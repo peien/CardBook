@@ -7,237 +7,138 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		98C7CF4915CA69D8009B52B9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C7CF4815CA69D8009B52B9 /* UIKit.framework */; };
-		98C7CF4B15CA69D8009B52B9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C7CF4A15CA69D8009B52B9 /* Foundation.framework */; };
-		98C7CF4D15CA69D8009B52B9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C7CF4C15CA69D8009B52B9 /* CoreGraphics.framework */; };
-		98C7CF4F15CA69D8009B52B9 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C7CF4E15CA69D8009B52B9 /* CoreData.framework */; };
-		98C7CF5515CA69D8009B52B9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 98C7CF5315CA69D8009B52B9 /* InfoPlist.strings */; };
-		98C7CF5715CA69D8009B52B9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C7CF5615CA69D8009B52B9 /* main.m */; };
-		98C7CF5B15CA69D8009B52B9 /* KHHAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C7CF5A15CA69D8009B52B9 /* KHHAppDelegate.m */; };
-		98C7CF5E15CA69D8009B52B9 /* CardBook.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 98C7CF5C15CA69D8009B52B9 /* CardBook.xcdatamodeld */; };
-		98C7CF6615CA69D8009B52B9 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C7CF6515CA69D8009B52B9 /* SenTestingKit.framework */; };
-		98C7CF6715CA69D8009B52B9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C7CF4815CA69D8009B52B9 /* UIKit.framework */; };
-		98C7CF6815CA69D8009B52B9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C7CF4A15CA69D8009B52B9 /* Foundation.framework */; };
-		98C7CF6915CA69D8009B52B9 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C7CF4E15CA69D8009B52B9 /* CoreData.framework */; };
-		98C7CF7115CA69D8009B52B9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 98C7CF6F15CA69D8009B52B9 /* InfoPlist.strings */; };
-		98C7CF7415CA69D8009B52B9 /* CardBookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C7CF7315CA69D8009B52B9 /* CardBookTests.m */; };
-		98C7CFA015CA6D0A009B52B9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C7CF4815CA69D8009B52B9 /* UIKit.framework */; };
-		98C7CFA115CA6D0A009B52B9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C7CF4A15CA69D8009B52B9 /* Foundation.framework */; };
-		98C7CFA215CA6D0A009B52B9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C7CF4C15CA69D8009B52B9 /* CoreGraphics.framework */; };
-		98C7CFA815CA6D0A009B52B9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 98C7CFA615CA6D0A009B52B9 /* InfoPlist.strings */; };
-		98C7CFAA15CA6D0A009B52B9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C7CFA915CA6D0A009B52B9 /* main.m */; };
-		98C7CFB815CA6DF0009B52B9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C7CF4815CA69D8009B52B9 /* UIKit.framework */; };
-		98C7CFB915CA6DF0009B52B9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C7CF4A15CA69D8009B52B9 /* Foundation.framework */; };
-		98C7CFBA15CA6DF0009B52B9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C7CF4C15CA69D8009B52B9 /* CoreGraphics.framework */; };
-		98C7CFC015CA6DF0009B52B9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 98C7CFBE15CA6DF0009B52B9 /* InfoPlist.strings */; };
-		98C7CFC215CA6DF0009B52B9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C7CFC115CA6DF0009B52B9 /* main.m */; };
-		98C7CFD115CA6EFE009B52B9 /* KHHAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C7CF5A15CA69D8009B52B9 /* KHHAppDelegate.m */; };
-		98C7CFD215CA6EFF009B52B9 /* KHHAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 98C7CF5A15CA69D8009B52B9 /* KHHAppDelegate.m */; };
-		98C7CFD315CA6F03009B52B9 /* CardBook.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 98C7CF5C15CA69D8009B52B9 /* CardBook.xcdatamodeld */; };
-		98C7CFD415CA6F04009B52B9 /* CardBook.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 98C7CF5C15CA69D8009B52B9 /* CardBook.xcdatamodeld */; };
-		98C7CFD515CA6F21009B52B9 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C7CF4E15CA69D8009B52B9 /* CoreData.framework */; };
-		98C7CFD615CA6F22009B52B9 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98C7CF4E15CA69D8009B52B9 /* CoreData.framework */; };
+		98A84D621602CD2500A4A673 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A84D611602CD2500A4A673 /* UIKit.framework */; };
+		98A84D641602CD2500A4A673 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A84D631602CD2500A4A673 /* Foundation.framework */; };
+		98A84D661602CD2500A4A673 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A84D651602CD2500A4A673 /* CoreGraphics.framework */; };
+		98A84D6C1602CD2500A4A673 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 98A84D6A1602CD2500A4A673 /* InfoPlist.strings */; };
+		98A84D6E1602CD2500A4A673 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84D6D1602CD2500A4A673 /* main.m */; };
+		98A84D721602CD2500A4A673 /* KHHAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84D711602CD2500A4A673 /* KHHAppDelegate.m */; };
+		98A84D7A1602CD2500A4A673 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A84D791602CD2500A4A673 /* SenTestingKit.framework */; };
+		98A84D7B1602CD2500A4A673 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A84D611602CD2500A4A673 /* UIKit.framework */; };
+		98A84D7C1602CD2500A4A673 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A84D631602CD2500A4A673 /* Foundation.framework */; };
+		98A84D841602CD2500A4A673 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 98A84D821602CD2500A4A673 /* InfoPlist.strings */; };
+		98A84D871602CD2500A4A673 /* CardBookTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84D861602CD2500A4A673 /* CardBookTests.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		98C7CF6A15CA69D8009B52B9 /* PBXContainerItemProxy */ = {
+		98A84D7D1602CD2500A4A673 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 98C7CF3B15CA69D8009B52B9 /* Project object */;
+			containerPortal = 98A84D541602CD2500A4A673 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 98C7CF4315CA69D8009B52B9;
+			remoteGlobalIDString = 98A84D5C1602CD2500A4A673;
 			remoteInfo = CardBook;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		98C7CF4415CA69D8009B52B9 /* CardBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		98C7CF4815CA69D8009B52B9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		98C7CF4A15CA69D8009B52B9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		98C7CF4C15CA69D8009B52B9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		98C7CF4E15CA69D8009B52B9 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		98C7CF5215CA69D8009B52B9 /* CardBook-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CardBook-Info.plist"; sourceTree = "<group>"; };
-		98C7CF5415CA69D8009B52B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		98C7CF5615CA69D8009B52B9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		98C7CF5815CA69D8009B52B9 /* CardBook-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CardBook-Prefix.pch"; sourceTree = "<group>"; };
-		98C7CF5915CA69D8009B52B9 /* KHHAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHHAppDelegate.h; sourceTree = "<group>"; };
-		98C7CF5A15CA69D8009B52B9 /* KHHAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHHAppDelegate.m; sourceTree = "<group>"; };
-		98C7CF5D15CA69D8009B52B9 /* CardBook.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CardBook.xcdatamodel; sourceTree = "<group>"; };
-		98C7CF6415CA69D8009B52B9 /* CardBookTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CardBookTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		98C7CF6515CA69D8009B52B9 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		98C7CF6E15CA69D8009B52B9 /* CardBookTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CardBookTests-Info.plist"; sourceTree = "<group>"; };
-		98C7CF7015CA69D8009B52B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		98C7CF7215CA69D8009B52B9 /* CardBookTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardBookTests.h; sourceTree = "<group>"; };
-		98C7CF7315CA69D8009B52B9 /* CardBookTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardBookTests.m; sourceTree = "<group>"; };
-		98C7CF9E15CA6D0A009B52B9 /* eCardFree.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = eCardFree.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		98C7CFA515CA6D0A009B52B9 /* eCardFree-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "eCardFree-Info.plist"; sourceTree = "<group>"; };
-		98C7CFA715CA6D0A009B52B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		98C7CFA915CA6D0A009B52B9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		98C7CFAB15CA6D0A009B52B9 /* eCardFree-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "eCardFree-Prefix.pch"; sourceTree = "<group>"; };
-		98C7CFB615CA6DF0009B52B9 /* eCardPro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = eCardPro.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		98C7CFBD15CA6DF0009B52B9 /* eCardPro-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "eCardPro-Info.plist"; sourceTree = "<group>"; };
-		98C7CFBF15CA6DF0009B52B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		98C7CFC115CA6DF0009B52B9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		98C7CFC315CA6DF0009B52B9 /* eCardPro-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "eCardPro-Prefix.pch"; sourceTree = "<group>"; };
+		98A84D5D1602CD2500A4A673 /* CardBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		98A84D611602CD2500A4A673 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		98A84D631602CD2500A4A673 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		98A84D651602CD2500A4A673 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		98A84D691602CD2500A4A673 /* CardBook-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CardBook-Info.plist"; sourceTree = "<group>"; };
+		98A84D6B1602CD2500A4A673 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		98A84D6D1602CD2500A4A673 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		98A84D6F1602CD2500A4A673 /* CardBook-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CardBook-Prefix.pch"; sourceTree = "<group>"; };
+		98A84D701602CD2500A4A673 /* KHHAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHHAppDelegate.h; sourceTree = "<group>"; };
+		98A84D711602CD2500A4A673 /* KHHAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = KHHAppDelegate.m; sourceTree = "<group>"; };
+		98A84D781602CD2500A4A673 /* CardBookTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CardBookTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		98A84D791602CD2500A4A673 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		98A84D811602CD2500A4A673 /* CardBookTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CardBookTests-Info.plist"; sourceTree = "<group>"; };
+		98A84D831602CD2500A4A673 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		98A84D851602CD2500A4A673 /* CardBookTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardBookTests.h; sourceTree = "<group>"; };
+		98A84D861602CD2500A4A673 /* CardBookTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardBookTests.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		98C7CF4115CA69D8009B52B9 /* Frameworks */ = {
+		98A84D5A1602CD2500A4A673 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				98C7CF4915CA69D8009B52B9 /* UIKit.framework in Frameworks */,
-				98C7CF4B15CA69D8009B52B9 /* Foundation.framework in Frameworks */,
-				98C7CF4D15CA69D8009B52B9 /* CoreGraphics.framework in Frameworks */,
-				98C7CF4F15CA69D8009B52B9 /* CoreData.framework in Frameworks */,
+				98A84D621602CD2500A4A673 /* UIKit.framework in Frameworks */,
+				98A84D641602CD2500A4A673 /* Foundation.framework in Frameworks */,
+				98A84D661602CD2500A4A673 /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		98C7CF6015CA69D8009B52B9 /* Frameworks */ = {
+		98A84D741602CD2500A4A673 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				98C7CF6615CA69D8009B52B9 /* SenTestingKit.framework in Frameworks */,
-				98C7CF6715CA69D8009B52B9 /* UIKit.framework in Frameworks */,
-				98C7CF6815CA69D8009B52B9 /* Foundation.framework in Frameworks */,
-				98C7CF6915CA69D8009B52B9 /* CoreData.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		98C7CF9B15CA6D0A009B52B9 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				98C7CFA015CA6D0A009B52B9 /* UIKit.framework in Frameworks */,
-				98C7CFA115CA6D0A009B52B9 /* Foundation.framework in Frameworks */,
-				98C7CFA215CA6D0A009B52B9 /* CoreGraphics.framework in Frameworks */,
-				98C7CFD615CA6F22009B52B9 /* CoreData.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		98C7CFB315CA6DF0009B52B9 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				98C7CFB815CA6DF0009B52B9 /* UIKit.framework in Frameworks */,
-				98C7CFB915CA6DF0009B52B9 /* Foundation.framework in Frameworks */,
-				98C7CFBA15CA6DF0009B52B9 /* CoreGraphics.framework in Frameworks */,
-				98C7CFD515CA6F21009B52B9 /* CoreData.framework in Frameworks */,
+				98A84D7A1602CD2500A4A673 /* SenTestingKit.framework in Frameworks */,
+				98A84D7B1602CD2500A4A673 /* UIKit.framework in Frameworks */,
+				98A84D7C1602CD2500A4A673 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		98C7CF3915CA69D8009B52B9 = {
+		98A84D521602CD2500A4A673 = {
 			isa = PBXGroup;
 			children = (
-				98C7CF5015CA69D8009B52B9 /* CardBook */,
-				98C7CF6C15CA69D8009B52B9 /* CardBookTests */,
-				98C7CFA315CA6D0A009B52B9 /* eCardFree */,
-				98C7CFBB15CA6DF0009B52B9 /* eCardPro */,
-				98C7CF4715CA69D8009B52B9 /* Frameworks */,
-				98C7CF4515CA69D8009B52B9 /* Products */,
+				98A84D671602CD2500A4A673 /* CardBook */,
+				98A84D7F1602CD2500A4A673 /* CardBookTests */,
+				98A84D601602CD2500A4A673 /* Frameworks */,
+				98A84D5E1602CD2500A4A673 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		98C7CF4515CA69D8009B52B9 /* Products */ = {
+		98A84D5E1602CD2500A4A673 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				98C7CF4415CA69D8009B52B9 /* CardBook.app */,
-				98C7CF6415CA69D8009B52B9 /* CardBookTests.octest */,
-				98C7CF9E15CA6D0A009B52B9 /* eCardFree.app */,
-				98C7CFB615CA6DF0009B52B9 /* eCardPro.app */,
+				98A84D5D1602CD2500A4A673 /* CardBook.app */,
+				98A84D781602CD2500A4A673 /* CardBookTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		98C7CF4715CA69D8009B52B9 /* Frameworks */ = {
+		98A84D601602CD2500A4A673 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				98C7CF4815CA69D8009B52B9 /* UIKit.framework */,
-				98C7CF4A15CA69D8009B52B9 /* Foundation.framework */,
-				98C7CF4C15CA69D8009B52B9 /* CoreGraphics.framework */,
-				98C7CF4E15CA69D8009B52B9 /* CoreData.framework */,
-				98C7CF6515CA69D8009B52B9 /* SenTestingKit.framework */,
+				98A84D611602CD2500A4A673 /* UIKit.framework */,
+				98A84D631602CD2500A4A673 /* Foundation.framework */,
+				98A84D651602CD2500A4A673 /* CoreGraphics.framework */,
+				98A84D791602CD2500A4A673 /* SenTestingKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		98C7CF5015CA69D8009B52B9 /* CardBook */ = {
+		98A84D671602CD2500A4A673 /* CardBook */ = {
 			isa = PBXGroup;
 			children = (
-				98C7CF5915CA69D8009B52B9 /* KHHAppDelegate.h */,
-				98C7CF5A15CA69D8009B52B9 /* KHHAppDelegate.m */,
-				98C7CF5C15CA69D8009B52B9 /* CardBook.xcdatamodeld */,
-				98C7CF5115CA69D8009B52B9 /* Supporting Files */,
+				98A84D701602CD2500A4A673 /* KHHAppDelegate.h */,
+				98A84D711602CD2500A4A673 /* KHHAppDelegate.m */,
+				98A84D681602CD2500A4A673 /* Supporting Files */,
 			);
 			path = CardBook;
 			sourceTree = "<group>";
 		};
-		98C7CF5115CA69D8009B52B9 /* Supporting Files */ = {
+		98A84D681602CD2500A4A673 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				98C7CF5215CA69D8009B52B9 /* CardBook-Info.plist */,
-				98C7CF5315CA69D8009B52B9 /* InfoPlist.strings */,
-				98C7CF5615CA69D8009B52B9 /* main.m */,
-				98C7CF5815CA69D8009B52B9 /* CardBook-Prefix.pch */,
+				98A84D691602CD2500A4A673 /* CardBook-Info.plist */,
+				98A84D6A1602CD2500A4A673 /* InfoPlist.strings */,
+				98A84D6D1602CD2500A4A673 /* main.m */,
+				98A84D6F1602CD2500A4A673 /* CardBook-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		98C7CF6C15CA69D8009B52B9 /* CardBookTests */ = {
+		98A84D7F1602CD2500A4A673 /* CardBookTests */ = {
 			isa = PBXGroup;
 			children = (
-				98C7CF7215CA69D8009B52B9 /* CardBookTests.h */,
-				98C7CF7315CA69D8009B52B9 /* CardBookTests.m */,
-				98C7CF6D15CA69D8009B52B9 /* Supporting Files */,
+				98A84D851602CD2500A4A673 /* CardBookTests.h */,
+				98A84D861602CD2500A4A673 /* CardBookTests.m */,
+				98A84D801602CD2500A4A673 /* Supporting Files */,
 			);
 			path = CardBookTests;
 			sourceTree = "<group>";
 		};
-		98C7CF6D15CA69D8009B52B9 /* Supporting Files */ = {
+		98A84D801602CD2500A4A673 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				98C7CF6E15CA69D8009B52B9 /* CardBookTests-Info.plist */,
-				98C7CF6F15CA69D8009B52B9 /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		98C7CFA315CA6D0A009B52B9 /* eCardFree */ = {
-			isa = PBXGroup;
-			children = (
-				98C7CFA415CA6D0A009B52B9 /* Supporting Files */,
-			);
-			path = eCardFree;
-			sourceTree = "<group>";
-		};
-		98C7CFA415CA6D0A009B52B9 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				98C7CFA515CA6D0A009B52B9 /* eCardFree-Info.plist */,
-				98C7CFA615CA6D0A009B52B9 /* InfoPlist.strings */,
-				98C7CFA915CA6D0A009B52B9 /* main.m */,
-				98C7CFAB15CA6D0A009B52B9 /* eCardFree-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		98C7CFBB15CA6DF0009B52B9 /* eCardPro */ = {
-			isa = PBXGroup;
-			children = (
-				98C7CFBC15CA6DF0009B52B9 /* Supporting Files */,
-			);
-			path = eCardPro;
-			sourceTree = "<group>";
-		};
-		98C7CFBC15CA6DF0009B52B9 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				98C7CFBD15CA6DF0009B52B9 /* eCardPro-Info.plist */,
-				98C7CFBE15CA6DF0009B52B9 /* InfoPlist.strings */,
-				98C7CFC115CA6DF0009B52B9 /* main.m */,
-				98C7CFC315CA6DF0009B52B9 /* eCardPro-Prefix.pch */,
+				98A84D811602CD2500A4A673 /* CardBookTests-Info.plist */,
+				98A84D821602CD2500A4A673 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -245,13 +146,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		98C7CF4315CA69D8009B52B9 /* CardBook */ = {
+		98A84D5C1602CD2500A4A673 /* CardBook */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 98C7CF7715CA69D8009B52B9 /* Build configuration list for PBXNativeTarget "CardBook" */;
+			buildConfigurationList = 98A84D8A1602CD2500A4A673 /* Build configuration list for PBXNativeTarget "CardBook" */;
 			buildPhases = (
-				98C7CF4015CA69D8009B52B9 /* Sources */,
-				98C7CF4115CA69D8009B52B9 /* Frameworks */,
-				98C7CF4215CA69D8009B52B9 /* Resources */,
+				98A84D591602CD2500A4A673 /* Sources */,
+				98A84D5A1602CD2500A4A673 /* Frameworks */,
+				98A84D5B1602CD2500A4A673 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -259,129 +160,77 @@
 			);
 			name = CardBook;
 			productName = CardBook;
-			productReference = 98C7CF4415CA69D8009B52B9 /* CardBook.app */;
+			productReference = 98A84D5D1602CD2500A4A673 /* CardBook.app */;
 			productType = "com.apple.product-type.application";
 		};
-		98C7CF6315CA69D8009B52B9 /* CardBookTests */ = {
+		98A84D771602CD2500A4A673 /* CardBookTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 98C7CF7A15CA69D8009B52B9 /* Build configuration list for PBXNativeTarget "CardBookTests" */;
+			buildConfigurationList = 98A84D8D1602CD2500A4A673 /* Build configuration list for PBXNativeTarget "CardBookTests" */;
 			buildPhases = (
-				98C7CF5F15CA69D8009B52B9 /* Sources */,
-				98C7CF6015CA69D8009B52B9 /* Frameworks */,
-				98C7CF6115CA69D8009B52B9 /* Resources */,
-				98C7CF6215CA69D8009B52B9 /* ShellScript */,
+				98A84D731602CD2500A4A673 /* Sources */,
+				98A84D741602CD2500A4A673 /* Frameworks */,
+				98A84D751602CD2500A4A673 /* Resources */,
+				98A84D761602CD2500A4A673 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				98C7CF6B15CA69D8009B52B9 /* PBXTargetDependency */,
+				98A84D7E1602CD2500A4A673 /* PBXTargetDependency */,
 			);
 			name = CardBookTests;
 			productName = CardBookTests;
-			productReference = 98C7CF6415CA69D8009B52B9 /* CardBookTests.octest */;
+			productReference = 98A84D781602CD2500A4A673 /* CardBookTests.octest */;
 			productType = "com.apple.product-type.bundle";
-		};
-		98C7CF9D15CA6D0A009B52B9 /* eCardFree */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 98C7CFAF15CA6D0A009B52B9 /* Build configuration list for PBXNativeTarget "eCardFree" */;
-			buildPhases = (
-				98C7CF9A15CA6D0A009B52B9 /* Sources */,
-				98C7CF9B15CA6D0A009B52B9 /* Frameworks */,
-				98C7CF9C15CA6D0A009B52B9 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = eCardFree;
-			productName = eCardFree;
-			productReference = 98C7CF9E15CA6D0A009B52B9 /* eCardFree.app */;
-			productType = "com.apple.product-type.application";
-		};
-		98C7CFB515CA6DF0009B52B9 /* eCardPro */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 98C7CFC715CA6DF0009B52B9 /* Build configuration list for PBXNativeTarget "eCardPro" */;
-			buildPhases = (
-				98C7CFB215CA6DF0009B52B9 /* Sources */,
-				98C7CFB315CA6DF0009B52B9 /* Frameworks */,
-				98C7CFB415CA6DF0009B52B9 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = eCardPro;
-			productName = eCardPro;
-			productReference = 98C7CFB615CA6DF0009B52B9 /* eCardPro.app */;
-			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		98C7CF3B15CA69D8009B52B9 /* Project object */ = {
+		98A84D541602CD2500A4A673 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = KHH;
 				LastUpgradeCheck = 0440;
-				ORGANIZATIONNAME = KingHanHong;
+				ORGANIZATIONNAME = Kinghanhong;
 			};
-			buildConfigurationList = 98C7CF3E15CA69D8009B52B9 /* Build configuration list for PBXProject "CardBook" */;
+			buildConfigurationList = 98A84D571602CD2500A4A673 /* Build configuration list for PBXProject "CardBook" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = 98C7CF3915CA69D8009B52B9;
-			productRefGroup = 98C7CF4515CA69D8009B52B9 /* Products */;
+			mainGroup = 98A84D521602CD2500A4A673;
+			productRefGroup = 98A84D5E1602CD2500A4A673 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				98C7CF4315CA69D8009B52B9 /* CardBook */,
-				98C7CF6315CA69D8009B52B9 /* CardBookTests */,
-				98C7CF9D15CA6D0A009B52B9 /* eCardFree */,
-				98C7CFB515CA6DF0009B52B9 /* eCardPro */,
+				98A84D5C1602CD2500A4A673 /* CardBook */,
+				98A84D771602CD2500A4A673 /* CardBookTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		98C7CF4215CA69D8009B52B9 /* Resources */ = {
+		98A84D5B1602CD2500A4A673 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				98C7CF5515CA69D8009B52B9 /* InfoPlist.strings in Resources */,
+				98A84D6C1602CD2500A4A673 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		98C7CF6115CA69D8009B52B9 /* Resources */ = {
+		98A84D751602CD2500A4A673 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				98C7CF7115CA69D8009B52B9 /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		98C7CF9C15CA6D0A009B52B9 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				98C7CFA815CA6D0A009B52B9 /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		98C7CFB415CA6DF0009B52B9 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				98C7CFC015CA6DF0009B52B9 /* InfoPlist.strings in Resources */,
+				98A84D841602CD2500A4A673 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		98C7CF6215CA69D8009B52B9 /* ShellScript */ = {
+		98A84D761602CD2500A4A673 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -397,83 +246,46 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		98C7CF4015CA69D8009B52B9 /* Sources */ = {
+		98A84D591602CD2500A4A673 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				98C7CF5715CA69D8009B52B9 /* main.m in Sources */,
-				98C7CF5B15CA69D8009B52B9 /* KHHAppDelegate.m in Sources */,
-				98C7CF5E15CA69D8009B52B9 /* CardBook.xcdatamodeld in Sources */,
+				98A84D6E1602CD2500A4A673 /* main.m in Sources */,
+				98A84D721602CD2500A4A673 /* KHHAppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		98C7CF5F15CA69D8009B52B9 /* Sources */ = {
+		98A84D731602CD2500A4A673 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				98C7CF7415CA69D8009B52B9 /* CardBookTests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		98C7CF9A15CA6D0A009B52B9 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				98C7CFAA15CA6D0A009B52B9 /* main.m in Sources */,
-				98C7CFD115CA6EFE009B52B9 /* KHHAppDelegate.m in Sources */,
-				98C7CFD315CA6F03009B52B9 /* CardBook.xcdatamodeld in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		98C7CFB215CA6DF0009B52B9 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				98C7CFC215CA6DF0009B52B9 /* main.m in Sources */,
-				98C7CFD215CA6EFF009B52B9 /* KHHAppDelegate.m in Sources */,
-				98C7CFD415CA6F04009B52B9 /* CardBook.xcdatamodeld in Sources */,
+				98A84D871602CD2500A4A673 /* CardBookTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		98C7CF6B15CA69D8009B52B9 /* PBXTargetDependency */ = {
+		98A84D7E1602CD2500A4A673 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 98C7CF4315CA69D8009B52B9 /* CardBook */;
-			targetProxy = 98C7CF6A15CA69D8009B52B9 /* PBXContainerItemProxy */;
+			target = 98A84D5C1602CD2500A4A673 /* CardBook */;
+			targetProxy = 98A84D7D1602CD2500A4A673 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		98C7CF5315CA69D8009B52B9 /* InfoPlist.strings */ = {
+		98A84D6A1602CD2500A4A673 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				98C7CF5415CA69D8009B52B9 /* en */,
+				98A84D6B1602CD2500A4A673 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		98C7CF6F15CA69D8009B52B9 /* InfoPlist.strings */ = {
+		98A84D821602CD2500A4A673 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				98C7CF7015CA69D8009B52B9 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		98C7CFA615CA6D0A009B52B9 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				98C7CFA715CA6D0A009B52B9 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		98C7CFBE15CA6DF0009B52B9 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				98C7CFBF15CA6DF0009B52B9 /* en */,
+				98A84D831602CD2500A4A673 /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -481,7 +293,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		98C7CF7515CA69D8009B52B9 /* Debug */ = {
+		98A84D881602CD2500A4A673 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -508,7 +320,7 @@
 			};
 			name = Debug;
 		};
-		98C7CF7615CA69D8009B52B9 /* Release */ = {
+		98A84D891602CD2500A4A673 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -530,7 +342,7 @@
 			};
 			name = Release;
 		};
-		98C7CF7815CA69D8009B52B9 /* Debug */ = {
+		98A84D8B1602CD2500A4A673 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -541,7 +353,7 @@
 			};
 			name = Debug;
 		};
-		98C7CF7915CA69D8009B52B9 /* Release */ = {
+		98A84D8C1602CD2500A4A673 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -552,7 +364,7 @@
 			};
 			name = Release;
 		};
-		98C7CF7B15CA69D8009B52B9 /* Debug */ = {
+		98A84D8E1602CD2500A4A673 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CardBook.app/CardBook";
@@ -569,7 +381,7 @@
 			};
 			name = Debug;
 		};
-		98C7CF7C15CA69D8009B52B9 /* Release */ = {
+		98A84D8F1602CD2500A4A673 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CardBook.app/CardBook";
@@ -583,119 +395,38 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
-			};
-			name = Release;
-		};
-		98C7CFB015CA6D0A009B52B9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "eCardFree/eCardFree-Prefix.pch";
-				INFOPLIST_FILE = "eCardFree/eCardFree-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Debug;
-		};
-		98C7CFB115CA6D0A009B52B9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "eCardFree/eCardFree-Prefix.pch";
-				INFOPLIST_FILE = "eCardFree/eCardFree-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Release;
-		};
-		98C7CFC815CA6DF0009B52B9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "eCardPro/eCardPro-Prefix.pch";
-				INFOPLIST_FILE = "eCardPro/eCardPro-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Debug;
-		};
-		98C7CFC915CA6DF0009B52B9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "eCardPro/eCardPro-Prefix.pch";
-				INFOPLIST_FILE = "eCardPro/eCardPro-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		98C7CF3E15CA69D8009B52B9 /* Build configuration list for PBXProject "CardBook" */ = {
+		98A84D571602CD2500A4A673 /* Build configuration list for PBXProject "CardBook" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				98C7CF7515CA69D8009B52B9 /* Debug */,
-				98C7CF7615CA69D8009B52B9 /* Release */,
+				98A84D881602CD2500A4A673 /* Debug */,
+				98A84D891602CD2500A4A673 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		98C7CF7715CA69D8009B52B9 /* Build configuration list for PBXNativeTarget "CardBook" */ = {
+		98A84D8A1602CD2500A4A673 /* Build configuration list for PBXNativeTarget "CardBook" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				98C7CF7815CA69D8009B52B9 /* Debug */,
-				98C7CF7915CA69D8009B52B9 /* Release */,
+				98A84D8B1602CD2500A4A673 /* Debug */,
+				98A84D8C1602CD2500A4A673 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
-		98C7CF7A15CA69D8009B52B9 /* Build configuration list for PBXNativeTarget "CardBookTests" */ = {
+		98A84D8D1602CD2500A4A673 /* Build configuration list for PBXNativeTarget "CardBookTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				98C7CF7B15CA69D8009B52B9 /* Debug */,
-				98C7CF7C15CA69D8009B52B9 /* Release */,
+				98A84D8E1602CD2500A4A673 /* Debug */,
+				98A84D8F1602CD2500A4A673 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		98C7CFAF15CA6D0A009B52B9 /* Build configuration list for PBXNativeTarget "eCardFree" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				98C7CFB015CA6D0A009B52B9 /* Debug */,
-				98C7CFB115CA6D0A009B52B9 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		98C7CFC715CA6DF0009B52B9 /* Build configuration list for PBXNativeTarget "eCardPro" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				98C7CFC815CA6DF0009B52B9 /* Debug */,
-				98C7CFC915CA6DF0009B52B9 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		98C7CF5C15CA69D8009B52B9 /* CardBook.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				98C7CF5D15CA69D8009B52B9 /* CardBook.xcdatamodel */,
-			);
-			currentVersion = 98C7CF5D15CA69D8009B52B9 /* CardBook.xcdatamodel */;
-			path = CardBook.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
-	rootObject = 98C7CF3B15CA69D8009B52B9 /* Project object */;
+	rootObject = 98A84D541602CD2500A4A673 /* Project object */;
 }
