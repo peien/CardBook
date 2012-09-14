@@ -1,0 +1,175 @@
+// DO NOT EDIT. This file is machine-generated and constantly overwritten.
+// Make changes to Image.h instead.
+
+#import <CoreData/CoreData.h>
+
+
+extern const struct ImageAttributes {
+	__unsafe_unretained NSString *id;
+	__unsafe_unretained NSString *url;
+} ImageAttributes;
+
+extern const struct ImageRelationships {
+	__unsafe_unretained NSString *cards;
+	__unsafe_unretained NSString *companies;
+	__unsafe_unretained NSString *messages;
+	__unsafe_unretained NSString *schedules;
+	__unsafe_unretained NSString *templates;
+} ImageRelationships;
+
+extern const struct ImageFetchedProperties {
+} ImageFetchedProperties;
+
+@class Card;
+@class Company;
+@class Message;
+@class Schedule;
+@class CardTemplate;
+
+
+
+
+@interface ImageID : NSManagedObjectID {}
+@end
+
+@interface _Image : NSManagedObject {}
++ (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
++ (NSString*)entityName;
++ (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
+- (ImageID*)objectID;
+
+
+
+
+@property (nonatomic, strong) NSNumber* id;
+
+
+@property int64_t idValue;
+- (int64_t)idValue;
+- (void)setIdValue:(int64_t)value_;
+
+//- (BOOL)validateId:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSString* url;
+
+
+//- (BOOL)validateUrl:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSSet* cards;
+
+- (NSMutableSet*)cardsSet;
+
+
+
+
+@property (nonatomic, strong) NSSet* companies;
+
+- (NSMutableSet*)companiesSet;
+
+
+
+
+@property (nonatomic, strong) NSSet* messages;
+
+- (NSMutableSet*)messagesSet;
+
+
+
+
+@property (nonatomic, strong) NSSet* schedules;
+
+- (NSMutableSet*)schedulesSet;
+
+
+
+
+@property (nonatomic, strong) NSSet* templates;
+
+- (NSMutableSet*)templatesSet;
+
+
+
+
+
+@end
+
+@interface _Image (CoreDataGeneratedAccessors)
+
+- (void)addCards:(NSSet*)value_;
+- (void)removeCards:(NSSet*)value_;
+- (void)addCardsObject:(Card*)value_;
+- (void)removeCardsObject:(Card*)value_;
+
+- (void)addCompanies:(NSSet*)value_;
+- (void)removeCompanies:(NSSet*)value_;
+- (void)addCompaniesObject:(Company*)value_;
+- (void)removeCompaniesObject:(Company*)value_;
+
+- (void)addMessages:(NSSet*)value_;
+- (void)removeMessages:(NSSet*)value_;
+- (void)addMessagesObject:(Message*)value_;
+- (void)removeMessagesObject:(Message*)value_;
+
+- (void)addSchedules:(NSSet*)value_;
+- (void)removeSchedules:(NSSet*)value_;
+- (void)addSchedulesObject:(Schedule*)value_;
+- (void)removeSchedulesObject:(Schedule*)value_;
+
+- (void)addTemplates:(NSSet*)value_;
+- (void)removeTemplates:(NSSet*)value_;
+- (void)addTemplatesObject:(CardTemplate*)value_;
+- (void)removeTemplatesObject:(CardTemplate*)value_;
+
+@end
+
+@interface _Image (CoreDataGeneratedPrimitiveAccessors)
+
+
+- (NSNumber*)primitiveId;
+- (void)setPrimitiveId:(NSNumber*)value;
+
+- (int64_t)primitiveIdValue;
+- (void)setPrimitiveIdValue:(int64_t)value_;
+
+
+
+
+- (NSString*)primitiveUrl;
+- (void)setPrimitiveUrl:(NSString*)value;
+
+
+
+
+
+- (NSMutableSet*)primitiveCards;
+- (void)setPrimitiveCards:(NSMutableSet*)value;
+
+
+
+- (NSMutableSet*)primitiveCompanies;
+- (void)setPrimitiveCompanies:(NSMutableSet*)value;
+
+
+
+- (NSMutableSet*)primitiveMessages;
+- (void)setPrimitiveMessages:(NSMutableSet*)value;
+
+
+
+- (NSMutableSet*)primitiveSchedules;
+- (void)setPrimitiveSchedules:(NSMutableSet*)value;
+
+
+
+- (NSMutableSet*)primitiveTemplates;
+- (void)setPrimitiveTemplates:(NSMutableSet*)value;
+
+
+@end
