@@ -7,6 +7,8 @@
 //
 
 #import "KHHAppDelegate.h"
+#import "NSObject+Notification.h"
+#import "KHHNotifications.h"
 
 @implementation KHHAppDelegate
 
@@ -14,8 +16,16 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.backgroundColor = [UIColor blackColor];
+    
+    // 注册响应的消息
+    [self observeNotification:KHHNotificationShowStartup selector:@"handleShowStartup:"]; // 显示主界面消息
+    [self observeNotification:KHHNotificationShowMainUI  selector:@"handleShowMainUI:"]; // 显示主界面消息
+    
+    // 显示Startup界面
     [self.window makeKeyAndVisible];
+    [self postNotification:KHHNotificationShowStartup info:nil];
+    
     return YES;
 }
 
@@ -44,6 +54,16 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark -
+- (void)handleShowStartup:(NSNotification *)noti {
+    // 销毁主界面
+    self.mainUI = nil;
+    self.window.rootViewController = [[StartupViewController alloc] initWithNibName:nil bundle:nil];
+}
+- (void)handleShowMainUI:(NSNotification *)noti {
+    self.mainUI = [[KHHMainUIController alloc] init];
 }
 
 @end

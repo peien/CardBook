@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "StartupViewController.h"
+#import "KHHMainUIController.h"
 
 @interface KHHAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (nonatomic, strong) KHHMainUIController *mainUI;
 
 @end

@@ -152,8 +152,10 @@
 }
 - (void)handlePostLoginSync:(NSNotification *)notification
 {
-#warning not complete!
     self.actionLabel.text = textStartPostLoginSync;
+#warning 改掉这里：由于同步尚未实现，直接进主界面。
+    // 由于同步尚未实现，直接进主界面。
+    [self postNotification:KHHNotificationShowMainUI info:nil];
 }
 - (void)handleSignUpAction:(NSNotification *)notification
 {
@@ -225,7 +227,7 @@
 }
 - (void)showCompanyLogo
 {
-#warning TODO
+#warning 这里根据需要来重写
 //    NSURL *logoURL = self.defaults.companyLogo;
 //    if (imgURL) {
 //        [self.companyImageView setImageWithURL:imgURL

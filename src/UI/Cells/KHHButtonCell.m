@@ -11,12 +11,6 @@
 @implementation KHHButtonCell
 @synthesize button = _button;
 
-//- (id)init {
-//    self = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([self class])
-//                                          owner:self options:nil] objectAtIndex:0];
-//    return self;
-//}
-
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];

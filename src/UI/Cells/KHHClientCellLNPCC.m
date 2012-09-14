@@ -14,14 +14,14 @@ const NSInteger CheckboxPadding = 10;
 @implementation KHHClientCellLNPCC
 @synthesize logoBtn = _logoBtn;
 
-//- (id)init {
-//    self = [[[NSBundle mainBundle] loadNibNamed:NSStringFromClass([self class])
-//                                          owner:self options:nil] objectAtIndex:0];
-//    return self;
-//}
-
 - (void)dealloc {
     self.checkbox = nil;
+}
+
+- (void)awakeFromNib {
+    [super awakeFromNib];
+    _checkbox = [[SMCheckbox alloc] init];
+    [self addSubview:_checkbox];
 }
 
 - (void)drawRect:(CGRect)rect
@@ -34,12 +34,6 @@ const NSInteger CheckboxPadding = 10;
                                  h / 2 - CheckboxSize / 2,
                                  CheckboxSize,
                                  CheckboxSize);
-}
-
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    _checkbox = [[SMCheckbox alloc] init];
-    [self addSubview:_checkbox];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

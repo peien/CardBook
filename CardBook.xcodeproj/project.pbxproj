@@ -332,6 +332,7 @@
 		98A851011602EDBC00A4A673 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A850F41602ECAB00A4A673 /* QuartzCore.framework */; };
 		98A851031602EDCC00A4A673 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A851021602EDCC00A4A673 /* MessageUI.framework */; };
 		98A851051602EDDD00A4A673 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A851041602EDDD00A4A673 /* CoreData.framework */; };
+		98A851111602F69200A4A673 /* KHHMainUIController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A851101602F69200A4A673 /* KHHMainUIController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -851,6 +852,8 @@
 		98A850FF1602ED6F00A4A673 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		98A851021602EDCC00A4A673 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		98A851041602EDDD00A4A673 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		98A8510F1602F69200A4A673 /* KHHMainUIController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHMainUIController.h; sourceTree = "<group>"; };
+		98A851101602F69200A4A673 /* KHHMainUIController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHMainUIController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1090,6 +1093,8 @@
 		98A84DA11602D24D00A4A673 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				98A8510F1602F69200A4A673 /* KHHMainUIController.h */,
+				98A851101602F69200A4A673 /* KHHMainUIController.m */,
 				98A84EF41602D67E00A4A673 /* Startup */,
 				98A84E231602D66200A4A673 /* Exchange */,
 				98A84E2A1602D66200A4A673 /* Home */,
@@ -2284,6 +2289,7 @@
 				98A850E61602E63A00A4A673 /* KHHNetworkAPIAgent+Template.m in Sources */,
 				98A850E71602E63A00A4A673 /* KHHNetworkAPIAgent+VisitSchedule.m in Sources */,
 				98A850EE1602EB5A00A4A673 /* JSONKit.m in Sources */,
+				98A851111602F69200A4A673 /* KHHMainUIController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

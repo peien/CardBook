@@ -9,4 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface StartupViewController : UIViewController
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
 @end

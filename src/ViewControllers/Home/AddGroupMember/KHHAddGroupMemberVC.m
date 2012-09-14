@@ -204,8 +204,9 @@ int num = 0;
     [self.navigationController popViewControllerAnimated:YES];
 
 }
-- (void)checkBox:(SMCheckbox *)checkBox valueChanged:(BOOL)newValue
+- (void)checkbox:(SMCheckbox *)checkbox valueChanged:(BOOL)newValue
 {
+#warning 这里未完成
 //    KHHClientCellLNPC *cell = (KHHClientCellLNPC *)[[checkBox superview] superview];
 //    NSNumber *value = [NSNumber numberWithBool:newValue];
 //    //DLog(@"checkBox======%@",value);
