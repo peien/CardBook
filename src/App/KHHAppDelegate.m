@@ -59,10 +59,13 @@
 #pragma mark -
 - (void)handleShowStartup:(NSNotification *)noti {
     // 销毁主界面
+    self.window.rootViewController = nil;
     self.mainUI = nil;
+    // 显示启动界面
     self.window.rootViewController = [[StartupViewController alloc] initWithNibName:nil bundle:nil];
 }
 - (void)handleShowMainUI:(NSNotification *)noti {
+    // 显示主界面
     self.mainUI = [[KHHMainUIController alloc] init];
 }
 

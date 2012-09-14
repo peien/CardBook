@@ -135,7 +135,8 @@
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person
 {
     // 从通讯录获取姓名和电话
-    NSString *aName = (__bridge NSString *)ABRecordCopyCompositeName(person);
+//    NSString *aName = (__bridge NSString *)ABRecordCopyCompositeName(person);;
+    NSString *aName = CFBridgingRelease(ABRecordCopyCompositeName(person));
     ABMultiValueRef phones = ABRecordCopyValue(person, kABPersonPhoneProperty);
     NSString *aPhone = nil;
     CFIndex n = ABMultiValueGetCount(phones);
@@ -151,7 +152,8 @@
         return NO;
     }
     if (n == 1) {
-        NSString *aPhoneRef = (__bridge NSString *)ABMultiValueCopyValueAtIndex(phones,0);
+//        NSString *aPhoneRef = (__bridge NSString *)ABMultiValueCopyValueAtIndex(phones,0);
+        NSString *aPhoneRef = CFBridgingRelease(ABMultiValueCopyValueAtIndex(phones,0));
         aPhone = [self retrievePhoneNumberFromString:aPhoneRef];
         if (aPhone.isRegistrablePhone) {
             //
@@ -175,18 +177,20 @@
                otherButtonTitles:nil]
                show];
         }
+        CFRelease(phones);
         return NO;
     }
+    CFRelease(phones);
     return NO;
 
 }
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier
 {
-    NSString *aName = (__bridge NSString *)ABRecordCopyCompositeName(person);
+    NSString *aName = CFBridgingRelease(ABRecordCopyCompositeName(person));
     NSString *aPhone = nil;
     ABMultiValueRef phones = ABRecordCopyValue(person, property);
     if (identifier != kABMultiValueInvalidIdentifier) {
-        NSString *aPhoneRef = (__bridge NSString *)ABMultiValueCopyValueAtIndex(phones, identifier);
+        NSString *aPhoneRef = CFBridgingRelease(ABMultiValueCopyValueAtIndex(phones, identifier));
         aPhone = [self retrievePhoneNumberFromString:aPhoneRef];
         if (aPhone.isRegistrablePhone) {
             //
@@ -212,6 +216,7 @@
         }
        
     }
+    CFRelease(phones);
     return NO;
 
 }

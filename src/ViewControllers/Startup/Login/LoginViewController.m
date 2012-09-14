@@ -81,7 +81,6 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     DLog(@"[II] viewDidAppear...");
-//    self.navigationController.navigationBarHidden = YES;
     [self performSelector:@selector(showTheKeyboard) withObject:nil afterDelay:0.2f];
     [super viewDidAppear:animated];
 }
