@@ -35,6 +35,9 @@ static NSString * const KHHDefaultsKeyUser = @"khh_user";
 static NSString * const KHHDefaultsKeyCompanyList = @"khh_companyList";
 static NSString * const KHHDefaultsKeyUserList = @"khh_userList";
 
+// App - MainUI
+static NSString * const KHHDefaultsKeyMainUISelectedTabIndex = @"khh_MainUI_selectedTabIndex";
+
 @interface KHHDefaults ()
 @property (nonatomic, weak) NSUserDefaults *defaults;
 
@@ -319,7 +322,13 @@ static NSString * const KHHDefaultsKeyUserList = @"khh_userList";
     [self setBool:value
            forKey:KHHDefaultsKeyRememberPassword];
 }
-
+#pragma mark - App - MainUI
+- (NSInteger)selectedTab {
+    return [[self numberForKey:KHHDefaultsKeyMainUISelectedTabIndex] integerValue];
+}
+- (void)setSelectedTab:(NSInteger)index {
+    [self setNumber:[NSNumber numberWithInteger:index] forKey:KHHDefaultsKeyMainUISelectedTabIndex];
+}
 #pragma mark - Utils
 - (NSMutableArray *)userList {
     NSArray *array = [self arrayForKey:KHHDefaultsKeyUserList];

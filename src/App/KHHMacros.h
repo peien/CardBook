@@ -26,7 +26,7 @@
 //    static NSString * const KHHServer = @"192.168.1.151:9999";
 //    static NSString * const KHHServer = @"192.168.1.70:8081"; //海波
 #else
-static NSString * const KHHServer = @"www.kinghanhong.com";
+    static NSString * const KHHServer = @"www.kinghanhong.com";
 #endif
 
 static NSString * const KHHURLFormat = @"http://%@/XCardServer/%@";

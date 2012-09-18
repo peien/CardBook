@@ -71,5 +71,7 @@
 - (void)setRememberPassword:(BOOL)value;
 - (BOOL)showCompanyLogo; // 是否显示公司logo
 - (void)setShowCompanyLogo:(BOOL)value;
-
+#pragma mark - App - MainUI
+- (NSInteger)selectedTab;
+- (void)setSelectedTab:(NSInteger)index;
 @end

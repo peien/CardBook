@@ -14,9 +14,11 @@
 #import "MoreViewController.h"
 #import "MyTabBarController.h"
 #import "NSObject+Notification.h"
+#import "KHHDefaults.h"
 
 @interface KHHMainUIController ()
 @property (readonly, nonatomic, weak) UIWindow *window; // 当前的keyWindow
+@property (readonly, nonatomic, weak) KHHDefaults *defaults; // 当前的keyWindow
 @property (strong, nonatomic) MyTabBarController *aTabBarController;
 @end
 
@@ -30,6 +32,7 @@
     self = [super init];
     if (self) {
         // 初始化
+        _defaults = [KHHDefaults sharedDefaults];
         _aTabBarController = [[MyTabBarController alloc] initWithNum:5];
         
         // 交换
@@ -73,6 +76,10 @@
 #pragma mark -
 - (void)showMainUI {
     self.window.rootViewController = self.aTabBarController;
-    self.aTabBarController.selectedIndex = 1;
+//    NSInteger index = self.defaults.selectedTab;
+//    if (index < 0 || index > 4) {
+//        self.defaults.selectedTab = 0;
+//    }
+//    self.aTabBarController.selectedIndex = 3;
 }
 @end
