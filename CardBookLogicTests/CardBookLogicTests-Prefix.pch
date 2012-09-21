@@ -1,0 +1,9 @@
+//
+// Prefix header for all source files of the 'CardBookLogicTests' target in the 'CardBookLogicTests' project
+//
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import "KHHHeaders.h"
+#endif

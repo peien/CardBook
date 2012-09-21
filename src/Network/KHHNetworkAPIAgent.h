@@ -23,6 +23,7 @@
  */
 - (BOOL)authenticateWithFakeID:(NSString *)fakeID
                       password:(NSString *)password;
+- (void)clearAuthorizationHeader;
 /**
  生成所谓的系统级别参数
  */
@@ -32,19 +33,32 @@
  */
 - (NSString *)signatureWithDictionary:(NSDictionary *)aDictionary;
 /**
- 发请求的统一方法
+ 发请求
  */
+// 简便模式
 - (void)postAction:(NSString *)action
              query:(NSString *)query
         parameters:(NSDictionary *)parameters;
+// 带pathRoot的模式
 - (void)postAction:(NSString *)action
+          pathRoot:(NSString *)pathRoot
+             query:(NSString *)query
+        parameters:(NSDictionary *)parameters;
+// 带条件的模式
+- (void)postAction:(NSString *)action
+             extra:(NSDictionary *)extra
+             query:(NSString *)query
+        parameters:(NSDictionary *)parameters;
+// 完全体
+- (void)postAction:(NSString *)action
+             extra:(NSDictionary *)extra
           pathRoot:(NSString *)pathRoot
              query:(NSString *)query
         parameters:(NSDictionary *)parameters;
 /**
  把http response body的base64数据，转成json，再解析为dictionary。
  */
-- (NSDictionary *)resultDictionaryFromResponse:(id)responseObject;
+- (NSMutableDictionary *)resultDictionaryFromResponse:(id)responseObject;
 
 @end
 

@@ -11,6 +11,7 @@
  Notification names
  */
 // allDataAfterDate
+static NSString * const KHHNotificationAllDataAfterDateBegin = @"allDataAfterDateBegin";
 static NSString * const KHHNotificationAllDataAfterDateSucceeded = @"allDataAfterDateSucceeded";
 static NSString * const KHHNotificationAllDataAfterDateFailed    = @"allDataAfterDateFailed";
 // allDataAfterDate
@@ -22,7 +23,8 @@ static NSString * const KHHNotificationLogoURLWithCompanyNameFailed    = @"logoU
  增量同步所有数据 userPasswordService.syncAllInfo
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=183
  */
-- (void)allDataAfterDate:(NSString *)lastDate;
+- (void)allDataAfterDate:(NSString *)lastDate extra:(NSDictionary *)extra;
+
 /**
  公司logo kinghhCompanyService.getCompanyMessage
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=193

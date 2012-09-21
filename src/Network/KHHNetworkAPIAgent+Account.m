@@ -9,8 +9,8 @@
 #import "KHHNetworkAPIAgent+Account.h"
 #import "Encryptor.h"
 #import "NSObject+Notification.h"
-#import "NSString+Number.h"
-#import "NSNumber+String.h"
+#import "NSString+SM.h"
+#import "NSNumber+SM.h"
 
 @implementation KHHNetworkAPIAgent (Account)
 /**
@@ -36,8 +36,8 @@
           parameters:parameters];
     return YES;
 }
-- (void)loginSuccessWithCode:(KHHNetworkStatusCode)code
-                        json:(NSDictionary *)jsonDict {
+- (void)loginResultCode:(KHHNetworkStatusCode)code
+                   info:(NSDictionary *)jsonDict {
     
     NSString *name = (KHHNetworkStatusCodeSucceeded == code)?
                         KHHNotificationLoginSucceeded
@@ -49,25 +49,26 @@
         id obj = nil;
         NSNumber *number = nil;
         NSString *string = nil;
-        // AuthorizationID
-        obj = [jsonDict valueForKeyPath:kJSONDataKeyID]; // string
-        number = (nil == obj || obj == [NSNull null])?[NSNumber numberWithInteger:0]:[NSNumber numberFromString:obj];
+        // AuthorizationID number
+        obj = [jsonDict valueForKeyPath:JSONDataKeyID]; // string
+        number = [NSNumber numberFromObject:obj zeroIfUnresolvable:YES];
         [dict setObject:number forKey:kInfoKeyAuthorizationID];
-        // AutoReceive
-        obj = [jsonDict valueForKeyPath:kJSONDataKeyIsAutoReceive]; // string
-        number = (nil == obj || obj == [NSNull null] || [@"yes" isEqualToString:obj])?[NSNumber numberWithBool:YES]:[NSNumber numberWithBool:NO];
+        // AutoReceive number
+        obj = [jsonDict valueForKeyPath:JSONDataKeyIsAutoReceive]; // string
+        number = (nil == obj || obj == [NSNull null])? [NSNumber numberWithBool:YES]
+                : [NSNumber numberFromObject:obj zeroIfUnresolvable:YES];
         [dict setObject:number forKey:kInfoKeyAutoReceive];
-        // CompanyID
-        obj = [jsonDict valueForKeyPath:kJSONDataKeyCompanyId];
-        number = (nil == obj || obj == [NSNull null])?[NSNumber numberWithInteger:0]:obj;
+        // CompanyID number
+        obj = [jsonDict valueForKeyPath:JSONDataKeyCompanyId];
+        number = [NSNumber numberFromObject:obj zeroIfUnresolvable:YES];
         [dict setObject:number forKey:kInfoKeyCompanyID];
-        // DepartmentID
-        obj = [jsonDict valueForKeyPath:kJSONDataKeyOrgId];
-        number = (nil == obj || obj == [NSNull null])?[NSNumber numberWithInteger:0]:obj;
+        // DepartmentID number
+        obj = [jsonDict valueForKeyPath:JSONDataKeyOrgId];
+        number = [NSNumber numberFromObject:obj zeroIfUnresolvable:YES];
         [dict setObject:number forKey:kInfoKeyDepartmentID];
-        // Permission
-        obj = [jsonDict valueForKeyPath:kJSONDataKeyPermissionName];
-        string = (nil == obj || obj == [NSNull null])?@"":obj;
+        // Permission string
+        obj = [jsonDict valueForKeyPath:JSONDataKeyPermissionName];
+        string = [NSString stringFromObject:obj];
         [dict setObject:string forKey:kInfoKeyPermission];
     } else {
         // 登录失败
@@ -99,8 +100,8 @@
     }
     return NO;
 }
-- (void)createAccountSuccessWithCode:(KHHNetworkStatusCode)code
-                                json:(NSDictionary *)jsonDict {
+- (void)createAccountResultCode:(KHHNetworkStatusCode)code
+                           info:(NSDictionary *)jsonDict {
     NSString *name = (KHHNetworkStatusCodeSucceeded == code)?
                         KHHNotificationCreateAccountSucceeded
                         : KHHNotificationCreateAccountFailed;
@@ -113,24 +114,24 @@
         NSNumber *number = nil;
 //        NSString *string = nil;
         // AuthorizationID
-        obj = [jsonDict valueForKeyPath:kJSONDataKeyID]; // string
-        number = (nil == obj || obj == [NSNull null])?[NSNumber numberWithInteger:0]:[NSNumber numberFromString:obj];
+        obj = [jsonDict valueForKeyPath:JSONDataKeyID]; // string
+        number = [NSNumber numberFromObject:obj zeroIfUnresolvable:YES];
         [dict setObject:number forKey:kInfoKeyAuthorizationID];
 //        // 补齐数据结构
 //        // AutoReceive
-//        obj = [jsonDict valueForKeyPath:kJSONDataKeyIsAutoReceive]; // string
+//        obj = [jsonDict valueForKeyPath:JSONDataKeyIsAutoReceive]; // string
 //        number = (nil == obj || obj == [NSNull null] || [@"yes" isEqualToString:obj])?[NSNumber numberWithBool:YES]:[NSNumber numberWithBool:NO];
 //        [dict setObject:number forKey:kInfoKeyAutoReceive];
 //        // CompanyID
-//        obj = [jsonDict valueForKeyPath:kJSONDataKeyCompanyId];
+//        obj = [jsonDict valueForKeyPath:JSONDataKeyCompanyId];
 //        number = (nil == obj || obj == [NSNull null])?[NSNumber numberWithInteger:0]:obj;
 //        [dict setObject:number forKey:kInfoKeyCompanyID];
 //        // DepartmentID
-//        obj = [jsonDict valueForKeyPath:kJSONDataKeyOrgId];
+//        obj = [jsonDict valueForKeyPath:JSONDataKeyOrgId];
 //        number = (nil == obj || obj == [NSNull null])?[NSNumber numberWithInteger:0]:obj;
 //        [dict setObject:number forKey:kInfoKeyDepartmentID];
 //        // Permission
-//        obj = [jsonDict valueForKeyPath:kJSONDataKeyPermissionName];
+//        obj = [jsonDict valueForKeyPath:JSONDataKeyPermissionName];
 //        string = (nil == obj || obj == [NSNull null])?@"":obj;
 //        [dict setObject:string forKey:kInfoKeyPermission];
     } else {
@@ -164,17 +165,17 @@
           parameters:parameters];
     return YES;
 }
-- (void)changePasswordSuccessWithCode:(KHHNetworkStatusCode)code
-                                 json:(NSDictionary *)jsonDict {
-    NSString *name = (KHHNetworkStatusCodeSucceeded == code)?
-    KHHNotificationChangePasswordSucceeded
-    : KHHNotificationChangePasswordFailed;
-    
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:jsonDict];
-    [dict setObject:[NSNumber numberWithInteger:code] forKey:kInfoKeyErrorCode];
-    
-    [self postNotification:name info:dict];
-}
+//- (void)changePasswordResultCode:(KHHNetworkStatusCode)code
+//                                 json:(NSDictionary *)jsonDict {
+//    NSString *name = (KHHNetworkStatusCodeSucceeded == code)?
+//    KHHNotificationChangePasswordSucceeded
+//    : KHHNotificationChangePasswordFailed;
+//    
+//    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:jsonDict];
+//    [dict setObject:[NSNumber numberWithInteger:code] forKey:kInfoKeyErrorCode];
+//    
+//    [self postNotification:name info:dict];
+//}
 
 /**
  重置密码: 对应"userPasswordService.resetPwd"
@@ -195,17 +196,17 @@
           parameters:parameters];
     return YES;
 }
-- (void)resetPasswordSuccessWithCode:(KHHNetworkStatusCode)code
-                                json:(NSDictionary *)jsonDict {
-    NSString *name = (KHHNetworkStatusCodeSucceeded == code)?
-    KHHNotificationResetPasswordSucceeded
-    : KHHNotificationResetPasswordFailed;
-    
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:jsonDict];
-    [dict setObject:[NSNumber numberWithInteger:code] forKey:kInfoKeyErrorCode];
-    
-    [self postNotification:name info:dict];
-}
+//- (void)resetPasswordResultCode:(KHHNetworkStatusCode)code
+//                                json:(NSDictionary *)jsonDict {
+//    NSString *name = (KHHNetworkStatusCodeSucceeded == code)?
+//    KHHNotificationResetPasswordSucceeded
+//    : KHHNotificationResetPasswordFailed;
+//    
+//    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:jsonDict];
+//    [dict setObject:[NSNumber numberWithInteger:code] forKey:kInfoKeyErrorCode];
+//    
+//    [self postNotification:name info:dict];
+//}
 
 /**
  设置是否自动接收名片 userPasswordService.autoReceive
@@ -219,15 +220,15 @@
                query:@"userPasswordService.autoReceive"
           parameters:parameters];
 }
-- (void)markAutoReceiveSuccessWithCode:(KHHNetworkStatusCode)code
-                                  json:(NSDictionary *)jsonDict {
-    NSString *name = (KHHNetworkStatusCodeSucceeded == code)?
-    KHHNotificationMarkAutoReceiveSucceeded
-    : KHHNotificationMarkAutoReceiveFailed;
-    
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:jsonDict];
-    [dict setObject:[NSNumber numberWithInteger:code] forKey:kInfoKeyErrorCode];
-    
-    [self postNotification:name info:dict];
-}
+//- (void)markAutoReceiveResultCode:(KHHNetworkStatusCode)code
+//                                  json:(NSDictionary *)jsonDict {
+//    NSString *name = (KHHNetworkStatusCodeSucceeded == code)?
+//    KHHNotificationMarkAutoReceiveSucceeded
+//    : KHHNotificationMarkAutoReceiveFailed;
+//    
+//    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:jsonDict];
+//    [dict setObject:[NSNumber numberWithInteger:code] forKey:kInfoKeyErrorCode];
+//    
+//    [self postNotification:name info:dict];
+//}
 @end

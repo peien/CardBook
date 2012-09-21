@@ -21,11 +21,13 @@ static NSString * const ECardNotificationStartAutoLogin = @"StartAutoLogin";
 static NSString * const ECardNotificationLoginAuto = @"LoginAuto";
 static NSString * const ECardNotificationLoginManually = @"LoginManually";
 static NSString * const ECardNotificationAutoLoginFailed = @"AutoLoginFailed";
-static NSString * const ECardNotificationPostLoginSync = @"PostLoginSync";
 // 注册
 static NSString * const ECardNotificationSignUpAction = @"SignUpAction";
 static NSString * const ECardNotificationStartSignUp = @"StartSignUp";
 static NSString * const ECardNotificationStartResetPassword = @"StartResetPassword";
 static NSString * const ECardNotificationResetPasswordAction = @"ResetPasswordAction";
-
+// Sync
+static NSString * const KHHNotificationStartSyncAfterLogin = @"startSyncAfterLogin";
+static NSString * const KHHNotificationSyncAfterLoginSucceeded = @"SyncAfterLoginSucceeded";
+static NSString * const KHHNotificationSyncAfterLoginFailed = @"SyncAfterLoginFailed";
 #endif

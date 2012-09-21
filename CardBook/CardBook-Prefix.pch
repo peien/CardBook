@@ -11,10 +11,5 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
-#import "KHHKeys.h"
-#import "KHHLog.h"
-#import "KHHMacros.h"
-#import "KHHNotifications.h"
-#import "KHHStatusCodes.h"
-
+    #import "KHHHeaders.h"
 #endif

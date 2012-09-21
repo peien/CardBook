@@ -239,7 +239,7 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(Card *card) {
     if ([card isKindOfClass:[MyCard class]]) {
         query = @"kinghhCardService.create";
         result = YES;
-    } else if ([card isKindOfClass:[CreatedCard class]]) {
+    } else if ([card isKindOfClass:[PrivateCard class]]) {
         query = @"kinghhPrivateCardService.create";
         result = YES;
     }
@@ -266,7 +266,7 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(Card *card) {
     if ([card isKindOfClass:[MyCard class]]) {
         query = @"kinghhCardService.update";
         result = YES;
-    } else if ([card isKindOfClass:[CreatedCard class]]) {
+    } else if ([card isKindOfClass:[PrivateCard class]]) {
         query = @"kinghhPrivateCardService.update";
         result = YES;
     }
@@ -298,7 +298,7 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(Card *card) {
         IDKey = @"card.cardId";
         query = @"kinghhCardService.delete";
         result = YES;
-    } else if ([card isKindOfClass:[CreatedCard class]]) {
+    } else if ([card isKindOfClass:[PrivateCard class]]) {
         IDKey = @"card.id";
         query = @"kinghhPrivateCardService.delete";
         result = YES;
@@ -356,7 +356,8 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(Card *card) {
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=195
  */
 - (BOOL)receivedCardCountAfterDate:(NSString *)lastDate
-                          lastCard:(ReceivedCard *)lastCard {
+                          lastCard:(ReceivedCard *)lastCard
+                             extra:(NSDictionary *)extra {
     if (lastCard && !CardHasRequiredAttributes(lastCard, KHHCardAttributeID)) {
         return NO;
     }
@@ -366,6 +367,7 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(Card *card) {
             @"lastCardbookId" : lastID? lastID: @"",
     };
     [self postAction:@"receivedCardCountAfterDateLastCard"
+               extra:extra
                query:@"exchangeCardService.getReceiverCardBookSynCount"
           parameters:parameters];
     return YES;
@@ -377,7 +379,8 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(Card *card) {
  */
 - (BOOL)receivedCardsAfterDate:(NSString *)lastDate
                       lastCard:(ReceivedCard *)lastCard
-                 expectedCount:(NSString *)count {
+                 expectedCount:(NSString *)count
+                         extra:(NSDictionary *)extra {
     if (lastCard && !CardHasRequiredAttributes(lastCard, KHHCardAttributeID)) {
         return NO;
     }
@@ -386,9 +389,10 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(Card *card) {
             @"lastUpdTime" : (lastDate.length > 0? lastDate: @""),
             @"lastCardbookId" : lastID? lastID: @"",
             @"number" : ([count integerValue]? count: @"50"),
-            @"isGZip" : @"yes"
+            @"isGZip" : @"no"
     };
     [self postAction:@"receivedCardsAfterDateLastCardExpectedCount"
+               extra:extra
                query:@"exchangeCardService.getReceiverCardBookSyn"
           parameters:parameters];
     return YES;
@@ -425,47 +429,17 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(Card *card) {
 }
 
 @end
-#pragma mark - CreatedCard 私有名片，即自建的他人名片
-@implementation KHHNetworkAPIAgent (CreatedCard)
-/*!
- 增 kinghhPrivateCardService.create
- http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=179
- */
-//- (BOOL)createCreatedCard:(CreatedCard *)card {
-//    
-//}
-/**
- 改 kinghhPrivateCardService.update
- http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=180
- */
-//- (BOOL)updateCreatedCard:(CreatedCard *)card {
-//    
-//}
-/**
- 删除 kinghhPrivateCardService.delete
- http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=181
- */
-//- (BOOL)deleteCreatedCard:(CreatedCard *)card {
-//    if (!CardHasRequiredAttributes(card, KHHCardAttributeID)) {
-//        return NO;
-//    }
-//    NSDictionary *parameters = @{
-//            @"card.id" : [[card valueForKey:kAttributeKeyID] stringValue]
-//    };
-//    [self postAction:@"deleteCreatedCard"
-//               query:@"kinghhPrivateCardService.delete"
-//          parameters:parameters];
-//    return YES;
-//}
+#pragma mark - PrivateCard 私有名片，即自建的他人名片
+@implementation KHHNetworkAPIAgent (PrivateCard)
 /**
  增量查 kinghhPrivateCardService.synCard
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=178
  */
-- (void)createdCardsAfterDate:(NSString *)lastDate {
+- (void)privateCardsAfterDate:(NSString *)lastDate {
     NSDictionary *parameters = @{
             @"lastUpdateDateStr" : [lastDate length] > 0? lastDate: @""
     };
-    [self postAction:@"createdCardsAfterDate"
+    [self postAction:@"privateCardsAfterDate"
                query:@"kinghhPrivateCardService.synCard"
           parameters:parameters];
 }

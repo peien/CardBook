@@ -10,7 +10,8 @@ extern const struct ImageAttributes {
 } ImageAttributes;
 
 extern const struct ImageRelationships {
-	__unsafe_unretained NSString *cards;
+	__unsafe_unretained NSString *cardsWithFrame;
+	__unsafe_unretained NSString *cardsWithLogo;
 	__unsafe_unretained NSString *companies;
 	__unsafe_unretained NSString *messages;
 	__unsafe_unretained NSString *schedules;
@@ -20,6 +21,7 @@ extern const struct ImageRelationships {
 extern const struct ImageFetchedProperties {
 } ImageFetchedProperties;
 
+@class Card;
 @class Card;
 @class Company;
 @class Message;
@@ -62,9 +64,16 @@ extern const struct ImageFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSSet* cards;
+@property (nonatomic, strong) NSSet* cardsWithFrame;
 
-- (NSMutableSet*)cardsSet;
+- (NSMutableSet*)cardsWithFrameSet;
+
+
+
+
+@property (nonatomic, strong) NSSet* cardsWithLogo;
+
+- (NSMutableSet*)cardsWithLogoSet;
 
 
 
@@ -102,10 +111,15 @@ extern const struct ImageFetchedProperties {
 
 @interface _Image (CoreDataGeneratedAccessors)
 
-- (void)addCards:(NSSet*)value_;
-- (void)removeCards:(NSSet*)value_;
-- (void)addCardsObject:(Card*)value_;
-- (void)removeCardsObject:(Card*)value_;
+- (void)addCardsWithFrame:(NSSet*)value_;
+- (void)removeCardsWithFrame:(NSSet*)value_;
+- (void)addCardsWithFrameObject:(Card*)value_;
+- (void)removeCardsWithFrameObject:(Card*)value_;
+
+- (void)addCardsWithLogo:(NSSet*)value_;
+- (void)removeCardsWithLogo:(NSSet*)value_;
+- (void)addCardsWithLogoObject:(Card*)value_;
+- (void)removeCardsWithLogoObject:(Card*)value_;
 
 - (void)addCompanies:(NSSet*)value_;
 - (void)removeCompanies:(NSSet*)value_;
@@ -148,8 +162,13 @@ extern const struct ImageFetchedProperties {
 
 
 
-- (NSMutableSet*)primitiveCards;
-- (void)setPrimitiveCards:(NSMutableSet*)value;
+- (NSMutableSet*)primitiveCardsWithFrame;
+- (void)setPrimitiveCardsWithFrame:(NSMutableSet*)value;
+
+
+
+- (NSMutableSet*)primitiveCardsWithLogo;
+- (void)setPrimitiveCardsWithLogo:(NSMutableSet*)value;
 
 
 

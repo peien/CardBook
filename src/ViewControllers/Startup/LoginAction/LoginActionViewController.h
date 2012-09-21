@@ -13,7 +13,7 @@
 extern NSString * const ECardNotificationLoginManually;
 extern NSString * const ECardNotificationLoginAuto;
 extern NSString * const ECardNotificationAutoLoginFailed;
-extern NSString * const ECardNotificationPostLoginSync;
+extern NSString * const KHHNotificationStartSyncAfterLogin;
 extern NSString * const ECardNotificationSignUpAction;
 extern NSString * const ECardNotificationResetPasswordAction;
 

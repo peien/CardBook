@@ -7,12 +7,14 @@
 extern const struct CardAttributes {
 	__unsafe_unretained NSString *aliWangWang;
 	__unsafe_unretained NSString *businessScope;
+	__unsafe_unretained NSString *cTimeUTC;
 	__unsafe_unretained NSString *customerServiceTel;
 	__unsafe_unretained NSString *department;
 	__unsafe_unretained NSString *email;
 	__unsafe_unretained NSString *factoryAddress;
 	__unsafe_unretained NSString *fax;
 	__unsafe_unretained NSString *id;
+	__unsafe_unretained NSString *mTimeUTC;
 	__unsafe_unretained NSString *microblog;
 	__unsafe_unretained NSString *mobilePhone;
 	__unsafe_unretained NSString *moreInfo;
@@ -21,6 +23,7 @@ extern const struct CardAttributes {
 	__unsafe_unretained NSString *officeEmail;
 	__unsafe_unretained NSString *qq;
 	__unsafe_unretained NSString *remarks;
+	__unsafe_unretained NSString *roleType;
 	__unsafe_unretained NSString *telephone;
 	__unsafe_unretained NSString *title;
 	__unsafe_unretained NSString *userID;
@@ -32,6 +35,7 @@ extern const struct CardRelationships {
 	__unsafe_unretained NSString *address;
 	__unsafe_unretained NSString *bankAccount;
 	__unsafe_unretained NSString *company;
+	__unsafe_unretained NSString *frames;
 	__unsafe_unretained NSString *groups;
 	__unsafe_unretained NSString *logo;
 	__unsafe_unretained NSString *schedules;
@@ -44,10 +48,14 @@ extern const struct CardFetchedProperties {
 @class Address;
 @class BankAccount;
 @class Company;
+@class Image;
 @class Group;
 @class Image;
 @class Schedule;
 @class CardTemplate;
+
+
+
 
 
 
@@ -95,6 +103,14 @@ extern const struct CardFetchedProperties {
 
 
 //- (BOOL)validateBusinessScope:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSString* cTimeUTC;
+
+
+//- (BOOL)validateCTimeUTC:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -147,6 +163,14 @@ extern const struct CardFetchedProperties {
 - (void)setIdValue:(int64_t)value_;
 
 //- (BOOL)validateId:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSString* mTimeUTC;
+
+
+//- (BOOL)validateMTimeUTC:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -211,6 +235,18 @@ extern const struct CardFetchedProperties {
 
 
 //- (BOOL)validateRemarks:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSNumber* roleType;
+
+
+@property int32_t roleTypeValue;
+- (int32_t)roleTypeValue;
+- (void)setRoleTypeValue:(int32_t)value_;
+
+//- (BOOL)validateRoleType:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -285,6 +321,13 @@ extern const struct CardFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSSet* frames;
+
+- (NSMutableSet*)framesSet;
+
+
+
+
 @property (nonatomic, strong) NSSet* groups;
 
 - (NSMutableSet*)groupsSet;
@@ -318,6 +361,11 @@ extern const struct CardFetchedProperties {
 
 @interface _Card (CoreDataGeneratedAccessors)
 
+- (void)addFrames:(NSSet*)value_;
+- (void)removeFrames:(NSSet*)value_;
+- (void)addFramesObject:(Image*)value_;
+- (void)removeFramesObject:(Image*)value_;
+
 - (void)addGroups:(NSSet*)value_;
 - (void)removeGroups:(NSSet*)value_;
 - (void)addGroupsObject:(Group*)value_;
@@ -341,6 +389,12 @@ extern const struct CardFetchedProperties {
 
 - (NSString*)primitiveBusinessScope;
 - (void)setPrimitiveBusinessScope:(NSString*)value;
+
+
+
+
+- (NSString*)primitiveCTimeUTC;
+- (void)setPrimitiveCTimeUTC:(NSString*)value;
 
 
 
@@ -380,6 +434,12 @@ extern const struct CardFetchedProperties {
 
 - (int64_t)primitiveIdValue;
 - (void)setPrimitiveIdValue:(int64_t)value_;
+
+
+
+
+- (NSString*)primitiveMTimeUTC;
+- (void)setPrimitiveMTimeUTC:(NSString*)value;
 
 
 
@@ -428,6 +488,15 @@ extern const struct CardFetchedProperties {
 
 - (NSString*)primitiveRemarks;
 - (void)setPrimitiveRemarks:(NSString*)value;
+
+
+
+
+- (NSNumber*)primitiveRoleType;
+- (void)setPrimitiveRoleType:(NSNumber*)value;
+
+- (int32_t)primitiveRoleTypeValue;
+- (void)setPrimitiveRoleTypeValue:(int32_t)value_;
 
 
 
@@ -481,6 +550,11 @@ extern const struct CardFetchedProperties {
 
 - (Company*)primitiveCompany;
 - (void)setPrimitiveCompany:(Company*)value;
+
+
+
+- (NSMutableSet*)primitiveFrames;
+- (void)setPrimitiveFrames:(NSMutableSet*)value;
 
 
 

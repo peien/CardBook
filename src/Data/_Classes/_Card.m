@@ -6,12 +6,14 @@
 const struct CardAttributes CardAttributes = {
 	.aliWangWang = @"aliWangWang",
 	.businessScope = @"businessScope",
+	.cTimeUTC = @"cTimeUTC",
 	.customerServiceTel = @"customerServiceTel",
 	.department = @"department",
 	.email = @"email",
 	.factoryAddress = @"factoryAddress",
 	.fax = @"fax",
 	.id = @"id",
+	.mTimeUTC = @"mTimeUTC",
 	.microblog = @"microblog",
 	.mobilePhone = @"mobilePhone",
 	.moreInfo = @"moreInfo",
@@ -20,6 +22,7 @@ const struct CardAttributes CardAttributes = {
 	.officeEmail = @"officeEmail",
 	.qq = @"qq",
 	.remarks = @"remarks",
+	.roleType = @"roleType",
 	.telephone = @"telephone",
 	.title = @"title",
 	.userID = @"userID",
@@ -31,6 +34,7 @@ const struct CardRelationships CardRelationships = {
 	.address = @"address",
 	.bankAccount = @"bankAccount",
 	.company = @"company",
+	.frames = @"frames",
 	.groups = @"groups",
 	.logo = @"logo",
 	.schedules = @"schedules",
@@ -70,6 +74,10 @@ const struct CardFetchedProperties CardFetchedProperties = {
 		NSSet *affectingKey = [NSSet setWithObject:@"id"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
+	if ([key isEqualToString:@"roleTypeValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"roleType"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
 	if ([key isEqualToString:@"userIDValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"userID"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -93,6 +101,13 @@ const struct CardFetchedProperties CardFetchedProperties = {
 
 
 @dynamic businessScope;
+
+
+
+
+
+
+@dynamic cTimeUTC;
 
 
 
@@ -160,6 +175,13 @@ const struct CardFetchedProperties CardFetchedProperties = {
 
 
 
+@dynamic mTimeUTC;
+
+
+
+
+
+
 @dynamic microblog;
 
 
@@ -211,6 +233,32 @@ const struct CardFetchedProperties CardFetchedProperties = {
 
 @dynamic remarks;
 
+
+
+
+
+
+@dynamic roleType;
+
+
+
+- (int32_t)roleTypeValue {
+	NSNumber *result = [self roleType];
+	return [result intValue];
+}
+
+- (void)setRoleTypeValue:(int32_t)value_ {
+	[self setRoleType:[NSNumber numberWithInt:value_]];
+}
+
+- (int32_t)primitiveRoleTypeValue {
+	NSNumber *result = [self primitiveRoleType];
+	return [result intValue];
+}
+
+- (void)setPrimitiveRoleTypeValue:(int32_t)value_ {
+	[self setPrimitiveRoleType:[NSNumber numberWithInt:value_]];
+}
 
 
 
@@ -299,6 +347,19 @@ const struct CardFetchedProperties CardFetchedProperties = {
 
 @dynamic company;
 
+	
+
+@dynamic frames;
+
+	
+- (NSMutableSet*)framesSet {
+	[self willAccessValueForKey:@"frames"];
+  
+	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"frames"];
+  
+	[self didAccessValueForKey:@"frames"];
+	return result;
+}
 	
 
 @dynamic groups;

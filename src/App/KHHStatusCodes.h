@@ -11,7 +11,6 @@
 
 typedef enum {
     //    KHHNetworkStatusCode
-    KHHNetworkStatusCodeUnknownError = 10000,
     KHHNetworkStatusCodeSucceeded = 0,
     KHHNetworkStatusCodeFailed = -1,
     KHHNetworkStatusCodeDataServerError = -2,
@@ -22,8 +21,10 @@ typedef enum {
     KHHNetworkStatusCodeLatitudeOrLongitudeWrong = -14,
     KHHNetworkStatusCodeNoneCounterpartCard = -21,
     KHHNetworkStatusCodeSomethingWrong = -999,
+    KHHNetworkStatusCodeUnresolvableData = 10000, // 不可解析
     KHHNetworkStatusCodeConnectionFailed,
     KHHNetworkStatusCodeConnectionTimeOut,
+    KHHNetworkStatusCodeUnknownError = 3000, // 要你命3000
 } KHHNetworkStatusCode;
 
 #endif

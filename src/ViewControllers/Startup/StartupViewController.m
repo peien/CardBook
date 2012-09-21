@@ -17,6 +17,7 @@
 #import "KHHDefaults.h"
 #import "KHHNetworkAPIAgent+Account.h"
 #import "NSObject+Notification.h"
+#import "UIViewController+SM.h"
 
 #define textLoginFailed NSLocalizedString(@"登录失败", nil)
 #define textSignUpFailed NSLocalizedString(@"注册失败", nil)
@@ -187,7 +188,7 @@
     } else {
         //手动登录失败
         //显示警告信息
-        [self showAlertWithTitle:textLoginFailed message:message delegate:self];
+        [self alertWithTitle:textLoginFailed message:message];
     }
     NSLog(@"\n%@: 登录失败: %@", self, message);
     NSLog(@"\n%@: _navVC.view.subviews: %@", self, _navVC.view.subviews); 
@@ -212,7 +213,7 @@
 //        message = [KHHAccountAgent stringFromErrorCode:errCode];
 //    }
     //显示警告信息
-    [self showAlertWithTitle:textSignUpFailed message:message delegate:self];
+    [self alertWithTitle:textSignUpFailed message:message];
 }
 - (void)handleStartResetPassword:(NSNotification *)notification
 {
@@ -227,9 +228,7 @@
 {
     NSString *message = textResetPasswordSucceededMessage;
     //显示警告信息
-    [self showAlertWithTitle:textResetPasswordSucceeded
-                     message:message
-                    delegate:self];
+    [self alertWithTitle:textResetPasswordSucceeded message:message];
 }
 - (void)handleResetPasswordFailed:(NSNotification *)notification
 {
@@ -242,7 +241,7 @@
 //        message = [KHHAccountAgent stringFromErrorCode:errCode];
 //    }
     //显示警告信息
-    [self showAlertWithTitle:textResetPasswordFailed message:message delegate:self];
+    [self alertWithTitle:textResetPasswordFailed message:message];
 }
 
 #pragma mark - Actions
@@ -269,15 +268,6 @@
 }
 
 #pragma mark - Utilities
-- (void)showAlertWithTitle:(NSString *)title message:(NSString *)message delegate:(id)delegate
-{
-    //显示警告信息
-    [[[UIAlertView alloc] initWithTitle:title
-                                 message:message
-                                delegate:delegate
-                       cancelButtonTitle:NSLocalizedString(@"OK", nil)
-                       otherButtonTitles:nil] show];
-}
 - (void)transitionToViewController:(UIViewController *)toVC
                            options:(UIViewAnimationOptions)options
 {
@@ -300,11 +290,19 @@
 #pragma mark - UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-//    if ([alertView.title isEqualToString:textLoginFailed]) {
-//        //登录失败
-//        //返回Login界面
+    NSString *title = alertView.title;
+    if ([title isEqualToString:textLoginFailed]) {
+        //登录失败
 //        [self showLoginView:UIViewAnimationOptionTransitionFlipFromLeft];
-//    }
+    } else if ([title isEqualToString:textSignUpFailed]) {
+        //登录失败
+//        [self showLoginView:UIViewAnimationOptionTransitionFlipFromLeft];
+    } else if ([title isEqualToString:textResetPasswordSucceeded]) {
+//        [self showLoginView:UIViewAnimationOptionTransitionFlipFromLeft];
+    } else if ([title isEqualToString:textResetPasswordFailed]) {
+//        [self showLoginView:UIViewAnimationOptionTransitionFlipFromLeft];
+    }
+    // 现在统一返回Login界面
     [self showLoginView:UIViewAnimationOptionTransitionFlipFromLeft];
 }
 @end

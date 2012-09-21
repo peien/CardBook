@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1487" systemVersion="12B19" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1810" systemVersion="12C54" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Address" representedClassName="Address" syncable="YES">
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
@@ -19,6 +19,7 @@
     <entity name="Card" representedClassName="Card" syncable="YES">
         <attribute name="aliWangWang" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="businessScope" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="cTimeUTC" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="customerServiceTel" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="department" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
@@ -29,20 +30,23 @@
         <attribute name="mobilePhone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="moreInfo" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="msn" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mTimeUTC" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="officeEmail" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="qq" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="remarks" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="roleType" optional="YES" attributeType="Integer 32" syncable="YES"/>
         <attribute name="telephone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="userID" optional="YES" attributeType="Integer 64" minValueString="1" syncable="YES"/>
         <attribute name="version" optional="YES" attributeType="Integer 64" syncable="YES"/>
         <attribute name="web" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="address" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Address" inverseName="card" inverseEntity="Address" syncable="YES"/>
-        <relationship name="bankAccount" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="BankAccount" inverseName="cards" inverseEntity="BankAccount" syncable="YES"/>
+        <relationship name="bankAccount" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="BankAccount" inverseName="cards" inverseEntity="BankAccount" syncable="YES"/>
         <relationship name="company" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Company" inverseName="cards" inverseEntity="Company" syncable="YES"/>
+        <relationship name="frames" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Image" inverseName="cardsWithFrame" inverseEntity="Image" syncable="YES"/>
         <relationship name="groups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Group" inverseName="cards" inverseEntity="Group" syncable="YES"/>
-        <relationship name="logo" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Image" inverseName="cards" inverseEntity="Image" syncable="YES"/>
+        <relationship name="logo" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Image" inverseName="cardsWithLogo" inverseEntity="Image" syncable="YES"/>
         <relationship name="schedules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Schedule" inverseName="targets" inverseEntity="Schedule" syncable="YES"/>
         <relationship name="template" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="CardTemplate" inverseName="cards" inverseEntity="CardTemplate" syncable="YES"/>
     </entity>
@@ -67,7 +71,6 @@
         <relationship name="cards" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Card" inverseName="company" inverseEntity="Card" syncable="YES"/>
         <relationship name="logo" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Image" inverseName="companies" inverseEntity="Image" syncable="YES"/>
     </entity>
-    <entity name="CreatedCard" representedClassName="CreatedCard" parentEntity="Card" syncable="YES"/>
     <entity name="Group" representedClassName="Group" syncable="YES">
         <attribute name="id" optional="YES" attributeType="Integer 64" minValueString="1" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -78,7 +81,8 @@
     <entity name="Image" representedClassName="Image" syncable="YES">
         <attribute name="id" optional="YES" attributeType="Integer 64" syncable="YES"/>
         <attribute name="url" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="cards" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Card" inverseName="logo" inverseEntity="Card" syncable="YES"/>
+        <relationship name="cardsWithFrame" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Card" inverseName="frames" inverseEntity="Card" syncable="YES"/>
+        <relationship name="cardsWithLogo" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Card" inverseName="logo" inverseEntity="Card" syncable="YES"/>
         <relationship name="companies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Company" inverseName="logo" inverseEntity="Company" syncable="YES"/>
         <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="image" inverseEntity="Message" syncable="YES"/>
         <relationship name="schedules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Schedule" inverseName="images" inverseEntity="Schedule" syncable="YES"/>
@@ -93,6 +97,7 @@
         <relationship name="image" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Image" inverseName="messages" inverseEntity="Image" syncable="YES"/>
     </entity>
     <entity name="MyCard" representedClassName="MyCard" parentEntity="Card" syncable="YES"/>
+    <entity name="PrivateCard" representedClassName="PrivateCard" parentEntity="Card" syncable="YES"/>
     <entity name="ReceivedCard" representedClassName="ReceivedCard" parentEntity="Card" syncable="YES">
         <attribute name="isRead" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
     </entity>
@@ -107,15 +112,15 @@
     <elements>
         <element name="Address" positionX="0" positionY="0" width="128" height="165"/>
         <element name="BankAccount" positionX="0" positionY="0" width="128" height="105"/>
-        <element name="Card" positionX="0" positionY="0" width="128" height="465"/>
+        <element name="Card" positionX="0" positionY="0" width="128" height="525"/>
         <element name="CardTemplate" positionX="0" positionY="0" width="128" height="165"/>
         <element name="CardTemplateItem" positionX="0" positionY="0" width="128" height="90"/>
         <element name="Company" positionX="0" positionY="0" width="128" height="105"/>
-        <element name="CreatedCard" positionX="0" positionY="0" width="128" height="45"/>
         <element name="Group" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="Image" positionX="0" positionY="0" width="128" height="150"/>
+        <element name="Image" positionX="0" positionY="0" width="128" height="165"/>
         <element name="Message" positionX="0" positionY="0" width="128" height="135"/>
         <element name="MyCard" positionX="0" positionY="0" width="128" height="45"/>
+        <element name="PrivateCard" positionX="160" positionY="192" width="128" height="45"/>
         <element name="ReceivedCard" positionX="0" positionY="0" width="128" height="60"/>
         <element name="Schedule" positionX="0" positionY="0" width="128" height="135"/>
     </elements>

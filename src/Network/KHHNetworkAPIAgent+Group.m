@@ -66,18 +66,18 @@ BOOL GroupHasRequiredAttributes(Group *group,
           parameters:parameters];
     return YES;
 }
-- (void)createGroupSuccessWithCode:(KHHNetworkStatusCode)code
-                        json:(NSDictionary *)jsonDict {
-    
-    NSString *name = (KHHNetworkStatusCodeSucceeded == code)?
-    KHHNotificationCreateGroupSucceeded
-    : KHHNotificationCreateGroupFailed;
-    
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:jsonDict];
-    [dict setValue:[NSNumber numberWithInteger:code] forKey:kInfoKeyErrorCode];
-    
-    [self postNotification:name info:dict];
-}
+//- (void)createGroupResultCode:(KHHNetworkStatusCode)code
+//                        json:(NSDictionary *)jsonDict {
+//    
+//    NSString *name = (KHHNetworkStatusCodeSucceeded == code)?
+//    KHHNotificationCreateGroupSucceeded
+//    : KHHNotificationCreateGroupFailed;
+//    
+//    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:jsonDict];
+//    [dict setValue:[NSNumber numberWithInteger:code] forKey:kInfoKeyErrorCode];
+//    
+//    [self postNotification:name info:dict];
+//}
 /**
  修改分组 groupService.updateGroup
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=206
@@ -106,18 +106,18 @@ BOOL GroupHasRequiredAttributes(Group *group,
           parameters:parameters];
     return YES;
 }
-- (void)updateGroupSuccessWithCode:(KHHNetworkStatusCode)code
-                              json:(NSDictionary *)jsonDict {
-    
-    NSString *name = (KHHNetworkStatusCodeSucceeded == code)?
-    KHHNotificationUpdateGroupSucceeded
-    : KHHNotificationUpdateGroupFailed;
-    
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:jsonDict];
-    [dict setValue:[NSNumber numberWithInteger:code] forKey:kInfoKeyErrorCode];
-    
-    [self postNotification:name info:dict];
-}
+//- (void)updateGroupResultCode:(KHHNetworkStatusCode)code
+//                              json:(NSDictionary *)jsonDict {
+//    
+//    NSString *name = (KHHNetworkStatusCodeSucceeded == code)?
+//    KHHNotificationUpdateGroupSucceeded
+//    : KHHNotificationUpdateGroupFailed;
+//    
+//    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:jsonDict];
+//    [dict setValue:[NSNumber numberWithInteger:code] forKey:kInfoKeyErrorCode];
+//    
+//    [self postNotification:name info:dict];
+//}
 /**
  删除分组 groupService.deleteGroup
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=207
@@ -132,18 +132,18 @@ BOOL GroupHasRequiredAttributes(Group *group,
           parameters:parameters];
     return YES;
 }
-- (void)deleteGroupSuccessWithCode:(KHHNetworkStatusCode)code
-                              json:(NSDictionary *)jsonDict {
-    
-    NSString *name = (KHHNetworkStatusCodeSucceeded == code)?
-    KHHNotificationDeleteGroupSucceeded
-    : KHHNotificationDeleteGroupFailed;
-    
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:jsonDict];
-    [dict setValue:[NSNumber numberWithInteger:code] forKey:kInfoKeyErrorCode];
-    
-    [self postNotification:name info:dict];
-}
+//- (void)deleteGroupResultCode:(KHHNetworkStatusCode)code
+//                              json:(NSDictionary *)jsonDict {
+//    
+//    NSString *name = (KHHNetworkStatusCodeSucceeded == code)?
+//    KHHNotificationDeleteGroupSucceeded
+//    : KHHNotificationDeleteGroupFailed;
+//    
+//    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:jsonDict];
+//    [dict setValue:[NSNumber numberWithInteger:code] forKey:kInfoKeyErrorCode];
+//    
+//    [self postNotification:name info:dict];
+//}
 /**
  获取分组下的客户名片id cardGroupService.getCardIdsByGroupId
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=164
@@ -160,18 +160,18 @@ BOOL GroupHasRequiredAttributes(Group *group,
           parameters:parameters];
     return YES;
 }
-- (void)cardIDsWithinGroupSuccessWithCode:(KHHNetworkStatusCode)code
-                              json:(NSDictionary *)jsonDict {
-    
-    NSString *name = (KHHNetworkStatusCodeSucceeded == code)?
-    KHHNotificationCardIDsWithinGroupSucceeded
-    : KHHNotificationCardIDsWithinGroupFailed;
-    
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:jsonDict];
-    [dict setValue:[NSNumber numberWithInteger:code] forKey:kInfoKeyErrorCode];
-    
-    [self postNotification:name info:dict];
-}
+//- (void)cardIDsWithinGroupResultCode:(KHHNetworkStatusCode)code
+//                              json:(NSDictionary *)jsonDict {
+//    
+//    NSString *name = (KHHNetworkStatusCodeSucceeded == code)?
+//    KHHNotificationCardIDsWithinGroupSucceeded
+//    : KHHNotificationCardIDsWithinGroupFailed;
+//    
+//    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:jsonDict];
+//    [dict setValue:[NSNumber numberWithInteger:code] forKey:kInfoKeyErrorCode];
+//    
+//    [self postNotification:name info:dict];
+//}
 /**
  移动、删除、添加客户名片到分组 cardGroupService.addOrDelCardGroup
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=154
@@ -201,7 +201,7 @@ BOOL GroupHasRequiredAttributes(Group *group,
         }
         NSString *cardID = [[card valueForKey:kAttributeKeyID] stringValue];
         NSString *cardType = [card isKindOfClass:[ReceivedCard class]]?@"linkman"
-                            :([card isKindOfClass:[CreatedCard class]]?@"me"
+                            :([card isKindOfClass:[PrivateCard class]]?@"me"
                               :@"private");
         [idAndTypes addObject:[NSString stringWithFormat:@"%@;%@", cardID, cardType]];
     }
@@ -213,28 +213,17 @@ BOOL GroupHasRequiredAttributes(Group *group,
           parameters:parameters];
     return YES;
 }
-- (void)moveCardsSuccessWithCode:(KHHNetworkStatusCode)code
-                            json:(NSDictionary *)jsonDict {
-    
-    NSString *name = (KHHNetworkStatusCodeSucceeded == code)?
-    KHHNotificationMoveCardsSucceeded
-    : KHHNotificationMoveCardsFailed;
-    
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:jsonDict];
-    [dict setValue:[NSNumber numberWithInteger:code] forKey:kInfoKeyErrorCode];
-    
-    [self postNotification:name info:dict];
-}
-//- (void)deleteGroupSuccessWithCode:(KHHNetworkStatusCode)code
-//                              json:(NSDictionary *)jsonDict {
+//- (void)moveCardsResultCode:(KHHNetworkStatusCode)code
+//                            json:(NSDictionary *)jsonDict {
 //    
 //    NSString *name = (KHHNetworkStatusCodeSucceeded == code)?
-//    KHHNotificationDeleteGroupSucceeded
-//    : KHHNotificationDeleteGroupFailed;
+//    KHHNotificationMoveCardsSucceeded
+//    : KHHNotificationMoveCardsFailed;
 //    
 //    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:jsonDict];
 //    [dict setValue:[NSNumber numberWithInteger:code] forKey:kInfoKeyErrorCode];
 //    
-//    [self postNotificationName:name info:dict];
+//    [self postNotification:name info:dict];
 //}
+
 @end

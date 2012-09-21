@@ -177,11 +177,11 @@ static NSString * const KHHDefaultsKeyMainUISelectedTabIndex = @"khh_MainUI_sele
     // 遍历当前userID是否存在,不存在则创建新的userDict
     NSMutableDictionary *theUserDict = [self dictionaryWithID:userID offArray:userList];
     // 更新用户数据
-    [theUserDict setValue:user forKey:KHHDefaultsKeyUser];
+    theUserDict[KHHDefaultsKeyUser] = user;
     if (self.rememberPassword) {
-        [theUserDict setValue:password forKey:KHHDefaultsKeyPassword];
+        theUserDict[KHHDefaultsKeyPassword] = password;
     }
-    [theUserDict setValue:userID forKey:KHHDefaultsKeyID];
+    theUserDict[KHHDefaultsKeyID] = userID;
     
     // 保存数据：take 3，用户关联的公司列表
     // 从用户Dict里取出公司列表

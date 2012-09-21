@@ -8,7 +8,7 @@
 
 #import "KHHNetworkAPIAgent.h"
 #import "MyCard.h"
-#import "CreatedCard.h"
+#import "PrivateCard.h"
 #import "ReceivedCard.h"
 /*!
  Notification names
@@ -41,9 +41,9 @@ static NSString * const KHHNotificationReceivedCardsAfterDateLastCardExpectedCou
 // markReadReceivedCard
 static NSString * const KHHNotificationMarkReadReceivedCardSucceeded = @"markReadReceivedCardSucceeded";
 static NSString * const KHHNotificationMarkReadReceivedCardFailed    = @"markReadReceivedCardFailed";
-// createdCardsAfterDate
-static NSString * const KHHNotificationCreatedCardsAfterDateSucceeded = @"createdCardsAfterDateSucceeded";
-static NSString * const KHHNotificationCreatedCardsAfterDateFailed    = @"createdCardsAfterDateFailed";
+// privateCardsAfterDate
+static NSString * const KHHNotificationPrivateCardsAfterDateSucceeded = @"privateCardsAfterDateSucceeded";
+static NSString * const KHHNotificationPrivateCardsAfterDateFailed    = @"privateCardsAfterDateFailed";
 
 typedef enum {
     KHHCardAttributeNone       = 0UL,
@@ -99,7 +99,8 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(Card *card);
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=195
  */
 - (BOOL)receivedCardCountAfterDate:(NSString *)lastDate
-                          lastCard:(ReceivedCard *)lastCard;
+                          lastCard:(ReceivedCard *)lastCard
+                             extra:(NSDictionary *)extra;
 
 /**
  我的联系人增量 exchangeCardService.getReceiverCardBookSyn
@@ -107,7 +108,8 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(Card *card);
  */
 - (BOOL)receivedCardsAfterDate:(NSString *)lastDate
                       lastCard:(ReceivedCard *)lastCard
-                 expectedCount:(NSString *)count;
+                 expectedCount:(NSString *)count
+                         extra:(NSDictionary *)extra;
 
 /**
  设置联系人的状态为已查看 sendCardService.updateReadState
@@ -116,26 +118,26 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(Card *card);
 - (BOOL)markReadReceivedCard:(ReceivedCard *)card;
 @end
 
-#pragma mark - CreatedCard 私有名片，即自建的他人名片
-@interface KHHNetworkAPIAgent (CreatedCard)
+#pragma mark - PrivateCard 私有名片，即自建的他人名片
+@interface KHHNetworkAPIAgent (PrivateCard)
 /**
  增 kinghhPrivateCardService.create
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=179
  */
-//- (BOOL)createCreatedCard:(CreatedCard *)card;
+//- (BOOL)createPrivateCard:(PrivateCard *)card;
 /**
  改 kinghhPrivateCardService.update
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=180
  */
-//- (BOOL)updateCreatedCard:(CreatedCard *)card;
+//- (BOOL)updatePrivateCard:(PrivateCard *)card;
 /**
  删除 kinghhPrivateCardService.delete
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=181
  */
-//- (BOOL)deleteCreatedCard:(CreatedCard *)card;
+//- (BOOL)deletePrivateCard:(PrivateCard *)card;
 /**
  增量查 kinghhPrivateCardService.synCard
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=178
  */
-- (void)createdCardsAfterDate:(NSString *)lastDate;
+- (void)privateCardsAfterDate:(NSString *)lastDate;
 @end

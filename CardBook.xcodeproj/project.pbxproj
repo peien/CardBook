@@ -6,7 +6,132 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		984C2849160AEC25007D4D13 /* mogenerator */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 984C284A160AEC25007D4D13 /* Build configuration list for PBXAggregateTarget "mogenerator" */;
+			buildPhases = (
+				984C284D160AECBA007D4D13 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = mogenerator;
+			productName = mogenerator;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
+		982AACB71609ABB4002B9BAD /* UIViewController+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACB61609ABB4002B9BAD /* UIViewController+SM.m */; };
+		982AACBA1609BD08002B9BAD /* KHHData+Handlers.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACB91609BD08002B9BAD /* KHHData+Handlers.m */; };
+		982AACBB1609BD08002B9BAD /* KHHData+Handlers.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACB91609BD08002B9BAD /* KHHData+Handlers.m */; };
+		982AACBC1609BD08002B9BAD /* KHHData+Handlers.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACB91609BD08002B9BAD /* KHHData+Handlers.m */; };
+		982AACBF1609BE6B002B9BAD /* KHHData+UI.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACBE1609BE6B002B9BAD /* KHHData+UI.m */; };
+		982AACC01609BE6B002B9BAD /* KHHData+UI.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACBE1609BE6B002B9BAD /* KHHData+UI.m */; };
+		982AACC11609BE6B002B9BAD /* KHHData+UI.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACBE1609BE6B002B9BAD /* KHHData+UI.m */; };
+		984C2854160AF02D007D4D13 /* PrivateCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 984C2853160AF02D007D4D13 /* PrivateCard.m */; };
+		984C2857160AF044007D4D13 /* _PrivateCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 984C2856160AF044007D4D13 /* _PrivateCard.m */; };
+		984C28B5160B0D5B007D4D13 /* KHHData+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 984C28B4160B0D5B007D4D13 /* KHHData+Utils.m */; };
+		98838DF11608624800CE2353 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A84D791602CD2500A4A673 /* SenTestingKit.framework */; };
+		98838DF21608624800CE2353 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A84D611602CD2500A4A673 /* UIKit.framework */; };
+		98838DF31608624800CE2353 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A84D631602CD2500A4A673 /* Foundation.framework */; };
+		98838DF91608624800CE2353 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 98838DF71608624800CE2353 /* InfoPlist.strings */; };
+		98838DFC1608624800CE2353 /* CardBookLogicTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 98838DFB1608624800CE2353 /* CardBookLogicTests.m */; };
+		98838E111608642B00CE2353 /* KHHHTTPClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 98838E041608642B00CE2353 /* KHHHTTPClientTests.m */; };
+		98838E121608642B00CE2353 /* KHHNetworkAPIAgentAccountTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 98838E061608642B00CE2353 /* KHHNetworkAPIAgentAccountTests.m */; };
+		98838E131608642B00CE2353 /* KHHNetworkAPIAgentCardTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 98838E081608642B00CE2353 /* KHHNetworkAPIAgentCardTests.m */; };
+		98838E141608642B00CE2353 /* KHHNetworkAPIAgentEnterpriseManagementTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 98838E0A1608642B00CE2353 /* KHHNetworkAPIAgentEnterpriseManagementTests.m */; };
+		98838E151608642B00CE2353 /* KHHNetworkAPIAgentGroupTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 98838E0C1608642B00CE2353 /* KHHNetworkAPIAgentGroupTests.m */; };
+		98838E161608642B00CE2353 /* KHHNetworkAPIAgentMessageTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 98838E0E1608642B00CE2353 /* KHHNetworkAPIAgentMessageTests.m */; };
+		98838E171608642B00CE2353 /* KHHNetworkAPIAgentMiscTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 98838E101608642B00CE2353 /* KHHNetworkAPIAgentMiscTests.m */; };
+		98838E181608644B00CE2353 /* KHHHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850C51602E63A00A4A673 /* KHHHTTPClient.m */; };
+		98838E191608644F00CE2353 /* KHHNetworkAPIAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850C71602E63A00A4A673 /* KHHNetworkAPIAgent.m */; };
+		98838E1A1608645200CE2353 /* KHHNetworkAPIAgent+Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850C91602E63A00A4A673 /* KHHNetworkAPIAgent+Account.m */; };
+		98838E1B1608645400CE2353 /* KHHNetworkAPIAgent+Card.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850CB1602E63A00A4A673 /* KHHNetworkAPIAgent+Card.m */; };
+		98838E1C1608645800CE2353 /* KHHNetworkAPIAgent+EnterpriseManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850CD1602E63A00A4A673 /* KHHNetworkAPIAgent+EnterpriseManagement.m */; };
+		98838E1D1608645B00CE2353 /* KHHNetworkAPIAgent+Exchange.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850CF1602E63A00A4A673 /* KHHNetworkAPIAgent+Exchange.m */; };
+		98838E1E1608645D00CE2353 /* KHHNetworkAPIAgent+Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850D11602E63A00A4A673 /* KHHNetworkAPIAgent+Group.m */; };
+		98838E1F1608646000CE2353 /* KHHNetworkAPIAgent+Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850D31602E63A00A4A673 /* KHHNetworkAPIAgent+Message.m */; };
+		98838E201608646200CE2353 /* KHHNetworkAPIAgent+Misc.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850D51602E63A00A4A673 /* KHHNetworkAPIAgent+Misc.m */; };
+		98838E211608646500CE2353 /* KHHNetworkAPIAgent+Statistics.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850D71602E63A00A4A673 /* KHHNetworkAPIAgent+Statistics.m */; };
+		98838E221608646700CE2353 /* KHHNetworkAPIAgent+Template.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850D91602E63A00A4A673 /* KHHNetworkAPIAgent+Template.m */; };
+		98838E231608646A00CE2353 /* KHHNetworkAPIAgent+VisitSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850DB1602E63A00A4A673 /* KHHNetworkAPIAgent+VisitSchedule.m */; };
+		98838E24160864C000CE2353 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A851041602EDDD00A4A673 /* CoreData.framework */; };
+		98838E25160864D800CE2353 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84FED1602DA3F00A4A673 /* AFHTTPClient.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		98838E261608651A00CE2353 /* AFJSONRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84FF31602DA3F00A4A673 /* AFJSONRequestOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		98838E271608653400CE2353 /* AFJSONUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84FF51602DA3F00A4A673 /* AFJSONUtilities.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		98838E281608654600CE2353 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84FEF1602DA3F00A4A673 /* AFHTTPRequestOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		98838E291608657700CE2353 /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84FF71602DA3F00A4A673 /* AFNetworkActivityIndicatorManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		98838E2A1608657F00CE2353 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84FFC1602DA3F00A4A673 /* AFURLConnectionOperation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		98838E2B160865AA00CE2353 /* CardBook.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DC51602D3A300A4A673 /* CardBook.xcdatamodeld */; };
+		98838E2C160865BF00CE2353 /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DC91602D3A300A4A673 /* Address.m */; };
+		98838E2D160865BF00CE2353 /* BankAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DCB1602D3A300A4A673 /* BankAccount.m */; };
+		98838E2E160865BF00CE2353 /* Card.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DCD1602D3A300A4A673 /* Card.m */; };
+		98838E2F160865BF00CE2353 /* CardTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DCF1602D3A300A4A673 /* CardTemplate.m */; };
+		98838E30160865BF00CE2353 /* CardTemplateItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DD11602D3A300A4A673 /* CardTemplateItem.m */; };
+		98838E31160865BF00CE2353 /* Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DD31602D3A300A4A673 /* Company.m */; };
+		98838E33160865BF00CE2353 /* Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DD71602D3A300A4A673 /* Group.m */; };
+		98838E34160865BF00CE2353 /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DD91602D3A300A4A673 /* Image.m */; };
+		98838E35160865BF00CE2353 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DDB1602D3A300A4A673 /* Message.m */; };
+		98838E36160865BF00CE2353 /* MyCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DDD1602D3A300A4A673 /* MyCard.m */; };
+		98838E37160865BF00CE2353 /* ReceivedCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DDF1602D3A300A4A673 /* ReceivedCard.m */; };
+		98838E38160865BF00CE2353 /* Schedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DE11602D3A300A4A673 /* Schedule.m */; };
+		98838E39160865D600CE2353 /* _Address.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DAC1602D3A300A4A673 /* _Address.m */; };
+		98838E3A160865D600CE2353 /* _BankAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DAE1602D3A300A4A673 /* _BankAccount.m */; };
+		98838E3B160865D600CE2353 /* _Card.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DB01602D3A300A4A673 /* _Card.m */; };
+		98838E3C160865D600CE2353 /* _CardTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DB21602D3A300A4A673 /* _CardTemplate.m */; };
+		98838E3D160865D600CE2353 /* _CardTemplateItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DB41602D3A300A4A673 /* _CardTemplateItem.m */; };
+		98838E3E160865D600CE2353 /* _Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DB61602D3A300A4A673 /* _Company.m */; };
+		98838E40160865D600CE2353 /* _Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DBA1602D3A300A4A673 /* _Group.m */; };
+		98838E41160865D600CE2353 /* _Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DBC1602D3A300A4A673 /* _Image.m */; };
+		98838E42160865D600CE2353 /* _Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DBE1602D3A300A4A673 /* _Message.m */; };
+		98838E43160865D600CE2353 /* _MyCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DC01602D3A300A4A673 /* _MyCard.m */; };
+		98838E44160865D600CE2353 /* _ReceivedCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DC21602D3A300A4A673 /* _ReceivedCard.m */; };
+		98838E45160865D600CE2353 /* _Schedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DC41602D3A300A4A673 /* _Schedule.m */; };
+		98838E46160865F400CE2353 /* Encryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DFE1602D46000A4A673 /* Encryptor.m */; };
+		98838E47160865FF00CE2353 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E011602D46000A4A673 /* NSData+Base64.m */; };
+		98838E491608660500CE2353 /* NSObject+Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E051602D46000A4A673 /* NSObject+Notification.m */; };
+		98838E4A1608660800CE2353 /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E071602D46000A4A673 /* NSString+Base64.m */; };
+		98838E4B1608660A00CE2353 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E091602D46000A4A673 /* NSString+MD5.m */; };
+		98838E4C1608661900CE2353 /* NSString+Networking.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E0B1602D46000A4A673 /* NSString+Networking.m */; };
+		98838E4E1608661900CE2353 /* NSString+Validation.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E0F1602D46000A4A673 /* NSString+Validation.m */; };
+		98838E4F1608661900CE2353 /* NSURL+KHH.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E111602D46000A4A673 /* NSURL+KHH.m */; };
+		98838E501608661900CE2353 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 98CFC96D1607201E001B9B17 /* UIImage+Resize.m */; };
+		98838E521608663D00CE2353 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A850F41602ECAB00A4A673 /* QuartzCore.framework */; };
+		98838E531608663D00CE2353 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A850F41602ECAB00A4A673 /* QuartzCore.framework */; };
+		98838E541608664100CE2353 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A851021602EDCC00A4A673 /* MessageUI.framework */; };
+		98838E551608664100CE2353 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A851021602EDCC00A4A673 /* MessageUI.framework */; };
+		98838E561608664400CE2353 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A850FF1602ED6F00A4A673 /* MapKit.framework */; };
+		98838E571608664400CE2353 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A850FF1602ED6F00A4A673 /* MapKit.framework */; };
+		98838E581608664700CE2353 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A850F71602ECE800A4A673 /* ImageIO.framework */; };
+		98838E591608664700CE2353 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A850F71602ECE800A4A673 /* ImageIO.framework */; };
+		98838E5A1608664C00CE2353 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A850FA1602ECFE00A4A673 /* CoreLocation.framework */; };
+		98838E5B1608664C00CE2353 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A850FA1602ECFE00A4A673 /* CoreLocation.framework */; };
+		98838E5C1608664F00CE2353 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A850F61602ECE800A4A673 /* CoreImage.framework */; };
+		98838E5D1608664F00CE2353 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A850F61602ECE800A4A673 /* CoreImage.framework */; };
+		98838E5E1608665100CE2353 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A84D651602CD2500A4A673 /* CoreGraphics.framework */; };
+		98838E5F1608665200CE2353 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A84D651602CD2500A4A673 /* CoreGraphics.framework */; };
+		98838E601608665400CE2353 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A851041602EDDD00A4A673 /* CoreData.framework */; };
+		98838E611608665700CE2353 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A850F11602EC1600A4A673 /* AddressBookUI.framework */; };
+		98838E621608665800CE2353 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A850F11602EC1600A4A673 /* AddressBookUI.framework */; };
+		98838E631608665B00CE2353 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A850F01602EC1600A4A673 /* AddressBook.framework */; };
+		98838E641608665B00CE2353 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A850F01602EC1600A4A673 /* AddressBook.framework */; };
+		98838E65160869AA00CE2353 /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850401602DA3F00A4A673 /* NSObject+SBJson.m */; };
+		98838E66160869CB00CE2353 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850431602DA3F00A4A673 /* SBJsonParser.m */; };
+		98838E67160869CB00CE2353 /* SBJsonStreamParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850451602DA3F00A4A673 /* SBJsonStreamParser.m */; };
+		98838E68160869CB00CE2353 /* SBJsonStreamParserAccumulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850471602DA3F00A4A673 /* SBJsonStreamParserAccumulator.m */; };
+		98838E69160869CB00CE2353 /* SBJsonStreamParserAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850491602DA3F00A4A673 /* SBJsonStreamParserAdapter.m */; };
+		98838E6A160869CB00CE2353 /* SBJsonStreamParserState.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8504B1602DA3F00A4A673 /* SBJsonStreamParserState.m */; };
+		98838E6B160869CB00CE2353 /* SBJsonUTF8Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850551602DA3F00A4A673 /* SBJsonUTF8Stream.m */; };
+		98838E6C160869DF00CE2353 /* SBJsonTokeniser.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850531602DA3F00A4A673 /* SBJsonTokeniser.m */; };
+		98838E6D160869F000CE2353 /* SBJsonStreamWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8504D1602DA3F00A4A673 /* SBJsonStreamWriter.m */; };
+		98838E6E160869F300CE2353 /* SBJsonStreamWriterAccumulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8504F1602DA3F00A4A673 /* SBJsonStreamWriterAccumulator.m */; };
+		98838E6F160869F600CE2353 /* SBJsonStreamWriterState.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850511602DA3F00A4A673 /* SBJsonStreamWriterState.m */; };
+		98838E70160869FD00CE2353 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850571602DA3F00A4A673 /* SBJsonWriter.m */; };
+		98838E7416086CB300CE2353 /* NSNumberStringTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 98838E7316086CB300CE2353 /* NSNumberStringTests.m */; };
+		98838E7A160879C600CE2353 /* NSNumber+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 98838E79160879C300CE2353 /* NSNumber+SM.m */; };
+		98838E7D160886EC00CE2353 /* NSString+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 98838E7C160886EC00CE2353 /* NSString+SM.m */; };
+		98838E7E16089A7600CE2353 /* NSNumber+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 98838E79160879C300CE2353 /* NSNumber+SM.m */; };
+		98838E7F16089A7D00CE2353 /* NSString+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 98838E7C160886EC00CE2353 /* NSString+SM.m */; };
 		98A84D621602CD2500A4A673 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A84D611602CD2500A4A673 /* UIKit.framework */; };
 		98A84D641602CD2500A4A673 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A84D631602CD2500A4A673 /* Foundation.framework */; };
 		98A84D6C1602CD2500A4A673 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 98A84D6A1602CD2500A4A673 /* InfoPlist.strings */; };
@@ -24,7 +149,6 @@
 		98A84DE51602D3A300A4A673 /* _CardTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DB21602D3A300A4A673 /* _CardTemplate.m */; };
 		98A84DE61602D3A300A4A673 /* _CardTemplateItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DB41602D3A300A4A673 /* _CardTemplateItem.m */; };
 		98A84DE71602D3A300A4A673 /* _Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DB61602D3A300A4A673 /* _Company.m */; };
-		98A84DE81602D3A300A4A673 /* _CreatedCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DB81602D3A300A4A673 /* _CreatedCard.m */; };
 		98A84DE91602D3A300A4A673 /* _Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DBA1602D3A300A4A673 /* _Group.m */; };
 		98A84DEA1602D3A300A4A673 /* _Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DBC1602D3A300A4A673 /* _Image.m */; };
 		98A84DEB1602D3A300A4A673 /* _Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DBE1602D3A300A4A673 /* _Message.m */; };
@@ -38,7 +162,6 @@
 		98A84DF31602D3A300A4A673 /* CardTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DCF1602D3A300A4A673 /* CardTemplate.m */; };
 		98A84DF41602D3A300A4A673 /* CardTemplateItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DD11602D3A300A4A673 /* CardTemplateItem.m */; };
 		98A84DF51602D3A300A4A673 /* Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DD31602D3A300A4A673 /* Company.m */; };
-		98A84DF61602D3A300A4A673 /* CreatedCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DD51602D3A300A4A673 /* CreatedCard.m */; };
 		98A84DF71602D3A300A4A673 /* Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DD71602D3A300A4A673 /* Group.m */; };
 		98A84DF81602D3A300A4A673 /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DD91602D3A300A4A673 /* Image.m */; };
 		98A84DF91602D3A300A4A673 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DDB1602D3A300A4A673 /* Message.m */; };
@@ -47,15 +170,12 @@
 		98A84DFC1602D3A300A4A673 /* Schedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DE11602D3A300A4A673 /* Schedule.m */; };
 		98A84E141602D46000A4A673 /* Encryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DFE1602D46000A4A673 /* Encryptor.m */; };
 		98A84E151602D46000A4A673 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E011602D46000A4A673 /* NSData+Base64.m */; };
-		98A84E161602D46000A4A673 /* NSNumber+String.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E031602D46000A4A673 /* NSNumber+String.m */; };
 		98A84E171602D46000A4A673 /* NSObject+Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E051602D46000A4A673 /* NSObject+Notification.m */; };
 		98A84E181602D46000A4A673 /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E071602D46000A4A673 /* NSString+Base64.m */; };
 		98A84E191602D46000A4A673 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E091602D46000A4A673 /* NSString+MD5.m */; };
 		98A84E1A1602D46000A4A673 /* NSString+Networking.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E0B1602D46000A4A673 /* NSString+Networking.m */; };
-		98A84E1B1602D46000A4A673 /* NSString+Number.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E0D1602D46000A4A673 /* NSString+Number.m */; };
 		98A84E1C1602D46000A4A673 /* NSString+Validation.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E0F1602D46000A4A673 /* NSString+Validation.m */; };
 		98A84E1D1602D46000A4A673 /* NSURL+KHH.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E111602D46000A4A673 /* NSURL+KHH.m */; };
-		98A84E1E1602D46000A4A673 /* UIViewController+Navigation.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E131602D46000A4A673 /* UIViewController+Navigation.m */; };
 		98A84EA51602D66200A4A673 /* KHHExchangeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E251602D66200A4A673 /* KHHExchangeViewController.m */; };
 		98A84EA61602D66200A4A673 /* KHHExchangeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E261602D66200A4A673 /* KHHExchangeViewController.xib */; };
 		98A84EA71602D66200A4A673 /* KHHSendToViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E281602D66200A4A673 /* KHHSendToViewController.m */; };
@@ -349,6 +469,47 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		982AACAE16096C3D002B9BAD /* KHHNetworkAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHHNetworkAPI.h; sourceTree = "<group>"; };
+		982AACB51609ABB3002B9BAD /* UIViewController+SM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SM.h"; sourceTree = "<group>"; };
+		982AACB61609ABB4002B9BAD /* UIViewController+SM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SM.m"; sourceTree = "<group>"; };
+		982AACB81609BD08002B9BAD /* KHHData+Handlers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHData+Handlers.h"; sourceTree = "<group>"; };
+		982AACB91609BD08002B9BAD /* KHHData+Handlers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHData+Handlers.m"; sourceTree = "<group>"; };
+		982AACBD1609BE6B002B9BAD /* KHHData+UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHData+UI.h"; sourceTree = "<group>"; };
+		982AACBE1609BE6B002B9BAD /* KHHData+UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHData+UI.m"; sourceTree = "<group>"; };
+		982AACC21609C903002B9BAD /* KHHTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHHTypes.h; sourceTree = "<group>"; };
+		982AACC31609C948002B9BAD /* KHHHeaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHHHeaders.h; sourceTree = "<group>"; };
+		984C2852160AF02D007D4D13 /* PrivateCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivateCard.h; sourceTree = "<group>"; };
+		984C2853160AF02D007D4D13 /* PrivateCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrivateCard.m; sourceTree = "<group>"; };
+		984C2855160AF044007D4D13 /* _PrivateCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _PrivateCard.h; sourceTree = "<group>"; };
+		984C2856160AF044007D4D13 /* _PrivateCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _PrivateCard.m; sourceTree = "<group>"; };
+		984C28B3160B0D5B007D4D13 /* KHHData+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHData+Utils.h"; sourceTree = "<group>"; };
+		984C28B4160B0D5B007D4D13 /* KHHData+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHData+Utils.m"; sourceTree = "<group>"; };
+		98838DF01608624800CE2353 /* CardBookLogicTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CardBookLogicTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		98838DF61608624800CE2353 /* CardBookLogicTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CardBookLogicTests-Info.plist"; sourceTree = "<group>"; };
+		98838DF81608624800CE2353 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		98838DFA1608624800CE2353 /* CardBookLogicTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardBookLogicTests.h; sourceTree = "<group>"; };
+		98838DFB1608624800CE2353 /* CardBookLogicTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardBookLogicTests.m; sourceTree = "<group>"; };
+		98838DFD1608624800CE2353 /* CardBookLogicTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CardBookLogicTests-Prefix.pch"; sourceTree = "<group>"; };
+		98838E031608642B00CE2353 /* KHHHTTPClientTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHHTTPClientTests.h; sourceTree = "<group>"; };
+		98838E041608642B00CE2353 /* KHHHTTPClientTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHHTTPClientTests.m; sourceTree = "<group>"; };
+		98838E051608642B00CE2353 /* KHHNetworkAPIAgentAccountTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNetworkAPIAgentAccountTests.h; sourceTree = "<group>"; };
+		98838E061608642B00CE2353 /* KHHNetworkAPIAgentAccountTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHNetworkAPIAgentAccountTests.m; sourceTree = "<group>"; };
+		98838E071608642B00CE2353 /* KHHNetworkAPIAgentCardTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNetworkAPIAgentCardTests.h; sourceTree = "<group>"; };
+		98838E081608642B00CE2353 /* KHHNetworkAPIAgentCardTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHNetworkAPIAgentCardTests.m; sourceTree = "<group>"; };
+		98838E091608642B00CE2353 /* KHHNetworkAPIAgentEnterpriseManagementTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNetworkAPIAgentEnterpriseManagementTests.h; sourceTree = "<group>"; };
+		98838E0A1608642B00CE2353 /* KHHNetworkAPIAgentEnterpriseManagementTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHNetworkAPIAgentEnterpriseManagementTests.m; sourceTree = "<group>"; };
+		98838E0B1608642B00CE2353 /* KHHNetworkAPIAgentGroupTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNetworkAPIAgentGroupTests.h; sourceTree = "<group>"; };
+		98838E0C1608642B00CE2353 /* KHHNetworkAPIAgentGroupTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHNetworkAPIAgentGroupTests.m; sourceTree = "<group>"; };
+		98838E0D1608642B00CE2353 /* KHHNetworkAPIAgentMessageTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNetworkAPIAgentMessageTests.h; sourceTree = "<group>"; };
+		98838E0E1608642B00CE2353 /* KHHNetworkAPIAgentMessageTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHNetworkAPIAgentMessageTests.m; sourceTree = "<group>"; };
+		98838E0F1608642B00CE2353 /* KHHNetworkAPIAgentMiscTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNetworkAPIAgentMiscTests.h; sourceTree = "<group>"; };
+		98838E101608642B00CE2353 /* KHHNetworkAPIAgentMiscTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHNetworkAPIAgentMiscTests.m; sourceTree = "<group>"; };
+		98838E7216086CB300CE2353 /* NSNumberStringTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSNumberStringTests.h; sourceTree = "<group>"; };
+		98838E7316086CB300CE2353 /* NSNumberStringTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSNumberStringTests.m; sourceTree = "<group>"; };
+		98838E78160879C200CE2353 /* NSNumber+SM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+SM.h"; sourceTree = "<group>"; };
+		98838E79160879C300CE2353 /* NSNumber+SM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+SM.m"; sourceTree = "<group>"; };
+		98838E7B160886EB00CE2353 /* NSString+SM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SM.h"; sourceTree = "<group>"; };
+		98838E7C160886EC00CE2353 /* NSString+SM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SM.m"; sourceTree = "<group>"; };
 		98A84D5D1602CD2500A4A673 /* CardBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98A84D611602CD2500A4A673 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		98A84D631602CD2500A4A673 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -383,8 +544,6 @@
 		98A84DB41602D3A300A4A673 /* _CardTemplateItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _CardTemplateItem.m; sourceTree = "<group>"; };
 		98A84DB51602D3A300A4A673 /* _Company.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Company.h; sourceTree = "<group>"; };
 		98A84DB61602D3A300A4A673 /* _Company.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Company.m; sourceTree = "<group>"; };
-		98A84DB71602D3A300A4A673 /* _CreatedCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _CreatedCard.h; sourceTree = "<group>"; };
-		98A84DB81602D3A300A4A673 /* _CreatedCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _CreatedCard.m; sourceTree = "<group>"; };
 		98A84DB91602D3A300A4A673 /* _Group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Group.h; sourceTree = "<group>"; };
 		98A84DBA1602D3A300A4A673 /* _Group.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Group.m; sourceTree = "<group>"; };
 		98A84DBB1602D3A300A4A673 /* _Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Image.h; sourceTree = "<group>"; };
@@ -410,8 +569,6 @@
 		98A84DD11602D3A300A4A673 /* CardTemplateItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardTemplateItem.m; sourceTree = "<group>"; };
 		98A84DD21602D3A300A4A673 /* Company.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Company.h; sourceTree = "<group>"; };
 		98A84DD31602D3A300A4A673 /* Company.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Company.m; sourceTree = "<group>"; };
-		98A84DD41602D3A300A4A673 /* CreatedCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreatedCard.h; sourceTree = "<group>"; };
-		98A84DD51602D3A300A4A673 /* CreatedCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreatedCard.m; sourceTree = "<group>"; };
 		98A84DD61602D3A300A4A673 /* Group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Group.h; sourceTree = "<group>"; };
 		98A84DD71602D3A300A4A673 /* Group.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Group.m; sourceTree = "<group>"; };
 		98A84DD81602D3A300A4A673 /* Image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Image.h; sourceTree = "<group>"; };
@@ -429,8 +586,6 @@
 		98A84DFF1602D46000A4A673 /* KHHLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHLog.h; sourceTree = "<group>"; };
 		98A84E001602D46000A4A673 /* NSData+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64.h"; sourceTree = "<group>"; };
 		98A84E011602D46000A4A673 /* NSData+Base64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64.m"; sourceTree = "<group>"; };
-		98A84E021602D46000A4A673 /* NSNumber+String.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumber+String.h"; sourceTree = "<group>"; };
-		98A84E031602D46000A4A673 /* NSNumber+String.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+String.m"; sourceTree = "<group>"; };
 		98A84E041602D46000A4A673 /* NSObject+Notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Notification.h"; sourceTree = "<group>"; };
 		98A84E051602D46000A4A673 /* NSObject+Notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Notification.m"; sourceTree = "<group>"; };
 		98A84E061602D46000A4A673 /* NSString+Base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Base64.h"; sourceTree = "<group>"; };
@@ -439,14 +594,10 @@
 		98A84E091602D46000A4A673 /* NSString+MD5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MD5.m"; sourceTree = "<group>"; };
 		98A84E0A1602D46000A4A673 /* NSString+Networking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Networking.h"; sourceTree = "<group>"; };
 		98A84E0B1602D46000A4A673 /* NSString+Networking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Networking.m"; sourceTree = "<group>"; };
-		98A84E0C1602D46000A4A673 /* NSString+Number.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Number.h"; sourceTree = "<group>"; };
-		98A84E0D1602D46000A4A673 /* NSString+Number.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Number.m"; sourceTree = "<group>"; };
 		98A84E0E1602D46000A4A673 /* NSString+Validation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Validation.h"; sourceTree = "<group>"; };
 		98A84E0F1602D46000A4A673 /* NSString+Validation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Validation.m"; sourceTree = "<group>"; };
 		98A84E101602D46000A4A673 /* NSURL+KHH.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+KHH.h"; sourceTree = "<group>"; };
 		98A84E111602D46000A4A673 /* NSURL+KHH.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+KHH.m"; sourceTree = "<group>"; };
-		98A84E121602D46000A4A673 /* UIViewController+Navigation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Navigation.h"; sourceTree = "<group>"; };
-		98A84E131602D46000A4A673 /* UIViewController+Navigation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Navigation.m"; sourceTree = "<group>"; };
 		98A84E241602D66200A4A673 /* KHHExchangeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHExchangeViewController.h; sourceTree = "<group>"; };
 		98A84E251602D66200A4A673 /* KHHExchangeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHExchangeViewController.m; sourceTree = "<group>"; };
 		98A84E261602D66200A4A673 /* KHHExchangeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHExchangeViewController.xib; sourceTree = "<group>"; };
@@ -865,6 +1016,26 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		98838DEC1608624800CE2353 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				98838DF11608624800CE2353 /* SenTestingKit.framework in Frameworks */,
+				98838DF21608624800CE2353 /* UIKit.framework in Frameworks */,
+				98838DF31608624800CE2353 /* Foundation.framework in Frameworks */,
+				98838E24160864C000CE2353 /* CoreData.framework in Frameworks */,
+				98838E521608663D00CE2353 /* QuartzCore.framework in Frameworks */,
+				98838E541608664100CE2353 /* MessageUI.framework in Frameworks */,
+				98838E561608664400CE2353 /* MapKit.framework in Frameworks */,
+				98838E581608664700CE2353 /* ImageIO.framework in Frameworks */,
+				98838E5A1608664C00CE2353 /* CoreLocation.framework in Frameworks */,
+				98838E5C1608664F00CE2353 /* CoreImage.framework in Frameworks */,
+				98838E5E1608665100CE2353 /* CoreGraphics.framework in Frameworks */,
+				98838E611608665700CE2353 /* AddressBookUI.framework in Frameworks */,
+				98838E631608665B00CE2353 /* AddressBook.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		98A84D5A1602CD2500A4A673 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -891,12 +1062,74 @@
 				98A84D7A1602CD2500A4A673 /* SenTestingKit.framework in Frameworks */,
 				98A84D7B1602CD2500A4A673 /* UIKit.framework in Frameworks */,
 				98A84D7C1602CD2500A4A673 /* Foundation.framework in Frameworks */,
+				98838E531608663D00CE2353 /* QuartzCore.framework in Frameworks */,
+				98838E551608664100CE2353 /* MessageUI.framework in Frameworks */,
+				98838E571608664400CE2353 /* MapKit.framework in Frameworks */,
+				98838E591608664700CE2353 /* ImageIO.framework in Frameworks */,
+				98838E5B1608664C00CE2353 /* CoreLocation.framework in Frameworks */,
+				98838E5D1608664F00CE2353 /* CoreImage.framework in Frameworks */,
+				98838E5F1608665200CE2353 /* CoreGraphics.framework in Frameworks */,
+				98838E601608665400CE2353 /* CoreData.framework in Frameworks */,
+				98838E621608665800CE2353 /* AddressBookUI.framework in Frameworks */,
+				98838E641608665B00CE2353 /* AddressBook.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		98838DF41608624800CE2353 /* CardBookLogicTests */ = {
+			isa = PBXGroup;
+			children = (
+				98838E7116086C3900CE2353 /* Misc */,
+				98838E021608642B00CE2353 /* Network */,
+				98838DFA1608624800CE2353 /* CardBookLogicTests.h */,
+				98838DFB1608624800CE2353 /* CardBookLogicTests.m */,
+				98838DF51608624800CE2353 /* Supporting Files */,
+			);
+			path = CardBookLogicTests;
+			sourceTree = "<group>";
+		};
+		98838DF51608624800CE2353 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				98838DF61608624800CE2353 /* CardBookLogicTests-Info.plist */,
+				98838DF71608624800CE2353 /* InfoPlist.strings */,
+				98838DFD1608624800CE2353 /* CardBookLogicTests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		98838E021608642B00CE2353 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				98838E031608642B00CE2353 /* KHHHTTPClientTests.h */,
+				98838E041608642B00CE2353 /* KHHHTTPClientTests.m */,
+				98838E051608642B00CE2353 /* KHHNetworkAPIAgentAccountTests.h */,
+				98838E061608642B00CE2353 /* KHHNetworkAPIAgentAccountTests.m */,
+				98838E071608642B00CE2353 /* KHHNetworkAPIAgentCardTests.h */,
+				98838E081608642B00CE2353 /* KHHNetworkAPIAgentCardTests.m */,
+				98838E091608642B00CE2353 /* KHHNetworkAPIAgentEnterpriseManagementTests.h */,
+				98838E0A1608642B00CE2353 /* KHHNetworkAPIAgentEnterpriseManagementTests.m */,
+				98838E0B1608642B00CE2353 /* KHHNetworkAPIAgentGroupTests.h */,
+				98838E0C1608642B00CE2353 /* KHHNetworkAPIAgentGroupTests.m */,
+				98838E0D1608642B00CE2353 /* KHHNetworkAPIAgentMessageTests.h */,
+				98838E0E1608642B00CE2353 /* KHHNetworkAPIAgentMessageTests.m */,
+				98838E0F1608642B00CE2353 /* KHHNetworkAPIAgentMiscTests.h */,
+				98838E101608642B00CE2353 /* KHHNetworkAPIAgentMiscTests.m */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		98838E7116086C3900CE2353 /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				98838E7216086CB300CE2353 /* NSNumberStringTests.h */,
+				98838E7316086CB300CE2353 /* NSNumberStringTests.m */,
+			);
+			path = Misc;
+			sourceTree = "<group>";
+		};
 		98A84D521602CD2500A4A673 = {
 			isa = PBXGroup;
 			children = (
@@ -905,6 +1138,7 @@
 				98A84D981602D1F100A4A673 /* res */,
 				98A84D671602CD2500A4A673 /* CardBook */,
 				98A84D7F1602CD2500A4A673 /* CardBookTests */,
+				98838DF41608624800CE2353 /* CardBookLogicTests */,
 				98A84D601602CD2500A4A673 /* Frameworks */,
 				98A84D5E1602CD2500A4A673 /* Products */,
 			);
@@ -915,6 +1149,7 @@
 			children = (
 				98A84D5D1602CD2500A4A673 /* CardBook.app */,
 				98A84D781602CD2500A4A673 /* CardBookTests.octest */,
+				98838DF01608624800CE2353 /* CardBookLogicTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1002,6 +1237,7 @@
 		98A84D9C1602D21F00A4A673 /* App */ = {
 			isa = PBXGroup;
 			children = (
+				982AACC31609C948002B9BAD /* KHHHeaders.h */,
 				98A84D701602CD2500A4A673 /* KHHAppDelegate.h */,
 				98A84D711602CD2500A4A673 /* KHHAppDelegate.m */,
 				98F83BE5160740100036A516 /* KHHApp.h */,
@@ -1012,6 +1248,7 @@
 				98A84DA61602D2DA00A4A673 /* KHHMacros.h */,
 				98A84DA71602D2DA00A4A673 /* KHHNotifications.h */,
 				98A84DA81602D2DA00A4A673 /* KHHStatusCodes.h */,
+				982AACC21609C903002B9BAD /* KHHTypes.h */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -1019,10 +1256,10 @@
 		98A84D9D1602D22600A4A673 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				98F83BE416073D0B0036A516 /* KHHData */,
 				98A84DC51602D3A300A4A673 /* CardBook.xcdatamodeld */,
 				98A84DC71602D3A300A4A673 /* Classes */,
 				98A84DAA1602D3A300A4A673 /* _Classes */,
+				98F83BE416073D0B0036A516 /* KHHData */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -1035,8 +1272,8 @@
 				98A84DFF1602D46000A4A673 /* KHHLog.h */,
 				98A84E001602D46000A4A673 /* NSData+Base64.h */,
 				98A84E011602D46000A4A673 /* NSData+Base64.m */,
-				98A84E021602D46000A4A673 /* NSNumber+String.h */,
-				98A84E031602D46000A4A673 /* NSNumber+String.m */,
+				98838E78160879C200CE2353 /* NSNumber+SM.h */,
+				98838E79160879C300CE2353 /* NSNumber+SM.m */,
 				98A84E041602D46000A4A673 /* NSObject+Notification.h */,
 				98A84E051602D46000A4A673 /* NSObject+Notification.m */,
 				98A84E061602D46000A4A673 /* NSString+Base64.h */,
@@ -1045,16 +1282,16 @@
 				98A84E091602D46000A4A673 /* NSString+MD5.m */,
 				98A84E0A1602D46000A4A673 /* NSString+Networking.h */,
 				98A84E0B1602D46000A4A673 /* NSString+Networking.m */,
-				98A84E0C1602D46000A4A673 /* NSString+Number.h */,
-				98A84E0D1602D46000A4A673 /* NSString+Number.m */,
+				98838E7B160886EB00CE2353 /* NSString+SM.h */,
+				98838E7C160886EC00CE2353 /* NSString+SM.m */,
 				98A84E0E1602D46000A4A673 /* NSString+Validation.h */,
 				98A84E0F1602D46000A4A673 /* NSString+Validation.m */,
 				98A84E101602D46000A4A673 /* NSURL+KHH.h */,
 				98A84E111602D46000A4A673 /* NSURL+KHH.m */,
 				98CFC96C1607201E001B9B17 /* UIImage+Resize.h */,
 				98CFC96D1607201E001B9B17 /* UIImage+Resize.m */,
-				98A84E121602D46000A4A673 /* UIViewController+Navigation.h */,
-				98A84E131602D46000A4A673 /* UIViewController+Navigation.m */,
+				982AACB51609ABB3002B9BAD /* UIViewController+SM.h */,
+				982AACB61609ABB4002B9BAD /* UIViewController+SM.m */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -1064,6 +1301,7 @@
 			children = (
 				98A850C41602E63A00A4A673 /* KHHHTTPClient.h */,
 				98A850C51602E63A00A4A673 /* KHHHTTPClient.m */,
+				982AACAE16096C3D002B9BAD /* KHHNetworkAPI.h */,
 				98A850C61602E63A00A4A673 /* KHHNetworkAPIAgent.h */,
 				98A850C71602E63A00A4A673 /* KHHNetworkAPIAgent.m */,
 				98A850C81602E63A00A4A673 /* KHHNetworkAPIAgent+Account.h */,
@@ -1132,8 +1370,6 @@
 				98A84DB41602D3A300A4A673 /* _CardTemplateItem.m */,
 				98A84DB51602D3A300A4A673 /* _Company.h */,
 				98A84DB61602D3A300A4A673 /* _Company.m */,
-				98A84DB71602D3A300A4A673 /* _CreatedCard.h */,
-				98A84DB81602D3A300A4A673 /* _CreatedCard.m */,
 				98A84DB91602D3A300A4A673 /* _Group.h */,
 				98A84DBA1602D3A300A4A673 /* _Group.m */,
 				98A84DBB1602D3A300A4A673 /* _Image.h */,
@@ -1142,6 +1378,8 @@
 				98A84DBE1602D3A300A4A673 /* _Message.m */,
 				98A84DBF1602D3A300A4A673 /* _MyCard.h */,
 				98A84DC01602D3A300A4A673 /* _MyCard.m */,
+				984C2855160AF044007D4D13 /* _PrivateCard.h */,
+				984C2856160AF044007D4D13 /* _PrivateCard.m */,
 				98A84DC11602D3A300A4A673 /* _ReceivedCard.h */,
 				98A84DC21602D3A300A4A673 /* _ReceivedCard.m */,
 				98A84DC31602D3A300A4A673 /* _Schedule.h */,
@@ -1165,8 +1403,6 @@
 				98A84DD11602D3A300A4A673 /* CardTemplateItem.m */,
 				98A84DD21602D3A300A4A673 /* Company.h */,
 				98A84DD31602D3A300A4A673 /* Company.m */,
-				98A84DD41602D3A300A4A673 /* CreatedCard.h */,
-				98A84DD51602D3A300A4A673 /* CreatedCard.m */,
 				98A84DD61602D3A300A4A673 /* Group.h */,
 				98A84DD71602D3A300A4A673 /* Group.m */,
 				98A84DD81602D3A300A4A673 /* Image.h */,
@@ -1175,6 +1411,8 @@
 				98A84DDB1602D3A300A4A673 /* Message.m */,
 				98A84DDC1602D3A300A4A673 /* MyCard.h */,
 				98A84DDD1602D3A300A4A673 /* MyCard.m */,
+				984C2852160AF02D007D4D13 /* PrivateCard.h */,
+				984C2853160AF02D007D4D13 /* PrivateCard.m */,
 				98A84DDE1602D3A300A4A673 /* ReceivedCard.h */,
 				98A84DDF1602D3A300A4A673 /* ReceivedCard.m */,
 				98A84DE01602D3A300A4A673 /* Schedule.h */,
@@ -1892,6 +2130,12 @@
 			children = (
 				98F83BE016073C790036A516 /* KHHData.h */,
 				98F83BE116073C790036A516 /* KHHData.m */,
+				982AACBD1609BE6B002B9BAD /* KHHData+UI.h */,
+				982AACBE1609BE6B002B9BAD /* KHHData+UI.m */,
+				982AACB81609BD08002B9BAD /* KHHData+Handlers.h */,
+				982AACB91609BD08002B9BAD /* KHHData+Handlers.m */,
+				984C28B3160B0D5B007D4D13 /* KHHData+Utils.h */,
+				984C28B4160B0D5B007D4D13 /* KHHData+Utils.m */,
 			);
 			path = KHHData;
 			sourceTree = "<group>";
@@ -1899,6 +2143,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		98838DEF1608624800CE2353 /* CardBookLogicTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 98838E001608624800CE2353 /* Build configuration list for PBXNativeTarget "CardBookLogicTests" */;
+			buildPhases = (
+				98838DEB1608624800CE2353 /* Sources */,
+				98838DEC1608624800CE2353 /* Frameworks */,
+				98838DED1608624800CE2353 /* Resources */,
+				98838DEE1608624800CE2353 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CardBookLogicTests;
+			productName = CardBookLogicTests;
+			productReference = 98838DF01608624800CE2353 /* CardBookLogicTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
 		98A84D5C1602CD2500A4A673 /* CardBook */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 98A84D8A1602CD2500A4A673 /* Build configuration list for PBXNativeTarget "CardBook" */;
@@ -1959,11 +2221,21 @@
 			targets = (
 				98A84D5C1602CD2500A4A673 /* CardBook */,
 				98A84D771602CD2500A4A673 /* CardBookTests */,
+				98838DEF1608624800CE2353 /* CardBookLogicTests */,
+				984C2849160AEC25007D4D13 /* mogenerator */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		98838DED1608624800CE2353 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				98838DF91608624800CE2353 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		98A84D5B1602CD2500A4A673 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2124,6 +2396,32 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		984C284D160AECBA007D4D13 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd src/Data\necho Model dir = `pwd`\n/opt/local/bin/mogenerator -m CardBook.xcdatamodeld/CardBook.xcdatamodel \\\n-M _Classes -H Classes --template-var arc=true";
+		};
+		98838DEE1608624800CE2353 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
 		98A84D761602CD2500A4A673 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2140,6 +2438,90 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		98838DEB1608624800CE2353 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				98838DFC1608624800CE2353 /* CardBookLogicTests.m in Sources */,
+				98838E111608642B00CE2353 /* KHHHTTPClientTests.m in Sources */,
+				98838E121608642B00CE2353 /* KHHNetworkAPIAgentAccountTests.m in Sources */,
+				98838E131608642B00CE2353 /* KHHNetworkAPIAgentCardTests.m in Sources */,
+				98838E141608642B00CE2353 /* KHHNetworkAPIAgentEnterpriseManagementTests.m in Sources */,
+				98838E151608642B00CE2353 /* KHHNetworkAPIAgentGroupTests.m in Sources */,
+				98838E161608642B00CE2353 /* KHHNetworkAPIAgentMessageTests.m in Sources */,
+				98838E171608642B00CE2353 /* KHHNetworkAPIAgentMiscTests.m in Sources */,
+				98838E181608644B00CE2353 /* KHHHTTPClient.m in Sources */,
+				98838E191608644F00CE2353 /* KHHNetworkAPIAgent.m in Sources */,
+				98838E1A1608645200CE2353 /* KHHNetworkAPIAgent+Account.m in Sources */,
+				98838E1B1608645400CE2353 /* KHHNetworkAPIAgent+Card.m in Sources */,
+				98838E1C1608645800CE2353 /* KHHNetworkAPIAgent+EnterpriseManagement.m in Sources */,
+				98838E1D1608645B00CE2353 /* KHHNetworkAPIAgent+Exchange.m in Sources */,
+				98838E1E1608645D00CE2353 /* KHHNetworkAPIAgent+Group.m in Sources */,
+				98838E1F1608646000CE2353 /* KHHNetworkAPIAgent+Message.m in Sources */,
+				98838E201608646200CE2353 /* KHHNetworkAPIAgent+Misc.m in Sources */,
+				98838E211608646500CE2353 /* KHHNetworkAPIAgent+Statistics.m in Sources */,
+				98838E221608646700CE2353 /* KHHNetworkAPIAgent+Template.m in Sources */,
+				98838E231608646A00CE2353 /* KHHNetworkAPIAgent+VisitSchedule.m in Sources */,
+				98838E25160864D800CE2353 /* AFHTTPClient.m in Sources */,
+				98838E261608651A00CE2353 /* AFJSONRequestOperation.m in Sources */,
+				98838E271608653400CE2353 /* AFJSONUtilities.m in Sources */,
+				98838E281608654600CE2353 /* AFHTTPRequestOperation.m in Sources */,
+				98838E291608657700CE2353 /* AFNetworkActivityIndicatorManager.m in Sources */,
+				98838E2A1608657F00CE2353 /* AFURLConnectionOperation.m in Sources */,
+				98838E2B160865AA00CE2353 /* CardBook.xcdatamodeld in Sources */,
+				98838E2C160865BF00CE2353 /* Address.m in Sources */,
+				98838E2D160865BF00CE2353 /* BankAccount.m in Sources */,
+				98838E2E160865BF00CE2353 /* Card.m in Sources */,
+				98838E2F160865BF00CE2353 /* CardTemplate.m in Sources */,
+				98838E30160865BF00CE2353 /* CardTemplateItem.m in Sources */,
+				98838E31160865BF00CE2353 /* Company.m in Sources */,
+				98838E33160865BF00CE2353 /* Group.m in Sources */,
+				98838E34160865BF00CE2353 /* Image.m in Sources */,
+				98838E35160865BF00CE2353 /* Message.m in Sources */,
+				98838E36160865BF00CE2353 /* MyCard.m in Sources */,
+				98838E37160865BF00CE2353 /* ReceivedCard.m in Sources */,
+				98838E38160865BF00CE2353 /* Schedule.m in Sources */,
+				98838E39160865D600CE2353 /* _Address.m in Sources */,
+				98838E3A160865D600CE2353 /* _BankAccount.m in Sources */,
+				98838E3B160865D600CE2353 /* _Card.m in Sources */,
+				98838E3C160865D600CE2353 /* _CardTemplate.m in Sources */,
+				98838E3D160865D600CE2353 /* _CardTemplateItem.m in Sources */,
+				98838E3E160865D600CE2353 /* _Company.m in Sources */,
+				98838E40160865D600CE2353 /* _Group.m in Sources */,
+				98838E41160865D600CE2353 /* _Image.m in Sources */,
+				98838E42160865D600CE2353 /* _Message.m in Sources */,
+				98838E43160865D600CE2353 /* _MyCard.m in Sources */,
+				98838E44160865D600CE2353 /* _ReceivedCard.m in Sources */,
+				98838E45160865D600CE2353 /* _Schedule.m in Sources */,
+				98838E46160865F400CE2353 /* Encryptor.m in Sources */,
+				98838E47160865FF00CE2353 /* NSData+Base64.m in Sources */,
+				98838E491608660500CE2353 /* NSObject+Notification.m in Sources */,
+				98838E4A1608660800CE2353 /* NSString+Base64.m in Sources */,
+				98838E4B1608660A00CE2353 /* NSString+MD5.m in Sources */,
+				98838E4C1608661900CE2353 /* NSString+Networking.m in Sources */,
+				98838E4E1608661900CE2353 /* NSString+Validation.m in Sources */,
+				98838E4F1608661900CE2353 /* NSURL+KHH.m in Sources */,
+				98838E501608661900CE2353 /* UIImage+Resize.m in Sources */,
+				98838E65160869AA00CE2353 /* NSObject+SBJson.m in Sources */,
+				98838E66160869CB00CE2353 /* SBJsonParser.m in Sources */,
+				98838E67160869CB00CE2353 /* SBJsonStreamParser.m in Sources */,
+				98838E68160869CB00CE2353 /* SBJsonStreamParserAccumulator.m in Sources */,
+				98838E69160869CB00CE2353 /* SBJsonStreamParserAdapter.m in Sources */,
+				98838E6A160869CB00CE2353 /* SBJsonStreamParserState.m in Sources */,
+				98838E6B160869CB00CE2353 /* SBJsonUTF8Stream.m in Sources */,
+				98838E6C160869DF00CE2353 /* SBJsonTokeniser.m in Sources */,
+				98838E6D160869F000CE2353 /* SBJsonStreamWriter.m in Sources */,
+				98838E6E160869F300CE2353 /* SBJsonStreamWriterAccumulator.m in Sources */,
+				98838E6F160869F600CE2353 /* SBJsonStreamWriterState.m in Sources */,
+				98838E70160869FD00CE2353 /* SBJsonWriter.m in Sources */,
+				98838E7416086CB300CE2353 /* NSNumberStringTests.m in Sources */,
+				98838E7A160879C600CE2353 /* NSNumber+SM.m in Sources */,
+				98838E7D160886EC00CE2353 /* NSString+SM.m in Sources */,
+				982AACBC1609BD08002B9BAD /* KHHData+Handlers.m in Sources */,
+				982AACC11609BE6B002B9BAD /* KHHData+UI.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		98A84D591602CD2500A4A673 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2153,7 +2535,6 @@
 				98A84DE51602D3A300A4A673 /* _CardTemplate.m in Sources */,
 				98A84DE61602D3A300A4A673 /* _CardTemplateItem.m in Sources */,
 				98A84DE71602D3A300A4A673 /* _Company.m in Sources */,
-				98A84DE81602D3A300A4A673 /* _CreatedCard.m in Sources */,
 				98A84DE91602D3A300A4A673 /* _Group.m in Sources */,
 				98A84DEA1602D3A300A4A673 /* _Image.m in Sources */,
 				98A84DEB1602D3A300A4A673 /* _Message.m in Sources */,
@@ -2167,7 +2548,6 @@
 				98A84DF31602D3A300A4A673 /* CardTemplate.m in Sources */,
 				98A84DF41602D3A300A4A673 /* CardTemplateItem.m in Sources */,
 				98A84DF51602D3A300A4A673 /* Company.m in Sources */,
-				98A84DF61602D3A300A4A673 /* CreatedCard.m in Sources */,
 				98A84DF71602D3A300A4A673 /* Group.m in Sources */,
 				98A84DF81602D3A300A4A673 /* Image.m in Sources */,
 				98A84DF91602D3A300A4A673 /* Message.m in Sources */,
@@ -2176,15 +2556,12 @@
 				98A84DFC1602D3A300A4A673 /* Schedule.m in Sources */,
 				98A84E141602D46000A4A673 /* Encryptor.m in Sources */,
 				98A84E151602D46000A4A673 /* NSData+Base64.m in Sources */,
-				98A84E161602D46000A4A673 /* NSNumber+String.m in Sources */,
 				98A84E171602D46000A4A673 /* NSObject+Notification.m in Sources */,
 				98A84E181602D46000A4A673 /* NSString+Base64.m in Sources */,
 				98A84E191602D46000A4A673 /* NSString+MD5.m in Sources */,
 				98A84E1A1602D46000A4A673 /* NSString+Networking.m in Sources */,
-				98A84E1B1602D46000A4A673 /* NSString+Number.m in Sources */,
 				98A84E1C1602D46000A4A673 /* NSString+Validation.m in Sources */,
 				98A84E1D1602D46000A4A673 /* NSURL+KHH.m in Sources */,
-				98A84E1E1602D46000A4A673 /* UIViewController+Navigation.m in Sources */,
 				98A84EA51602D66200A4A673 /* KHHExchangeViewController.m in Sources */,
 				98A84EA71602D66200A4A673 /* KHHSendToViewController.m in Sources */,
 				98A84EA91602D66200A4A673 /* KHHAddGroupMemberVC.m in Sources */,
@@ -2314,6 +2691,14 @@
 				98CFC96E1607201E001B9B17 /* UIImage+Resize.m in Sources */,
 				98F83BE216073C790036A516 /* KHHData.m in Sources */,
 				98F83BE7160740100036A516 /* KHHApp.m in Sources */,
+				98838E7E16089A7600CE2353 /* NSNumber+SM.m in Sources */,
+				98838E7F16089A7D00CE2353 /* NSString+SM.m in Sources */,
+				982AACB71609ABB4002B9BAD /* UIViewController+SM.m in Sources */,
+				982AACBA1609BD08002B9BAD /* KHHData+Handlers.m in Sources */,
+				982AACBF1609BE6B002B9BAD /* KHHData+UI.m in Sources */,
+				984C2854160AF02D007D4D13 /* PrivateCard.m in Sources */,
+				984C2857160AF044007D4D13 /* _PrivateCard.m in Sources */,
+				984C28B5160B0D5B007D4D13 /* KHHData+Utils.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2322,6 +2707,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				98A84D871602CD2500A4A673 /* CardBookTests.m in Sources */,
+				982AACBB1609BD08002B9BAD /* KHHData+Handlers.m in Sources */,
+				982AACC01609BE6B002B9BAD /* KHHData+UI.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2336,6 +2723,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		98838DF71608624800CE2353 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				98838DF81608624800CE2353 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		98A84D6A1602CD2500A4A673 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -2355,6 +2750,56 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		984C284B160AEC25007D4D13 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		984C284C160AEC25007D4D13 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		98838DFE1608624800CE2353 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CardBookLogicTests/CardBookLogicTests-Prefix.pch";
+				INFOPLIST_FILE = "CardBookLogicTests/CardBookLogicTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		98838DFF1608624800CE2353 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CardBookLogicTests/CardBookLogicTests-Prefix.pch";
+				INFOPLIST_FILE = "CardBookLogicTests/CardBookLogicTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
 		98A84D881602CD2500A4A673 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2463,6 +2908,23 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		984C284A160AEC25007D4D13 /* Build configuration list for PBXAggregateTarget "mogenerator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				984C284B160AEC25007D4D13 /* Debug */,
+				984C284C160AEC25007D4D13 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		98838E001608624800CE2353 /* Build configuration list for PBXNativeTarget "CardBookLogicTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				98838DFE1608624800CE2353 /* Debug */,
+				98838DFF1608624800CE2353 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		98A84D571602CD2500A4A673 /* Build configuration list for PBXProject "CardBook" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

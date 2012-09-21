@@ -7,13 +7,15 @@
 //
 
 #import "LoginActionViewController.h"
+#import "KHHData.h"
 #import "KHHDefaults.h"
 #import "KHHNetworkAPIAgent+Account.h"
 #import "UIImageView+WebCache.h"
+#import "UIViewController+SM.h"
 #import "NSObject+Notification.h"
 
-#define textStartLogin NSLocalizedString(@"正在登录...", nil)
 #define textStartAutoLogin NSLocalizedString(@"正在自动登录...", nil)
+#define textStartLogin NSLocalizedString(@"正在登录...", nil)
 #define textWillAutoLogin NSLocalizedString(@"将自动登录...", nil)
 #define textLoginSucceeded NSLocalizedString(@"登录成功", nil)
 #define textStartPostLoginSync NSLocalizedString(@"正在同步数据...", nil)
@@ -23,8 +25,11 @@
 #define alertTitleSignUpSucceeded NSLocalizedString(@"注册成功", nil)
 #define textStartResetPassword NSLocalizedString(@"正在重置密码...", nil)
 #define textResetPasswordSucceeded NSLocalizedString(@"重置密码成功", nil)
+#define alertTitleSyncFailed NSLocalizedString(@"同步数据出错", nil)
+#define textNotAllDataAvailable NSLocalizedString(@"部分数据可能暂时无法使用。", nil)
 
-@interface LoginActionViewController () 
+@interface LoginActionViewController ()
+@property (nonatomic, weak) KHHData *data;
 @property (nonatomic, strong) KHHDefaults *defaults;
 @property (nonatomic, strong) KHHNetworkAPIAgent *agent;
 @end
@@ -42,6 +47,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        _data = [KHHData sharedData];
         _defaults = [KHHDefaults sharedDefaults];
         _agent = [[KHHNetworkAPIAgent alloc] init];
         //需要捕获的消息
@@ -52,8 +58,6 @@
                          selector:@"handleLoginAuto:"];
         [self observeNotification:KHHNotificationLoginSucceeded
                          selector:@"handleLoginSucceeded:"];
-        [self observeNotification:ECardNotificationPostLoginSync
-                         selector:@"handlePostLoginSync:"];
         //Sign up
         [self observeNotification:ECardNotificationSignUpAction
                          selector:@"handleSignUpAction:"];
@@ -64,6 +68,13 @@
                          selector:@"handleResetPasswordAction:"];
         [self observeNotification:KHHNotificationResetPasswordSucceeded
                          selector:@"handleResetPasswordSucceeded:"];
+        //Sync
+        [self observeNotification:KHHNotificationStartSyncAfterLogin
+                         selector:@"handleStartSyncAfterLogin:"];
+        [self observeNotification:KHHNotificationSyncAfterLoginSucceeded
+                         selector:@"handleSyncAfterLoginSucceeded:"];
+        [self observeNotification:KHHNotificationSyncAfterLoginFailed
+                         selector:@"handleSyncAfterLoginFailed:"];
     }
     return self;
 }
@@ -148,14 +159,7 @@
     [self.agent authenticateWithFakeID:self.defaults.currentAuthorizationID.stringValue
                               password:self.defaults.currentPassword];
     // 发送同步消息
-    [self postNotification:ECardNotificationPostLoginSync info:nil];
-}
-- (void)handlePostLoginSync:(NSNotification *)notification
-{
-    self.actionLabel.text = textStartPostLoginSync;
-#warning 改掉这里：由于同步尚未实现，直接进主界面。
-    // 由于同步尚未实现，直接进主界面。
-    [self postNotification:KHHNotificationShowMainUI info:nil];
+    [self postNotification:KHHNotificationStartSyncAfterLogin info:nil];
 }
 - (void)handleSignUpAction:(NSNotification *)notification
 {
@@ -180,9 +184,7 @@
     
     [self.defaults saveLoginOrRegisterResult:notification.userInfo];
 
-    [self showAlertWithTitle:alertTitleSignUpSucceeded 
-                     message:textWillAutoLogin 
-                    delegate:self];
+    [self alertWithTitle:alertTitleSignUpSucceeded message:textWillAutoLogin];
 }
 - (void)handleResetPasswordAction:(NSNotification *)notification
 {
@@ -200,6 +202,21 @@
 //    [KHHDefaults setBool:NO forKey:kKHHDefaultsKeyHaveSignedIn];
     self.defaults.loggedIn = NO;
 }
+- (void)handleStartSyncAfterLogin:(NSNotification *)notification
+{
+    self.actionLabel.text = textStartPostLoginSync;
+    // 开始同步数据
+    [self.data startSyncAllData];
+}
+- (void)handleSyncAfterLoginSucceeded:(NSNotification *)noti {
+    // 进主界面。
+    [self postNotification:KHHNotificationShowMainUI info:nil];
+}
+- (void)handleSyncAfterLoginFailed:(NSNotification *)noti {
+    [self alertWithTitle:alertTitleSyncFailed message:textNotAllDataAvailable];
+    // 进主界面。
+    [self postNotification:KHHNotificationShowMainUI info:nil];
+}
 
 #pragma mark - UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -216,15 +233,6 @@
 }
 
 #pragma mark - Utilities
-- (void)showAlertWithTitle:(NSString *)title message:(NSString *)message delegate:(id)delegate
-{
-    //显示警告信息
-    [[[UIAlertView alloc] initWithTitle:title
-                                 message:message
-                                delegate:delegate
-                       cancelButtonTitle:NSLocalizedString(@"OK", nil)
-                       otherButtonTitles:nil] show];
-}
 - (void)showCompanyLogo
 {
 #warning 这里根据需要来重写

@@ -9,7 +9,8 @@ const struct ImageAttributes ImageAttributes = {
 };
 
 const struct ImageRelationships ImageRelationships = {
-	.cards = @"cards",
+	.cardsWithFrame = @"cardsWithFrame",
+	.cardsWithLogo = @"cardsWithLogo",
 	.companies = @"companies",
 	.messages = @"messages",
 	.schedules = @"schedules",
@@ -89,15 +90,28 @@ const struct ImageFetchedProperties ImageFetchedProperties = {
 
 
 
-@dynamic cards;
+@dynamic cardsWithFrame;
 
 	
-- (NSMutableSet*)cardsSet {
-	[self willAccessValueForKey:@"cards"];
+- (NSMutableSet*)cardsWithFrameSet {
+	[self willAccessValueForKey:@"cardsWithFrame"];
   
-	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"cards"];
+	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"cardsWithFrame"];
   
-	[self didAccessValueForKey:@"cards"];
+	[self didAccessValueForKey:@"cardsWithFrame"];
+	return result;
+}
+	
+
+@dynamic cardsWithLogo;
+
+	
+- (NSMutableSet*)cardsWithLogoSet {
+	[self willAccessValueForKey:@"cardsWithLogo"];
+  
+	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"cardsWithLogo"];
+  
+	[self didAccessValueForKey:@"cardsWithLogo"];
 	return result;
 }
 	

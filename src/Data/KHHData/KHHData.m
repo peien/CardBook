@@ -7,13 +7,38 @@
 //
 
 #import "KHHData.h"
-#import "KHHApp.h"
+#import "KHHData+Handlers.h"
+#import "KHHData+UI.h"
+#import "NSObject+Notification.h"
 
 @implementation KHHData
 @synthesize managedObjectContext = _managedObjectContext;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
+@synthesize agent = _agent;
 
+- (id)initData
+{
+    self = [super init];
+    if (self) {
+        //
+        _agent = [[KHHNetworkAPIAgent alloc] init];
+        [self observeNotification:KHHNotificationAllDataAfterDateSucceeded
+                           object:_agent selector:@"handleAllDataAfterDateSucceeded:"];
+        [self observeNotification:KHHNotificationAllDataAfterDateFailed
+                           object:_agent selector:@"handleAllDataAfterDateFailed:"];
+        [self observeNotification:KHHNotificationReceivedCardCountAfterDateLastCardSucceeded
+                           object:_agent selector:@"handleReceivedCardCountAfterDateLastCardSucceeded:"];
+        [self observeNotification:KHHNotificationReceivedCardCountAfterDateLastCardFailed
+                           object:_agent selector:@"handleReceivedCardCountAfterDateLastCardFailed:"];
+    }
+    return self;
+}
+- (void)dealloc
+{
+    [self removeContext];
+    _agent = nil;
+}
 + (id)sharedData {
     static id _sharedObj = nil;
     static dispatch_once_t onceToken;
@@ -22,15 +47,14 @@
     });
     return _sharedObj;
 }
-- (id)initData
+#pragma mark - Core Data stack
+- (void)removeContext // 删除Context。登出或登入时使用。
 {
-    self = [super init];
-    if (self) {
-        //
-    }
-    return self;
+    _managedObjectContext = nil;
+    _persistentStoreCoordinator = nil;
+    _managedObjectModel = nil;
 }
-- (void)saveContext
+- (void)saveContext // 保存更改。
 {
     NSError *error = nil;
     NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
@@ -43,7 +67,10 @@
         }
     }
 }
-#pragma mark - Core Data stack
+- (void)cleanContext // 清除未保存的更改。
+{
+    [self.managedObjectContext reset];
+}
 - (NSManagedObjectContext *)managedObjectContext {
     if (_managedObjectContext != nil) {
         return _managedObjectContext;
@@ -103,4 +130,13 @@
     
     return _persistentStoreCoordinator;
 }
+#pragma mark - Sync
+// 开始批量同步所有信息
+- (void)startSyncAllData {
+    // 启动调用链！
+    NSDictionary *extra = @{kExtraKeyChainedInvocation : [NSNumber numberWithBool:YES]};
+#warning 需要填上时间
+    [self.agent allDataAfterDate:nil extra:extra];
+}
+
 @end
