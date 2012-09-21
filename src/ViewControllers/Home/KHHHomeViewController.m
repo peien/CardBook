@@ -24,7 +24,6 @@
 #import "MyTabBarController.h"
 #import "KHHShowHideTabBar.h"
 #import "MapController.h"
-#import "KHHImageTrans.h"
 #import "UIButton+WebCache.h"
 
 #import "Group.h"
