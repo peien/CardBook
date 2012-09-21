@@ -7,23 +7,12 @@
 //
 
 #import "SuperViewController.h"
-@implementation UIImage(Half)
-
-- (id)transformHalf
-{
-    UIGraphicsBeginImageContext(CGSizeMake(self.size.width, self.size.height));
-    [self drawInRect:CGRectMake(0.0f, 0.0f, self.size.width, self.size.height)]; 
-    UIImage *bgImg = UIGraphicsGetImageFromCurrentImageContext();  
-    UIGraphicsEndImageContext();
-    return bgImg;
-}
-@end
 
 @implementation UINavigationBar (custom)
 
 - (UIImage *)barBackground
 {
-    return [[[UIImage imageNamed:@"title_bg.png"] transformHalf] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
+    return [[UIImage imageNamed:@"title_bg.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
 
 }
 //ios 5 会调用这个方法，但是drawRect不能调用
@@ -56,7 +45,7 @@
     if (self) {
         // Custom initialization
         rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [rightBtn setBackgroundImage:[[[UIImage imageNamed:@"titlebtn_normal.png"] transformHalf]stretchableImageWithLeftCapWidth:8 topCapHeight:2] forState:UIControlStateNormal];
+        [rightBtn setBackgroundImage:[[UIImage imageNamed:@"titlebtn_normal.png"] stretchableImageWithLeftCapWidth:8 topCapHeight:2] forState:UIControlStateNormal];
         rightBtn.titleLabel.font = [UIFont systemFontOfSize:12];
         [rightBtn addTarget:self action:@selector(rightBarButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         rightBtn.frame = CGRectMake(0, 0, 65, 40);
@@ -64,7 +53,7 @@
         self.navigationItem.rightBarButtonItem = rightBar;
         
         leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [leftBtn setBackgroundImage:[[[UIImage imageNamed:@"titlebtn_normal.png"] transformHalf]stretchableImageWithLeftCapWidth:8 topCapHeight:2] forState:UIControlStateNormal];
+        [leftBtn setBackgroundImage:[[UIImage imageNamed:@"titlebtn_normal.png"] stretchableImageWithLeftCapWidth:8 topCapHeight:2] forState:UIControlStateNormal];
         [leftBtn addTarget:self action:@selector(leftBarButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         leftBtn.frame = CGRectMake(0, 0, 65, 40);
         [leftBtn setTitle:@"返回" forState:UIControlStateNormal];

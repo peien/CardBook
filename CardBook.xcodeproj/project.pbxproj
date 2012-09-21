@@ -184,7 +184,6 @@
 		98A84F7A1602D6C500A4A673 /* KHHCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F4D1602D6C500A4A673 /* KHHCardView.xib */; };
 		98A84F7C1602D6C500A4A673 /* KHHCustomEvaluaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F511602D6C500A4A673 /* KHHCustomEvaluaView.m */; };
 		98A84F7D1602D6C500A4A673 /* KHHCustomEvaluaView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F521602D6C500A4A673 /* KHHCustomEvaluaView.xib */; };
-		98A84F7E1602D6C500A4A673 /* KHHImageTrans.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F541602D6C500A4A673 /* KHHImageTrans.m */; };
 		98A84F7F1602D6C500A4A673 /* KHHMySearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F561602D6C500A4A673 /* KHHMySearchBar.m */; };
 		98A84F801602D6C500A4A673 /* KHHShowHideTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F581602D6C500A4A673 /* KHHShowHideTabBar.m */; };
 		98A84F811602D6C500A4A673 /* KHHVisitCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F5A1602D6C500A4A673 /* KHHVisitCalendarView.m */; };
@@ -678,8 +677,6 @@
 		98A84F501602D6C500A4A673 /* KHHCustomEvaluaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHCustomEvaluaView.h; sourceTree = "<group>"; };
 		98A84F511602D6C500A4A673 /* KHHCustomEvaluaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHCustomEvaluaView.m; sourceTree = "<group>"; };
 		98A84F521602D6C500A4A673 /* KHHCustomEvaluaView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHCustomEvaluaView.xib; sourceTree = "<group>"; };
-		98A84F531602D6C500A4A673 /* KHHImageTrans.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHImageTrans.h; sourceTree = "<group>"; };
-		98A84F541602D6C500A4A673 /* KHHImageTrans.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHImageTrans.m; sourceTree = "<group>"; };
 		98A84F551602D6C500A4A673 /* KHHMySearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHMySearchBar.h; sourceTree = "<group>"; };
 		98A84F561602D6C500A4A673 /* KHHMySearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHMySearchBar.m; sourceTree = "<group>"; };
 		98A84F571602D6C500A4A673 /* KHHShowHideTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHShowHideTabBar.h; sourceTree = "<group>"; };
@@ -1681,8 +1678,6 @@
 				98A84F501602D6C500A4A673 /* KHHCustomEvaluaView.h */,
 				98A84F511602D6C500A4A673 /* KHHCustomEvaluaView.m */,
 				98A84F521602D6C500A4A673 /* KHHCustomEvaluaView.xib */,
-				98A84F531602D6C500A4A673 /* KHHImageTrans.h */,
-				98A84F541602D6C500A4A673 /* KHHImageTrans.m */,
 				98A84F551602D6C500A4A673 /* KHHMySearchBar.h */,
 				98A84F561602D6C500A4A673 /* KHHMySearchBar.m */,
 				98A84F571602D6C500A4A673 /* KHHShowHideTabBar.h */,
@@ -2378,7 +2373,6 @@
 				98A84F771602D6C500A4A673 /* KHHAddImageView.m in Sources */,
 				98A84F791602D6C500A4A673 /* KHHCardView.m in Sources */,
 				98A84F7C1602D6C500A4A673 /* KHHCustomEvaluaView.m in Sources */,
-				98A84F7E1602D6C500A4A673 /* KHHImageTrans.m in Sources */,
 				98A84F7F1602D6C500A4A673 /* KHHMySearchBar.m in Sources */,
 				98A84F801602D6C500A4A673 /* KHHShowHideTabBar.m in Sources */,
 				98A84F811602D6C500A4A673 /* KHHVisitCalendarView.m in Sources */,
