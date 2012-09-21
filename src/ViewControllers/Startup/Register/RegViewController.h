@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SuperViewController.h"
 #define SignupAccountFieldTag     1002
 #define SignupPasswordFieldTag 1003
 
-@interface RegViewController : UIViewController <UITableViewDelegate, 
+@interface RegViewController : SuperViewController <UITableViewDelegate,
                                                 UITableViewDataSource, 
                                                 UITextFieldDelegate>
 

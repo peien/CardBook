@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SuperViewController.h"
 
-@interface ModifyViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
+@interface ModifyViewController : SuperViewController<UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic) IBOutlet UITableView *theTable;
 @end

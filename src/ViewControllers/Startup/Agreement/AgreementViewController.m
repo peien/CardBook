@@ -18,6 +18,7 @@
     if (self) {
         // Custom initialization
         self.navigationItem.title = textAgreement;
+        self.navigationItem.rightBarButtonItem = nil;
     }
     return self;
 }

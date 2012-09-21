@@ -11,6 +11,7 @@
 #import "KHHCalendarViewController.h"
 #import "KHHFinishVisitVC.h"
 #import "KHHVisitRecoardVC.h"
+#import "KHHFullFrameController.h"
 
 @implementation KHHVisitCalendarView
 @synthesize theTable = _theTable;
@@ -41,7 +42,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 135;
+    return 140;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -56,6 +57,21 @@
     if (indexPath.row%2 == 0) {
         cell.finishBtn.hidden = YES;
     }
+    for (int i = 0; i < 1; i++) {
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapFullFrame:)];
+        tap.numberOfTapsRequired = 1;
+        tap.numberOfTouchesRequired = 1;
+        if (i == 0) {
+            [cell.imgviewIco1 addGestureRecognizer:tap];
+        }else if (i == 1){
+            [cell.imgviewIco2 addGestureRecognizer:tap];
+        }else if (i == 2){
+            [cell.imgviewIco3 addGestureRecognizer:tap];
+        }else if (i == 3){
+            [cell.imgviewIco4 addGestureRecognizer:tap];
+        }
+    }
+    
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -64,7 +80,6 @@
     //有没有图片
     visitVC.style = KVisitRecoardVCStyleShowInfo;
     visitVC.isHaveImage = YES;
-    visitVC.num = 1;
     [self.viewCtrl.navigationController pushViewController:visitVC animated:YES];
 }
 
@@ -85,19 +100,26 @@
 {
     UIButton *btn = (UIButton *)sender;
     if (btn.tag == 333) {
-        DLog(@"添加");
         KHHVisitRecoardVC *visitRVC = [[KHHVisitRecoardVC alloc] initWithNibName:nil bundle:nil];
         visitRVC.style = KVisitRecoardVCStyleNewBuild;
         visitRVC.isNeedWarn = YES;
         [self.viewCtrl.navigationController pushViewController:visitRVC animated:YES];
         
     }else if (btn.tag == 444){
-        DLog(@"日历");
+        
         KHHCalendarViewController *calendarVC = [[KHHCalendarViewController alloc] initWithNibName:nil bundle:nil];
         [self.viewCtrl.navigationController pushViewController:calendarVC animated:YES];
         
     }
 
+}
+- (void)tapFullFrame:(UITapGestureRecognizer *)sender
+{
+    self.imgview = (UIImageView *)[sender view];
+    KHHFullFrameController *fullVC = [[KHHFullFrameController alloc] initWithNibName:nil bundle:nil];
+    fullVC.image = self.imgview.image;
+    [self.viewCtrl.navigationController pushViewController:fullVC animated:YES];
+    
 }
 
 @end

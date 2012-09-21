@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface ShareSinaViewController : UIViewController
+#import "SuperViewController.h"
+@interface ShareSinaViewController : SuperViewController
 
 @end

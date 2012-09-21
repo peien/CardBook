@@ -7,12 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-@protocol KHHMySearchBarDelegate<NSObject>
-- (void)KHHMySearchBarBtnClick:(NSInteger)tag;
-@end
+
 @interface KHHMySearchBar : UISearchBar
-@property (assign, nonatomic) id<KHHMySearchBarDelegate>delegateKHH;
 @property (assign, nonatomic) bool isSimple;
 @property (strong, nonatomic) UIButton *takePhoto;
+@property (strong, nonatomic) UIButton *synBtn;
 - (id)initWithFrame:(CGRect)frame simple:(BOOL)sim;
 @end

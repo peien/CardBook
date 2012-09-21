@@ -7,25 +7,47 @@
 //
 
 #import "ModifyViewController.h"
+#import "NSString+Validation.h"
+#import "KHHDefaults.h"
+#import "KHHNetworkAPIAgent+Account.h"
+
 #define LABEL_CELL_TAG 555
 #define TEXTFIELD_CELL_TAG 666
-@interface ModifyViewController ()
 
+#define ChangePasswordTag_Old 1201
+#define ChangePasswordTag_New 1202
+#define ChangePasswordTag_Re  1203
+
+#define textOldPasswordWrong NSLocalizedString(@"旧密码错误！", nil)
+#define textNewPasswordsNotMatch NSLocalizedString(@"两次输入的新密码不同！", @"")
+#define textNewPasswordsEqualToOld NSLocalizedString(@"新密码不能跟旧密码相同！", @"")
+#define textEmptyNewPassword NSLocalizedString(@"新密码不能为空！", @"")
+#define textInvalidNewPassword NSLocalizedString(@"新密码无效！", @"")
+#define textInvalidPasswords NSLocalizedString(@"密码无效！", @"")
+#define textChangePasswordSucceeded NSLocalizedString(@"密码修改成功", @"")
+#define textChangePasswordFailed NSLocalizedString(@"修改密码失败！", @"")
+#define textPleaseReLogIn NSLocalizedString(@"请重新登录。", @"")
+#define textOK NSLocalizedString(@"确定", @"")
+
+@interface ModifyViewController ()<UITextFieldDelegate>
+@property (strong, nonatomic) KHHDefaults *defaults;
+@property (strong, nonatomic) KHHNetworkAPIAgent *httpAgent;
 @end
 
 @implementation ModifyViewController
 @synthesize theTable = _theTable;
+@synthesize defaults = _defaults;
+@synthesize httpAgent = _httpAgent;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"完成" 
-                                                                     style:UIBarButtonItemStylePlain 
-                                                                    target:self 
-                                                                    action:@selector(rightBarClick:)];
-        self.navigationItem.rightBarButtonItem = rightBar;
+        [self.rightBtn setTitle:@"完成" forState:UIControlStateNormal];
         self.title = @"修改密码";
+        _defaults = [KHHDefaults sharedDefaults];
+        _httpAgent = [[KHHNetworkAPIAgent alloc] init];
     }
     return self;
 }
@@ -42,6 +64,7 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
     _theTable = nil;
+    _defaults = nil;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -71,32 +94,121 @@
         textfield.tag = TEXTFIELD_CELL_TAG;
         textfield.font = [UIFont systemFontOfSize:12];
         textfield.adjustsFontSizeToFitWidth = YES;
+        textfield.delegate = self;
         [cell.contentView addSubview:textfield];
     }
     UILabel *lab = (UILabel *)[cell.contentView viewWithTag:LABEL_CELL_TAG];
     UITextField *tf = (UITextField *)[cell.contentView viewWithTag:TEXTFIELD_CELL_TAG];
     if (indexPath.row == 0) {
         lab.text = @"旧密码";
-        tf.tag = 1122;
+        tf.tag = ChangePasswordTag_Old;
         tf.placeholder = @"请输入旧密码";
     }else if (indexPath.row == 1) {
         lab.text = @"新密码";
-        tf.tag = 1123;
+        tf.tag = ChangePasswordTag_New;
         tf.placeholder = @"请输入4－12位字符";
     }else if (indexPath.row == 2) {
         lab.text = @"确认密码";
-        tf.tag = 1123;
+        tf.tag = ChangePasswordTag_Re;
         tf.placeholder = @"请重复密码";
     }
     return cell;
 
 }
-- (void)rightBarClick:(id)sender
+- (void)rightBarButtonClick:(id)sender
 {
+    [self changePassword];
 
 }
-
-
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    switch (textField.tag) {
+        case ChangePasswordTag_Old:
+            //跳到密码输入框
+            [[self.view viewWithTag:ChangePasswordTag_New] becomeFirstResponder];
+            break;
+        case ChangePasswordTag_New:
+            [[self.view viewWithTag:ChangePasswordTag_Re] becomeFirstResponder];
+            break;
+        case ChangePasswordTag_Re:
+            [textField resignFirstResponder];
+            break;
+    }
+    return NO;
+}
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSUInteger newLength = textField.text.length + string.length - range.length;
+    return (newLength > 12) ? NO : YES;
+}// return NO to not change text
+- (void)changePassword{
+    
+    UITextField *oldField = ((UITextField*)[self.view viewWithTag:ChangePasswordTag_Old]);
+    UITextField *newField = ((UITextField*)[self.view viewWithTag:ChangePasswordTag_New]);
+    UITextField *reField = ((UITextField*)[self.view viewWithTag:ChangePasswordTag_Re]);
+    [oldField resignFirstResponder];
+    [newField resignFirstResponder];
+    [reField resignFirstResponder];
+    NSString *oldPass = oldField.text;
+    NSString *newPass = newField.text;
+    NSString *rePass = reField.text;
+#ifdef DEBUG
+    NSLog(@"修改密码: old-%@, new-%@, re-%@.", oldPass, newPass, rePass);
+    //    NSLog(@"修改密码: old-%@, new-%@.", oldPass, newPass);
+#endif
+    if (![oldPass isEqualToString:nil]) {
+        //旧密码错误
+        [self popAlartMessage:textOldPasswordWrong];
+        return;
+    }
+    
+    //旧密码正确......
+    
+    if (0 == newPass.length) {
+        //新密码为空
+        [self popAlartMessage:textEmptyNewPassword];
+        return;
+    }
+    
+    //新密码不为空......
+    
+    if (!(newPass.isValidPassword)) {
+        //新密码非法
+        [self popAlartMessage:textInvalidNewPassword];
+        return;
+    }
+    
+    //新密码合法......
+    
+    if (![newPass isEqualToString:rePass]) {
+        //新密码两次输入不一致
+        [self popAlartMessage:textNewPasswordsNotMatch];
+        return;
+    }
+    
+    //两次输入一致......
+    
+    if ([newPass isEqualToString:oldPass]) {
+        //新密码跟旧密码相同
+        [self popAlartMessage:textNewPasswordsEqualToOld];
+        return;
+    }
+    
+    //万事ok
+    NSLog(@"New Passwrod look valid! Let's change the password.");
+    [_httpAgent changePassword:oldPass toNewPassword:newPass];
+}
+#pragma mark - Utilites
+- (void)popAlartMessage:(NSString *)message
+{
+    [[[UIAlertView alloc]
+       initWithTitle:nil
+       message:message
+       delegate:nil
+       cancelButtonTitle:textOK
+       otherButtonTitles:nil]
+      show];
+}
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);

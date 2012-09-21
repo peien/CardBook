@@ -9,6 +9,7 @@
 #import "KHHAppDelegate.h"
 #import "NSObject+Notification.h"
 #import "KHHNotifications.h"
+#import "MyTabBarController.h"
 
 @implementation KHHAppDelegate
 
@@ -25,6 +26,9 @@
     // 显示Startup界面
     [self.window makeKeyAndVisible];
     [self postNotification:KHHNotificationShowStartup info:nil];
+    
+    //捕获摇摇动作
+    application.applicationSupportsShakeToEdit = YES;
     
     return YES;
 }
@@ -67,6 +71,17 @@
 - (void)handleShowMainUI:(NSNotification *)noti {
     // 显示主界面
     self.mainUI = [[KHHMainUIController alloc] init];
+    //暂时写在这里，处理新到联系人或消息提示
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:9999],@"Num", nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"KNotificationNewMsgNum" object:dic];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"KNotificationNewContactNum" object:dic];
 }
+//设置时间触发
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    DLog(@"didReceiveLocalNotification");
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"时间到" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alert show];
 
+}
 @end

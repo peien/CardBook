@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "StartupViewController.h"
 #import "KHHMainUIController.h"
+#import "MyTabBarController.h"
 
 @interface KHHAppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (nonatomic, strong) KHHMainUIController *mainUI;
+@property (nonatomic, strong) MyTabBarController  *aTabBarController;
 
 @end

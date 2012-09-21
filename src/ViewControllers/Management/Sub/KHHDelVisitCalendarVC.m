@@ -23,7 +23,7 @@
     if (self) {
         // Custom initialization
         self.title = NSLocalizedString(@"拜访日历", nil);
-        self.hidesBottomBarWhenPushed = YES;
+        //self.hidesBottomBarWhenPushed = YES;
     }
     return self;
 }
@@ -56,7 +56,6 @@
     cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (cell == nil) {
         cell = [[[NSBundle mainBundle] loadNibNamed:@"KHHDelVisitCalendarCell" owner:self options:nil] objectAtIndex:0];
-        //SMCheckbox *checkbox = [[SMCheckbox alloc] initWithFrame:CGRectMake(10, cell.frame.size.height/2, 45, 45)];
         SMCheckbox *checkbox = [[[NSBundle mainBundle] loadNibNamed:@"SMCheckbox" owner:self options:nil] objectAtIndex:0];
         checkbox.frame = CGRectMake(0, 35, 45, 45);
         [cell addSubview:checkbox];

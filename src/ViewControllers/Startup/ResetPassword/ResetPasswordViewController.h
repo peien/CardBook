@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SuperViewController.h"
 
-@interface ResetPasswordViewController : UIViewController
+@interface ResetPasswordViewController : SuperViewController
 
 @property (nonatomic, weak) IBOutlet UIImageView *theView;
 @property (nonatomic, weak) IBOutlet UITextField *theTextField;

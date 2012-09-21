@@ -7,15 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SuperViewController.h"
 
 #define LoginBackgroundViewTag 999
 #define LoginAccountFieldTag   1000
 #define LoginPasswordFieldTag  1001
 
-@interface LoginViewController : UIViewController
+@interface LoginViewController : SuperViewController
 @property (nonatomic, weak) IBOutlet UITableView *inputTable;
 @property (nonatomic, weak) IBOutlet UIButton *theLoginButton;
+@property (nonatomic, strong)        UIView   *latestView;
+@property (nonatomic, strong) IBOutlet UITextField *accountTf;
+@property (nonatomic, strong) IBOutlet UITextField *passWordTf;
 
 - (IBAction)login:(id)sender;
 - (IBAction)showResetPasswordPage:(id)sender;
+- (IBAction)registBtnClick:(id)sender;
 @end

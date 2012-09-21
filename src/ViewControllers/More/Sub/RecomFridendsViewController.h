@@ -8,8 +8,8 @@
 
 
 #import <MessageUI/MFMessageComposeViewController.h>
-
-@interface RecomFridendsViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
+#import "SuperViewController.h"
+@interface RecomFridendsViewController : SuperViewController<UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic) IBOutlet UITableView *theTable;
 @property (strong, nonatomic) IBOutlet NSArray     *ItemArray;
 @end

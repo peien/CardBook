@@ -24,11 +24,9 @@
 #import "MyTabBarController.h"
 #import "KHHShowHideTabBar.h"
 #import "MapController.h"
-#import "KHHImageTrans.h"
 #import "UIButton+WebCache.h"
 
 #import "Group.h"
-//#import "Group+ui.h"
 
 #import <MessageUI/MessageUI.h>
 
@@ -38,9 +36,9 @@ typedef enum {
     KHHTableIndexClient = 101
 } KHHTableIndexType;
 
-@interface KHHHomeViewController ()<KHHFloatBarControllerDelegate,UIActionSheetDelegate,UIAlertViewDelegate,
-                                   UITextFieldDelegate,UISearchBarDelegate,UISearchDisplayDelegate,
-                                   KHHMySearchBarDelegate,MFMessageComposeViewControllerDelegate>
+@interface KHHHomeViewController ()<UIActionSheetDelegate,UIAlertViewDelegate,
+                                   UITextFieldDelegate,UISearchBarDelegate,UISearchDisplayDelegate
+                                   >
 @property (nonatomic, strong) WEPopoverController *popover;
 @property (strong, nonatomic)  NSArray *keys;
 @property (strong, nonatomic)  KHHAppDelegate *app;
@@ -56,7 +54,6 @@ typedef enum {
 @synthesize btnTable = _btnTable;
 @synthesize btnArray = _btnArray;
 @synthesize isShowData = _isShowData;
-@synthesize type = _type;
 @synthesize currentBtn = _currentBtn;
 @synthesize isAddGroup = _isAddGroup;
 @synthesize isDelGroup = _isDelGroup;
@@ -79,6 +76,7 @@ typedef enum {
 @synthesize titleStr = _titleStr;
 @synthesize resultArray = _resultArray;
 @synthesize searchArray = _searchArray;
+@synthesize type = _type;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -99,7 +97,8 @@ typedef enum {
 {
     [self.navigationController pushViewController:[[KHHMyDetailController alloc] init] animated:YES];
 }
-
+#pragma mark -
+#pragma mark View LifeCycle
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -116,15 +115,19 @@ typedef enum {
     UIBarButtonItem *searchBarItem = [[UIBarButtonItem alloc] initWithCustomView:self.searchBar];
     UIBarButtonItem *addButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:nil];
     [self.toolBar setItems:[NSArray arrayWithObjects:searchBarItem, addButtonItem, nil] animated:YES];
+    
     KHHFloatBarController *floatBarVC = [[KHHFloatBarController alloc] initWithNibName:nil bundle:nil];
-    floatBarVC.delegate = self;
+    floatBarVC.viewController = self;
     self.popover = [[WEPopoverController alloc] initWithContentViewController:floatBarVC];
-    _btnTitleArr = [[NSMutableArray alloc] initWithObjects:@"全部",@"new",@"同事",@"拜访",@"重点",@"已发送",@"未分组", nil];
+    floatBarVC.popover = self.popover;
+    
+    _btnTitleArr = [[NSMutableArray alloc] initWithObjects:@"全部",@"new",@"同事",@"已发送",@"拜访",@"重点",@"未分组", nil];
     _btnArray = [[NSMutableArray alloc] initWithCapacity:0];
     _isShowData = YES;
     NSIndexPath *index = [NSIndexPath indexPathForRow:-1 inSection:0];
     _lastIndexPath = index;
     KHHMySearchBar *mySearchBar = [[KHHMySearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44) simple:_isNormalSearchBar];
+    [mySearchBar.synBtn addTarget:self action:@selector(synBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [mySearchBar.takePhoto addTarget:self action:@selector(takePhotoClick:) forControlEvents:UIControlEventTouchUpInside];
     if (_isNormalSearchBar) {
         _smallBtn.hidden = YES;
@@ -137,7 +140,6 @@ typedef enum {
         
     }
     mySearchBar.delegate = self;
-    mySearchBar.delegateKHH = self;
     [self.view addSubview:mySearchBar];
     UISearchDisplayController *disCtrl = [[UISearchDisplayController alloc] initWithSearchBar:mySearchBar contentsController:self];
     disCtrl.delegate = self;
@@ -152,16 +154,12 @@ typedef enum {
     //添加一个长按动作（bigtable）
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressFunc:)];
     longPress.numberOfTouchesRequired = 1;
-    //longPress.numberOfTapsRequired = 1;
-    //longPress.minimumPressDuration = 1;
     longPress.allowableMovement = NO;
     [_bigTable addGestureRecognizer:longPress];
     
     //搜索结果
     _resultArray = [[NSArray alloc] init];
     _searchArray = [[NSArray alloc] initWithObjects:@"孙悟空",@"孙悟空",@"孙悟空",@"孙悟空",@"孙悟空",@"孙悟空",@"孙悟空", nil];
-    
-    
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -174,18 +172,7 @@ typedef enum {
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     //[KHHShowHideTabBar hideTabbar];
-    
 }
-- (void)defaultSelectBtn
-{
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-    KHHButtonCell *cell = (KHHButtonCell *)[_btnTable cellForRowAtIndexPath:indexPath];
-   [self performSelector:@selector(cellBtnClick:) withObject:cell.button afterDelay:0.1];
-}
-- (void)cancelBtnClick:(id)sender{
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -218,45 +205,12 @@ typedef enum {
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
-
-#pragma mark - KHHFloatBarControllerDelegate
-- (void)BtnTagValueChanged:(NSInteger)index
+#pragma mark -
+#pragma mark Init ViewData
+- (void)initViewData
 {
-    
-    if (index == 0) {
-        UIActionSheet *actSheet = [[UIActionSheet alloc] initWithTitle:@"选择号码" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
-        _type = KUIActionSheetStylePhone;
-        //一个电话号码直接拨
-        [actSheet addButtonWithTitle:@"15077358653"];
-        //[actSheet addButtonWithTitle:@""];
-        [actSheet showInView:self.view];
-         POPDismiss;
-    }else if (index == 1){
-        UIActionSheet *actSheet = [[UIActionSheet alloc] initWithTitle:@"选择号码" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
-        _type = KUIActionSheetStyleMessage;
-        [actSheet addButtonWithTitle:@"15033759865"];
-        //[actSheet addButtonWithTitle:@""];
-        [actSheet showInView:self.view];
-        POPDismiss;
-    }else if (index == 2){
-        //拍照
-        [self takePhotos];
-        POPDismiss;
-    }else if (index == 3){
-        //定位
-        MapController *mapVC = [[MapController alloc] initWithNibName:nil bundle:nil];
-        mapVC.companyAddr = @"浙江滨江区南环路4280号元光德大厦501室";
-        mapVC.companyName = @"浙江金汉弘";
-        [self.navigationController pushViewController:mapVC animated:YES];
-        POPDismiss;
+    //调用数据库接口，获取各个分组的array
 
-    }else if (index == 4){
-        KHHVisitRecoardVC *newVisVC = [[KHHVisitRecoardVC alloc] initWithNibName:nil bundle:nil];
-        newVisVC.style = KVisitRecoardVCStyleNewBuild;
-        newVisVC.isNeedWarn = YES;
-        [self.navigationController pushViewController:newVisVC animated:YES];
-        POPDismiss;
-    }
 }
 
 #pragma mark - UITableViewDataSource
@@ -303,12 +257,10 @@ typedef enum {
                 KHHButtonCell *cell = nil;
                 cell = [tableView dequeueReusableCellWithIdentifier:cellId];
                 if (nil == cell) {
-                    DLog(@"new cell create!!======%@",indexPath);
                     cell = [[[NSBundle mainBundle] loadNibNamed:cellId
                                                           owner:self
                                                         options:nil] objectAtIndex:0];
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                    
                 }else
                     DLog(@"recell!!========%@",indexPath);
                 cell.button.tag = indexPath.row + 100;
@@ -340,12 +292,12 @@ typedef enum {
                              placeholderImage:[UIImage imageNamed:@"logopic.png"]
                                       success:^(UIImage *image, BOOL cached){
                                           if(CGSizeEqualToSize(image.size, CGSizeZero)){
-                                              //imageView.image = [UIImage imageNamed:@"logopic2.png"];
+                                              [cell.activi stopAnimating];
+                                              cell.activi.hidden = YES;
                                               [cell.logoBtn setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
                                           }
                                       }
                                       failure:^(NSError *error){
-                                          //imageView.image = [UIImage imageNamed:@"logopic2.png"];
                                           [cell.logoBtn setBackgroundImage:[UIImage imageNamed:@"logopic.png"] forState:UIControlStateNormal];
                                       }];
                 
@@ -362,10 +314,20 @@ typedef enum {
 
     return nil;
 }
+#pragma mark -
+#pragma mark Button Click
+- (void)defaultSelectBtn
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    KHHButtonCell *cell = (KHHButtonCell *)[_btnTable cellForRowAtIndexPath:indexPath];
+    [self performSelector:@selector(cellBtnClick:) withObject:cell.button afterDelay:0.1];
+}
+- (void)cancelBtnClick:(id)sender{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 //点击图片弹出横框
 - (void)logoBtnClick:(id)sender
 {
-    
     UIButton *btn = (UIButton *)sender;
     KHHClientCellLNPCC *cell = (KHHClientCellLNPCC *)[[btn superview] superview];
     CGRect cellRect = btn.frame;
@@ -376,7 +338,7 @@ typedef enum {
     UIPopoverArrowDirection arrowDirection = rect.origin.y < self.view.bounds.size.height/2?UIPopoverArrowDirectionUp:UIPopoverArrowDirectionDown;
     [self.popover presentPopoverFromRect:rect inView:self.view permittedArrowDirections:arrowDirection animated:YES];
 }
-//长按弹出横框
+//长按单元格弹出横框
 - (void)longPressFunc:(id)sender
 {
     if (!_isNormalSearchBar) {
@@ -393,11 +355,11 @@ typedef enum {
             //DLog(@"[II] logo = %@, frame = %@, converted frame = %@", cell.logoView, NSStringFromCGRect(cell.logoView.frame), NSStringFromCGRect(rect));
             UIPopoverArrowDirection arrowDirection = rect.origin.y < self.view.bounds.size.height/2?UIPopoverArrowDirectionUp:UIPopoverArrowDirectionDown;
             [self.popover presentPopoverFromRect:rect inView:self.view permittedArrowDirections:arrowDirection animated:YES];
-
         }
     }
 }
-
+#pragma mark-
+#pragma mark groupBtn Click
 - (void)cellBtnClick:(id)sender
 {
     UIButton *btn = (UIButton *)sender;
@@ -458,8 +420,15 @@ typedef enum {
             [actSheet addButtonWithTitle:@"删除分组"];
             [actSheet showInView:self.view];
         }
-        
     }
+}
+#pragma mark -
+#pragma mark synBtnClick
+- (void)synBtnClick:(id)sender
+{
+    NSLog(@"start syn");
+    //进度条，调用同步联系人接口，同步完后，刷新界面
+
 }
 #pragma mark - UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -489,33 +458,6 @@ typedef enum {
             return;
         }
         [self.navigationController pushViewController:addMemVC animated:YES];
-    }else if (_type == KUIActionSheetStylePhone){
-        if (buttonIndex == 0) {
-            return;
-        }
-        NSString *phone = [actionSheet buttonTitleAtIndex:buttonIndex];
-        NSString *urlSting = [NSString stringWithFormat:@"tel://%@",phone];
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlSting]];
-    }else if (_type == KUIActionSheetStyleMessage){
-        if (buttonIndex == 0) {
-            return;
-        }
-       // NSString *phone = [actionSheet buttonTitleAtIndex:buttonIndex];
-        Class messageClass = (NSClassFromString(@"MFMessageComposeViewController"));
-        if (messageClass != nil) {
-            if ([messageClass canSendText]) {
-                MFMessageComposeViewController *messageVC = [[MFMessageComposeViewController alloc] init];
-                NSString *receiver = [actionSheet buttonTitleAtIndex:buttonIndex];
-                messageVC.recipients = [NSArray arrayWithObject:receiver];
-                messageVC.messageComposeDelegate = self;
-                [self presentModalViewController:messageVC animated:YES];
-            }else{
-                DLog(@"不支持发送短信");
-                // 不支持发送短信;
-            }
-        }else{
-            //系统版本过低，只有ios4.0以上才支持程序内发送短信;
-        }
     }else if (_type == KUIActionSheetStyleUpload){
         if (buttonIndex == 0) {
            
@@ -531,22 +473,6 @@ typedef enum {
     }
 }
 
-- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
-{
-    switch (result) {
-        case MessageComposeResultSent:
-            break;
-        case MessageComposeResultCancelled:
-            break;
-        case MessageComposeResultFailed:
-            break;
-        default:
-            break;
-    }
-    [self dismissModalViewControllerAnimated:YES];
-
-
-}
 // 拍照
 - (void)takePhotos
 {
@@ -557,7 +483,6 @@ typedef enum {
         imagePickCtrl.allowsEditing = YES;
         [self presentModalViewController:imagePickCtrl animated:YES];
     }
-
 }
 - (void)takePhotoClick:(id)sender
 {
@@ -570,7 +495,6 @@ typedef enum {
     [actSheet addButtonWithTitle:@"手动制作"];
     [actSheet addButtonWithTitle:@"备份手机通讯录"];
     [actSheet showInView:self.view];
-    
 }
 - (void)saveImage:(UIImage *)image
 {
@@ -581,7 +505,6 @@ typedef enum {
     [picker dismissModalViewControllerAnimated:YES];
     UIImage *image = [info objectForKey:UIImagePickerControllerEditedImage];
     [self performSelector:@selector(saveImage:) withObject:image afterDelay:0.5];
-
 }
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
@@ -630,7 +553,7 @@ typedef enum {
             btn.hidden = YES;
         }
     }
-    [controller.searchBar setBackgroundImage:[[UIImage imageNamed:@"searchbar_bg_normal.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:1]];
+    //[controller.searchBar setBackgroundImage:[[UIImage imageNamed:@"searchbar_bg_normal.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:1]];
 }
     
 - (void) searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller {
@@ -643,7 +566,7 @@ typedef enum {
         }
     }
     if (!_isNormalSearchBar) {
-        [controller.searchBar setBackgroundImage:[[UIImage imageNamed:@"searchbarbg.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:1]];
+    //[controller.searchBar setBackgroundImage:[[UIImage imageNamed:@"searchbarbg.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:1]];
     }
 }
 
@@ -677,13 +600,6 @@ typedef enum {
                     [_btnTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_btnTitleArr count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
                     //此时创建一个组，保存到数据库
                     
-//                    NSManagedObjectContext *appcontext = [(KHHAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext];
-//                    Group *group = [Group createGroup:appcontext];
-//                    group.name = tf.text;
-//                    if ([Group saveGroup:group]) {
-//                        DLog(@"success save group!!");
-//                    }
-                    
                 }else{
                     //修改组名，
                     if (tf.text == nil) {
@@ -706,11 +622,6 @@ typedef enum {
         return;
     }
 }
-//- (IBAction)cancelBtnClick:(id)sender
-//{
-//
-//}
-
 #pragma mark - test
 - (void)testAction:(id)sender {
     DLog(@"[II] testAction");

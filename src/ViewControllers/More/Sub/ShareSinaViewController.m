@@ -21,11 +21,7 @@
     if (self) {
         // Custom initialization
         self.title =@"分享到新浪微薄";
-        UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithTitle:@"确认" 
-                                                                     style:UIBarButtonItemStylePlain 
-                                                                    target:self 
-                                                                    action:@selector(rightBarClick:)];
-        self.navigationItem.rightBarButtonItem = rightBar;
+        [self.rightBtn setTitle:@"确认" forState:UIControlStateNormal];
         
     }
     return self;
@@ -44,7 +40,7 @@
     // e.g. self.myOutlet = nil;
 }
 
-- (void)rightBarClick:(id)sender
+- (void)rightBarButtonClick:(id)sender
 {
     LoginSinaViewController *logsinaVC = [[LoginSinaViewController alloc] initWithNibName:@"LoginSinaViewController" bundle:nil];
     [self.navigationController pushViewController:logsinaVC animated:YES];

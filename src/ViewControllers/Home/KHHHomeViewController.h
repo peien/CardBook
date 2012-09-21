@@ -13,7 +13,7 @@ typedef enum {
     KUIActionSheetStyleMessage,
     KUIActionSheetStyleEditGroupMember,
     KUIActionSheetStyleUpload
-}KUIActionSheetType;
+}KUIActionSheetHomeType;
 @interface KHHHomeViewController : SuperViewController <UITableViewDelegate, UITableViewDataSource,
                                                         UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (nonatomic, weak) IBOutlet UISearchBar   *searchBar;
@@ -25,11 +25,10 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UITableView *bigTable;
 @property (nonatomic, strong) NSMutableArray       *btnArray;
 @property (assign, nonatomic) bool                 isShowData;
-@property (assign, nonatomic) KUIActionSheetType   type;
 @property (strong, nonatomic)  UIButton            *currentBtn;
 @property (assign, nonatomic) bool                 isAddGroup;
 @property (assign, nonatomic) bool                 isDelGroup;
-@property (strong, nonatomic)  UISearchDisplayController *searCtrl;
+@property (strong, nonatomic) UISearchDisplayController *searCtrl;
 @property (strong, nonatomic) NSIndexPath          *lastIndexPath;
 @property (assign, nonatomic) bool                 isNotHomePage;
 @property (strong, nonatomic) IBOutlet UIImageView *imgview;
@@ -40,6 +39,7 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIButton    *btnForCancel;
 @property (strong, nonatomic)  UIView              *btnBackbg;
 @property (strong, nonatomic) NSMutableDictionary  *btnDic;
+@property (assign, nonatomic) KUIActionSheetHomeType type;
 - (IBAction)addBtnClick:(id)sender;
 - (IBAction)cancelBtnClick:(id)sender;
 @end

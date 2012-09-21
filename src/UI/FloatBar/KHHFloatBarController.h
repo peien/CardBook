@@ -7,15 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-@protocol KHHFloatBarControllerDelegate<NSObject>
-- (void)BtnTagValueChanged:(NSInteger)index;
-@end
+#import "WEPopoverController.h"
+
 
 @interface KHHFloatBarController : UIViewController
-@property (nonatomic, weak)   IBOutlet UISegmentedControl *segmentedControl;
 @property (strong, nonatomic) IBOutlet UIView *viewF;
-@property (assign, nonatomic) id<KHHFloatBarControllerDelegate>delegate;
 @property (assign, nonatomic) bool isFour;
-//- (IBAction)BtnTagValueChanged:(id)sender;
+@property (strong, nonatomic) UIViewController *viewController;
+@property (strong, nonatomic) WEPopoverController *popover;
+@property (assign, nonatomic) int                 type;
 - (IBAction)BtnClick:(id)sender;
 @end

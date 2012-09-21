@@ -17,15 +17,20 @@
 #import "UIViewController+SM.h"
 #import "KHHNetworkAPIAgent+Account.h"
 
+
 #define textLogin NSLocalizedString(@"登录", @"")
 
 @interface LoginViewController () <UITableViewDataSource, UITableViewDelegate,
                                     UITextFieldDelegate, SMCheckboxDelegate>
 @property (nonatomic, strong) SMCheckbox *showPasswordBox;
+@property (nonatomic, strong) SMCheckbox *remberPasswordBox;
 @property (nonatomic, strong) KHHDefaults *defaults;
 @end
 
 @implementation LoginViewController
+@synthesize latestView = _latestView;
+@synthesize accountTf = _accountTf;
+@synthesize passWordTf = _passWordTf;
 
 #pragma mark -
 - (void)dealloc {
@@ -47,6 +52,37 @@
                                                   style:UIBarButtonItemStylePlain 
                                                   target:self action:nil];
         _defaults = [KHHDefaults sharedDefaults];
+        
+        self.latestView = [[[NSBundle mainBundle] loadNibNamed:@"LoginView" owner:self options:nil] objectAtIndex:0];
+        _accountTf.placeholder = NSLocalizedString(@"请输入您的手机号", @"Login account placeholder");
+        _accountTf.keyboardType = UIKeyboardTypePhonePad;
+        _accountTf.returnKeyType = UIReturnKeyNext;
+        _accountTf.tag = LoginAccountFieldTag;
+        _accountTf.text = self.defaults.currentUser;
+        _accountTf.clearButtonMode = UITextFieldViewModeWhileEditing;
+        
+        _passWordTf.placeholder = NSLocalizedString(@"请输入4~12位的密码", @"Login password placeholder");
+        _passWordTf.keyboardType = UIKeyboardTypeASCIICapable;
+        _passWordTf.returnKeyType = UIReturnKeyDone;
+        _passWordTf.secureTextEntry = YES;
+        _passWordTf.tag = LoginPasswordFieldTag;
+        _passWordTf.text = self.defaults.currentPassword;
+        _passWordTf.clearButtonMode = UITextFieldViewModeWhileEditing;
+        
+        self.showPasswordBox = [[[NSBundle mainBundle] loadNibNamed:@"SMCheckbox"
+                                                              owner:self
+                                                            options:nil] objectAtIndex:0];
+        self.showPasswordBox.frame = CGRectMake(20, 132, 25, 25);
+        self.showPasswordBox.delegate = self;
+        [self.latestView addSubview:self.showPasswordBox];
+       
+        self.remberPasswordBox = [[[NSBundle mainBundle] loadNibNamed:@"SMCheckbox"
+                                                              owner:self
+                                                            options:nil] objectAtIndex:0];
+        self.remberPasswordBox.frame = CGRectMake(20, 160, 25, 25);
+        self.remberPasswordBox.delegate = self;
+        self.remberPasswordBox.selected = YES;
+        [self.latestView addSubview:self.remberPasswordBox];
     }
     return self;
 }
@@ -55,12 +91,12 @@
 {
     [super viewDidLoad];
     // show password checkbox
-    self.showPasswordBox = [[[NSBundle mainBundle] loadNibNamed:@"SMCheckbox"
-                                                          owner:self
-                                                        options:nil] objectAtIndex:0];
-    self.showPasswordBox.frame = CGRectMake(10, 110, 25, 25);
-    self.showPasswordBox.delegate = self;
-    [self.view addSubview:self.showPasswordBox];
+//    self.showPasswordBox = [[[NSBundle mainBundle] loadNibNamed:@"SMCheckbox"
+//                                                          owner:self
+//                                                        options:nil] objectAtIndex:0];
+//    self.showPasswordBox.frame = CGRectMake(10, 110, 25, 25);
+//    self.showPasswordBox.delegate = self;
+//    [self.view addSubview:self.showPasswordBox];
     
     // 登录按钮
     UIImage *okButtonImage = [[UIImage imageNamed:@"OKButton.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:0];
@@ -72,17 +108,40 @@
     UIImageView *bgImageView = [[UIImageView alloc] initWithImage:bgImage];
     bgImageView.frame = CGRectMake(0, 0, 320, 460);
     [self.inputTable  setBackgroundView:bgImageView];
+
+    [self.view addSubview:self.latestView];
+    
 }
+
 - (void)viewDidUnload
 {
     [super viewDidUnload];
     DLog(@"[II] viewDidUnload...");
+    _latestView = nil;
+    _passWordTf = nil;
+    _accountTf = nil;
 }
 - (void)viewDidAppear:(BOOL)animated
 {
     DLog(@"[II] viewDidAppear...");
     [self performSelector:@selector(showTheKeyboard) withObject:nil afterDelay:0.2f];
     [super viewDidAppear:animated];
+}
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+     self.navigationController.navigationBarHidden = YES;
+
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBarHidden = NO;
+
 }
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -111,7 +170,7 @@
         textField.clearButtonMode = UITextFieldViewModeWhileEditing;
         textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         textField.userInteractionEnabled = YES;
-        textField.delegate = self;
+        //textField.delegate = self;
         textField.font = [UIFont systemFontOfSize:15.0f];
 
         switch (indexPath.row) {
@@ -227,6 +286,14 @@
                          animated:YES];
     self.defaults.loggedIn = NO;
 } //gotoRegView:
+//注册
+- (IBAction)registBtnClick:(id)sender
+{
+    [self pushViewControllerClass:[RegViewController class]
+                         animated:YES];
+    self.defaults.loggedIn = NO;
+
+}
 - (IBAction)showResetPasswordPage:(id)sender
 {
     [self pushViewControllerClass:[ResetPasswordViewController class]

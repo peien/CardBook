@@ -10,6 +10,5 @@
 #import "SuperViewController.h"
 
 @interface KHHVisitCalendarVC : SuperViewController
-//- (IBAction)addBtnClick:(id)sender;
-//- (IBAction)calendarBtnClick:(id)sender;
+
 @end

@@ -15,9 +15,8 @@
 #import "NSString+Validation.h"
 #import "KHHFrameCardView.h"
 
+#import "_Card.h"
 
-#import "Card.h"
-//#import "Card+ui.h"
 #define CARD_IMGVIEW_TAG 990
 #define CARDMOD_VIEW_TAG 991
 
@@ -67,10 +66,9 @@ NSString *const kECardListSeparator = @"|";
 @property (strong, nonatomic) XLPageControl *xlPage;
 @property (strong, nonatomic) UITextField   *beginEditField;
 @property (strong, nonatomic) UILabel       *beginEditLabel;
-@property (strong, nonatomic) Card          *card;
-@property (strong, nonatomic) TCard         *glCard;
+@property (strong, nonatomic) _Card         *glCard;
 @property (assign, nonatomic) NSInteger     offset;
-@property (assign, nonatomic) NSInteger      indexAll;
+@property (assign, nonatomic) NSInteger     indexAll;
 
 @end
 
@@ -93,7 +91,6 @@ NSString *const kECardListSeparator = @"|";
 @synthesize xlPage;
 @synthesize beginEditField;
 @synthesize beginEditLabel;
-@synthesize card;
 @synthesize glCard = _glCard;
 @synthesize offset = _offset;
 @synthesize indexAll = _indexAll;
@@ -136,20 +133,20 @@ NSString *const kECardListSeparator = @"|";
     KHHFrameCardView *cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(0, 0, 320, 220) isVer:NO];
     _theTable.tableHeaderView = cardView;
 
-
-    //MODEL CARD
-    _glCard = [[TCard alloc] init];
+   //MODEL CARD
+   // _glCard = [_Card insertInManagedObjectContext:nsman];
     _glCard.name = @"Jhon";
-    _glCard.job = @"设计";
-    _glCard.mobiles = @"15123568975";
-    _glCard.tels = @"0751-222222";
-    _glCard.faxs = @"0751-222222";
-    _glCard.mails = @"87569458@qq.com";
-    _glCard.company = @"浙江金汉弘技术有限公司";
-    _glCard.address = @"杭州滨江区南环路元光德大厦501室";
-    _glCard.zipCode = @"00000000";
+   // _glCard.job = @"设计";
+    _glCard.mobilePhone = @"15123568975";
+    _glCard.telephone = @"0751-222222";
+    _glCard.fax = @"0751-222222";
+    _glCard.email = @"87569458@qq.com";
+    //_glCard.company = @"浙江金汉弘技术有限公司";
+    _glCard.factoryAddress = @"杭州滨江区南环路元光德大厦501室";
+    //_glCard.zipCode = @"00000000";
     _glCard.web = @"www.baidu.com";
     _glCard.qq = @"875698754";
+    
     [self initVCData];
     _theTable.editing = YES;
 }
@@ -183,10 +180,8 @@ NSString *const kECardListSeparator = @"|";
     _fieldExternTwo = [[NSMutableArray alloc] initWithCapacity:0];
     _fieldExternThree = [[NSMutableArray alloc] initWithCapacity:0];
     _fieldValueDic = [[NSMutableDictionary alloc] initWithCapacity:0];
-    //调用数据库接口，创建card模型
-    KHHAppDelegate *app = (KHHAppDelegate *)[[UIApplication sharedApplication] delegate];
-#warning 重写这一行
-//    self.card = [Card createCard:app.managedObjectContext];
+    
+    // 显示信息
     [self updateFieldValue];
 }
 
@@ -196,13 +191,14 @@ NSString *const kECardListSeparator = @"|";
     if (_glCard.name.length > 0) {
         [_fieldValue replaceObjectAtIndex:0 withObject:_glCard.name];
     }
-    if (_glCard.job.length > 0) {
-        [_fieldValue replaceObjectAtIndex:1 withObject:_glCard.job];
-    }
+    
+//    if (_glCard.job.length > 0) {
+//        [_fieldValue replaceObjectAtIndex:1 withObject:_glCard.job];
+//    }
     
     //手机，电话，传真，邮箱有多个，默认显示第一个
 
-    NSArray *mobiels = [_glCard.mobiles componentsSeparatedByString:kECardListSeparator];
+    NSArray *mobiels = [_glCard.mobilePhone componentsSeparatedByString:kECardListSeparator];
     for (int i = 0; i<mobiels.count; i++) {
         if (i == 0) {
             [_fieldValue replaceObjectAtIndex:3 withObject:[mobiels objectAtIndex:0]];
@@ -211,7 +207,7 @@ NSString *const kECardListSeparator = @"|";
         }
     }
     
-    NSArray *tels = [_glCard.tels componentsSeparatedByString:kECardListSeparator];
+    NSArray *tels = [_glCard.telephone componentsSeparatedByString:kECardListSeparator];
     for (int i = 0; i<tels.count; i++) {
         if (i == 0) {
             [_fieldValue replaceObjectAtIndex:4 withObject:[tels objectAtIndex:0]];
@@ -220,7 +216,7 @@ NSString *const kECardListSeparator = @"|";
         }
     }
     
-    NSArray *faxs = [_glCard.faxs componentsSeparatedByString:kECardListSeparator];
+    NSArray *faxs = [_glCard.fax componentsSeparatedByString:kECardListSeparator];
     for (int i = 0; i<faxs.count; i++) {
         if (i == 0) {
             [_fieldValue replaceObjectAtIndex:5 withObject:[faxs objectAtIndex:0]];
@@ -229,7 +225,7 @@ NSString *const kECardListSeparator = @"|";
         }
     }
     
-    NSArray *mails = [_glCard.mails componentsSeparatedByString:kECardListSeparator];
+    NSArray *mails = [_glCard.email componentsSeparatedByString:kECardListSeparator];
     for (int i = 0; i<mails.count; i++) {
         if (i == 0) {
             [_fieldValue replaceObjectAtIndex:6 withObject:[mails objectAtIndex:0]];
@@ -238,15 +234,15 @@ NSString *const kECardListSeparator = @"|";
         }
     }
     
-    if (_glCard.company.length > 0) {
-        [_fieldValue replaceObjectAtIndex:7 withObject:_glCard.company];
-    }
-    if (_glCard.address.length > 0) {
-        [_fieldValue replaceObjectAtIndex:8 withObject:_glCard.address];
-    }
-    if (_glCard.zipCode.length > 0) {
-        [_fieldValue replaceObjectAtIndex:9 withObject:_glCard.zipCode];
-    }
+//    if (_glCard.company.length > 0) {
+//        [_fieldValue replaceObjectAtIndex:7 withObject:_glCard.company];
+//    }
+//    if (_glCard.address.length > 0) {
+//        [_fieldValue replaceObjectAtIndex:8 withObject:_glCard.address];
+//    }
+//    if (_glCard.zipCode.length > 0) {
+//        [_fieldValue replaceObjectAtIndex:9 withObject:_glCard.zipCode];
+//    }
     
     if (_glCard.web.length > 0) {
         //[_fieldExternThree addObject:[NSDictionary dictionaryWithObjectsAndKeys:_glCard.web,@"value",@"网页",@"key", nil]];
@@ -277,7 +273,6 @@ NSString *const kECardListSeparator = @"|";
     self.xlPage = nil;
     self.beginEditLabel = nil;
     self.beginEditField = nil;
-    self.card = nil;
     _glCard = nil;
 }
 #pragma mark -
@@ -686,8 +681,8 @@ NSString *const kECardListSeparator = @"|";
     NSString *group = [_fieldValue objectAtIndex:2];
     
     _glCard.name = name;
-    _glCard.job = job;
-    _glCard.group = group;
+//    _glCard.job = job;
+//    _glCard.group = group;
     
     //把多个手机号，用@“｜”串联起来，然后保存
     NSMutableString *mobiles = [NSMutableString stringWithString:[_fieldValue objectAtIndex:3]];
@@ -736,16 +731,16 @@ NSString *const kECardListSeparator = @"|";
         NSString *key = [dic objectForKey:@"key"];
         NSString *value = [dic objectForKey:@"value"];
         if ([key isEqualToString:@"部门"]) {
-            _glCard.depart = value;
+            _glCard.department = value;
             DLog(@"depart=====save:%@",value);
         }else if ([key isEqualToString:@"公司邮箱"]){
-            _glCard.mails = value;
+            _glCard.email = value;
             DLog(@"company mail=======save:%@",value);
         }
     }
-    _glCard.company = company;
-    _glCard.address = address;
-    _glCard.zipCode = zipCode;
+    //_glCard.company = company;
+   // _glCard.address = address;
+    //_glCard.zipCode = zipCode;
     
     // 对是否为空或格式进行判断，然后把手机，电话，传真，邮箱保存起来
     //    if (mobiles.length==0 && phones.length==0) {
@@ -793,10 +788,10 @@ NSString *const kECardListSeparator = @"|";
     //            return;
     //        }
     //    }
-    _glCard.mobiles = mobiles;
-    _glCard.tels = phones;
-    _glCard.faxs = faxes;
-    _glCard.mails = mails;
+    _glCard.mobilePhone = mobiles;
+    _glCard.telephone = phones;
+    _glCard.fax = faxes;
+    _glCard.email = mails;
     
     //save externThree;
     for (NSDictionary *dic in _fieldExternThree) {
@@ -813,7 +808,7 @@ NSString *const kECardListSeparator = @"|";
             _glCard.msn = value;
             
         }else if ([key isEqualToString:@"旺旺"]){
-            _glCard.wangwang = value;
+            _glCard.aliWangWang = value;
             
         }else if ([key isEqualToString:@"业务范围"]){
             DLog(@"业务范围=====save:%@",value);

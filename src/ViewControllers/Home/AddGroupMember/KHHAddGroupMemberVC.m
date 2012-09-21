@@ -11,6 +11,7 @@
 #import "SMCheckbox.h"
 #import "KHHShowHideTabBar.h"
 #import "KHHMySearchBar.h"
+#import "UIImageView+WebCache.h"
 @interface KHHAddGroupMemberVC ()<UISearchBarDelegate,UISearchDisplayDelegate,
                                  UITableViewDataSource,UITableViewDelegate,SMCheckboxDelegate>
 
@@ -47,10 +48,7 @@
     num = 0;
     [self.navigationController popViewControllerAnimated:YES];
 }
-//- (void)rightBarButtonClick:(id)sender
-//{
-//   
-//}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -100,6 +98,20 @@
     _addGroupArray = nil;
     _selectedItemArray = nil;
 }
+// 初始化界面数据
+#pragma mark -
+#pragma mark InitViewData
+- (void)initViewData
+{
+    if (_isAdd) {
+        //获取添加组员界面数据，调用数据库接口（获取非本组下的客户名片列表）
+    }else{
+        //获取删除组员界面数据，获取本组下的客户名片列表
+    }
+
+}
+#pragma mark -
+#pragma mark TableDelegates
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (tableView == self.searbarCtrl.searchResultsTableView ) {
@@ -141,12 +153,12 @@
         }
         if ([[_selectedItemArray objectAtIndex:indexPath.row] isEqualToNumber:[NSNumber numberWithBool:YES]]) {
             //cell.accessoryType = UITableViewCellAccessoryCheckmark;
-            UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkbox_yes.png"]];
+            UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checked.png"]];
             imgView.frame = CGRectMake(280, 10, 30, 30);
             [cell addSubview:imgView];
         }else{
             //cell.accessoryType = UITableViewCellAccessoryNone;
-            UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checkbox_no.png"]];
+            UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"unchecked.png"]];
             imgView.frame = CGRectMake(280, 10, 30, 30);
             [cell addSubview:imgView];
             
@@ -177,7 +189,8 @@ int num = 0;
     [_theTableM reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
     [_theTableM deselectRowAtIndexPath:indexPath animated:NO];
 }
-
+#pragma mark -
+#pragma mark ButtonClick
 - (IBAction)sureBtnClick:(id)sender
 {
     for (int i = 0; i<12; i++) {
@@ -197,7 +210,6 @@ int num = 0;
     [self.navigationController popViewControllerAnimated:YES];
     num = 0;
     
-
 }
 - (IBAction)cancelBtn:(id)sender
 {
@@ -206,29 +218,7 @@ int num = 0;
 }
 - (void)checkbox:(SMCheckbox *)checkbox valueChanged:(BOOL)newValue
 {
-#warning 这里未完成
-//    KHHClientCellLNPC *cell = (KHHClientCellLNPC *)[[checkBox superview] superview];
-//    NSNumber *value = [NSNumber numberWithBool:newValue];
-//    //DLog(@"checkBox======%@",value);
-//    if ([value isEqualToNumber:[NSNumber numberWithBool:YES]]) {
-//        cell.selected = YES;
-//        num++;
-//        DLog(@"num=======%d",num);
-//    }else{
-//    
-//        cell.selected = NO;
-//        num--;
-//        DLog(@"num======%d",num);
-//    }
-//    NSString *s = [NSString stringWithFormat:@"(%d)",num];
-//    self.numLab.text = s;
-//    if (num == 0) {
-//        self.numLab.hidden = YES;
-//    }else{
-//        self.numLab.hidden = NO;
-//    }
-//    //
-//    NSIndexPath *indexPath = [_theTableM indexPathForCell:cell];
+    
 
 }
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString

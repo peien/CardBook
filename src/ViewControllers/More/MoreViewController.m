@@ -16,7 +16,7 @@
 #import "AboutController.h"
 
 
-@interface MoreViewController ()<UIActionSheetDelegate>
+@interface MoreViewController ()<UIActionSheetDelegate,UIAlertViewDelegate>
 
 @end
 
@@ -88,7 +88,7 @@
             return 3;
             break;
         case 1:
-            return 2;
+            return 1;
             break;
         case 2:
             return 4;
@@ -115,6 +115,7 @@
                     if (cell == nil) {
                         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
                         cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     }
                     cell.textLabel.text = @"修改密码";
 
@@ -126,6 +127,7 @@
                     if (cell == nil) {
                         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
                         cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     }
                     cell.textLabel.text = @"登出";
                 }
@@ -136,6 +138,7 @@
                     if (cell == nil) {
                         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
                         cell.accessoryView = _autoLog;
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     }
                     cell.textLabel.text = @"自动登陆";
                 }
@@ -153,6 +156,7 @@
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
                 cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
             cell.textLabel.text = @"检查更新";
         }
@@ -165,6 +169,7 @@
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
                 cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
             cell.textLabel.text = @"软件更新方式设置";
             _updateStyle.frame = CGRectMake(25, 36, 260, 20);
@@ -183,6 +188,7 @@
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
                 cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
             cell.textLabel.text = @"使用指南";
         }
@@ -194,6 +200,7 @@
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
                 cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
             cell.textLabel.text = @"推荐给好友";
         
@@ -205,6 +212,7 @@
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
                 cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
             cell.textLabel.text = @"客户反馈";
         
@@ -216,6 +224,7 @@
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
                 cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
             cell.textLabel.text = @"关于印象名片";
         }
@@ -235,6 +244,7 @@
             if (cell == nil) {
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
                 cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
             cell.textLabel.text = @"默认页面设置";
             _defaultPage.frame = CGRectMake(15, 36, 260, 20);
@@ -250,6 +260,7 @@
                 cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
                 cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
                 cell.accessoryView = _autoReturn;
+                cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
             cell.textLabel.text = @"自动回赠名片";
             
@@ -280,8 +291,8 @@
             ModifyViewController *modVC = [[ModifyViewController alloc] initWithNibName:@"ModifyViewController" bundle:nil];
             [self.navigationController pushViewController:modVC animated:YES];
         }else if (indexPath.row == 1) {
-            LoginViewController *loginVC = [[LoginViewController alloc] initWithNibName:nil bundle:nil];
-            [self.navigationController pushViewController:loginVC animated:YES];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"确定要登出吗" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            [alert show];
 
         }
     }else if (indexPath.section == 2) {
@@ -342,6 +353,14 @@
     }else{
         _defaultPage.text = change;
     }
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1) {
+        LoginViewController *loginVC = [[LoginViewController alloc] initWithNibName:@"LoginViewController2" bundle:nil];
+        [self.navigationController pushViewController:loginVC animated:YES];
+    }
+
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

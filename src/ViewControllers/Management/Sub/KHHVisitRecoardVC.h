@@ -34,10 +34,9 @@ typedef enum
 @property (strong, nonatomic) NSMutableArray        *fieldValue;
 @property (strong, nonatomic) UILabel               *editLabel;
 @property (strong, nonatomic) NSArray               *fieldName;
-@property (assign, nonatomic) int                   num;
 @property (assign, nonatomic) int                   index;
-@property (assign, nonatomic) bool                  isDelImg;
 @property (strong, nonatomic) NSMutableArray        *imgArray;
 @property (strong, nonatomic) NSArray               *timeArr;
+@property (strong, nonatomic) UIImageView           *tapImgview;
 
 @end

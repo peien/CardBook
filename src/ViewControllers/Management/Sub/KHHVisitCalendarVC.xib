@@ -39,7 +39,7 @@
 					<object class="IBUITableView" id="739228686">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">274</int>
-						<string key="NSFrameSize">{320, 426}</string>
+						<string key="NSFrame">{{0, 31}, {320, 419}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -246,75 +246,65 @@
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
-					<string key="className">KHHEditCusEvalVC</string>
-					<string key="superclassName">UIViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">addBtnClick:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">addBtnClick:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">addBtnClick:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="addBtn">UIButton</string>
-						<string key="pick">UIPickerView</string>
-						<string key="smallPick">UIPickerView</string>
-						<string key="theTable">UITableView</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="addBtn">
-							<string key="name">addBtn</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="pick">
-							<string key="name">pick</string>
-							<string key="candidateClassName">UIPickerView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="smallPick">
-							<string key="name">smallPick</string>
-							<string key="candidateClassName">UIPickerView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="theTable">
-							<string key="name">theTable</string>
-							<string key="candidateClassName">UITableView</string>
-						</object>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/KHHEditCusEvalVC.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">KHHHomeViewController</string>
-					<string key="superclassName">UIViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">addBtnClick:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">addBtnClick:</string>
-						<object class="IBActionInfo" key="NS.object.0">
+					<string key="superclassName">SuperViewController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="addBtnClick:">id</string>
+						<string key="cancelBtnClick:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="addBtnClick:">
 							<string key="name">addBtnClick:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-					</object>
+						<object class="IBActionInfo" key="cancelBtnClick:">
+							<string key="name">cancelBtnClick:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="bigTable">UITableView</string>
+						<string key="btnForCancel">UIButton</string>
 						<string key="btnTable">UITableView</string>
+						<string key="footView">UIView</string>
+						<string key="imgview">UIImageView</string>
 						<string key="searchBar">UISearchBar</string>
+						<string key="smalImageView">UIImageView</string>
+						<string key="smallBtn">UIButton</string>
 						<string key="toolBar">UIToolbar</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="bigTable">
+							<string key="name">bigTable</string>
+							<string key="candidateClassName">UITableView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="btnForCancel">
+							<string key="name">btnForCancel</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="btnTable">
 							<string key="name">btnTable</string>
 							<string key="candidateClassName">UITableView</string>
 						</object>
+						<object class="IBToOneOutletInfo" key="footView">
+							<string key="name">footView</string>
+							<string key="candidateClassName">UIView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="imgview">
+							<string key="name">imgview</string>
+							<string key="candidateClassName">UIImageView</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="searchBar">
 							<string key="name">searchBar</string>
 							<string key="candidateClassName">UISearchBar</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="smalImageView">
+							<string key="name">smalImageView</string>
+							<string key="candidateClassName">UIImageView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="smallBtn">
+							<string key="name">smallBtn</string>
+							<string key="candidateClassName">UIButton</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="toolBar">
 							<string key="name">toolBar</string>
@@ -334,6 +324,7 @@
 						<string key="funnelBtnClick:">id</string>
 						<string key="locationBtnClick:">id</string>
 						<string key="manageEmployeesBtnClick:">id</string>
+						<string key="personBtnClick:">id</string>
 						<string key="radarBtnClick:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
@@ -353,6 +344,10 @@
 							<string key="name">manageEmployeesBtnClick:</string>
 							<string key="candidateClassName">id</string>
 						</object>
+						<object class="IBActionInfo" key="personBtnClick:">
+							<string key="name">personBtnClick:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 						<object class="IBActionInfo" key="radarBtnClick:">
 							<string key="name">radarBtnClick:</string>
 							<string key="candidateClassName">id</string>
@@ -365,35 +360,18 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">KHHVisitCalendarVC</string>
-					<string key="superclassName">UIViewController</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="addBtnClick:">id</string>
-						<string key="calendarBtnClick:">id</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="addBtnClick:">
-							<string key="name">addBtnClick:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="calendarBtnClick:">
-							<string key="name">calendarBtnClick:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</dictionary>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">theTable</string>
-						<string key="NS.object.0">UITableView</string>
-					</object>
-					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<string key="NS.key.0">theTable</string>
-						<object class="IBToOneOutletInfo" key="NS.object.0">
-							<string key="name">theTable</string>
-							<string key="candidateClassName">UITableView</string>
-						</object>
-					</object>
+					<string key="superclassName">SuperViewController</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">./Classes/KHHVisitCalendarVC.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SuperViewController</string>
+					<string key="superclassName">UIViewController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/SuperViewController.h</string>
 					</object>
 				</object>
 			</array>

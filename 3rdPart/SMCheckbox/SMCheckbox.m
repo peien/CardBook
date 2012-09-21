@@ -6,8 +6,8 @@
 //
 
 #import "SMCheckbox.h"
-NSString *const SMCheckboxImage_Checked = @"checkbox_yes.png";
-NSString *const SMCheckboxImage_Unchecked = @"checkbox_no.png";
+NSString *const SMCheckboxImage_Checked = @"checked.png";
+NSString *const SMCheckboxImage_Unchecked = @"unchecked.png";
 
 @implementation SMCheckbox
 @synthesize delegate = _delegate;

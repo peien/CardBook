@@ -21,7 +21,7 @@
     if (self) {
         // Custom initialization
         self.title = @"消息详情";
-        [self.rightBtn setTitle:@"编辑" forState:UIControlStateNormal];
+        self.navigationItem.rightBarButtonItem = nil;
     }
     return self;
 }
