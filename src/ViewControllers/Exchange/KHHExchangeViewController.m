@@ -13,14 +13,23 @@
 #import "UIImageView+WebCache.h"
 #import "KHHFrameCardView.h"
 
-@interface KHHExchangeViewController ()<UIScrollViewDelegate>
+#import <CoreLocation/CoreLocation.h>
+#import "KHHNetworkAPIAgent+Exchange.h"
+
+@interface KHHExchangeViewController ()<UIScrollViewDelegate,CLLocationManagerDelegate>
 @property (strong, nonatomic) XLPageControl *xlPage;
+@property (strong, nonatomic) CLLocation *currentLocation;
+@property (strong, nonatomic) CLLocationManager *localM;
+@property (strong, nonatomic) KHHNetworkAPIAgent *httpAgent;
 @end
 
 @implementation KHHExchangeViewController
 @synthesize scrView = _scrView;
 @synthesize isVer = _isVer;
 @synthesize xlPage;
+@synthesize currentLocation = _currentLocation;
+@synthesize localM = _localM;
+@synthesize httpAgent = _httpAgent;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -29,6 +38,7 @@
         self.title = @"交换名片";
         [self.leftBtn setTitle:@"切换名片" forState:UIControlStateNormal];
         [self.rightBtn setTitle:@"发送纪录" forState:UIControlStateNormal];
+        self.httpAgent = [[KHHNetworkAPIAgent alloc] init];
     }
     return self;
 }
@@ -68,19 +78,28 @@
         btn.frame = CGRectMake(25+i*(80 + 15), 280, 90, 50);
         [self.view insertSubview:btn atIndex:10];
     }
-    
-    // 摇一摇交换名片
-    [[UIApplication sharedApplication] setApplicationSupportsShakeToEdit:YES];
-    [self becomeFirstResponder];
+    // 获取经度，纬度
+    _localM = [[CLLocationManager alloc] init];
+    if (_localM && [CLLocationManager locationServicesEnabled]) {
+        _localM.delegate = self;
+        _localM.distanceFilter = 100;
+        _localM.desiredAccuracy = kCLLocationAccuracyBest;
+        [_localM startUpdatingLocation];
+    }else {
+        _localM = nil;
+    }
+
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [KHHShowHideTabBar showTabbar];
+    [self becomeFirstResponder];
     
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     //[KHHShowHideTabBar hideTabbar];
+    [self resignFirstResponder];
     
 }
 
@@ -110,7 +129,6 @@
         int page = ((scrollView.contentOffset.x-scrollWidth/2)/scrollWidth)+1;
         XLPageControl *pageCtrl = (XLPageControl *)[self.view viewWithTag:118];
         pageCtrl.currentPage = page;
-
     }
 }
 
@@ -119,6 +137,7 @@
     UIButton *button = (UIButton *)sender;
     switch (button.tag) {
         case 111:
+            [self exchangeCard];
             break;
         case 112:
         {
@@ -127,6 +146,7 @@
         }
             break;
         case 113:
+            //同步所有，同步联系人，启动定位服务
             break;
         default:
             break;
@@ -134,24 +154,64 @@
 
 }
 // 摇摇交换
+- (BOOL)canBecomeFirstResponder
+{
+    return YES;
+}
 - (void)motionBegan:(UIEventSubtype)motion withEvent:(UIEvent *)event
 {
     if (motion == UIEventSubtypeMotionShake) {
         NSLog(@"shake......");
     }
-    
-    
 }
 - (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event
 {
-    if (event.subtype == UIEventSubtypeMotionShake) {
+    if (motion == UIEventSubtypeMotionShake) {
         NSLog(@"开始交换");
+        [self exchangeCard];
     }
-
 }
 - (void)motionCancelled:(UIEventSubtype)motion withEvent:(UIEvent *)event
 {
 
+}
+//交换名片
+- (void)exchangeCard
+{
+    if (!self.localM) {
+        NSLog(@"你的设备无法开启定位");
+        return;
+    }
+    if (self.currentLocation == nil) {
+        NSLog(@"正在获取位置，请稍等");
+        return;
+    }
+    NSLog(@"everything is ok !!");
+    NSString *longitude = [NSString stringWithFormat:@"%f",self.currentLocation.coordinate.longitude];
+    NSString *latitude = [NSString stringWithFormat:@"%f",self.currentLocation.coordinate.latitude];
+    NSLog(@"%@++++++++%@",longitude,latitude);
+    [self.httpAgent exchangeCard:nil withCoordinate:self.currentLocation.coordinate];
+}
+//定位委托方法
+- (void)locationManager:(CLLocationManager *)manager
+	didUpdateToLocation:(CLLocation *)newLocation
+           fromLocation:(CLLocation *)oldLocation
+{
+    
+    _currentLocation = newLocation;
+    [manager stopUpdatingLocation];
+    
+}
+- (void)locationManager:(CLLocationManager *)manager
+       didFailWithError:(NSError *)error
+{
+    if (error.code == kCLErrorDenied) {
+        [manager stopUpdatingHeading];
+        [manager stopUpdatingLocation];
+    }else if (error.code == kCLErrorHeadingFailure) {
+        
+    }
+    
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

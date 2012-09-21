@@ -22,6 +22,7 @@
     if (self) {
         // Custom initialization
         self.title = @"推荐给好友";
+        self.navigationItem.rightBarButtonItem = nil;
     }
     return self;
 }

@@ -10,6 +10,7 @@
 #import "KHHMessageCell.h"
 #import "KHHShowHideTabBar.h"
 #import "KHHDetailMessageVC.h"
+#import "KHHEditMSGViewController.h"
 @interface KHHMessageViewController ()<UITableViewDataSource,UITableViewDelegate>
 
 @end
@@ -23,11 +24,24 @@
     if (self) {
         // Custom initialization
         self.title = @"消息";
-        self.navigationItem.leftBarButtonItem = nil;
+        [self.leftBtn setTitle:@"编辑" forState:UIControlStateNormal];
+        [self.rightBtn setTitle:@"刷新" forState:UIControlStateNormal];
     }
     return self;
 }
+//刷新
+- (void)rightBarButtonClick:(id)sender
+{
 
+}
+//编辑
+- (void)leftBarButtonClick:(id)sender
+{
+    KHHEditMSGViewController *editVC = [[KHHEditMSGViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:editVC animated:YES];
+    
+
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];

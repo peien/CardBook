@@ -15,5 +15,6 @@
 @property (nonatomic, weak) IBOutlet UILabel *nameLabel;
 @property (nonatomic, weak) IBOutlet UILabel *positionLabel;
 @property (nonatomic, weak) IBOutlet UILabel *companyLabel;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *activi;
 @property (nonatomic, strong) SMCheckbox *checkbox;
 @end

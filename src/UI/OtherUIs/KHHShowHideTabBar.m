@@ -9,21 +9,20 @@
 #import "KHHShowHideTabBar.h"
 #import "KHHAppDelegate.h"
 #import "MyTabBarController.h"
+#import "KHHMainUIController.h"
 @implementation KHHShowHideTabBar
 + (void)showTabbar
 {
     KHHAppDelegate *app = (KHHAppDelegate *)[[UIApplication sharedApplication] delegate];
-#warning 改写这里
-//    MyTabBarController *tab = (MyTabBarController *)app.aTabBarController;
-//    tab.tabBarView.hidden = NO;
+    MyTabBarController *tab = (MyTabBarController *)app.aTabBarController;
+    tab.tabBarView.hidden = NO;
 
 }
 + (void)hideTabbar
 {
     KHHAppDelegate *app = (KHHAppDelegate *)[[UIApplication sharedApplication] delegate];
-#warning 改写这里
-//    MyTabBarController *tab = (MyTabBarController *)app.aTabBarController;
-//    tab.tabBarView.hidden = YES;
+    MyTabBarController *tab = (MyTabBarController *)app.aTabBarController;
+    tab.tabBarView.hidden = YES;
 
 }
 @end

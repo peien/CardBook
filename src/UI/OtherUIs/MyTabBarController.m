@@ -12,7 +12,8 @@
 
 @interface MyTabBarController ()
 @property (strong, nonatomic) UIImageView *bgimgView;
-
+@property (strong, nonatomic) UIImageView *message;
+@property (strong, nonatomic) UIImageView *contact;
 @end
 
 @implementation MyTabBarController
@@ -27,6 +28,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        
     }
     return self;
 }
@@ -34,7 +36,9 @@
 {
     count = num;
     if (self = [super init]) {
-        
+    
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNewMsgNum:) name:@"KNotificationNewMsgNum" object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNewContactNum:) name:@"KNotificationNewContactNum" object:nil];
     }
     return self;
 }
@@ -84,7 +88,7 @@
     // 默认选择
     UIButton *btn = (UIButton *)[self.tabBarView viewWithTag:100];
     [self performSelector:@selector(buttonClick:) withObject:btn afterDelay:0.1];
-
+    [self creatNumView];
     
 }
 - (void)viewDidUnload
@@ -92,8 +96,63 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     self.tabBarView =  nil;
+    self.bgimgView = nil;
+    self.message = nil;
+    self.contact =nil;
 }
-
+- (void)creatNumView
+{
+    UIImageView *msgImgview = (UIImageView *)[self.tabBarView viewWithTag:104];
+    self.message = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"message_bg.png"]stretchableImageWithLeftCapWidth:0 topCapHeight:0]];
+    self.message.frame = CGRectMake(35, -9, 35, 35);
+    [msgImgview addSubview:self.message];
+    UILabel *numLab1 = [[UILabel alloc] initWithFrame:CGRectMake(1, 2, 32, 38)];
+    numLab1.backgroundColor = [UIColor clearColor];
+    numLab1.font = [UIFont systemFontOfSize:10];
+    numLab1.textColor = [UIColor whiteColor];
+    numLab1.textAlignment = UITextAlignmentCenter;
+    numLab1.tag = 8901;
+    [self.message addSubview:numLab1];
+    self.message.hidden = YES;
+    //
+    UIImageView *contactImgview = (UIImageView *)[self.tabBarView viewWithTag:101];
+    self.contact = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"message_bg.png"]stretchableImageWithLeftCapWidth:0 topCapHeight:0]];
+    self.contact.frame = CGRectMake(35, -9, 35, 35);
+    [contactImgview addSubview:self.contact];
+    UILabel *numLab2 = [[UILabel alloc] initWithFrame:CGRectMake(1, 2, 32, 38)];
+    numLab2.backgroundColor = [UIColor clearColor];
+    numLab2.font = [UIFont systemFontOfSize:10];
+    numLab2.textColor = [UIColor whiteColor];
+    numLab2.textAlignment = UITextAlignmentCenter;
+    numLab2.tag = 8902;
+    [self.contact addSubview:numLab2];
+    self.contact.hidden = YES;
+}
+- (void)handleNewMsgNum:(NSNotification *)noti
+{
+    NSDictionary *dic = noti.object;
+    NSNumber *number = [dic objectForKey:@"Num"];
+    if ([number intValue] == 0) {
+        self.message.hidden = YES;
+    }else{
+        self.message.hidden = NO;
+    }
+    UILabel *lab = (UILabel *)[self.message viewWithTag:8901];
+    lab.text = [number stringValue];
+    
+}
+- (void)handleNewContactNum:(NSNotification *)noti
+{
+    NSDictionary *dic = noti.object;
+    NSNumber *number = [dic objectForKey:@"Num"];
+    if ([number intValue] == 0) {
+        self.contact.hidden = YES;
+    }else{
+        self.contact.hidden = NO;
+    }
+    UILabel *lab = (UILabel *)[self.contact viewWithTag:8902];
+    lab.text = [number stringValue];
+}
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);

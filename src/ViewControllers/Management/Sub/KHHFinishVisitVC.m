@@ -60,6 +60,8 @@
     _secZeroArr = nil;
     _secOneArr = nil;
 }
+#pragma mark -
+#pragma mark TableDelegagtes
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 2;
@@ -132,7 +134,7 @@
     return cell;
 
 }
-
+#pragma mark -
 - (void)addBtnImageClick:(id)sender
 {
 

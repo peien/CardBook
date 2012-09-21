@@ -16,9 +16,9 @@
 #define TEXTFIELD_CELL_TAG 222
 @implementation KHHCardView
 @synthesize theTable = _theTable;
-@synthesize scroller = _scroller;
-@synthesize pageCtrl = _pageCtrl;
-@synthesize xlPage;
+//@synthesize scroller = _scroller;
+//@synthesize pageCtrl = _pageCtrl;
+//@synthesize xlPage;
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -52,7 +52,7 @@
     [btnFooter setTitle:@"保存至手机通讯录" forState:UIControlStateNormal];
     btnFooter.titleLabel.font = [UIFont systemFontOfSize:15];
     [btnFooter setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [btnFooter addTarget:self action:@selector(saveToContactBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    self.saveToContactBtn = btnFooter;
     [footView addSubview:btnFooter];
     
     UIButton *btnFooterDel = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -61,7 +61,7 @@
     [btnFooterDel setBackgroundImage:[[UIImage imageNamed:@"tongbu_normal.png"]stretchableImageWithLeftCapWidth:11 topCapHeight:4] forState:UIControlStateNormal];
     btnFooterDel.titleLabel.font = [UIFont systemFontOfSize:15];
     [btnFooterDel setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [btnFooterDel addTarget:self action:@selector(delCardBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    self.delContactBtn = btnFooterDel;
     [footView addSubview:btnFooterDel];
     _theTable.tableFooterView = footView;
     
@@ -69,16 +69,6 @@
 //跳转到全屏
 - (void)gotoFullFrame:(id)sender
 {
-
-}
-- (void)saveToContactBtnClick:(id)sender
-{
-    DLog(@"11");
-
-}
-- (void)delCardBtnClick:(id)sender
-{
-    DLog(@"22");
 
 }
 - (void)pageCtrlClick:(id)sender
@@ -191,16 +181,16 @@
     return cell;
 }
 #pragma mark - ScrollerDelegateMothed
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    if ([scrollView isEqual:_scroller]) {
-        CGFloat scrollWidth = scrollView.frame.size.width;
-        int page = ((scrollView.contentOffset.x-scrollWidth/2)/scrollWidth)+1;
-        XLPageControl *pageCtrl = (XLPageControl *)[self viewWithTag:118];
-        pageCtrl.currentPage = page;
-        
-    }
-}
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+//{
+//    if ([scrollView isEqual:_scroller]) {
+//        CGFloat scrollWidth = scrollView.frame.size.width;
+//        int page = ((scrollView.contentOffset.x-scrollWidth/2)/scrollWidth)+1;
+//        XLPageControl *pageCtrl = (XLPageControl *)[self viewWithTag:118];
+//        pageCtrl.currentPage = page;
+//        
+//    }
+//}
 
 
 @end

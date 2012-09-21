@@ -39,7 +39,7 @@
 					<object class="IBUITableView" id="939661625">
 						<reference key="NSNextResponder" ref="421214021"/>
 						<int key="NSvFlags">274</int>
-						<string key="NSFrame">{{0, 11}, {320, 411}}</string>
+						<string key="NSFrame">{{0, 9}, {320, 411}}</string>
 						<reference key="NSSuperview" ref="421214021"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -122,7 +122,7 @@
 								<reference key="IBUIFont" ref="370481612"/>
 							</object>
 						</array>
-						<string key="NSFrame">{{0, 371}, {320, 48}}</string>
+						<string key="NSFrame">{{0, 374}, {320, 48}}</string>
 						<reference key="NSSuperview" ref="421214021"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>

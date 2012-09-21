@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SuperViewController.h"
 
-@interface LoginSinaViewController:UIViewController<UITableViewDelegate,UITableViewDataSource>
+@interface LoginSinaViewController:SuperViewController<UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic) IBOutlet UITableView *theTable;
 
 - (IBAction)loginAndShare:(id)sender;

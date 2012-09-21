@@ -8,6 +8,7 @@
 
 
 #import <UIKit/UIKit.h>
-@interface WebSinaViewController : UIViewController
+#import "SuperViewController.h"
+@interface WebSinaViewController : SuperViewController
 
 @end

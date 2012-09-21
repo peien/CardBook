@@ -12,6 +12,7 @@
 		</object>
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
+			<string>IBUIActivityIndicatorView</string>
 			<string>IBUIButton</string>
 			<string>IBUILabel</string>
 			<string>IBUITableViewCell</string>
@@ -162,12 +163,21 @@
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MC41AA</bytes>
 								</object>
-								<object class="NSCustomResource" key="IBUINormalBackgroundImage">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">logopic@2x.png</string>
-								</object>
 								<reference key="IBUIFontDescription" ref="277611310"/>
 								<reference key="IBUIFont" ref="213468435"/>
+							</object>
+							<object class="IBUIActivityIndicatorView" id="649889956">
+								<reference key="NSNextResponder" ref="379129547"/>
+								<int key="NSvFlags">-2147483356</int>
+								<string key="NSFrame">{{20, 19}, {20, 20}}</string>
+								<reference key="NSSuperview" ref="379129547"/>
+								<reference key="NSWindow"/>
+								<string key="NSReuseIdentifierKey">_NS:9</string>
+								<bool key="IBUIOpaque">NO</bool>
+								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+								<bool key="IBUIHidesWhenStopped">NO</bool>
+								<bool key="IBUIAnimating">YES</bool>
+								<int key="IBUIStyle">2</int>
 							</object>
 						</array>
 						<string key="NSFrameSize">{320, 59}</string>
@@ -227,6 +237,14 @@
 					</object>
 					<int key="connectionID">12</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">activi</string>
+						<reference key="source" ref="1034934815"/>
+						<reference key="destination" ref="649889956"/>
+					</object>
+					<int key="connectionID">14</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -255,6 +273,7 @@
 							<reference ref="281006781"/>
 							<reference ref="311023255"/>
 							<reference ref="979664920"/>
+							<reference ref="649889956"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -278,6 +297,11 @@
 						<reference key="object" ref="979664920"/>
 						<reference key="parent" ref="1034934815"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">13</int>
+						<reference key="object" ref="649889956"/>
+						<reference key="parent" ref="1034934815"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -285,6 +309,7 @@
 				<string key="-2.CustomClassName">UIResponder</string>
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="11.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="13.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="2.CustomClassName">KHHClientCellLNPCC</string>
 				<string key="2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -295,7 +320,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">12</int>
+			<int key="maxID">14</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -303,6 +328,7 @@
 					<string key="className">KHHClientCellLNPCC</string>
 					<string key="superclassName">UITableViewCell</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="activi">UIActivityIndicatorView</string>
 						<string key="companyLabel">UILabel</string>
 						<string key="logoBtn">UIButton</string>
 						<string key="logoView">UIImageView</string>
@@ -310,6 +336,10 @@
 						<string key="positionLabel">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="activi">
+							<string key="name">activi</string>
+							<string key="candidateClassName">UIActivityIndicatorView</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="companyLabel">
 							<string key="name">companyLabel</string>
 							<string key="candidateClassName">UILabel</string>
@@ -346,10 +376,6 @@
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NS.key.0">logopic@2x.png</string>
-			<string key="NS.object.0">{95, 89}</string>
-		</object>
 		<string key="IBCocoaTouchPluginVersion">1498</string>
 	</data>
 </archive>

@@ -27,6 +27,7 @@
     if (self) {
         // Custom initialization
         self.navigationItem.title = textResetPassword;
+        self.rightBtn.hidden = YES;
     }
     return self;
 }
@@ -40,9 +41,7 @@
     UIImage *okButtonImage = [[UIImage imageNamed:@"OKButton.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:0];
     [self.theOKButton setBackgroundImage:okButtonImage forState:UIControlStateNormal];
     [self.theOKButton setTitle:textOK forState:UIControlStateNormal];
-    // 更换背景
-    UIImage *bgImage = [[UIImage imageNamed:@"activity_bg.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    [self.theView setImage:bgImage];
+    
 }
 - (void)viewDidUnload
 {

@@ -7,10 +7,8 @@
 //
 
 #import "KHHVisitCalendarVC.h"
-#import "KHHVisitCalendarCell.h"
 #import "KHHDelVisitCalendarVC.h"
 #import "KHHCalendarViewController.h"
-#import "KHHFinishVisitVC.h"
 #import "KHHVisitCalendarView.h"
 #import "KHHShowHideTabBar.h"
 
@@ -59,100 +57,6 @@
     // e.g. self.myOutlet = nil;
 
 }
-#pragma mark -
-#pragma KHHVisitCalendarViewDelegate
-//- (void) visitCalendarViewBtnClick:(NSInteger)tag
-//{
-//    if (tag == 111) {
-//        DLog(@"添加");
-//        NewVisitRecordVC *newVisVC = [[NewVisitRecordVC alloc] initWithNibName:@"NewVisitRecordVC" bundle:nil];
-//        newVisVC.style = KNewVisitRecordVCStyleVisitRecord;
-//        [self.navigationController pushViewController:newVisVC animated:YES];
-//        
-//    }else if (tag == 222){
-//        DLog(@"日历");
-//        KHHCalendarViewController *calendarVC = [[KHHCalendarViewController alloc] initWithNibName:nil bundle:nil];
-//        [self.navigationController pushViewController:calendarVC animated:YES];
-//
-//        
-//    }
-//
-//}
-//- (void)visitCalendarViewCellClick:(KHHVisitCalendarCell *)cell
-//{
-//    DLog(@"visitCalendarViewCellClick");
-//    
-//    if (cell.finishBtn.hidden) {
-//        NewVisitRecordVC *newVisVC = [[NewVisitRecordVC alloc] initWithNibName:@"NewVisitRecordVC" bundle:nil];
-//        newVisVC.style = KNewVisitRecordVCStyleEditLog;
-//        [self.navigationController pushViewController:newVisVC animated:YES];
-//    }else{
-//        KHHFinishVisitVC *finVC = [[KHHFinishVisitVC alloc] initWithNibName:@"KHHFinishVisitVC" bundle:nil];
-//        finVC.isShowUpdateBtn = NO;
-//        finVC.isFinishVisit = YES;
-//        [self.navigationController pushViewController:finVC animated:YES];
-//    }
-//
-//}
-//
-//- (void)visitCalendarViewCellBtnClick:(NSInteger)tag
-//{
-//    if (tag == 222) {
-//        //铃铛提示
-//    }else if (tag == 223){
-//        //完成
-//        KHHFinishVisitVC *finishVC = [[KHHFinishVisitVC alloc] initWithNibName:nil bundle:nil];
-//        finishVC.isShowUpdateBtn = YES;
-//        finishVC.isFinishVisit = YES;
-//        [self.navigationController pushViewController:finishVC animated:YES];
-//        
-//    }
-//
-//}
-//- (void)testALL{}
-//- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-//{
-//    return 11;
-//}
-//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    return 130;
-//}
-//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    static NSString *cellID = @"cellID";
-//    KHHVisitCalendarCell *cell = nil;
-//    cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-//    if (cell == nil) {
-//        cell = [[[NSBundle mainBundle] loadNibNamed:@"KHHVisitCalendarCell" owner:self options:nil] objectAtIndex:0];
-//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//        cell.delegate = self;
-//    }
-//    if (indexPath.row%2 == 0) {
-//        cell.finishBtn.hidden = YES;
-//    }
-//    return cell;
-//
-//}
-//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    KHHVisitCalendarCell *cell = (KHHVisitCalendarCell *)[tableView cellForRowAtIndexPath:indexPath];
-//    if (cell.finishBtn.hidden) {
-//        NewVisitRecordVC *newVisVC = [[NewVisitRecordVC alloc] initWithNibName:@"NewVisitRecordVC" bundle:nil];
-//        newVisVC.style = KNewVisitRecordVCStyleEditLog;
-//        [self.navigationController pushViewController:newVisVC animated:YES];
-//    }else{
-//        KHHFinishVisitVC *finVC = [[KHHFinishVisitVC alloc] initWithNibName:@"KHHFinishVisitVC" bundle:nil];
-//        finVC.isShowUpdateBtn = NO;
-//        finVC.isFinishVisit = YES;
-//        [self.navigationController pushViewController:finVC animated:YES];
-//    }
-//
-//    // 根据单元格是否是完成或没完成
-//}
-
-
-
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {

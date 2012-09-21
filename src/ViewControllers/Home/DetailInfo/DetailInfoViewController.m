@@ -20,14 +20,12 @@
 #import "KHHEditCustomValueVC.h"
 #import "MyTabBarController.h"
 #import "KHHShowHideTabBar.h"
-#import "MapController.h"
 #import "KHHVisitRecoardVC.h"
-#import <MessageUI/MessageUI.h>
+
 
 #define POPDismiss [self.popover dismissPopoverAnimated:YES];
 
-@interface DetailInfoViewController ()<KHHFloatBarControllerDelegate,UIImagePickerControllerDelegate, UIActionSheetDelegate,
-                                      UINavigationControllerDelegate,MFMessageComposeViewControllerDelegate>
+@interface DetailInfoViewController ()
 @property (nonatomic, strong) WEPopoverController *popover;
 @property (nonatomic, strong) KHHCardView         *cardView;
 @property (nonatomic, strong) KHHVisitCalendarView *visitCalView;
@@ -185,11 +183,9 @@
     
     //popView
     KHHFloatBarController *floatBarVC = [[KHHFloatBarController alloc] initWithNibName:nil bundle:nil];
-    floatBarVC.delegate = self;
+    floatBarVC.viewController = self;
     self.popover = [[WEPopoverController alloc] initWithContentViewController:floatBarVC];
-    
-    _actSheet = [[UIActionSheet alloc] initWithTitle:@"选择号码" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
-    _actSheet.delegate = self;
+    floatBarVC.popover = self.popover;
 }
 - (void)bottomBtnClick:(id)sender
 {
@@ -249,110 +245,6 @@
     }
 
 
-}
-- (void)BtnTagValueChanged:(NSInteger)index
-{
-    if (index == 0) {
-        //电话
-        _style = 0;
-        //只有一个号码
-        if (YES) {
-            [self callPhone:@""];
-            return;
-        }
-        [_actSheet showInView:self.view];
-        
-    }else if (index == 1){
-        //短信
-        _style = 1;
-        if (NO) {
-            [self sendMessage:@""];
-            return;
-        }
-        [_actSheet showInView:self.view];
-    }else if (index == 2){
-        //拍照
-        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-            UIImagePickerController *imagePickCtrl = [[UIImagePickerController alloc] init];
-            imagePickCtrl.sourceType = UIImagePickerControllerSourceTypeCamera;
-            imagePickCtrl.delegate = self;
-            [self presentModalViewController:imagePickCtrl animated:YES];
-        }
-    }else if (index == 3){
-        //定位
-        MapController *mapVC = [[MapController alloc] initWithNibName:nil bundle:nil];
-        mapVC.companyAddr = @"浙江滨江区南环路4280号元光德大厦501室";
-        mapVC.companyName = @"浙江金汉弘";
-        [self.navigationController pushViewController:mapVC animated:YES];
-        POPDismiss;
-    }else if (index == 4){
-        //编辑详情
-        KHHVisitRecoardVC *newVisVC = [[KHHVisitRecoardVC alloc] initWithNibName:nil bundle:nil];
-        newVisVC.style = KVisitRecoardVCStyleNewBuild;
-        newVisVC.isNeedWarn = YES;
-        [self.navigationController pushViewController:newVisVC animated:YES];
-        POPDismiss;
-    }
-
-
-}
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    NSString *s = [actionSheet buttonTitleAtIndex:buttonIndex];
-    if (_style == 0) {
-        [self callPhone:s];
-        
-    }else if (_style == 1){
-        [self sendMessage:s];
-    
-    }
-
-}
-//打电话
-- (void)callPhone:(NSString *)number
-{
-   
-    NSString *urlSting = [NSString stringWithFormat:@"tel://%@",number];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlSting]];
-
-
-}
-- (void)sendMessage:(NSString *)number
-{
-    Class messageClass = (NSClassFromString(@"MFMessageComposeViewController"));
-    if (messageClass != nil) {
-        if ([messageClass canSendText]) {
-            MFMessageComposeViewController *messageVC = [[MFMessageComposeViewController alloc] init];
-            messageVC.messageComposeDelegate = self;
-            messageVC.body = @"发送短信内容";
-            //号码：
-            messageVC.recipients = [NSArray arrayWithObjects:@"",@"", nil];
-            [self presentModalViewController:messageVC animated:YES];
-        }else{
-            DLog(@"不支持发送短信");
-            // 不支持发送短信;
-        }
-    }else{
-        //系统版本过低，只有ios4.0以上才支持程序内发送短信;
-    }
-
-
-}
-- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result
-{
-    switch (result) {
-        case MessageComposeResultSent:
-            break;
-        case MessageComposeResultCancelled:
-            break;
-        case MessageComposeResultFailed:
-            break;
-        default:
-            break;
-    }
-    [self dismissModalViewControllerAnimated:YES];
-    
-    
 }
 
 - (void)viewDidUnload

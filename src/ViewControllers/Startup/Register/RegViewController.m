@@ -45,6 +45,7 @@
         [(UIScrollView*)(self.view) setContentSize:CGSizeMake(320,530)];
         ((UIScrollView*)self.view).bounces = NO;
         [(UIScrollView*)self.view setShowsVerticalScrollIndicator:NO];
+        self.rightBtn.hidden = YES;
     }
     return self;
 }
@@ -74,12 +75,6 @@
     UIImage *okButtonImage = [[UIImage imageNamed:@"OKButton.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:0];
     [self.theRegButton setBackgroundImage:okButtonImage forState:UIControlStateNormal];
     [self.theRegButton setTitle:textRegister forState:UIControlStateNormal];
-    
-    // 更换背景
-    UIImage *bgImage = [[UIImage imageNamed:@"activity_bg.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    UIImageView *bgImageView = [[UIImageView alloc] initWithImage:bgImage];
-    bgImageView.frame = CGRectMake(0, 0, 320, 460);
-    [self.regTableView  setBackgroundView:bgImageView];
     
     self.theWarnTextView.text = textWarnRealPhoneNumber;
 }

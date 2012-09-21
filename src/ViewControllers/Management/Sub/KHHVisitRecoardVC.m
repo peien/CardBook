@@ -11,6 +11,9 @@
 #import "KHHShowHideTabBar.h"
 #import "TSLocateView.h"
 #import "KHHAddImageView.h"
+#import "MapController.h"
+#import "KHHAddImageCell.h"
+#import "KHHFullFrameController.h"
 
 #define TEXTFIELD_DATE_TAG 5551
 #define TEXTFIELD_TIME_TAG 5552
@@ -18,13 +21,10 @@
 #define NOTE_FIELD_TAG     3313
 #define TEXTFIELD_ADDRESS_TAG 3314
 @interface KHHVisitRecoardVC ()<UITextFieldDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
-@property (strong, nonatomic)KHHAddImageView *addView;
-@property (strong, nonatomic)UIImageView     *addImg1;
-@property (strong, nonatomic)UIImageView     *addImg2;
-@property (strong, nonatomic)UIImageView     *addImg3;
-@property (strong, nonatomic)UIImageView     *addImg4;
 @property (strong, nonatomic)UIImageView     *imgview;
 @property (assign, nonatomic)int             currentTag;
+@property (assign, nonatomic)double          timeInterval;
+@property (strong, nonatomic)NSTimer         *timer;
 
 
 @end
@@ -48,18 +48,14 @@
 @synthesize fieldValue = _fieldValue;
 @synthesize editLabel = _editLabel;
 @synthesize fieldName = _fieldName;
-@synthesize addImg4 = _addImg4;
-@synthesize addImg3 = _addImg3;
-@synthesize addImg2 = _addImg2;
-@synthesize addImg1 = _addImg1;
-@synthesize addView = _addView;
-@synthesize num = _num;
 @synthesize imgview = _imgview;
 @synthesize index = _index;
 @synthesize currentTag = _currentTag;
-@synthesize isDelImg = _isDelImg;
 @synthesize imgArray = _imgArray;
 @synthesize timeArr = _timeArr;
+@synthesize timeInterval = _timeInterval;
+@synthesize tapImgview = _tapImgview;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -75,15 +71,15 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTime) userInfo:nil repeats:YES];
     NSDate *now = [NSDate date];
     NSDateFormatter *dateForm = [[NSDateFormatter alloc] init];
-    [dateForm setDateFormat:@"yyyy-MM-dd HH:mm"];
+    [dateForm setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString *showDAte = [dateForm stringFromDate:now];
     NSLog(@"%@",showDAte);
     NSArray *dateArr = [showDAte componentsSeparatedByString:@" "];
     _dateStr = [dateArr objectAtIndex:0];
     _timeStr = [dateArr objectAtIndex:1];
-    
     [_datePicker setDate:now animated:YES];
     [_datePicker addTarget:self action:@selector(datePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
     _tempPickArr = [[NSArray alloc] init];
@@ -91,34 +87,40 @@
     _timeArr = [[NSArray alloc] initWithObjects:@"",@"30",@"1",@"2",@"3",@"12",@"24",@"2",@"3",@"7",nil];
     _noteArray = [[NSArray alloc] initWithObjects:@"初次见面",@"商务洽谈",@"一起吃饭",@"一起喝茶",@"回访客户",@"签订合同", nil];
     _fieldName = [[NSArray alloc] initWithObjects:@"对象",@"日期",@"时间",@"备注",@"位置",@"提醒",@"参与者",@"", nil];
-    _imgArray = [[NSMutableArray alloc] initWithCapacity:0];
+    _imgArray = [[NSMutableArray alloc] init];
     _fieldValue = [[NSMutableArray alloc] initWithObjects:@"",_dateStr,_timeStr,@"",@"",@"",@"", nil];
     if (_isHaveImage) {
         [_imgArray addObject:[UIImage imageNamed:@"logopic.png"]];
+        
     }
-
-    
 
     //如果不是新建，就获取数据让其显示
     if (_style == KVisitRecoardVCStyleShowInfo) {
         [self initViewData];
     }
 
+}
+//动态显示时间
+- (void)updateTime
+{
+    NSDate *dt = [NSDate date];
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    [df setDateFormat:@"HH:mm:ss"];
+    UITextField *tf = (UITextField *)[self.view viewWithTag:TEXTFIELD_TIME_TAG];
+    tf.text = [df stringFromDate:dt];
 
-    
 }
 // 闹钟设置
-- (void)setAlerm
+- (void)setAlerm:(double)timeInterval
 {
     UILocalNotification *notification=[[UILocalNotification alloc] init];
     if (notification!=nil)
     {
         NSDate *now=[NSDate new];
-        //notification.fireDate=[now addTimeInterval:period];
-        notification.fireDate = [now dateByAddingTimeInterval:1];
+        notification.fireDate = [now dateByAddingTimeInterval:timeInterval];
         notification.timeZone=[NSTimeZone defaultTimeZone];
         notification.soundName = UILocalNotificationDefaultSoundName;
-        //notification.alertBody=@"TIME！";
+        notification.alertBody=@"TIME！";
         notification.alertBody = [NSString stringWithFormat:@"时间到了!"];
         NSDictionary* info = [NSDictionary dictionaryWithObject:@""forKey:@""];
         notification.userInfo = info;
@@ -126,42 +128,6 @@
     }
 
 }
-//-(void)schedulNotificationWithYear:(int)y andMonth:(int)m andDay:(int)d andHour:(int)h andMintu:(int)mi andMsg:(NSString *)msg{
-//    
-//    // Set up the fire time
-//    NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
-//    NSDateComponents *dateComps = [[NSDateComponents alloc] init];
-//    [dateComps setDay:d];
-//    [dateComps setMonth:m];
-//    [dateComps setYear:y];
-//    [dateComps setHour:h];
-//    // Notification will fire in one minute
-//    [dateComps setMinute:mi];
-//    [dateComps setSecond:0];
-//    NSDate *itemDate = [calendar dateFromComponents:dateComps];
-//    
-//    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-//    if (localNotif == nil)
-//        return;
-//    localNotif.fireDate = itemDate;
-//    localNotif.timeZone = [NSTimeZone defaultTimeZone];
-//    
-//    // Notification details
-//    localNotif.alertBody = msg;
-//    // Set the action button
-//    localNotif.alertAction = @"查看";
-//    
-//    localNotif.soundName = UILocalNotificationDefaultSoundName;
-//    //    localNotif.applicationIconBadgeNumber = 1;
-//    
-//    // Specify custom data for the notification
-//    NSDictionary *infoDict = [NSDictionary dictionaryWithObject:@"someValue" forKey:@"someKey"];
-//    localNotif.userInfo = infoDict;
-//    
-//    // Schedule the notification
-//    [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
-//   
-//}
 //从网络或数据库获得数据
 - (void)initViewData
 {
@@ -174,7 +140,7 @@
         [_fieldValue replaceObjectAtIndex:3 withObject:@"请客吃饭"];
     }
     if (YES) {
-        [_fieldValue replaceObjectAtIndex:4 withObject:@"浙江省杭州市滨江区南环路111"];
+        [_fieldValue replaceObjectAtIndex:4 withObject:@"浙江省杭州市滨江区南环路"];
     }
     if (YES) {
         [_fieldValue replaceObjectAtIndex:6 withObject:@"小刘"];
@@ -219,11 +185,6 @@
     _fieldValue = nil;
     _editLabel = nil;
     _fieldName = nil;
-    _addImg1 = nil;
-    _addImg2 = nil;
-    _addImg3 = nil;
-    _addImg4 = nil;
-    _addView = nil;
     _imgview = nil;
     _imgArray = nil;
 }
@@ -231,7 +192,7 @@
 {
     [super viewWillAppear:animated];
     [KHHShowHideTabBar hideTabbar];
-    [_theTable reloadData];
+    //[_theTable reloadData];
 }
 - (void)datePickerValueChanged:(id)sender
 {
@@ -251,6 +212,9 @@
     }else{
         UITextField *tf = (UITextField *)[self.view viewWithTag:TEXTFIELD_TIME_TAG];
         tf.text = _timeStr;
+        [self.timer invalidate];
+        self.timer = nil;
+        
     }
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:0.3];
@@ -271,181 +235,170 @@
         return 75;
     }
     return 44;
-
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *cellID = @"cellID";
-    UITableViewCell *cell = nil;
-    cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        cell.textLabel.text = [_fieldName objectAtIndex:indexPath.row];
-        cell.textLabel.font = [UIFont systemFontOfSize:12];
-        UITextField *tf = [[UITextField alloc] initWithFrame:CGRectMake(80, 0, 220, 37)];
-        [tf setBackgroundColor:[UIColor clearColor]];
-        tf.leftViewMode = UITextFieldViewModeAlways;
-        tf.tag = 9693;
-        tf.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-        tf.font = [UIFont systemFontOfSize:13];
-        tf.delegate = self;
-        [cell.contentView addSubview:tf];
-        
-        UITextField *detailAddress = [[UITextField alloc] initWithFrame:CGRectMake(80, 35, 280, 37)];
-        detailAddress.tag = 9694;
-        detailAddress.hidden = YES;
-        [detailAddress setBackgroundColor:[UIColor clearColor]];
-        detailAddress.leftViewMode = UITextFieldViewModeAlways;
-        detailAddress.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-        detailAddress.font = [UIFont systemFontOfSize:13];
-        detailAddress.delegate = self;
-        detailAddress.placeholder = @"请输入详细地址";
-        [cell.contentView addSubview:detailAddress];
-        
-    }
-    UITextField *textField = (UITextField *)[cell.contentView viewWithTag:9693];
-    UITextField *detail = (UITextField *)[cell.contentView viewWithTag:9694];
-    if (indexPath.row == 0) {
-        UIButton *objectBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        objectBtn.frame = CGRectMake(280, 2, 35, 35);
-        [objectBtn addTarget:self action:@selector(objectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.contentView addSubview:objectBtn];
-        if (_style == KVisitRecoardVCStyleNewBuild) {
-            textField.placeholder = @"请输入拜访对象";
-        }else if (_style == KVisitRecoardVCStyleShowInfo){
-            textField.text = [_fieldValue objectAtIndex:indexPath.row];
-        }
-        
-    }else if (indexPath.row == 1){
-        textField.enabled = NO;
-        textField.tag = TEXTFIELD_DATE_TAG;
-        if (_style == KVisitRecoardVCStyleNewBuild) {
-            textField.placeholder = @"请输入拜访日期";
-            textField.text = _dateStr;
-        }else if (_style == KVisitRecoardVCStyleShowInfo){
-            textField.text = [_fieldValue objectAtIndex:indexPath.row];
-        }
-    }else if (indexPath.row == 2){
-        textField.enabled = NO;
-        textField.tag = TEXTFIELD_TIME_TAG;
-        if (_style == KVisitRecoardVCStyleNewBuild) {
-            textField.placeholder = @"请输入拜访时间";
-            textField.text = _timeStr;
-        }else if (_style == KVisitRecoardVCStyleShowInfo){
-            textField.text = [_fieldValue objectAtIndex:indexPath.row];
-        }
-    }else if (indexPath.row == 3){
-        textField.placeholder = @"限制400字内";
-        textField.tag = NOTE_FIELD_TAG;
-        if (_style == KVisitRecoardVCStyleNewBuild) {
+    if (indexPath.row < 7) {
+        static NSString *cellID = @"cellID";
+        UITableViewCell *cell = nil;
+        cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            cell.textLabel.text = [_fieldName objectAtIndex:indexPath.row];
+            cell.textLabel.font = [UIFont systemFontOfSize:12];
+            UITextField *tf = [[UITextField alloc] initWithFrame:CGRectMake(80, 0, 220, 37)];
+            [tf setBackgroundColor:[UIColor clearColor]];
+            tf.leftViewMode = UITextFieldViewModeAlways;
+            tf.tag = 9693;
+            tf.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+            tf.font = [UIFont systemFontOfSize:13];
+            tf.delegate = self;
+            [cell.contentView addSubview:tf];
             
-        }else if (_style == KVisitRecoardVCStyleShowInfo){
-            textField.text = [_fieldValue objectAtIndex:indexPath.row];
-            if (_isFinishTask) {
-                UIButton *noteBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-                noteBtn.frame = CGRectMake(280, 5, 30, 30);
-                noteBtn.tag = NOTE_BTN_TAG;
-                [noteBtn addTarget:self action:@selector(noteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-                [cell.contentView addSubview:noteBtn];
+            UITextField *detailAddress = [[UITextField alloc] initWithFrame:CGRectMake(80, 35, 280, 37)];
+            detailAddress.tag = 9694;
+            detailAddress.hidden = YES;
+            [detailAddress setBackgroundColor:[UIColor clearColor]];
+            detailAddress.leftViewMode = UITextFieldViewModeAlways;
+            detailAddress.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+            detailAddress.font = [UIFont systemFontOfSize:13];
+            detailAddress.delegate = self;
+            detailAddress.placeholder = @"请输入详细地址";
+            [cell.contentView addSubview:detailAddress];
+            
+        }
+        UITextField *textField = (UITextField *)[cell.contentView viewWithTag:9693];
+        UITextField *detail = (UITextField *)[cell.contentView viewWithTag:9694];
+        if (indexPath.row == 0) {
+            UIButton *objectBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            objectBtn.frame = CGRectMake(280, 2, 35, 35);
+            [objectBtn addTarget:self action:@selector(objectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+            [cell.contentView addSubview:objectBtn];
+            if (_style == KVisitRecoardVCStyleNewBuild) {
+                textField.placeholder = @"请输入拜访对象";
+            }else if (_style == KVisitRecoardVCStyleShowInfo){
+                textField.text = [_fieldValue objectAtIndex:indexPath.row];
             }
             
-        }
-        
-    }else if (indexPath.row == 4){
-        textField.enabled = NO;
-        textField.tag = TEXTFIELD_ADDRESS_TAG;
-        if (_style == KVisitRecoardVCStyleNewBuild) {
-            textField.placeholder = @"请输入城市名称";
-            detail.hidden = NO;
-        }else{
-            textField.text = [_fieldValue objectAtIndex:indexPath.row];
-            for (int i = 0; i<2; i++) {
-                UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-                if (i== 0 || i == 1) {
-                    [btn setBackgroundImage:[UIImage imageNamed:@"locationImg.png"] forState:UIControlStateNormal];
+        }else if (indexPath.row == 1){
+            textField.enabled = NO;
+            textField.tag = TEXTFIELD_DATE_TAG;
+            if (_style == KVisitRecoardVCStyleNewBuild) {
+                textField.placeholder = @"请输入拜访日期";
+                textField.text = _dateStr;
+            }else if (_style == KVisitRecoardVCStyleShowInfo){
+                textField.text = [_fieldValue objectAtIndex:indexPath.row];
+            }
+        }else if (indexPath.row == 2){
+            textField.enabled = NO;
+            textField.tag = TEXTFIELD_TIME_TAG;
+            if (_style == KVisitRecoardVCStyleNewBuild) {
+                textField.placeholder = @"请输入拜访时间";
+                //textField.text = _timeStr;
+            }else if (_style == KVisitRecoardVCStyleShowInfo){
+                textField.text = [_fieldValue objectAtIndex:indexPath.row];
+            }
+        }else if (indexPath.row == 3){
+            textField.placeholder = @"限制400字内";
+            textField.tag = NOTE_FIELD_TAG;
+            if (_style == KVisitRecoardVCStyleNewBuild) {
+                
+            }else if (_style == KVisitRecoardVCStyleShowInfo){
+                textField.text = [_fieldValue objectAtIndex:indexPath.row];
+                if (_isFinishTask) {
+                    UIButton *noteBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+                    noteBtn.frame = CGRectMake(280, 5, 30, 30);
+                    noteBtn.tag = NOTE_BTN_TAG;
+                    [noteBtn addTarget:self action:@selector(noteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+                    [cell.contentView addSubview:noteBtn];
                 }
-                btn.frame = CGRectMake(280, 5+i*(8+30), 30, 30);
-                btn.tag = i + 778;
-                [cell.contentView addSubview:btn];
+                
+            }
+            
+        }else if (indexPath.row == 4){
+            textField.enabled = NO;
+            textField.tag = TEXTFIELD_ADDRESS_TAG;
+            if (_style == KVisitRecoardVCStyleNewBuild) {
+                textField.placeholder = @"请输入城市名称";
+                detail.hidden = NO;
+            }else{
+                textField.text = [_fieldValue objectAtIndex:indexPath.row];
+                for (int i = 0; i<2; i++) {
+                    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+                    if (i== 0 || i == 1) {
+                        [btn setBackgroundImage:[UIImage imageNamed:@"locationImg.png"] forState:UIControlStateNormal];
+                        [btn addTarget:self action:@selector(showMap:) forControlEvents:UIControlEventTouchUpInside];
+                    }
+                    btn.frame = CGRectMake(280, 5+i*(8+30), 30, 30);
+                    btn.tag = i + 778;
+                    [cell.contentView addSubview:btn];
+                }
+            }
+            
+        }else if (indexPath.row == 5){
+            [textField removeFromSuperview];
+            UIButton *warnBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            warnBtn.tag = 2277;
+            warnBtn.frame = CGRectMake(80, 8, 180, 30);
+            [warnBtn setTitle:@"不提醒" forState:UIControlStateNormal];
+            if (_isNeedWarn) {
+                [warnBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            }else{
+                [warnBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+                warnBtn.enabled = NO;
+            }
+            warnBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+            [warnBtn addTarget:self action:@selector(warnBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+            [cell.contentView addSubview:warnBtn];
+            
+        }else if (indexPath.row == 6){
+            textField.placeholder = @"请输入参与者人员";
+            if (_style == KVisitRecoardVCStyleShowInfo) {
+                textField.text = [_fieldValue objectAtIndex:indexPath.row];
             }
         }
-        
-    }else if (indexPath.row == 5){
-        [textField removeFromSuperview];
-        UIButton *warnBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        warnBtn.tag = 2277;
-        warnBtn.frame = CGRectMake(80, 8, 180, 30);
-        [warnBtn setTitle:@"不提醒" forState:UIControlStateNormal];
-        if (_isNeedWarn) {
-            [warnBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        }else{
-            [warnBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-            warnBtn.enabled = NO;
-        }
-        warnBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-        [warnBtn addTarget:self action:@selector(warnBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.contentView addSubview:warnBtn];
-        
-    }else if (indexPath.row == 6){
-        textField.placeholder = @"请输入参与者人员";
-        if (_style == KVisitRecoardVCStyleShowInfo) {
-            textField.text = [_fieldValue objectAtIndex:indexPath.row];
-        }
+        return cell;
     }else if (indexPath.row == 7){
-        [textField removeFromSuperview];
-        
-        if (_addView == nil) {
-            _addView = [[[NSBundle mainBundle] loadNibNamed:@"KHHAddImageView" owner:self options:nil] objectAtIndex:0];
-            _addView.tag = 9090;
-            [_addView.addImageBtn addTarget:self action:@selector(addBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-            _addView.addImageBtn.tag = 9091;
-            
+        static NSString *cellID1 = @"CELLID1";
+        KHHAddImageCell *cell = nil;
+        cell = [tableView dequeueReusableCellWithIdentifier:cellID1];
+        if (cell == nil) {
+            cell = (KHHAddImageCell *)[[[NSBundle mainBundle] loadNibNamed:@"KHHAddImageCell" owner:self options:nil] objectAtIndex:0];
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
-        if (_imgArray.count > 0) {
-            _addView.frame = CGRectMake(5+(_imgArray.count)*65, 5, 60, 60);
-            [cell addSubview:_addView];
-        }
+        [cell.addBtn addTarget:self action:@selector(addImageBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        for (int i = 0; i<[_imgArray count]; i++) {
+            _imgview = [[UIImageView alloc] init];
+            _imgview.userInteractionEnabled = YES;
+            UILongPressGestureRecognizer *longpress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressFunctionOne:)];
+            longpress.allowableMovement = NO;
+            longpress.numberOfTouchesRequired = 1;
+            longpress.minimumPressDuration = 0.5;
+            [_imgview addGestureRecognizer:longpress];
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapFull:)];
+            tap.numberOfTapsRequired = 1;
+            tap.numberOfTouchesRequired = 1;
+            [_imgview addGestureRecognizer:tap];
+            _imgview.tag = i + 100;
+            _imgview.frame = CGRectMake(5+i*(10 + 60), 5, 60, 60);
+            _imgview.image = [_imgArray objectAtIndex:i];
+            [cell addSubview:_imgview];
 
-        if (_isHaveImage) {
-            if (_imgArray.count < 5 && _imgArray.count > 0) {
-                for (int i = 0; i<[_imgArray count]; i++) {
-                    _imgview = [[UIImageView alloc] init];
-                    _imgview.userInteractionEnabled = YES;
-                    UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressFunctionOne:)];
-                    longPress.minimumPressDuration = 0.5;
-                    longPress.numberOfTouchesRequired = 1;
-                    longPress.allowableMovement = NO;
-                    [_imgview addGestureRecognizer:longPress];
-                    _imgview.backgroundColor = [UIColor darkGrayColor];
-                    _imgview.frame = CGRectMake(5+i*(60+5), 5, 60, 60);
-                    _imgview.tag = i+101;
-                    _imgview.image = [_imgArray objectAtIndex:i];
-                    [cell addSubview:_imgview];
-                }
-            }
-            if (_imgArray.count == 4) {
-                [_addView removeFromSuperview];
-            }
-            
         }
-        
-        if (_isDelImg) {
-            
-            
+        if (_imgArray.count == 4) {
+            cell.addBtn.hidden = YES;
+            cell.lab.hidden = YES;
         }
-        if ([_imgArray count] == 0) {
-            [_addView removeFromSuperview];
-            UIButton *addBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-            [addBtn setBackgroundImage:[UIImage imageNamed:@"addBtnimg.png"] forState:UIControlStateNormal];
-            addBtn.tag = 9092;
-            addBtn.frame = CGRectMake(10, 3, 45, 45);
-            [addBtn addTarget:self action:@selector(addBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-            [cell.contentView addSubview:addBtn];
+        if (_imgArray.count < 4) {
+            cell.addBtn.hidden = NO;
+            cell.lab.hidden = NO;
         }
+        return cell;
     }
-    return cell;
+    
+    return nil;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -537,14 +490,20 @@
 
 
 }
-- (void)addBtnClick:(UIButton *)sender
+- (void)showMap:(id)sender
+{
+    UITextField *address = (UITextField *)[self.view viewWithTag:TEXTFIELD_ADDRESS_TAG];
+    MapController *mapVC = [[MapController alloc] initWithNibName:nil bundle:nil];
+    mapVC.companyAddr = address.text;
+    mapVC.companyName = @"浙江金汉弘";
+    [self.navigationController pushViewController:mapVC animated:YES];
+
+}
+- (void)addImageBtnClick:(UIButton *)sender
 {
     _isHaveImage = YES;
-    _isDelImg = NO;
+    _isAddress = NO;
     _index = 0;
-    if (_num == 4) {
-        return;
-    }
     UIActionSheet *actSheet = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
     [actSheet addButtonWithTitle:@"本地相册"];
     [actSheet addButtonWithTitle:@"拍照"];
@@ -563,7 +522,14 @@
         _currentTag = imgview.tag;
     }
 }
-
+- (void)tapFull:(UITapGestureRecognizer *)sender
+{
+    self.tapImgview = (UIImageView *)[sender view];
+    KHHFullFrameController *fullVC = [[KHHFullFrameController alloc] initWithNibName:nil bundle:nil];
+    fullVC.image = self.tapImgview.image;
+    [self.navigationController pushViewController:fullVC animated:YES];
+    
+}
 - (void)noteBtnClick:(id)sender
 {
     _isWarnBtnClick = NO;
@@ -614,45 +580,51 @@
             UIImagePickerController *imagePickCtrl = [[UIImagePickerController alloc] init];
             imagePickCtrl.sourceType = UIImagePickerControllerSourceTypeCamera;
             imagePickCtrl.delegate = self;
+            imagePickCtrl.allowsEditing = YES;
             [self presentModalViewController:imagePickCtrl animated:YES];
         }
-        
     }
-    
     if (_index == 1) {
        //长按小图片
         if (buttonIndex == 1) {
             //设为头像
         }else if (buttonIndex == 2){
-            _isDelImg = YES;
-            _isHaveImage = NO;
-            if (_imgArray.count > 0) {
-                [_imgArray removeObjectAtIndex:_currentTag-101];
-                DLog(@"_imgArray.count=====%d",_imgArray.count);
-            }
-            [_theTable reloadData];
-
-
+            //删除暂时不能处理
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:7 inSection:0];
+            [_imgArray removeObjectAtIndex:_currentTag - 100];
+            [_theTable reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
         }
     }
 }
+- (void)handlePickedImage:(UIImage *)image
+{
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:7 inSection:0];
+    [_imgArray addObject:image];
+    [_theTable reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+}
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo
 {
-  
-    _isHaveImage = YES;
-    [_imgArray addObject:image];
-    
+
+    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+        UIImage *oriImage = [editingInfo objectForKey:UIImagePickerControllerOriginalImage];
+        UIImageWriteToSavedPhotosAlbum(oriImage, nil, nil,nil);
+    }
+    [self performSelector:@selector(handlePickedImage:) withObject:image afterDelay:0.1];
     [self dismissModalViewControllerAnimated:YES];
 
 }
+//- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+//{
+//    [picker dismissModalViewControllerAnimated:YES];
+//    UIImage *image = [info objectForKey:UIImagePickerControllerMediaType];
+//    [self performSelector:@selector(saveImage:) withObject:image afterDelay:0.5];
+//}
 
 #pragma mark -
 #pragma mark UIPickViewDelegates
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
-    
     return 1;
-    
 }
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
@@ -670,16 +642,35 @@
     if (_isWarnBtnClick) {
         UIButton *btn = (UIButton *)[self.view viewWithTag:2277];
         [btn setTitle:[_tempPickArr objectAtIndex:row] forState:UIControlStateNormal];
-        if ([[_tempPickArr objectAtIndex:row] isEqualToString:@"不提醒"]) {
-        }else{
-            //获取当前时间
-            //[self schedulNotificationWithYear:0 andMonth:0 andDay:0 andHour:0 andMintu:0 andMsg:@"时间到"];
+        //获取当前时间
+        if (row == 0) {
+            _timeInterval = MAXFLOAT;
+        }else if (row == 1){
+            _timeInterval = 30*60;
+        }else if (row == 2){
+            _timeInterval = 60*60;
+        }else if (row == 3){
+            _timeInterval = 2*60*60;
+        }else if (row == 4){
+            _timeInterval = 3*60*60;
+        }else if (row == 5){
+            _timeInterval = 12*60*60;
+        }else if (row == 6){
+            _timeInterval = 24*60*60;
+        }else if (row == 7){
+            _timeInterval = 2*24*60*60;
+        }else if (row == 8){
+            _timeInterval = 3*24*60*60;
+        }else if (row == 9){
+            _timeInterval = 7*24*60*60;
         }
+        [self setAlerm:_timeInterval];
+
     }else{
         UITextField *noteTf = (UITextField *)[self.view viewWithTag:NOTE_FIELD_TAG];
         noteTf.text = [_tempPickArr objectAtIndex:row];
     }
-
+    
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:0.3];
     CGRect rect = _pick.frame;

@@ -14,5 +14,6 @@
 @property (strong, nonatomic) IBOutlet UIView *footView;
 @property (strong, nonatomic) UIViewController *viewCtrl;
 @property (strong, nonatomic) NSMutableArray   *imgArr;
+@property (strong, nonatomic) UIImageView      *imgview;
 - (IBAction)VisitCalendarBtnClick:(id)sender;
 @end

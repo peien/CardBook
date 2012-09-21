@@ -34,7 +34,8 @@
     // Do any additional setup after loading the view from its nib.
     CKCalendarView *calendar = [[CKCalendarView alloc] initWithStartDay:startSunday];
     calendar.delegate = self;
-    calendar.frame = CGRectMake(35, 28, 245, 160);
+    //calendar.frame = CGRectMake(35, 28, 245, 160);
+    calendar.frame = CGRectMake(60, 28, 200, 208);
     [self.view addSubview:calendar];
     
 }
@@ -80,7 +81,6 @@
     //有没有图片
     visitVC.style = KVisitRecoardVCStyleShowInfo;
     visitVC.isHaveImage = YES;
-    visitVC.num = 1;
     [self.navigationController pushViewController:visitVC animated:YES];
 
 

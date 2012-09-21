@@ -14,6 +14,7 @@
 #import "MoreViewController.h"
 #import "MyTabBarController.h"
 #import "NSObject+Notification.h"
+#import "KHHAppDelegate.h"
 
 @interface KHHMainUIController ()
 @property (readonly, nonatomic, weak) UIWindow *window; // 当前的keyWindow
@@ -60,9 +61,10 @@
         //    navFive.tabBarItem = [[UITabBarItem alloc] initWithTitle:NSLocalizedString(@"", nil) image:[UIImage imageNamed:@"ico4.png"] tag:4];
         
         _aTabBarController.viewControllers = @[ navOne, navTwo, navThree, navFour, navFive ];
-        
         // 显示主界面
         [self showMainUI];
+        KHHAppDelegate *app = (KHHAppDelegate *)[[UIApplication sharedApplication] delegate];
+        app.aTabBarController = self.aTabBarController;
     }
     return self;
 }

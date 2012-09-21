@@ -24,6 +24,7 @@
     if (self) {
         // Custom initialization
         self.title =@"分享到新浪微薄";
+        self.navigationItem.rightBarButtonItem = nil;
     }
     return self;
 }

@@ -12,8 +12,7 @@
 @interface KHHCardView : UIView<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *theTable;
 @property (nonatomic, strong) UIView *card;
-@property (strong, nonatomic) UIScrollView  *scroller;
-@property (strong, nonatomic) UIPageControl *pageCtrl;
-@property (strong, nonatomic) XLPageControl *xlPage;
+@property (strong, nonatomic) UIButton *saveToContactBtn;
+@property (strong, nonatomic) UIButton *delContactBtn;
 - (void)initView;
 @end

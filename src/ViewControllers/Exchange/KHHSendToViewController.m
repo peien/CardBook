@@ -11,10 +11,15 @@
 #import <AddressBookUI/AddressBookUI.h>
 #import "NSString+Validation.h"
 #import "JSTokenField.h"
+#import "_Card.h"
+#import "KHHNetWorkAPIAgent+Card.h"
 
 #define TheScrollMaxHeight 180
 #define TheScrollMinHeight 42
 #define TheScrollHeightPadding 5
+
+#define textCardSent NSLocalizedString(@"名片已发出", @"")
+#define textOK NSLocalizedString(@"确定", @"")
 
 @implementation CardReceiver
 @synthesize name = _name;
@@ -35,7 +40,8 @@
 @end
 
 @interface KHHSendToViewController ()<ABPeoplePickerNavigationControllerDelegate,JSTokenFieldDelegate>
-@property (retain, nonatomic) NSMutableArray *theReceivers;
+@property (strong, nonatomic) NSMutableArray *theReceivers;
+@property (strong, nonatomic) _Card          *theCard;
 @end
 
 @implementation KHHSendToViewController
@@ -65,8 +71,54 @@
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
-- (void)rightBarClick:(id)sender
+- (void)rightBarButtonClick:(id)sender
 {
+    //发送成功跳转到前一页,thecard 只是声明了下
+#ifdef DEBUG
+    NSLog(@"发送按钮！");
+#endif
+    if ([self tokenFieldShouldReturn:self.theTokenField]) {
+#ifdef DEBUG
+        NSLog(@"接受者：%@", self.theReceivers);
+#endif
+        if(_theReceivers.count==0){
+            [[[UIAlertView alloc] initWithTitle:@"手机号码为空!" message:nil delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            return;
+        }
+        
+        if (self.theCard) {
+            //
+            if (self.theReceivers.count) {
+                //
+                NSMutableString *mobileString = [[NSMutableString alloc] init];
+                for (CardReceiver *cr in self.theReceivers) {
+                    [mobileString appendFormat:@"%@;",cr.mobile];
+                }
+                NSRange rangeToDel = {mobileString.length - 1, 1};
+                [mobileString deleteCharactersInRange:rangeToDel];
+                NSString *cardIdString = self.theCard.id.stringValue;
+                NSString *versionString = self.theCard.version.stringValue;
+                NSString *cardContent = @"";
+#ifdef DEBUG
+                NSLog(@"接受者mobileString：%@", mobileString);
+#endif
+//                [_eCardReq sendCard:mobileString
+//                             cardId:cardIdString
+//                            version:versionString
+//                            context:cardContent];
+//              替换接口
+                
+                [[[UIAlertView alloc] initWithTitle:nil
+                                             message:textCardSent
+                                            delegate:nil
+                                   cancelButtonTitle:textOK
+                                   otherButtonTitles:nil] show];
+            }
+        } else {
+            // theCard 为 nil
+            NSLog(@"theCard 为 %@", self.theCard);
+        }
+    }
 
 }
 - (void)viewDidLoad
@@ -120,7 +172,6 @@
     } else{
         [self presentModalViewController:aPeoplePicker animated:YES];
     }
-
 }
 - (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker
 {
@@ -177,7 +228,7 @@
         }
         return NO;
     }
-    return NO;
+    return YES;
 
 }
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier

@@ -11,6 +11,8 @@
 #import "KHHCardView.h"
 #import "KHHShowHideTabBar.h"
 #import "Edit_eCardViewController.h"
+#import "KHHAddressBook.h"
+#import "_Card.h"
 
 @interface KHHMyDetailController ()
 @end
@@ -64,6 +66,8 @@
     _visitView.viewCtrl = self;
     _cardView = [[[NSBundle mainBundle] loadNibNamed:@"KHHCardView" owner:self options:nil] objectAtIndex:0];
     [_cardView initView];
+    [_cardView.saveToContactBtn addTarget:self action:@selector(saveToContactBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_cardView.delContactBtn addTarget:self action:@selector(delCardBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.containView addSubview:_visitView];
     [self.containView addSubview:_cardView];
     
@@ -79,6 +83,18 @@
         [bottomBtn setBackgroundImage:[UIImage imageNamed:@"editBtn_normal.png"] forState:UIControlStateNormal];
         [self.view insertSubview:bottomBtn atIndex:100];
     }
+    //addressbook
+}
+//添加card到通讯录
+- (void)saveToContactBtnClick:(id)sender
+{
+
+    
+}
+- (void)delCardBtnClick:(id)sender
+{
+    
+    
 }
 - (void)viewWillAppear:(BOOL)animated
 {
