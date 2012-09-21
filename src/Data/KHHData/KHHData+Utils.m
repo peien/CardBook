@@ -261,7 +261,7 @@
 // 根据公司ID查数据库。
 // 无则返回nil；
 - (Company *)companyByID:(NSNumber *)companyID {
-    [self companyByID:companyID createIfNone:NO];
+    return [self companyByID:companyID createIfNone:NO];
 }
 
 // 根据公司ID查数据库，并填上name；name为nil不修改；
