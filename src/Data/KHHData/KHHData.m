@@ -7,7 +7,6 @@
 //
 
 #import "KHHData.h"
-#import "NSObject+Notification.h"
 
 @implementation KHHData
 @synthesize managedObjectContext = _managedObjectContext;

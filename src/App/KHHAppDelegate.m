@@ -7,7 +7,6 @@
 //
 
 #import "KHHAppDelegate.h"
-#import "NSObject+Notification.h"
 #import "KHHNotifications.h"
 #import "MyTabBarController.h"
 

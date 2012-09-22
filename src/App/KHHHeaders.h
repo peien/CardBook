@@ -27,6 +27,8 @@
 #import "KHHData.h"
 #import "KHHData+Handlers.h"
 #import "KHHData+UI.h"
-#import "KHHData+Utils.h"
+#import "KHHData+CRUD.h"
+#import "KHHData+Processors.h"
 
+#import "NSObject+SM.h"
 #endif

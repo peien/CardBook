@@ -13,7 +13,6 @@
 #import "KHHDefaults.h"
 #import "SMCheckBox.h"
 #import "NSString+Validation.h"
-#import "NSObject+Notification.h"
 #import "UIViewController+SM.h"
 #import "KHHNetworkAPIAgent+Account.h"
 

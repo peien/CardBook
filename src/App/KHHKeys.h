@@ -72,6 +72,7 @@ static NSString * const JSONDataKeyCompanyId = @"companyId";
 static NSString * const JSONDataKeyCompanyLinkList = @"companyLinkList";
 static NSString * const JSONDataKeyCompanyName = @"companyName";
 static NSString * const JSONDataKeyCountry = @"country";
+static NSString * const JSONDataKeyDetails = @"details";
 static NSString * const JSONDataKeyEmail = @"email";
 static NSString * const JSONDataKeyFax = @"fax";
 static NSString * const JSONDataKeyFuctionIds = @"fuctionIds";

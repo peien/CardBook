@@ -8,7 +8,6 @@
 
 #import "KHHNetworkAPIAgent+Group.h"
 #import "KHHNetworkAPIAgent+Card.h"
-#import "NSObject+Notification.h"
 
 /*!
  @fuctiongroup Group参数整理函数

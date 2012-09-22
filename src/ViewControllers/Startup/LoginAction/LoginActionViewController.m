@@ -12,7 +12,6 @@
 #import "KHHNetworkAPIAgent+Account.h"
 #import "UIImageView+WebCache.h"
 #import "UIViewController+SM.h"
-#import "NSObject+Notification.h"
 
 #define textStartAutoLogin NSLocalizedString(@"正在自动登录...", nil)
 #define textStartLogin NSLocalizedString(@"正在登录...", nil)

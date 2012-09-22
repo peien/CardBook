@@ -1,5 +1,5 @@
 //
-//  NSObject+Notification.h
+//  NSObject+SM.h
 //  CardBook
 //
 //  Created by 孙铭 on 8/23/12.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSObject (Notification)
+@interface NSObject (SMNotification)
 - (void)observeNotification:(NSString *)name
                    selector:(NSString *)selector;
 - (void)observeNotification:(NSString *)name
@@ -24,4 +24,9 @@
 - (void)postNotification:(NSString *)name
                     info:(NSDictionary *)dict
                      now:(BOOL)now;
+@end
+
+@interface NSObject (SMInvocation)
+// 调用
+//- (void)invokeSelector:(SEL)selector withParameters:(NSArray *)parameters count;
 @end

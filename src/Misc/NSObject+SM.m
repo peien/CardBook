@@ -1,14 +1,14 @@
 //
-//  NSObject+Notification.m
+//  NSObject+SM.m
 //  CardBook
 //
 //  Created by 孙铭 on 8/23/12.
 //  Copyright (c) 2012 KingHanHong. All rights reserved.
 //
 
-#import "NSObject+Notification.h"
+#import "NSObject+SM.h"
 
-@implementation NSObject (Notification)
+@implementation NSObject (SMNotification)
 - (void)observeNotification:(NSString *)name
                           selector:(NSString *)selector {
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -46,5 +46,9 @@
     [[NSNotificationQueue defaultQueue] enqueueNotification:noti
                                                postingStyle:now?NSPostNow:NSPostASAP];
 }
+
+@end
+
+@implementation NSObject (SMInvocation)
 
 @end

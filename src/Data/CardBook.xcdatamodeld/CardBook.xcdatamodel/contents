@@ -13,6 +13,7 @@
     <entity name="BankAccount" representedClassName="BankAccount" syncable="YES">
         <attribute name="bank" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="branch" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="number" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="cards" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Card" inverseName="bankAccount" inverseEntity="Card" syncable="YES"/>
     </entity>
@@ -114,7 +115,7 @@
     </entity>
     <elements>
         <element name="Address" positionX="0" positionY="0" width="128" height="165"/>
-        <element name="BankAccount" positionX="0" positionY="0" width="128" height="105"/>
+        <element name="BankAccount" positionX="0" positionY="0" width="128" height="120"/>
         <element name="Card" positionX="0" positionY="0" width="128" height="525"/>
         <element name="CardTemplate" positionX="0" positionY="0" width="128" height="210"/>
         <element name="CardTemplateItem" positionX="0" positionY="0" width="128" height="90"/>

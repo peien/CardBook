@@ -1,16 +1,14 @@
 //
-//  KHHData+Utils.h
+//  KHHData+CRUD.h
 //  CardBook
 //
-//  Created by 孙铭 on 12-9-20.
+//  Created by Sun Ming on 12-9-22.
 //  Copyright (c) 2012年 Kinghanhong. All rights reserved.
 //
 
 #import "KHHData.h"
-/*
- 用于 KHHData 内部使用，外部不需要调用。
- */
-@interface KHHData (Utils)
+
+@interface KHHData (CRUD)
 // 没有符合条件的返回空数组，出错返回nil。
 - (NSArray *)fetchEntityName:(NSString *)entityName
                        error:(NSError **)error;
@@ -25,9 +23,9 @@
                           error:(NSError **)error;
 // 出错的返回值是NSNotFound，且error指向一个 NSError 实例。
 - (NSUInteger)countOfEntityName:(NSString *)entityName
-                     predicate:(NSPredicate *)predicate
-             sortDescriptors:(NSArray *)sortDescriptors
-                       error:(NSError **)error;
+                      predicate:(NSPredicate *)predicate
+                sortDescriptors:(NSArray *)sortDescriptors
+                          error:(NSError **)error;
 // 根据 ID 和 类名 查数据库。此 ID 不是CoreData OBjectID，而至cardID，companyID等等。
 // 无则返回nil；
 - (id)objectByID:(NSNumber *)ID ofClass:(NSString *)className;
@@ -36,27 +34,12 @@
 // createIfNone==YES，无则新建
 // createIfNone==NO， 无则返回nil；
 - (id)objectByID:(NSNumber *)ID ofClass:(NSString *)className createIfNone:(BOOL)createIfNone;
+// 新建一个对象。无预设ID之类的属性。
+- (id)objectOfClass:(NSString *)className ;
+@end
 
-#pragma mark - Address utils
-// 新建一个地址，失败返回nil；
-- (Address *)addressWithCountry:(NSString *)country   // 国，
-                       province:(NSString *)province  // 省，
-                           city:(NSString *)city      // 市
-                       district:(NSString *)district  // 区，现在可能未使用
-                         street:(NSString *)street    // 街，现在可能为使用
-                          other:(NSString *)other     // 剩下的全部写在这里，对应于address
-                            zip:(NSString *)zip;      // 邮编
-
-#pragma mark - Bank utils
-// 新建一个银行帐户
-- (BankAccount *)bankAccountWithBank:(NSString *)bank   // 银行
-                              branch:(NSString *)branch // 开户行
-                              number:(NSString *)number; // 帐户
-
-#pragma mark - Card utils
-// JSON data -> Card
-- (void)FillCard:(Card *)card ofType:(KHHCardModelType)type withJSON:(NSDictionary *)dict;
-
+#pragma mark - Card
+@interface KHHData (CRUD_Card)
 // cardType -> entityName: 出错返回nil。
 - (NSString *)entityNameWithCardType:(KHHCardModelType)cardType;
 - (NSArray *)allCardsOfType:(KHHCardModelType)cardType;
@@ -68,25 +51,20 @@
 - (void)createCardOfType:(KHHCardModelType)cardType withDictionary:(NSDictionary *)dict;//联网
 - (void)modifyCardOfType:(KHHCardModelType)cardType withDictionary:(NSDictionary *)dict;//联网
 - (void)deleteCardOfType:(KHHCardModelType)cardType byID:(NSNumber *)cardID;//联网
+@end
 
-#pragma mark - Company utils
+#pragma mark - Company
+@interface KHHData (CRUD_Company)
 // 根据公司ID查数据库。
 // 无则返回nil；
 - (Company *)companyByID:(NSNumber *)companyID;
+@end
 
-// 根据公司ID查数据库。
-// createIfNone==YES，无则新建
-// createIfNone==NO， 无则返回nil；
-- (Company *)companyByID:(NSNumber *)companyID createIfNone:(BOOL)createIfNone;
-
-#pragma mark - Image utils
+#pragma mark - Image
+@interface KHHData (CRUD_Image)
 // 根据图片ID查数据库，无则新建。
 // 注意id==0或nil，亦新建；
 - (Image *)imageByID:(NSNumber *)imageID;
-
-#pragma mark - Template utils
-// JSON data -> Template
-- (void)FillCardTemplate:(CardTemplate *)cardTemplate withJSON:(NSDictionary *)dict;
 @end
 
 

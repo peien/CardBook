@@ -13,7 +13,6 @@
 #import "KHHMessageViewController.h"
 #import "MoreViewController.h"
 #import "MyTabBarController.h"
-#import "NSObject+Notification.h"
 #import "KHHDefaults.h"
 #import "KHHAppDelegate.h"
 

@@ -11,7 +11,6 @@
 #import "NSString+Validation.h"
 #import "AgreementViewController.h"
 #import "SMCheckBox.h"
-#import "NSObject+Notification.h"
 #import "KHHNetworkAPIAgent+Account.h"
 #import "KHHDefaults.h"
 

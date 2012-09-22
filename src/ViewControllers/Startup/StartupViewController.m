@@ -16,7 +16,6 @@
 #import "AgreementViewController.h"
 #import "KHHDefaults.h"
 #import "KHHNetworkAPIAgent+Account.h"
-#import "NSObject+Notification.h"
 #import "UIViewController+SM.h"
 
 #define textLoginFailed NSLocalizedString(@"登录失败", nil)
