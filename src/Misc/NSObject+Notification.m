@@ -33,12 +33,18 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)postNotification:(NSString *)name info:(NSDictionary *)dict {
+    [self postNotification:name info:dict now:NO];
+}
+// now == YES：发出的消息被立即处理
+- (void)postNotification:(NSString *)name
+                    info:(NSDictionary *)dict
+                     now:(BOOL)now {
     NSNotification *noti = [NSNotification notificationWithName:name
                                                          object:self
                                                        userInfo:dict];
     DLog(@"[II] 发送 notification = %@", noti);
     [[NSNotificationQueue defaultQueue] enqueueNotification:noti
-                                               postingStyle:NSPostASAP];
+                                               postingStyle:now?NSPostNow:NSPostASAP];
 }
 
 @end

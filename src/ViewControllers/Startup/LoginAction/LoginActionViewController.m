@@ -210,12 +210,12 @@
 }
 - (void)handleSyncAfterLoginSucceeded:(NSNotification *)noti {
     // 进主界面。
-    [self postNotification:KHHNotificationShowMainUI info:nil];
+    [self postNotification:KHHNotificationShowMainUI info:nil now:YES];
 }
 - (void)handleSyncAfterLoginFailed:(NSNotification *)noti {
     [self alertWithTitle:alertTitleSyncFailed message:textNotAllDataAvailable];
     // 进主界面。
-    [self postNotification:KHHNotificationShowMainUI info:nil];
+    [self postNotification:KHHNotificationShowMainUI info:nil now:YES];
 }
 
 #pragma mark - UIAlertViewDelegate

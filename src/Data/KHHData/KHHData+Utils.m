@@ -9,10 +9,7 @@
 #import "KHHData+Utils.h"
 #import "NSNumber+SM.h"
 #import "NSString+SM.h"
-#import "Address.h"
-#import "BankAccount.h"
-#import "Company.h"
-#import "Image.h"
+
 
 @implementation KHHData (Utils)
 // 没有符合条件的返回空数组，出错返回nil。
@@ -69,7 +66,108 @@
                                                                 error:error];
     return result;
 }
+// 根据 ID 和 类名 查数据库。此 ID 不是CoreData OBjectID，而至cardID，companyID等等。
+// 无则返回nil；
+- (id)objectByID:(NSNumber *)ID ofClass:(NSString *)className {
+    return [self objectByID:ID ofClass:className createIfNone:NO];
+}
 
+// 根据 ID 和 类名 查数据库。此 ID 不是CoreData OBjectID，而至cardID，companyID等等。
+// createIfNone==YES，无则新建
+// createIfNone==NO， 无则返回nil；
+- (id)objectByID:(NSNumber *)ID
+         ofClass:(NSString *)className
+    createIfNone:(BOOL)createIfNone {
+    id result = nil;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id = %@", ID];
+    NSError *error;
+    NSArray *matches = [self fetchEntityName:className
+                                   predicate:predicate
+                             sortDescriptors:nil
+                                       error:&error];
+    if (nil == matches) {
+        ALog(@"[EE] fetchEntityName 出错：%@", error.localizedDescription);
+        return result;
+    }
+    if ([matches count] > 1) {
+        ALog(@"[EE] fetchEntityName 出错：返回的对象多于一个!");
+        //        return result;
+    }
+    result = [matches lastObject];
+    if (nil == result && createIfNone) {
+        result = [NSEntityDescription insertNewObjectForEntityForName:className
+                                               inManagedObjectContext:self.managedObjectContext];
+        [result setValue:ID forKey:kAttributeKeyID];
+    }
+    return result;
+}
+
+#pragma mark - Address utils
+// 新建一个地址
+- (Address *)addressWithCountry:(NSString *)country   // 国，
+                       province:(NSString *)province  // 省，
+                           city:(NSString *)city      // 市
+                       district:(NSString *)district  // 区，现在可能未使用
+                         street:(NSString *)street    // 街，现在可能为使用
+                          other:(NSString *)other     // 剩下的全部写在这里，对应于address
+                            zip:(NSString *)zip       // 邮编
+{
+    Address *result = nil;
+    result = [NSEntityDescription insertNewObjectForEntityForName:[Address entityName]
+                                           inManagedObjectContext:self.managedObjectContext];
+    if (nil == result) {
+        return result;
+    }
+    
+    // 插入数据
+    if (country) {
+        result.country = country;
+    }
+    if (province) {
+        result.province = province;
+    }
+    if (city) {
+        result.city = city;
+    }
+    if (district) {
+        result.district = district;
+    }
+    if (street) {
+        result.street = street;
+    }
+    if (other) {
+        result.other = other;
+    }
+    if (zip) {
+        result.zip = zip;
+    }
+    
+    return result;
+}
+#pragma mark - Bank utils
+// 新建一个银行帐户
+- (BankAccount *)bankAccountWithBank:(NSString *)bank   // 银行
+                              branch:(NSString *)branch // 开户行
+                              number:(NSString *)number // 帐户
+{
+    BankAccount *result = nil;
+    NSString *entityName = [BankAccount entityName];
+    result = [NSEntityDescription insertNewObjectForEntityForName:entityName
+                                           inManagedObjectContext:self.managedObjectContext];
+    if (nil == result) {
+        return result;
+    }
+    if (bank) {
+        result.bank = bank;
+    }
+    if (branch) {
+        result.branch = branch;
+    }
+    if (number) {
+        result.number = number;
+    }
+    return result;
+}
 #pragma mark - Card utils
 // JSON data -> Card
 - (void)FillCard:(Card *)card
@@ -116,11 +214,13 @@
          */
         
         // 模板
-//        card.template = ;
+        // 根据ID查，不存在则新建
+//        card.template = [self templateByID:templateID createIfNone:YES];
+
 #warning TODO
         // logo
         NSString *logoURL = [NSString stringFromObject:json[JSONDataKeyLogoImage]];
-        if (nil == card.logo) {
+        if (nil == card.logo) { // card.logo不存在则新建
             card.logo = [self imageByID:nil];
         }
         card.logo.url = logoURL;
@@ -129,8 +229,7 @@
         NSNumber *companyID = [NSNumber numberFromObject:json[JSONDataKeyCompanyId]
                                              defaultValue:0 defaultIfUnresolvable:YES];
         NSString *companyName = [NSString stringFromObject:json[JSONDataKeyCompanyName]];
-        card.company = [self companyByID:companyID
-                            createIfNone:YES];
+        card.company = [self companyByID:companyID createIfNone:YES];
         card.company.name = companyName;
         
         // 地址
@@ -214,7 +313,7 @@
 - (id)cardOfType:(KHHCardModelType)cardType
             byID:(NSNumber *)cardID
     createIfNone:(BOOL)createIfNone {
-    id result = nil;
+    Card *result = nil;
     NSString *entityName = [self entityNameWithCardType:cardType];
     if (0 == [entityName length]) {
         ALog(@"[EE] entityName = nil 或 @\"\"!!!");
@@ -238,6 +337,7 @@
     if (nil == result && createIfNone) {
         result = [NSEntityDescription insertNewObjectForEntityForName:entityName
                                                inManagedObjectContext:self.managedObjectContext];
+        result.id = cardID;
     }
     return result;
 }
@@ -258,6 +358,7 @@
 #warning TODO
 }
 
+#pragma mark - Company utils
 // 根据公司ID查数据库。
 // 无则返回nil；
 - (Company *)companyByID:(NSNumber *)companyID {
@@ -269,29 +370,12 @@
 // createIfNone==NO， 无则返回nil；
 - (Company *)companyByID:(NSNumber *)companyID
             createIfNone:(BOOL)createIfNone {
-    Company *result = nil;
-    NSString *entityName = [Company entityName];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id = %@", companyID];
-    NSError *error;
-    NSArray *matches = [self fetchEntityName:entityName
-                                   predicate:predicate
-                             sortDescriptors:nil
-                                       error:&error];
-    if (nil == matches) {
-        ALog(@"[EE] fetchEntityName 出错：%@", error.localizedDescription);
-        return result;
-    }
-    if ([matches count] > 1) {
-        ALog(@"[EE] fetchEntityName 出错：返回的对象多于一个!");
-        //        return result;
-    }
-    result = [matches lastObject];
-    if (nil == result && createIfNone) {
-        result = [NSEntityDescription insertNewObjectForEntityForName:entityName
-                                               inManagedObjectContext:self.managedObjectContext];
-    }
-    return result;
+    return [self objectByID:companyID
+                    ofClass:[Company entityName]
+               createIfNone:createIfNone];
 }
+
+#pragma mark - Image utils
 // 根据图片ID查数据库，无则新建。
 // 注意id==0或nil，亦新建；
 - (Image *)imageByID:(NSNumber *)imageID {
@@ -317,69 +401,15 @@
                                            inManagedObjectContext:self.managedObjectContext];
     return result;
 }
-// 新建一个地址
-- (Address *)addressWithCountry:(NSString *)country   // 国，
-                       province:(NSString *)province  // 省，
-                           city:(NSString *)city      // 市
-                       district:(NSString *)district  // 区，现在可能未使用
-                         street:(NSString *)street    // 街，现在可能为使用
-                          other:(NSString *)other     // 剩下的全部写在这里，对应于address
-                            zip:(NSString *)zip       // 邮编
-{
-    Address *result = nil;
-    result = [NSEntityDescription insertNewObjectForEntityForName:[Address entityName]
-                                  inManagedObjectContext:self.managedObjectContext];
-    if (nil == result) {
-        return result;
-    }
-    
-    // 插入数据
-    if (country) {
-        result.country = country;
-    }
-    if (province) {
-        result.province = province;
-    }
-    if (city) {
-        result.city = city;
-    }
-    if (district) {
-        result.district = district;
-    }
-    if (street) {
-        result.street = street;
-    }
-    if (other) {
-        result.other = other;
-    }
-    if (zip) {
-        result.zip = zip;
-    }
-    
-    return result;
+#pragma mark - Template utils
+// JSON data -> Template
+- (void)FillCardTemplate:(CardTemplate *)cardTemplate
+                withJSON:(NSDictionary *)dict {
+#warning TODO
 }
-// 新建一个银行帐户
-- (BankAccount *)bankAccountWithBank:(NSString *)bank   // 银行
-                              branch:(NSString *)branch // 开户行
-                              number:(NSString *)number // 帐户
-{
-    BankAccount *result = nil;
-    NSString *entityName = [BankAccount entityName];
-    result = [NSEntityDescription insertNewObjectForEntityForName:entityName
-                                           inManagedObjectContext:self.managedObjectContext];
-    if (nil == result) {
-        return result;
-    }
-    if (bank) {
-        result.bank = bank;
-    }
-    if (branch) {
-        result.branch = branch;
-    }
-    if (number) {
-        result.number = number;
-    }
-    return result;
+// JSON data -> TemplateItem
+- (void)FillCardTemplateItem:(CardTemplateItem *)CardTemplateItem
+                    withJSON:(NSDictionary *)dict {
+#warning TODO
 }
-
 @end

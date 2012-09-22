@@ -7,8 +7,6 @@
 //
 
 #import "KHHData.h"
-#import "KHHData+Handlers.h"
-#import "KHHData+UI.h"
 #import "NSObject+Notification.h"
 
 @implementation KHHData
@@ -96,7 +94,14 @@
         return _persistentStoreCoordinator;
     }
     
-    NSURL *storeURL = [[KHHApp applicationDocumentsDirectory] URLByAppendingPathComponent:@"CardBook.sqlite"];
+    // 登陆成功后以 “user_companyID.sqlite” 为文件名创建数据库文件。user取不到时使用默认的“CardBook.sqlite”。
+    NSString *fileName = @"CardBook.sqlite";
+    NSString *userID = [[KHHDefaults sharedDefaults] currentUser];
+    if (userID.length) {
+        NSNumber *companyID = [[KHHDefaults sharedDefaults] currentCompanyID];
+        fileName = [NSString stringWithFormat:@"%@_%@.sqlite",userID, companyID];
+    }
+    NSURL *storeURL = [[KHHApp applicationDocumentsDirectory] URLByAppendingPathComponent:fileName];
     
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];

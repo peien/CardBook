@@ -28,11 +28,32 @@
                      predicate:(NSPredicate *)predicate
              sortDescriptors:(NSArray *)sortDescriptors
                        error:(NSError **)error;
+// 根据 ID 和 类名 查数据库。此 ID 不是CoreData OBjectID，而至cardID，companyID等等。
+// 无则返回nil；
+- (id)objectByID:(NSNumber *)ID ofClass:(NSString *)className;
+
+// 根据 ID 和 类名 查数据库。此 ID 不是CoreData OBjectID，而至cardID，companyID等等。
+// createIfNone==YES，无则新建
+// createIfNone==NO， 无则返回nil；
+- (id)objectByID:(NSNumber *)ID ofClass:(NSString *)className createIfNone:(BOOL)createIfNone;
+
+#pragma mark - Address utils
+// 新建一个地址，失败返回nil；
+- (Address *)addressWithCountry:(NSString *)country   // 国，
+                       province:(NSString *)province  // 省，
+                           city:(NSString *)city      // 市
+                       district:(NSString *)district  // 区，现在可能未使用
+                         street:(NSString *)street    // 街，现在可能为使用
+                          other:(NSString *)other     // 剩下的全部写在这里，对应于address
+                            zip:(NSString *)zip;      // 邮编
+
+#pragma mark - Bank utils
+// 新建一个银行帐户
+- (BankAccount *)bankAccountWithBank:(NSString *)bank   // 银行
+                              branch:(NSString *)branch // 开户行
+                              number:(NSString *)number; // 帐户
 
 #pragma mark - Card utils
-/*!
- Card: 通用接口，不要直接调这些接口！！！
- */
 // JSON data -> Card
 - (void)FillCard:(Card *)card ofType:(KHHCardModelType)type withJSON:(NSDictionary *)dict;
 
@@ -48,32 +69,24 @@
 - (void)modifyCardOfType:(KHHCardModelType)cardType withDictionary:(NSDictionary *)dict;//联网
 - (void)deleteCardOfType:(KHHCardModelType)cardType byID:(NSNumber *)cardID;//联网
 
-// 新建一个地址，失败返回nil；
-- (Address *)addressWithCountry:(NSString *)country   // 国，
-                       province:(NSString *)province  // 省，
-                           city:(NSString *)city      // 市
-                       district:(NSString *)district  // 区，现在可能未使用
-                         street:(NSString *)street    // 街，现在可能为使用
-                          other:(NSString *)other     // 剩下的全部写在这里，对应于address
-                            zip:(NSString *)zip;      // 邮编
-
+#pragma mark - Company utils
 // 根据公司ID查数据库。
 // 无则返回nil；
 - (Company *)companyByID:(NSNumber *)companyID;
 
-// 根据公司ID查数据库，并填上name；
+// 根据公司ID查数据库。
 // createIfNone==YES，无则新建
 // createIfNone==NO， 无则返回nil；
 - (Company *)companyByID:(NSNumber *)companyID createIfNone:(BOOL)createIfNone;
 
+#pragma mark - Image utils
 // 根据图片ID查数据库，无则新建。
 // 注意id==0或nil，亦新建；
 - (Image *)imageByID:(NSNumber *)imageID;
 
-// 新建一个银行帐户
-- (BankAccount *)bankAccountWithBank:(NSString *)bank   // 银行
-                              branch:(NSString *)branch // 开户行
-                              number:(NSString *)number; // 帐户
+#pragma mark - Template utils
+// JSON data -> Template
+- (void)FillCardTemplate:(CardTemplate *)cardTemplate withJSON:(NSDictionary *)dict;
 @end
 
 

@@ -4,11 +4,14 @@
 #import "_CardTemplate.h"
 
 const struct CardTemplateAttributes CardTemplateAttributes = {
-	.atime = @"atime",
-	.ctime = @"ctime",
+	.cTimeUTC = @"cTimeUTC",
+	.descriptionInfo = @"descriptionInfo",
+	.domainType = @"domainType",
 	.id = @"id",
+	.mTimeUTC = @"mTimeUTC",
 	.ownerID = @"ownerID",
-	.type = @"type",
+	.style = @"style",
+	.version = @"version",
 };
 
 const struct CardTemplateRelationships CardTemplateRelationships = {
@@ -46,6 +49,10 @@ const struct CardTemplateFetchedProperties CardTemplateFetchedProperties = {
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
+	if ([key isEqualToString:@"domainTypeValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"domainType"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
 	if ([key isEqualToString:@"idValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"id"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -54,8 +61,8 @@ const struct CardTemplateFetchedProperties CardTemplateFetchedProperties = {
 		NSSet *affectingKey = [NSSet setWithObject:@"ownerID"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
-	if ([key isEqualToString:@"typeValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"type"];
+	if ([key isEqualToString:@"versionValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"version"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 
@@ -65,15 +72,41 @@ const struct CardTemplateFetchedProperties CardTemplateFetchedProperties = {
 
 
 
-@dynamic atime;
+@dynamic cTimeUTC;
 
 
 
 
 
 
-@dynamic ctime;
+@dynamic descriptionInfo;
 
+
+
+
+
+
+@dynamic domainType;
+
+
+
+- (int32_t)domainTypeValue {
+	NSNumber *result = [self domainType];
+	return [result intValue];
+}
+
+- (void)setDomainTypeValue:(int32_t)value_ {
+	[self setDomainType:[NSNumber numberWithInt:value_]];
+}
+
+- (int32_t)primitiveDomainTypeValue {
+	NSNumber *result = [self primitiveDomainType];
+	return [result intValue];
+}
+
+- (void)setPrimitiveDomainTypeValue:(int32_t)value_ {
+	[self setPrimitiveDomainType:[NSNumber numberWithInt:value_]];
+}
 
 
 
@@ -105,6 +138,13 @@ const struct CardTemplateFetchedProperties CardTemplateFetchedProperties = {
 
 
 
+@dynamic mTimeUTC;
+
+
+
+
+
+
 @dynamic ownerID;
 
 
@@ -131,26 +171,33 @@ const struct CardTemplateFetchedProperties CardTemplateFetchedProperties = {
 
 
 
-@dynamic type;
+@dynamic style;
 
 
 
-- (int32_t)typeValue {
-	NSNumber *result = [self type];
-	return [result intValue];
+
+
+
+@dynamic version;
+
+
+
+- (int64_t)versionValue {
+	NSNumber *result = [self version];
+	return [result longLongValue];
 }
 
-- (void)setTypeValue:(int32_t)value_ {
-	[self setType:[NSNumber numberWithInt:value_]];
+- (void)setVersionValue:(int64_t)value_ {
+	[self setVersion:[NSNumber numberWithLongLong:value_]];
 }
 
-- (int32_t)primitiveTypeValue {
-	NSNumber *result = [self primitiveType];
-	return [result intValue];
+- (int64_t)primitiveVersionValue {
+	NSNumber *result = [self primitiveVersion];
+	return [result longLongValue];
 }
 
-- (void)setPrimitiveTypeValue:(int32_t)value_ {
-	[self setPrimitiveType:[NSNumber numberWithInt:value_]];
+- (void)setPrimitiveVersionValue:(int64_t)value_ {
+	[self setPrimitiveVersion:[NSNumber numberWithLongLong:value_]];
 }
 
 

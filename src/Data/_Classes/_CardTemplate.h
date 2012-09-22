@@ -5,11 +5,14 @@
 
 
 extern const struct CardTemplateAttributes {
-	__unsafe_unretained NSString *atime;
-	__unsafe_unretained NSString *ctime;
+	__unsafe_unretained NSString *cTimeUTC;
+	__unsafe_unretained NSString *descriptionInfo;
+	__unsafe_unretained NSString *domainType;
 	__unsafe_unretained NSString *id;
+	__unsafe_unretained NSString *mTimeUTC;
 	__unsafe_unretained NSString *ownerID;
-	__unsafe_unretained NSString *type;
+	__unsafe_unretained NSString *style;
+	__unsafe_unretained NSString *version;
 } CardTemplateAttributes;
 
 extern const struct CardTemplateRelationships {
@@ -31,6 +34,9 @@ extern const struct CardTemplateFetchedProperties {
 
 
 
+
+
+
 @interface CardTemplateID : NSManagedObjectID {}
 @end
 
@@ -43,18 +49,30 @@ extern const struct CardTemplateFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSString* atime;
+@property (nonatomic, strong) NSString* cTimeUTC;
 
 
-//- (BOOL)validateAtime:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateCTimeUTC:(id*)value_ error:(NSError**)error_;
 
 
 
 
-@property (nonatomic, strong) NSString* ctime;
+@property (nonatomic, strong) NSString* descriptionInfo;
 
 
-//- (BOOL)validateCtime:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateDescriptionInfo:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSNumber* domainType;
+
+
+@property int32_t domainTypeValue;
+- (int32_t)domainTypeValue;
+- (void)setDomainTypeValue:(int32_t)value_;
+
+//- (BOOL)validateDomainType:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -71,6 +89,14 @@ extern const struct CardTemplateFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSString* mTimeUTC;
+
+
+//- (BOOL)validateMTimeUTC:(id*)value_ error:(NSError**)error_;
+
+
+
+
 @property (nonatomic, strong) NSNumber* ownerID;
 
 
@@ -83,14 +109,22 @@ extern const struct CardTemplateFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSNumber* type;
+@property (nonatomic, strong) NSString* style;
 
 
-@property int32_t typeValue;
-- (int32_t)typeValue;
-- (void)setTypeValue:(int32_t)value_;
+//- (BOOL)validateStyle:(id*)value_ error:(NSError**)error_;
 
-//- (BOOL)validateType:(id*)value_ error:(NSError**)error_;
+
+
+
+@property (nonatomic, strong) NSNumber* version;
+
+
+@property int64_t versionValue;
+- (int64_t)versionValue;
+- (void)setVersionValue:(int64_t)value_;
+
+//- (BOOL)validateVersion:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -137,14 +171,23 @@ extern const struct CardTemplateFetchedProperties {
 @interface _CardTemplate (CoreDataGeneratedPrimitiveAccessors)
 
 
-- (NSString*)primitiveAtime;
-- (void)setPrimitiveAtime:(NSString*)value;
+- (NSString*)primitiveCTimeUTC;
+- (void)setPrimitiveCTimeUTC:(NSString*)value;
 
 
 
 
-- (NSString*)primitiveCtime;
-- (void)setPrimitiveCtime:(NSString*)value;
+- (NSString*)primitiveDescriptionInfo;
+- (void)setPrimitiveDescriptionInfo:(NSString*)value;
+
+
+
+
+- (NSNumber*)primitiveDomainType;
+- (void)setPrimitiveDomainType:(NSNumber*)value;
+
+- (int32_t)primitiveDomainTypeValue;
+- (void)setPrimitiveDomainTypeValue:(int32_t)value_;
 
 
 
@@ -158,6 +201,12 @@ extern const struct CardTemplateFetchedProperties {
 
 
 
+- (NSString*)primitiveMTimeUTC;
+- (void)setPrimitiveMTimeUTC:(NSString*)value;
+
+
+
+
 - (NSNumber*)primitiveOwnerID;
 - (void)setPrimitiveOwnerID:(NSNumber*)value;
 
@@ -167,11 +216,17 @@ extern const struct CardTemplateFetchedProperties {
 
 
 
-- (NSNumber*)primitiveType;
-- (void)setPrimitiveType:(NSNumber*)value;
+- (NSString*)primitiveStyle;
+- (void)setPrimitiveStyle:(NSString*)value;
 
-- (int32_t)primitiveTypeValue;
-- (void)setPrimitiveTypeValue:(int32_t)value_;
+
+
+
+- (NSNumber*)primitiveVersion;
+- (void)setPrimitiveVersion:(NSNumber*)value;
+
+- (int64_t)primitiveVersionValue;
+- (void)setPrimitiveVersionValue:(int64_t)value_;
 
 
 

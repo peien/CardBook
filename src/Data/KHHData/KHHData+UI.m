@@ -7,7 +7,6 @@
 //
 
 #import "KHHData+UI.h"
-#import "KHHData+Utils.h"
 
 @implementation KHHData (UI)
 
