@@ -10,5 +10,9 @@
 
 @interface NSString (SM)
 + (NSString *)stringFromObject:(id)obj; // 主要针对 string 和 number，其他都是@"%@"
+
+// 根据string生成新string。如果string为nil则返回@""；若包含@“(null)”，则滤掉。
++ (NSString *)stringByFilterNilFromString:(NSString *)string;
+
 - (NSNumber *)numberValue; // nil if unresolvable; 1 if @"yes", 0 if @"no";
 @end

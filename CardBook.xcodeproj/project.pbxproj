@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		0C23C26C1610BE42006FCD8A /* UIColor+HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C23C26B1610BE42006FCD8A /* UIColor+HexColor.m */; };
 		625BD93C16086FEF00F565AD /* KHHAddImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 625BD93B16086FEF00F565AD /* KHHAddImageCell.m */; };
 		625BD93F1608701E00F565AD /* KHHAddImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 625BD93E1608701E00F565AD /* KHHAddImageCell.xib */; };
 		62A6C4DE160AAECE00ADA43E /* KHHFullFrameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A6C4DC160AAECE00ADA43E /* KHHFullFrameController.m */; };
@@ -488,6 +489,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C23C26A1610BE42006FCD8A /* UIColor+HexColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HexColor.h"; sourceTree = "<group>"; };
+		0C23C26B1610BE42006FCD8A /* UIColor+HexColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HexColor.m"; sourceTree = "<group>"; };
 		625BD93A16086FEF00F565AD /* KHHAddImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHAddImageCell.h; sourceTree = "<group>"; };
 		625BD93B16086FEF00F565AD /* KHHAddImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHAddImageCell.m; sourceTree = "<group>"; };
 		625BD93E1608701E00F565AD /* KHHAddImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHAddImageCell.xib; sourceTree = "<group>"; };
@@ -1457,6 +1460,8 @@
 				984FA63716104AF000344BDC /* ATestViewController.h */,
 				984FA63816104AF000344BDC /* ATestViewController.m */,
 				984FA63916104AF000344BDC /* ATestViewController.xib */,
+				0C23C26A1610BE42006FCD8A /* UIColor+HexColor.h */,
+				0C23C26B1610BE42006FCD8A /* UIColor+HexColor.m */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -2894,6 +2899,7 @@
 				9803EBB1160DBC8E00402B53 /* KHHData+Processors.m in Sources */,
 				984FA6351610297D00344BDC /* KHHVisualCardViewController.m in Sources */,
 				984FA63A16104AF000344BDC /* ATestViewController.m in Sources */,
+				0C23C26C1610BE42006FCD8A /* UIColor+HexColor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -29,7 +29,7 @@
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor blackColor];
     self.data = [KHHData sharedData];
-    self.card = [[self.data allMyCards] lastObject];
+    self.card = [[self.data allMyCards] objectAtIndex:0];
     if (self.card) {
         self.visualCard = [[KHHVisualCardViewController alloc] initWithNibName:nil bundle:nil];
         [self.view addSubview:self.visualCard.view];

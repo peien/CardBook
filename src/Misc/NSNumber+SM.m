@@ -34,7 +34,13 @@
             DLog(@"[II] number from string(%@) is %@", string, result);
             return result;
         };
-        
+        double doubleValue;
+        if ([scanner scanDouble:&doubleValue]) {
+            // 成功直接返回
+            result = [NSNumber numberWithDouble:doubleValue];
+            DLog(@"[II] number from string(%@) is %@", string, result);
+            return result;
+        }
         // 不成功则把string转为全大写，然后查字典
         NSString *ucString = [string uppercaseString];
         NSDictionary *mapDict = @{

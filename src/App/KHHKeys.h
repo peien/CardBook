@@ -49,6 +49,7 @@ static NSString * const kAttributeKeyPathBankAccountBranch = @"bankAccount.branc
 static NSString * const kAttributeKeyPathBankAccountNumber = @"bankAccount.number";
 static NSString * const kAttributeKeyPathCompanyEmail = @"company.email";
 static NSString * const kAttributeKeyPathCompanyID = @"company.id";
+static NSString * const kAttributeKeyPathCompanyLogoURL = @"company.logo.url";
 static NSString * const kAttributeKeyPathCompanyName = @"company.name";
 static NSString * const kAttributeKeyPathLogoURL = @"logo.url";
 static NSString * const kAttributeKeyPathParentID = @"parent.id";
