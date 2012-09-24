@@ -49,6 +49,10 @@
 		982AACC11609BE6B002B9BAD /* KHHData+UI.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACBE1609BE6B002B9BAD /* KHHData+UI.m */; };
 		984C2854160AF02D007D4D13 /* PrivateCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 984C2853160AF02D007D4D13 /* PrivateCard.m */; };
 		984C2857160AF044007D4D13 /* _PrivateCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 984C2856160AF044007D4D13 /* _PrivateCard.m */; };
+		984FA6351610297D00344BDC /* KHHVisualCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 984FA6331610297D00344BDC /* KHHVisualCardViewController.m */; };
+		984FA6361610297D00344BDC /* KHHVisualCardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 984FA6341610297D00344BDC /* KHHVisualCardViewController.xib */; };
+		984FA63A16104AF000344BDC /* ATestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 984FA63816104AF000344BDC /* ATestViewController.m */; };
+		984FA63B16104AF000344BDC /* ATestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 984FA63916104AF000344BDC /* ATestViewController.xib */; };
 		98838DF11608624800CE2353 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A84D791602CD2500A4A673 /* SenTestingKit.framework */; };
 		98838DF21608624800CE2353 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A84D611602CD2500A4A673 /* UIKit.framework */; };
 		98838DF31608624800CE2353 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A84D631602CD2500A4A673 /* Foundation.framework */; };
@@ -549,6 +553,12 @@
 		984C2853160AF02D007D4D13 /* PrivateCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrivateCard.m; sourceTree = "<group>"; };
 		984C2855160AF044007D4D13 /* _PrivateCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _PrivateCard.h; sourceTree = "<group>"; };
 		984C2856160AF044007D4D13 /* _PrivateCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _PrivateCard.m; sourceTree = "<group>"; };
+		984FA6321610297D00344BDC /* KHHVisualCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHVisualCardViewController.h; sourceTree = "<group>"; };
+		984FA6331610297D00344BDC /* KHHVisualCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHVisualCardViewController.m; sourceTree = "<group>"; };
+		984FA6341610297D00344BDC /* KHHVisualCardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHVisualCardViewController.xib; sourceTree = "<group>"; };
+		984FA63716104AF000344BDC /* ATestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATestViewController.h; sourceTree = "<group>"; };
+		984FA63816104AF000344BDC /* ATestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATestViewController.m; sourceTree = "<group>"; };
+		984FA63916104AF000344BDC /* ATestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ATestViewController.xib; sourceTree = "<group>"; };
 		98838DF01608624800CE2353 /* CardBookLogicTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CardBookLogicTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		98838DF61608624800CE2353 /* CardBookLogicTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CardBookLogicTests-Info.plist"; sourceTree = "<group>"; };
 		98838DF81608624800CE2353 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1220,6 +1230,16 @@
 			path = BMapVC;
 			sourceTree = "<group>";
 		};
+		984FA630161028BF00344BDC /* VisualCard */ = {
+			isa = PBXGroup;
+			children = (
+				984FA6321610297D00344BDC /* KHHVisualCardViewController.h */,
+				984FA6331610297D00344BDC /* KHHVisualCardViewController.m */,
+				984FA6341610297D00344BDC /* KHHVisualCardViewController.xib */,
+			);
+			path = VisualCard;
+			sourceTree = "<group>";
+		};
 		98838DF41608624800CE2353 /* CardBookLogicTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1434,6 +1454,9 @@
 				98CFC96D1607201E001B9B17 /* UIImage+Resize.m */,
 				982AACB51609ABB3002B9BAD /* UIViewController+SM.h */,
 				982AACB61609ABB4002B9BAD /* UIViewController+SM.m */,
+				984FA63716104AF000344BDC /* ATestViewController.h */,
+				984FA63816104AF000344BDC /* ATestViewController.m */,
+				984FA63916104AF000344BDC /* ATestViewController.xib */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -1473,6 +1496,7 @@
 		98A84DA01602D24600A4A673 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				984FA630161028BF00344BDC /* VisualCard */,
 				62AB29B1160C47B90004A3E3 /* BMapVC */,
 				98A84F261602D6C500A4A673 /* Card */,
 				98A84F2A1602D6C500A4A673 /* Cells */,
@@ -2542,6 +2566,8 @@
 				62A6C4DF160AAECE00ADA43E /* KHHFullFrameController.xib in Resources */,
 				62AB2985160C07270004A3E3 /* KHHBMapViewController.xib in Resources */,
 				62AB29AC160C0AAB0004A3E3 /* mapapi.bundle in Resources */,
+				984FA6361610297D00344BDC /* KHHVisualCardViewController.xib in Resources */,
+				984FA63B16104AF000344BDC /* ATestViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2866,6 +2892,8 @@
 				9803EBA7160DA88D00402B53 /* NSObject+SM.m in Sources */,
 				9803EBAC160DBB6300402B53 /* KHHData+CRUD.m in Sources */,
 				9803EBB1160DBC8E00402B53 /* KHHData+Processors.m in Sources */,
+				984FA6351610297D00344BDC /* KHHVisualCardViewController.m in Sources */,
+				984FA63A16104AF000344BDC /* ATestViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

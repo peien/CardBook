@@ -19,7 +19,6 @@ const struct CardAttributes CardAttributes = {
 	.moreInfo = @"moreInfo",
 	.msn = @"msn",
 	.name = @"name",
-	.officeEmail = @"officeEmail",
 	.qq = @"qq",
 	.remarks = @"remarks",
 	.roleType = @"roleType",
@@ -211,13 +210,6 @@ const struct CardFetchedProperties CardFetchedProperties = {
 
 
 @dynamic name;
-
-
-
-
-
-
-@dynamic officeEmail;
 
 
 

@@ -171,7 +171,7 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(Card *card) {
         [result setObject:obj forKey:@"detail.moreInfo"];
     }
     // detail.col1 公司邮箱
-    obj = [[card valueForKey:kAttributeKeyOfficeEmail] stringValue];
+    obj = [[card valueForKey:kAttributeKeyCompanyEmail] stringValue];
     if (obj) {
         [result setObject:obj forKey:@"detail.col1"];
     }

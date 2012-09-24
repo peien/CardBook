@@ -9,6 +9,7 @@
 #import "KHHAppDelegate.h"
 #import "KHHNotifications.h"
 #import "MyTabBarController.h"
+#import "ATestViewController.h"
 
 @implementation KHHAppDelegate
 
@@ -67,13 +68,17 @@
     // 显示启动界面
     self.window.rootViewController = [[StartupViewController alloc] initWithNibName:nil bundle:nil];
 }
+//- (void)handleShowMainUI:(NSNotification *)noti {
+//    // 显示主界面
+//    self.mainUI = [[KHHMainUIController alloc] init];
+//    //暂时写在这里，处理新到联系人或消息提示
+//    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:9999],@"Num", nil];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"KNotificationNewMsgNum" object:dic];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:@"KNotificationNewContactNum" object:dic];
+//}
 - (void)handleShowMainUI:(NSNotification *)noti {
-    // 显示主界面
-    self.mainUI = [[KHHMainUIController alloc] init];
-    //暂时写在这里，处理新到联系人或消息提示
-    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:9999],@"Num", nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"KNotificationNewMsgNum" object:dic];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"KNotificationNewContactNum" object:dic];
+    // 显示 THE TEST VIEW
+    self.window.rootViewController = [[ATestViewController alloc] initWithNibName:nil bundle:nil];
 }
 //设置时间触发
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification

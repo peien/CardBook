@@ -15,6 +15,7 @@
 static NSString * const kAttributeKeyAutoReceive = @"autoReceive";
 static NSString * const kAttributeKeyAliWangWang = @"aliWangWang";
 static NSString * const kAttributeKeyBusinessScope = @"businessScope";
+static NSString * const kAttributeKeyCompanyEmail = @"companyEmail";
 static NSString * const kAttributeKeyCompanyList = @"companyList";
 static NSString * const kAttributeKeyCustomerServiceTel = @"customerServiceTel";
 static NSString * const kAttributeKeyDepartment = @"department";
@@ -27,7 +28,6 @@ static NSString * const kAttributeKeyMobilePhone = @"mobilePhone";
 static NSString * const kAttributeKeyMoreInfo = @"moreInfo";
 static NSString * const kAttributeKeyMSN = @"msn";
 static NSString * const kAttributeKeyName = @"name";
-static NSString * const kAttributeKeyOfficeEmail = @"officeEmail";
 static NSString * const kAttributeKeyPassword = @"password";
 static NSString * const kAttributeKeyQQ = @"qq";
 static NSString * const kAttributeKeyRemarks = @"remarks";
@@ -47,6 +47,7 @@ static NSString * const kAttributeKeyPathAddressProvince = @"address.province";
 static NSString * const kAttributeKeyPathAddressZip = @"address.zip";
 static NSString * const kAttributeKeyPathBankAccountBranch = @"bankAccount.branch";
 static NSString * const kAttributeKeyPathBankAccountNumber = @"bankAccount.number";
+static NSString * const kAttributeKeyPathCompanyEmail = @"company.email";
 static NSString * const kAttributeKeyPathCompanyID = @"company.id";
 static NSString * const kAttributeKeyPathCompanyName = @"company.name";
 static NSString * const kAttributeKeyPathLogoURL = @"logo.url";
@@ -142,5 +143,23 @@ static NSString * const kInfoKeyUserID = @"userID";//NSNumber
  "Extra" dictionary key
  */
 static NSString * const kExtraKeyChainedInvocation = @"chainedInvocation";//NSNumber(BOOL), 是否为链式调用
+
+/*!
+ Card Template Item keys
+ static NSString * const kCardTemplateItemKey<#Name#> = @"<#String#>";
+ */
+static NSString * const kVisualCardItemKeyAddress = @"address";
+static NSString * const kVisualCardItemKeyCompanyEmail = @"cpemail";
+static NSString * const kVisualCardItemKeyCompanyName = @"company";
+static NSString * const kVisualCardItemKeyCompanyLogo = @"companylogo";
+static NSString * const kVisualCardItemKeyEmail = @"email";
+static NSString * const kVisualCardItemKeyFax = @"fax";
+static NSString * const kVisualCardItemKeyLogo = @"logo";
+static NSString * const kVisualCardItemKeyMobilePhone = @"mobile";
+static NSString * const kVisualCardItemKeyMSN = @"msn";
+static NSString * const kVisualCardItemKeyName = @"name";
+static NSString * const kVisualCardItemKeyQQ = @"qq";
+static NSString * const kVisualCardItemKeyTelephone = @"telephone";
+static NSString * const kVisualCardItemKeyTitle = @"title";
 
 #endif

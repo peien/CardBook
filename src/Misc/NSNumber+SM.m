@@ -15,22 +15,34 @@
     if ([string isKindOfClass:[NSString class]]) {
         // 先尝试解析
         NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
-        [f setNumberStyle:NSNumberFormatterDecimalStyle];
+        [f setNumberStyle:NSNumberFormatterNoStyle];
         result = [f numberFromString:string];
+        
         if (result) {
             // 解析成功直接返回
+            DLog(@"[II] number from string(%@) is %@", string, result);
             return result;
         }
         
-        // 解析不成功则把string转为全大写，然后查字典
-        NSString *ucString = [string uppercaseString];
+        // 解析失败，尝试其他
+        // 尝试scan
+        NSScanner *scanner = [NSScanner scannerWithString:string];
+        NSInteger intValue;
+        if ([scanner scanInteger:&intValue]) {
+            // 成功直接返回
+            result = [NSNumber numberWithInteger:intValue];
+            DLog(@"[II] number from string(%@) is %@", string, result);
+            return result;
+        };
         
+        // 不成功则把string转为全大写，然后查字典
+        NSString *ucString = [string uppercaseString];
         NSDictionary *mapDict = @{
         @"Y":@1, @"N":@0, @"YES":@1, @"NO":@0,
         };
-        
         result = mapDict[ucString];
     }
+    DLog(@"[II] number from string(%@) is %@", string, result);
     return result;
 }
 + (NSNumber *)numberFromObject:(id)obj

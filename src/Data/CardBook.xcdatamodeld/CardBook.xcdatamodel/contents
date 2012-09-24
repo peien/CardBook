@@ -33,7 +33,6 @@
         <attribute name="msn" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mTimeUTC" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="officeEmail" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="qq" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="remarks" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="roleType" optional="YES" attributeType="Integer 32" syncable="YES"/>
@@ -65,12 +64,20 @@
         <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CardTemplateItem" inverseName="templates" inverseEntity="CardTemplateItem" syncable="YES"/>
     </entity>
     <entity name="CardTemplateItem" representedClassName="CardTemplateItem" syncable="YES">
+        <attribute name="fontColor" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="fontSize" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="fontWeight" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="originX" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="originY" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="rectHeight" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="rectWidth" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="style" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="templates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CardTemplate" inverseName="items" inverseEntity="CardTemplate" syncable="YES"/>
     </entity>
     <entity name="Company" representedClassName="Company" syncable="YES">
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="cards" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Card" inverseName="company" inverseEntity="Card" syncable="YES"/>
@@ -117,10 +124,10 @@
     <elements>
         <element name="Address" positionX="0" positionY="0" width="128" height="165"/>
         <element name="BankAccount" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="Card" positionX="0" positionY="0" width="128" height="525"/>
+        <element name="Card" positionX="0" positionY="0" width="128" height="510"/>
         <element name="CardTemplate" positionX="0" positionY="0" width="128" height="210"/>
-        <element name="CardTemplateItem" positionX="0" positionY="0" width="128" height="105"/>
-        <element name="Company" positionX="0" positionY="0" width="128" height="105"/>
+        <element name="CardTemplateItem" positionX="0" positionY="0" width="128" height="210"/>
+        <element name="Company" positionX="0" positionY="0" width="128" height="120"/>
         <element name="Group" positionX="0" positionY="0" width="128" height="120"/>
         <element name="Image" positionX="0" positionY="0" width="128" height="165"/>
         <element name="Message" positionX="0" positionY="0" width="128" height="135"/>

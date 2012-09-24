@@ -20,7 +20,6 @@ extern const struct CardAttributes {
 	__unsafe_unretained NSString *moreInfo;
 	__unsafe_unretained NSString *msn;
 	__unsafe_unretained NSString *name;
-	__unsafe_unretained NSString *officeEmail;
 	__unsafe_unretained NSString *qq;
 	__unsafe_unretained NSString *remarks;
 	__unsafe_unretained NSString *roleType;
@@ -53,7 +52,6 @@ extern const struct CardFetchedProperties {
 @class Image;
 @class Schedule;
 @class CardTemplate;
-
 
 
 
@@ -211,14 +209,6 @@ extern const struct CardFetchedProperties {
 
 
 //- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
-
-
-
-
-@property (nonatomic, strong) NSString* officeEmail;
-
-
-//- (BOOL)validateOfficeEmail:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -470,12 +460,6 @@ extern const struct CardFetchedProperties {
 
 - (NSString*)primitiveName;
 - (void)setPrimitiveName:(NSString*)value;
-
-
-
-
-- (NSString*)primitiveOfficeEmail;
-- (void)setPrimitiveOfficeEmail:(NSString*)value;
 
 
 

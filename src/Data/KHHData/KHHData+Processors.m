@@ -373,7 +373,12 @@
         // userId,        y ownerID
         tmpl.ownerID = [NSNumber numberFromObject:json[JSONDataKeyUserId] zeroIfUnresolvable:YES];
         // templateType,  y domainType
-        tmpl.domainType = [NSNumber numberFromObject:json[JSONDataKeyTemplateType] defaultValue:1 defaultIfUnresolvable:YES];
+        NSString *dtString = [[NSString stringFromObject:json[JSONDataKeyTemplateType]] lowercaseString];
+        if ([dtString isEqualToString:@"public"]) {
+            tmpl.domainType = [NSNumber numberWithInteger:KHHTemplateDomainTypePublic];
+        } else {
+            tmpl.domainType = [NSNumber numberWithInteger:KHHTemplateDomainTypePrivate];
+        }
         // description,   y descriptionInfo
         tmpl.descriptionInfo = [NSString stringFromObject:json[JSONDataKeyDescription]];
         // templateStyle, y style
@@ -421,12 +426,30 @@
         item.name = [NSString stringFromObject:json[JSONDataKeyItem]];
         //style
         item.style = [NSString stringFromObject:json[JSONDataKeyStyle]];
-#warning TODO
-        //col1,
-        //col2,
-        //col3,
-        //col4,
-        //col5,
+        
+        // style to attributes "top: 32 px; left: 25 px; font-size: 22 px; color: #0; fontWeight: normal"
+        NSDictionary *styleAttrDict = @{
+        @"left":@"originX", @"top":@"originY", @"width":@"rectWidth", @"height":@"rectHeight",
+        @"color":@"fontColor", @"font-size":@"fontSize", @"fontWeight":@"fontWeight",
+        };
+        NSArray *styleAttrList = [item.style componentsSeparatedByString:@";"];
+        for (NSString *styleAttr in styleAttrList) {
+            NSArray *keyValuePair = [styleAttr componentsSeparatedByString:@":"];
+            if (keyValuePair.count != 2) {
+                continue;
+            }
+            NSString *theKey = [(NSString *)keyValuePair[0] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+            NSString *theValue = [(NSString *)keyValuePair[1] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+            NSString *attrKey = styleAttrDict[theKey];
+            if (0 == attrKey.length) {
+                continue;
+            }
+            if ([theKey isEqualToString:@"color"] || [theKey isEqualToString:@"fontWeight"]) { // 这两个属性直接保存为string
+                [item setValue:theValue forKey:attrKey];
+            } else { // 其他属性是number
+                [item setValue:[NSNumber numberFromString:theValue] forKey:attrKey];
+            }
+        }
     }
     DLog(@"[II] item = %@", item);
     return item;

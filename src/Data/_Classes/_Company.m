@@ -4,6 +4,7 @@
 #import "_Company.h"
 
 const struct CompanyAttributes CompanyAttributes = {
+	.email = @"email",
 	.id = @"id",
 	.name = @"name",
 };
@@ -49,6 +50,13 @@ const struct CompanyFetchedProperties CompanyFetchedProperties = {
 
 	return keyPaths;
 }
+
+
+
+
+@dynamic email;
+
+
 
 
 

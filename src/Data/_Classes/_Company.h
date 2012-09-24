@@ -5,6 +5,7 @@
 
 
 extern const struct CompanyAttributes {
+	__unsafe_unretained NSString *email;
 	__unsafe_unretained NSString *id;
 	__unsafe_unretained NSString *name;
 } CompanyAttributes;
@@ -23,6 +24,7 @@ extern const struct CompanyFetchedProperties {
 
 
 
+
 @interface CompanyID : NSManagedObjectID {}
 @end
 
@@ -31,6 +33,14 @@ extern const struct CompanyFetchedProperties {
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (CompanyID*)objectID;
+
+
+
+
+@property (nonatomic, strong) NSString* email;
+
+
+//- (BOOL)validateEmail:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -83,6 +93,12 @@ extern const struct CompanyFetchedProperties {
 @end
 
 @interface _Company (CoreDataGeneratedPrimitiveAccessors)
+
+
+- (NSString*)primitiveEmail;
+- (void)setPrimitiveEmail:(NSString*)value;
+
+
 
 
 - (NSNumber*)primitiveId;
