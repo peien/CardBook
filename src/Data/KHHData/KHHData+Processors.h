@@ -9,58 +9,53 @@
 #import "KHHData.h"
 
 @interface KHHData (Processors)
-//- (NSArray *)processList:(NSArray *)list ofClass:(NSString *)className;
-- (NSManagedObject *)processObject:(NSDictionary *)objDict ofClass:(NSString *)className withID:(NSNumber *)ID;// ID 不存在就不操作
+// 解析一个对象
+// 以下情况会返回nil
+// 1.objDict为空或nil
+// 2.className为空或nil
+// 3.ID为空或nil，或者查不到对象
+- (NSManagedObject *)processObject:(NSDictionary *)objDict ofClass:(NSString *)className withID:(NSNumber *)ID;
 @end
-#pragma mark - Address
-@interface KHHData (Processors_Address)
-// 填地址数据。并把填好的地址返回。
-- (Address *)fillAddress:(Address *)address withJSON:(NSDictionary *)json;
-@end
-#pragma mark - BankAccount
-@interface KHHData (Processors_BankAccount)
-// 填银行帐户数据。并把填好的银行帐户返回。
-- (BankAccount *)fillBankAccount:(BankAccount *)bankAccount withJSON:(NSDictionary *)json;
-@end
-#pragma mark - Card
-@interface KHHData (Processors_Card)
+#pragma mark - Processors_List
+@interface KHHData (Processors_List)
 // card
 // 返回各种Card数组
-- (NSArray *)processMyCardList:(NSArray *)list;
-- (NSArray *)processPrivateCardList:(NSArray *)list;
-- (NSArray *)processReceivedCardList:(NSArray *)list;
-- (NSArray *)processCardList:(NSArray *)list cardType:(KHHCardModelType)type;
-// 返回各种Card对象
-- (Card *)processCard:(NSDictionary *)aCard cardType:(KHHCardModelType)type;
-// JSON data -> Card
-- (Card *)fillCard:(Card *)card ofType:(KHHCardModelType)type withJSON:(NSDictionary *)dict;
-@end
-#pragma mark - Company
-@interface KHHData (Processors_Company)
-// company
-// 返回Company数组
-- (NSArray *)processCompanyList:(NSArray *)list;
-// 返回Company对象
-- (Company *)processCompany:(NSDictionary *)company;
-@end
-#pragma mark - Template
-@interface KHHData (Processors_Template)
+- (NSMutableArray *)processCardList:(NSArray *)list cardType:(KHHCardModelType)type;
+- (NSMutableArray *)processMyCardList:(NSArray *)list;
+- (NSMutableArray *)processPrivateCardList:(NSArray *)list;
+- (NSMutableArray *)processReceivedCardList:(NSArray *)list;
+
 // template
 // CardTemplate数组
-- (NSArray *)processCardTemplateList:(NSArray *)list;
+- (NSMutableArray *)processCardTemplateList:(NSArray *)list;
+// CardTemplateItem数组
+- (NSMutableArray *)processCardTemplateItemList:(NSArray *)list;
+
+@end
+#pragma mark - Processors_Object
+@interface KHHData (Processors_Object)
+// 返回各种Card对象
+- (Card *)processCard:(NSDictionary *)aCard cardType:(KHHCardModelType)type;
 // 返回CardTemplate
 - (CardTemplate *)processCardTemplate:(NSDictionary *)cardTemplate;
-// JSON data -> Template 填模板数据，并把填好的模板返回。
-- (CardTemplate *)fillCardTemplate:(CardTemplate *)cardTemplate withJSON:(NSDictionary *)dict;
-// CardTemplateItem数组
-- (NSArray *)processCardTemplateItemList:(NSArray *)list;
 // 返回CardTemplateItem
 - (CardTemplateItem *)processCardTemplateItem:(NSDictionary *)templateItem;
-// JSON data -> TemplateItem 填模板item数据，并把填好的item返回。
-- (CardTemplateItem *)fillCardTemplateItem:(CardTemplateItem *)CardTemplateItem withJSON:(NSDictionary *)dict;
-@end
-#pragma mark - Misc
-@interface KHHData (Processors_Zoo)
+// 返回Company对象
+- (Company *)processCompany:(NSDictionary *)company;
 //
 - (void)processSyncTime:(NSString *)syncTime;
 @end
+#pragma mark - Processors_FillContent
+@interface KHHData (Processors_FillContent)
+// 填地址数据。并把填好的地址返回。
+- (Address *)fillAddress:(Address *)address withJSON:(NSDictionary *)json;
+// 填银行帐户数据。并把填好的银行帐户返回。
+- (BankAccount *)fillBankAccount:(BankAccount *)bankAccount withJSON:(NSDictionary *)json;
+// JSON data -> Card
+- (Card *)fillCard:(Card *)card ofType:(KHHCardModelType)type withJSON:(NSDictionary *)dict;
+// JSON data -> Template 填模板数据，并把填好的模板返回。
+- (CardTemplate *)fillCardTemplate:(CardTemplate *)cardTemplate withJSON:(NSDictionary *)dict;
+// JSON data -> TemplateItem 填模板item数据，并把填好的item返回。
+- (CardTemplateItem *)fillCardTemplateItem:(CardTemplateItem *)CardTemplateItem withJSON:(NSDictionary *)dict;
+@end
+

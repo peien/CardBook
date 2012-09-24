@@ -46,7 +46,12 @@
 //
 //    return result;
 //}
-// ID 不存在就不操作
+
+// 解析一个对象
+// 以下情况会返回nil
+// 1.objDict为空或nil
+// 2.className为空或nil
+// 3.ID为空或nil，或者查不到对象
 - (NSManagedObject *)processObject:(NSDictionary *)dict
                            ofClass:(NSString *)className
                             withID:(NSNumber *)ID {
@@ -96,11 +101,128 @@
 //    DLog(@"[II] 填充完数据后 obj = %@", result);
     return result;
 }
+@end
+@implementation KHHData (Processors_List)
+// card {
+- (NSMutableArray *)processCardList:(NSArray *)list cardType:(KHHCardModelType)type {
+    NSMutableArray *result = [NSMutableArray array];
+    if (0 == [list count]) {
+        return result;
+    }
+    for (NSDictionary *dict in list) {
+        if (dict) {
+            id card = [self processCard:dict cardType:type];
+            if (card) {
+                [result addObject:card];
+            }
+        }
+    }
+    return result;
+}
+- (NSMutableArray *)processMyCardList:(NSArray *)list {
+    return [self processCardList:list cardType:KHHCardModelTypeMyCard];
+}
+- (NSMutableArray *)processPrivateCardList:(NSArray *)list {
+    return [self processCardList:list cardType:KHHCardModelTypePrivateCard];
+}
+- (NSMutableArray *)processReceivedCardList:(NSArray *)list {
+    return [self processCardList:list cardType:KHHCardModelTypeReceivedCard];
+}
+// }
+- (NSMutableArray *)processCardTemplateList:(NSArray *)list {
+    NSMutableArray *result = [NSMutableArray array];
+    if (0 == list.count) {
+        return result;
+    }
+    for (id obj in list) {
+        if (nil == obj) {
+            continue;
+        }
+        
+        CardTemplate *tmpl = [self processCardTemplate:obj];
+        if (tmpl) {
+            [result addObject:tmpl];
+        }
+    }
+    return result;
+}
+- (NSMutableArray *)processCardTemplateItemList:(NSArray *)list {
+    NSMutableArray *result = [NSMutableArray array];
+    if (0 == list.count) {
+        return result;
+    }
+    for (id obj in list) {
+        if (nil == obj) {
+            continue;
+        }
+        CardTemplateItem *item = [self processCardTemplateItem:obj];
+        if (item) {
+            [result addObject:item];
+        }
+    }
+    return result;
+}
 
 @end
-
-@implementation KHHData (Processors_Address)
-
+@implementation KHHData (Processors_Object)
+- (Card *)processCard:(NSDictionary *)dict cardType:(KHHCardModelType)type {
+    DLog(@"[II] a Card dict class= %@, data = %@", [dict class], dict);
+    Card *result = nil;
+    if (dict) {
+        NSNumber *ID = [NSNumber numberFromObject:dict[JSONDataKeyCardId]
+                               zeroIfUnresolvable:NO];
+        if (nil == ID) {
+            // ID无法解析就不操作
+            return result;
+        }
+        BOOL isDeleted = [[NSNumber numberFromObject:dict[JSONDataKeyIsDelete] zeroIfUnresolvable:YES] boolValue];
+        // 按ID从数据库里查询
+        if (isDeleted) {
+            // 无不新建
+            result = [self cardOfType:type byID:ID createIfNone:NO];
+            // 有则删除
+            if (result) {
+                [self.context deleteObject:result];
+                result = nil;
+            }
+        } else {
+            // 无则新建。
+            result = [self cardOfType:type byID:ID createIfNone:YES];
+            // 填充数据
+            [self fillCard:result ofType:type withJSON:dict];
+        }
+    }
+    DLog(@"[II] card = %@", result);
+    return result;
+}
+- (CardTemplate *)processCardTemplate:(NSDictionary *)dict {
+    NSString *className = [CardTemplate entityName];
+    NSNumber *ID = [NSNumber numberFromObject:dict[JSONDataKeyID]
+                           zeroIfUnresolvable:NO];
+    return (CardTemplate *)[self processObject:dict ofClass:className withID:ID];
+}
+- (CardTemplateItem *)processCardTemplateItem:(NSDictionary *)dict {
+    NSString *className = [CardTemplateItem entityName];
+    NSNumber *ID = [NSNumber numberFromObject:dict[JSONDataKeyID]
+                           zeroIfUnresolvable:NO];
+    return (CardTemplateItem *)[self processObject:dict ofClass:className withID:ID];
+}
+- (Company *)processCompany:(NSDictionary *)dict {
+    DLog(@"[II] a Company dict class= %@, data = %@", [dict class], dict);
+    DLog(@"[II] a Company keys = %@", [dict allKeys]);
+#warning company ID?
+    NSString *className = [Company entityName];
+    NSNumber *ID = [NSNumber numberFromObject:dict[JSONDataKeyID]
+                           zeroIfUnresolvable:NO];
+    return (Company *)[self processObject:dict ofClass:className withID:ID];
+}
+//
+- (void)processSyncTime:(NSString *)syncTime {
+    DLog(@"[II] syncTime = %@", syncTime);
+#warning TODO
+}
+@end
+@implementation KHHData (Processors_FillContent)
 - (Address *)fillAddress:(Address *)address withJSON:(NSDictionary *)json {
     NSString *country = [NSString stringFromObject:json[JSONDataKeyCountry]];
     NSString *province = [NSString stringFromObject:json[JSONDataKeyProvince]];
@@ -132,8 +254,7 @@
     }
     return address;
 }
-@end
-@implementation KHHData (Processors_BankAccount)
+
 - (BankAccount *)fillBankAccount:(BankAccount *)bankAccount withJSON:(NSDictionary *)json {
     NSString *branch = [NSString stringFromObject:json[JSONDataKeyOpenBank]];
     NSString *number = [NSString stringFromObject:json[JSONDataKeyBankNO]];
@@ -153,71 +274,8 @@
     }
     return bankAccount;
 }
-
-@end
-@implementation KHHData (Processors_Card)
-// card {
-- (NSArray *)processMyCardList:(NSArray *)list {
-    return [self processCardList:list cardType:KHHCardModelTypeMyCard];
-}
-- (NSArray *)processPrivateCardList:(NSArray *)list {
-    return [self processCardList:list cardType:KHHCardModelTypePrivateCard];
-}
-- (NSArray *)processReceivedCardList:(NSArray *)list {
-    return [self processCardList:list cardType:KHHCardModelTypeReceivedCard];
-}
-- (NSArray *)processCardList:(NSArray *)list cardType:(KHHCardModelType)type {
-    NSMutableArray *result = [NSMutableArray array];
-    if (0 == [list count]) {
-        return result;
-    }
-    for (NSDictionary *dict in list) {
-        if (dict) {
-            id card = [self processCard:dict cardType:type];
-            if (card) {
-                [result addObject:card];
-            }
-        }
-    }
-    return result;
-}
-- (Card *)processCard:(NSDictionary *)dict cardType:(KHHCardModelType)type {
-    DLog(@"[II] a Card dict class= %@, data = %@", [dict class], dict);
-    Card *result = nil;
-    if (dict) {
-        NSNumber *ID = [NSNumber numberFromObject:dict[JSONDataKeyCardId]
-                               zeroIfUnresolvable:NO];
-        if (nil == ID) {
-            // ID无法解析就不操作
-            return result;
-        }
-        BOOL isDeleted = [[NSNumber numberFromObject:dict[JSONDataKeyIsDelete] zeroIfUnresolvable:YES] boolValue];
-        // 按ID从数据库里查询
-        if (isDeleted) {
-            // 无不新建
-            result = [self cardOfType:type byID:ID createIfNone:NO];
-            // 有则删除
-            if (result) {
-                [self.context deleteObject:result];
-                result = nil;
-            }
-        } else {
-            // 无则新建。
-            result = [self cardOfType:type byID:ID createIfNone:YES];
-            // 填充数据
-            [self fillCard:result ofType:type withJSON:dict];
-        }
-        // 保存
-//        [self saveContext];
-    }
-//    DLog(@"[II] card = %@", result);
-    return result;
-}
-
 // JSON data -> Card
-- (Card *)fillCard:(Card *)card
-            ofType:(KHHCardModelType)type
-          withJSON:(NSDictionary *)json {
+- (Card *)fillCard:(Card *)card ofType:(KHHCardModelType)type withJSON:(NSDictionary *)json {
     if (card && json) {
         // id 已经有了，填剩下的数据。
         card.userID = [NSNumber numberFromObject:json[JSONDataKeyUserId]
@@ -297,7 +355,7 @@
         /*
          col1 = "";              ?
          col2 = "";              ?
-         col3 = "";              Received isRead 
+         col3 = "";              Received isRead
          col4 = "";              ?
          col5 = "";              ?
          */
@@ -305,56 +363,9 @@
     return card;
 }
 
-// }
-@end
-@implementation KHHData (Processors_Company)
-// company {
-- (NSArray *)processCompanyList:(NSArray *)list {
-//    return [self processList:list ofClass:@"Company"];
-    
-}
-- (Company *)processCompany:(NSDictionary *)dict {
-    DLog(@"[II] a Company dict class= %@, data = %@", [dict class], dict);
-    DLog(@"[II] a Company keys = %@", [dict allKeys]);
-#warning company ID?
-    NSString *className = [Company entityName];
-    NSNumber *ID = [NSNumber numberFromObject:dict[JSONDataKeyID]
-                           zeroIfUnresolvable:NO];
-    return (Company *)[self processObject:dict ofClass:className withID:ID];
-}
-// }
-@end
-
-@implementation KHHData (Processors_Template)
-// template {
-- (NSMutableArray *)processCardTemplateList:(NSArray *)list {
-//    return [self processList:list ofClass:@"CardTemplate"];
-    NSMutableArray *result = [NSMutableArray array];
-    if (0 == list.count) {
-        return result;
-    }
-    for (id obj in list) {
-        if (nil == obj) {
-            continue;
-        }
-        
-        CardTemplate *tmpl = [self processCardTemplate:obj];
-        if (tmpl) {
-            [result addObject:tmpl];
-        }
-    }
-    return result;
-}
-- (CardTemplate *)processCardTemplate:(NSDictionary *)dict {
-    NSString *className = [CardTemplate entityName];
-    NSNumber *ID = [NSNumber numberFromObject:dict[JSONDataKeyID]
-                           zeroIfUnresolvable:NO];
-    return (CardTemplate *)[self processObject:dict ofClass:className withID:ID];
-}
 // JSON data -> Template
-- (CardTemplate *)fillCardTemplate:(CardTemplate *)tmpl
-                          withJSON:(NSDictionary *)json {
-//    DLog(@"[II] json = %@", json);
+- (CardTemplate *)fillCardTemplate:(CardTemplate *)tmpl withJSON:(NSDictionary *)json {
+    DLog(@"[II] json = %@", json);
     if (tmpl && json) {
         // id应该已经有了，填剩下的数据。
         // version,       y version
@@ -371,7 +382,7 @@
         tmpl.cTimeUTC = [NSString stringFromObject:json[JSONDataKeyGmtCreateTime]];
         // gmtModTime,    y mtimeUTC
         tmpl.mTimeUTC = [NSString stringFromObject:json[JSONDataKeyGmtModTime]];
-
+        
         // item列表 {
         NSArray *items = [self processCardTemplateItemList:json[JSONDataKeyDetails]];
         if (items.count) {
@@ -395,41 +406,13 @@
          col5,
          */
     }
-//    DLog(@"[II] tmpl = %@", tmpl);
+    DLog(@"[II] tmpl = %@", tmpl);
     return tmpl;
 }
-- (NSArray *)processCardTemplateItemList:(NSArray *)list {
-//    return [self processList:list ofClass:@"CardTemplateItem"];
-    NSMutableArray *result = [NSMutableArray array];
-    if (0 == list.count) {
-        return result;
-    }
-    for (id obj in list) {
-        if (nil == obj) {
-            continue;
-        }
-        
-        CardTemplateItem *item = [self processCardTemplateItem:obj];
-        if (item) {
-            [result addObject:item];
-        }
-    }
-    
-    return result;
-}
-- (CardTemplateItem *)processCardTemplateItem:(NSDictionary *)dict {
-    NSString *className = [CardTemplateItem entityName];
-    NSNumber *ID = [NSNumber numberFromObject:dict[JSONDataKeyID]
-                           zeroIfUnresolvable:NO];
-    return (CardTemplateItem *)[self processObject:dict ofClass:className withID:ID];
-}
-// }
 
 // JSON data -> TemplateItem
-- (CardTemplateItem *)fillCardTemplateItem:(CardTemplateItem *)item
-                                  withJSON:(NSDictionary *)json {
-//    DLog(@"[II] a templateItem dict class= %@, data = %@", [json class], json);
-//    DLog(@"[II] a templateItem keys = %@", [json allKeys]);
+- (CardTemplateItem *)fillCardTemplateItem:(CardTemplateItem *)item withJSON:(NSDictionary *)json {
+    DLog(@"[II] json = %@",  json);
     if (item && json) {
         //templateId, x
         //id,
@@ -445,15 +428,8 @@
         //col4,
         //col5,
     }
-//    DLog(@"[II] item = %@", item);
+    DLog(@"[II] item = %@", item);
     return item;
 }
 @end
 
-@implementation KHHData (Processors_Zoo)
-//
-- (void)processSyncTime:(NSString *)syncTime {
-    DLog(@"[II] syncTime = %@", syncTime);
-#warning TODO
-}
-@end
