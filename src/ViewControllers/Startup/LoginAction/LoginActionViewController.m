@@ -28,7 +28,7 @@
 #define textNotAllDataAvailable NSLocalizedString(@"部分数据可能暂时无法使用。", nil)
 
 @interface LoginActionViewController ()
-@property (nonatomic, weak) KHHData *data;
+@property (nonatomic, strong) KHHData *data;
 @property (nonatomic, strong) KHHDefaults *defaults;
 @property (nonatomic, strong) KHHNetworkAPIAgent *agent;
 @end
@@ -39,6 +39,7 @@
 - (void)dealloc
 {
     [self stopObservingAllNotifications];
+    self.data = nil;
     self.defaults = nil;
     self.agent = nil;
 }//dealloc
@@ -205,16 +206,17 @@
 {
     self.actionLabel.text = textStartPostLoginSync;
     // 开始同步数据
+    [self.data removeContext];
     [self.data startSyncAllData];
 }
 - (void)handleSyncAfterLoginSucceeded:(NSNotification *)noti {
     // 进主界面。
-    [self postNotification:KHHNotificationShowMainUI info:nil now:YES];
+    [self postNotification:KHHNotificationShowMainUI info:nil];
 }
 - (void)handleSyncAfterLoginFailed:(NSNotification *)noti {
     [self alertWithTitle:alertTitleSyncFailed message:textNotAllDataAvailable];
     // 进主界面。
-    [self postNotification:KHHNotificationShowMainUI info:nil now:YES];
+    [self postNotification:KHHNotificationShowMainUI info:nil];
 }
 
 #pragma mark - UIAlertViewDelegate

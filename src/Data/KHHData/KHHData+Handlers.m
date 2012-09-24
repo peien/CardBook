@@ -52,7 +52,7 @@
         [self processSyncTime:syncTime];
     }
     // }
-    
+    [self saveContext];
     // 处理结束
     BOOL isChained = NO;
     NSDictionary *extra= info[kInfoKeyExtra];
@@ -62,11 +62,12 @@
     if (isChained) {
         // 接下来，同步联系人
         // 先获取要同步的数量
-        [self.agent receivedCardCountAfterDate:nil
-                                      lastCard:nil
-                                         extra:@{
-                   kExtraKeyChainedInvocation : [NSNumber numberWithBool:YES]
-         }];
+//        [self.agent receivedCardCountAfterDate:nil
+//                                      lastCard:nil
+//                                         extra:@{
+//                   kExtraKeyChainedInvocation : [NSNumber numberWithBool:YES]
+//         }];
+        [self syncAllDataEnded:YES];
     } else {
         // 暂时没有什么要做的
     }

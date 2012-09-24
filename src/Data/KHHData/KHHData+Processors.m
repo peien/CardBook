@@ -12,76 +12,88 @@
 
 @implementation KHHData (Processors)
 
-- (NSArray *)processList:(NSArray *)list
-                 ofClass:(NSString *)className {
-    NSMutableArray *result = [NSMutableArray array];
-    if (list.count && className.length) {
-        for (NSDictionary *objDict in list) {
-            if (objDict) {
-                SEL selector = NSSelectorFromString([NSString stringWithFormat:@"process%@:", className]);
-                if ([self respondsToSelector:selector]) {
-                    NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[self methodSignatureForSelector:selector]];
-                    [inv setTarget:self];
-                    [inv setSelector:selector];
-                    NSDictionary *arg = objDict;
-                    [inv setArgument:&arg atIndex:2];
-                    [inv invoke];
-                    id invResult = nil;
-                    [inv getReturnValue:&invResult];
-                    if (invResult) {
-                        [result addObject:invResult];
-                    }
-                }
-            }
-        }
-    }
-    return result;
-}
+//- (NSMutableArray *)processList:(NSArray *)list
+//                 ofClass:(NSString *)className {
+//    NSMutableArray *result = [NSMutableArray array];
+//    if (0 == list.count || 0 == className.length) {
+//        return result;
+//    }
+//    id obj;
+//    for (obj in list) {
+//        if (nil == obj) {
+//            continue;
+//        }
+//        
+//        NSString *selName = [NSString stringWithFormat:@"process%@:", className];
+//        DLog(@"[II] 尝试 seletcor = %@", selName);
+//        SEL selector = NSSelectorFromString(selName);
+//        if (![self respondsToSelector:selector]) {
+//            DLog(@"[EE] KHHData 缺少 seletcor = %@", selName);
+//            break;
+//        }
+//        NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[self methodSignatureForSelector:selector]];
+//        [inv setTarget:self];
+//        [inv setSelector:selector];
+//        [inv setArgument:&obj atIndex:2];
+//        [inv retainArguments];
+//        [inv invoke];
+//        id invResult = nil;
+//        [inv getReturnValue:&invResult];
+//        if ([invResult isKindOfClass:NSClassFromString(className)]) {
+//            [result addObject:invResult];
+//        }
+//    }
+//
+//    return result;
+//}
 // ID 不存在就不操作
-- (id)processObject:(NSDictionary *)dict
-            ofClass:(NSString *)name
-             withID:(NSNumber *)ID {
-    id result = nil;
+- (NSManagedObject *)processObject:(NSDictionary *)dict
+                           ofClass:(NSString *)className
+                            withID:(NSNumber *)ID {
+    NSManagedObject *result = nil;
     if (dict) {
-        id obj = nil;
-        
         // ID 不存在就不操作
         if (nil == ID) {
             return result;
         }
         
-        BOOL isDeleted = [dict[JSONDataKeyIsDelete] boolValue];
+        BOOL isDeleted = [[NSNumber numberFromObject:dict[JSONDataKeyIsDelete] zeroIfUnresolvable:YES] boolValue];
         // 按ID从数据库里查询
-        if (isDeleted) {
+        if (isDeleted) { // 若标记为已删除
             // 无不新建
-            obj = [self objectByID:ID ofClass:name createIfNone:NO];
+            result = [self objectByID:ID ofClass:className createIfNone:NO];
             // 有则删除
-            if (obj) {
-                [self.managedObjectContext deleteObject:obj];
+            if (result) {
+                [self.context deleteObject:result];
+                result = nil;
             }
-        } else {
-            // 无则新建。
-            obj = [self objectByID:ID ofClass:name createIfNone:YES];
-            // 填充数据
-            SEL selector = NSSelectorFromString([NSString stringWithFormat:@"fill%@:withJSON:", name]);
-            if ([self respondsToSelector:selector]) {
-                NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[self methodSignatureForSelector:selector]];
-                [inv setTarget:self];
-                [inv setSelector:selector];
-                [inv setArgument:&obj atIndex:2];
-                [inv setArgument:&dict atIndex:3];
-                [inv invoke];
-                id invResult = nil;
-                [inv getReturnValue:&invResult];
-                if (invResult) {
-                    result = invResult;
-                }
-            }
-            DLog(@"[II] obj = %@", obj);
+            return result;
         }
+        
+        // 无则新建。
+        result = [self objectByID:ID ofClass:className createIfNone:YES];
+        if (nil == result) {
+            return result;
+        }
+        // 填充数据
+        NSString *selName = [NSString stringWithFormat:@"fill%@:withJSON:", className];
+        DLog(@"[II] 调用 seletcor = %@", selName);
+        SEL selector = NSSelectorFromString(selName);
+        if (![self respondsToSelector:selector]) {
+            DLog(@"[EE] KHHData 缺少 seletcor = %@", selName);
+        }
+        
+        NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[self methodSignatureForSelector:selector]];
+        [inv setTarget:self];
+        [inv setSelector:selector];
+        [inv setArgument:&result atIndex:2];
+        [inv setArgument:&dict atIndex:3];
+        [inv retainArguments];
+        [inv invoke];
         // 保存
-        [self saveContext];
+        // [self saveContext];
     }
+//    DLog(@"[II] 填充完数据后 obj = %@", result);
     return result;
 }
 
@@ -125,7 +137,6 @@
 - (BankAccount *)fillBankAccount:(BankAccount *)bankAccount withJSON:(NSDictionary *)json {
     NSString *branch = [NSString stringFromObject:json[JSONDataKeyOpenBank]];
     NSString *number = [NSString stringFromObject:json[JSONDataKeyBankNO]];
-#warning TO REVIEW
     NSString *bank = nil;
     NSString *name = nil;//[NSString stringFromObject:json[JSONDataKeyBankAccountName]];
     if (bank) { // 银行
@@ -170,9 +181,9 @@
     }
     return result;
 }
-- (id)processCard:(NSDictionary *)dict cardType:(KHHCardModelType)type {
+- (Card *)processCard:(NSDictionary *)dict cardType:(KHHCardModelType)type {
     DLog(@"[II] a Card dict class= %@, data = %@", [dict class], dict);
-    id result = nil;
+    Card *result = nil;
     if (dict) {
         NSNumber *ID = [NSNumber numberFromObject:dict[JSONDataKeyCardId]
                                zeroIfUnresolvable:NO];
@@ -180,25 +191,26 @@
             // ID无法解析就不操作
             return result;
         }
-        BOOL isDeleted = [dict[JSONDataKeyIsDelete] boolValue];
+        BOOL isDeleted = [[NSNumber numberFromObject:dict[JSONDataKeyIsDelete] zeroIfUnresolvable:YES] boolValue];
         // 按ID从数据库里查询
         if (isDeleted) {
             // 无不新建
             result = [self cardOfType:type byID:ID createIfNone:NO];
             // 有则删除
             if (result) {
-                [self.managedObjectContext deleteObject:result];
+                [self.context deleteObject:result];
+                result = nil;
             }
         } else {
             // 无则新建。
             result = [self cardOfType:type byID:ID createIfNone:YES];
             // 填充数据
             [self fillCard:result ofType:type withJSON:dict];
-            DLog(@"[II] card = %@", result);
         }
         // 保存
-        [self saveContext];
+//        [self saveContext];
     }
+//    DLog(@"[II] card = %@", result);
     return result;
 }
 
@@ -207,9 +219,7 @@
             ofType:(KHHCardModelType)type
           withJSON:(NSDictionary *)json {
     if (card && json) {
-        
-        card.id = [NSNumber numberFromObject:json[JSONDataKeyCardId]
-                          zeroIfUnresolvable:0];
+        // id 已经有了，填剩下的数据。
         card.userID = [NSNumber numberFromObject:json[JSONDataKeyUserId]
                               zeroIfUnresolvable:NO]; // 解不出为nil
         card.version = [NSNumber numberFromObject:json[JSONDataKeyVersion]
@@ -230,8 +240,8 @@
         card.aliWangWang = [NSString stringFromObject:json[JSONDataKeyWangWang]];
         card.email = [NSString stringFromObject:json[JSONDataKeyEmail]];
         card.microblog = [NSString stringFromObject:json[JSONDataKeyMicroBlog]];
-        card.msn = [NSString stringFromObject:JSONDataKeyMSN];
-        card.qq = [NSString stringFromObject:JSONDataKeyQQ];
+        card.msn = [NSString stringFromObject:json[JSONDataKeyMSN]];
+        card.qq = [NSString stringFromObject:json[JSONDataKeyQQ]];
         card.web = [NSString stringFromObject:json[JSONDataKeyWeb]];
         
         // 杂项
@@ -242,7 +252,7 @@
         NSNumber *templateID = [NSNumber numberFromObject:json[JSONDataKeyTemplateId]
                                              defaultValue:KHHDefaultTemplateID
                                     defaultIfUnresolvable:YES];
-        card.template = [self objectByID:templateID ofClass:[CardTemplate entityName] createIfNone:YES];
+        card.template = (CardTemplate *)[self objectByID:templateID ofClass:[CardTemplate entityName] createIfNone:YES];
         // }
         
         // 公司 {
@@ -251,10 +261,11 @@
                                             defaultValue:0 defaultIfUnresolvable:YES];
         NSString *companyName = [NSString stringFromObject:json[JSONDataKeyCompanyName]];
         if (companyID.integerValue) { // 有公司ID则查询
-            card.company = [self objectByID:companyID ofClass:[Company entityName] createIfNone:YES];
+            card.company = (Company *)[self objectByID:companyID ofClass:[Company entityName] createIfNone:YES];
         } else { // 如果无公司ID或ID为0，则company为nil时新建
             if (nil == card.company) {
-                card.company = [self objectOfClass:[Company entityName]];
+                card.company = (Company *)[self objectOfClass:[Company entityName]];
+                card.company.idValue = 0;
             }
         }
         card.company.name = companyName;
@@ -270,14 +281,14 @@
         
         // 地址 {
         if (nil == card.address) { // 无则新建
-            card.address = [self objectOfClass:[Address entityName]];
+            card.address = (Address *)[self objectOfClass:[Address entityName]];
         }
         [self fillAddress:card.address withJSON:json];
         // }
         
         // 银行帐户 {
         if (nil == card.bankAccount) {
-            card.bankAccount = [self objectOfClass:[BankAccount entityName]];
+            card.bankAccount = (BankAccount *)[self objectOfClass:[BankAccount entityName]];
         }
         [self fillBankAccount:card.bankAccount withJSON:json];
         // }
@@ -286,7 +297,7 @@
         /*
          col1 = "";              ?
          col2 = "";              ?
-         col3 = "";              ?
+         col3 = "";              Received isRead 
          col4 = "";              ?
          col5 = "";              ?
          */
@@ -299,7 +310,8 @@
 @implementation KHHData (Processors_Company)
 // company {
 - (NSArray *)processCompanyList:(NSArray *)list {
-    return [self processList:list ofClass:@"Company"];
+//    return [self processList:list ofClass:@"Company"];
+    
 }
 - (Company *)processCompany:(NSDictionary *)dict {
     DLog(@"[II] a Company dict class= %@, data = %@", [dict class], dict);
@@ -308,53 +320,132 @@
     NSString *className = [Company entityName];
     NSNumber *ID = [NSNumber numberFromObject:dict[JSONDataKeyID]
                            zeroIfUnresolvable:NO];
-    return [self processObject:dict ofClass:className withID:ID];
+    return (Company *)[self processObject:dict ofClass:className withID:ID];
 }
 // }
 @end
 
 @implementation KHHData (Processors_Template)
 // template {
-- (NSArray *)processCardTemplateList:(NSArray *)list {
-    return [self processList:list ofClass:@"CardTemplate"];
+- (NSMutableArray *)processCardTemplateList:(NSArray *)list {
+//    return [self processList:list ofClass:@"CardTemplate"];
+    NSMutableArray *result = [NSMutableArray array];
+    if (0 == list.count) {
+        return result;
+    }
+    for (id obj in list) {
+        if (nil == obj) {
+            continue;
+        }
+        
+        CardTemplate *tmpl = [self processCardTemplate:obj];
+        if (tmpl) {
+            [result addObject:tmpl];
+        }
+    }
+    return result;
 }
 - (CardTemplate *)processCardTemplate:(NSDictionary *)dict {
-    DLog(@"[II] a template dict class= %@, data = %@", [dict class], dict);
-    DLog(@"[II] a template keys = %@", [dict allKeys]);
-    
     NSString *className = [CardTemplate entityName];
     NSNumber *ID = [NSNumber numberFromObject:dict[JSONDataKeyID]
                            zeroIfUnresolvable:NO];
-    return [self processObject:dict ofClass:className withID:ID];
+    return (CardTemplate *)[self processObject:dict ofClass:className withID:ID];
 }
 // JSON data -> Template
-- (CardTemplate *)fillCardTemplate:(CardTemplate *)cardTemplate
+- (CardTemplate *)fillCardTemplate:(CardTemplate *)tmpl
                           withJSON:(NSDictionary *)json {
+//    DLog(@"[II] json = %@", json);
+    if (tmpl && json) {
+        // id应该已经有了，填剩下的数据。
+        // version,       y version
+        tmpl.version = [NSNumber numberFromObject:json[JSONDataKeyVersion] defaultValue:1 defaultIfUnresolvable:YES];
+        // userId,        y ownerID
+        tmpl.ownerID = [NSNumber numberFromObject:json[JSONDataKeyUserId] zeroIfUnresolvable:YES];
+        // templateType,  y domainType
+        tmpl.domainType = [NSNumber numberFromObject:json[JSONDataKeyTemplateType] defaultValue:1 defaultIfUnresolvable:YES];
+        // description,   y descriptionInfo
+        tmpl.descriptionInfo = [NSString stringFromObject:json[JSONDataKeyDescription]];
+        // templateStyle, y style
+        tmpl.style = [NSString stringFromObject:json[JSONDataKeyTemplateStyle]];
+        // gmtCreateTime, y ctimeUTC
+        tmpl.cTimeUTC = [NSString stringFromObject:json[JSONDataKeyGmtCreateTime]];
+        // gmtModTime,    y mtimeUTC
+        tmpl.mTimeUTC = [NSString stringFromObject:json[JSONDataKeyGmtModTime]];
+
+        // item列表 {
+        NSArray *items = [self processCardTemplateItemList:json[JSONDataKeyDetails]];
+        if (items.count) {
+            tmpl.items = [NSSet setWithArray:items];
+        }
+        // }
+        
+        // imageUrl,      y bgImage->url {
+        NSString *imageUrl = [NSString stringFromObject:json[JSONDataKeyImageUrl]];
+        if (nil == tmpl.bgImage) { // 不存在则新建
+            tmpl.bgImage = [self imageByID:nil];
+        }
+        tmpl.bgImage.url = imageUrl;
+        // }
 #warning TODO
-    
-    // 处理item列表
-    NSArray *items = [self processCardTemplateItemList:json[JSONDataKeyDetails]];
-    // 保存item列表
-    cardTemplate.items = [NSSet setWithArray:items];
-    return cardTemplate;
+        /*
+         col1,
+         col2,
+         col3,
+         col4,
+         col5,
+         */
+    }
+//    DLog(@"[II] tmpl = %@", tmpl);
+    return tmpl;
 }
 - (NSArray *)processCardTemplateItemList:(NSArray *)list {
-    return [self processList:list ofClass:@"CardTemplateItem"];
+//    return [self processList:list ofClass:@"CardTemplateItem"];
+    NSMutableArray *result = [NSMutableArray array];
+    if (0 == list.count) {
+        return result;
+    }
+    for (id obj in list) {
+        if (nil == obj) {
+            continue;
+        }
+        
+        CardTemplateItem *item = [self processCardTemplateItem:obj];
+        if (item) {
+            [result addObject:item];
+        }
+    }
+    
+    return result;
 }
 - (CardTemplateItem *)processCardTemplateItem:(NSDictionary *)dict {
-    DLog(@"[II] a templateItem dict class= %@, data = %@", [dict class], dict);
-    DLog(@"[II] a templateItem keys = %@", [dict allKeys]);
     NSString *className = [CardTemplateItem entityName];
     NSNumber *ID = [NSNumber numberFromObject:dict[JSONDataKeyID]
                            zeroIfUnresolvable:NO];
-    return [self processObject:dict ofClass:className withID:ID];
+    return (CardTemplateItem *)[self processObject:dict ofClass:className withID:ID];
 }
 // }
 
 // JSON data -> TemplateItem
 - (CardTemplateItem *)fillCardTemplateItem:(CardTemplateItem *)item
                                   withJSON:(NSDictionary *)json {
+//    DLog(@"[II] a templateItem dict class= %@, data = %@", [json class], json);
+//    DLog(@"[II] a templateItem keys = %@", [json allKeys]);
+    if (item && json) {
+        //templateId, x
+        //id,
+        item.id = [NSNumber numberFromObject:json[JSONDataKeyID] zeroIfUnresolvable:NO];
+        //item, - name
+        item.name = [NSString stringFromObject:json[JSONDataKeyItem]];
+        //style
+        item.style = [NSString stringFromObject:json[JSONDataKeyStyle]];
 #warning TODO
+        //col1,
+        //col2,
+        //col3,
+        //col4,
+        //col5,
+    }
+//    DLog(@"[II] item = %@", item);
     return item;
 }
 @end

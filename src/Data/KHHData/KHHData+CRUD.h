@@ -10,32 +10,28 @@
 
 @interface KHHData (CRUD)
 // 没有符合条件的返回空数组，出错返回nil。
-- (NSArray *)fetchEntityName:(NSString *)entityName
-                       error:(NSError **)error;
+- (NSArray *)fetchEntityName:(NSString *)entityName;
 // 没有符合条件的返回空数组，出错返回nil。
 - (NSArray *)fetchEntityName:(NSString *)entityName
                    predicate:(NSPredicate *)predicate
-             sortDescriptors:(NSArray *)sortDescriptors
-                       error:(NSError **)error;
+             sortDescriptors:(NSArray *)sortDescriptors;
 
-// 出错的返回值是NSNotFound，且error指向一个 NSError 实例。
-- (NSUInteger)countOfEntityName:(NSString *)entityName
-                          error:(NSError **)error;
-// 出错的返回值是NSNotFound，且error指向一个 NSError 实例。
+// 出错的返回值是NSNotFound。
+- (NSUInteger)countOfEntityName:(NSString *)entityName;
+// 出错的返回值是NSNotFound。
 - (NSUInteger)countOfEntityName:(NSString *)entityName
                       predicate:(NSPredicate *)predicate
-                sortDescriptors:(NSArray *)sortDescriptors
-                          error:(NSError **)error;
+                sortDescriptors:(NSArray *)sortDescriptors;
 // 根据 ID 和 类名 查数据库。此 ID 不是CoreData OBjectID，而至cardID，companyID等等。
 // 无则返回nil；
-- (id)objectByID:(NSNumber *)ID ofClass:(NSString *)className;
+- (NSManagedObject *)objectByID:(NSNumber *)ID ofClass:(NSString *)className;
 
 // 根据 ID 和 类名 查数据库。此 ID 不是CoreData OBjectID，而至cardID，companyID等等。
 // createIfNone==YES，无则新建
 // createIfNone==NO， 无则返回nil；
-- (id)objectByID:(NSNumber *)ID ofClass:(NSString *)className createIfNone:(BOOL)createIfNone;
+- (NSManagedObject *)objectByID:(NSNumber *)ID ofClass:(NSString *)className createIfNone:(BOOL)createIfNone;
 // 新建一个对象。无预设ID之类的属性。
-- (id)objectOfClass:(NSString *)className ;
+- (NSManagedObject *)objectOfClass:(NSString *)className ;
 @end
 
 #pragma mark - Card
@@ -44,10 +40,10 @@
 - (NSString *)entityNameWithCardType:(KHHCardModelType)cardType;
 - (NSArray *)allCardsOfType:(KHHCardModelType)cardType;
 // 如果多于一个返回最后一个。不存在或出错都是nil.
-- (id)cardOfType:(KHHCardModelType)cardType byID:(NSNumber *)cardID;//本地
+- (Card *)cardOfType:(KHHCardModelType)cardType byID:(NSNumber *)cardID;//本地
 // 如果多于一个返回最后一个。
 // createIfNone==NO：不存在或出错都是nil；createIfNone==YES：不存在会创建一个id==ID的新名片，出错为nil。
-- (id)cardOfType:(KHHCardModelType)cardType byID:(NSNumber *)cardID createIfNone:(BOOL)createIfNone;//本地
+- (Card *)cardOfType:(KHHCardModelType)cardType byID:(NSNumber *)cardID createIfNone:(BOOL)createIfNone;//本地
 - (void)createCardOfType:(KHHCardModelType)cardType withDictionary:(NSDictionary *)dict;//联网
 - (void)modifyCardOfType:(KHHCardModelType)cardType withDictionary:(NSDictionary *)dict;//联网
 - (void)deleteCardOfType:(KHHCardModelType)cardType byID:(NSNumber *)cardID;//联网

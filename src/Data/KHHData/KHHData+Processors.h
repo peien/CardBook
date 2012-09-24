@@ -9,8 +9,8 @@
 #import "KHHData.h"
 
 @interface KHHData (Processors)
-- (NSArray *)processList:(NSArray *)list ofClass:(NSString *)className;
-- (id)processObject:(NSDictionary *)objDict ofClass:(NSString *)className withID:(NSNumber *)ID;// ID 不存在就不操作
+//- (NSArray *)processList:(NSArray *)list ofClass:(NSString *)className;
+- (NSManagedObject *)processObject:(NSDictionary *)objDict ofClass:(NSString *)className withID:(NSNumber *)ID;// ID 不存在就不操作
 @end
 #pragma mark - Address
 @interface KHHData (Processors_Address)
@@ -31,7 +31,7 @@
 - (NSArray *)processReceivedCardList:(NSArray *)list;
 - (NSArray *)processCardList:(NSArray *)list cardType:(KHHCardModelType)type;
 // 返回各种Card对象
-- (id)processCard:(NSDictionary *)aCard cardType:(KHHCardModelType)type;
+- (Card *)processCard:(NSDictionary *)aCard cardType:(KHHCardModelType)type;
 // JSON data -> Card
 - (Card *)fillCard:(Card *)card ofType:(KHHCardModelType)type withJSON:(NSDictionary *)dict;
 @end

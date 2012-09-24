@@ -23,7 +23,7 @@
     return result;
 }
 - (MyCard *)myCardByID:(NSNumber *)cardID {
-    MyCard *result = [self cardOfType:KHHCardModelTypeMyCard byID:cardID];
+    id result = [self cardOfType:KHHCardModelTypeMyCard byID:cardID];
     return result;
 }
 - (void)createMyCardWithDictionary:(NSDictionary *)dict {
@@ -44,7 +44,7 @@
     return result;
 }
 - (PrivateCard *)privateCardByID:(NSNumber *)cardID {
-    PrivateCard *result = [self cardOfType:KHHCardModelTypePrivateCard byID:cardID];
+    id result = [self cardOfType:KHHCardModelTypePrivateCard byID:cardID];
     return result;
 }
 - (void)createPrivateCardWithDictionary:(NSDictionary *)dict {
@@ -65,7 +65,7 @@
     return result;
 }
 - (ReceivedCard *)receivedCardByID:(NSNumber *)cardID {
-    ReceivedCard *result = [self cardOfType:KHHCardModelTypeReceivedCard byID:cardID];
+    id result = [self cardOfType:KHHCardModelTypeReceivedCard byID:cardID];
     return result;
 }
 - (void)createReceivedCardWithDictionary:(NSDictionary *)dict {

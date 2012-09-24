@@ -11,20 +11,17 @@
 @implementation KHHData (CRUD)
 
 // 没有符合条件的返回空数组，出错返回nil。
-- (NSArray *)fetchEntityName:(NSString *)entityName
-                       error:(NSError **)error {
+- (NSArray *)fetchEntityName:(NSString *)entityName {
     NSArray *result = nil;
     result = [self fetchEntityName:entityName
                          predicate:nil
-                   sortDescriptors:nil
-                             error:error];
+                   sortDescriptors:nil];
     return result;
 }
 // 没有符合条件的返回空数组，出错返回nil。
 - (NSArray *)fetchEntityName:(NSString *)entityName
                    predicate:(NSPredicate *)predicate
-             sortDescriptors:(NSArray *)sortDescriptors
-                       error:(NSError **)error {
+             sortDescriptors:(NSArray *)sortDescriptors {
     
     NSFetchRequest *req = [NSFetchRequest fetchRequestWithEntityName:entityName];
     if (predicate) {
@@ -33,26 +30,28 @@
     if ([sortDescriptors count]) {
         req.sortDescriptors = sortDescriptors;
     }
-    NSArray *result = [self.managedObjectContext executeFetchRequest:req
-                                                               error:error];
+    NSError *error = nil;
+    NSArray *result = [self.context executeFetchRequest:req error:&error];
+    if (nil == result) {
+        NSString *errorMessage = (error)?error.localizedDescription:@"未知错误!!!";
+        ALog(@"[EE] fetchEntityName 出错：%@", errorMessage);
+        return result;
+    }
     return result;
 }
 
-// 出错的返回值是NSNotFound，且error指向一个 NSError 实例。
-- (NSUInteger)countOfEntityName:(NSString *)entityName
-                          error:(NSError **)error {
+// 出错的返回值是NSNotFound。
+- (NSUInteger)countOfEntityName:(NSString *)entityName {
     NSUInteger result = NSNotFound;
     result = [self countOfEntityName:entityName
                            predicate:nil
-                     sortDescriptors:nil
-                               error:error];
+                     sortDescriptors:nil];
     return result;
 }
-// 出错的返回值是NSNotFound，且error指向一个 NSError 实例。
+// 出错的返回值是NSNotFound。
 - (NSUInteger)countOfEntityName:(NSString *)entityName
                       predicate:(NSPredicate *)predicate
-                sortDescriptors:(NSArray *)sortDescriptors
-                          error:(NSError **)error {
+                sortDescriptors:(NSArray *)sortDescriptors {
     NSFetchRequest *req = [NSFetchRequest fetchRequestWithEntityName:entityName];
     if (predicate) {
         req.predicate = predicate;
@@ -60,31 +59,35 @@
     if ([sortDescriptors count]) {
         req.sortDescriptors = sortDescriptors;
     }
-    NSUInteger result = [self.managedObjectContext countForFetchRequest:req
-                                                                  error:error];
+    NSError *error = nil;
+    NSUInteger result = [self.context countForFetchRequest:req error:&error];
+    if (NSNotFound == result) {
+        NSString *errorMessage = (error)?error.localizedDescription:@"未知错误!!!";
+        ALog(@"[EE] fetchEntityName 出错：%@", errorMessage);
+        return result;
+    }
     return result;
 }
 // 根据 ID 和 类名 查数据库。此 ID 不是CoreData OBjectID，而至cardID，companyID等等。
 // 无则返回nil；
-- (id)objectByID:(NSNumber *)ID ofClass:(NSString *)className {
+- (NSManagedObject *)objectByID:(NSNumber *)ID ofClass:(NSString *)className {
     return [self objectByID:ID ofClass:className createIfNone:NO];
 }
 
 // 根据 ID 和 类名 查数据库。此 ID 不是CoreData OBjectID，而至cardID，companyID等等。
 // createIfNone==YES，无则新建
 // createIfNone==NO， 无则返回nil；
-- (id)objectByID:(NSNumber *)ID
+- (NSManagedObject *)objectByID:(NSNumber *)ID
          ofClass:(NSString *)className
     createIfNone:(BOOL)createIfNone {
-    id result = nil;
+    NSManagedObject *result = nil;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id = %@", ID];
     NSError *error;
     NSArray *matches = [self fetchEntityName:className
                                    predicate:predicate
-                             sortDescriptors:nil
-                                       error:&error];
+                             sortDescriptors:nil];
     if (nil == matches) {
-        ALog(@"[EE] fetchEntityName 出错：%@", error.localizedDescription);
+        ALog(@"[EE] fetchEntityName 出错：%@", error?error.localizedDescription:@"未知错误!!!");
         return result;
     }
     if ([matches count] > 1) {
@@ -94,16 +97,16 @@
     result = [matches lastObject];
     if (nil == result && createIfNone) {
         result = [NSEntityDescription insertNewObjectForEntityForName:className
-                                               inManagedObjectContext:self.managedObjectContext];
+                                               inManagedObjectContext:self.context];
         [result setValue:ID forKey:kAttributeKeyID];
     }
     return result;
 }
 // 新建一个对象。无预设ID之类的属性。
-- (id)objectOfClass:(NSString *)className {
-    id result = nil;
-    result = result = [NSEntityDescription insertNewObjectForEntityForName:className
-                                                    inManagedObjectContext:self.managedObjectContext];
+- (NSManagedObject *)objectOfClass:(NSString *)className {
+    NSManagedObject *result = nil;
+    result = [NSEntityDescription insertNewObjectForEntityForName:className
+                                                    inManagedObjectContext:self.context];
     return result;
 }
 
@@ -136,23 +139,22 @@
     NSArray *result = nil;
     NSString *entityName = [self entityNameWithCardType:cardType];
     if (entityName) {
-        result = [self fetchEntityName:entityName
-                                 error:nil];
+        result = [self fetchEntityName:entityName];
     } else {
         ALog(@"[EE] entityName = nil!!!");
     }
     return result;
 }
 // 根据ID读取。// 如果多于一个返回最后一个。不存在或出错都是nil.
-- (id)cardOfType:(KHHCardModelType)cardType
+- (NSManagedObject *)cardOfType:(KHHCardModelType)cardType
             byID:(NSNumber *)cardID {
-    id result = nil;
+    NSManagedObject * result = nil;
     result = [self cardOfType:cardType
                          byID:cardID
                  createIfNone:NO];
     return result;
 }
-- (id)cardOfType:(KHHCardModelType)cardType
+- (Card *)cardOfType:(KHHCardModelType)cardType
             byID:(NSNumber *)cardID
     createIfNone:(BOOL)createIfNone {
     Card *result = nil;
@@ -162,23 +164,20 @@
         return result;
     }
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id = %@", cardID];
-    NSError *error;
     NSArray *matches = [self fetchEntityName:entityName
                                    predicate:predicate
-                             sortDescriptors:nil
-                                       error:&error];
-    if (nil == matches) {
-        ALog(@"[EE] fetchEntityName 出错：%@", error.localizedDescription);
+                             sortDescriptors:nil];
+    if (nil == matches) { // 出错
+#warning TO REVIEW
         return result;
     }
     if ([matches count] > 1) {
         ALog(@"[EE] fetchEntityName 出错：返回的对象多于一个!");
-        //        return result;
     }
     result = [matches lastObject];
     if (nil == result && createIfNone) {
         result = [NSEntityDescription insertNewObjectForEntityForName:entityName
-                                               inManagedObjectContext:self.managedObjectContext];
+                                               inManagedObjectContext:self.context];
         result.id = cardID;
     }
     return result;
@@ -206,7 +205,7 @@
 // 根据公司ID查数据库。
 // 无则返回nil；
 - (Company *)companyByID:(NSNumber *)companyID {
-    return [self objectByID:companyID ofClass:[Company entityName]];
+    return (Company *)[self objectByID:companyID ofClass:[Company entityName]];
 }
 @end
 
@@ -221,11 +220,9 @@
     
     // imageID 不为nil，且不等于0；
     if (imageID && (0 != imageID.integerValue)) {
-        NSError *error;
         NSArray *matches =  [self fetchEntityName:entityName
                                         predicate:predicate
-                                  sortDescriptors:nil
-                                            error:&error];
+                                  sortDescriptors:nil];
         result = [matches lastObject];
     }
     
@@ -233,7 +230,7 @@
         return result;
     }
     result = [NSEntityDescription insertNewObjectForEntityForName:entityName
-                                           inManagedObjectContext:self.managedObjectContext];
+                                           inManagedObjectContext:self.context];
     return result;
 }
 @end

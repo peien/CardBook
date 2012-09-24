@@ -9,7 +9,7 @@
 #import "KHHData.h"
 
 @implementation KHHData
-@synthesize managedObjectContext = _managedObjectContext;
+@synthesize context = _context;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize agent = _agent;
@@ -21,19 +21,22 @@
         //
         _agent = [[KHHNetworkAPIAgent alloc] init];
         [self observeNotification:KHHNotificationAllDataAfterDateSucceeded
-                           object:_agent selector:@"handleAllDataAfterDateSucceeded:"];
+                         selector:@"handleAllDataAfterDateSucceeded:"];
         [self observeNotification:KHHNotificationAllDataAfterDateFailed
-                           object:_agent selector:@"handleAllDataAfterDateFailed:"];
+                         selector:@"handleAllDataAfterDateFailed:"];
         [self observeNotification:KHHNotificationReceivedCardCountAfterDateLastCardSucceeded
-                           object:_agent selector:@"handleReceivedCardCountAfterDateLastCardSucceeded:"];
+                         selector:@"handleReceivedCardCountAfterDateLastCardSucceeded:"];
         [self observeNotification:KHHNotificationReceivedCardCountAfterDateLastCardFailed
-                           object:_agent selector:@"handleReceivedCardCountAfterDateLastCardFailed:"];
+                         selector:@"handleReceivedCardCountAfterDateLastCardFailed:"];
     }
     return self;
 }
 - (void)dealloc
 {
-    [self removeContext];
+    [self stopObservingAllNotifications];
+    _context = nil;
+    _persistentStoreCoordinator = nil;
+    _managedObjectModel = nil;
     _agent = nil;
 }
 + (id)sharedData {
@@ -47,38 +50,46 @@
 #pragma mark - Core Data stack
 - (void)removeContext // 删除Context。登出或登入时使用。
 {
-    _managedObjectContext = nil;
+    _context = nil;
     _persistentStoreCoordinator = nil;
     _managedObjectModel = nil;
 }
 - (void)saveContext // 保存更改。
 {
-    NSError *error = nil;
-    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
-    if (managedObjectContext != nil) {
-        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
+    if (self.context) {
+        if (![self.context hasChanges]) {
+            ALog(@"[II] context 无需保存！");
+            return;
+        }
+        NSError *error = nil;
+        if (![self.context save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            if (error) {
+                ALog(@"Unresolved error %@, %@", error, [error userInfo]);
+            } else {
+                ALog(@"[II] 保存 context 时发生了未知错误！");
+            }
+#warning 会导致闪退！
             abort();
         }
     }
 }
 - (void)cleanContext // 清除未保存的更改。
 {
-    [self.managedObjectContext reset];
+    [self.context reset];
 }
-- (NSManagedObjectContext *)managedObjectContext {
-    if (_managedObjectContext != nil) {
-        return _managedObjectContext;
+- (NSManagedObjectContext *)context {
+    if (_context != nil) {
+        return _context;
     }
     
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil) {
-        _managedObjectContext = [[NSManagedObjectContext alloc] init];
-        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+        _context = [[NSManagedObjectContext alloc] init];
+        [_context setPersistentStoreCoordinator:coordinator];
     }
-    return _managedObjectContext;
+    return _context;
 }
 - (NSManagedObjectModel *)managedObjectModel {
     if (_managedObjectModel != nil) {

@@ -10,17 +10,26 @@
 
 @implementation NSNumber (SM)
 // nil if unresolvable; 1 if @"yes", 0 if @"no";
-+ (NSNumber *)numberFromString:(NSString *)value {
++ (NSNumber *)numberFromString:(NSString *)string {
     NSNumber *result = nil;
-    if ([value isKindOfClass:[NSString class]]) {
+    if ([string isKindOfClass:[NSString class]]) {
+        // 先尝试解析
         NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
         [f setNumberStyle:NSNumberFormatterDecimalStyle];
-        result = [f numberFromString:value];
-        if ([value caseInsensitiveCompare:@"yes"] == NSOrderedSame) {
-            result = [NSNumber numberWithBool:YES];
-        } else if ([value caseInsensitiveCompare:@"no"] == NSOrderedSame) {
-            result = [NSNumber numberWithBool:NO];
+        result = [f numberFromString:string];
+        if (result) {
+            // 解析成功直接返回
+            return result;
         }
+        
+        // 解析不成功则把string转为全大写，然后查字典
+        NSString *ucString = [string uppercaseString];
+        
+        NSDictionary *mapDict = @{
+        @"Y":@1, @"N":@0, @"YES":@1, @"NO":@0,
+        };
+        
+        result = mapDict[ucString];
     }
     return result;
 }
@@ -35,7 +44,7 @@
          defaultIfUnresolvable:(BOOL)flag {
     // 设置默认值
     id result = flag? [NSNumber numberWithInteger:defaultValue]: nil;
-    DLog(@"[II] obj class = %@", [obj class]);
+//    DLog(@"[II] obj class = %@", [obj class]);
     if ([obj isKindOfClass:[NSNumber class]]) { //
         result = obj;
     } else if ([obj isKindOfClass:[NSString class]]) { //

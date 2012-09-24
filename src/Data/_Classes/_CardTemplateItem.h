@@ -7,16 +7,18 @@
 extern const struct CardTemplateItemAttributes {
 	__unsafe_unretained NSString *id;
 	__unsafe_unretained NSString *name;
+	__unsafe_unretained NSString *style;
 } CardTemplateItemAttributes;
 
 extern const struct CardTemplateItemRelationships {
-	__unsafe_unretained NSString *template;
+	__unsafe_unretained NSString *templates;
 } CardTemplateItemRelationships;
 
 extern const struct CardTemplateItemFetchedProperties {
 } CardTemplateItemFetchedProperties;
 
 @class CardTemplate;
+
 
 
 
@@ -53,10 +55,18 @@ extern const struct CardTemplateItemFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSString* style;
 
-@property (nonatomic, strong) CardTemplate* template;
 
-//- (BOOL)validateTemplate:(id*)value_ error:(NSError**)error_;
+//- (BOOL)validateStyle:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
+@property (nonatomic, strong) NSSet* templates;
+
+- (NSMutableSet*)templatesSet;
 
 
 
@@ -65,6 +75,11 @@ extern const struct CardTemplateItemFetchedProperties {
 @end
 
 @interface _CardTemplateItem (CoreDataGeneratedAccessors)
+
+- (void)addTemplates:(NSSet*)value_;
+- (void)removeTemplates:(NSSet*)value_;
+- (void)addTemplatesObject:(CardTemplate*)value_;
+- (void)removeTemplatesObject:(CardTemplate*)value_;
 
 @end
 
@@ -86,9 +101,15 @@ extern const struct CardTemplateItemFetchedProperties {
 
 
 
+- (NSString*)primitiveStyle;
+- (void)setPrimitiveStyle:(NSString*)value;
 
-- (CardTemplate*)primitiveTemplate;
-- (void)setPrimitiveTemplate:(CardTemplate*)value;
+
+
+
+
+- (NSMutableSet*)primitiveTemplates;
+- (void)setPrimitiveTemplates:(NSMutableSet*)value;
 
 
 @end
