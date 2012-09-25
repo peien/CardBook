@@ -207,15 +207,6 @@
                            zeroIfUnresolvable:NO];
     return (CardTemplateItem *)[self processObject:dict ofClass:className withID:ID];
 }
-- (Company *)processCompany:(NSDictionary *)dict {
-    DLog(@"[II] a Company dict class= %@, data = %@", [dict class], dict);
-    DLog(@"[II] a Company keys = %@", [dict allKeys]);
-#warning company ID?
-    NSString *className = [Company entityName];
-    NSNumber *ID = [NSNumber numberFromObject:dict[JSONDataKeyID]
-                           zeroIfUnresolvable:NO];
-    return (Company *)[self processObject:dict ofClass:className withID:ID];
-}
 //
 - (void)processSyncTime:(NSString *)syncTime {
     DLog(@"[II] syncTime = %@", syncTime);
@@ -278,15 +269,15 @@
 - (Card *)fillCard:(Card *)card ofType:(KHHCardModelType)type withJSON:(NSDictionary *)json {
     if (card && json) {
         // id 已经有了，填剩下的数据。
+        
+        card.name = [NSString stringFromObject:json[JSONDataKeyName]]; // 解不出为nil
+        
         card.userID = [NSNumber numberFromObject:json[JSONDataKeyUserId]
                               zeroIfUnresolvable:NO]; // 解不出为nil
         card.version = [NSNumber numberFromObject:json[JSONDataKeyVersion]
                                      defaultValue:1 defaultIfUnresolvable:YES];
         card.roleType = [NSNumber numberFromObject:json[JSONDataKeyCardTypeId]
-                                      defaultValue:1 defaultIfUnresolvable:YES];
-        card.cTimeUTC = [NSString stringFromObject:json[JSONDataKeyGmtCreateTime]];
-        card.mTimeUTC = [NSString stringFromObject:json[JSONDataKeyGmtModTime]];
-        
+                                      defaultValue:1 defaultIfUnresolvable:YES];        
         // 工作相关
         card.title = [NSString stringFromObject:json[JSONDataKeyJobTitle]];
         card.businessScope = [NSString stringFromObject:json[JSONDataKeyBusinessScope]];
@@ -314,7 +305,6 @@
         // }
         
         // 公司 {
-#warning 需确认是否有无ID的情况
         NSNumber *companyID = [NSNumber numberFromObject:json[JSONDataKeyCompanyId]
                                             defaultValue:0 defaultIfUnresolvable:YES];
         NSString *companyName = [NSString stringFromObject:json[JSONDataKeyCompanyName]];

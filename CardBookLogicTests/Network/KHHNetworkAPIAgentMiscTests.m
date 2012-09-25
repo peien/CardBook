@@ -62,17 +62,17 @@ typedef enum {
 }
 #pragma mark -
 - (void)testAllDataAfterDate {
-    [self observeNotification:KHHNotificationAllDataAfterDateSucceeded
+    [self observeNotificationName:KHHNetworkAllDataAfterDateSucceeded
                      selector:@"actionSucceeded:"];
-    [self observeNotification:KHHNotificationAllDataAfterDateFailed
+    [self observeNotificationName:KHHNetworkAllDataAfterDateFailed
                      selector:@"actionFailed:"];
     [self.agent allDataAfterDate:nil extra:nil];
     [self waitUntilDone];
 }
 - (void)testLogoURLWithCompanyName {
-    [self observeNotification:KHHNotificationLogoURLWithCompanyNameSucceeded
+    [self observeNotificationName:KHHNotificationLogoURLWithCompanyNameSucceeded
                      selector:@"actionSucceeded:"];
-    [self observeNotification:KHHNotificationLogoURLWithCompanyNameFailed
+    [self observeNotificationName:KHHNotificationLogoURLWithCompanyNameFailed
                      selector:@"actionFailed:"];
     [self.agent logoURLWithCompanyName:@"浙江金汉弘软件有限公司"];
     [self waitUntilDone];

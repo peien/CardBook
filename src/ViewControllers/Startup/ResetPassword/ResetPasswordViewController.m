@@ -69,10 +69,10 @@
     if (user.isValidMobilePhoneNumber) {
         // ok
         [self hideTheKeyboard];
-        NSString *notiName = ECardNotificationStartResetPassword;
+        NSString *notiName = KHHUIStartResetPassword;
         NSDictionary *dict = @{ kInfoKeyUser : user };
         DLog(@"[II] 重设密码: 发送 %@", notiName);
-        [self postNotification:notiName
+        [self postASAPNotificationName:notiName
                           info:dict];
     } else {
         // invalid phone

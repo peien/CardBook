@@ -39,8 +39,8 @@
                    info:(NSDictionary *)jsonDict {
     
     NSString *name = (KHHNetworkStatusCodeSucceeded == code)?
-                        KHHNotificationLoginSucceeded
-                        : KHHNotificationLoginFailed;
+                        KHHNetworkLoginSucceeded
+                        : KHHNetworkLoginFailed;
     // 把返回的json dictionary转换成本地数据类型。
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:8];
     if (KHHNetworkStatusCodeSucceeded == code) {
@@ -73,8 +73,7 @@
         // 登录失败
     }
     [dict setObject:@(code) forKey:kInfoKeyErrorCode];
-    [self postNotification:name
-                      info:dict];
+    [self postASAPNotificationName:name info:dict];
 }
 
 /**
@@ -102,7 +101,7 @@
 - (void)createAccountResultCode:(KHHNetworkStatusCode)code
                            info:(NSDictionary *)jsonDict {
     NSString *name = (KHHNetworkStatusCodeSucceeded == code)?
-                        KHHNotificationCreateAccountSucceeded
+                        KHHNetworkCreateAccountSucceeded
                         : KHHNotificationCreateAccountFailed;
     
     // 把返回的json dictionary转换成本地数据类型。
@@ -137,8 +136,7 @@
         // 注册失败
     }
     [dict setObject:@(code) forKey:kInfoKeyErrorCode];
-    [self postNotification:name
-                      info:dict];
+    [self postASAPNotificationName:name info:dict];
 }
 /**
  修改密码: 对应"userPasswordService.updatePwd"
@@ -173,7 +171,7 @@
 //    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:jsonDict];
 //    [dict setObject:[NSNumber numberWithInteger:code] forKey:kInfoKeyErrorCode];
 //    
-//    [self postNotification:name info:dict];
+//    [self postASAPNotificationName:name info:dict];
 //}
 
 /**
@@ -204,7 +202,7 @@
 //    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:jsonDict];
 //    [dict setObject:[NSNumber numberWithInteger:code] forKey:kInfoKeyErrorCode];
 //    
-//    [self postNotification:name info:dict];
+//    [self postASAPNotificationName:name info:dict];
 //}
 
 /**
@@ -228,6 +226,6 @@
 //    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:jsonDict];
 //    [dict setObject:[NSNumber numberWithInteger:code] forKey:kInfoKeyErrorCode];
 //    
-//    [self postNotification:name info:dict];
+//    [self postASAPNotificationName:name info:dict];
 //}
 @end

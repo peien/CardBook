@@ -20,7 +20,6 @@
     <entity name="Card" representedClassName="Card" syncable="YES">
         <attribute name="aliWangWang" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="businessScope" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="cTimeUTC" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="customerServiceTel" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="department" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
@@ -31,7 +30,6 @@
         <attribute name="mobilePhone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="moreInfo" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="msn" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="mTimeUTC" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="qq" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="remarks" optional="YES" attributeType="String" syncable="YES"/>
@@ -121,10 +119,14 @@
         <relationship name="images" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Image" inverseName="schedules" inverseEntity="Image" syncable="YES"/>
         <relationship name="targets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Card" inverseName="schedules" inverseEntity="Card" syncable="YES"/>
     </entity>
+    <entity name="SyncMark" representedClassName="SyncMark" syncable="YES">
+        <attribute name="key" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
         <element name="Address" positionX="0" positionY="0" width="128" height="165"/>
         <element name="BankAccount" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="Card" positionX="0" positionY="0" width="128" height="510"/>
+        <element name="Card" positionX="0" positionY="0" width="128" height="480"/>
         <element name="CardTemplate" positionX="0" positionY="0" width="128" height="210"/>
         <element name="CardTemplateItem" positionX="0" positionY="0" width="128" height="210"/>
         <element name="Company" positionX="0" positionY="0" width="128" height="120"/>
@@ -135,5 +137,6 @@
         <element name="PrivateCard" positionX="160" positionY="192" width="128" height="45"/>
         <element name="ReceivedCard" positionX="0" positionY="0" width="128" height="60"/>
         <element name="Schedule" positionX="0" positionY="0" width="128" height="135"/>
+        <element name="SyncMark" positionX="160" positionY="192" width="128" height="75"/>
     </elements>
 </model>

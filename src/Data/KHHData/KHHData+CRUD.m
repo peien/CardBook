@@ -106,7 +106,7 @@
 - (NSManagedObject *)objectOfClass:(NSString *)className {
     NSManagedObject *result = nil;
     result = [NSEntityDescription insertNewObjectForEntityForName:className
-                                                    inManagedObjectContext:self.context];
+                                           inManagedObjectContext:self.context];
     return result;
 }
 
@@ -225,12 +225,35 @@
                                   sortDescriptors:nil];
         result = [matches lastObject];
     }
-    
-    if (result) {
-        return result;
+    if (nil == result) {
+        result = [NSEntityDescription insertNewObjectForEntityForName:entityName
+                                               inManagedObjectContext:self.context];
+        result.id = imageID;
     }
-    result = [NSEntityDescription insertNewObjectForEntityForName:entityName
-                                           inManagedObjectContext:self.context];
+    return result;
+}
+@end
+
+#pragma mark - Sync Time
+@implementation KHHData (CRUD_SyncMark)
+// 根据key查数据库，无则新建。
+// 注意key为@""或nil，亦新建；
+- (SyncMark *)syncMarkByKey:(NSString *)key {
+    NSString *entityName = [SyncMark entityName];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"key = %@", key];
+    SyncMark *result;
+    // key 非空
+    if (key.length) {
+        NSArray *matches =  [self fetchEntityName:entityName
+                                        predicate:predicate
+                                  sortDescriptors:nil];
+        result = [matches lastObject];
+    }
+    if (nil == result) {
+        result = [NSEntityDescription insertNewObjectForEntityForName:entityName
+                                               inManagedObjectContext:self.context];
+        result.key = key;
+    }
     return result;
 }
 @end

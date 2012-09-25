@@ -474,6 +474,8 @@
 		98A851051602EDDD00A4A673 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A851041602EDDD00A4A673 /* CoreData.framework */; };
 		98A851111602F69200A4A673 /* KHHMainUIController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A851101602F69200A4A673 /* KHHMainUIController.m */; };
 		98CFC96E1607201E001B9B17 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 98CFC96D1607201E001B9B17 /* UIImage+Resize.m */; };
+		98F6491D16118012008DE515 /* SyncMark.m in Sources */ = {isa = PBXBuildFile; fileRef = 98F6491C16118012008DE515 /* SyncMark.m */; };
+		98F6492116118035008DE515 /* _SyncMark.m in Sources */ = {isa = PBXBuildFile; fileRef = 98F6492016118035008DE515 /* _SyncMark.m */; };
 		98F83BE216073C790036A516 /* KHHData.m in Sources */ = {isa = PBXBuildFile; fileRef = 98F83BE116073C790036A516 /* KHHData.m */; };
 		98F83BE7160740100036A516 /* KHHApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 98F83BE6160740100036A516 /* KHHApp.m */; };
 /* End PBXBuildFile section */
@@ -1083,6 +1085,10 @@
 		98A851101602F69200A4A673 /* KHHMainUIController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHMainUIController.m; sourceTree = "<group>"; };
 		98CFC96C1607201E001B9B17 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
 		98CFC96D1607201E001B9B17 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
+		98F6491B16118012008DE515 /* SyncMark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncMark.h; sourceTree = "<group>"; };
+		98F6491C16118012008DE515 /* SyncMark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncMark.m; sourceTree = "<group>"; };
+		98F6491F16118035008DE515 /* _SyncMark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _SyncMark.h; sourceTree = "<group>"; };
+		98F6492016118035008DE515 /* _SyncMark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _SyncMark.m; sourceTree = "<group>"; };
 		98F83BE016073C790036A516 /* KHHData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHData.h; sourceTree = "<group>"; };
 		98F83BE116073C790036A516 /* KHHData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHData.m; sourceTree = "<group>"; };
 		98F83BE5160740100036A516 /* KHHApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHApp.h; sourceTree = "<group>"; };
@@ -1559,6 +1565,8 @@
 				98A84DC21602D3A300A4A673 /* _ReceivedCard.m */,
 				98A84DC31602D3A300A4A673 /* _Schedule.h */,
 				98A84DC41602D3A300A4A673 /* _Schedule.m */,
+				98F6491F16118035008DE515 /* _SyncMark.h */,
+				98F6492016118035008DE515 /* _SyncMark.m */,
 			);
 			path = _Classes;
 			sourceTree = "<group>";
@@ -1592,6 +1600,8 @@
 				98A84DDF1602D3A300A4A673 /* ReceivedCard.m */,
 				98A84DE01602D3A300A4A673 /* Schedule.h */,
 				98A84DE11602D3A300A4A673 /* Schedule.m */,
+				98F6491B16118012008DE515 /* SyncMark.h */,
+				98F6491C16118012008DE515 /* SyncMark.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -2900,6 +2910,8 @@
 				984FA6351610297D00344BDC /* KHHVisualCardViewController.m in Sources */,
 				984FA63A16104AF000344BDC /* ATestViewController.m in Sources */,
 				0C23C26C1610BE42006FCD8A /* UIColor+HexColor.m in Sources */,
+				98F6491D16118012008DE515 /* SyncMark.m in Sources */,
+				98F6492116118035008DE515 /* _SyncMark.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

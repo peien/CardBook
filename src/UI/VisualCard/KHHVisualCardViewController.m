@@ -73,8 +73,6 @@ static CGFloat const ratio = 300.f / 450.f;
  */
 - (void)drawViewWithCard {
     NSDictionary * const prefixPair = @{
-    kVisualCardItemKeyAddress:NSLocalizedString(@"地址：", nil),
-    kVisualCardItemKeyCompanyEmail:NSLocalizedString(@"公司email：", nil),
     kVisualCardItemKeyEmail:NSLocalizedString(@"email：", nil),
     kVisualCardItemKeyFax:NSLocalizedString(@"传真：", nil),
     kVisualCardItemKeyMobilePhone:NSLocalizedString(@"手机：", nil),

@@ -7,14 +7,12 @@
 extern const struct CardAttributes {
 	__unsafe_unretained NSString *aliWangWang;
 	__unsafe_unretained NSString *businessScope;
-	__unsafe_unretained NSString *cTimeUTC;
 	__unsafe_unretained NSString *customerServiceTel;
 	__unsafe_unretained NSString *department;
 	__unsafe_unretained NSString *email;
 	__unsafe_unretained NSString *factoryAddress;
 	__unsafe_unretained NSString *fax;
 	__unsafe_unretained NSString *id;
-	__unsafe_unretained NSString *mTimeUTC;
 	__unsafe_unretained NSString *microblog;
 	__unsafe_unretained NSString *mobilePhone;
 	__unsafe_unretained NSString *moreInfo;
@@ -75,8 +73,6 @@ extern const struct CardFetchedProperties {
 
 
 
-
-
 @interface CardID : NSManagedObjectID {}
 @end
 
@@ -101,14 +97,6 @@ extern const struct CardFetchedProperties {
 
 
 //- (BOOL)validateBusinessScope:(id*)value_ error:(NSError**)error_;
-
-
-
-
-@property (nonatomic, strong) NSString* cTimeUTC;
-
-
-//- (BOOL)validateCTimeUTC:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -161,14 +149,6 @@ extern const struct CardFetchedProperties {
 - (void)setIdValue:(int64_t)value_;
 
 //- (BOOL)validateId:(id*)value_ error:(NSError**)error_;
-
-
-
-
-@property (nonatomic, strong) NSString* mTimeUTC;
-
-
-//- (BOOL)validateMTimeUTC:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -383,12 +363,6 @@ extern const struct CardFetchedProperties {
 
 
 
-- (NSString*)primitiveCTimeUTC;
-- (void)setPrimitiveCTimeUTC:(NSString*)value;
-
-
-
-
 - (NSString*)primitiveCustomerServiceTel;
 - (void)setPrimitiveCustomerServiceTel:(NSString*)value;
 
@@ -424,12 +398,6 @@ extern const struct CardFetchedProperties {
 
 - (int64_t)primitiveIdValue;
 - (void)setPrimitiveIdValue:(int64_t)value_;
-
-
-
-
-- (NSString*)primitiveMTimeUTC;
-- (void)setPrimitiveMTimeUTC:(NSString*)value;
 
 
 

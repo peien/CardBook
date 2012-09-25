@@ -10,21 +10,7 @@
 /*!
  Notification names
  */
-//登录
-static NSString * const KHHNotificationLoginSucceeded = @"loginSucceeded";
-static NSString * const KHHNotificationLoginFailed = @"loginFailed";
-//注册
-static NSString * const KHHNotificationCreateAccountSucceeded = @"createAccountSucceeded";
-static NSString * const KHHNotificationCreateAccountFailed = @"createAccountFailed";
-//改密码
-static NSString * const KHHNotificationChangePasswordSucceeded = @"changePasswordSucceeded";
-static NSString * const KHHNotificationChangePasswordFailed = @"changePasswordFailed";
-//重置密码
-static NSString * const KHHNotificationResetPasswordSucceeded = @"resetPasswordSucceeded";
-static NSString * const KHHNotificationResetPasswordFailed = @"resetPasswordFailed";
-//markAutoReceive
-static NSString * const KHHNotificationMarkAutoReceiveSucceeded = @"markAutoReceiveSucceeded";
-static NSString * const KHHNotificationMarkAutoReceiveFailed = @"markAutoReceiveFailed";
+
 
 @interface KHHNetworkAPIAgent (Account)
 /**

@@ -9,19 +9,18 @@
 #import <Foundation/Foundation.h>
 
 @interface NSObject (SMNotification)
-- (void)observeNotification:(NSString *)name
-                   selector:(NSString *)selector;
-//- (void)observeNotification:(NSString *)name
-//                     object:(id)object
-//                   selector:(NSString *)selector;
-- (void)stopObservingNotification:(NSString *)name;
+- (void)observeNotificationName:(NSString *)name selector:(NSString *)selector;
+- (void)stopObservingNotificationName:(NSString *)name;
 - (void)stopObservingAllNotifications;
 
 // 发出的消息被立即处理（NOW）
-- (void)postNotification:(NSString *)name
-                    info:(NSDictionary *)dict;
+- (void)postNowNotificationName:(NSString *)name;
+- (void)postNowNotificationName:(NSString *)name info:(NSDictionary *)dict;
+// 发出的消息被尽快处理（ASAP）
+- (void)postASAPNotificationName:(NSString *)name;
+- (void)postASAPNotificationName:(NSString *)name info:(NSDictionary *)dict;
 // now == YES：发出的消息被立即处理
-- (void)postNotification:(NSString *)name
-                    info:(NSDictionary *)dict
-                     now:(BOOL)now;
+- (void)postQueueNotificationName:(NSString *)name
+                             info:(NSDictionary *)dict
+                     postingStyle:(NSPostingStyle)style;
 @end

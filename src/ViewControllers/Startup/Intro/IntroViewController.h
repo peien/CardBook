@@ -7,8 +7,8 @@
 #import <UIKit/UIKit.h>
 
 //Notifications
-extern NSString * const ECardNotificationShowIntro;
-extern NSString * const ECardNotificationSkipIntro;
+extern NSString * const KHHUIShowIntro;
+extern NSString * const KHHUISkipIntro;
 
 @interface IntroViewController : UIViewController <UIScrollViewDelegate>
 

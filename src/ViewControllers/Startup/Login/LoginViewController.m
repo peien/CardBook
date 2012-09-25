@@ -274,8 +274,8 @@
         self.defaults.currentUser = user;
         self.defaults.currentPassword = password;
         NSDictionary *dict = @{ kInfoKeyUser : user, kInfoKeyPassword : password };
-        NSString *notiName = ECardNotificationStartLogin;
-        [self postNotification:notiName info:dict];
+        NSString *notiName = KHHUIStartLogin;
+        [self postASAPNotificationName:notiName info:dict];
         DLog(@"发送消息 %@", notiName);
     }
 } //login:

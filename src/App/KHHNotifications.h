@@ -9,25 +9,43 @@
 
 //static NSString * const <#Name#> = @"<#String#>";
 // Startup
-static NSString * const KHHNotificationShowStartup = @"showStartup";
+static NSString * const KHHUIShowStartup = @"showStartup";
 // MainUI
-static NSString * const KHHNotificationShowMainUI = @"showMainUI";
+static NSString * const KHHUIShowMainUI = @"showMainUI";
 // Intro
-static NSString * const ECardNotificationShowIntro = @"ShowIntro";
-static NSString * const ECardNotificationSkipIntro = @"SkipIntro";
+static NSString * const KHHUIShowIntro = @"ShowIntro";
+static NSString * const KHHUISkipIntro = @"SkipIntro";
 // Login
-static NSString * const ECardNotificationStartLogin = @"StartLogin";
-static NSString * const ECardNotificationStartAutoLogin = @"StartAutoLogin";
-static NSString * const ECardNotificationLoginAuto = @"LoginAuto";
-static NSString * const ECardNotificationLoginManually = @"LoginManually";
-static NSString * const ECardNotificationAutoLoginFailed = @"AutoLoginFailed";
+// 注意设置userInfo: 包含的keys @"user" @"password"
+static NSString * const KHHUIStartLogin = @"StartLogin";
+static NSString * const KHHUIStartAutoLogin = @"StartAutoLogin";
+static NSString * const KHHUILoginAuto = @"LoginAuto";
+static NSString * const KHHUILoginManually = @"LoginManually";
+static NSString * const KHHUIAutoLoginFailed = @"AutoLoginFailed";
 // 注册
-static NSString * const ECardNotificationSignUpAction = @"SignUpAction";
-static NSString * const ECardNotificationStartSignUp = @"StartSignUp";
-static NSString * const ECardNotificationStartResetPassword = @"StartResetPassword";
-static NSString * const ECardNotificationResetPasswordAction = @"ResetPasswordAction";
+// 注意设置userInfo: 包含的keys @"user" @"password"
+static NSString * const KHHUISignUpAction = @"SignUpAction";
+static NSString * const KHHUIStartSignUp = @"StartSignUp";
+static NSString * const KHHUIStartResetPassword = @"StartResetPassword";
+static NSString * const KHHUIResetPasswordAction = @"ResetPasswordAction";
 // Sync
 static NSString * const KHHNotificationStartSyncAfterLogin = @"startSyncAfterLogin";
 static NSString * const KHHNotificationSyncAfterLoginSucceeded = @"SyncAfterLoginSucceeded";
 static NSString * const KHHNotificationSyncAfterLoginFailed = @"SyncAfterLoginFailed";
+
+//登录
+static NSString * const KHHNetworkLoginSucceeded = @"loginSucceeded";
+static NSString * const KHHNetworkLoginFailed = @"loginFailed";
+//注册
+static NSString * const KHHNetworkCreateAccountSucceeded = @"createAccountSucceeded";
+static NSString * const KHHNotificationCreateAccountFailed = @"createAccountFailed";
+//改密码
+static NSString * const KHHNotificationChangePasswordSucceeded = @"changePasswordSucceeded";
+static NSString * const KHHNotificationChangePasswordFailed = @"changePasswordFailed";
+//重置密码
+static NSString * const KHHNotificationResetPasswordSucceeded = @"resetPasswordSucceeded";
+static NSString * const KHHNotificationResetPasswordFailed = @"resetPasswordFailed";
+//markAutoReceive
+static NSString * const KHHNotificationMarkAutoReceiveSucceeded = @"markAutoReceiveSucceeded";
+static NSString * const KHHNotificationMarkAutoReceiveFailed = @"markAutoReceiveFailed";
 #endif

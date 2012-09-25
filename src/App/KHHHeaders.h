@@ -23,6 +23,7 @@
 #import "Image.h"
 #import "CardTemplate.h"
 #import "CardTemplateItem.h"
+#import "SyncMark.h"
 
 #import "KHHData.h"
 #import "KHHData+Handlers.h"

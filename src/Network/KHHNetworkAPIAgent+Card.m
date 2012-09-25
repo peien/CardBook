@@ -377,16 +377,12 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(Card *card) {
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=182
  */
 - (BOOL)receivedCardsAfterDate:(NSString *)lastDate
-                      lastCard:(ReceivedCard *)lastCard
+                      lastCard:(NSString *)lastCardID
                  expectedCount:(NSString *)count
                          extra:(NSDictionary *)extra {
-    if (lastCard && !CardHasRequiredAttributes(lastCard, KHHCardAttributeID)) {
-        return NO;
-    }
-    NSString *lastID = [[lastCard valueForKey:kAttributeKeyID] stringValue];
     NSDictionary *parameters = @{
             @"lastUpdTime" : (lastDate.length > 0? lastDate: @""),
-            @"lastCardbookId" : lastID? lastID: @"",
+            @"lastCardbookId" : lastCardID? lastCardID: @"",
             @"number" : ([count integerValue]? count: @"50"),
             @"isGZip" : @"no"
     };
@@ -396,7 +392,27 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(Card *card) {
           parameters:parameters];
     return YES;
 }
+- (void)receivedCardsAfterDateLastCardExpectedCountResultCode:(KHHNetworkStatusCode)code
+                                                         info:(NSMutableDictionary *)dict {
+    NSString *notiName = (KHHNetworkStatusCodeSucceeded == code)?
+    KHHNetworkReceivedCardsAfterDateLastCardExpectedCountSucceeded
+    : KHHNetworkReceivedCardsAfterDateLastCardExpectedCountFailed;
+    DLog(@"[II] dict keys = %@", [dict allKeys]);
+    if (KHHNetworkStatusCodeSucceeded == code) {
+        // 把返回的数据转成本地数据
+        // synTime -> syncTime
+        NSString *syncTime = dict[JSONDataKeySynTime];
+        dict[kInfoKeySyncTime] = syncTime;
+        [dict removeObjectForKey:JSONDataKeySynTime];
+        // count 不改
+        // lastCardbookId -> lastID
+        NSNumber *lastID = dict[JSONDataKeyLastCardbookId];
+        dict[kInfoKeyLastID] = lastID;
+        [dict removeObjectForKey:JSONDataKeyLastCardbookId];
+    }
 
+    
+}
 /**
  设置联系人的状态为已查看 sendCardService.updateReadState
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=208

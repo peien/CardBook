@@ -20,14 +20,18 @@
     if (self) {
         //
         _agent = [[KHHNetworkAPIAgent alloc] init];
-        [self observeNotification:KHHNotificationAllDataAfterDateSucceeded
+        [self observeNotificationName:KHHNetworkAllDataAfterDateSucceeded
                          selector:@"handleAllDataAfterDateSucceeded:"];
-        [self observeNotification:KHHNotificationAllDataAfterDateFailed
+        [self observeNotificationName:KHHNetworkAllDataAfterDateFailed
                          selector:@"handleAllDataAfterDateFailed:"];
-        [self observeNotification:KHHNotificationReceivedCardCountAfterDateLastCardSucceeded
+        [self observeNotificationName:KHHNetworkReceivedCardCountAfterDateLastCardSucceeded
                          selector:@"handleReceivedCardCountAfterDateLastCardSucceeded:"];
-        [self observeNotification:KHHNotificationReceivedCardCountAfterDateLastCardFailed
+        [self observeNotificationName:KHHNetworkReceivedCardCountAfterDateLastCardFailed
                          selector:@"handleReceivedCardCountAfterDateLastCardFailed:"];
+        [self observeNotificationName:KHHNetworkReceivedCardsAfterDateLastCardExpectedCountSucceeded
+                         selector:@"handleReceivedCardsAfterDateLastCardExpectedCountSucceeded:"];
+        [self observeNotificationName:KHHNetworkReceivedCardsAfterDateLastCardExpectedCountFailed
+                         selector:@"handleReceivedCardsAfterDateLastCardExpectedCountFailed:"];
     }
     return self;
 }
@@ -70,7 +74,6 @@
             } else {
                 ALog(@"[II] 保存 context 时发生了未知错误！");
             }
-#warning 会导致闪退！
             abort();
         }
     }
@@ -150,8 +153,8 @@
 - (void)startSyncAllData {
     // 启动调用链！
     NSDictionary *extra = @{kExtraKeyChainedInvocation : [NSNumber numberWithBool:YES]};
-#warning 需要填上时间
-    [self.agent allDataAfterDate:nil extra:extra];
+    SyncMark *lastSyncTime = [self syncMarkByKey:kSyncMarkKeySyncAllLastTime];
+    [self.agent allDataAfterDate:lastSyncTime.value extra:extra];
 }
 
 @end

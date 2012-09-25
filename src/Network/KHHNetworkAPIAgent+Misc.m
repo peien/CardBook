@@ -25,8 +25,8 @@
 - (void)allDataAfterDateResultCode:(KHHNetworkStatusCode)code
                               info:(NSMutableDictionary *)dict {
     NSString *notiName = (KHHNetworkStatusCodeSucceeded == code)?
-    KHHNotificationAllDataAfterDateSucceeded
-    : KHHNotificationAllDataAfterDateFailed;
+    KHHNetworkAllDataAfterDateSucceeded
+    : KHHNetworkAllDataAfterDateFailed;
     
     DLog(@"[II] dict keys = %@", [dict allKeys]);
     // 把返回的数据转成本地数据
@@ -57,7 +57,7 @@
         [dict removeObjectForKey:JSONDataKeySynTime];
     }
     
-    [self postNotification:notiName info:dict];
+    [self postASAPNotificationName:notiName info:dict];
 }
 /**
  公司logo kinghhCompanyService.getCompanyMessage

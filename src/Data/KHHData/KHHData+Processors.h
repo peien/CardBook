@@ -40,8 +40,6 @@
 - (CardTemplate *)processCardTemplate:(NSDictionary *)cardTemplate;
 // 返回CardTemplateItem
 - (CardTemplateItem *)processCardTemplateItem:(NSDictionary *)templateItem;
-// 返回Company对象
-- (Company *)processCompany:(NSDictionary *)company;
 //
 - (void)processSyncTime:(NSString *)syncTime;
 @end

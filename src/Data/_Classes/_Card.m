@@ -6,14 +6,12 @@
 const struct CardAttributes CardAttributes = {
 	.aliWangWang = @"aliWangWang",
 	.businessScope = @"businessScope",
-	.cTimeUTC = @"cTimeUTC",
 	.customerServiceTel = @"customerServiceTel",
 	.department = @"department",
 	.email = @"email",
 	.factoryAddress = @"factoryAddress",
 	.fax = @"fax",
 	.id = @"id",
-	.mTimeUTC = @"mTimeUTC",
 	.microblog = @"microblog",
 	.mobilePhone = @"mobilePhone",
 	.moreInfo = @"moreInfo",
@@ -106,13 +104,6 @@ const struct CardFetchedProperties CardFetchedProperties = {
 
 
 
-@dynamic cTimeUTC;
-
-
-
-
-
-
 @dynamic customerServiceTel;
 
 
@@ -169,13 +160,6 @@ const struct CardFetchedProperties CardFetchedProperties = {
 - (void)setPrimitiveIdValue:(int64_t)value_ {
 	[self setPrimitiveId:[NSNumber numberWithLongLong:value_]];
 }
-
-
-
-
-
-@dynamic mTimeUTC;
-
 
 
 

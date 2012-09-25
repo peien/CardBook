@@ -116,7 +116,7 @@
                                                             [NSString stringWithFormat:@"%@Succeeded", action]
                                                             : [NSString stringWithFormat:@"%@Failed", action];
                                            ALog(@"[II] 发送 %@ 消息。", name);
-                                           [self postNotification:name info:dict];
+                                           [self postASAPNotificationName:name info:dict];
                                        }
                                    }
                                    failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -130,7 +130,7 @@
                                        if (extra) {
                                            dict[kInfoKeyExtra] = extra;
                                        }
-                                       [self postNotification:name info:dict];
+                                       [self postASAPNotificationName:name info:dict];
                                    }];
 }
 #pragma mark - Utils

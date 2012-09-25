@@ -75,7 +75,7 @@ BOOL GroupHasRequiredAttributes(Group *group,
 //    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:jsonDict];
 //    [dict setValue:[NSNumber numberWithInteger:code] forKey:kInfoKeyErrorCode];
 //    
-//    [self postNotification:name info:dict];
+//    [self postASAPNotificationName:name info:dict];
 //}
 /**
  修改分组 groupService.updateGroup
@@ -115,7 +115,7 @@ BOOL GroupHasRequiredAttributes(Group *group,
 //    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:jsonDict];
 //    [dict setValue:[NSNumber numberWithInteger:code] forKey:kInfoKeyErrorCode];
 //    
-//    [self postNotification:name info:dict];
+//    [self postASAPNotificationName:name info:dict];
 //}
 /**
  删除分组 groupService.deleteGroup
@@ -141,7 +141,7 @@ BOOL GroupHasRequiredAttributes(Group *group,
 //    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:jsonDict];
 //    [dict setValue:[NSNumber numberWithInteger:code] forKey:kInfoKeyErrorCode];
 //    
-//    [self postNotification:name info:dict];
+//    [self postASAPNotificationName:name info:dict];
 //}
 /**
  获取分组下的客户名片id cardGroupService.getCardIdsByGroupId
@@ -169,7 +169,7 @@ BOOL GroupHasRequiredAttributes(Group *group,
 //    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:jsonDict];
 //    [dict setValue:[NSNumber numberWithInteger:code] forKey:kInfoKeyErrorCode];
 //    
-//    [self postNotification:name info:dict];
+//    [self postASAPNotificationName:name info:dict];
 //}
 /**
  移动、删除、添加客户名片到分组 cardGroupService.addOrDelCardGroup
@@ -222,7 +222,7 @@ BOOL GroupHasRequiredAttributes(Group *group,
 //    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:jsonDict];
 //    [dict setValue:[NSNumber numberWithInteger:code] forKey:kInfoKeyErrorCode];
 //    
-//    [self postNotification:name info:dict];
+//    [self postASAPNotificationName:name info:dict];
 //}
 
 @end

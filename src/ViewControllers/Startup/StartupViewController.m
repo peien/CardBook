@@ -49,22 +49,22 @@
         
         //注册需要捕获的消息
         //Intro
-        [self observeNotification:ECardNotificationShowIntro selector:@"handleShowIntro:"];
-        [self observeNotification:ECardNotificationSkipIntro selector:@"handleSkipIntro:"];
+        [self observeNotificationName:KHHUIShowIntro selector:@"handleShowIntro:"];
+        [self observeNotificationName:KHHUISkipIntro selector:@"handleSkipIntro:"];
 
         //Login
-        [self observeNotification:ECardNotificationStartLogin selector:@"handleStartLogin:"];
-        [self observeNotification:ECardNotificationStartAutoLogin selector:@"handleStartAutoLogin:"];
-        [self observeNotification:KHHNotificationLoginFailed selector:@"handleLoginFailed:"];
+        [self observeNotificationName:KHHUIStartLogin selector:@"handleStartLogin:"];
+        [self observeNotificationName:KHHUIStartAutoLogin selector:@"handleStartAutoLogin:"];
+        [self observeNotificationName:KHHNetworkLoginFailed selector:@"handleLoginFailed:"];
         
         //注册
-        [self observeNotification:ECardNotificationStartSignUp selector:@"handleStartSignUp:"];
-        [self observeNotification:KHHNotificationCreateAccountFailed selector:@"handleSignUpFailed:"];
+        [self observeNotificationName:KHHUIStartSignUp selector:@"handleStartSignUp:"];
+        [self observeNotificationName:KHHNotificationCreateAccountFailed selector:@"handleSignUpFailed:"];
         
         //Reset password
-        [self observeNotification:ECardNotificationStartResetPassword selector:@"handleStartResetPassword:"];
-        [self observeNotification:KHHNotificationResetPasswordSucceeded selector:@"handleResetPasswordSucceeded:"];
-        [self observeNotification:KHHNotificationResetPasswordFailed selector:@"handleResetPasswordFailed:"];
+        [self observeNotificationName:KHHUIStartResetPassword selector:@"handleStartResetPassword:"];
+        [self observeNotificationName:KHHNotificationResetPasswordSucceeded selector:@"handleResetPasswordSucceeded:"];
+        [self observeNotificationName:KHHNotificationResetPasswordFailed selector:@"handleResetPasswordFailed:"];
     }
     return self;
 }//initWithNibName:bundle:
@@ -96,16 +96,15 @@
     if (self.defaults.firstLaunch) {
         // 首次启动
         // 显示引导界面
-        notification = ECardNotificationShowIntro;
+        notification = KHHUIShowIntro;
     } else {
         // 不是首次启动
         // 尝试自动登录
-//        notification = ECardNotificationStartLogin;
-        notification = ECardNotificationStartAutoLogin;
+        notification = KHHUIStartAutoLogin;
     }
     
     DLog(@"[II] 发送消息: %@", notification);
-    [self postNotification:notification info:nil];
+    [self postASAPNotificationName:notification];
 }//viewDidLoad
 
 - (void)viewDidUnload
@@ -129,16 +128,16 @@
     //跳过Intro以后先尝试自动登录
     DLog(@"[II] 跳过Intro以后先尝试自动登录...");
 //    [self handleStartLogin:notification];
-    [self postNotification:ECardNotificationStartAutoLogin info:nil];
+    [self postASAPNotificationName:KHHUIStartAutoLogin];
 }
 - (void)handleStartAutoLogin:(NSNotification *)notification {
     //自动登录
     //转到LoginAction界面
     [self showLoginAction:UIViewAnimationOptionTransitionCrossDissolve];
     //准备发送消息
-    NSString *name = ECardNotificationLoginAuto;
+    NSString *name = KHHUILoginAuto;
     DLog(@"[II] 发送消息: %@", name);
-    [self postNotification:name info:nil];
+    [self postASAPNotificationName:name];
 }
 - (void)handleStartLogin:(NSNotification *)notification
 {
@@ -151,14 +150,14 @@
         //转到LoginAction界面
         [self showLoginAction:UIViewAnimationOptionTransitionFlipFromRight];
         //准备发送消息
-        notificationName = ECardNotificationLoginManually;
+        notificationName = KHHUILoginManually;
         infoDict = notification.userInfo;
     } else {
         //自动登录
         //转到LoginAction界面
         [self showLoginAction:UIViewAnimationOptionTransitionCrossDissolve];
         //准备发送消息
-        notificationName = ECardNotificationLoginAuto;
+        notificationName = KHHUILoginAuto;
     }
     NSLog(@"\n%@: handleStartLogin: 发送消息: %@", self, notificationName);
     [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
@@ -197,9 +196,9 @@
     //转到LoginAction界面
     [self showLoginAction:UIViewAnimationOptionTransitionFlipFromRight];
     //发送注册动作消息
-    NSString *name = ECardNotificationSignUpAction;
+    NSString *name = KHHUISignUpAction;
     DLog(@"[II] 发送消息: %@", name);
-    [self postNotification:name info:notification.userInfo];
+    [self postASAPNotificationName:name info:notification.userInfo];
 }
 - (void)handleSignUpFailed:(NSNotification *)notification
 {
@@ -219,9 +218,9 @@
     //转到LoginAction界面
     [self showLoginAction:UIViewAnimationOptionTransitionFlipFromRight];
     //发送重置密码消息
-    NSString *name = ECardNotificationResetPasswordAction;
+    NSString *name = KHHUIResetPasswordAction;
     DLog(@"[II] 发送消息: %@", name);
-    [self postNotification:name info:notification.userInfo];
+    [self postASAPNotificationName:name info:notification.userInfo];
 }
 - (void)handleResetPasswordSucceeded:(NSNotification *)notification
 {

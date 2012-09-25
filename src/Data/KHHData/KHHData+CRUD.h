@@ -63,4 +63,9 @@
 - (Image *)imageByID:(NSNumber *)imageID;
 @end
 
-
+#pragma mark - Sync Mark
+@interface KHHData (CRUD_SyncMark)
+// 根据key查数据库，无则新建。
+// 注意key为@""或nil，亦新建；
+- (SyncMark *)syncMarkByKey:(NSString *)key;
+@end

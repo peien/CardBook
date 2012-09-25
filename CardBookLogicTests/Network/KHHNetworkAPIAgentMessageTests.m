@@ -62,41 +62,41 @@ typedef enum {
 }
 #pragma mark -
 - (void)testAllMessages {
-    [self observeNotification:KHHNotificationAllMessagesSucceeded
+    [self observeNotificationName:KHHNotificationAllMessagesSucceeded
                      selector:@"actionSucceeded:"];
-    [self observeNotification:KHHNotificationAllMessagesFailed
+    [self observeNotificationName:KHHNotificationAllMessagesFailed
                      selector:@"actionFailed:"];
     [self.agent allMessages];
     [self waitUntilDone];
 }
 //- (void)testDeleteMessages {
-//    [self observeNotification:KHHNotificationDeleteMessagesSucceeded
+//    [self observeNotificationName:KHHNotificationDeleteMessagesSucceeded
 //                     selector:@"actionSucceeded:"];
-//    [self observeNotification:KHHNotificationDeleteMessagesFailed
+//    [self observeNotificationName:KHHNotificationDeleteMessagesFailed
 //                     selector:@"actionFailed:"];
 //    [self.agent deleteMessages:<#(NSArray *)#>];
 //    [self waitUntilDone];
 //}
 - (void)testPromotionMessagesWithTypeNil {
-    [self observeNotification:KHHNotificationPromotionMessagesWithTypeSucceeded
+    [self observeNotificationName:KHHNotificationPromotionMessagesWithTypeSucceeded
                      selector:@"actionSucceeded:"];
-    [self observeNotification:KHHNotificationPromotionMessagesWithTypeFailed
+    [self observeNotificationName:KHHNotificationPromotionMessagesWithTypeFailed
                      selector:@"actionFailed:"];
     [self.agent promotionMessagesWithType:nil];
     [self waitUntilDone];
 }
 - (void)testPromotionMessagesWithTypeIOS {
-    [self observeNotification:KHHNotificationPromotionMessagesWithTypeSucceeded
+    [self observeNotificationName:KHHNotificationPromotionMessagesWithTypeSucceeded
                      selector:@"actionSucceeded:"];
-    [self observeNotification:KHHNotificationPromotionMessagesWithTypeFailed
+    [self observeNotificationName:KHHNotificationPromotionMessagesWithTypeFailed
                      selector:@"actionFailed:"];
     [self.agent promotionMessagesWithType:nil];
     [self waitUntilDone];
 }
 - (void)testPromotionMessagesWithTypeAndroid {
-    [self observeNotification:KHHNotificationPromotionMessagesWithTypeSucceeded
+    [self observeNotificationName:KHHNotificationPromotionMessagesWithTypeSucceeded
                      selector:@"actionSucceeded:"];
-    [self observeNotification:KHHNotificationPromotionMessagesWithTypeFailed
+    [self observeNotificationName:KHHNotificationPromotionMessagesWithTypeFailed
                      selector:@"actionFailed:"];
     [self.agent promotionMessagesWithType:nil];
     [self waitUntilDone];
