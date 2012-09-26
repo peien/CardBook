@@ -4,11 +4,9 @@
 #import "_CardTemplate.h"
 
 const struct CardTemplateAttributes CardTemplateAttributes = {
-	.cTimeUTC = @"cTimeUTC",
 	.descriptionInfo = @"descriptionInfo",
 	.domainType = @"domainType",
 	.id = @"id",
-	.mTimeUTC = @"mTimeUTC",
 	.ownerID = @"ownerID",
 	.style = @"style",
 	.version = @"version",
@@ -72,13 +70,6 @@ const struct CardTemplateFetchedProperties CardTemplateFetchedProperties = {
 
 
 
-@dynamic cTimeUTC;
-
-
-
-
-
-
 @dynamic descriptionInfo;
 
 
@@ -133,13 +124,6 @@ const struct CardTemplateFetchedProperties CardTemplateFetchedProperties = {
 - (void)setPrimitiveIdValue:(int64_t)value_ {
 	[self setPrimitiveId:[NSNumber numberWithLongLong:value_]];
 }
-
-
-
-
-
-@dynamic mTimeUTC;
-
 
 
 

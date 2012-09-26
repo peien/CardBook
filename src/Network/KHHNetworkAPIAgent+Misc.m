@@ -23,41 +23,50 @@
           parameters:parameters];
 }
 - (void)allDataAfterDateResultCode:(KHHNetworkStatusCode)code
-                              info:(NSMutableDictionary *)dict {
-    NSString *notiName = (KHHNetworkStatusCodeSucceeded == code)?
-    KHHNetworkAllDataAfterDateSucceeded
-    : KHHNetworkAllDataAfterDateFailed;
+                              info:(NSDictionary *)dict {
+    NSMutableDictionary *resultDict = [NSMutableDictionary dictionaryWithCapacity:dict.count];
     
-    DLog(@"[II] dict keys = %@", [dict allKeys]);
     // 把返回的数据转成本地数据
     if (KHHNetworkStatusCodeSucceeded == code) {
         // MyCard List
-        NSArray *mCardList = dict[JSONDataKeyMyCard];
-        dict[kInfoKeyMyCardList] = mCardList;
-        [dict removeObjectForKey:JSONDataKeyMyCard];
+        NSArray *oldMyCardList = dict[JSONDataKeyMyCard];
+        NSMutableArray *myCardList = [NSMutableArray arrayWithCapacity:oldMyCardList.count];
+        for (NSDictionary *oldCard in oldMyCardList) {
+            InterCard *card = [InterCard interCardWithMyCardJSON:oldCard];
+            [myCardList addObject:card];
+        }
+        resultDict[kInfoKeyMyCardList] = myCardList;
+        
         // PrivateCard List
-        NSArray *pCardList = dict[JSONDataKeyMyPrivateCard];
-        dict[kInfoKeyPrivateCardList] = pCardList;
-        [dict removeObjectForKey:JSONDataKeyMyPrivateCard];
+        NSArray *oldPrivateCardList = dict[JSONDataKeyMyPrivateCard];
+        NSMutableArray *privateCardList = [NSMutableArray arrayWithCapacity:oldPrivateCardList.count];
+        for (NSDictionary *oldCard in oldPrivateCardList) {
+            InterCard *card = [InterCard interCardWithPrivateCardJSON:oldCard];
+            [privateCardList addObject:card];
+        }
+        resultDict[kInfoKeyPrivateCardList] = privateCardList;
+        
         // Template List
-        NSArray *tList = dict[JSONDataKeyTemplateList];
-        dict[kInfoKeyTemplateList] = tList;
-        [dict removeObjectForKey:JSONDataKeyTemplateList];
+        NSArray *templateList = dict[JSONDataKeyTemplateList];
+        resultDict[kInfoKeyTemplateList] = templateList;
+
         // 运营商推广连接
         NSArray *ICPList = dict[JSONDataKeyLinkList];
-        dict[kInfoKeyICPPromotionLinkList] = ICPList;
-        [dict removeObjectForKey:JSONDataKeyLinkList];
+        resultDict[kInfoKeyICPPromotionLinkList] = ICPList;
+
         // 公司推广连接
         NSArray *comProList = dict[JSONDataKeyCompanyLinkList];
-        dict[kInfoKeyCompanyPromotionLinkList] = comProList;
-        [dict removeObjectForKey:JSONDataKeyCompanyLinkList];
+        resultDict[kInfoKeyCompanyPromotionLinkList] = comProList;
+
         // Sync Time
         NSString *syncTime = dict[JSONDataKeySynTime];
-        dict[kInfoKeySyncTime] = syncTime;
-        [dict removeObjectForKey:JSONDataKeySynTime];
+        resultDict[kInfoKeySyncTime] = syncTime;
     }
     
-    [self postASAPNotificationName:notiName info:dict];
+    NSString *notiName = (KHHNetworkStatusCodeSucceeded == code)?
+    KHHNetworkAllDataAfterDateSucceeded
+    : KHHNetworkAllDataAfterDateFailed;
+    [self postASAPNotificationName:notiName info:resultDict];
 }
 /**
  公司logo kinghhCompanyService.getCompanyMessage

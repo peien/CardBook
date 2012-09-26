@@ -68,70 +68,70 @@
              extra:(NSDictionary *)extra
           pathRoot:(NSString *)pathRoot
              query:(NSString *)query
-        parameters:(NSDictionary *)parameters{
-    
+        parameters:(NSDictionary *)parameters
+           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success {
+    // 声称path
     NSMutableString *path = [NSMutableString stringWithString:pathRoot];
     NSDictionary *queries = @{ @"method" : query };
     [path appendFormat:@"?%@",[self queryStringWithDictionary:queries]];
-    
+    //
+    void (^successBlock)(AFHTTPRequestOperation *operation, id responseObject);
+    if (success) {
+        successBlock = success;
+    } else {
+        successBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
+            // HTTP request 成功
+            NSMutableDictionary *jsonData = [self resultDictionaryFromResponse:responseObject];
+            NSMutableDictionary *dict = [jsonData objectForKey:JSONDataKeyJSONData];
+            NSNumber *state = [dict valueForKey:JSONDataKeyState];
+            NSInteger code = KHHNetworkStatusCodeUnresolvableData;
+            if (dict) {
+                if (state) {
+                    code = state.integerValue;
+                    [dict removeObjectForKey:JSONDataKeyState];
+                    [dict removeObjectForKey:JSONDataKeyNote];
+                } else {
+                    code = KHHNetworkStatusCodeUnknownError;
+                }
+            } else {
+                // 确保返回的dict不是nil
+                dict = [NSMutableDictionary dictionaryWithCapacity:2];
+            }
+            // 把code返回
+            dict[kInfoKeyErrorCode] = [NSNumber numberWithInteger:code];
+            // 把extra也一并返回
+            if (extra) {
+                dict[kInfoKeyExtra] = extra;
+            }
+            
+            ALog(@"[II] 缺少处理返回结果的方法 %@%@", action, @"ResultCode:info:");
+            ALog(@"[II] 进入默认模式:");
+            NSString *name = (KHHNetworkStatusCodeSucceeded == code)?
+            [NSString stringWithFormat:@"%@Succeeded", action]
+            : [NSString stringWithFormat:@"%@Failed", action];
+            ALog(@"[II] 发送 %@ 消息。", name);
+            [self postNowNotificationName:name info:dict];
+            
+        };
+    }
+    void (^failureBlock)(AFHTTPRequestOperation *operation, NSError *error);
+    failureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
+        // HTTP request 失败
+        DLog(@"[II] action = %@\n operation = %@\n error = %@", action, operation, error);
+        NSString *name = [NSString stringWithFormat:@"%@Failed", action];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:3];
+        dict[kInfoKeyErrorCode] = @(error.code);
+        dict[kInfoKeyError] = error.localizedDescription;
+        // 把extra也一并返回
+        if (extra) {
+            dict[kInfoKeyExtra] = extra;
+        }
+        [self postASAPNotificationName:name info:dict];
+    };
     [[KHHHTTPClient sharedClient] postPath:path
                                 parameters:parameters
-                                   success:^(AFHTTPRequestOperation *operation, id responseObject) {
-                                       // HTTP request 成功
-                                       NSMutableDictionary *jsonData = [self resultDictionaryFromResponse:responseObject];
-                                       NSMutableDictionary *dict = [jsonData objectForKey:JSONDataKeyJSONData];
-                                       NSNumber *state = [dict valueForKey:JSONDataKeyState];
-                                       NSInteger code = KHHNetworkStatusCodeUnresolvableData;
-                                       if (dict) {
-                                           if (state) {
-                                               code = state.integerValue;
-                                               [dict removeObjectForKey:JSONDataKeyState];
-                                               [dict removeObjectForKey:JSONDataKeyNote];
-                                           } else {
-                                               code = KHHNetworkStatusCodeUnknownError;
-                                           }
-                                       } else {
-                                           // 确保返回的dict不是nil
-                                           dict = [NSMutableDictionary dictionaryWithCapacity:2];
-                                       }
-                                       // 把code返回
-                                       dict[kInfoKeyErrorCode] = [NSNumber numberWithInteger:code];
-                                       // 把extra也一并返回
-                                       if (extra) {
-                                           dict[kInfoKeyExtra] = extra;
-                                       }
-                                       
-                                       SEL selector = NSSelectorFromString([NSString stringWithFormat:@"%@%@", action, @"ResultCode:info:"]);
-                                       if ([self respondsToSelector:selector]) {
-                                           NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[self methodSignatureForSelector:selector]];
-                                           [inv setTarget:self];
-                                           [inv setSelector:selector];
-                                           [inv setArgument:&code atIndex:2];
-                                           [inv setArgument:&dict atIndex:3];
-                                           [inv invoke];
-                                       } else {
-                                           ALog(@"[II] 缺少处理返回结果的方法 %@%@", action, @"ResultCode:info:");
-                                           ALog(@"[II] 进入默认模式:");
-                                           NSString *name = (KHHNetworkStatusCodeSucceeded == code)?
-                                                            [NSString stringWithFormat:@"%@Succeeded", action]
-                                                            : [NSString stringWithFormat:@"%@Failed", action];
-                                           ALog(@"[II] 发送 %@ 消息。", name);
-                                           [self postASAPNotificationName:name info:dict];
-                                       }
-                                   }
-                                   failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                                       // HTTP request 失败
-                                       DLog(@"[II] action = %@\n operation = %@\n error = %@", action, operation, error);
-                                       NSString *name = [NSString stringWithFormat:@"%@Failed", action];
-                                       NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:3];
-                                       dict[kInfoKeyErrorCode] = @(error.code);
-                                       dict[kInfoKeyError] = error.localizedDescription;
-                                       // 把extra也一并返回
-                                       if (extra) {
-                                           dict[kInfoKeyExtra] = extra;
-                                       }
-                                       [self postASAPNotificationName:name info:dict];
-                                   }];
+                                   success:successBlock
+                                   failure:failureBlock];
 }
 #pragma mark - Utils
 - (NSString *)queryStringWithDictionary:(NSDictionary *)aDictionary {

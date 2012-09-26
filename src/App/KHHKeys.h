@@ -9,6 +9,9 @@
 #ifndef KHHKeys_h
 #define KHHKeys_h
 
+// 暂时空着的占位符号
+static NSString * const KHHPlaceholderForEmptyString = @"";
+
 #pragma mark - kAttributeKey* : Object attributes keys
 /*!
  kAttributeKey* : Object attributes keys
@@ -24,6 +27,8 @@ static NSString * const kAttributeKeyEmail = @"email";
 static NSString * const kAttributeKeyFactoryAddress = @"factoryAddress";
 static NSString * const kAttributeKeyFax = @"fax";
 static NSString * const kAttributeKeyID = @"id";
+static NSString * const kAttributeKeyIsRead = @"isRead";
+static NSString * const kAttributeKeyMemo = @"memo";
 static NSString * const kAttributeKeyMicroblog = @"microblog";
 static NSString * const kAttributeKeyMobilePhone = @"mobilePhone";
 static NSString * const kAttributeKeyMoreInfo = @"moreInfo";
@@ -64,6 +69,7 @@ static NSString * const JSONDataKeyAddress = @"address";
 static NSString * const JSONDataKeyBankNO = @"bankNO";
 static NSString * const JSONDataKeyBusinessScope = @"businessScope";
 static NSString * const JSONDataKeyCardId = @"cardId";
+static NSString * const JSONDataKeyCardBookList = @"cardBookList";
 static NSString * const JSONDataKeyCardLinkList = @"cardLinkList";
 static NSString * const JSONDataKeyCardTypeId = @"cardTypeId"; // 对应 roleType
 static NSString * const JSONDataKeyCity = @"city";
@@ -75,6 +81,7 @@ static NSString * const JSONDataKeyCol5 = @"col5";
 static NSString * const JSONDataKeyCompanyId = @"companyId";
 static NSString * const JSONDataKeyCompanyLinkList = @"companyLinkList";
 static NSString * const JSONDataKeyCompanyName = @"companyName";
+static NSString * const JSONDataKeyCount = @"count";
 static NSString * const JSONDataKeyCountry = @"country";
 static NSString * const JSONDataKeyDescription = @"description";
 static NSString * const JSONDataKeyDetails = @"details";
@@ -93,6 +100,7 @@ static NSString * const JSONDataKeyJobTitle = @"jobTitle";
 static NSString * const JSONDataKeyLastCardbookId = @"lastCardbookId";
 static NSString * const JSONDataKeyLinkList = @"linkList";
 static NSString * const JSONDataKeyLogoImage = @"logoImage";
+static NSString * const JSONDataKeyMemo = @"memo";
 static NSString * const JSONDataKeyMicroBlog = @"microBlog";
 static NSString * const JSONDataKeyMobilePhone = @"mobilephone";
 static NSString * const JSONDataKeyMoreInfo = @"moreInfo";
@@ -141,6 +149,7 @@ static NSString * const kInfoKeyMyCardList = @"myCardList";//NSArray
 static NSString * const kInfoKeyPassword = @"password";//NSString
 static NSString * const kInfoKeyPermission = @"permission";//NSString
 static NSString * const kInfoKeyPrivateCardList = @"privateCardList";//NSArray
+static NSString * const kInfoKeyReceivedCardList = @"receivedCardList";//NSArray
 static NSString * const kInfoKeySyncTime = @"syncTime";//NSString
 static NSString * const kInfoKeyTemplateList = @"templateList";//NSArray
 static NSString * const kInfoKeyUser = @"user";//NSString

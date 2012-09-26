@@ -7,6 +7,7 @@
 //
 
 #import "KHHNetworkAPIAgent+Card.h"
+#import "InterCard.h"
 
 /*!
  @fuctiongroup Card参数整理函数
@@ -393,25 +394,34 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(Card *card) {
     return YES;
 }
 - (void)receivedCardsAfterDateLastCardExpectedCountResultCode:(KHHNetworkStatusCode)code
-                                                         info:(NSMutableDictionary *)dict {
+                                                         info:(NSDictionary *)dict {
+    NSMutableDictionary *resultDict = [NSMutableDictionary dictionaryWithCapacity:8];
+    resultDict[kInfoKeyErrorCode] = dict[kInfoKeyErrorCode];
+    resultDict[kInfoKeyExtra] = dict[kInfoKeyExtra];
+    
+    // 把返回的数据转成本地数据
+    if (KHHNetworkStatusCodeSucceeded == code) {
+        // count
+        resultDict[kInfoKeyCount] = dict[JSONDataKeyCount];
+        // synTime -> syncTime
+        resultDict[kInfoKeySyncTime] = dict[JSONDataKeySynTime];
+        // lastCardbookId -> lastID
+        resultDict[kInfoKeyLastID] = dict[JSONDataKeyLastCardbookId];
+        // cardBookList -> receivedCardList
+        NSArray *oldList = dict[JSONDataKeyCardBookList];
+        NSMutableArray *receivedCardList = [NSMutableArray arrayWithCapacity:oldList.count];
+        for (NSDictionary *oldDict in oldList) {
+            InterCard *iCard = [InterCard interCardWithReceivedCardJSON:oldDict];
+            [receivedCardList addObject:iCard];
+        }
+        resultDict[kInfoKeyReceivedCardList] = receivedCardList;
+    }
+    
+    // 把处理完的数据发出去。
     NSString *notiName = (KHHNetworkStatusCodeSucceeded == code)?
     KHHNetworkReceivedCardsAfterDateLastCardExpectedCountSucceeded
     : KHHNetworkReceivedCardsAfterDateLastCardExpectedCountFailed;
-    DLog(@"[II] dict keys = %@", [dict allKeys]);
-    if (KHHNetworkStatusCodeSucceeded == code) {
-        // 把返回的数据转成本地数据
-        // synTime -> syncTime
-        NSString *syncTime = dict[JSONDataKeySynTime];
-        dict[kInfoKeySyncTime] = syncTime;
-        [dict removeObjectForKey:JSONDataKeySynTime];
-        // count 不改
-        // lastCardbookId -> lastID
-        NSNumber *lastID = dict[JSONDataKeyLastCardbookId];
-        dict[kInfoKeyLastID] = lastID;
-        [dict removeObjectForKey:JSONDataKeyLastCardbookId];
-    }
-
-    
+    [self postASAPNotificationName:notiName info:resultDict];
 }
 /**
  设置联系人的状态为已查看 sendCardService.updateReadState

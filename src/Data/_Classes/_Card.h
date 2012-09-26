@@ -7,14 +7,13 @@
 extern const struct CardAttributes {
 	__unsafe_unretained NSString *aliWangWang;
 	__unsafe_unretained NSString *businessScope;
-	__unsafe_unretained NSString *customerServiceTel;
 	__unsafe_unretained NSString *department;
 	__unsafe_unretained NSString *email;
-	__unsafe_unretained NSString *factoryAddress;
 	__unsafe_unretained NSString *fax;
 	__unsafe_unretained NSString *id;
 	__unsafe_unretained NSString *microblog;
 	__unsafe_unretained NSString *mobilePhone;
+	__unsafe_unretained NSString *modelType;
 	__unsafe_unretained NSString *moreInfo;
 	__unsafe_unretained NSString *msn;
 	__unsafe_unretained NSString *name;
@@ -72,7 +71,6 @@ extern const struct CardFetchedProperties {
 
 
 
-
 @interface CardID : NSManagedObjectID {}
 @end
 
@@ -101,14 +99,6 @@ extern const struct CardFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSString* customerServiceTel;
-
-
-//- (BOOL)validateCustomerServiceTel:(id*)value_ error:(NSError**)error_;
-
-
-
-
 @property (nonatomic, strong) NSString* department;
 
 
@@ -121,14 +111,6 @@ extern const struct CardFetchedProperties {
 
 
 //- (BOOL)validateEmail:(id*)value_ error:(NSError**)error_;
-
-
-
-
-@property (nonatomic, strong) NSString* factoryAddress;
-
-
-//- (BOOL)validateFactoryAddress:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -165,6 +147,18 @@ extern const struct CardFetchedProperties {
 
 
 //- (BOOL)validateMobilePhone:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSNumber* modelType;
+
+
+@property int32_t modelTypeValue;
+- (int32_t)modelTypeValue;
+- (void)setModelTypeValue:(int32_t)value_;
+
+//- (BOOL)validateModelType:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -363,12 +357,6 @@ extern const struct CardFetchedProperties {
 
 
 
-- (NSString*)primitiveCustomerServiceTel;
-- (void)setPrimitiveCustomerServiceTel:(NSString*)value;
-
-
-
-
 - (NSString*)primitiveDepartment;
 - (void)setPrimitiveDepartment:(NSString*)value;
 
@@ -377,12 +365,6 @@ extern const struct CardFetchedProperties {
 
 - (NSString*)primitiveEmail;
 - (void)setPrimitiveEmail:(NSString*)value;
-
-
-
-
-- (NSString*)primitiveFactoryAddress;
-- (void)setPrimitiveFactoryAddress:(NSString*)value;
 
 
 
@@ -410,6 +392,15 @@ extern const struct CardFetchedProperties {
 
 - (NSString*)primitiveMobilePhone;
 - (void)setPrimitiveMobilePhone:(NSString*)value;
+
+
+
+
+- (NSNumber*)primitiveModelType;
+- (void)setPrimitiveModelType:(NSNumber*)value;
+
+- (int32_t)primitiveModelTypeValue;
+- (void)setPrimitiveModelTypeValue:(int32_t)value_;
 
 
 

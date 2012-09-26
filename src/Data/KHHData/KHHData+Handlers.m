@@ -33,10 +33,10 @@
     // }
     
     // privateCard List {
-//    NSArray *privateCardList = info[kInfoKeyPrivateCardList];
-//    if (privateCardList.count) {
-//        [self processPrivateCardList:privateCardList];
-//    }
+    NSArray *privateCardList = info[kInfoKeyPrivateCardList];
+    if (privateCardList.count) {
+        [self processPrivateCardList:privateCardList];
+    }
     // }
     
     // MyCard List {

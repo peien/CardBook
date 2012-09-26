@@ -6,6 +6,7 @@
 
 extern const struct ReceivedCardAttributes {
 	__unsafe_unretained NSString *isRead;
+	__unsafe_unretained NSString *memo;
 } ReceivedCardAttributes;
 
 extern const struct ReceivedCardRelationships {
@@ -13,6 +14,7 @@ extern const struct ReceivedCardRelationships {
 
 extern const struct ReceivedCardFetchedProperties {
 } ReceivedCardFetchedProperties;
+
 
 
 
@@ -41,6 +43,14 @@ extern const struct ReceivedCardFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSString* memo;
+
+
+//- (BOOL)validateMemo:(id*)value_ error:(NSError**)error_;
+
+
+
+
 
 
 @end
@@ -57,6 +67,12 @@ extern const struct ReceivedCardFetchedProperties {
 
 - (BOOL)primitiveIsReadValue;
 - (void)setPrimitiveIsReadValue:(BOOL)value_;
+
+
+
+
+- (NSString*)primitiveMemo;
+- (void)setPrimitiveMemo:(NSString*)value;
 
 
 

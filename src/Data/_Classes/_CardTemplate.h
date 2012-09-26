@@ -5,11 +5,9 @@
 
 
 extern const struct CardTemplateAttributes {
-	__unsafe_unretained NSString *cTimeUTC;
 	__unsafe_unretained NSString *descriptionInfo;
 	__unsafe_unretained NSString *domainType;
 	__unsafe_unretained NSString *id;
-	__unsafe_unretained NSString *mTimeUTC;
 	__unsafe_unretained NSString *ownerID;
 	__unsafe_unretained NSString *style;
 	__unsafe_unretained NSString *version;
@@ -35,8 +33,6 @@ extern const struct CardTemplateFetchedProperties {
 
 
 
-
-
 @interface CardTemplateID : NSManagedObjectID {}
 @end
 
@@ -45,14 +41,6 @@ extern const struct CardTemplateFetchedProperties {
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (CardTemplateID*)objectID;
-
-
-
-
-@property (nonatomic, strong) NSString* cTimeUTC;
-
-
-//- (BOOL)validateCTimeUTC:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -85,14 +73,6 @@ extern const struct CardTemplateFetchedProperties {
 - (void)setIdValue:(int64_t)value_;
 
 //- (BOOL)validateId:(id*)value_ error:(NSError**)error_;
-
-
-
-
-@property (nonatomic, strong) NSString* mTimeUTC;
-
-
-//- (BOOL)validateMTimeUTC:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -171,12 +151,6 @@ extern const struct CardTemplateFetchedProperties {
 @interface _CardTemplate (CoreDataGeneratedPrimitiveAccessors)
 
 
-- (NSString*)primitiveCTimeUTC;
-- (void)setPrimitiveCTimeUTC:(NSString*)value;
-
-
-
-
 - (NSString*)primitiveDescriptionInfo;
 - (void)setPrimitiveDescriptionInfo:(NSString*)value;
 
@@ -197,12 +171,6 @@ extern const struct CardTemplateFetchedProperties {
 
 - (int64_t)primitiveIdValue;
 - (void)setPrimitiveIdValue:(int64_t)value_;
-
-
-
-
-- (NSString*)primitiveMTimeUTC;
-- (void)setPrimitiveMTimeUTC:(NSString*)value;
 
 
 

@@ -165,21 +165,18 @@
 
 @end
 @implementation KHHData (Processors_Object)
-- (Card *)processCard:(NSDictionary *)dict cardType:(KHHCardModelType)type {
-    DLog(@"[II] a Card dict class= %@, data = %@", [dict class], dict);
+- (Card *)processCard:(InterCard *)interCard cardType:(KHHCardModelType)type {
     Card *result = nil;
-    if (dict) {
-        NSNumber *ID = [NSNumber numberFromObject:dict[JSONDataKeyCardId]
-                               zeroIfUnresolvable:NO];
-        if (nil == ID) {
+    if (interCard) {
+        if (nil == interCard.id) {
             // ID无法解析就不操作
             return result;
         }
-        BOOL isDeleted = [[NSNumber numberFromObject:dict[JSONDataKeyIsDelete] zeroIfUnresolvable:YES] boolValue];
+        BOOL isDeleted = [interCard.isDeleted boolValue];
         // 按ID从数据库里查询
         if (isDeleted) {
             // 无不新建
-            result = [self cardOfType:type byID:ID createIfNone:NO];
+            result = [self cardOfType:type byID:interCard.id createIfNone:NO];
             // 有则删除
             if (result) {
                 [self.context deleteObject:result];
@@ -187,9 +184,9 @@
             }
         } else {
             // 无则新建。
-            result = [self cardOfType:type byID:ID createIfNone:YES];
+            result = [self cardOfType:type byID:interCard.id createIfNone:YES];
             // 填充数据
-            [self fillCard:result ofType:type withJSON:dict];
+            [self fillCard:result ofType:type withInterCard:interCard];
         }
     }
     DLog(@"[II] card = %@", result);
@@ -214,102 +211,45 @@
 }
 @end
 @implementation KHHData (Processors_FillContent)
-- (Address *)fillAddress:(Address *)address withJSON:(NSDictionary *)json {
-    NSString *country = [NSString stringFromObject:json[JSONDataKeyCountry]];
-    NSString *province = [NSString stringFromObject:json[JSONDataKeyProvince]];
-    NSString *city = [NSString stringFromObject:json[JSONDataKeyCity]];
-    NSString *district = nil;
-    NSString *street = nil;
-    NSString *other = [NSString stringFromObject:json[JSONDataKeyAddress]];
-    NSString *zip = [NSString stringFromObject:json[JSONDataKeyZipcode]];
-    if (country) { // 国
-        address.country = country;
-    }
-    if (province) { // 省
-        address.province = province;
-    }
-    if (city) { // 市
-        address.city = city;
-    }
-    if (district) { // 区，现在可能未使用
-        address.district = district;
-    }
-    if (street) { // 街，现在可能为使用
-        address.street = street;
-    }
-    if (other) { // 剩下的全部写在这里，对应于address
-        address.other = other;
-    }
-    if (zip) { // 邮编
-        address.zip = zip;
-    }
-    return address;
-}
-
-- (BankAccount *)fillBankAccount:(BankAccount *)bankAccount withJSON:(NSDictionary *)json {
-    NSString *branch = [NSString stringFromObject:json[JSONDataKeyOpenBank]];
-    NSString *number = [NSString stringFromObject:json[JSONDataKeyBankNO]];
-    NSString *bank = nil;
-    NSString *name = nil;//[NSString stringFromObject:json[JSONDataKeyBankAccountName]];
-    if (bank) { // 银行
-        bankAccount.bank = bank;
-    }
-    if (branch) { // 开户行
-        bankAccount.branch = branch;
-    }
-    if (name) { // 户名
-        bankAccount.name = name;
-    }
-    if (number) { // 帐户
-        bankAccount.number = number;
-    }
-    return bankAccount;
-}
-// JSON data -> Card
-- (Card *)fillCard:(Card *)card ofType:(KHHCardModelType)type withJSON:(NSDictionary *)json {
-    if (card && json) {
-        // id 已经有了，填剩下的数据。
-        
-        card.name = [NSString stringFromObject:json[JSONDataKeyName]]; // 解不出为nil
-        
-        card.userID = [NSNumber numberFromObject:json[JSONDataKeyUserId]
-                              zeroIfUnresolvable:NO]; // 解不出为nil
-        card.version = [NSNumber numberFromObject:json[JSONDataKeyVersion]
-                                     defaultValue:1 defaultIfUnresolvable:YES];
-        card.roleType = [NSNumber numberFromObject:json[JSONDataKeyCardTypeId]
-                                      defaultValue:1 defaultIfUnresolvable:YES];        
+- (Card *)fillCard:(Card *)card ofType:(KHHCardModelType)type withInterCard:(InterCard *)interCard {
+    if (card && interCard) {
+        card.name = interCard.name;
+        card.userID = interCard.userID;
+        card.version = interCard.version;
+        card.roleType = interCard.roleType;
         // 工作相关
-        card.title = [NSString stringFromObject:json[JSONDataKeyJobTitle]];
-        card.businessScope = [NSString stringFromObject:json[JSONDataKeyBusinessScope]];
+        card.title = interCard.title;
+        card.businessScope = interCard.businessScope;
         
         // 联系方式
-        card.fax   = [NSString stringFromObject:json[JSONDataKeyFax]];
-        card.mobilePhone = [NSString stringFromObject:json[JSONDataKeyMobilePhone]];
-        card.telephone = [NSString stringFromObject:json[JSONDataKeyTelephone]];
-        card.aliWangWang = [NSString stringFromObject:json[JSONDataKeyWangWang]];
-        card.email = [NSString stringFromObject:json[JSONDataKeyEmail]];
-        card.microblog = [NSString stringFromObject:json[JSONDataKeyMicroBlog]];
-        card.msn = [NSString stringFromObject:json[JSONDataKeyMSN]];
-        card.qq = [NSString stringFromObject:json[JSONDataKeyQQ]];
-        card.web = [NSString stringFromObject:json[JSONDataKeyWeb]];
+        card.fax   = interCard.fax;
+        card.mobilePhone = interCard.mobilePhone;
+        card.telephone = interCard.telephone;
+        card.aliWangWang = interCard.aliWangWang;
+        card.email = interCard.email;
+        card.microblog = interCard.microblog;
+        card.msn = interCard.msn;
+        card.qq = interCard.qq;
+        card.web = interCard.web;
         
         // 杂项
-        card.moreInfo = [NSString stringFromObject:json[JSONDataKeyMoreInfo]];
+        card.moreInfo = interCard.moreInfo;
         
         // 模板 {
         // 根据ID查，不存在则新建
-        NSNumber *templateID = [NSNumber numberFromObject:json[JSONDataKeyTemplateId]
-                                             defaultValue:KHHDefaultTemplateID
-                                    defaultIfUnresolvable:YES];
-        card.template = (CardTemplate *)[self objectByID:templateID ofClass:[CardTemplate entityName] createIfNone:YES];
+        NSNumber *templateID = interCard.templateID;
+        card.template = (CardTemplate *)[self objectByID:templateID
+                                                 ofClass:[CardTemplate entityName]
+                                            createIfNone:YES];
         // }
         
         // 公司 {
-        NSNumber *companyID = [NSNumber numberFromObject:json[JSONDataKeyCompanyId]
-                                            defaultValue:0 defaultIfUnresolvable:YES];
-        NSString *companyName = [NSString stringFromObject:json[JSONDataKeyCompanyName]];
+        NSNumber *companyID = interCard.companyID;
+        NSString *companyName = interCard.companyName;
         if (companyID.integerValue) { // 有公司ID则查询
-            card.company = (Company *)[self objectByID:companyID ofClass:[Company entityName] createIfNone:YES];
+            card.company = (Company *)[self objectByID:companyID
+                                               ofClass:[Company entityName]
+                                          createIfNone:YES];
         } else { // 如果无公司ID或ID为0，则company为nil时新建
             if (nil == card.company) {
                 card.company = (Company *)[self objectOfClass:[Company entityName]];
@@ -320,7 +260,7 @@
         // }
         
         // logo {
-        NSString *logoURL = [NSString stringFromObject:json[JSONDataKeyLogoImage]];
+        NSString *logoURL = interCard.logoURL;
         if (nil == card.logo) { // card.logo不存在则新建
             card.logo = [self imageByID:nil];
         }
@@ -331,28 +271,36 @@
         if (nil == card.address) { // 无则新建
             card.address = (Address *)[self objectOfClass:[Address entityName]];
         }
-        [self fillAddress:card.address withJSON:json];
+        card.address.city = interCard.addressCity;
+        card.address.country = interCard.addressCountry;
+        card.address.district = interCard.addressDistrict;
+        card.address.other = interCard.addressOther;
+        card.address.province = interCard.addressProvince;
+        card.address.street = interCard.addressStreet;
         // }
         
         // 银行帐户 {
         if (nil == card.bankAccount) {
             card.bankAccount = (BankAccount *)[self objectOfClass:[BankAccount entityName]];
         }
-        [self fillBankAccount:card.bankAccount withJSON:json];
+        card.bankAccount.bank = interCard.bankAccountBank;
+        card.bankAccount.branch = interCard.bankAccountBranch;
+        card.bankAccount.name = interCard.bankAccountName;
+        card.bankAccount.number = interCard.bankAccountNumber;
         // }
+        
+        // 其他名片类型的数据 {
+        if (KHHCardModelTypeReceivedCard == type) {
+            [card setValue:interCard.isRead forKey:kAttributeKeyIsRead];
+            [card setValue:interCard.memo forKey:kAttributeKeyMemo];
+        }
+        // }
+        
 #warning TODO
         // 第2～n祯
-        /*
-         col1 = "";              ?
-         col2 = "";              ?
-         col3 = "";              Received isRead
-         col4 = "";              ?
-         col5 = "";              ?
-         */
     }
     return card;
 }
-
 // JSON data -> Template
 - (CardTemplate *)fillCardTemplate:(CardTemplate *)tmpl withJSON:(NSDictionary *)json {
     DLog(@"[II] json = %@", json);
@@ -373,10 +321,6 @@
         tmpl.descriptionInfo = [NSString stringFromObject:json[JSONDataKeyDescription]];
         // templateStyle, y style
         tmpl.style = [NSString stringFromObject:json[JSONDataKeyTemplateStyle]];
-        // gmtCreateTime, y ctimeUTC
-        tmpl.cTimeUTC = [NSString stringFromObject:json[JSONDataKeyGmtCreateTime]];
-        // gmtModTime,    y mtimeUTC
-        tmpl.mTimeUTC = [NSString stringFromObject:json[JSONDataKeyGmtModTime]];
         
         // item列表 {
         NSArray *items = [self processCardTemplateItemList:json[JSONDataKeyDetails]];
@@ -392,14 +336,6 @@
         }
         tmpl.bgImage.url = imageUrl;
         // }
-#warning TODO
-        /*
-         col1,
-         col2,
-         col3,
-         col4,
-         col5,
-         */
     }
     DLog(@"[II] tmpl = %@", tmpl);
     return tmpl;

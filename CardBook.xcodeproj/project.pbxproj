@@ -474,6 +474,7 @@
 		98A851051602EDDD00A4A673 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A851041602EDDD00A4A673 /* CoreData.framework */; };
 		98A851111602F69200A4A673 /* KHHMainUIController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A851101602F69200A4A673 /* KHHMainUIController.m */; };
 		98CFC96E1607201E001B9B17 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 98CFC96D1607201E001B9B17 /* UIImage+Resize.m */; };
+		98DF0AC01612945E004826D5 /* InterCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF0ABF1612945E004826D5 /* InterCard.m */; };
 		98F6491D16118012008DE515 /* SyncMark.m in Sources */ = {isa = PBXBuildFile; fileRef = 98F6491C16118012008DE515 /* SyncMark.m */; };
 		98F6492116118035008DE515 /* _SyncMark.m in Sources */ = {isa = PBXBuildFile; fileRef = 98F6492016118035008DE515 /* _SyncMark.m */; };
 		98F83BE216073C790036A516 /* KHHData.m in Sources */ = {isa = PBXBuildFile; fileRef = 98F83BE116073C790036A516 /* KHHData.m */; };
@@ -1085,6 +1086,8 @@
 		98A851101602F69200A4A673 /* KHHMainUIController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHMainUIController.m; sourceTree = "<group>"; };
 		98CFC96C1607201E001B9B17 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
 		98CFC96D1607201E001B9B17 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
+		98DF0ABE1612945E004826D5 /* InterCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterCard.h; sourceTree = "<group>"; };
+		98DF0ABF1612945E004826D5 /* InterCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InterCard.m; sourceTree = "<group>"; };
 		98F6491B16118012008DE515 /* SyncMark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncMark.h; sourceTree = "<group>"; };
 		98F6491C16118012008DE515 /* SyncMark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SyncMark.m; sourceTree = "<group>"; };
 		98F6491F16118035008DE515 /* _SyncMark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _SyncMark.h; sourceTree = "<group>"; };
@@ -2330,6 +2333,8 @@
 				9803EBAB160DBB6300402B53 /* KHHData+CRUD.m */,
 				9803EBAF160DBC8E00402B53 /* KHHData+Processors.h */,
 				9803EBB0160DBC8E00402B53 /* KHHData+Processors.m */,
+				98DF0ABE1612945E004826D5 /* InterCard.h */,
+				98DF0ABF1612945E004826D5 /* InterCard.m */,
 			);
 			path = KHHData;
 			sourceTree = "<group>";
@@ -2912,6 +2917,7 @@
 				0C23C26C1610BE42006FCD8A /* UIColor+HexColor.m in Sources */,
 				98F6491D16118012008DE515 /* SyncMark.m in Sources */,
 				98F6492116118035008DE515 /* _SyncMark.m in Sources */,
+				98DF0AC01612945E004826D5 /* InterCard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

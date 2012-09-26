@@ -7,6 +7,7 @@
 //
 
 #import "KHHData.h"
+#import "InterCard.h"
 
 @interface KHHData (Processors)
 // 解析一个对象
@@ -45,12 +46,7 @@
 @end
 #pragma mark - Processors_FillContent
 @interface KHHData (Processors_FillContent)
-// 填地址数据。并把填好的地址返回。
-- (Address *)fillAddress:(Address *)address withJSON:(NSDictionary *)json;
-// 填银行帐户数据。并把填好的银行帐户返回。
-- (BankAccount *)fillBankAccount:(BankAccount *)bankAccount withJSON:(NSDictionary *)json;
-// JSON data -> Card
-- (Card *)fillCard:(Card *)card ofType:(KHHCardModelType)type withJSON:(NSDictionary *)dict;
+- (Card *)fillCard:(Card *)card ofType:(KHHCardModelType)type withInterCard:(InterCard *)interCard;
 // JSON data -> Template 填模板数据，并把填好的模板返回。
 - (CardTemplate *)fillCardTemplate:(CardTemplate *)cardTemplate withJSON:(NSDictionary *)dict;
 // JSON data -> TemplateItem 填模板item数据，并把填好的item返回。
