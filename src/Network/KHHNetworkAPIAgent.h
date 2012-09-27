@@ -13,6 +13,9 @@
 #import "KHHHTTPClient.h"
 #import "SBJson.h"
 
+typedef void (^KHHSuccessBlock)(AFHTTPRequestOperation *operation, id responseObject);
+typedef void (^KHHFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
+
 /**
  该类及其扩展封装了所有的服务器接口。
  对返回结果进行处理以后，用notification通知调用者。
@@ -35,30 +38,25 @@
 /**
  发请求
  */
-// 简便模式
 - (void)postAction:(NSString *)action
              query:(NSString *)query
-        parameters:(NSDictionary *)parameters;
-// 带pathRoot的模式
+        parameters:(NSDictionary *)parameters
+           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success;
+- (void)postAction:(NSString *)action
+             query:(NSString *)query
+        parameters:(NSDictionary *)parameters
+           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+             extra:(NSDictionary *)extra;
 - (void)postAction:(NSString *)action
           pathRoot:(NSString *)pathRoot
              query:(NSString *)query
-        parameters:(NSDictionary *)parameters;
-// 带条件的模式
-- (void)postAction:(NSString *)action
-             extra:(NSDictionary *)extra
-             query:(NSString *)query
-        parameters:(NSDictionary *)parameters;
-// 完全体
-- (void)postAction:(NSString *)action
-             extra:(NSDictionary *)extra
-          pathRoot:(NSString *)pathRoot
-             query:(NSString *)query
-        parameters:(NSDictionary *)parameters;
+        parameters:(NSDictionary *)parameters
+           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+             extra:(NSDictionary *)extra;
 /**
  把http response body的base64数据，转成json，再解析为dictionary。
  */
-- (NSMutableDictionary *)resultDictionaryFromResponse:(id)responseObject;
+- (NSMutableDictionary *)JSONDictionaryWithResponse:(id)responseObject;
 
 @end
 

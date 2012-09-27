@@ -43,10 +43,11 @@
         }
         // 不成功则把string转为全大写，然后查字典
         NSString *ucString = [string uppercaseString];
-        NSDictionary *mapDict = @{
-        @"Y":@1, @"N":@0, @"YES":@1, @"NO":@0,
-        };
-        result = mapDict[ucString];
+        if ([@"YES" hasPrefix:ucString]) {
+            result = [NSNumber numberWithBool:YES];
+        } else if ([@"NO" hasPrefix:ucString]) {
+            result = [NSNumber numberWithBool:NO];
+        }
     }
     DLog(@"[II] number from string(%@) is %@", string, result);
     return result;

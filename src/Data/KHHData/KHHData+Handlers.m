@@ -33,10 +33,10 @@
     // }
     
     // privateCard List {
-    NSArray *privateCardList = info[kInfoKeyPrivateCardList];
-    if (privateCardList.count) {
-        [self processPrivateCardList:privateCardList];
-    }
+//    NSArray *privateCardList = info[kInfoKeyPrivateCardList];
+//    if (privateCardList.count) {
+//        [self processPrivateCardList:privateCardList];
+//    }
     // }
     
     // MyCard List {
@@ -91,7 +91,6 @@
         isChained = [extra[kExtraKeyChainedInvocation] boolValue];
     }
     if (isChained) {
-//        [self syncAllDataEnded:YES];
         SyncMark *lastTime = [self syncMarkByKey:kSyncMarkKeyReceviedCardLastTime];
         SyncMark *lastCardID = [self syncMarkByKey:kSyncMarkKeyReceviedCardLastID];
         [self.agent receivedCardsAfterDate:lastTime.value
@@ -110,7 +109,30 @@
 - (void)handleReceivedCardsAfterDateLastCardExpectedCountSucceeded:(NSNotification *)noti {
     DLog(@"[II] handleReceivedCardsAfterDateLastCardExpectedCountSucceeded:%@", noti);
     NSDictionary *info = noti.userInfo;
+    //1.receivedCardList {
+    NSArray *receivedCardList = info[kInfoKeyReceivedCardList];
+    if (receivedCardList.count) {
+        [self processReceivedCardList:receivedCardList];
+    }
+    // }
     
+    //2.syncTime
+    NSString *syncTime = info[kInfoKeySyncTime];
+    if (syncTime.length) {
+        SyncMark *timeMark = [self syncMarkByKey:kSyncMarkKeyReceviedCardLastTime];
+        timeMark.value = syncTime;
+    }
+    
+    //3.lastID
+    NSString *lastID = info[kInfoKeyLastID];
+    if (lastID.length) {
+        SyncMark *IDMark = [self syncMarkByKey:kSyncMarkKeyReceviedCardLastID];
+        IDMark.value = lastID;
+    }
+    
+    // 4.保存
+    [self saveContext];
+    // extra:
     BOOL isChained = NO;
     NSDictionary *extra= info[kInfoKeyExtra];
     if (extra) {

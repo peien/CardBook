@@ -29,51 +29,51 @@
     @"accountNo" : user,
     @"userPassword" : encPass
     };
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:8];
+        // 把 responseDict 的数据转成本地可用的数据
+        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        if (KHHNetworkStatusCodeSucceeded == code) {
+            // 登录成功
+            id obj = nil;
+            // AuthorizationID number
+            obj = [responseDict valueForKeyPath:JSONDataKeyID]; // string
+            NSNumber *authorizationID = [NSNumber numberFromObject:obj zeroIfUnresolvable:YES];
+            dict[kInfoKeyAuthorizationID] = authorizationID;
+            // AutoReceive number
+            obj = [responseDict valueForKeyPath:JSONDataKeyIsAutoReceive]; // string
+            NSNumber *autoReceive = [NSNumber numberFromObject:obj defaultValue:1 defaultIfUnresolvable:YES];
+            dict[kInfoKeyAutoReceive] = autoReceive;
+            // CompanyID number
+            obj = [responseDict valueForKeyPath:JSONDataKeyCompanyId];
+            NSNumber *companyID = [NSNumber numberFromObject:obj zeroIfUnresolvable:YES];
+            dict[kInfoKeyCompanyID] = companyID;
+            // DepartmentID number
+            obj = [responseDict valueForKeyPath:JSONDataKeyOrgId];
+            NSNumber *departmentID = [NSNumber numberFromObject:obj zeroIfUnresolvable:YES];
+            dict[kInfoKeyDepartmentID] = departmentID;
+            // Permission string
+            obj = [responseDict valueForKeyPath:JSONDataKeyPermissionName];
+            NSString *permission = [NSString stringFromObject:obj];
+            dict[kInfoKeyPermission] = permission;
+        }
+        
+        dict[kInfoKeyErrorCode] = @(code);
+        
+        NSString *noti = (KHHNetworkStatusCodeSucceeded == code)?
+        KHHNetworkLoginSucceeded
+        : KHHNetworkLoginFailed;
+        [self postASAPNotificationName:noti info:dict];
+
+    };
     [self postAction:@"login"
             pathRoot:@"registerOrLogin"
                query:@"accountService.login"
-          parameters:parameters];
+          parameters:parameters
+             success:success
+               extra:nil];
     return YES;
-}
-- (void)loginResultCode:(KHHNetworkStatusCode)code
-                   info:(NSDictionary *)jsonDict {
-    
-    NSString *name = (KHHNetworkStatusCodeSucceeded == code)?
-                        KHHNetworkLoginSucceeded
-                        : KHHNetworkLoginFailed;
-    // 把返回的json dictionary转换成本地数据类型。
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:8];
-    if (KHHNetworkStatusCodeSucceeded == code) {
-        // 登录成功
-        id obj = nil;
-        NSNumber *number = nil;
-        NSString *string = nil;
-        // AuthorizationID number
-        obj = [jsonDict valueForKeyPath:JSONDataKeyID]; // string
-        number = [NSNumber numberFromObject:obj zeroIfUnresolvable:YES];
-        [dict setObject:number forKey:kInfoKeyAuthorizationID];
-        // AutoReceive number
-        obj = [jsonDict valueForKeyPath:JSONDataKeyIsAutoReceive]; // string
-        number = (nil == obj || obj == [NSNull null])? [NSNumber numberWithBool:YES]
-                : [NSNumber numberFromObject:obj zeroIfUnresolvable:YES];
-        [dict setObject:number forKey:kInfoKeyAutoReceive];
-        // CompanyID number
-        obj = [jsonDict valueForKeyPath:JSONDataKeyCompanyId];
-        number = [NSNumber numberFromObject:obj zeroIfUnresolvable:YES];
-        [dict setObject:number forKey:kInfoKeyCompanyID];
-        // DepartmentID number
-        obj = [jsonDict valueForKeyPath:JSONDataKeyOrgId];
-        number = [NSNumber numberFromObject:obj zeroIfUnresolvable:YES];
-        [dict setObject:number forKey:kInfoKeyDepartmentID];
-        // Permission string
-        obj = [jsonDict valueForKeyPath:JSONDataKeyPermissionName];
-        string = [NSString stringFromObject:obj];
-        [dict setObject:string forKey:kInfoKeyPermission];
-    } else {
-        // 登录失败
-    }
-    [dict setObject:@(code) forKey:kInfoKeyErrorCode];
-    [self postASAPNotificationName:name info:dict];
 }
 
 /**
@@ -90,53 +90,55 @@
         @"accountNo" : account,
         @"userPassword" : encPass
         };
+        
+        // 返回数据的处理block
+        KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
+            NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
+            NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:8];
+            // 把 responseDict 的数据转成本地可用的数据
+            KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+            if (KHHNetworkStatusCodeSucceeded == code) {
+                // 注册成功
+                id obj = nil;
+                // AuthorizationID
+                obj = [responseDict valueForKeyPath:JSONDataKeyID]; // string
+                NSNumber *authorizationID = [NSNumber numberFromObject:obj zeroIfUnresolvable:YES];
+                dict[kInfoKeyAuthorizationID] = authorizationID;
+                //        // 补齐数据结构
+                //        // AutoReceive
+                //        obj = [jsonDict valueForKeyPath:JSONDataKeyIsAutoReceive]; // string
+                //        number = (nil == obj || obj == [NSNull null] || [@"yes" isEqualToString:obj])?[NSNumber numberWithBool:YES]:[NSNumber numberWithBool:NO];
+                //        [dict setObject:number forKey:kInfoKeyAutoReceive];
+                //        // CompanyID
+                //        obj = [jsonDict valueForKeyPath:JSONDataKeyCompanyId];
+                //        number = (nil == obj || obj == [NSNull null])?[NSNumber numberWithInteger:0]:obj;
+                //        [dict setObject:number forKey:kInfoKeyCompanyID];
+                //        // DepartmentID
+                //        obj = [jsonDict valueForKeyPath:JSONDataKeyOrgId];
+                //        number = (nil == obj || obj == [NSNull null])?[NSNumber numberWithInteger:0]:obj;
+                //        [dict setObject:number forKey:kInfoKeyDepartmentID];
+                //        // Permission
+                //        obj = [jsonDict valueForKeyPath:JSONDataKeyPermissionName];
+                //        string = (nil == obj || obj == [NSNull null])?@"":obj;
+                //        [dict setObject:string forKey:kInfoKeyPermission];
+            } 
+            
+            dict[kInfoKeyErrorCode] = @(code);
+            
+            NSString *noti = (KHHNetworkStatusCodeSucceeded == code)?
+            KHHNetworkCreateAccountSucceeded
+            : KHHNotificationCreateAccountFailed;
+            [self postASAPNotificationName:noti info:dict];
+        };
         [self postAction:@"createAccount"
                 pathRoot:@"registerOrLogin"
                    query:@"accountService.registerAccount"
-              parameters:parameters];
+              parameters:parameters
+                 success:success
+                   extra:nil];
         return YES;
     }
     return NO;
-}
-- (void)createAccountResultCode:(KHHNetworkStatusCode)code
-                           info:(NSDictionary *)jsonDict {
-    NSString *name = (KHHNetworkStatusCodeSucceeded == code)?
-                        KHHNetworkCreateAccountSucceeded
-                        : KHHNotificationCreateAccountFailed;
-    
-    // 把返回的json dictionary转换成本地数据类型。
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:8];
-    if (KHHNetworkStatusCodeSucceeded == code) {
-        // 注册成功
-        id obj = nil;
-        NSNumber *number = nil;
-//        NSString *string = nil;
-        // AuthorizationID
-        obj = [jsonDict valueForKeyPath:JSONDataKeyID]; // string
-        number = [NSNumber numberFromObject:obj zeroIfUnresolvable:YES];
-        [dict setObject:number forKey:kInfoKeyAuthorizationID];
-//        // 补齐数据结构
-//        // AutoReceive
-//        obj = [jsonDict valueForKeyPath:JSONDataKeyIsAutoReceive]; // string
-//        number = (nil == obj || obj == [NSNull null] || [@"yes" isEqualToString:obj])?[NSNumber numberWithBool:YES]:[NSNumber numberWithBool:NO];
-//        [dict setObject:number forKey:kInfoKeyAutoReceive];
-//        // CompanyID
-//        obj = [jsonDict valueForKeyPath:JSONDataKeyCompanyId];
-//        number = (nil == obj || obj == [NSNull null])?[NSNumber numberWithInteger:0]:obj;
-//        [dict setObject:number forKey:kInfoKeyCompanyID];
-//        // DepartmentID
-//        obj = [jsonDict valueForKeyPath:JSONDataKeyOrgId];
-//        number = (nil == obj || obj == [NSNull null])?[NSNumber numberWithInteger:0]:obj;
-//        [dict setObject:number forKey:kInfoKeyDepartmentID];
-//        // Permission
-//        obj = [jsonDict valueForKeyPath:JSONDataKeyPermissionName];
-//        string = (nil == obj || obj == [NSNull null])?@"":obj;
-//        [dict setObject:string forKey:kInfoKeyPermission];
-    } else {
-        // 注册失败
-    }
-    [dict setObject:@(code) forKey:kInfoKeyErrorCode];
-    [self postASAPNotificationName:name info:dict];
 }
 /**
  修改密码: 对应"userPasswordService.updatePwd"
@@ -159,20 +161,10 @@
     };
     [self postAction:@"changePassword"
                query:@"userPasswordService.updatePwd"
-          parameters:parameters];
+          parameters:parameters
+             success:nil];
     return YES;
 }
-//- (void)changePasswordResultCode:(KHHNetworkStatusCode)code
-//                                 json:(NSDictionary *)jsonDict {
-//    NSString *name = (KHHNetworkStatusCodeSucceeded == code)?
-//    KHHNotificationChangePasswordSucceeded
-//    : KHHNotificationChangePasswordFailed;
-//    
-//    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:jsonDict];
-//    [dict setObject:[NSNumber numberWithInteger:code] forKey:kInfoKeyErrorCode];
-//    
-//    [self postASAPNotificationName:name info:dict];
-//}
 
 /**
  重置密码: 对应"userPasswordService.resetPwd"
@@ -190,20 +182,11 @@
     [self postAction:@"resetPassword"
             pathRoot:@"registerOrLogin"
                query:@"userPasswordService.resetPwd"
-          parameters:parameters];
+          parameters:parameters
+             success:nil
+               extra:nil];
     return YES;
 }
-//- (void)resetPasswordResultCode:(KHHNetworkStatusCode)code
-//                                json:(NSDictionary *)jsonDict {
-//    NSString *name = (KHHNetworkStatusCodeSucceeded == code)?
-//    KHHNotificationResetPasswordSucceeded
-//    : KHHNotificationResetPasswordFailed;
-//    
-//    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:jsonDict];
-//    [dict setObject:[NSNumber numberWithInteger:code] forKey:kInfoKeyErrorCode];
-//    
-//    [self postASAPNotificationName:name info:dict];
-//}
 
 /**
  设置是否自动接收名片 userPasswordService.autoReceive
@@ -215,17 +198,7 @@
     };
     [self postAction:@"markAutoReceive"
                query:@"userPasswordService.autoReceive"
-          parameters:parameters];
+          parameters:parameters
+             success:nil];
 }
-//- (void)markAutoReceiveResultCode:(KHHNetworkStatusCode)code
-//                                  json:(NSDictionary *)jsonDict {
-//    NSString *name = (KHHNetworkStatusCodeSucceeded == code)?
-//    KHHNotificationMarkAutoReceiveSucceeded
-//    : KHHNotificationMarkAutoReceiveFailed;
-//    
-//    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:jsonDict];
-//    [dict setObject:[NSNumber numberWithInteger:code] forKey:kInfoKeyErrorCode];
-//    
-//    [self postASAPNotificationName:name info:dict];
-//}
 @end

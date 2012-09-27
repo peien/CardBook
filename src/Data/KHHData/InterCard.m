@@ -25,7 +25,8 @@
     result.templateID = [NSNumber numberFromObject:json[JSONDataKeyTemplateId] zeroIfUnresolvable:NO];// 解不出为nil
     
     // 个人重要信息
-    result.name = [NSString stringFromObject:json[JSONDataKeyName]]; // 解不出为nil
+    result.name = [NSString stringFromObject:json[JSONDataKeyName]];
+//    NSLog(@"%@", [NSString stringWithUTF8String:[json[JSONDataKeyName] cStringUsingEncoding:NSASCIIStringEncoding]]);
     result.title = [NSString stringFromObject:json[JSONDataKeyJobTitle]];
     result.department = KHHPlaceholderForEmptyString;
     result.mobilePhone = [NSString stringFromObject:json[JSONDataKeyMobilePhone]];
@@ -73,7 +74,12 @@
     return result;
 }
 + (InterCard *)interCardWithPrivateCardJSON:(NSDictionary *)json {
-//    self.modelType;
+    // 先填入普通名片
+    NSDictionary *myCard = json[@"card"];
+    InterCard * result = [self interCardWithMyCardJSON:myCard];
+#warning TODO
+    // 再填PrivateCard相关的数据
+    return result;
 }
 + (InterCard *)interCardWithReceivedCardJSON:(NSDictionary *)json {
     // 先填入普通名片
@@ -81,9 +87,9 @@
     InterCard * result = [self interCardWithMyCardJSON:myCard];
     // 再填ReceivedCard相关的数据
     // isRead(col3),(col1?),memo
-    result.isDeleted = json[JSONDataKeyIsDelete];
-    result.isRead = json[JSONDataKeyCol3];
-    result.memo = json[JSONDataKeyMemo];
+    result.isDeleted = [NSNumber numberFromObject:json[JSONDataKeyIsDelete] zeroIfUnresolvable:YES];
+    result.isRead = [NSNumber numberFromObject:json[JSONDataKeyCol3] zeroIfUnresolvable:YES];
+    result.memo = [NSString stringFromObject:json[JSONDataKeyMemo]];
     // 处理完毕，返回。
     return result;
 }

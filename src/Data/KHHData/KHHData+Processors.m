@@ -291,8 +291,8 @@
         
         // 其他名片类型的数据 {
         if (KHHCardModelTypeReceivedCard == type) {
-            [card setValue:interCard.isRead forKey:kAttributeKeyIsRead];
-            [card setValue:interCard.memo forKey:kAttributeKeyMemo];
+            [(ReceivedCard *)card setValue:interCard.isRead forKey:kAttributeKeyIsRead];
+            [(ReceivedCard *)card setValue:interCard.memo forKey:kAttributeKeyMemo];
         }
         // }
         

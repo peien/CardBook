@@ -247,7 +247,8 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(Card *card) {
     if (result) {
         [self postAction:action
                    query:query
-              parameters:parameters];
+              parameters:parameters
+                 success:nil];
     }
     return result;
 }
@@ -274,7 +275,8 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(Card *card) {
     if (result) {
         [self postAction:action
                    query:query
-              parameters:parameters];
+              parameters:parameters
+                 success:nil];
     }
     return result;
 }
@@ -310,7 +312,8 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(Card *card) {
     if (result) {
         [self postAction:action
                    query:query
-              parameters:parameters];
+              parameters:parameters
+                 success:nil];
     }
     return result;
 }
@@ -337,7 +340,8 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(Card *card) {
     };
     [self postAction:@"deleteReceivedCards"
                query:@"relationGroupService.deleteCardBook"
-          parameters:parameters];
+          parameters:parameters
+             success:nil];
     return YES;
 }
 
@@ -348,7 +352,8 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(Card *card) {
 - (void)latestReceivedCard {
     [self postAction:@"latestReceivedCard"
                query:@"exchangeCardService.getReceiverCardBookLast"
-          parameters:nil];
+          parameters:nil
+             success:nil];
 }
 
 /**
@@ -367,9 +372,10 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(Card *card) {
             @"lastCardbookId" : lastID? lastID: @"",
     };
     [self postAction:@"receivedCardCountAfterDateLastCard"
-               extra:extra
                query:@"exchangeCardService.getReceiverCardBookSynCount"
-          parameters:parameters];
+          parameters:parameters
+             success:nil
+               extra:extra];
     return YES;
 }
 
@@ -387,41 +393,46 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(Card *card) {
             @"number" : ([count integerValue]? count: @"50"),
             @"isGZip" : @"no"
     };
-    [self postAction:@"receivedCardsAfterDateLastCardExpectedCount"
-               extra:extra
-               query:@"exchangeCardService.getReceiverCardBookSyn"
-          parameters:parameters];
-    return YES;
-}
-- (void)receivedCardsAfterDateLastCardExpectedCountResultCode:(KHHNetworkStatusCode)code
-                                                         info:(NSDictionary *)dict {
-    NSMutableDictionary *resultDict = [NSMutableDictionary dictionaryWithCapacity:8];
-    resultDict[kInfoKeyErrorCode] = dict[kInfoKeyErrorCode];
-    resultDict[kInfoKeyExtra] = dict[kInfoKeyExtra];
-    
-    // 把返回的数据转成本地数据
-    if (KHHNetworkStatusCodeSucceeded == code) {
-        // count
-        resultDict[kInfoKeyCount] = dict[JSONDataKeyCount];
-        // synTime -> syncTime
-        resultDict[kInfoKeySyncTime] = dict[JSONDataKeySynTime];
-        // lastCardbookId -> lastID
-        resultDict[kInfoKeyLastID] = dict[JSONDataKeyLastCardbookId];
-        // cardBookList -> receivedCardList
-        NSArray *oldList = dict[JSONDataKeyCardBookList];
-        NSMutableArray *receivedCardList = [NSMutableArray arrayWithCapacity:oldList.count];
-        for (NSDictionary *oldDict in oldList) {
-            InterCard *iCard = [InterCard interCardWithReceivedCardJSON:oldDict];
-            [receivedCardList addObject:iCard];
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:8];
+        
+        // 把返回的数据转成本地数据
+        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        if (KHHNetworkStatusCodeSucceeded == code) {
+            // count
+            dict[kInfoKeyCount] = responseDict[JSONDataKeyCount];
+            if ([dict[kInfoKeyCount] integerValue]>0) {
+                // synTime -> syncTime
+                dict[kInfoKeySyncTime] = responseDict[JSONDataKeySynTime];
+                // lastCardbookId -> lastID
+                dict[kInfoKeyLastID] = responseDict[JSONDataKeyLastCardbookId];
+                // cardBookList -> receivedCardList
+                NSArray *oldList = responseDict[JSONDataKeyCardBookList];
+                NSMutableArray *receivedCardList = [NSMutableArray arrayWithCapacity:oldList.count];
+                for (NSDictionary *oldDict in oldList) {
+                    InterCard *iCard = [InterCard interCardWithReceivedCardJSON:oldDict];
+                    [receivedCardList addObject:iCard];
+                }
+                dict[kInfoKeyReceivedCardList] = receivedCardList;
+            }
         }
-        resultDict[kInfoKeyReceivedCardList] = receivedCardList;
-    }
-    
-    // 把处理完的数据发出去。
-    NSString *notiName = (KHHNetworkStatusCodeSucceeded == code)?
-    KHHNetworkReceivedCardsAfterDateLastCardExpectedCountSucceeded
-    : KHHNetworkReceivedCardsAfterDateLastCardExpectedCountFailed;
-    [self postASAPNotificationName:notiName info:resultDict];
+        
+        // errorCode 和 extra
+        dict[kInfoKeyErrorCode] = @(code);
+        dict[kInfoKeyExtra] = extra;
+        // 把处理完的数据发出去。
+        NSString *noti = (KHHNetworkStatusCodeSucceeded == code)?
+        KHHNetworkReceivedCardsAfterDateLastCardExpectedCountSucceeded
+        : KHHNetworkReceivedCardsAfterDateLastCardExpectedCountFailed;
+        [self postASAPNotificationName:noti info:dict];
+    };
+    [self postAction:@"receivedCardsAfterDateLastCardExpectedCount"
+               query:@"exchangeCardService.getReceiverCardBookSyn"
+          parameters:parameters
+             success:success
+               extra:extra];
+    return YES;
 }
 /**
  设置联系人的状态为已查看 sendCardService.updateReadState
@@ -449,7 +460,8 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(Card *card) {
     };
     [self postAction:@"markReadReceivedCard"
                query:@"sendCardService.updateReadState"
-          parameters:parameters];
+          parameters:parameters
+             success:nil];
     return YES;
 }
 
@@ -466,6 +478,7 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(Card *card) {
     };
     [self postAction:@"privateCardsAfterDate"
                query:@"kinghhPrivateCardService.synCard"
-          parameters:parameters];
+          parameters:parameters
+             success:nil];
 }
 @end
