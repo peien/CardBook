@@ -10,15 +10,24 @@
 #import "KHHClientCellLNP.h"
 #import "XLPageControl.h"
 #import "KHHFrameCardView.h"
+#import "MyCard.h"
+#import "Image.h"
+#import "UIImageView+WebCache.h"
+#import "KHHAddressBook.h"
+
 #define CARD_IMGVIEW_TAG 333
 #define CARDMOD_VIEW_TAG 444
 #define LABEL_CELL_TAG 111
 #define TEXTFIELD_CELL_TAG 222
+
 @implementation KHHCardView
 @synthesize theTable = _theTable;
-//@synthesize scroller = _scroller;
-//@synthesize pageCtrl = _pageCtrl;
-//@synthesize xlPage;
+@synthesize data = _data;
+@synthesize dataArray = _dataArray;
+@synthesize myCard = _myCard;
+@synthesize detailVC;
+@synthesize myDetailVC;
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -39,8 +48,7 @@
 */
 - (void)initView
 {
-    self.backgroundColor = [UIColor clearColor];
-
+    self.backgroundColor = [UIColor colorWithRed:241 green:238 blue:232 alpha:1.0];
     KHHFrameCardView *cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(0, 0, 320, 225) isVer:NO];
     _theTable.tableHeaderView = cardView;
     
@@ -52,7 +60,7 @@
     [btnFooter setTitle:@"保存至手机通讯录" forState:UIControlStateNormal];
     btnFooter.titleLabel.font = [UIFont systemFontOfSize:15];
     [btnFooter setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    self.saveToContactBtn = btnFooter;
+    [btnFooter addTarget:self action:@selector(saveToContactBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [footView addSubview:btnFooter];
     
     UIButton *btnFooterDel = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -61,10 +69,20 @@
     [btnFooterDel setBackgroundImage:[[UIImage imageNamed:@"tongbu_normal.png"]stretchableImageWithLeftCapWidth:11 topCapHeight:4] forState:UIControlStateNormal];
     btnFooterDel.titleLabel.font = [UIFont systemFontOfSize:15];
     [btnFooterDel setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    self.delContactBtn = btnFooterDel;
+    [btnFooterDel addTarget:self action:@selector(delCardBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [footView addSubview:btnFooterDel];
     _theTable.tableFooterView = footView;
     
+}
+//初始化界面数据
+- (void)initViewData
+{
+    self.data = [KHHData sharedData];
+    self.dataArray = [self.data allMyCards];
+    _myCard = [self.dataArray objectAtIndex:0];
+    DLog(@"_myCard============%@",_myCard);
+    self.detailVC.card = _myCard;
+    self.myDetailVC.card = _myCard;
 }
 //跳转到全屏
 - (void)gotoFullFrame:(id)sender
@@ -76,9 +94,6 @@
 
 }
 #pragma mark - UITableViewDataSource
-//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
-//    
-//}
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -137,19 +152,19 @@
             switch (indexPath.row) {
                 case 0:
                     lab.text = @"手机";
-                    tf.text = @"13058698758";
+                    tf.text = _myCard.mobilePhone;
                     break;
                 case 1:
                     lab.text = @"电话";
-                    tf.text = @"0577-45289569";
+                    tf.text = _myCard.telephone;
                     break;
                  case 2:
                     lab.text = @"传真";
-                    tf.text = @"0577-45289569";
+                    tf.text = _myCard.fax;
                     break;
                  case 3:
                     lab.text = @"邮箱";
-                    tf.text = @"www.kinghanhong.com";
+                    tf.text = _myCard.email;
                     break;
                 default:
                     break;
@@ -158,7 +173,8 @@
          case 0:
             switch (indexPath.row) {
                 case 0:{
-                    cell.imageView.image = [UIImage imageNamed:@"logopic.png"];
+                    //获取图片
+                    [cell.imageView setImageWithURL:[NSURL URLWithString:_myCard.logo.url] placeholderImage:[UIImage imageNamed:@"logopic.png"]];
                     CGRect rectLab = lab.frame;
                     rectLab.origin.x = 50;
                     lab.frame = rectLab;
@@ -166,8 +182,8 @@
                     rectTf.origin.y = 30;
                     rectTf.origin.x = 69;
                     tf.frame = rectTf;
-                    lab.text = @"贝蒂";
-                    tf.text = @"交互设计师";
+                    lab.text = _myCard.name;
+                    tf.text = _myCard.title;
                 }
                     break;
                     
@@ -179,6 +195,16 @@
             break;
     }
     return cell;
+}
+//添加card到通讯录
+- (void)saveToContactBtnClick:(id)sender
+{
+    [KHHAddressBook saveToCantactWithCard:_myCard];
+    
+}
+- (void)delCardBtnClick:(id)sender
+{
+    [self.data deleteMyCardByID:_myCard.id];
 }
 #pragma mark - ScrollerDelegateMothed
 //- (void)scrollViewDidScroll:(UIScrollView *)scrollView

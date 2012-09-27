@@ -14,10 +14,11 @@
 #import "UseGuideViewController.h"
 #import "FeedBackViewController.h"
 #import "AboutController.h"
+#import "KHHDefaults.h"
 
 
 @interface MoreViewController ()<UIActionSheetDelegate,UIAlertViewDelegate>
-
+@property (strong, nonatomic) KHHDefaults *defaultSet;
 @end
 
 @implementation MoreViewController
@@ -27,6 +28,7 @@
 @synthesize updateStyle = _updateStyle;
 @synthesize defaultPage = _defaultPage;
 @synthesize titleStr = _titleStr;
+@synthesize defaultSet;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,6 +37,7 @@
         // Custom initialization
         self.navigationItem.leftBarButtonItem = nil;
         self.title = @"更多";
+        self.defaultSet = [KHHDefaults sharedDefaults];
     }
     return self;
 }
@@ -43,6 +46,20 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    //_theTable.backgroundColor = [UIColor clearColor];
+    [self.view setBackgroundColor:[UIColor colorWithRed:241 green:238 blue:232 alpha:1.0]];
+    int index = [[self.defaultSet defaultMainUI] intValue];
+    if (index == 100) {
+        _defaultPage.text = @"(名片夹界面)";
+    }else if (index == 101){
+        _defaultPage.text = @"(CRM管理界面)";
+    }else if (index == 102){
+        _defaultPage.text = @"(交换名片界面)";
+    }else if (index == 103){
+        _defaultPage.text = @"(消息界面)";
+    }else{
+       _defaultPage.text = @"(名片夹界面)";
+    }
 }
 - (void)viewWillAppear:(BOOL)animated{
       [super viewWillAppear:animated];
@@ -66,6 +83,7 @@
     _updateStyle = nil;
     _defaultPage = nil;
     _titleStr = nil;
+    self.defaultSet = nil;
 }
 #pragma mark TableDelegates
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -247,7 +265,7 @@
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
             cell.textLabel.text = @"默认页面设置";
-            _defaultPage.frame = CGRectMake(15, 36, 260, 20);
+            _defaultPage.frame = CGRectMake(18, 36, 260, 20);
             [cell addSubview:_defaultPage];
         
         }
@@ -352,11 +370,22 @@
         _updateStyle.text = change;
     }else{
         _defaultPage.text = change;
+        if (buttonIndex == 1) {
+            [self.defaultSet setDefaultMainUI:[NSNumber numberWithInt:100]];
+        }else if (buttonIndex == 2){
+            [self.defaultSet setDefaultMainUI:[NSNumber numberWithInt:101]];
+        }else if (buttonIndex == 3){
+            [self.defaultSet setDefaultMainUI:[NSNumber numberWithInt:102]];
+        }else if (buttonIndex == 4){
+            [self.defaultSet setDefaultMainUI:[NSNumber numberWithInt:103]];
+        }
     }
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 1) {
+        //登出将状态设置为No
+        [self.defaultSet setLoggedIn:NO];
         LoginViewController *loginVC = [[LoginViewController alloc] initWithNibName:@"LoginViewController2" bundle:nil];
         [self.navigationController pushViewController:loginVC animated:YES];
     }

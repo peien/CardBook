@@ -10,6 +10,8 @@
 #import "SuperViewController.h"
 #import "KHHAppDelegate.h"
 #import "KHHCustomEvaluaView.h"
+#import "Card.h"
+#import "KHHCardMode.h"
 @class eCardViewController;
 
 @interface DetailInfoViewController : SuperViewController
@@ -20,5 +22,7 @@
 @property (strong, nonatomic) UISegmentedControl *segmCtrl;
 @property (assign, nonatomic) NSUInteger         lastBtn;
 @property (assign, nonatomic) KHHAppDelegate    *app;
+@property (strong, nonatomic) Card              *card;
+@property (strong, nonatomic) KHHCardMode       *cardM;
 
 @end

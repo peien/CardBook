@@ -18,4 +18,5 @@
 @property (strong, nonatomic) NSArray               *dataName;
 @property (assign, nonatomic) id<PickViewControllerDelegate>delegate;
 @property (strong, nonatomic) NSArray               *groupArr;
+@property (strong, nonatomic) NSMutableArray        *tempArray;
 @end

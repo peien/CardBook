@@ -9,11 +9,14 @@
 #define BUTTON_HEIGHT 24
 #import "MyTabBarController.h"
 #import "SuperViewController.h"
+#import "NSObject+Notification.h"
+#import "KHHDefaults.h"
 
 @interface MyTabBarController ()
 @property (strong, nonatomic) UIImageView *bgimgView;
 @property (strong, nonatomic) UIImageView *message;
 @property (strong, nonatomic) UIImageView *contact;
+@property (assign, nonatomic) int          index;
 @end
 
 @implementation MyTabBarController
@@ -39,6 +42,8 @@
     
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNewMsgNum:) name:@"KNotificationNewMsgNum" object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleNewContactNum:) name:@"KNotificationNewContactNum" object:nil];
+//        [self observeNotification:@"KNotificationNewMsgNum" selector:@"handleNewMsgNum:"];
+//        [self observeNotification:@"KNotificationNewContactNum" selector:@"handleNewContactNum:"];
     }
     return self;
 }
@@ -86,7 +91,9 @@
         [self.tabBarView addSubview:btn];
     }
     // 默认选择
-    UIButton *btn = (UIButton *)[self.tabBarView viewWithTag:100];
+    KHHDefaults *defau = [KHHDefaults sharedDefaults];
+    self.index = [[defau defaultMainUI]intValue];
+    UIButton *btn = (UIButton *)[self.tabBarView viewWithTag:self.index];
     [self performSelector:@selector(buttonClick:) withObject:btn afterDelay:0.1];
     [self creatNumView];
     

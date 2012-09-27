@@ -21,7 +21,7 @@
 #import "MyTabBarController.h"
 #import "KHHShowHideTabBar.h"
 #import "KHHVisitRecoardVC.h"
-
+#import "UIImageView+WebCache.h"
 
 #define POPDismiss [self.popover dismissPopoverAnimated:YES];
 
@@ -48,7 +48,9 @@
 @synthesize app = _app;
 @synthesize actSheet = _actSheet;
 @synthesize style = _style;
-
+@synthesize card;
+@synthesize cardM;
+#pragma mark -
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -65,7 +67,7 @@
 //回赠todo
 - (void)rightBarButtonClick:(id)sender
 {
-    DLog(@"huizeng");
+    
 }
 
 //右下角按钮 todo
@@ -107,10 +109,12 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOne:)];
     tap.numberOfTapsRequired = 1;
     tap.numberOfTouchesRequired = 1;
+    
     [iconImgView addGestureRecognizer:tap];
     UIImage *iconImg = [UIImage imageNamed:@"logopic.png"];
     iconImgView.image = iconImg;
-    iconImgView.backgroundColor = [UIColor grayColor];
+    [iconImgView setImageWithURL:[NSURL URLWithString:self.cardM.logUrl] placeholderImage:iconImg];
+    iconImgView.backgroundColor = [UIColor clearColor];
     [headerView addSubview:iconImgView];
     _segmCtrl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(0, 75, 320, 30)];
     [_segmCtrl insertSegmentWithTitle:@"客户评估" atIndex:0 animated:NO];
@@ -119,7 +123,7 @@
     [_segmCtrl addTarget:self action:@selector(segCtrlClick:) forControlEvents:UIControlEventValueChanged];
     _segmCtrl.selectedSegmentIndex = 0;
     UILabel *nameLab = [[UILabel alloc] initWithFrame:CGRectMake(75, 10, 120, 20)];
-    nameLab.text = @"艾酷";
+    nameLab.text = self.cardM.name;
     nameLab.backgroundColor = [UIColor clearColor];
     nameLab.font = [UIFont boldSystemFontOfSize:15];
     nameLab.textAlignment = UITextAlignmentLeft;
@@ -131,7 +135,7 @@
     companylab.text = @"浙江金汉弘软件有限公司";
     [headerView addSubview:companylab];
     UILabel *jobLab = [[UILabel alloc] initWithFrame:CGRectMake(125, 10, 100, 20)];
-    jobLab.text = @"设计师";
+    jobLab.text = self.cardM.title;
     jobLab.textAlignment = UITextAlignmentLeft;
     jobLab.font = [UIFont systemFontOfSize:13];
     jobLab.backgroundColor = [UIColor clearColor];
@@ -158,6 +162,9 @@
     }
     _cardView = [[[NSBundle mainBundle] loadNibNamed:@"KHHCardView" owner:self options:nil] objectAtIndex:0];
     [_cardView initView];
+    _cardView.detailVC = self;
+    //暂时显示数据
+    [_cardView initViewData];
     [self.containView addSubview:_cardView];
     _visitCalView = [[[NSBundle mainBundle] loadNibNamed:@"KHHVisitCalendarView" owner:self options:nil] objectAtIndex:0];
     
@@ -182,15 +189,14 @@
     [self.view insertSubview:bottomBtn atIndex:100];
     
     //popView
-    KHHFloatBarController *floatBarVC = [[KHHFloatBarController alloc] initWithNibName:nil bundle:nil];
-    floatBarVC.viewController = self;
-    self.popover = [[WEPopoverController alloc] initWithContentViewController:floatBarVC];
-    floatBarVC.popover = self.popover;
+
 }
 - (void)bottomBtnClick:(id)sender
 {
     if (_isToeCardVC) {
         Edit_eCardViewController *editeCardVC = [[Edit_eCardViewController alloc] initWithNibName:@"Edit_eCardViewController" bundle:nil];
+        editeCardVC.type = KCardViewControllerTypeShowInfo;
+        editeCardVC.glCard = self.card;
         [self.navigationController pushViewController:editeCardVC animated:YES];
         
     }else{
@@ -259,12 +265,17 @@
     _customView = nil;
     _popover = nil;
     _actSheet = nil;
+    self.card = nil;
+    self.cardM = nil;
 }
 #pragma mark -
-#pragma mark KHHFloatBarControllerDelegate
 - (void)tapOne:(id)sender
 {
-    DLog();
+    KHHFloatBarController *floatBarVC = [[KHHFloatBarController alloc] initWithNibName:nil bundle:nil];
+    floatBarVC.viewController = self;
+    self.popover = [[WEPopoverController alloc] initWithContentViewController:floatBarVC];
+    floatBarVC.popover = self.popover;
+    floatBarVC.card = self.cardM;
     CGRect rect = CGRectMake(55, 5, 2, 40);
     UIPopoverArrowDirection arrowDirection = UIPopoverArrowDirectionLeft;
     [self.popover presentPopoverFromRect:rect inView:self.view permittedArrowDirections:arrowDirection animated:YES];

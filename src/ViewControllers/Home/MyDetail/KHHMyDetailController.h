@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SuperViewController.h"
+#import "Card.h"
 @class KHHVisitCalendarView;
 @class KHHCardView;
 @interface KHHMyDetailController : SuperViewController
@@ -15,5 +16,6 @@
 @property (strong, nonatomic) IBOutlet UIView             *containView;
 @property (nonatomic, strong) KHHVisitCalendarView        *visitView;
 @property (nonatomic, strong) KHHCardView                 *cardView;
-@property (assign, nonatomic)  NSUInteger                 lastBtn;
+@property (assign, nonatomic) NSUInteger                  lastBtn;
+@property (strong, nonatomic) Card                        *card;
 @end

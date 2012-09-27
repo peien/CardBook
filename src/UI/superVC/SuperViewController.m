@@ -1,6 +1,6 @@
 //
 //  SuperViewController.m
-//  LoveCard
+//  CardBook
 //
 //  Created by gh w on 12-7-18.
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
@@ -69,13 +69,6 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-//    self.navigationItem.rightBarButtonItem = [self woodBarButtonItemWithText:@"Store"];
-//    UIButton* rightButton = (UIButton*)self.navigationItem.rightBarButtonItem.customView;
-//    [rightButton addTarget:self action:@selector(storeAction:) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    self.navigationItem.leftBarButtonItem = [self woodBarButtonItemWithText:@"Edit"];
-//    UIButton* leftButton = (UIButton*)self.navigationItem.leftBarButtonItem.customView;
-//    [leftButton addTarget:self action:@selector(editAction:) forControlEvents:UIControlEventTouchUpInside];
 
 }
 

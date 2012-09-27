@@ -38,7 +38,7 @@
                                                        userInfo:dict];
     DLog(@"[II] 发送 notification = %@", noti);
     [[NSNotificationQueue defaultQueue] enqueueNotification:noti
-                                               postingStyle:NSPostASAP];
+                                               postingStyle:NSPostNow];
 }
 
 @end

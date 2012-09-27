@@ -84,10 +84,10 @@
                               zeroIfUnresolvable:NO]; // 解不出为nil
         card.version = [NSNumber numberFromObject:json[JSONDataKeyVersion]
                                      defaultValue:1 defaultIfUnresolvable:YES];
-        card.roleType = [NSNumber numberFromObject:json[JSONDataKeyCardTypeId]
-                                      defaultValue:1 defaultIfUnresolvable:YES];
-        card.cTimeUTC = [NSString stringFromObject:json[JSONDataKeyGmtCreateTime]];
-        card.mTimeUTC = [NSString stringFromObject:json[JSONDataKeyGmtModTime]];
+//        card.roleType = [NSNumber numberFromObject:json[JSONDataKeyCardTypeId]
+//                                      defaultValue:1 defaultIfUnresolvable:YES];
+//        card.cTimeUTC = [NSString stringFromObject:json[JSONDataKeyGmtCreateTime]];
+//        card.mTimeUTC = [NSString stringFromObject:json[JSONDataKeyGmtModTime]];
         
         // 工作相关
         card.title = [NSString stringFromObject:json[JSONDataKeyJobTitle]];

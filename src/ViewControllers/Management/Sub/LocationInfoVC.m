@@ -86,6 +86,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     _isGetLocationInfo = YES;
+    self.view.backgroundColor = [UIColor colorWithRed:241 green:238 blue:232 alpha:1.0 ];
     UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 150)];
     footView.backgroundColor = [UIColor clearColor];
     UIButton *takePhotoBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -102,6 +103,12 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    _theTable = nil;
+    _imgArray = nil;
+    _currentLocation = nil;
+    _localM = nil;
+    _imgview = nil;
+    
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -220,6 +227,7 @@
     [actView showInView:self.view];
 
 }
+//上传地理位置
 - (void)uploadBtnClick:(id)sender
 {
 
@@ -266,7 +274,7 @@
     if (self.index == 2){
         if (buttonIndex == 1) {
             // 设为头像;
-        }else if (buttonIndex == 2){
+        }else if (buttonIndex == 2){ 
             //删除
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:4 inSection:0];
             [_imgArray removeObjectAtIndex:_currentTag - 100];

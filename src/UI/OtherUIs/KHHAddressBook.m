@@ -7,10 +7,12 @@
 //
 
 #import "KHHAddressBook.h"
+#import "Company.h"
+#import "Address.h"
 #import <AddressBook/AddressBook.h>
 @implementation KHHAddressBook
 //保存到通讯录
-+ (BOOL)saveToCantactWithCard:(_Card *)card
++ (BOOL)saveToCantactWithCard:(MyCard *)card
 {
     BOOL result = YES;
     ABMutableMultiValueRef phoneNumbers = ABMultiValueCreateMutable(kABMultiStringPropertyType);
@@ -40,7 +42,7 @@
     }
     
     //address
-    ABMutableMultiValueRef address = ABMultiValueCreateMutable(kABDictionaryPropertyType);
+     ABMutableMultiValueRef address = ABMultiValueCreateMutable(kABDictionaryPropertyType);
 //    CFStringRef keys[5] = {kABPersonAddressZIPKey,kABPersonAddressStreetKey,kABPersonAddressCityKey,kABPersonAddressStateKey,kABPersonAddressCountryKey};
 //    CFStringRef values[5];
     
@@ -67,15 +69,18 @@
     }
     ABRecordRef newPerson = ABPersonCreate();
     if (card.department && card.department.length > 0) {
-        ABRecordSetValue(newPerson, kABPersonJobTitleProperty, (__bridge CFTypeRef)card.department, NULL);
+        ABRecordSetValue(newPerson, kABPersonDepartmentProperty, (__bridge CFTypeRef)card.department, NULL);
     }
     ABRecordSetValue(newPerson, kABPersonFirstNameProperty, (__bridge CFTypeRef)card.name, NULL);
-   //判断公司名字,公司名字暂时引用不了
-//    if (card.company && card.company.length > 0) {
-//		ABRecordSetValue(newPerson, kABPersonOrganizationProperty, card.company, NULL);
-//	}else{
-//		ABRecordSetValue(newPerson, kABPersonOrganizationProperty, @"", NULL);
-//	}
+   //判断公司名字,
+    if (card.company && card.company.name.length > 0) {
+		ABRecordSetValue(newPerson, kABPersonNoteProperty, (__bridge CFTypeRef)card.company.name, NULL);
+	}else{
+		ABRecordSetValue(newPerson, kABPersonNoteProperty, @"", NULL);
+	}
+    if (card.title && card.title.length > 0) {
+        ABRecordSetValue(newPerson, kABPersonJobTitleProperty, (__bridge CFTypeRef)card.title, NULL);
+    }
     
     ABRecordSetValue(newPerson, kABPersonEmailProperty, emails, NULL);
 	ABRecordSetValue(newPerson, kABPersonPhoneProperty, phoneNumbers, NULL);

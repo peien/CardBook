@@ -65,10 +65,10 @@
     [self.navigationController popViewControllerAnimated:YES];
 
 }
-
+//ios 6 不能横屏了
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft);
+     return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft);
 }
 
 @end

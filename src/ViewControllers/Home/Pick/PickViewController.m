@@ -18,6 +18,7 @@
 @synthesize dataName = _dataName;
 @synthesize delegate = _delegate;
 @synthesize groupArr = _groupArr;
+@synthesize tempArray;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -49,6 +50,7 @@
     _pickView = nil;
     _dataName = nil;
     _groupArr = nil;
+    self.tempArray = nil;
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -61,9 +63,11 @@
     if (_PickFlag == 0 ) {
         return 4;
     }else if (_PickFlag == 2){
-        return 7;
-    }else if (_PickFlag == 3 || _PickFlag == 1){
+        return tempArray.count;
+    }else if (_PickFlag == 3){
         return 2;
+    }else if (_PickFlag == 1){
+        return tempArray.count;
     }else
         return 0;
 
@@ -74,11 +78,11 @@
     if (_PickFlag == 0) {
         return [[_dataName objectAtIndex:0] objectAtIndex:row];
     }else if (_PickFlag == 2){
-        return [[_dataName objectAtIndex:2] objectAtIndex:row];
+        return [tempArray objectAtIndex:row];
     }else if(_PickFlag == 3){
         return [_groupArr objectAtIndex:row];
     }else if (_PickFlag == 1){
-        return [[_dataName objectAtIndex:3] objectAtIndex:row];
+        return [tempArray objectAtIndex:row];
     }
      else
         return nil;
@@ -90,11 +94,12 @@
     if (_PickFlag == 0) {
         str = [[_dataName objectAtIndex:0] objectAtIndex:row];
     }else if (_PickFlag == 2){
-        str = [[_dataName objectAtIndex:2] objectAtIndex:row];
+        str = [tempArray objectAtIndex:row];
     }else if (_PickFlag == 3){
         str = [_groupArr objectAtIndex:row];
     }else if (_PickFlag == 1){
-        str = [[_dataName objectAtIndex:3] objectAtIndex:row];
+        str = [tempArray objectAtIndex:row];
+        
     }
     //NSLog(@">>>>>>>>>>%@",str);
     [_delegate addToExternArrayFromPick:str];

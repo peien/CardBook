@@ -24,6 +24,7 @@
 @synthesize viewController = _viewController;
 @synthesize popover = _popover;
 @synthesize type = _type;
+@synthesize card;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -50,6 +51,7 @@
     _viewF = nil;
     self.actSheet = nil;
     _popover = nil;
+    self.card = nil;
     
 }
 
@@ -84,7 +86,7 @@
 {
     _type = 1;
     self.actSheet = [[UIActionSheet alloc] initWithTitle:@"选择号码" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
-    [self.actSheet addButtonWithTitle:@"15123568754"];
+    [self.actSheet addButtonWithTitle:self.card.mobilePhone];
     [self.actSheet showInView:_viewController.view];
     [self.popover dismissPopoverAnimated:YES];
 
@@ -94,7 +96,7 @@
 {
     _type = 2;
     self.actSheet = [[UIActionSheet alloc] initWithTitle:@"选择号码" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
-    [self.actSheet addButtonWithTitle:@"15123568754"];
+    [self.actSheet addButtonWithTitle:self.card.mobilePhone];
     [self.actSheet showInView:_viewController.view];
     [self.popover dismissPopoverAnimated:YES];
     

@@ -46,6 +46,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    _theTable.backgroundColor = [UIColor clearColor];
+    [self.view setBackgroundColor:[UIColor colorWithRed:241 green:238 blue:232 alpha:1.0]];
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];

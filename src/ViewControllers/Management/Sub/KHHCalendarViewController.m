@@ -34,8 +34,8 @@
     // Do any additional setup after loading the view from its nib.
     CKCalendarView *calendar = [[CKCalendarView alloc] initWithStartDay:startSunday];
     calendar.delegate = self;
-    //calendar.frame = CGRectMake(35, 28, 245, 160);
-    calendar.frame = CGRectMake(60, 28, 200, 208);
+    calendar.frame = CGRectMake(35, 28, 245, 160);
+    //calendar.frame = CGRectMake(60, 28, 200, 208);
     [self.view addSubview:calendar];
     
 }
@@ -53,6 +53,24 @@
     visitRVC.style = KVisitRecoardVCStyleNewBuild;
     visitRVC.isNeedWarn = YES;
     [self.navigationController pushViewController:visitRVC animated:YES];
+}
+- (void)calendarChangeFrame:(CKCalendarView *)calendar
+{
+//    int height = (int)calendar.frame.size.height;
+//    if (height == 272) {
+//        CGRect rect = _theTable.frame;
+//        rect.size.height = 120;
+//        rect.origin.y = 302;
+//        _theTable.frame = rect;
+//        
+//    }else if (height == 238){
+//        CGRect rect = _theTable.frame;
+//        rect.size.height = 150;
+//        rect.origin.y = 270;
+//        _theTable.frame = rect;
+//      
+//    }
+
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -96,7 +114,6 @@
 }
 - (void)KHHVisitCalendarCellBtnClick:(NSInteger)tag
 {
-
     if (tag == 222) {
         //铃铛；
         

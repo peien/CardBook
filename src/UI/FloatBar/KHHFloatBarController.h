@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "WEPopoverController.h"
+#import "KHHCardMode.h"
 
 
 @interface KHHFloatBarController : UIViewController
@@ -16,5 +17,7 @@
 @property (strong, nonatomic) UIViewController *viewController;
 @property (strong, nonatomic) WEPopoverController *popover;
 @property (assign, nonatomic) int                 type;
+@property (strong, nonatomic) KHHCardMode         *card;
+
 - (IBAction)BtnClick:(id)sender;
 @end
