@@ -25,10 +25,7 @@
 @property (assign, nonatomic)int             currentTag;
 @property (assign, nonatomic)double          timeInterval;
 @property (strong, nonatomic)NSTimer         *timer;
-
-
 @end
-
 
 @implementation KHHVisitRecoardVC
 @synthesize noteArray = _noteArray;
@@ -131,7 +128,6 @@
 //从网络或数据库获得数据
 - (void)initViewData
 {
- 
     //获取对象模型，填充fieldvalue
     if (YES) {
         [_fieldValue replaceObjectAtIndex:0 withObject:@"王文"];

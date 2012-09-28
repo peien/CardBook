@@ -22,8 +22,10 @@
 
 /* Begin PBXBuildFile section */
 		0C23C26C1610BE42006FCD8A /* UIColor+HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C23C26B1610BE42006FCD8A /* UIColor+HexColor.m */; };
+		62134B45160D7BDE00A8EC9F /* KHHAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 62134B44160D7BDE00A8EC9F /* KHHAddressCell.m */; };
 		625BD93C16086FEF00F565AD /* KHHAddImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 625BD93B16086FEF00F565AD /* KHHAddImageCell.m */; };
 		625BD93F1608701E00F565AD /* KHHAddImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 625BD93E1608701E00F565AD /* KHHAddImageCell.xib */; };
+		62812688161299BF0054B753 /* KHHCardMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 62812687161299BF0054B753 /* KHHCardMode.m */; };
 		62A6C4DE160AAECE00ADA43E /* KHHFullFrameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A6C4DC160AAECE00ADA43E /* KHHFullFrameController.m */; };
 		62A6C4DF160AAECE00ADA43E /* KHHFullFrameController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62A6C4DD160AAECE00ADA43E /* KHHFullFrameController.xib */; };
 		62A9C99B16099AC100BF7D41 /* KHHAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A9C99A16099AC100BF7D41 /* KHHAddressBook.m */; };
@@ -494,12 +496,16 @@
 /* Begin PBXFileReference section */
 		0C23C26A1610BE42006FCD8A /* UIColor+HexColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HexColor.h"; sourceTree = "<group>"; };
 		0C23C26B1610BE42006FCD8A /* UIColor+HexColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HexColor.m"; sourceTree = "<group>"; };
+		62134B43160D7BDE00A8EC9F /* KHHAddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHAddressCell.h; sourceTree = "<group>"; };
+		62134B44160D7BDE00A8EC9F /* KHHAddressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHAddressCell.m; sourceTree = "<group>"; };
 		625BD93A16086FEF00F565AD /* KHHAddImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHAddImageCell.h; sourceTree = "<group>"; };
 		625BD93B16086FEF00F565AD /* KHHAddImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHAddImageCell.m; sourceTree = "<group>"; };
 		625BD93E1608701E00F565AD /* KHHAddImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHAddImageCell.xib; sourceTree = "<group>"; };
-		62A6C4DB160AAECE00ADA43E /* KHHFullFrameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHFullFrameController.h; sourceTree = "<group>"; };
-		62A6C4DC160AAECE00ADA43E /* KHHFullFrameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHFullFrameController.m; sourceTree = "<group>"; };
-		62A6C4DD160AAECE00ADA43E /* KHHFullFrameController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHFullFrameController.xib; sourceTree = "<group>"; };
+		62812686161299BF0054B753 /* KHHCardMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHCardMode.h; sourceTree = "<group>"; };
+		62812687161299BF0054B753 /* KHHCardMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHCardMode.m; sourceTree = "<group>"; };
+		62A6C4DB160AAECE00ADA43E /* KHHFullFrameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KHHFullFrameController.h; path = ../../ViewControllers/KHHFullFrameController.h; sourceTree = "<group>"; };
+		62A6C4DC160AAECE00ADA43E /* KHHFullFrameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KHHFullFrameController.m; path = ../../ViewControllers/KHHFullFrameController.m; sourceTree = "<group>"; };
+		62A6C4DD160AAECE00ADA43E /* KHHFullFrameController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = KHHFullFrameController.xib; path = ../../ViewControllers/KHHFullFrameController.xib; sourceTree = "<group>"; };
 		62A9C99916099AC100BF7D41 /* KHHAddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHAddressBook.h; sourceTree = "<group>"; };
 		62A9C99A16099AC100BF7D41 /* KHHAddressBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHAddressBook.m; sourceTree = "<group>"; };
 		62AB2981160C07270004A3E3 /* KHHBMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHBMapViewController.h; sourceTree = "<group>"; };
@@ -1526,9 +1532,6 @@
 			children = (
 				98A8510F1602F69200A4A673 /* KHHMainUIController.h */,
 				98A851101602F69200A4A673 /* KHHMainUIController.m */,
-				62A6C4DB160AAECE00ADA43E /* KHHFullFrameController.h */,
-				62A6C4DC160AAECE00ADA43E /* KHHFullFrameController.m */,
-				62A6C4DD160AAECE00ADA43E /* KHHFullFrameController.xib */,
 				98A84EF41602D67E00A4A673 /* Startup */,
 				98A84E231602D66200A4A673 /* Exchange */,
 				98A84E2A1602D66200A4A673 /* Home */,
@@ -1671,6 +1674,8 @@
 				98A84E391602D66200A4A673 /* Edit_eCardViewController.xib */,
 				98A84E3A1602D66200A4A673 /* EditCardPersonCell.h */,
 				98A84E3B1602D66200A4A673 /* EditCardPersonCell.m */,
+				62134B43160D7BDE00A8EC9F /* KHHAddressCell.h */,
+				62134B44160D7BDE00A8EC9F /* KHHAddressCell.m */,
 			);
 			path = Edit;
 			sourceTree = "<group>";
@@ -1922,6 +1927,8 @@
 				98A84F271602D6C500A4A673 /* KHHCard.xib */,
 				98A84F281602D6C500A4A673 /* KHHFrameCardView.h */,
 				98A84F291602D6C500A4A673 /* KHHFrameCardView.m */,
+				62812686161299BF0054B753 /* KHHCardMode.h */,
+				62812687161299BF0054B753 /* KHHCardMode.m */,
 			);
 			path = Card;
 			sourceTree = "<group>";
@@ -1991,6 +1998,9 @@
 				98A84F5F1602D6C500A4A673 /* MyTabBarController.m */,
 				62A9C99916099AC100BF7D41 /* KHHAddressBook.h */,
 				62A9C99A16099AC100BF7D41 /* KHHAddressBook.m */,
+				62A6C4DB160AAECE00ADA43E /* KHHFullFrameController.h */,
+				62A6C4DC160AAECE00ADA43E /* KHHFullFrameController.m */,
+				62A6C4DD160AAECE00ADA43E /* KHHFullFrameController.xib */,
 			);
 			path = OtherUIs;
 			sourceTree = "<group>";
@@ -2918,6 +2928,8 @@
 				98F6491D16118012008DE515 /* SyncMark.m in Sources */,
 				98F6492116118035008DE515 /* _SyncMark.m in Sources */,
 				98DF0AC01612945E004826D5 /* InterCard.m in Sources */,
+				62134B45160D7BDE00A8EC9F /* KHHAddressCell.m in Sources */,
+				62812688161299BF0054B753 /* KHHCardMode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

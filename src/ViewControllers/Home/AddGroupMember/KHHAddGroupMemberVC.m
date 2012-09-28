@@ -12,6 +12,8 @@
 #import "KHHShowHideTabBar.h"
 #import "KHHMySearchBar.h"
 #import "UIImageView+WebCache.h"
+
+#import "KHHCardMode.h"
 @interface KHHAddGroupMemberVC ()<UISearchBarDelegate,UISearchDisplayDelegate,
                                  UITableViewDataSource,UITableViewDelegate,SMCheckboxDelegate>
 
@@ -29,9 +31,11 @@
 @synthesize isAdd = _isAdd;
 @synthesize box = _box;
 @synthesize selectedItemArray = _selectedItemArray;
-@synthesize addGroupArray = _addGroupArray;
+@synthesize addOrDelGroupArray = _addOrDelGroupArray;
 @synthesize resultArray = _resultArray;
 @synthesize searchArray = _searchArray;
+@synthesize handleArray;
+@synthesize homeVC;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -68,10 +72,10 @@
         self.title = NSLocalizedString(@"移出组员", nil);
     }
     _selectedItemArray = [[NSMutableArray alloc] initWithCapacity:0];
-    for (int i = 0; i<12; i++) {
+    for (int i = 0; i<handleArray.count; i++) {
         [_selectedItemArray addObject:[NSNumber numberWithBool:NO]];
     }
-    _addGroupArray = [[NSMutableArray alloc] initWithCapacity:0];
+    _addOrDelGroupArray = [[NSMutableArray alloc] initWithCapacity:0];
     
     //构建搜索表
     _searchArray = [[NSArray alloc] initWithObjects:@"孙悟空",@"孙三",@"孙四", nil];
@@ -81,6 +85,7 @@
 {
     [super viewWillAppear:animated];
     [KHHShowHideTabBar hideTabbar];
+   
 }
 
 - (void)viewDidUnload
@@ -95,8 +100,10 @@
     _cancelBtn = nil;
     _numLab = nil;
     _box = nil;
-    _addGroupArray = nil;
+    _addOrDelGroupArray = nil;
     _selectedItemArray = nil;
+    self.handleArray = nil;
+    self.homeVC = nil;
 }
 // 初始化界面数据
 #pragma mark -
@@ -117,7 +124,7 @@
     if (tableView == self.searbarCtrl.searchResultsTableView ) {
         return [_resultArray count];
     }else
-    return 12;
+    return [handleArray count];
 
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -146,23 +153,22 @@
         if (cell == nil) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"KHHClientCellLNPC" owner:self options:nil] objectAtIndex:0];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            //        _box = [[[NSBundle mainBundle] loadNibNamed:@"SMCheckbox" owner:self options:nil] objectAtIndex:0];
-            //        _box.frame = CGRectMake(280, 10, 35, 35);
-            
             
         }
         if ([[_selectedItemArray objectAtIndex:indexPath.row] isEqualToNumber:[NSNumber numberWithBool:YES]]) {
-            //cell.accessoryType = UITableViewCellAccessoryCheckmark;
             UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checked.png"]];
             imgView.frame = CGRectMake(280, 10, 30, 30);
             [cell addSubview:imgView];
         }else{
-            //cell.accessoryType = UITableViewCellAccessoryNone;
             UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"unchecked.png"]];
             imgView.frame = CGRectMake(280, 10, 30, 30);
             [cell addSubview:imgView];
-            
         }
+        KHHCardMode *card = [self.handleArray objectAtIndex:indexPath.row];
+        cell.nameLabel.text = card.name;
+        cell.positionLabel.text = card.title;
+        cell.companyLabel.text = @"浙江金汉弘软件技术有限公司";
+        [cell.logoView setImageWithURL:[NSURL URLWithString:card.logUrl] placeholderImage:[UIImage imageNamed:@"logopic.png"]];
         return cell;
     }
 }
@@ -193,27 +199,28 @@ int num = 0;
 #pragma mark ButtonClick
 - (IBAction)sureBtnClick:(id)sender
 {
-    for (int i = 0; i<12; i++) {
+    for (int i = 0; i<self.handleArray.count; i++) {
         if ([[_selectedItemArray objectAtIndex:i] isEqualToNumber:[NSNumber numberWithBool:YES]]) {
-            [_addGroupArray addObject:[_selectedItemArray objectAtIndex:i]];
-        }else{
-            //[_addGroupArray removeObjectAtIndex:i];
+            [_addOrDelGroupArray addObject:[self.handleArray objectAtIndex:i]];
         }
     }
     
     //调用接口
     if (_isAdd) {
-       //调用添加组员接口
+       //调用添加组员接口,暂时测试显示数据
+        self.homeVC.generalArray = _addOrDelGroupArray;
+        self.homeVC.oWnGroupArray = _addOrDelGroupArray;
     }else{
        //调用移出组员接口
     }
+     num = 0;
     [self.navigationController popViewControllerAnimated:YES];
-    num = 0;
-    
+   
 }
 - (IBAction)cancelBtn:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
+    num = 0;
 
 }
 - (void)checkbox:(SMCheckbox *)checkbox valueChanged:(BOOL)newValue

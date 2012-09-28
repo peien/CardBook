@@ -40,6 +40,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     KHHVisitCalendarView *visitCalendar = [[[NSBundle mainBundle] loadNibNamed:@"KHHVisitCalendarView" owner:self options:nil] objectAtIndex:0];
+    CGRect rect = visitCalendar.theTable.frame;
+    rect.origin.y = 0;
+    rect.size.height = 370;
+    visitCalendar.theTable.frame = rect;
     visitCalendar.viewCtrl = self;
     [self.view addSubview:visitCalendar];
 }

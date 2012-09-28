@@ -378,4 +378,13 @@ static NSString * const KHHDefaultsKeyMainUISelectedTabIndex = @"khh_MainUI_sele
     }
     return result;
 }
+#pragma mark - setDefaultMainUI
+- (void)setDefaultMainUI:(NSNumber *)index{
+    [self setNumber:index forKey:@"defaultMainUI"];
+}
+- (NSNumber *)defaultMainUI
+{
+    return [self numberForKey:@"defaultMainUI"];
+}
+
 @end

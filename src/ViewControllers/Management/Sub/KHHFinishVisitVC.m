@@ -85,7 +85,6 @@
     }else if (indexPath.section == 1 && indexPath.row == 2){
         return 75;
     }
-    
     return 44;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath

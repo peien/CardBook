@@ -355,15 +355,24 @@
 }
 
 - (void)moveCalendarToNextMonth {
+    
+    
     NSDateComponents* comps = [[NSDateComponents alloc]init];
     [comps setMonth:1];
+    [_delegate calendarChangeFrame:self];
     self.monthShowing = [self.calendar dateByAddingComponents:comps toDate:self.monthShowing options:0];
+    DLog(@"self.frame=========%d",(int)self.frame.size.height);
+   
 }
 
 - (void)moveCalendarToPreviousMonth {
+    
     NSDateComponents* comps = [[NSDateComponents alloc] init];
     [comps setMonth:-1];
+    [_delegate calendarChangeFrame:self];
     self.monthShowing = [self.calendar dateByAddingComponents:comps toDate:self.monthShowing options:0];
+    DLog(@"self.frame=========%d",(int)self.frame.size.height);
+   
 }
 
 - (void)dateButtonPressed:(id)sender {

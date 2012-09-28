@@ -74,4 +74,7 @@
 #pragma mark - App - MainUI
 - (NSInteger)selectedTab;
 - (void)setSelectedTab:(NSInteger)index;
+#pragma mark - set defaultMainUI
+- (void)setDefaultMainUI:(NSNumber *)index;
+- (NSNumber *)defaultMainUI;
 @end

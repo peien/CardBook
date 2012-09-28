@@ -37,7 +37,6 @@
             _takePhoto = OneBtn;
         
         }
-        
     }
     return self;
 }

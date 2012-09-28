@@ -25,69 +25,53 @@
 }
 - (void)showView
 {
-    if (_isVer) {
-        UIScrollView *scroll = [[UIScrollView alloc] initWithFrame:CGRectMake(65, 20, 180, 220)];
-        scroll.showsHorizontalScrollIndicator = NO;
-        scroll.delegate = self;
-        for (int i = 0; i<2; i++) {
-            UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(i*180, 0, 180, 220)];
-            if (i == 0) {
-                imgView.backgroundColor = [UIColor clearColor];
-                imgView.image = [UIImage imageNamed:@"card_tesco.png"];
-            }else{
-                //第二张从网络获取
-                imgView.backgroundColor = [UIColor clearColor];
-                imgView.image = [UIImage imageNamed:@"card_watsons.png"];
-                //[imgView setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@""]];
-            }
-            
-            [scroll addSubview:imgView];
-        }
-        scroll.pagingEnabled = YES;
-        scroll.contentSize = CGSizeMake(2*180, 220);
-        scroll.backgroundColor = [UIColor clearColor];
-        _scrView = scroll;
-    }else{
-        UIScrollView *scroll = [[UIScrollView alloc] initWithFrame:CGRectMake(30, 35, 260, 180)];
-        scroll.showsHorizontalScrollIndicator = NO;
-        scroll.delegate = self;
-        for (int i = 0; i<2; i++) {
-            UIImageView *imgView = [[UIImageView alloc] initWithFrame:CGRectMake(i*260, 0, 260, 180)];
-            if (i == 0) {
-                imgView.backgroundColor = [UIColor clearColor];
-                imgView.image = [UIImage imageNamed:@"card_tesco.png"];
-            }else{
-                imgView.backgroundColor = [UIColor clearColor];
-                imgView.image = [UIImage imageNamed:@"card_watsons.png"];
-            }
-            [scroll addSubview:imgView];
-        }
-        scroll.pagingEnabled = YES;
-        scroll.contentSize = CGSizeMake(2*260, 180);
-        scroll.backgroundColor = [UIColor clearColor];
-        _scrView = scroll;
-        
-    }
-    [self addSubview:_scrView];
     xlPage = [[XLPageControl alloc] initWithFrame:CGRectMake(130, 190, 60, 15)];
     [xlPage setBackgroundColor:[UIColor clearColor]];
     xlPage.activeImg = [UIImage imageNamed:@"p1.png"];
     xlPage.unActiveImg = [UIImage imageNamed:@"p2.png"];
     xlPage.tag = 118;
     [xlPage addTarget:self action:@selector(pageCtrlClick:) forControlEvents:UIControlEventValueChanged];
-    xlPage.currentPage = 0;
+    [xlPage setCurrentPage:0];
     xlPage.hidesForSinglePage = YES;
     xlPage.numberOfPages = 2;
-    
+    [self addSubview:xlPage];
     if (_isVer) {
-        xlPage.frame = CGRectMake(100, 260, 100, 15);
+        CGRect rect = CGRectMake(75, 10, 180, 245);
+        [self creatCardTemplate:rect];
+        xlPage.frame = CGRectMake(110, 260, 100, 15);
     }else{
-        xlPage.frame = CGRectMake(100, 215, 100, 15);
+        CGRect rect = CGRectMake(30, 15, 260, 190);
+        [self creatCardTemplate:rect];
+        xlPage.frame = CGRectMake(100, 205, 100, 15);
+    }
+    [self addSubview:_scrView];
+}
+- (void)creatCardTemplate:(CGRect)frame
+{
+    UIScrollView *scroll = [[UIScrollView alloc] initWithFrame:frame];
+    scroll.showsHorizontalScrollIndicator = NO;
+    scroll.delegate = self;
+    for (int i = 0; i<2; i++) {
+        CGRect rect = frame;
+        rect.origin.x = i*frame.size.width;
+        frame = rect;
+        UIImageView *imgView = [[UIImageView alloc] initWithFrame:frame];
+        if (i == 0) {
+            imgView.backgroundColor = [UIColor clearColor];
+            imgView.image = [UIImage imageNamed:@"card_tesco.png"];
+        }else{
+            //第二张从网络获取
+            imgView.backgroundColor = [UIColor clearColor];
+            imgView.image = [UIImage imageNamed:@"card_watsons.png"];
+            //[imgView setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@""]];
+        }
+        [scroll addSubview:imgView];
     }
     
-    [xlPage addTarget:self action:@selector(pageCtrlClick:) forControlEvents:UIControlEventValueChanged];
-    [self addSubview:xlPage];
-
+    scroll.pagingEnabled = YES;
+    scroll.contentSize = CGSizeMake(2*frame.size.width, frame.size.height);
+    scroll.backgroundColor = [UIColor clearColor];
+    _scrView = scroll;
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -96,7 +80,6 @@
         int page = ((scrollView.contentOffset.x-scrollWidth/2)/scrollWidth)+1;
         XLPageControl *pageCtrl = (XLPageControl *)[self viewWithTag:118];
         pageCtrl.currentPage = page;
-        
     }
 }
 - (void)pageCtrlClick:(id)sender
@@ -111,8 +94,6 @@
     
 }
 //异步获取图片
-
-
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

@@ -11,10 +11,10 @@
 #import "KHHCardView.h"
 #import "KHHShowHideTabBar.h"
 #import "Edit_eCardViewController.h"
-#import "KHHAddressBook.h"
-#import "_Card.h"
+
 
 @interface KHHMyDetailController ()
+
 @end
 
 @implementation KHHMyDetailController
@@ -23,6 +23,7 @@
 @synthesize cardView = _cardView;
 @synthesize containView = _containView;
 @synthesize lastBtn = _lastBtn;
+@synthesize card;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -59,15 +60,21 @@
         [headerView addSubview:headBtn];
     }
     
+    //拜访日历界面
     _visitView = [[[NSBundle mainBundle] loadNibNamed:@"KHHVisitCalendarView" owner:self options:nil] objectAtIndex:0];
     CGRect rect = _visitView.footView.frame;
+    CGRect rectTable = _visitView.theTable.frame;
     rect.origin.y = 360;
+    rectTable.size.height = 350;
     _visitView.footView.frame = rect;
+    _visitView.theTable.frame = rectTable;
     _visitView.viewCtrl = self;
+    
+    //名片界面
     _cardView = [[[NSBundle mainBundle] loadNibNamed:@"KHHCardView" owner:self options:nil] objectAtIndex:0];
+    _cardView.myDetailVC = self;
     [_cardView initView];
-    [_cardView.saveToContactBtn addTarget:self action:@selector(saveToContactBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [_cardView.delContactBtn addTarget:self action:@selector(delCardBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [_cardView initViewData];
     [self.containView addSubview:_visitView];
     [self.containView addSubview:_cardView];
     
@@ -85,17 +92,6 @@
     }
     //addressbook
 }
-//添加card到通讯录
-- (void)saveToContactBtnClick:(id)sender
-{
-
-    
-}
-- (void)delCardBtnClick:(id)sender
-{
-    
-    
-}
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -111,6 +107,7 @@
     _visitView = nil;
     _cardView = nil;
     _containView = nil;
+    self.card = nil;
 }
 - (void)headBtnClick:(id)sender
 {
@@ -135,6 +132,8 @@
 - (void)bottomBtnClick:(id)sender
 {
     Edit_eCardViewController *editeCardVC = [[Edit_eCardViewController alloc] initWithNibName:@"Edit_eCardViewController" bundle:nil];
+    editeCardVC.type = KCardViewControllerTypeShowInfo;
+    editeCardVC.glCard = self.card;
     [self.navigationController pushViewController:editeCardVC animated:YES];
 }
 
