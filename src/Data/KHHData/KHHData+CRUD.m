@@ -185,12 +185,12 @@
 
 // 创建
 - (void)createCardOfType:(KHHCardModelType)cardType
-          withDictionary:(NSDictionary *)dict {
+          withInterCard:(InterCard *)iCard {
 #warning TODO
 }
 // 修改
 - (void)modifyCardOfType:(KHHCardModelType)cardType
-          withDictionary:(NSDictionary *)dict {
+          withInterCard:(InterCard *)iCard {
 #warning TODO
 }
 // 删除

@@ -20,7 +20,6 @@
         
         if (result) {
             // 解析成功直接返回
-            DLog(@"[II] number from string(%@) is %@", string, result);
             return result;
         }
         
@@ -31,14 +30,12 @@
         if ([scanner scanInteger:&intValue]) {
             // 成功直接返回
             result = [NSNumber numberWithInteger:intValue];
-            DLog(@"[II] number from string(%@) is %@", string, result);
             return result;
         };
         double doubleValue;
         if ([scanner scanDouble:&doubleValue]) {
             // 成功直接返回
             result = [NSNumber numberWithDouble:doubleValue];
-            DLog(@"[II] number from string(%@) is %@", string, result);
             return result;
         }
         // 不成功则把string转为全大写，然后查字典
@@ -49,7 +46,6 @@
             result = [NSNumber numberWithBool:NO];
         }
     }
-    DLog(@"[II] number from string(%@) is %@", string, result);
     return result;
 }
 + (NSNumber *)numberFromObject:(id)obj
@@ -63,7 +59,6 @@
          defaultIfUnresolvable:(BOOL)flag {
     // 设置默认值
     id result = flag? [NSNumber numberWithInteger:defaultValue]: nil;
-//    DLog(@"[II] obj class = %@", [obj class]);
     if ([obj isKindOfClass:[NSNumber class]]) { //
         result = obj;
     } else if ([obj isKindOfClass:[NSString class]]) { //

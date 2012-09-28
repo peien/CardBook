@@ -44,8 +44,8 @@
 // 如果多于一个返回最后一个。
 // createIfNone==NO：不存在或出错都是nil；createIfNone==YES：不存在会创建一个id==ID的新名片，出错为nil。
 - (Card *)cardOfType:(KHHCardModelType)cardType byID:(NSNumber *)cardID createIfNone:(BOOL)createIfNone;//本地
-- (void)createCardOfType:(KHHCardModelType)cardType withDictionary:(NSDictionary *)dict;//联网
-- (void)modifyCardOfType:(KHHCardModelType)cardType withDictionary:(NSDictionary *)dict;//联网
+- (void)createCardOfType:(KHHCardModelType)cardType withInterCard:(InterCard *)iCard;//联网
+- (void)modifyCardOfType:(KHHCardModelType)cardType withInterCard:(InterCard *)iCard;//联网
 - (void)deleteCardOfType:(KHHCardModelType)cardType byID:(NSNumber *)cardID;//联网
 @end
 

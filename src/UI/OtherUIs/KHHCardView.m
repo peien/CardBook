@@ -212,9 +212,11 @@
     [KHHAddressBook saveToCantactWithCard:_myCard];
     
 }
+
 - (void)delCardBtnClick:(id)sender
 {
-    [self.data deleteMyCardByID:_myCard.id];
+#warning 现在不允许删除我自己的名片
+//    [self.data deleteMyCardByID:_myCard.id];
 }
 #pragma mark - ScrollerDelegateMothed
 //- (void)scrollViewDidScroll:(UIScrollView *)scrollView
