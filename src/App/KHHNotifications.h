@@ -7,7 +7,9 @@
 #ifndef KHHNotifications_h
 #define KHHNotifications_h
 
-//static NSString * const <#Name#> = @"<#String#>";
+/*!
+ Notifications for UI
+ */
 // Startup
 static NSString * const KHHUIShowStartup = @"showStartup";
 // MainUI
@@ -29,23 +31,54 @@ static NSString * const KHHUIStartSignUp = @"StartSignUp";
 static NSString * const KHHUIStartResetPassword = @"StartResetPassword";
 static NSString * const KHHUIResetPasswordAction = @"ResetPasswordAction";
 // Sync
-static NSString * const KHHNotificationStartSyncAfterLogin = @"startSyncAfterLogin";
-static NSString * const KHHNotificationSyncAfterLoginSucceeded = @"SyncAfterLoginSucceeded";
-static NSString * const KHHNotificationSyncAfterLoginFailed = @"SyncAfterLoginFailed";
+static NSString * const KHHUIStartSyncAfterLogin = @"startSyncAfterLogin";
+static NSString * const KHHUISyncAfterLoginSucceeded = @"SyncAfterLoginSucceeded";
+static NSString * const KHHUISyncAfterLoginFailed = @"SyncAfterLoginFailed";
 
+/*!
+ Notifications for Network
+ */
 //登录
 static NSString * const KHHNetworkLoginSucceeded = @"loginSucceeded";
 static NSString * const KHHNetworkLoginFailed = @"loginFailed";
 //注册
 static NSString * const KHHNetworkCreateAccountSucceeded = @"createAccountSucceeded";
-static NSString * const KHHNotificationCreateAccountFailed = @"createAccountFailed";
+static NSString * const KHHNetworkCreateAccountFailed = @"createAccountFailed";
 //改密码
-static NSString * const KHHNotificationChangePasswordSucceeded = @"changePasswordSucceeded";
-static NSString * const KHHNotificationChangePasswordFailed = @"changePasswordFailed";
+static NSString * const KHHNetworkChangePasswordSucceeded = @"changePasswordSucceeded";
+static NSString * const KHHNetworkChangePasswordFailed = @"changePasswordFailed";
 //重置密码
-static NSString * const KHHNotificationResetPasswordSucceeded = @"resetPasswordSucceeded";
-static NSString * const KHHNotificationResetPasswordFailed = @"resetPasswordFailed";
+static NSString * const KHHNetworkResetPasswordSucceeded = @"resetPasswordSucceeded";
+static NSString * const KHHNetworkResetPasswordFailed = @"resetPasswordFailed";
 //markAutoReceive
-static NSString * const KHHNotificationMarkAutoReceiveSucceeded = @"markAutoReceiveSucceeded";
-static NSString * const KHHNotificationMarkAutoReceiveFailed = @"markAutoReceiveFailed";
+static NSString * const KHHNetworkMarkAutoReceiveSucceeded = @"markAutoReceiveSucceeded";
+static NSString * const KHHNetworkMarkAutoReceiveFailed = @"markAutoReceiveFailed";
+// createCard
+static NSString * const KHHNetworkCreateCardSucceeded = @"createCardSucceeded";
+static NSString * const KHHNetworkCreateCardFailed    = @"createCardFailed";
+// updateCard
+static NSString * const KHHNetworkUpdateCardSucceeded = @"updateCardSucceeded";
+static NSString * const KHHNetworkUpdateCardFailed    = @"updateCardFailed";
+// deleteCard
+static NSString * const KHHNetworkDeleteCardSucceeded = @"deleteCardSucceeded";
+static NSString * const KHHNetworkDeleteCardFailed    = @"deleteCardFailed";
+// deleteReceivedCards
+static NSString * const KHHNetworkDeleteReceivedCardsSucceeded = @"deleteReceivedCardsSucceeded";
+static NSString * const KHHNetworkDeleteReceivedCardsFailed    = @"deleteReceivedCardsFailed";
+// latestReceivedCard
+static NSString * const KHHNetworkLatestReceivedCardSucceeded = @"latestReceivedCardSucceeded";
+static NSString * const KHHNetworkLatestReceivedCardFailed    = @"latestReceivedCardFailed";
+// receivedCardCountAfterDateLastCard
+static NSString * const KHHNetworkReceivedCardCountAfterDateLastCardSucceeded = @"receivedCardCountAfterDateLastCardSucceeded";
+static NSString * const KHHNetworkReceivedCardCountAfterDateLastCardFailed = @"receivedCardCountAfterDateLastCardFailed";
+// receivedCardsAfterDateLastCardExpectedCount
+static NSString * const KHHNetworkReceivedCardsAfterDateLastCardExpectedCountSucceeded = @"receivedCardsAfterDateLastCardExpectedCountSucceeded";
+static NSString * const KHHNetworkReceivedCardsAfterDateLastCardExpectedCountFailed = @"receivedCardsAfterDateLastCardExpectedCountFailed";
+// markReadReceivedCard
+static NSString * const KHHNetworkMarkReadReceivedCardSucceeded = @"markReadReceivedCardSucceeded";
+static NSString * const KHHNetworkMarkReadReceivedCardFailed    = @"markReadReceivedCardFailed";
+// privateCardsAfterDate
+static NSString * const KHHNetworkPrivateCardsAfterDateSucceeded = @"privateCardsAfterDateSucceeded";
+static NSString * const KHHNetworkPrivateCardsAfterDateFailed    = @"privateCardsAfterDateFailed";
+
 #endif

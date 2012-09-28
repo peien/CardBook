@@ -22,7 +22,7 @@
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *title;
 @property (nonatomic, strong) NSString *logoURL;
-@property (nonatomic, strong) NSString *department;
+@property (nonatomic, strong) NSString *department; // card col2
 @property (nonatomic, strong) NSString *mobilePhone;
 @property (nonatomic, strong) NSString *telephone;
 
@@ -46,7 +46,7 @@
 // 公司信息
 @property (nonatomic, strong) NSNumber *companyID;
 @property (nonatomic, strong) NSString *companyName;
-//@property (nonatomic, strong) NSString *companyEmail;
+@property (nonatomic, strong) NSString *companyEmail; // card col1
 //@property (nonatomic, strong) NSString *companyLogoURL;
 
 // 地址信息

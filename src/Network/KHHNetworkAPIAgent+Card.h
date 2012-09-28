@@ -7,77 +7,39 @@
 //
 
 #import "KHHNetworkAPIAgent.h"
+#import "InterCard.h"
 #import "MyCard.h"
 #import "PrivateCard.h"
 #import "ReceivedCard.h"
-/*!
- Notification names
- */
-// createCard
-static NSString * const KHHNotificationCreateCardSucceeded = @"createCardSucceeded";
-static NSString * const KHHNotificationCreateCardFailed    = @"createCardFailed";
-// updateCard
-static NSString * const KHHNotificationUpdateCardSucceeded = @"updateCardSucceeded";
-static NSString * const KHHNotificationUpdateCardFailed    = @"updateCardFailed";
-// deleteCard
-static NSString * const KHHNotificationDeleteCardSucceeded = @"deleteCardSucceeded";
-static NSString * const KHHNotificationDeleteCardFailed    = @"deleteCardFailed";
-// deleteReceivedCards
-static NSString * const KHHNotificationDeleteReceivedCardsSucceeded = @"deleteReceivedCardsSucceeded";
-static NSString * const KHHNotificationDeleteReceivedCardsFailed    = @"deleteReceivedCardsFailed";
-// latestReceivedCard
-static NSString * const KHHNotificationLatestReceivedCardSucceeded = @"latestReceivedCardSucceeded";
-static NSString * const KHHNotificationLatestReceivedCardFailed    = @"latestReceivedCardFailed";
-// receivedCardCountAfterDateLastCard
-static NSString * const KHHNetworkReceivedCardCountAfterDateLastCardSucceeded
-                    = @"receivedCardCountAfterDateLastCardSucceeded";
-static NSString * const KHHNetworkReceivedCardCountAfterDateLastCardFailed
-                    = @"receivedCardCountAfterDateLastCardFailed";
-// receivedCardsAfterDateLastCardExpectedCount
-static NSString * const KHHNetworkReceivedCardsAfterDateLastCardExpectedCountSucceeded
-                    = @"receivedCardsAfterDateLastCardExpectedCountSucceeded";
-static NSString * const KHHNetworkReceivedCardsAfterDateLastCardExpectedCountFailed
-                    = @"receivedCardsAfterDateLastCardExpectedCountFailed";
-// markReadReceivedCard
-static NSString * const KHHNotificationMarkReadReceivedCardSucceeded = @"markReadReceivedCardSucceeded";
-static NSString * const KHHNotificationMarkReadReceivedCardFailed    = @"markReadReceivedCardFailed";
-// privateCardsAfterDate
-static NSString * const KHHNotificationPrivateCardsAfterDateSucceeded = @"privateCardsAfterDateSucceeded";
-static NSString * const KHHNotificationPrivateCardsAfterDateFailed    = @"privateCardsAfterDateFailed";
-
-typedef enum {
-    KHHCardAttributeNone       = 0UL,
-    KHHCardAttributeID         = 1UL << 0,
-    KHHCardAttributeVersion    = 1UL << 1,
-    KHHCardAttributeName       = 1UL << 2,
-    KHHCardAttributeUserID     = 1UL << 3,
-    KHHCardAttributeTemplateID = 1UL << 4,
-//    KHHCardAttribute           = ,
-    KHHCardAttributeAll        = ~KHHCardAttributeNone,
-} KHHCardAttributes;
 
 /*!
  @fuctiongroup Card参数整理函数
  */
-BOOL CardHasRequiredAttributes(Card *card, KHHCardAttributes attributes);
-NSMutableDictionary * ParametersToCreateOrUpdateCard(Card *card);
+BOOL CardHasRequiredAttributes(InterCard *card, KHHCardAttributeType attributes);
+NSMutableDictionary * ParametersToCreateOrUpdateCard(InterCard *card);
 
-@interface KHHNetworkAPIAgent (MyCard)
+@interface KHHNetworkAPIAgent (Card)
 /**
- 新增名片 kinghhCardService.create
+ 新增我的名片 kinghhCardService.create
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=202
+ 新增私有名片 kinghhPrivateCardService.create
+ http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=179
  */
-- (BOOL)createCard:(MyCard *)card;
+- (BOOL)createCard:(InterCard *)iCard ofType:(KHHCardModelType)cardType;
 /**
- 修改名片 kinghhCardService.update
+ 修改我的名片 kinghhCardService.update
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=203
+ 修改私有名片 kinghhPrivateCardService.update
+ http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=180
  */
-- (BOOL)updateCard:(MyCard *)card;
+- (BOOL)updateCard:(InterCard *)iCard ofType:(KHHCardModelType)cardType;
 /**
- 删除名片 kinghhCardService.delete
+ 删除我的名片 kinghhCardService.delete
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=204
+ 删除私有名片 kinghhPrivateCardService.delete
+ http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=181
  */
-- (BOOL)deleteCard:(MyCard *)card;
+- (BOOL)deleteCardByID:(NSNumber *)cardID ofType:(KHHCardModelType)cardType;
 @end
 
 #pragma mark - ReceivedCard 联系人，即收到的他人名片
@@ -98,15 +60,15 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(Card *card);
  我的联系人增量总个数 exchangeCardService.getReceiverCardBookSynCount
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=195
  */
-- (BOOL)receivedCardCountAfterDate:(NSString *)lastDate
-                          lastCard:(ReceivedCard *)lastCard
+- (void)receivedCardCountAfterDate:(NSString *)lastDate
+                          lastCard:(NSString *)lastCard
                              extra:(NSDictionary *)extra;
 
 /**
  我的联系人增量 exchangeCardService.getReceiverCardBookSyn
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=182
  */
-- (BOOL)receivedCardsAfterDate:(NSString *)lastDate
+- (void)receivedCardsAfterDate:(NSString *)lastDate
                       lastCard:(NSString *)lastCardID
                  expectedCount:(NSString *)count
                          extra:(NSDictionary *)extra;
@@ -120,21 +82,6 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(Card *card);
 
 #pragma mark - PrivateCard 私有名片，即自建的他人名片
 @interface KHHNetworkAPIAgent (PrivateCard)
-/**
- 增 kinghhPrivateCardService.create
- http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=179
- */
-//- (BOOL)createPrivateCard:(PrivateCard *)card;
-/**
- 改 kinghhPrivateCardService.update
- http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=180
- */
-//- (BOOL)updatePrivateCard:(PrivateCard *)card;
-/**
- 删除 kinghhPrivateCardService.delete
- http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=181
- */
-//- (BOOL)deletePrivateCard:(PrivateCard *)card;
 /**
  增量查 kinghhPrivateCardService.synCard
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=178

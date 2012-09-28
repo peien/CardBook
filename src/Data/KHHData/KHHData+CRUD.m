@@ -186,17 +186,26 @@
 // 创建
 - (void)createCardOfType:(KHHCardModelType)cardType
           withInterCard:(InterCard *)iCard {
-#warning TODO
+    if (![self.agent createCard:iCard ofType:cardType]) {
+        // 参数有误，未发送请求。
+        DLog(@"[II] createCardOfType:withInterCard: 参数有误，未发送请求。");
+    }
 }
 // 修改
 - (void)modifyCardOfType:(KHHCardModelType)cardType
           withInterCard:(InterCard *)iCard {
-#warning TODO
+    if (![self.agent updateCard:iCard ofType:cardType]) {
+        // 参数有误，未发送请求。
+        DLog(@"[II] modifyCardOfType:withInterCard: 参数有误，未发送请求。");
+    }
 }
 // 删除
 - (void)deleteCardOfType:(KHHCardModelType)cardType
                     byID:(NSNumber *)cardID {
-#warning TODO
+    if (![self.agent deleteCardByID:cardID ofType:cardType]) {
+        // 参数有误，未发送请求。
+        DLog(@"[II] deleteCardByID:withInterCard: 参数有误，未发送请求。");
+    }
 }
 
 @end

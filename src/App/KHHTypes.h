@@ -23,6 +23,18 @@ typedef enum {
     KHHCardRoleTypeCompanyEmployee   = 4, // 公司的员工 <---- 这个是通常所说的 “公司名片”
 } KHHCardRoleType;
 
+// KHHCardAttributeType 
+typedef enum {
+    KHHCardAttributeNone       = 0UL,
+    KHHCardAttributeID         = 1UL << 0,
+    KHHCardAttributeVersion    = 1UL << 1,
+    KHHCardAttributeName       = 1UL << 2,
+    KHHCardAttributeUserID     = 1UL << 3,
+    KHHCardAttributeTemplateID = 1UL << 4,
+    //    KHHCardAttribute           = ,
+    KHHCardAttributeAll        = ~KHHCardAttributeNone,
+} KHHCardAttributeType;
+
 // KHHTemplateDomainType 模板共有私有
 typedef enum {
     KHHTemplateDomainTypePublic   = 1,

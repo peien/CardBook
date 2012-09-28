@@ -127,7 +127,7 @@
             
             NSString *noti = (KHHNetworkStatusCodeSucceeded == code)?
             KHHNetworkCreateAccountSucceeded
-            : KHHNotificationCreateAccountFailed;
+            : KHHNetworkCreateAccountFailed;
             [self postASAPNotificationName:noti info:dict];
         };
         [self postAction:@"createAccount"

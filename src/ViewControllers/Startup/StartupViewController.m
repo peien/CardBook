@@ -59,12 +59,12 @@
         
         //注册
         [self observeNotificationName:KHHUIStartSignUp selector:@"handleStartSignUp:"];
-        [self observeNotificationName:KHHNotificationCreateAccountFailed selector:@"handleSignUpFailed:"];
+        [self observeNotificationName:KHHNetworkCreateAccountFailed selector:@"handleSignUpFailed:"];
         
         //Reset password
         [self observeNotificationName:KHHUIStartResetPassword selector:@"handleStartResetPassword:"];
-        [self observeNotificationName:KHHNotificationResetPasswordSucceeded selector:@"handleResetPasswordSucceeded:"];
-        [self observeNotificationName:KHHNotificationResetPasswordFailed selector:@"handleResetPasswordFailed:"];
+        [self observeNotificationName:KHHNetworkResetPasswordSucceeded selector:@"handleResetPasswordSucceeded:"];
+        [self observeNotificationName:KHHNetworkResetPasswordFailed selector:@"handleResetPasswordFailed:"];
     }
     return self;
 }//initWithNibName:bundle:

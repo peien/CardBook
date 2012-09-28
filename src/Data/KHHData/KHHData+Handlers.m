@@ -12,9 +12,9 @@
 @implementation KHHData (Handlers)
 - (void)syncAllDataEnded:(BOOL)succeed {
     if (succeed) {
-        [self postASAPNotificationName:KHHNotificationSyncAfterLoginSucceeded];
+        [self postASAPNotificationName:KHHUISyncAfterLoginSucceeded];
     } else {
-        [self postASAPNotificationName:KHHNotificationSyncAfterLoginFailed];
+        [self postASAPNotificationName:KHHUISyncAfterLoginFailed];
     }
 }
 #pragma mark - Notification handlers
@@ -63,8 +63,10 @@
     if (isChained) {
         // 接下来，同步联系人
         // 先获取要同步的数量
-        [self.agent receivedCardCountAfterDate:nil
-                                      lastCard:nil
+        SyncMark *lastTime = [self syncMarkByKey:kSyncMarkKeyReceviedCardLastTime];
+        SyncMark *lastCardID = [self syncMarkByKey:kSyncMarkKeyReceviedCardLastID];
+        [self.agent receivedCardCountAfterDate:lastTime.value
+                                      lastCard:lastCardID.value
                                          extra:@{
                    kExtraKeyChainedInvocation : [NSNumber numberWithBool:YES]
          }];

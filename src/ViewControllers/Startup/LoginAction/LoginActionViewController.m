@@ -66,14 +66,14 @@
         //Reset password
         [self observeNotificationName:KHHUIResetPasswordAction
                          selector:@"handleResetPasswordAction:"];
-        [self observeNotificationName:KHHNotificationResetPasswordSucceeded
+        [self observeNotificationName:KHHNetworkResetPasswordSucceeded
                          selector:@"handleResetPasswordSucceeded:"];
         //Sync
-        [self observeNotificationName:KHHNotificationStartSyncAfterLogin
+        [self observeNotificationName:KHHUIStartSyncAfterLogin
                          selector:@"handleStartSyncAfterLogin:"];
-        [self observeNotificationName:KHHNotificationSyncAfterLoginSucceeded
+        [self observeNotificationName:KHHUISyncAfterLoginSucceeded
                          selector:@"handleSyncAfterLoginSucceeded:"];
-        [self observeNotificationName:KHHNotificationSyncAfterLoginFailed
+        [self observeNotificationName:KHHUISyncAfterLoginFailed
                          selector:@"handleSyncAfterLoginFailed:"];
     }
     return self;
@@ -159,7 +159,7 @@
     [self.agent authenticateWithFakeID:self.defaults.currentAuthorizationID.stringValue
                               password:self.defaults.currentPassword];
     // 发送同步消息
-    [self postASAPNotificationName:KHHNotificationStartSyncAfterLogin];
+    [self postASAPNotificationName:KHHUIStartSyncAfterLogin];
 }
 - (void)handleSignUpAction:(NSNotification *)notification
 {
