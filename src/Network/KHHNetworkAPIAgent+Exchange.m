@@ -35,7 +35,8 @@
                    forKey:@"shakeInfo.hasGps"];
     [self postAction:@"exchangeCard"
                query:@"shakeExchangeCardService.shakeExchangeCardNew"
-          parameters:parameters];
+          parameters:parameters
+             success:nil];
     return YES;
 }
 /**
@@ -66,7 +67,8 @@
     };
     [self postAction:@"sendCardToPhones"
                query:@"sendCardService.sendCard"
-          parameters:parameters];
+          parameters:parameters
+             success:nil];
     return YES;
 }
 /**
@@ -90,7 +92,8 @@
     };
     [self postAction:@"sendCardToUser"
                query:@"sendCardService.sendCardByReceiverId"
-          parameters:parameters];
+          parameters:parameters
+             success:nil];
     return YES;
 }
 

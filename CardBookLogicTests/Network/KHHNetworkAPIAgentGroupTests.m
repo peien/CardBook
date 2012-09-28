@@ -162,9 +162,9 @@ typedef enum {
     Group *group = [Group insertInManagedObjectContext:self.managedObjectContext];
     group.name = [NSString stringWithFormat:@"打手%@", [NSDate date]];
     DLog(@"[II] group = %@", group);
-    [self observeNotification:KHHNotificationCreateGroupSucceeded
+    [self observeNotificationName:KHHNotificationCreateGroupSucceeded
                             selector:@"actionSucceeded:"];
-    [self observeNotification:KHHNotificationCreateGroupFailed
+    [self observeNotificationName:KHHNotificationCreateGroupFailed
                             selector:@"actionFailed:"];
     [self.agent createGroup:group];
     [self.managedObjectContext deleteObject:group];
@@ -198,9 +198,9 @@ typedef enum {
     Group *group = [Group insertInManagedObjectContext:self.managedObjectContext];
     group.idValue = 120;
     DLog(@"[II] group = %@", group);
-    [self observeNotification:KHHNotificationUpdateGroupSucceeded
+    [self observeNotificationName:KHHNotificationUpdateGroupSucceeded
                             selector:@"actionSucceeded:"];
-    [self observeNotification:KHHNotificationUpdateGroupFailed
+    [self observeNotificationName:KHHNotificationUpdateGroupFailed
                             selector:@"actionFailed:"];
     [self.agent updateGroup:group
                     newName:nil
@@ -214,9 +214,9 @@ typedef enum {
     group.idValue = 121;
     group.name = @"呵呵";
     DLog(@"[II] group = %@", group);
-    [self observeNotification:KHHNotificationUpdateGroupSucceeded
+    [self observeNotificationName:KHHNotificationUpdateGroupSucceeded
                             selector:@"actionSucceeded:"];
-    [self observeNotification:KHHNotificationUpdateGroupFailed
+    [self observeNotificationName:KHHNotificationUpdateGroupFailed
                             selector:@"actionFailed:"];
     NSString *name = [NSString stringWithFormat:@"新组名%@", [NSDate date]];
     [self.agent updateGroup:group
@@ -232,9 +232,9 @@ typedef enum {
     Group *parent = [Group insertInManagedObjectContext:self.managedObjectContext];
     parent.idValue = 121;
     DLog(@"[II] group = %@, parent = %@", group, parent);
-    [self observeNotification:KHHNotificationUpdateGroupSucceeded
+    [self observeNotificationName:KHHNotificationUpdateGroupSucceeded
                      selector:@"actionSucceeded:"];
-    [self observeNotification:KHHNotificationUpdateGroupFailed
+    [self observeNotificationName:KHHNotificationUpdateGroupFailed
                      selector:@"actionFailed:"];
     [self.agent updateGroup:group
                     newName:nil
@@ -249,9 +249,9 @@ typedef enum {
     Group *parent = [Group insertInManagedObjectContext:self.managedObjectContext];
     parent.idValue = 121;
     DLog(@"[II] group = %@, parent = %@", group, parent);
-    [self observeNotification:KHHNotificationUpdateGroupSucceeded
+    [self observeNotificationName:KHHNotificationUpdateGroupSucceeded
                             selector:@"actionSucceeded:"];
-    [self observeNotification:KHHNotificationUpdateGroupFailed
+    [self observeNotificationName:KHHNotificationUpdateGroupFailed
                             selector:@"actionFailed:"];
     NSString *name = [NSString stringWithFormat:@"新组名%@", [NSDate date]];
     [self.agent updateGroup:group
@@ -266,9 +266,9 @@ typedef enum {
     Group *group = [Group insertInManagedObjectContext:self.managedObjectContext];
     group.idValue = 120;
     DLog(@"[II] group = %@", group);
-    [self observeNotification:KHHNotificationDeleteGroupSucceeded
+    [self observeNotificationName:KHHNotificationDeleteGroupSucceeded
                      selector:@"actionSucceeded:"];
-    [self observeNotification:KHHNotificationDeleteGroupFailed
+    [self observeNotificationName:KHHNotificationDeleteGroupFailed
                      selector:@"actionFailed:"];
     [self.agent deleteGroup:group];
     [self.managedObjectContext deleteObject:group];
@@ -280,9 +280,9 @@ typedef enum {
     Group *group = [Group insertInManagedObjectContext:self.managedObjectContext];
     group.idValue = 1;
     DLog(@"[II] group = %@", group);
-    [self observeNotification:KHHNotificationCardIDsWithinGroupSucceeded
+    [self observeNotificationName:KHHNotificationCardIDsWithinGroupSucceeded
                      selector:@"actionSucceeded:"];
-    [self observeNotification:KHHNotificationCardIDsWithinGroupFailed
+    [self observeNotificationName:KHHNotificationCardIDsWithinGroupFailed
                      selector:@"actionFailed:"];
     [self.agent cardIDsWithinGroup:group];
     [self.managedObjectContext deleteObject:group];
@@ -310,9 +310,9 @@ typedef enum {
     if ([self.agent moveCards:[NSArray arrayWithObjects:mCard, cCard, rCard, nil]
                     fromGroup:fromGroup
                       toGroup:toGroup]) {
-        [self observeNotification:KHHNotificationMoveCardsSucceeded
+        [self observeNotificationName:KHHNotificationMoveCardsSucceeded
                          selector:@"actionSucceeded:"];
-        [self observeNotification:KHHNotificationMoveCardsFailed
+        [self observeNotificationName:KHHNotificationMoveCardsFailed
                          selector:@"actionFailed:"];
         [self waitUntilDone];
     }

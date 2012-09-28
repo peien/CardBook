@@ -6,20 +6,16 @@
 const struct CardAttributes CardAttributes = {
 	.aliWangWang = @"aliWangWang",
 	.businessScope = @"businessScope",
-	.cTimeUTC = @"cTimeUTC",
-	.customerServiceTel = @"customerServiceTel",
 	.department = @"department",
 	.email = @"email",
-	.factoryAddress = @"factoryAddress",
 	.fax = @"fax",
 	.id = @"id",
-	.mTimeUTC = @"mTimeUTC",
 	.microblog = @"microblog",
 	.mobilePhone = @"mobilePhone",
+	.modelType = @"modelType",
 	.moreInfo = @"moreInfo",
 	.msn = @"msn",
 	.name = @"name",
-	.officeEmail = @"officeEmail",
 	.qq = @"qq",
 	.remarks = @"remarks",
 	.roleType = @"roleType",
@@ -74,6 +70,10 @@ const struct CardFetchedProperties CardFetchedProperties = {
 		NSSet *affectingKey = [NSSet setWithObject:@"id"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
+	if ([key isEqualToString:@"modelTypeValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"modelType"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
 	if ([key isEqualToString:@"roleTypeValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"roleType"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -107,20 +107,6 @@ const struct CardFetchedProperties CardFetchedProperties = {
 
 
 
-@dynamic cTimeUTC;
-
-
-
-
-
-
-@dynamic customerServiceTel;
-
-
-
-
-
-
 @dynamic department;
 
 
@@ -129,13 +115,6 @@ const struct CardFetchedProperties CardFetchedProperties = {
 
 
 @dynamic email;
-
-
-
-
-
-
-@dynamic factoryAddress;
 
 
 
@@ -175,13 +154,6 @@ const struct CardFetchedProperties CardFetchedProperties = {
 
 
 
-@dynamic mTimeUTC;
-
-
-
-
-
-
 @dynamic microblog;
 
 
@@ -191,6 +163,32 @@ const struct CardFetchedProperties CardFetchedProperties = {
 
 @dynamic mobilePhone;
 
+
+
+
+
+
+@dynamic modelType;
+
+
+
+- (int32_t)modelTypeValue {
+	NSNumber *result = [self modelType];
+	return [result intValue];
+}
+
+- (void)setModelTypeValue:(int32_t)value_ {
+	[self setModelType:[NSNumber numberWithInt:value_]];
+}
+
+- (int32_t)primitiveModelTypeValue {
+	NSNumber *result = [self primitiveModelType];
+	return [result intValue];
+}
+
+- (void)setPrimitiveModelTypeValue:(int32_t)value_ {
+	[self setPrimitiveModelType:[NSNumber numberWithInt:value_]];
+}
 
 
 
@@ -211,13 +209,6 @@ const struct CardFetchedProperties CardFetchedProperties = {
 
 
 @dynamic name;
-
-
-
-
-
-
-@dynamic officeEmail;
 
 
 

@@ -248,9 +248,9 @@ NSString *const kECardListSeparator = @"|";
     }
     //有改动 ＋＋＋＋＋＋＋ officeEmail
     
-    if (_glCard.officeEmail.length) {
-        [_fieldExternTwo addObject:[NSDictionary dictionaryWithObjectsAndKeys:_glCard.officeEmail,@"value",@"公司邮箱",@"key", nil]];
-    }
+//    if (_glCard.officeEmail.length) {
+//        [_fieldExternTwo addObject:[NSDictionary dictionaryWithObjectsAndKeys:_glCard.officeEmail,@"value",@"公司邮箱",@"key", nil]];
+//    }
     //银行信息
     if (_glCard.bankAccount.bank.length > 0 || _glCard.bankAccount.branch.length > 0) {
         NSString *adds = [NSString stringWithFormat:@",%@",_glCard.bankAccount.branch];

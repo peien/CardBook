@@ -19,6 +19,7 @@
 - (void)listDepartments {
     [self postAction:@"listDepartments"
                query:@"employeeViewService.getOrgsByPermission"
-          parameters:nil];
+          parameters:nil
+             success:nil];
 }
 @end

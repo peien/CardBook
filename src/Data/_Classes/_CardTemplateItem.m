@@ -4,12 +4,20 @@
 #import "_CardTemplateItem.h"
 
 const struct CardTemplateItemAttributes CardTemplateItemAttributes = {
+	.fontColor = @"fontColor",
+	.fontSize = @"fontSize",
+	.fontWeight = @"fontWeight",
 	.id = @"id",
 	.name = @"name",
+	.originX = @"originX",
+	.originY = @"originY",
+	.rectHeight = @"rectHeight",
+	.rectWidth = @"rectWidth",
+	.style = @"style",
 };
 
 const struct CardTemplateItemRelationships CardTemplateItemRelationships = {
-	.template = @"template",
+	.templates = @"templates",
 };
 
 const struct CardTemplateItemFetchedProperties CardTemplateItemFetchedProperties = {
@@ -41,13 +49,73 @@ const struct CardTemplateItemFetchedProperties CardTemplateItemFetchedProperties
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
+	if ([key isEqualToString:@"fontSizeValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"fontSize"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
 	if ([key isEqualToString:@"idValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"id"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"originXValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"originX"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"originYValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"originY"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"rectHeightValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"rectHeight"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"rectWidthValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"rectWidth"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 
 	return keyPaths;
 }
+
+
+
+
+@dynamic fontColor;
+
+
+
+
+
+
+@dynamic fontSize;
+
+
+
+- (float)fontSizeValue {
+	NSNumber *result = [self fontSize];
+	return [result floatValue];
+}
+
+- (void)setFontSizeValue:(float)value_ {
+	[self setFontSize:[NSNumber numberWithFloat:value_]];
+}
+
+- (float)primitiveFontSizeValue {
+	NSNumber *result = [self primitiveFontSize];
+	return [result floatValue];
+}
+
+- (void)setPrimitiveFontSizeValue:(float)value_ {
+	[self setPrimitiveFontSize:[NSNumber numberWithFloat:value_]];
+}
+
+
+
+
+
+@dynamic fontWeight;
+
+
 
 
 
@@ -85,8 +153,128 @@ const struct CardTemplateItemFetchedProperties CardTemplateItemFetchedProperties
 
 
 
-@dynamic template;
+@dynamic originX;
 
+
+
+- (float)originXValue {
+	NSNumber *result = [self originX];
+	return [result floatValue];
+}
+
+- (void)setOriginXValue:(float)value_ {
+	[self setOriginX:[NSNumber numberWithFloat:value_]];
+}
+
+- (float)primitiveOriginXValue {
+	NSNumber *result = [self primitiveOriginX];
+	return [result floatValue];
+}
+
+- (void)setPrimitiveOriginXValue:(float)value_ {
+	[self setPrimitiveOriginX:[NSNumber numberWithFloat:value_]];
+}
+
+
+
+
+
+@dynamic originY;
+
+
+
+- (float)originYValue {
+	NSNumber *result = [self originY];
+	return [result floatValue];
+}
+
+- (void)setOriginYValue:(float)value_ {
+	[self setOriginY:[NSNumber numberWithFloat:value_]];
+}
+
+- (float)primitiveOriginYValue {
+	NSNumber *result = [self primitiveOriginY];
+	return [result floatValue];
+}
+
+- (void)setPrimitiveOriginYValue:(float)value_ {
+	[self setPrimitiveOriginY:[NSNumber numberWithFloat:value_]];
+}
+
+
+
+
+
+@dynamic rectHeight;
+
+
+
+- (float)rectHeightValue {
+	NSNumber *result = [self rectHeight];
+	return [result floatValue];
+}
+
+- (void)setRectHeightValue:(float)value_ {
+	[self setRectHeight:[NSNumber numberWithFloat:value_]];
+}
+
+- (float)primitiveRectHeightValue {
+	NSNumber *result = [self primitiveRectHeight];
+	return [result floatValue];
+}
+
+- (void)setPrimitiveRectHeightValue:(float)value_ {
+	[self setPrimitiveRectHeight:[NSNumber numberWithFloat:value_]];
+}
+
+
+
+
+
+@dynamic rectWidth;
+
+
+
+- (float)rectWidthValue {
+	NSNumber *result = [self rectWidth];
+	return [result floatValue];
+}
+
+- (void)setRectWidthValue:(float)value_ {
+	[self setRectWidth:[NSNumber numberWithFloat:value_]];
+}
+
+- (float)primitiveRectWidthValue {
+	NSNumber *result = [self primitiveRectWidth];
+	return [result floatValue];
+}
+
+- (void)setPrimitiveRectWidthValue:(float)value_ {
+	[self setPrimitiveRectWidth:[NSNumber numberWithFloat:value_]];
+}
+
+
+
+
+
+@dynamic style;
+
+
+
+
+
+
+@dynamic templates;
+
+	
+- (NSMutableSet*)templatesSet {
+	[self willAccessValueForKey:@"templates"];
+  
+	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"templates"];
+  
+	[self didAccessValueForKey:@"templates"];
+	return result;
+}
 	
 
 

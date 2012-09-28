@@ -62,9 +62,9 @@ typedef enum {
 }
 #pragma mark -
 - (void)testListDepartments {
-    [self observeNotification:KHHNotificationListDepartmentsSucceeded
+    [self observeNotificationName:KHHNotificationListDepartmentsSucceeded
                      selector:@"actionSucceeded:"];
-    [self observeNotification:KHHNotificationListDepartmentsFailed
+    [self observeNotificationName:KHHNotificationListDepartmentsFailed
                      selector:@"actionFailed:"];
     [self.agent listDepartments];
     [self waitUntilDone];

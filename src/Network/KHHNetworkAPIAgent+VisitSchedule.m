@@ -61,7 +61,8 @@ NSMutableDictionary * ParametersFromSchedule(Schedule *visitSchedule,
     };
     [self postAction:@"visitSchedulesAfterDate"
                query:@"kinghhVisitCustomPlanService.incList"
-          parameters:parameters];
+          parameters:parameters
+             success:nil];
 }
 /**
  上传拜访图片 kinghhVisitCustomPlanService.uploadImg
@@ -82,7 +83,8 @@ NSMutableDictionary * ParametersFromSchedule(Schedule *visitSchedule,
                    forKey:@"imgs"];
     [self postAction:@"uploadImageForVisitSchedule"
                query:@"kinghhVisitCustomPlanService.uploadImg"
-          parameters:parameters];
+          parameters:parameters
+             success:nil];
     return YES;
 }
 /**

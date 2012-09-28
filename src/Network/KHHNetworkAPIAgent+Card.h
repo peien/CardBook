@@ -29,14 +29,14 @@ static NSString * const KHHNotificationDeleteReceivedCardsFailed    = @"deleteRe
 static NSString * const KHHNotificationLatestReceivedCardSucceeded = @"latestReceivedCardSucceeded";
 static NSString * const KHHNotificationLatestReceivedCardFailed    = @"latestReceivedCardFailed";
 // receivedCardCountAfterDateLastCard
-static NSString * const KHHNotificationReceivedCardCountAfterDateLastCardSucceeded
+static NSString * const KHHNetworkReceivedCardCountAfterDateLastCardSucceeded
                     = @"receivedCardCountAfterDateLastCardSucceeded";
-static NSString * const KHHNotificationReceivedCardCountAfterDateLastCardFailed
+static NSString * const KHHNetworkReceivedCardCountAfterDateLastCardFailed
                     = @"receivedCardCountAfterDateLastCardFailed";
 // receivedCardsAfterDateLastCardExpectedCount
-static NSString * const KHHNotificationReceivedCardsAfterDateLastCardExpectedCountSucceeded
+static NSString * const KHHNetworkReceivedCardsAfterDateLastCardExpectedCountSucceeded
                     = @"receivedCardsAfterDateLastCardExpectedCountSucceeded";
-static NSString * const KHHNotificationReceivedCardsAfterDateLastCardExpectedCountFailed
+static NSString * const KHHNetworkReceivedCardsAfterDateLastCardExpectedCountFailed
                     = @"receivedCardsAfterDateLastCardExpectedCountFailed";
 // markReadReceivedCard
 static NSString * const KHHNotificationMarkReadReceivedCardSucceeded = @"markReadReceivedCardSucceeded";
@@ -107,7 +107,7 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(Card *card);
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=182
  */
 - (BOOL)receivedCardsAfterDate:(NSString *)lastDate
-                      lastCard:(ReceivedCard *)lastCard
+                      lastCard:(NSString *)lastCardID
                  expectedCount:(NSString *)count
                          extra:(NSDictionary *)extra;
 

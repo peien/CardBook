@@ -30,7 +30,8 @@ BOOL MessageHasRequiredAttributes(Message *message,
 - (void)allMessages {
     [self postAction:@"allMessages"
                query:@"customFsendService.list"
-          parameters:nil];
+          parameters:nil
+             success:nil];
 }
 /**
  删除消息 customFsendService.delete
@@ -58,7 +59,8 @@ BOOL MessageHasRequiredAttributes(Message *message,
     };
     [self postAction:@"deleteMessages"
                query:@"customFsendService.delete"
-          parameters:parameters];
+          parameters:parameters
+             success:nil];
     return YES;
 }
 /**
@@ -69,6 +71,7 @@ BOOL MessageHasRequiredAttributes(Message *message,
     NSDictionary *parameters = @{ @"activeType" : type?type:@"" };
     [self postAction:@"promotionMessagesWithType"
                query:@"tellActiveService.getTellActive"
-          parameters:parameters];
+          parameters:parameters
+             success:nil];
 }
 @end

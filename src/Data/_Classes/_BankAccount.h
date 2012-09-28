@@ -7,6 +7,7 @@
 extern const struct BankAccountAttributes {
 	__unsafe_unretained NSString *bank;
 	__unsafe_unretained NSString *branch;
+	__unsafe_unretained NSString *name;
 	__unsafe_unretained NSString *number;
 } BankAccountAttributes;
 
@@ -18,6 +19,7 @@ extern const struct BankAccountFetchedProperties {
 } BankAccountFetchedProperties;
 
 @class Card;
+
 
 
 
@@ -47,6 +49,14 @@ extern const struct BankAccountFetchedProperties {
 
 
 //- (BOOL)validateBranch:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSString* name;
+
+
+//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -90,6 +100,12 @@ extern const struct BankAccountFetchedProperties {
 
 - (NSString*)primitiveBranch;
 - (void)setPrimitiveBranch:(NSString*)value;
+
+
+
+
+- (NSString*)primitiveName;
+- (void)setPrimitiveName:(NSString*)value;
 
 
 

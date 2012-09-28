@@ -10,7 +10,6 @@
 #import "NSString+Validation.h"
 #import "StartupViewController.h"
 #import "KHHNetworkAPIAgent+Account.h"
-#import "NSObject+Notification.h"
 
 #define textResetPassword NSLocalizedString(@"重置密码", @"")
 #define textInvalidPhone NSLocalizedString(@"无效手机号", @"")
@@ -70,10 +69,10 @@
     if (user.isValidMobilePhoneNumber) {
         // ok
         [self hideTheKeyboard];
-        NSString *notiName = ECardNotificationStartResetPassword;
+        NSString *notiName = KHHUIStartResetPassword;
         NSDictionary *dict = @{ kInfoKeyUser : user };
         DLog(@"[II] 重设密码: 发送 %@", notiName);
-        [self postNotification:notiName
+        [self postASAPNotificationName:notiName
                           info:dict];
     } else {
         // invalid phone

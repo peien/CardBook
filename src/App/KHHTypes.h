@@ -22,4 +22,10 @@ typedef enum {
     KHHCardRoleTypeCompany           = 3, // 公司的名片（通常是公司的客服）
     KHHCardRoleTypeCompanyEmployee   = 4, // 公司的员工 <---- 这个是通常所说的 “公司名片”
 } KHHCardRoleType;
+
+// KHHTemplateDomainType 模板共有私有
+typedef enum {
+    KHHTemplateDomainTypePublic   = 1,
+    KHHTemplateDomainTypePrivate  = 2,
+} KHHTemplateDomainType;
 #endif

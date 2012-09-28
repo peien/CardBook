@@ -99,18 +99,18 @@ typedef enum {
     rCard.idValue = 152053;
     rCard.versionValue = 10;
     rCard.userIDValue = 11136;
-    [self observeNotification:KHHNotificationDeleteReceivedCardsSucceeded
+    [self observeNotificationName:KHHNotificationDeleteReceivedCardsSucceeded
                      selector:@"actionSucceeded:"];
-    [self observeNotification:KHHNotificationDeleteReceivedCardsFailed
+    [self observeNotificationName:KHHNotificationDeleteReceivedCardsFailed
                      selector:@"actionFailed:"];
     [self.agent deleteReceivedCards:[NSArray arrayWithObject:rCard]];
     [self waitUntilDone];
 }
 #pragma mark - latestReceivedCard
 - (void)testLatestReceivedCard {
-    [self observeNotification:KHHNotificationLatestReceivedCardSucceeded
+    [self observeNotificationName:KHHNotificationLatestReceivedCardSucceeded
                      selector:@"actionSucceeded:"];
-    [self observeNotification:KHHNotificationLatestReceivedCardFailed
+    [self observeNotificationName:KHHNotificationLatestReceivedCardFailed
                      selector:@"actionFailed:"];
     [self.agent latestReceivedCard];
     [self waitUntilDone];
@@ -121,9 +121,9 @@ typedef enum {
     rCard.idValue = 152053;
     rCard.versionValue = 10;
     rCard.userIDValue = 11136;
-    [self observeNotification:KHHNotificationMarkReadReceivedCardSucceeded
+    [self observeNotificationName:KHHNotificationMarkReadReceivedCardSucceeded
                      selector:@"actionSucceeded:"];
-    [self observeNotification:KHHNotificationMarkReadReceivedCardFailed
+    [self observeNotificationName:KHHNotificationMarkReadReceivedCardFailed
                      selector:@"actionFailed:"];
     [self.agent markReadReceivedCard:rCard];
     [self waitUntilDone];
@@ -134,9 +134,9 @@ typedef enum {
     rCard.idValue = 152053;
     rCard.versionValue = 10;
     rCard.userIDValue = 11136;
-    [self observeNotification:KHHNotificationReceivedCardsAfterDateLastCardExpectedCountSucceeded
+    [self observeNotificationName:KHHNetworkReceivedCardsAfterDateLastCardExpectedCountSucceeded
                      selector:@"actionSucceeded:"];
-    [self observeNotification:KHHNotificationReceivedCardsAfterDateLastCardExpectedCountFailed
+    [self observeNotificationName:KHHNetworkReceivedCardsAfterDateLastCardExpectedCountFailed
                      selector:@"actionFailed:"];
     [self.agent receivedCardsAfterDate:nil lastCard:rCard expectedCount:nil extra:nil];
     [self waitUntilDone];
@@ -147,9 +147,9 @@ typedef enum {
     rCard.idValue = 152053;
     rCard.versionValue = 10;
     rCard.userIDValue = 11136;
-    [self observeNotification:KHHNotificationReceivedCardCountAfterDateLastCardSucceeded
+    [self observeNotificationName:KHHNetworkReceivedCardCountAfterDateLastCardSucceeded
                      selector:@"actionSucceeded:"];
-    [self observeNotification:KHHNotificationReceivedCardCountAfterDateLastCardFailed
+    [self observeNotificationName:KHHNetworkReceivedCardCountAfterDateLastCardFailed
                      selector:@"actionFailed:"];
     [self.agent receivedCardCountAfterDate:nil lastCard:nil extra:nil];
     [self waitUntilDone];
@@ -161,18 +161,18 @@ typedef enum {
 //- (void)updatePrivateCard
 #pragma mark - deletePrivateCard
 //- (void)testDeletePrivateCard {
-//    [self observeNotification:KHHNotificationDeletePrivateCardSucceeded
+//    [self observeNotificationName:KHHNotificationDeletePrivateCardSucceeded
 //                     selector:@"actionSucceeded:"];
-//    [self observeNotification:KHHNotificationDeletePrivateCardFailed
+//    [self observeNotificationName:KHHNotificationDeletePrivateCardFailed
 //                     selector:@"actionFailed:"];
 //    [self.agent deletePrivateCard:nil];
 //    [self waitUntilDone];
 //}
 #pragma mark - privateCardsAfterDate
 - (void)testPrivateCardsAfterDate {
-    [self observeNotification:KHHNotificationPrivateCardsAfterDateSucceeded
+    [self observeNotificationName:KHHNotificationPrivateCardsAfterDateSucceeded
                      selector:@"actionSucceeded:"];
-    [self observeNotification:KHHNotificationPrivateCardsAfterDateFailed
+    [self observeNotificationName:KHHNotificationPrivateCardsAfterDateFailed
                      selector:@"actionFailed:"];
     [self.agent privateCardsAfterDate:nil];
     [self waitUntilDone];

@@ -10,18 +10,46 @@
 
 @implementation NSNumber (SM)
 // nil if unresolvable; 1 if @"yes", 0 if @"no";
-+ (NSNumber *)numberFromString:(NSString *)value {
++ (NSNumber *)numberFromString:(NSString *)string {
     NSNumber *result = nil;
-    if ([value isKindOfClass:[NSString class]]) {
+    if ([string isKindOfClass:[NSString class]]) {
+        // 先尝试解析
         NSNumberFormatter *f = [[NSNumberFormatter alloc] init];
-        [f setNumberStyle:NSNumberFormatterDecimalStyle];
-        result = [f numberFromString:value];
-        if ([value caseInsensitiveCompare:@"yes"] == NSOrderedSame) {
+        [f setNumberStyle:NSNumberFormatterNoStyle];
+        result = [f numberFromString:string];
+        
+        if (result) {
+            // 解析成功直接返回
+            DLog(@"[II] number from string(%@) is %@", string, result);
+            return result;
+        }
+        
+        // 解析失败，尝试其他
+        // 尝试scan
+        NSScanner *scanner = [NSScanner scannerWithString:string];
+        NSInteger intValue;
+        if ([scanner scanInteger:&intValue]) {
+            // 成功直接返回
+            result = [NSNumber numberWithInteger:intValue];
+            DLog(@"[II] number from string(%@) is %@", string, result);
+            return result;
+        };
+        double doubleValue;
+        if ([scanner scanDouble:&doubleValue]) {
+            // 成功直接返回
+            result = [NSNumber numberWithDouble:doubleValue];
+            DLog(@"[II] number from string(%@) is %@", string, result);
+            return result;
+        }
+        // 不成功则把string转为全大写，然后查字典
+        NSString *ucString = [string uppercaseString];
+        if ([@"YES" hasPrefix:ucString]) {
             result = [NSNumber numberWithBool:YES];
-        } else if ([value caseInsensitiveCompare:@"no"] == NSOrderedSame) {
+        } else if ([@"NO" hasPrefix:ucString]) {
             result = [NSNumber numberWithBool:NO];
         }
     }
+    DLog(@"[II] number from string(%@) is %@", string, result);
     return result;
 }
 + (NSNumber *)numberFromObject:(id)obj
@@ -35,7 +63,7 @@
          defaultIfUnresolvable:(BOOL)flag {
     // 设置默认值
     id result = flag? [NSNumber numberWithInteger:defaultValue]: nil;
-    DLog(@"[II] obj class = %@", [obj class]);
+//    DLog(@"[II] obj class = %@", [obj class]);
     if ([obj isKindOfClass:[NSNumber class]]) { //
         result = obj;
     } else if ([obj isKindOfClass:[NSString class]]) { //

@@ -22,7 +22,8 @@
     };
     [self postAction:@"templateByID"
                query:@"kinghhTemplateService.getOnlyTemplate"
-          parameters:parameters];
+          parameters:parameters
+             success:nil];
     return YES;
 }
 /**
@@ -43,6 +44,7 @@
     };
     [self postAction:@"templatesAfterDate"
                query:@"kinghhTemplateService.synTemplate"
-          parameters:parameters];
+          parameters:parameters
+             success:nil];
 }
 @end

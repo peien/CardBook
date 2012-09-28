@@ -6,6 +6,7 @@
 const struct BankAccountAttributes BankAccountAttributes = {
 	.bank = @"bank",
 	.branch = @"branch",
+	.name = @"name",
 	.number = @"number",
 };
 
@@ -57,6 +58,13 @@ const struct BankAccountFetchedProperties BankAccountFetchedProperties = {
 
 
 @dynamic branch;
+
+
+
+
+
+
+@dynamic name;
 
 
 

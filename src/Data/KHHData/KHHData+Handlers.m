@@ -7,27 +7,14 @@
 //
 
 #import "KHHData+Handlers.h"
-#import "KHHData+Utils.h"
 #import "NSNumber+SM.h"
-#import "NSObject+Notification.h"
-
-@interface KHHData (DataProcessors)
-- (void)processCompanyList:(NSArray *)list;
-- (void)processCard:(NSDictionary *)aCard cardType:(KHHCardModelType)type;
-- (void)processCardList:(NSArray *)list cardType:(KHHCardModelType)type;
-- (void)processMyCardList:(NSArray *)list;
-- (void)processPrivateCardList:(NSArray *)list;
-- (void)processReceivedCardList:(NSArray *)list;
-- (void)processSyncTime:(NSString *)syncTime;
-- (void)processTemplateList:(NSArray *)list;
-@end
 
 @implementation KHHData (Handlers)
 - (void)syncAllDataEnded:(BOOL)succeed {
     if (succeed) {
-        [self postNotification:KHHNotificationSyncAfterLoginSucceeded info:nil];
+        [self postASAPNotificationName:KHHNotificationSyncAfterLoginSucceeded];
     } else {
-        [self postNotification:KHHNotificationSyncAfterLoginFailed info:nil];
+        [self postASAPNotificationName:KHHNotificationSyncAfterLoginFailed];
     }
 }
 #pragma mark - Notification handlers
@@ -35,21 +22,38 @@
     DLog(@"[II] noti userInfo keys = %@", [noti.userInfo allKeys]);
     NSDictionary *info = noti.userInfo;
     // 处理返回的数据
+#warning TODO
     // 1.
     // 2.
-    // 3.
-    // 4.
-    // MyCard List
+    // template List {
+    NSArray *templateList = info[kInfoKeyTemplateList];
+    if (templateList.count) {
+        [self processCardTemplateList:templateList];
+    }
+    // }
+    
+    // privateCard List {
+//    NSArray *privateCardList = info[kInfoKeyPrivateCardList];
+//    if (privateCardList.count) {
+//        [self processPrivateCardList:privateCardList];
+//    }
+    // }
+    
+    // MyCard List {
     NSArray *myCardList = info[kInfoKeyMyCardList];
-    if (myCardList) {
+    if (myCardList.count) {
         [self processMyCardList:myCardList];
     }
-    // Sync Time
+    // }
+    
+    // Sync Time {
     NSString *syncTime = info[kInfoKeySyncTime];
     if (syncTime.length) {
-        [self processSyncTime:syncTime];
+        SyncMark *thisMark = [self syncMarkByKey:kSyncMarkKeySyncAllLastTime];
+        thisMark.value = syncTime;
     }
-    
+    // }
+    [self saveContext];
     // 处理结束
     BOOL isChained = NO;
     NSDictionary *extra= info[kInfoKeyExtra];
@@ -65,7 +69,8 @@
                    kExtraKeyChainedInvocation : [NSNumber numberWithBool:YES]
          }];
     } else {
-        
+#warning TODO
+        // 发消息？
     }
 }
 - (void)handleAllDataAfterDateFailed:(NSNotification *)noti {
@@ -77,81 +82,71 @@
 #warning TODO
 }
 - (void)handleReceivedCardCountAfterDateLastCardSucceeded:(NSNotification *)noti {
-    BOOL isChained = NO;
     NSDictionary *info = noti.userInfo;
-    DLog(@"[II] 新名片数量%@。", info[kInfoKeyCount]);
+    NSNumber *count = info[kInfoKeyCount];
+    DLog(@"[II] 新名片数量%@。", count);
+    NSDictionary *extra= info[kInfoKeyExtra];
+    BOOL isChained = NO;
+    if (extra) {
+        isChained = [extra[kExtraKeyChainedInvocation] boolValue];
+    }
+    if (isChained) {
+        SyncMark *lastTime = [self syncMarkByKey:kSyncMarkKeyReceviedCardLastTime];
+        SyncMark *lastCardID = [self syncMarkByKey:kSyncMarkKeyReceviedCardLastID];
+        [self.agent receivedCardsAfterDate:lastTime.value
+                                  lastCard:lastCardID.value
+                             expectedCount:count.stringValue
+                                     extra:extra];
+    } else {
+#warning TODO
+        // 发消息？
+    }
+}
+- (void)handleReceivedCardCountAfterDateLastCardFailed:(NSNotification *)noti {
+    DLog(@"[II] handleReceivedCardCountAfterDateLastCardFailed:%@", noti);
+#warning TODO
+}
+- (void)handleReceivedCardsAfterDateLastCardExpectedCountSucceeded:(NSNotification *)noti {
+    DLog(@"[II] handleReceivedCardsAfterDateLastCardExpectedCountSucceeded:%@", noti);
+    NSDictionary *info = noti.userInfo;
+    //1.receivedCardList {
+    NSArray *receivedCardList = info[kInfoKeyReceivedCardList];
+    if (receivedCardList.count) {
+        [self processReceivedCardList:receivedCardList];
+    }
+    // }
+    
+    //2.syncTime
+    NSString *syncTime = info[kInfoKeySyncTime];
+    if (syncTime.length) {
+        SyncMark *timeMark = [self syncMarkByKey:kSyncMarkKeyReceviedCardLastTime];
+        timeMark.value = syncTime;
+    }
+    
+    //3.lastID
+    NSString *lastID = info[kInfoKeyLastID];
+    if (lastID.length) {
+        SyncMark *IDMark = [self syncMarkByKey:kSyncMarkKeyReceviedCardLastID];
+        IDMark.value = lastID;
+    }
+    
+    // 4.保存
+    [self saveContext];
+    // extra:
+    BOOL isChained = NO;
     NSDictionary *extra= info[kInfoKeyExtra];
     if (extra) {
         isChained = [extra[kExtraKeyChainedInvocation] boolValue];
     }
-#warning TODO
     if (isChained) {
         [self syncAllDataEnded:YES];
     } else {
-        
+#warning TODO
+        // 发消息？
     }
 }
-- (void)handleReceivedCardCountAfterDateLastCardFailed:(NSNotification *)noti {
-    
-}
-@end
-@implementation KHHData (DataProcessors)
-- (void)processCompanyList:(NSDictionary *)list {
-    
-}
-- (void)processTemplateList:(NSDictionary *)list {
-    
-}
-- (void)processCard:(NSDictionary *)dict cardType:(KHHCardModelType)type {
-    DLog(@"[II] a Card dict class= %@, data = %@", [dict class], dict);
-    if (dict) {
-        Card *card = nil;
-        NSNumber *ID = [NSNumber numberFromObject:dict[JSONDataKeyCardId]
-                               zeroIfUnresolvable:NO];
-        if (nil == ID) {
-            // ID无法解析就不操作
-            return;
-        }
-        BOOL isDeleted = [dict[JSONDataKeyIsDelete] boolValue];
-        // 按cardID从数据库里查询名片
-        if (isDeleted) {
-            // 无不新建
-            card = [self cardOfType:type byID:ID createIfNone:NO];
-            // 有则删除
-            if (card) {
-                [self.managedObjectContext deleteObject:card];
-            }
-        } else {
-            // 无则新建。
-            card = [self cardOfType:type byID:ID createIfNone:YES];
-            // 填充数据
-            [self FillCard:card ofType:type withJSON:dict];
-            DLog(@"[II] card = %@", card);
-        }
-        // 保存
-        [self saveContext];
-    }
-}
-- (void)processCardList:(NSArray *)list cardType:(KHHCardModelType)type {
-    if ([list count]) {
-        for (NSDictionary *aCard in list) {
-            if (aCard) {
-                [self processCard:aCard cardType:type];
-            }
-        }
-    }
-}
-- (void)processMyCardList:(NSArray *)list {
-    [self processCardList:list cardType:KHHCardModelTypeMyCard];
-}
-- (void)processPrivateCardList:(NSArray *)list {
-    [self processCardList:list cardType:KHHCardModelTypePrivateCard];
-}
-- (void)processReceivedCardList:(NSArray *)list {
-    [self processCardList:list cardType:KHHCardModelTypeReceivedCard];
-}
-- (void)processSyncTime:(NSString *)syncTime {
-    DLog(@"[II] syncTime = %@", syncTime);
+- (void)handleReceivedCardsAfterDateLastCardExpectedCountFailed:(NSNotification *)noti {
+    DLog(@"[II] handleReceivedCardsAfterDateLastCardExpectedCountFailed:%@", noti);
 #warning TODO
 }
 @end

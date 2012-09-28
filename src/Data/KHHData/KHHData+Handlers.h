@@ -13,4 +13,6 @@
 - (void)handleAllDataAfterDateFailed:(NSNotification *)noti;
 - (void)handleReceivedCardCountAfterDateLastCardSucceeded:(NSNotification *)noti;
 - (void)handleReceivedCardCountAfterDateLastCardFailed:(NSNotification *)noti;
+- (void)handleReceivedCardsAfterDateLastCardExpectedCountSucceeded:(NSNotification *)noti;
+- (void)handleReceivedCardsAfterDateLastCardExpectedCountFailed:(NSNotification *)noti;
 @end

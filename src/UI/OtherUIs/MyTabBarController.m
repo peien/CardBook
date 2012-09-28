@@ -9,7 +9,7 @@
 #define BUTTON_HEIGHT 24
 #import "MyTabBarController.h"
 #import "SuperViewController.h"
-#import "NSObject+Notification.h"
+#import "NSObject+SM.h"
 #import "KHHDefaults.h"
 
 @interface MyTabBarController ()

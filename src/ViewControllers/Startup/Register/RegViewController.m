@@ -11,7 +11,6 @@
 #import "NSString+Validation.h"
 #import "AgreementViewController.h"
 #import "SMCheckBox.h"
-#import "NSObject+Notification.h"
 #import "KHHNetworkAPIAgent+Account.h"
 #import "KHHDefaults.h"
 
@@ -38,8 +37,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         _defaults = [KHHDefaults sharedDefaults];
-        [self observeNotification:UIKeyboardWillShowNotification selector:@"keyboardWillShow:"];
-        [self observeNotification:UIKeyboardDidHideNotification selector:@"keyboardDidHide:"];
+        [self observeNotificationName:UIKeyboardWillShowNotification selector:@"keyboardWillShow:"];
+        [self observeNotificationName:UIKeyboardDidHideNotification selector:@"keyboardDidHide:"];
         
         self.navigationItem.title = NSLocalizedString(@"注册用户",nil);
         [(UIScrollView*)(self.view) setContentSize:CGSizeMake(320,530)];
@@ -278,9 +277,9 @@
     self.defaults.currentPassword = password;
     
     // 发送开始注册的消息
-    NSString *notiName = ECardNotificationStartSignUp;
+    NSString *notiName = KHHUIStartSignUp;
     NSDictionary *dict = @{ kInfoKeyUser : user, kInfoKeyPassword : password };
-    [self postNotification:notiName info:dict];
+    [self postASAPNotificationName:notiName info:dict];
 } //registerThis
 
 - (IBAction)showAgreement:(id)sender {

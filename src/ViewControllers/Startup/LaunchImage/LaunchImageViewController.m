@@ -8,7 +8,6 @@
 
 #import "LaunchImageViewController.h"
 #import "KHHDefaults.h"
-#import "NSObject+Notification.h"
 
 @implementation LaunchImageViewController
 

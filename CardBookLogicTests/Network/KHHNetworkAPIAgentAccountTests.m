@@ -65,9 +65,9 @@ typedef enum {
 }
 - (void)testLoginSuccess {
     self.test = TestCaseLoginSuccess;
-    [self observeNotification:KHHNotificationLoginSucceeded
+    [self observeNotificationName:KHHNetworkLoginSucceeded
                             selector:@"loginSucceeded:"];
-    [self observeNotification:KHHNotificationLoginFailed
+    [self observeNotificationName:KHHNetworkLoginFailed
                             selector:@"loginFailed:"];
     [self.agent clearAuthorizationHeader];
     [self.agent login:@"888888799826"
@@ -76,9 +76,9 @@ typedef enum {
 }
 - (void)testLoginFailure {
     self.test = TestCaseLoginFailure;
-    [self observeNotification:KHHNotificationLoginSucceeded
+    [self observeNotificationName:KHHNetworkLoginSucceeded
                             selector:@"loginSucceeded:"];
-    [self observeNotification:KHHNotificationLoginFailed
+    [self observeNotificationName:KHHNetworkLoginFailed
                             selector:@"loginFailed:"];
     [self.agent login:@"13188799821"
              password:@"654321"];
@@ -114,9 +114,9 @@ typedef enum {
 }
 - (void)testCreateAccountSuccess {
     self.test = TestCaseCreateAccountSuccess;
-    [self observeNotification:KHHNotificationCreateAccountSucceeded
+    [self observeNotificationName:KHHNetworkCreateAccountSucceeded
                             selector:@"createAccountSucceeded:"];
-    [self observeNotification:KHHNotificationCreateAccountFailed
+    [self observeNotificationName:KHHNotificationCreateAccountFailed
                             selector:@"createAccountFailed:"];
     NSString *account = [NSString stringWithFormat:@"888888%d", arc4random() % 10000];
     DLog(@"[II] account = %@", account);
@@ -136,9 +136,9 @@ typedef enum {
 //}
 - (void)testCreateAccountFailureAlreadyCreated {
     self.test = TestCaseCreateAccountFailureAlreadyCreated;
-    [self observeNotification:KHHNotificationCreateAccountSucceeded
+    [self observeNotificationName:KHHNetworkCreateAccountSucceeded
                             selector:@"createAccountSucceeded:"];
-    [self observeNotification:KHHNotificationCreateAccountFailed
+    [self observeNotificationName:KHHNotificationCreateAccountFailed
                             selector:@"createAccountFailed:"];
     [self.agent createAccount:@"13188799821"
                      password:@"123456"];
@@ -182,9 +182,9 @@ typedef enum {
 }
 - (void)testChangePasswordSuccess {
     self.test = TestCaseChangePasswordSuccess;
-    [self observeNotification:KHHNotificationChangePasswordSucceeded
+    [self observeNotificationName:KHHNotificationChangePasswordSucceeded
                             selector:@"changePasswordSucceeded:"];
-    [self observeNotification:KHHNotificationChangePasswordFailed
+    [self observeNotificationName:KHHNotificationChangePasswordFailed
                             selector:@"changePasswordFailed:"];
     [self.agent changePassword:@"123456" toNewPassword:@"123456"];
     [self waitUntilDone];
@@ -201,9 +201,9 @@ typedef enum {
 //}
 - (void)testChangePasswordFailureNotMatch {
     self.test = TestCaseChangePasswordFailureNotMatch;
-    [self observeNotification:KHHNotificationChangePasswordSucceeded
+    [self observeNotificationName:KHHNotificationChangePasswordSucceeded
                             selector:@"changePasswordSucceeded:"];
-    [self observeNotification:KHHNotificationChangePasswordFailed
+    [self observeNotificationName:KHHNotificationChangePasswordFailed
                             selector:@"changePasswordFailed:"];
     [self.agent changePassword:@"654321" toNewPassword:@"123456"];
     [self waitUntilDone];
@@ -251,9 +251,9 @@ typedef enum {
 //}
 - (void)testResetPasswordFailure {
     self.test = TestCaseResetPasswordFailure;
-    [self observeNotification:KHHNotificationResetPasswordSucceeded
+    [self observeNotificationName:KHHNotificationResetPasswordSucceeded
                             selector:@"resetPasswordSucceeded:"];
-    [self observeNotification:KHHNotificationResetPasswordFailed
+    [self observeNotificationName:KHHNotificationResetPasswordFailed
                             selector:@"resetPasswordFailed:"];
     [self.agent resetPasswordWithMobileNumber:@"8888373737"]; //不存在导致失败
     [self waitUntilDone];

@@ -5,6 +5,7 @@
 
 const struct ReceivedCardAttributes ReceivedCardAttributes = {
 	.isRead = @"isRead",
+	.memo = @"memo",
 };
 
 const struct ReceivedCardRelationships ReceivedCardRelationships = {
@@ -71,6 +72,13 @@ const struct ReceivedCardFetchedProperties ReceivedCardFetchedProperties = {
 - (void)setPrimitiveIsReadValue:(BOOL)value_ {
 	[self setPrimitiveIsRead:[NSNumber numberWithBool:value_]];
 }
+
+
+
+
+
+@dynamic memo;
+
 
 
 

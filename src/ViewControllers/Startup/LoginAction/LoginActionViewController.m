@@ -12,7 +12,6 @@
 #import "KHHNetworkAPIAgent+Account.h"
 #import "UIImageView+WebCache.h"
 #import "UIViewController+SM.h"
-#import "NSObject+Notification.h"
 
 #define textStartAutoLogin NSLocalizedString(@"正在自动登录...", nil)
 #define textStartLogin NSLocalizedString(@"正在登录...", nil)
@@ -29,7 +28,7 @@
 #define textNotAllDataAvailable NSLocalizedString(@"部分数据可能暂时无法使用。", nil)
 
 @interface LoginActionViewController ()
-@property (nonatomic, weak) KHHData *data;
+@property (nonatomic, strong) KHHData *data;
 @property (nonatomic, strong) KHHDefaults *defaults;
 @property (nonatomic, strong) KHHNetworkAPIAgent *agent;
 @end
@@ -40,6 +39,7 @@
 - (void)dealloc
 {
     [self stopObservingAllNotifications];
+    self.data = nil;
     self.defaults = nil;
     self.agent = nil;
 }//dealloc
@@ -52,28 +52,28 @@
         _agent = [[KHHNetworkAPIAgent alloc] init];
         //需要捕获的消息
         //Login
-        [self observeNotification:ECardNotificationLoginManually
+        [self observeNotificationName:KHHUILoginManually
                          selector:@"handleLoginManually:"];
-        [self observeNotification:ECardNotificationLoginAuto
+        [self observeNotificationName:KHHUILoginAuto
                          selector:@"handleLoginAuto:"];
-        [self observeNotification:KHHNotificationLoginSucceeded
+        [self observeNotificationName:KHHNetworkLoginSucceeded
                          selector:@"handleLoginSucceeded:"];
         //Sign up
-        [self observeNotification:ECardNotificationSignUpAction
+        [self observeNotificationName:KHHUISignUpAction
                          selector:@"handleSignUpAction:"];
-        [self observeNotification:KHHNotificationCreateAccountSucceeded
+        [self observeNotificationName:KHHNetworkCreateAccountSucceeded
                          selector:@"handleSignUpSucceeded:"];
         //Reset password
-        [self observeNotification:ECardNotificationResetPasswordAction
+        [self observeNotificationName:KHHUIResetPasswordAction
                          selector:@"handleResetPasswordAction:"];
-        [self observeNotification:KHHNotificationResetPasswordSucceeded
+        [self observeNotificationName:KHHNotificationResetPasswordSucceeded
                          selector:@"handleResetPasswordSucceeded:"];
         //Sync
-        [self observeNotification:KHHNotificationStartSyncAfterLogin
+        [self observeNotificationName:KHHNotificationStartSyncAfterLogin
                          selector:@"handleStartSyncAfterLogin:"];
-        [self observeNotification:KHHNotificationSyncAfterLoginSucceeded
+        [self observeNotificationName:KHHNotificationSyncAfterLoginSucceeded
                          selector:@"handleSyncAfterLoginSucceeded:"];
-        [self observeNotification:KHHNotificationSyncAfterLoginFailed
+        [self observeNotificationName:KHHNotificationSyncAfterLoginFailed
                          selector:@"handleSyncAfterLoginFailed:"];
     }
     return self;
@@ -137,14 +137,14 @@
         self.actionLabel.text = textStartAutoLogin;
         [self showCompanyLogo];
     } else {
-        NSString *notiName = KHHNotificationLoginFailed;
+        NSString *notiName = KHHNetworkLoginFailed;
         NSString *info = NSLocalizedString(@"自动登录条件不满足! ", nil);
         NSDictionary *infoDict = @{
                 kInfoKeyAutoLogin : @(YES),
                 kInfoKeyErrorMessage : info
         };
         DLog(@"[II] 自动登录条件不满足! 发送消息 %@", notiName);
-        [self postNotification:notiName
+        [self postASAPNotificationName:notiName
                           info:infoDict];
     }
 }
@@ -159,7 +159,7 @@
     [self.agent authenticateWithFakeID:self.defaults.currentAuthorizationID.stringValue
                               password:self.defaults.currentPassword];
     // 发送同步消息
-    [self postNotification:KHHNotificationStartSyncAfterLogin info:nil];
+    [self postASAPNotificationName:KHHNotificationStartSyncAfterLogin];
 }
 - (void)handleSignUpAction:(NSNotification *)notification
 {
@@ -206,16 +206,17 @@
 {
     self.actionLabel.text = textStartPostLoginSync;
     // 开始同步数据
+    [self.data removeContext];
     [self.data startSyncAllData];
 }
 - (void)handleSyncAfterLoginSucceeded:(NSNotification *)noti {
     // 进主界面。
-    [self postNotification:KHHNotificationShowMainUI info:nil];
+    [self postASAPNotificationName:KHHUIShowMainUI];
 }
 - (void)handleSyncAfterLoginFailed:(NSNotification *)noti {
     [self alertWithTitle:alertTitleSyncFailed message:textNotAllDataAvailable];
     // 进主界面。
-    [self postNotification:KHHNotificationShowMainUI info:nil];
+    [self postASAPNotificationName:KHHUIShowMainUI];
 }
 
 #pragma mark - UIAlertViewDelegate
@@ -225,10 +226,9 @@
         //注册成功
         self.defaults.loggedIn = YES;
         //发送登录消息
-        NSString *notiName = ECardNotificationLoginAuto;
+        NSString *notiName = KHHUILoginAuto;
         DLog(@"[II] 发送消息 %@ ！", notiName);
-        [self postNotification:notiName
-                          info:nil];
+        [self postASAPNotificationName:notiName];
     }
 }
 

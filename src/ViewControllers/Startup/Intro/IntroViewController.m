@@ -6,7 +6,6 @@
 
 #import "IntroViewController.h"
 #import "KHHDefaults.h"
-#import "NSObject+Notification.h"
 
 @interface IntroViewController ()
 @property (nonatomic, strong) KHHDefaults *defaults;
@@ -74,9 +73,9 @@
 
 - (IBAction)startNow:(id)sender {
     self.defaults.firstLaunch = NO;
-    NSString *name = ECardNotificationSkipIntro;
+    NSString *name = KHHUISkipIntro;
     DLog(@"[II] 发送消息 %@", name);
-    [self postNotification:name info:nil];
+    [self postASAPNotificationName:name];
 }
 
 @end

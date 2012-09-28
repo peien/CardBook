@@ -7,12 +7,9 @@
 //
 
 #import "KHHData.h"
-#import "KHHData+Handlers.h"
-#import "KHHData+UI.h"
-#import "NSObject+Notification.h"
 
 @implementation KHHData
-@synthesize managedObjectContext = _managedObjectContext;
+@synthesize context = _context;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize agent = _agent;
@@ -23,20 +20,27 @@
     if (self) {
         //
         _agent = [[KHHNetworkAPIAgent alloc] init];
-        [self observeNotification:KHHNotificationAllDataAfterDateSucceeded
-                           object:_agent selector:@"handleAllDataAfterDateSucceeded:"];
-        [self observeNotification:KHHNotificationAllDataAfterDateFailed
-                           object:_agent selector:@"handleAllDataAfterDateFailed:"];
-        [self observeNotification:KHHNotificationReceivedCardCountAfterDateLastCardSucceeded
-                           object:_agent selector:@"handleReceivedCardCountAfterDateLastCardSucceeded:"];
-        [self observeNotification:KHHNotificationReceivedCardCountAfterDateLastCardFailed
-                           object:_agent selector:@"handleReceivedCardCountAfterDateLastCardFailed:"];
+        [self observeNotificationName:KHHNetworkAllDataAfterDateSucceeded
+                         selector:@"handleAllDataAfterDateSucceeded:"];
+        [self observeNotificationName:KHHNetworkAllDataAfterDateFailed
+                         selector:@"handleAllDataAfterDateFailed:"];
+        [self observeNotificationName:KHHNetworkReceivedCardCountAfterDateLastCardSucceeded
+                         selector:@"handleReceivedCardCountAfterDateLastCardSucceeded:"];
+        [self observeNotificationName:KHHNetworkReceivedCardCountAfterDateLastCardFailed
+                         selector:@"handleReceivedCardCountAfterDateLastCardFailed:"];
+        [self observeNotificationName:KHHNetworkReceivedCardsAfterDateLastCardExpectedCountSucceeded
+                         selector:@"handleReceivedCardsAfterDateLastCardExpectedCountSucceeded:"];
+        [self observeNotificationName:KHHNetworkReceivedCardsAfterDateLastCardExpectedCountFailed
+                         selector:@"handleReceivedCardsAfterDateLastCardExpectedCountFailed:"];
     }
     return self;
 }
 - (void)dealloc
 {
-    [self removeContext];
+    [self stopObservingAllNotifications];
+    _context = nil;
+    _persistentStoreCoordinator = nil;
+    _managedObjectModel = nil;
     _agent = nil;
 }
 + (id)sharedData {
@@ -50,38 +54,45 @@
 #pragma mark - Core Data stack
 - (void)removeContext // 删除Context。登出或登入时使用。
 {
-    _managedObjectContext = nil;
+    _context = nil;
     _persistentStoreCoordinator = nil;
     _managedObjectModel = nil;
 }
 - (void)saveContext // 保存更改。
 {
-    NSError *error = nil;
-    NSManagedObjectContext *managedObjectContext = self.managedObjectContext;
-    if (managedObjectContext != nil) {
-        if ([managedObjectContext hasChanges] && ![managedObjectContext save:&error]) {
+    if (self.context) {
+        if (![self.context hasChanges]) {
+            ALog(@"[II] context 无需保存！");
+            return;
+        }
+        NSError *error = nil;
+        if (![self.context save:&error]) {
             // Replace this implementation with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-            NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+            if (error) {
+                ALog(@"Unresolved error %@, %@", error, [error userInfo]);
+            } else {
+                ALog(@"[II] 保存 context 时发生了未知错误！");
+            }
             abort();
         }
     }
 }
 - (void)cleanContext // 清除未保存的更改。
 {
-    [self.managedObjectContext reset];
+    [self.context reset];
 }
-- (NSManagedObjectContext *)managedObjectContext {
-    if (_managedObjectContext != nil) {
-        return _managedObjectContext;
+- (NSManagedObjectContext *)context {
+    if (_context != nil) {
+        return _context;
     }
     
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
     if (coordinator != nil) {
-        _managedObjectContext = [[NSManagedObjectContext alloc] init];
-        [_managedObjectContext setPersistentStoreCoordinator:coordinator];
+        _context = [[NSManagedObjectContext alloc] init];
+        [_context setPersistentStoreCoordinator:coordinator];
     }
-    return _managedObjectContext;
+    return _context;
 }
 - (NSManagedObjectModel *)managedObjectModel {
     if (_managedObjectModel != nil) {
@@ -96,7 +107,14 @@
         return _persistentStoreCoordinator;
     }
     
-    NSURL *storeURL = [[KHHApp applicationDocumentsDirectory] URLByAppendingPathComponent:@"CardBook.sqlite"];
+    // 登陆成功后以 “user_companyID.sqlite” 为文件名创建数据库文件。user取不到时使用默认的“CardBook.sqlite”。
+    NSString *fileName = @"CardBook.sqlite";
+    NSString *userID = [[KHHDefaults sharedDefaults] currentUser];
+    if (userID.length) {
+        NSNumber *companyID = [[KHHDefaults sharedDefaults] currentCompanyID];
+        fileName = [NSString stringWithFormat:@"%@_%@.sqlite",userID, companyID];
+    }
+    NSURL *storeURL = [[KHHApp applicationDocumentsDirectory] URLByAppendingPathComponent:fileName];
     
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
@@ -135,8 +153,8 @@
 - (void)startSyncAllData {
     // 启动调用链！
     NSDictionary *extra = @{kExtraKeyChainedInvocation : [NSNumber numberWithBool:YES]};
-#warning 需要填上时间
-    [self.agent allDataAfterDate:nil extra:extra];
+    SyncMark *lastSyncTime = [self syncMarkByKey:kSyncMarkKeySyncAllLastTime];
+    [self.agent allDataAfterDate:lastSyncTime.value extra:extra];
 }
 
 @end

@@ -7,25 +7,23 @@
 //
 
 #import "KHHAppDelegate.h"
-#import "NSObject+Notification.h"
-#import "KHHNotifications.h"
 #import "MyTabBarController.h"
+#import "ATestViewController.h"
 
 @implementation KHHAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor blackColor];
     
     // 注册响应的消息
-    [self observeNotification:KHHNotificationShowStartup selector:@"handleShowStartup:"]; // 显示主界面消息
-    [self observeNotification:KHHNotificationShowMainUI  selector:@"handleShowMainUI:"]; // 显示主界面消息
+    [self observeNotificationName:KHHUIShowStartup selector:@"handleShowStartup:"]; // 显示主界面消息
+    [self observeNotificationName:KHHUIShowMainUI  selector:@"handleShowMainUI:"]; // 显示主界面消息
     
     // 显示Startup界面
     [self.window makeKeyAndVisible];
-    [self postNotification:KHHNotificationShowStartup info:nil];
+    [self postASAPNotificationName:KHHUIShowStartup];
     
     //捕获摇摇动作
     application.applicationSupportsShakeToEdit = YES;
@@ -69,13 +67,17 @@
     self.window.rootViewController = [[StartupViewController alloc] initWithNibName:nil bundle:nil];
 }
 - (void)handleShowMainUI:(NSNotification *)noti {
+#if KHH_TEST_VIEWCONTROLLER == 1
+    // 显示 THE TEST VIEW
+    self.window.rootViewController = [[ATestViewController alloc] initWithNibName:nil bundle:nil];
+#else
     // 显示主界面
     self.mainUI = [[KHHMainUIController alloc] init];
     //暂时写在这里，处理新到联系人或消息提示
-//      NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:9999],@"Num", nil];
-//      [[NSNotificationCenter defaultCenter] postNotificationName:@"KNotificationNewMsgNum" object:dic];
-//      [[NSNotificationCenter defaultCenter] postNotificationName:@"KNotificationNewContactNum" object:dic];
-
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:9999],@"Num", nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"KNotificationNewMsgNum" object:dic];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"KNotificationNewContactNum" object:dic];
+#endif
 }
 //设置时间触发
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
