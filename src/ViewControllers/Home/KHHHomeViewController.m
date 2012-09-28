@@ -254,6 +254,7 @@ typedef enum {
         KHHCardMode *card = [[KHHCardMode alloc] init];
         card.name = [NSString stringWithFormat:@"张%d",i];
         card.title = @"软件设计师";
+        //直接读，再引用
         card.company.name = @"浙江金汉弘软件技术有限公司";
         card.mobilePhone = [NSString stringWithFormat:@"1512564124%d",i];
         if (i%2 == 0) {
@@ -391,7 +392,6 @@ typedef enum {
             }
         }
   }
-
     return nil;
 }
 #pragma mark - UITableViewDelegate

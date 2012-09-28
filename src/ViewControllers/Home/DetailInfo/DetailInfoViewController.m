@@ -23,6 +23,8 @@
 #import "KHHVisitRecoardVC.h"
 #import "UIImageView+WebCache.h"
 
+#import "Company.h"
+
 #define POPDismiss [self.popover dismissPopoverAnimated:YES];
 
 @interface DetailInfoViewController ()
@@ -133,6 +135,7 @@
     companylab.textAlignment = UITextAlignmentLeft;
     companylab.backgroundColor = [UIColor clearColor];
     companylab.text = @"浙江金汉弘软件有限公司";
+    //companylab.text = self.cardM.company.name;
     [headerView addSubview:companylab];
     UILabel *jobLab = [[UILabel alloc] initWithFrame:CGRectMake(125, 10, 100, 20)];
     jobLab.text = self.cardM.title;

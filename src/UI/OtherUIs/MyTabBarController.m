@@ -1,6 +1,6 @@
 //
 //  MyTabBarController.m
-//  91kge
+//  CardBook
 //
 //  Created by ge k on 12-8-23.
 //  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
@@ -96,7 +96,6 @@
     UIButton *btn = (UIButton *)[self.tabBarView viewWithTag:self.index];
     [self performSelector:@selector(buttonClick:) withObject:btn afterDelay:0.1];
     [self creatNumView];
-    
 }
 - (void)viewDidUnload
 {

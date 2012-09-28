@@ -32,11 +32,10 @@
 - (void)rightBarButtonClick:(id)sender
 {
     [_tf resignFirstResponder];
-    DLog(@"_tf====%@",_tf.text);
+    
     //保存，如果没有修改重要标记，直接保存importFlag
     if (!_tf.text) {
         DLog(@"直接保存重要标记");
-        
     }else{
         _importFlag = _tf.text;
     }
