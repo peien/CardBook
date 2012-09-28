@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "XLPageControl.h"
-
+#import "Card.h"
+@class KHHVisualCardViewController;
 @interface KHHFrameCardView : UIView<UIScrollViewDelegate>
 @property (strong, nonatomic) UIScrollView *scrView;
 @property (assign, nonatomic) bool         isVer;
 @property (strong, nonatomic) XLPageControl *xlPage;
+@property (nonatomic, strong) KHHVisualCardViewController *cardTempVC;
+@property (nonatomic, strong) Card                        *card;
 - (id)initWithFrame:(CGRect)frame isVer:(BOOL)ver;
+- (void)showView;
 @end

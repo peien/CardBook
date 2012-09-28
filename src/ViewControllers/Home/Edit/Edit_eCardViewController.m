@@ -110,6 +110,8 @@ NSString *const kECardListSeparator = @"|";
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor colorWithRed:241 green:238 blue:232 alpha:1.0];
     KHHFrameCardView *cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(0, 0, 320, 220) isVer:NO];
+    cardView.card = self.glCard;
+    [cardView showView];
     _theTable.tableHeaderView = cardView;
     if (self.type == KCardViewControllerTypeNewCreate) {
         self.title = @"新建名片";

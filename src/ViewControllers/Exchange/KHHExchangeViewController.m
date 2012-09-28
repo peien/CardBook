@@ -64,6 +64,7 @@
         [self.view addSubview:cardView];
     }else{
         KHHFrameCardView *cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(0, 0, 320, 220) isVer:NO];
+        [cardView showView];
         [self.view addSubview:cardView];
     }
     NSArray *titleArray = [[NSArray alloc] initWithObjects:@"交换名片",@"发送至手机",@"收名片", nil];

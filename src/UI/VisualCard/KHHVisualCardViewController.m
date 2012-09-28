@@ -12,18 +12,17 @@
 #import "UIColor+HexColor.h"
 #import "UIImageView+WebCache.h"
 static CGFloat const ratio = 300.f / 450.f;
-
 @interface KHHVisualCardViewController ()
 
 @end
 
 @implementation KHHVisualCardViewController
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        
     }
     return self;
 }

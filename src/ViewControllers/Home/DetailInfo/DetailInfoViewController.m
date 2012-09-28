@@ -115,7 +115,7 @@
     [iconImgView addGestureRecognizer:tap];
     UIImage *iconImg = [UIImage imageNamed:@"logopic.png"];
     iconImgView.image = iconImg;
-    [iconImgView setImageWithURL:[NSURL URLWithString:self.cardM.logUrl] placeholderImage:iconImg];
+    [iconImgView setImageWithURL:[NSURL URLWithString:self.card.logo.url] placeholderImage:iconImg];
     iconImgView.backgroundColor = [UIColor clearColor];
     [headerView addSubview:iconImgView];
     _segmCtrl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(0, 75, 320, 30)];
@@ -125,7 +125,7 @@
     [_segmCtrl addTarget:self action:@selector(segCtrlClick:) forControlEvents:UIControlEventValueChanged];
     _segmCtrl.selectedSegmentIndex = 0;
     UILabel *nameLab = [[UILabel alloc] initWithFrame:CGRectMake(75, 10, 120, 20)];
-    nameLab.text = self.cardM.name;
+    nameLab.text = self.card.name;
     nameLab.backgroundColor = [UIColor clearColor];
     nameLab.font = [UIFont boldSystemFontOfSize:15];
     nameLab.textAlignment = UITextAlignmentLeft;
@@ -134,11 +134,10 @@
     companylab.font = [UIFont systemFontOfSize:11];
     companylab.textAlignment = UITextAlignmentLeft;
     companylab.backgroundColor = [UIColor clearColor];
-    companylab.text = @"浙江金汉弘软件有限公司";
-    //companylab.text = self.cardM.company.name;
+    companylab.text = self.card.company.name;
     [headerView addSubview:companylab];
     UILabel *jobLab = [[UILabel alloc] initWithFrame:CGRectMake(125, 10, 100, 20)];
-    jobLab.text = self.cardM.title;
+    jobLab.text = self.card.title;
     jobLab.textAlignment = UITextAlignmentLeft;
     jobLab.font = [UIFont systemFontOfSize:13];
     jobLab.backgroundColor = [UIColor clearColor];
@@ -164,10 +163,11 @@
         [headerView addSubview:headBtn];
     }
     _cardView = [[[NSBundle mainBundle] loadNibNamed:@"KHHCardView" owner:self options:nil] objectAtIndex:0];
+    _cardView.myCard = self.card;
     [_cardView initView];
     _cardView.detailVC = self;
     //暂时显示数据
-    [_cardView initViewData];
+    //[_cardView initViewData];
     [self.containView addSubview:_cardView];
     _visitCalView = [[[NSBundle mainBundle] loadNibNamed:@"KHHVisitCalendarView" owner:self options:nil] objectAtIndex:0];
     

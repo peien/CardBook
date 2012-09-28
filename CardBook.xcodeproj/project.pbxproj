@@ -28,7 +28,6 @@
 		62812688161299BF0054B753 /* KHHCardMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 62812687161299BF0054B753 /* KHHCardMode.m */; };
 		62A6B6BB16153F000018F3DB /* KHHSinaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A6B6B916153F000018F3DB /* KHHSinaViewController.m */; };
 		62A6B6BC16153F000018F3DB /* KHHSinaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62A6B6BA16153F000018F3DB /* KHHSinaViewController.xib */; };
-		62A6B6BE16153F7A0018F3DB /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62A6B6BD16153F7A0018F3DB /* Social.framework */; };
 		62A6C4DE160AAECE00ADA43E /* KHHFullFrameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A6C4DC160AAECE00ADA43E /* KHHFullFrameController.m */; };
 		62A6C4DF160AAECE00ADA43E /* KHHFullFrameController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62A6C4DD160AAECE00ADA43E /* KHHFullFrameController.xib */; };
 		62A9C99B16099AC100BF7D41 /* KHHAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A9C99A16099AC100BF7D41 /* KHHAddressBook.m */; };
@@ -509,7 +508,6 @@
 		62A6B6B816153F000018F3DB /* KHHSinaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHSinaViewController.h; sourceTree = "<group>"; };
 		62A6B6B916153F000018F3DB /* KHHSinaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHSinaViewController.m; sourceTree = "<group>"; };
 		62A6B6BA16153F000018F3DB /* KHHSinaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHSinaViewController.xib; sourceTree = "<group>"; };
-		62A6B6BD16153F7A0018F3DB /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		62A6C4DB160AAECE00ADA43E /* KHHFullFrameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KHHFullFrameController.h; path = ../../ViewControllers/KHHFullFrameController.h; sourceTree = "<group>"; };
 		62A6C4DC160AAECE00ADA43E /* KHHFullFrameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KHHFullFrameController.m; path = ../../ViewControllers/KHHFullFrameController.m; sourceTree = "<group>"; };
 		62A6C4DD160AAECE00ADA43E /* KHHFullFrameController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = KHHFullFrameController.xib; path = ../../ViewControllers/KHHFullFrameController.xib; sourceTree = "<group>"; };
@@ -1136,7 +1134,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				62A6B6BE16153F7A0018F3DB /* Social.framework in Frameworks */,
 				98A851051602EDDD00A4A673 /* CoreData.framework in Frameworks */,
 				98A851031602EDCC00A4A673 /* MessageUI.framework in Frameworks */,
 				98A851011602EDBC00A4A673 /* QuartzCore.framework in Frameworks */,
@@ -1345,7 +1342,6 @@
 		98A84D601602CD2500A4A673 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				62A6B6BD16153F7A0018F3DB /* Social.framework */,
 				98A850F01602EC1600A4A673 /* AddressBook.framework */,
 				98A850F11602EC1600A4A673 /* AddressBookUI.framework */,
 				98A851041602EDDD00A4A673 /* CoreData.framework */,

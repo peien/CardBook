@@ -73,6 +73,7 @@
     //名片界面
     _cardView = [[[NSBundle mainBundle] loadNibNamed:@"KHHCardView" owner:self options:nil] objectAtIndex:0];
     _cardView.myDetailVC = self;
+    _cardView.myCard = self.card;
     [_cardView initView];
     [_cardView initViewData];
     [self.containView addSubview:_visitView];

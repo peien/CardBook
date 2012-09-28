@@ -30,6 +30,8 @@
 
 #import "Group.h"
 #import "KHHCardMode.h"
+#import "Image.h"
+#import "Card.h"
 
 #import <MessageUI/MessageUI.h>
 
@@ -50,8 +52,9 @@ typedef enum {
 @property (strong, nonatomic)  NSArray                *resultArray;
 @property (strong, nonatomic)  NSArray                *searchArray;
 @property (strong, nonatomic)  KHHData                *dataControl;
-@property (strong, nonatomic)  NSMutableArray         *allArray;
-@property (strong, nonatomic)  NSMutableArray         *ReceNewArray;
+@property (strong, nonatomic)  NSArray                *allArray;
+@property (strong, nonatomic)  NSArray                *ReceNewArray;
+@property (strong, nonatomic)  NSArray                *myCardArray;
 @property (strong, nonatomic)  KHHFloatBarController  *floatBarVC;
 @property (assign, nonatomic)  bool                   isOwnGroup;
 @end
@@ -93,13 +96,13 @@ typedef enum {
 @synthesize floatBarVC;
 @synthesize isOwnGroup;
 @synthesize oWnGroupArray;
+@synthesize myCardArray;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        [self.rightBtn setTitle:@"kity" forState:UIControlStateNormal];
         //self.navigationItem.leftBarButtonItem = nil;
         self.leftBtn.hidden = YES;
         //*****************
@@ -113,7 +116,9 @@ typedef enum {
 
 - (void)rightBarButtonClick:(id)sender
 {
-    [self.navigationController pushViewController:[[KHHMyDetailController alloc] init] animated:YES];
+    KHHMyDetailController *myDetailVC = [[KHHMyDetailController alloc] initWithNibName:nil bundle:nil];
+    myDetailVC.card = [self.myCardArray objectAtIndex:0];
+    [self.navigationController pushViewController:myDetailVC animated:YES];
 }
 #pragma mark -
 #pragma mark View LifeCycle
@@ -165,9 +170,6 @@ typedef enum {
     disCtrl.searchResultsDelegate = self;
     _searCtrl = disCtrl;
     
-    //
-    [self initViewData];
-    
     //默认选中哪个按钮
     //cell是nil;
     [self performSelector:@selector(defaultSelectBtn) withObject:nil afterDelay:0.3];
@@ -177,6 +179,12 @@ typedef enum {
     longPress.numberOfTouchesRequired = 1;
     longPress.allowableMovement = NO;
     [_bigTable addGestureRecognizer:longPress];
+    
+    //初始化界面数据
+    [self initViewData];
+    //我的详情
+    Card *myCard = [self.myCardArray objectAtIndex:0];
+    [self.rightBtn setTitle:myCard.name forState:UIControlStateNormal];
     
 }
 // 搜索结果
@@ -237,6 +245,7 @@ typedef enum {
     self.ReceNewArray = nil;
     self.floatBarVC = nil;
     self.oWnGroupArray = nil;
+    self.myCardArray = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -249,46 +258,51 @@ typedef enum {
 {
     //调用数据库接口，获取各个分组的array
     // 暂时用model数据
-    self.allArray = [[NSMutableArray alloc] init];
-    for (int i = 0; i< 10; i++) {
-        KHHCardMode *card = [[KHHCardMode alloc] init];
-        card.name = [NSString stringWithFormat:@"张%d",i];
-        card.title = @"软件设计师";
-        //直接读，再引用
-        card.company.name = @"浙江金汉弘软件技术有限公司";
-        card.mobilePhone = [NSString stringWithFormat:@"1512564124%d",i];
-        if (i%2 == 0) {
-            card.logUrl = @"http://farm6.static.flickr.com/5094/5464787611_642ee9280d_m.jpg";
-        }
-        if (i%2 != 0) {
-            card.logUrl = @"http://farm5.static.flickr.com/4078/4861715526_6ccb2b9a19_m.jpg";
-        }
-        if (i%3 == 0) {
-            card.logUrl = @"http://farm6.static.flickr.com/5030/5605213905_a7124c8f23_m.jpg";
-        }
-        [self.allArray addObject:card];
-    }
-    self.generalArray = self.allArray;
+//    self.allArray = [[NSMutableArray alloc] init];
+//    for (int i = 0; i< 10; i++) {
+//        KHHCardMode *card = [[KHHCardMode alloc] init];
+//        card.name = [NSString stringWithFormat:@"张%d",i];
+//        card.title = @"软件设计师";
+//        //直接读，再引用
+//        card.company.name = @"浙江金汉弘软件技术有限公司";
+//        card.mobilePhone = [NSString stringWithFormat:@"1512564124%d",i];
+//        if (i%2 == 0) {
+//            card.logUrl = @"http://farm6.static.flickr.com/5094/5464787611_642ee9280d_m.jpg";
+//        }
+//        if (i%2 != 0) {
+//            card.logUrl = @"http://farm5.static.flickr.com/4078/4861715526_6ccb2b9a19_m.jpg";
+//        }
+//        if (i%3 == 0) {
+//            card.logUrl = @"http://farm6.static.flickr.com/5030/5605213905_a7124c8f23_m.jpg";
+//        }
+//        [self.allArray addObject:card];
+//    }
+//    self.generalArray = self.allArray;
+//    
+//    self.ReceNewArray = [[NSMutableArray alloc] init];
+//    for (int i = 0; i< 10; i++) {
+//        KHHCardMode *card = [[KHHCardMode alloc] init];
+//        card.name = [NSString stringWithFormat:@"李%d",i];
+//        card.title = @"UI设计师";
+//        card.company.name = @"浙江金汉弘软件技术有限公司";
+//        card.mobilePhone = [NSString stringWithFormat:@"1552564124%d",i];
+//        if (i%2 != 0) {
+//            card.logUrl = @"http://farm6.static.flickr.com/5094/5464787611_642ee9280d_m.jpg";
+//        }
+//        if (i%2 == 0) {
+//            card.logUrl = @"http://farm5.static.flickr.com/4078/4861715526_6ccb2b9a19_m.jpg";
+//        }
+//        if (i%3 == 0) {
+//            card.logUrl = @"http://farm6.static.flickr.com/5030/5605213905_a7124c8f23_m.jpg";
+//        }
+//        [self.ReceNewArray addObject:card];
+//        [self.allArray addObject:card];
+//    }
     
-    self.ReceNewArray = [[NSMutableArray alloc] init];
-    for (int i = 0; i< 10; i++) {
-        KHHCardMode *card = [[KHHCardMode alloc] init];
-        card.name = [NSString stringWithFormat:@"李%d",i];
-        card.title = @"UI设计师";
-        card.company.name = @"浙江金汉弘软件技术有限公司";
-        card.mobilePhone = [NSString stringWithFormat:@"1552564124%d",i];
-        if (i%2 != 0) {
-            card.logUrl = @"http://farm6.static.flickr.com/5094/5464787611_642ee9280d_m.jpg";
-        }
-        if (i%2 == 0) {
-            card.logUrl = @"http://farm5.static.flickr.com/4078/4861715526_6ccb2b9a19_m.jpg";
-        }
-        if (i%3 == 0) {
-            card.logUrl = @"http://farm6.static.flickr.com/5030/5605213905_a7124c8f23_m.jpg";
-        }
-        [self.ReceNewArray addObject:card];
-        [self.allArray addObject:card];
-    }
+    self.allArray = [self.dataControl allReceivedCards];
+    self.generalArray = allArray;
+    self.myCardArray = [self.dataControl allMyCards];
+    
     
 }
 #pragma mark - UITableViewDataSource
@@ -366,8 +380,8 @@ typedef enum {
                     
                 }
                 //从网络获取头像
-                KHHCardMode *card = [self.generalArray objectAtIndex:indexPath.row];
-                [cell.logoBtn setImageWithURL:[NSURL URLWithString:card.logUrl]
+                Card *card = [self.generalArray objectAtIndex:indexPath.row];
+                [cell.logoBtn setImageWithURL:[NSURL URLWithString:card.logo.url]
                              placeholderImage:[UIImage imageNamed:@"logopic.png"]
                                       success:^(UIImage *image, BOOL cached){
                                           if(CGSizeEqualToSize(image.size, CGSizeZero)){
@@ -386,7 +400,7 @@ typedef enum {
                 //填充单元格数据
                 cell.nameLabel.text = card.name;
                 cell.positionLabel.text = card.title;
-                cell.companyLabel.text =@"浙江金汉弘软件技术有限公司";
+                cell.companyLabel.text =card.company.name;
                 return cell;
                 break;
             }
@@ -410,7 +424,7 @@ typedef enum {
                 KHHClientCellLNPCC *cell = (KHHClientCellLNPCC*)[tableView cellForRowAtIndexPath:indexPath];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 DetailInfoViewController *detailVC = [[DetailInfoViewController alloc] initWithNibName:nil bundle:nil];
-                detailVC.cardM = [self.generalArray objectAtIndex:indexPath.row];
+                detailVC.card = [self.generalArray objectAtIndex:indexPath.row];
                 [self.navigationController pushViewController:detailVC animated:YES];
             }
             break;
@@ -419,10 +433,10 @@ typedef enum {
     
     if (tableView == self.searCtrl.searchResultsTableView) {
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-        for (KHHCardMode *card in self.generalArray) {
+        for (Card *card in self.generalArray) {
             if ([cell.textLabel.text isEqualToString:card.name]) {
                 DetailInfoViewController *detailVC = [[DetailInfoViewController alloc] initWithNibName:nil bundle:nil];
-                detailVC.cardM = card;
+                detailVC.card = card;
                 self.searCtrl.active = NO;
                 [self.navigationController pushViewController:detailVC animated:YES];
             }
