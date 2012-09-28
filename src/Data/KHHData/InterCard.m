@@ -26,7 +26,6 @@
     
     // 个人重要信息
     result.name = [NSString stringFromObject:json[JSONDataKeyName]];
-//    NSLog(@"%@", [NSString stringWithUTF8String:[json[JSONDataKeyName] cStringUsingEncoding:NSASCIIStringEncoding]]);
     result.title = [NSString stringFromObject:json[JSONDataKeyJobTitle]];
     result.department = KHHPlaceholderForEmptyString;
     result.mobilePhone = [NSString stringFromObject:json[JSONDataKeyMobilePhone]];

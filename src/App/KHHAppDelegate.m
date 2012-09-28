@@ -15,7 +15,6 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor blackColor];
     
     // 注册响应的消息
@@ -67,17 +66,18 @@
     // 显示启动界面
     self.window.rootViewController = [[StartupViewController alloc] initWithNibName:nil bundle:nil];
 }
-//- (void)handleShowMainUI:(NSNotification *)noti {
-//    // 显示主界面
-//    self.mainUI = [[KHHMainUIController alloc] init];
-//    //暂时写在这里，处理新到联系人或消息提示
-//    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:9999],@"Num", nil];
-//    [[NSNotificationCenter defaultCenter] postASAPNotificationName:@"KNotificationNewMsgNum" object:dic];
-//    [[NSNotificationCenter defaultCenter] postASAPNotificationName:@"KNotificationNewContactNum" object:dic];
-//}
 - (void)handleShowMainUI:(NSNotification *)noti {
+#if KHH_TEST_VIEWCONTROLLER == 1
     // 显示 THE TEST VIEW
     self.window.rootViewController = [[ATestViewController alloc] initWithNibName:nil bundle:nil];
+#else
+    // 显示主界面
+    self.mainUI = [[KHHMainUIController alloc] init];
+    //暂时写在这里，处理新到联系人或消息提示
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:9999],@"Num", nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"KNotificationNewMsgNum" object:dic];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"KNotificationNewContactNum" object:dic];
+#endif
 }
 //设置时间触发
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
