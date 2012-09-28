@@ -146,7 +146,6 @@
     NSMutableDictionary *dict = [NSJSONSerialization JSONObjectWithData:decodedData
                                                          options:NSJSONReadingMutableContainers
                                                            error:nil];
-    DLog(@"[II] dict = %@", dict);
     NSMutableDictionary *result = dict[JSONDataKeyJSONData];
     NSNumber *state = result[JSONDataKeyState];
     NSInteger code = KHHNetworkStatusCodeUnresolvableData;

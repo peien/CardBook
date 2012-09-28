@@ -31,7 +31,6 @@
 - (NSMutableArray *)processCardTemplateList:(NSArray *)list;
 // CardTemplateItem数组
 - (NSMutableArray *)processCardTemplateItemList:(NSArray *)list;
-
 @end
 #pragma mark - Processors_Object
 @interface KHHData (Processors_Object)
@@ -41,8 +40,6 @@
 - (CardTemplate *)processCardTemplate:(NSDictionary *)cardTemplate;
 // 返回CardTemplateItem
 - (CardTemplateItem *)processCardTemplateItem:(NSDictionary *)templateItem;
-//
-- (void)processSyncTime:(NSString *)syncTime;
 @end
 #pragma mark - Processors_FillContent
 @interface KHHData (Processors_FillContent)

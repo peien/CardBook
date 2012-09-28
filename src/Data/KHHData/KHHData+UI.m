@@ -26,14 +26,8 @@
     id result = [self cardOfType:KHHCardModelTypeMyCard byID:cardID];
     return result;
 }
-- (void)createMyCardWithDictionary:(NSDictionary *)dict {
-    [self createCardOfType:KHHCardModelTypeMyCard withDictionary:dict];
-}
-- (void)modifyMyCardWithDictionary:(NSDictionary *)dict {
-    [self modifyCardOfType:KHHCardModelTypeMyCard withDictionary:dict];
-}
-- (void)deleteMyCardByID:(NSNumber *)cardID {
-    [self deleteCardOfType:KHHCardModelTypeMyCard byID:cardID];
+- (void)modifyMyCardWithInterCard:(InterCard *)iCard {
+    [self modifyCardOfType:KHHCardModelTypeMyCard withInterCard:iCard];
 }
 
 /*!
@@ -47,11 +41,11 @@
     id result = [self cardOfType:KHHCardModelTypePrivateCard byID:cardID];
     return result;
 }
-- (void)createPrivateCardWithDictionary:(NSDictionary *)dict {
-    [self createCardOfType:KHHCardModelTypePrivateCard withDictionary:dict];
+- (void)createPrivateCardWithInterCard:(InterCard *)iCard {
+    [self createCardOfType:KHHCardModelTypePrivateCard withInterCard:iCard];
 }
-- (void)modifyPrivateCardWithDictionary:(NSDictionary *)dict {
-    [self modifyCardOfType:KHHCardModelTypePrivateCard withDictionary:dict];
+- (void)modifyPrivateCardWithInterCard:(InterCard *)iCard {
+    [self modifyCardOfType:KHHCardModelTypePrivateCard withInterCard:iCard];
 }
 - (void)deletePrivateCardByID:(NSNumber *)cardID {
     [self deleteCardOfType:KHHCardModelTypePrivateCard byID:cardID];
@@ -67,12 +61,6 @@
 - (ReceivedCard *)receivedCardByID:(NSNumber *)cardID {
     id result = [self cardOfType:KHHCardModelTypeReceivedCard byID:cardID];
     return result;
-}
-- (void)createReceivedCardWithDictionary:(NSDictionary *)dict {
-    [self createCardOfType:KHHCardModelTypeReceivedCard withDictionary:dict];
-}
-- (void)modifyReceivedCardWithDictionary:(NSDictionary *)dict {
-    [self modifyCardOfType:KHHCardModelTypeReceivedCard withDictionary:dict];
 }
 - (void)deleteReceivedCardByID:(NSNumber *)cardID {
     [self deleteCardOfType:KHHCardModelTypeReceivedCard byID:cardID];

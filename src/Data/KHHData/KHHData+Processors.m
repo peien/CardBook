@@ -12,41 +12,6 @@
 
 @implementation KHHData (Processors)
 
-//- (NSMutableArray *)processList:(NSArray *)list
-//                 ofClass:(NSString *)className {
-//    NSMutableArray *result = [NSMutableArray array];
-//    if (0 == list.count || 0 == className.length) {
-//        return result;
-//    }
-//    id obj;
-//    for (obj in list) {
-//        if (nil == obj) {
-//            continue;
-//        }
-//        
-//        NSString *selName = [NSString stringWithFormat:@"process%@:", className];
-//        DLog(@"[II] 尝试 seletcor = %@", selName);
-//        SEL selector = NSSelectorFromString(selName);
-//        if (![self respondsToSelector:selector]) {
-//            DLog(@"[EE] KHHData 缺少 seletcor = %@", selName);
-//            break;
-//        }
-//        NSInvocation *inv = [NSInvocation invocationWithMethodSignature:[self methodSignatureForSelector:selector]];
-//        [inv setTarget:self];
-//        [inv setSelector:selector];
-//        [inv setArgument:&obj atIndex:2];
-//        [inv retainArguments];
-//        [inv invoke];
-//        id invResult = nil;
-//        [inv getReturnValue:&invResult];
-//        if ([invResult isKindOfClass:NSClassFromString(className)]) {
-//            [result addObject:invResult];
-//        }
-//    }
-//
-//    return result;
-//}
-
 // 解析一个对象
 // 以下情况会返回nil
 // 1.objDict为空或nil
@@ -189,7 +154,7 @@
             [self fillCard:result ofType:type withInterCard:interCard];
         }
     }
-    DLog(@"[II] card = %@", result);
+//    DLog(@"[II] card = %@", result);
     return result;
 }
 - (CardTemplate *)processCardTemplate:(NSDictionary *)dict {
@@ -203,11 +168,6 @@
     NSNumber *ID = [NSNumber numberFromObject:dict[JSONDataKeyID]
                            zeroIfUnresolvable:NO];
     return (CardTemplateItem *)[self processObject:dict ofClass:className withID:ID];
-}
-//
-- (void)processSyncTime:(NSString *)syncTime {
-    DLog(@"[II] syncTime = %@", syncTime);
-#warning TODO
 }
 @end
 @implementation KHHData (Processors_FillContent)
@@ -303,7 +263,7 @@
 }
 // JSON data -> Template
 - (CardTemplate *)fillCardTemplate:(CardTemplate *)tmpl withJSON:(NSDictionary *)json {
-    DLog(@"[II] json = %@", json);
+//    DLog(@"[II] json = %@", json);
     if (tmpl && json) {
         // id应该已经有了，填剩下的数据。
         // version,       y version
@@ -337,13 +297,13 @@
         tmpl.bgImage.url = imageUrl;
         // }
     }
-    DLog(@"[II] tmpl = %@", tmpl);
+//    DLog(@"[II] tmpl = %@", tmpl);
     return tmpl;
 }
 
 // JSON data -> TemplateItem
 - (CardTemplateItem *)fillCardTemplateItem:(CardTemplateItem *)item withJSON:(NSDictionary *)json {
-    DLog(@"[II] json = %@",  json);
+//    DLog(@"[II] json = %@",  json);
     if (item && json) {
         //templateId, x
         //id,
@@ -377,7 +337,7 @@
             }
         }
     }
-    DLog(@"[II] item = %@", item);
+//    DLog(@"[II] item = %@", item);
     return item;
 }
 @end
