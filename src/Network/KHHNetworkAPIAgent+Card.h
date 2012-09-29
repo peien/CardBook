@@ -77,7 +77,7 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(InterCard *card);
  设置联系人的状态为已查看 sendCardService.updateReadState
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=208
  */
-- (BOOL)markReadReceivedCard:(ReceivedCard *)card;
+- (BOOL)markReadReceivedCard:(InterCard *)iCard;
 @end
 
 #pragma mark - PrivateCard 私有名片，即自建的他人名片

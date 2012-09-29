@@ -14,6 +14,7 @@
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=183
  */
 - (void)allDataAfterDate:(NSString *)lastDate extra:(NSDictionary *)extra {
+    NSString *action = @"allDataAfterDate";
     NSDictionary *parameters = @{
     @"lastUpdTime" : [lastDate length] > 0? lastDate: @""
     };
@@ -61,12 +62,12 @@
         dict[kInfoKeyErrorCode] = @(code);
         dict[kInfoKeyExtra] = extra;
         
-        NSString *noti = (KHHNetworkStatusCodeSucceeded == code)?
-        KHHNetworkAllDataAfterDateSucceeded
-        : KHHNetworkAllDataAfterDateFailed;
-        [self postASAPNotificationName:noti info:dict];
+        NSString *name = NameWithActionAndCode(action, code);
+        DLog(@"[II] 发送 Notification name = %@", name);
+        [self postASAPNotificationName:name info:dict];
     };
-    [self postAction:@"allDataAfterDate"
+    DLog(@"[II] 发送请求！");
+    [self postAction:action
                query:@"userPasswordService.syncAllInfo"
           parameters:parameters
              success:success
@@ -79,9 +80,11 @@
 - (BOOL)logoURLWithCompanyName:(NSString *)companyName {
     if (0 == companyName.length) {
         // companyName为nil或@“”
+        ALog(@"[EE] ERROR!!参数错误！");
         return NO;
     }
     NSDictionary *parameters = @{ @"companyName" : companyName };
+    ALog(@"[II] 发送请求！");
     [self postAction:@"logoURLWithCompanyName"
                query:@"kinghhCompanyService.getCompanyMessage"
           parameters:parameters

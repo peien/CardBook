@@ -144,6 +144,7 @@ static NSString * const kInfoKeyError = @"error";
 static NSString * const kInfoKeyErrorCode = @"errorCode";//NSNumber
 static NSString * const kInfoKeyErrorMessage = @"errorMessage";//NSString
 static NSString * const kInfoKeyICPPromotionLinkList = @"ICPPromotionLinkList";//NSArray
+static NSString * const kInfoKeyID = @"id";
 static NSString * const kInfoKeyLastID = @"lastID";//NSNumber
 static NSString * const kInfoKeyMyCardList = @"myCardList";//NSArray
 static NSString * const kInfoKeyPassword = @"password";//NSString
@@ -159,7 +160,10 @@ static NSString * const kInfoKeyUserID = @"userID";//NSNumber
 /*!
  kExtraKey* : "Extra" dictionary key
  */
+static NSString * const kExtraKeyCardID = @"cardID";// Card ID, NSNumber
+static NSString * const kExtraKeyCardModelType = @"cardModelType";// CardModelType , NSNumber
 static NSString * const kExtraKeyChainedInvocation = @"chainedInvocation";//NSNumber(BOOL), 是否为链式调用
+static NSString * const kExtraKeyInterCard = @"interCard";// InterCard
 
 #pragma mark - kVisualCardItem* : 
 /*!

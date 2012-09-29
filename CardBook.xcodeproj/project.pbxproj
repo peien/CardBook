@@ -2333,6 +2333,8 @@
 		98F83BE416073D0B0036A516 /* KHHData */ = {
 			isa = PBXGroup;
 			children = (
+				98DF0ABE1612945E004826D5 /* InterCard.h */,
+				98DF0ABF1612945E004826D5 /* InterCard.m */,
 				98F83BE016073C790036A516 /* KHHData.h */,
 				98F83BE116073C790036A516 /* KHHData.m */,
 				982AACBD1609BE6B002B9BAD /* KHHData+UI.h */,
@@ -2343,8 +2345,6 @@
 				9803EBAB160DBB6300402B53 /* KHHData+CRUD.m */,
 				9803EBAF160DBC8E00402B53 /* KHHData+Processors.h */,
 				9803EBB0160DBC8E00402B53 /* KHHData+Processors.m */,
-				98DF0ABE1612945E004826D5 /* InterCard.h */,
-				98DF0ABF1612945E004826D5 /* InterCard.m */,
 			);
 			path = KHHData;
 			sourceTree = "<group>";

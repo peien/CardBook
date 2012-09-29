@@ -74,9 +74,9 @@
     if (0 == [list count]) {
         return result;
     }
-    for (NSDictionary *dict in list) {
-        if (dict) {
-            id card = [self processCard:dict cardType:type];
+    for (InterCard *iCard in list) {
+        if (iCard) {
+            id card = [self processCard:iCard cardType:type];
             if (card) {
                 [result addObject:card];
             }

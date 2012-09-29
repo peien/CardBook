@@ -72,7 +72,6 @@
         successBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
             ALog(@"[II] 缺少处理 %@ 返回结果的 successBlock！", action);
             ALog(@"[II] 进入默认模式:");
-            
             // HTTP request 成功
             // 把返回的 NSData 转成 NSDictionary
             NSMutableDictionary *dict = [self JSONDictionaryWithResponse:responseObject];
@@ -81,9 +80,7 @@
             if (extra) {
                 dict[kInfoKeyExtra] = extra;
             }
-            NSString *name = (KHHNetworkStatusCodeSucceeded == code)?
-            [NSString stringWithFormat:@"%@Succeeded", action]
-            : [NSString stringWithFormat:@"%@Failed", action];
+            NSString *name = NameWithActionAndCode(action, code);
             ALog(@"[II] 发送 %@ 消息。", name);
             [self postNowNotificationName:name info:dict];
         };
@@ -125,7 +122,7 @@
     
     //
     NSString *result = [@"" stringByAppendingQueryParameters:queryDict];
-    DLog(@"[II] result = %@", result);
+    DLog(@"[II] query = %@", result);
     return result;
 }
 - (NSString *)signatureWithDictionary:(NSDictionary *)aDictionary {
@@ -139,6 +136,7 @@
     return [result MD5];
 }
 - (NSMutableDictionary *)JSONDictionaryWithResponse:(NSData *)responseData {
+    ALog(@"[II] responseData -> JSON dictionary");
     NSString *base64 = [[NSString alloc] initWithBytes:[responseData bytes]
                                                 length:[responseData length]
                                               encoding:NSASCIIStringEncoding];
@@ -163,5 +161,16 @@
     result[kInfoKeyErrorCode] = [NSNumber numberWithInteger:code];
     DLog(@"[II] result class = %@, value = %@", [result class], result);
     return result;
+}
+/*!
+ 根据 Action 和 Status Code 生成 Notification Name。
+ KHHNetworkStatusCodeSucceeded 返回 action＋Succeeded
+ 其他返回action＋Failed
+ */
+NSString *NameWithActionAndCode(NSString *action, KHHNetworkStatusCode code) {
+    NSString *suffix = (KHHNetworkStatusCodeSucceeded == code)?@"Succeeded":@"Failed";
+    NSString *name = [NSString stringWithFormat:@"%@%@", action, suffix];
+    ALog(@"[II] Notification name = %@", name);
+    return name;
 }
 @end

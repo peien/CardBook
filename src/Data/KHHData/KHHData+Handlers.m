@@ -12,9 +12,9 @@
 @implementation KHHData (Handlers)
 - (void)syncAllDataEnded:(BOOL)succeed {
     if (succeed) {
-        [self postASAPNotificationName:KHHUISyncAfterLoginSucceeded];
+        [self postASAPNotificationName:KHHUISyncAllSucceeded];
     } else {
-        [self postASAPNotificationName:KHHUISyncAfterLoginFailed];
+        [self postASAPNotificationName:KHHUISyncAllFailed];
     }
 }
 #pragma mark - Notification handlers
@@ -55,59 +55,115 @@
     // }
     [self saveContext];
     // 处理结束
-    BOOL isChained = NO;
-    NSDictionary *extra= info[kInfoKeyExtra];
-    if (extra) {
-        isChained = [extra[kExtraKeyChainedInvocation] boolValue];
-    }
+    NSDictionary *extra = info[kInfoKeyExtra];
+    BOOL isChained = extra? [extra[kExtraKeyChainedInvocation] boolValue]: NO;
     if (isChained) {
         // 接下来，同步联系人
-        // 先获取要同步的数量
-        SyncMark *lastTime = [self syncMarkByKey:kSyncMarkKeyReceviedCardLastTime];
-        SyncMark *lastCardID = [self syncMarkByKey:kSyncMarkKeyReceviedCardLastID];
-        [self.agent receivedCardCountAfterDate:lastTime.value
-                                      lastCard:lastCardID.value
-                                         extra:@{
-                   kExtraKeyChainedInvocation : [NSNumber numberWithBool:YES]
-         }];
-    } else {
-#warning TODO
-        // 发消息？
-    }
-}
-- (void)handleAllDataAfterDateFailed:(NSNotification *)noti {
-    BOOL isChained = NO;
-    NSDictionary *info = noti.userInfo;
-    if (info) {
-        isChained = [info[kExtraKeyChainedInvocation] boolValue];
-    }
-#warning TODO
-}
-- (void)handleReceivedCardCountAfterDateLastCardSucceeded:(NSNotification *)noti {
-    NSDictionary *info = noti.userInfo;
-    NSNumber *count = info[kInfoKeyCount];
-    DLog(@"[II] 新名片数量%@。", count);
-    NSDictionary *extra= info[kInfoKeyExtra];
-    BOOL isChained = NO;
-    if (extra) {
-        isChained = [extra[kExtraKeyChainedInvocation] boolValue];
-    }
-    if (isChained) {
         SyncMark *lastTime = [self syncMarkByKey:kSyncMarkKeyReceviedCardLastTime];
         SyncMark *lastCardID = [self syncMarkByKey:kSyncMarkKeyReceviedCardLastID];
         [self.agent receivedCardsAfterDate:lastTime.value
                                   lastCard:lastCardID.value
-                             expectedCount:count.stringValue
+                             expectedCount:@"50"
                                      extra:extra];
     } else {
-#warning TODO
-        // 发消息？
+        ALog(@"[EE] ERROR!! 怎么会走到这里？");
     }
 }
-- (void)handleReceivedCardCountAfterDateLastCardFailed:(NSNotification *)noti {
-    DLog(@"[II] handleReceivedCardCountAfterDateLastCardFailed:%@", noti);
-#warning TODO
+- (void)handleAllDataAfterDateFailed:(NSNotification *)noti {
+    NSDictionary *info = noti.userInfo;
+    NSDictionary *extra = info[kInfoKeyExtra];
+    BOOL isChained = extra? [extra[kExtraKeyChainedInvocation] boolValue]: NO;
+    if (isChained) {
+        // 接下来，同步联系人
+        SyncMark *lastTime = [self syncMarkByKey:kSyncMarkKeyReceviedCardLastTime];
+        SyncMark *lastCardID = [self syncMarkByKey:kSyncMarkKeyReceviedCardLastID];
+        [self.agent receivedCardsAfterDate:lastTime.value
+                                  lastCard:lastCardID.value
+                             expectedCount:@"50"
+                                     extra:extra];
+    } else {
+        ALog(@"[EE] ERROR!! 怎么会走到这里？");
+    }
 }
+@end
+
+@implementation KHHData (Handlers_Card)
+- (void)handleCreateCardSucceeded:(NSNotification *)noti {
+    NSDictionary *info = noti.userInfo;
+    NSDictionary *extra = info[kInfoKeyExtra];
+    ALog(@"[II] extra = %@", extra);
+    InterCard *iCard = extra[kExtraKeyInterCard];
+    KHHCardModelType cardType = [extra[kExtraKeyCardModelType] integerValue];
+    // 填入数据库
+    [self processCard:iCard cardType:cardType];
+    // 保存数据库
+    [self saveContext];
+    // 发送成功消息
+    [self postASAPNotificationName:KHHUICreateCardSucceeded];
+}
+- (void)handleCreateCardFailed:(NSNotification *)noti {
+    NSDictionary *info = noti.userInfo;
+    ALog(@"[II] info = %@", info);
+    // 发送成功消息
+    [self postASAPNotificationName:KHHUICreateCardFailed];
+}
+- (void)handleUpdateCardSucceeded:(NSNotification *)noti {
+    NSDictionary *info = noti.userInfo;
+    NSDictionary *extra = info[kInfoKeyExtra];
+    ALog(@"[II] extra = %@", extra);
+    InterCard *iCard = extra[kExtraKeyInterCard];
+    KHHCardModelType cardType = [extra[kExtraKeyCardModelType] integerValue];
+    // 填入数据库
+    [self processCard:iCard cardType:cardType];
+    // 保存数据库
+    [self saveContext];
+    // 发送成功消息
+    [self postASAPNotificationName:KHHUIModifyCardSucceeded];
+}
+- (void)handleUpdateCardFailed:(NSNotification *)noti {
+    NSDictionary *info = noti.userInfo;
+    ALog(@"[II] info = %@", info);
+    // 发送成功消息
+    [self postASAPNotificationName:KHHUIModifyCardFailed];
+}
+- (void)handleDeleteCardSucceeded:(NSNotification *)noti {
+    NSDictionary *info = noti.userInfo;
+    NSDictionary *extra = info[kInfoKeyExtra];
+    ALog(@"[II] extra = %@", extra);
+    // 发送成功消息
+    [self postASAPNotificationName:KHHUIDeleteCardSucceeded];
+}
+- (void)handleDeleteCardFailed:(NSNotification *)noti {
+    NSDictionary *info = noti.userInfo;
+    ALog(@"[II] info = %@", info);
+    // 发送成功消息
+    [self postASAPNotificationName:KHHUIDeleteCardFailed];
+}
+//- (void)handleReceivedCardCountAfterDateLastCardSucceeded:(NSNotification *)noti {
+//    NSDictionary *info = noti.userInfo;
+//    NSNumber *count = info[kInfoKeyCount];
+//    DLog(@"[II] 新名片数量%@。", count);
+//    NSDictionary *extra= info[kInfoKeyExtra];
+//    BOOL isChained = NO;
+//    if (extra) {
+//        isChained = [extra[kExtraKeyChainedInvocation] boolValue];
+//    }
+//    if (isChained) {
+//        SyncMark *lastTime = [self syncMarkByKey:kSyncMarkKeyReceviedCardLastTime];
+//        SyncMark *lastCardID = [self syncMarkByKey:kSyncMarkKeyReceviedCardLastID];
+//        [self.agent receivedCardsAfterDate:lastTime.value
+//                                  lastCard:lastCardID.value
+//                             expectedCount:count.stringValue
+//                                     extra:extra];
+//    } else {
+//#warning TODO
+//        // 发消息？
+//    }
+//}
+//- (void)handleReceivedCardCountAfterDateLastCardFailed:(NSNotification *)noti {
+//    DLog(@"[II] handleReceivedCardCountAfterDateLastCardFailed:%@", noti);
+//#warning TODO
+//}
 - (void)handleReceivedCardsAfterDateLastCardExpectedCountSucceeded:(NSNotification *)noti {
     DLog(@"[II] handleReceivedCardsAfterDateLastCardExpectedCountSucceeded:%@", noti);
     NSDictionary *info = noti.userInfo;
@@ -117,38 +173,47 @@
         [self processReceivedCardList:receivedCardList];
     }
     // }
-    
     //2.syncTime
     NSString *syncTime = info[kInfoKeySyncTime];
     if (syncTime.length) {
         SyncMark *timeMark = [self syncMarkByKey:kSyncMarkKeyReceviedCardLastTime];
         timeMark.value = syncTime;
     }
-    
     //3.lastID
     NSString *lastID = info[kInfoKeyLastID];
     if (lastID.length) {
         SyncMark *IDMark = [self syncMarkByKey:kSyncMarkKeyReceviedCardLastID];
         IDMark.value = lastID;
     }
-    
     // 4.保存
+    ALog(@"[II] 同步联系人 save context!");
     [self saveContext];
-    // extra:
-    BOOL isChained = NO;
+    
+    // 本次同步的数量
+    NSInteger count = [info[kInfoKeyCount] integerValue];
     NSDictionary *extra= info[kInfoKeyExtra];
-    if (extra) {
-        isChained = [extra[kExtraKeyChainedInvocation] boolValue];
+    if (count > 1) { // count > 1
+        // 继续同步
+        ALog(@"[II] 继续同步联系人！");
+        [self.agent receivedCardsAfterDate:syncTime
+                                  lastCard:lastID
+                             expectedCount:@"50"
+                                     extra:extra];
+    } else { // count <= 1
+        // 根据 isChained 采取不同措施
+        BOOL isChained = extra? [extra[kExtraKeyChainedInvocation] boolValue]: NO;
+        if (isChained) {
+            [self syncAllDataEnded:YES];
+        }
+        // 发送完成消息
+        else {
+            ALog(@"[EE] ERROR!! 怎么会走到这里？");
+        }
     }
-    if (isChained) {
-        [self syncAllDataEnded:YES];
-    } else {
-#warning TODO
-        // 发消息？
-    }
+    
 }
 - (void)handleReceivedCardsAfterDateLastCardExpectedCountFailed:(NSNotification *)noti {
-    DLog(@"[II] handleReceivedCardsAfterDateLastCardExpectedCountFailed:%@", noti);
-#warning TODO
+    ALog(@"[II] handleReceivedCardsAfterDateLastCardExpectedCountFailed = %@", noti);
+    [self syncAllDataEnded:NO];
 }
 @end

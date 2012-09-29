@@ -31,26 +31,35 @@ static NSString * const KHHUIStartSignUp = @"StartSignUp";
 static NSString * const KHHUIStartResetPassword = @"StartResetPassword";
 static NSString * const KHHUIResetPasswordAction = @"ResetPasswordAction";
 // Sync
-static NSString * const KHHUIStartSyncAfterLogin = @"startSyncAfterLogin";
-static NSString * const KHHUISyncAfterLoginSucceeded = @"SyncAfterLoginSucceeded";
-static NSString * const KHHUISyncAfterLoginFailed = @"SyncAfterLoginFailed";
+static NSString * const KHHUIStartSyncAll = @"UIStartSyncAll";
+static NSString * const KHHUISyncAllSucceeded = @"UISyncAllSucceeded";
+static NSString * const KHHUISyncAllFailed = @"UISyncAllFailed";
+// createCard
+static NSString * const KHHUICreateCardSucceeded = @"UICreateCardSucceeded";
+static NSString * const KHHUICreateCardFailed    = @"UICreateCardFailed";
+// modifyCard
+static NSString * const KHHUIModifyCardSucceeded = @"UIModifyCardSucceeded";
+static NSString * const KHHUIModifyCardFailed    = @"UIModifyCardFailed";
+// deleteCard
+static NSString * const KHHUIDeleteCardSucceeded = @"UIDeleteCardSucceeded";
+static NSString * const KHHUIDeleteCardFailed    = @"UIDeleteCardFailed";
 
 /*!
  Notifications for Network
  */
-//登录
+// 登录
 static NSString * const KHHNetworkLoginSucceeded = @"loginSucceeded";
 static NSString * const KHHNetworkLoginFailed = @"loginFailed";
-//注册
+// 注册
 static NSString * const KHHNetworkCreateAccountSucceeded = @"createAccountSucceeded";
 static NSString * const KHHNetworkCreateAccountFailed = @"createAccountFailed";
-//改密码
+// 改密码
 static NSString * const KHHNetworkChangePasswordSucceeded = @"changePasswordSucceeded";
 static NSString * const KHHNetworkChangePasswordFailed = @"changePasswordFailed";
-//重置密码
+// 重置密码
 static NSString * const KHHNetworkResetPasswordSucceeded = @"resetPasswordSucceeded";
 static NSString * const KHHNetworkResetPasswordFailed = @"resetPasswordFailed";
-//markAutoReceive
+// markAutoReceive
 static NSString * const KHHNetworkMarkAutoReceiveSucceeded = @"markAutoReceiveSucceeded";
 static NSString * const KHHNetworkMarkAutoReceiveFailed = @"markAutoReceiveFailed";
 // createCard

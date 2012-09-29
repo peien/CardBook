@@ -35,7 +35,7 @@
 #pragma mark - Processors_Object
 @interface KHHData (Processors_Object)
 // 返回各种Card对象
-- (Card *)processCard:(NSDictionary *)aCard cardType:(KHHCardModelType)type;
+- (Card *)processCard:(InterCard *)iCard cardType:(KHHCardModelType)type;
 // 返回CardTemplate
 - (CardTemplate *)processCardTemplate:(NSDictionary *)cardTemplate;
 // 返回CardTemplateItem

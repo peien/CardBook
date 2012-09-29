@@ -8,6 +8,7 @@
 
 #import "KHHNetworkAPIAgent+Card.h"
 #import "InterCard.h"
+#import "NSNumber+SM.h"
 
 /*!
  @fuctiongroup Card参数整理函数
@@ -230,76 +231,40 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(InterCard *iCard) {
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=179
  */
 - (BOOL)createCard:(InterCard *)iCard ofType:(KHHCardModelType)cardType {
-    BOOL result = NO;
     if (!CardHasRequiredAttributes(iCard, KHHCardAttributeTemplateID)) {
-        return result;
+        DLog(@"[II] 参数错误！");
+        return NO;
     }
     NSString *action = @"createCard";
     NSString *query;
     if (KHHCardModelTypeMyCard == cardType) {
         query = @"kinghhCardService.create";
-        result = YES;
     } else if (KHHCardModelTypePrivateCard == cardType) {
         query = @"kinghhPrivateCardService.create";
-        result = YES;
     }
-    
-    if (result) {
-        NSDictionary *parameters = ParametersToCreateOrUpdateCard(iCard);
-        KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
-            NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
-            NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:responseDict.count];
-            KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
-            // 把返回的数据转成本地数据
-            if (KHHNetworkStatusCodeSucceeded == code) {
-                // MyCard List
-                NSArray *oldMyCardList = responseDict[JSONDataKeyMyCard];
-                NSMutableArray *myCardList = [NSMutableArray arrayWithCapacity:oldMyCardList.count];
-                for (NSDictionary *oldCard in oldMyCardList) {
-                    InterCard *card = [InterCard interCardWithMyCardJSON:oldCard];
-                    [myCardList addObject:card];
-                }
-                dict[kInfoKeyMyCardList] = myCardList;
-                
-                // PrivateCard List
-                NSArray *oldPrivateCardList = responseDict[JSONDataKeyMyPrivateCard];
-                NSMutableArray *privateCardList = [NSMutableArray arrayWithCapacity:oldPrivateCardList.count];
-                for (NSDictionary *oldCard in oldPrivateCardList) {
-                    InterCard *card = [InterCard interCardWithPrivateCardJSON:oldCard];
-                    [privateCardList addObject:card];
-                }
-                dict[kInfoKeyPrivateCardList] = privateCardList;
-                
-                // Template List
-                NSArray *templateList = responseDict[JSONDataKeyTemplateList];
-                dict[kInfoKeyTemplateList] = templateList;
-                
-                // 运营商推广连接
-                NSArray *ICPList = responseDict[JSONDataKeyLinkList];
-                dict[kInfoKeyICPPromotionLinkList] = ICPList;
-                
-                // 公司推广连接
-                NSArray *comProList = responseDict[JSONDataKeyCompanyLinkList];
-                dict[kInfoKeyCompanyPromotionLinkList] = comProList;
-                
-                // Sync Time
-                NSString *syncTime = responseDict[JSONDataKeySynTime];
-                dict[kInfoKeySyncTime] = syncTime;
-            }
-            
-            dict[kInfoKeyErrorCode] = @(code);
-            
-            NSString *noti = (KHHNetworkStatusCodeSucceeded == code)?
-            KHHNetworkAllDataAfterDateSucceeded
-            : KHHNetworkAllDataAfterDateFailed;
-            [self postASAPNotificationName:noti info:dict];
+    NSDictionary *parameters = ParametersToCreateOrUpdateCard(iCard);
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
+        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        // 把返回的数据转成本地数据
+        // 返回的CardID
+        iCard.id = [NSNumber numberFromObject:responseDict[JSONDataKeyID] zeroIfUnresolvable:NO];
+        dict[kInfoKeyExtra] = @{
+        kExtraKeyInterCard : iCard,
+        kExtraKeyCardModelType : [NSNumber numberWithInteger:cardType],
         };
-        [self postAction:action
-                   query:query
-              parameters:parameters
-                 success:success];
-    }
-    return result;
+        dict[kInfoKeyErrorCode] = @(code);
+        NSString *name = NameWithActionAndCode(action, code);
+        DLog(@"[II] 发送 Notification Name = %@", name);
+        [self postASAPNotificationName:name info:dict];
+    };
+    DLog(@"[II] 发送请求！");
+    [self postAction:action
+               query:query
+          parameters:parameters
+             success:success];
+    return YES;
 }
 /**
  修改我的名片 kinghhCardService.update
@@ -308,31 +273,37 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(InterCard *iCard) {
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=180
  */
 - (BOOL)updateCard:(InterCard *)iCard ofType:(KHHCardModelType)cardType {
-    BOOL result = NO;
     if (!CardHasRequiredAttributes(iCard, KHHCardAttributeID)) {
-        return result;
+        ALog(@"[EE] ERROR!!参数错误！");
+        return NO;
     }
     NSString *action = @"updateCard";
     NSString *query;
     if (KHHCardModelTypeMyCard == cardType) {
         query = @"kinghhCardService.update";
-        result = YES;
     } else if (KHHCardModelTypePrivateCard == cardType) {
         query = @"kinghhPrivateCardService.update";
-        result = YES;
     }
-    
-    if (result) {
-        NSDictionary *parameters = ParametersToCreateOrUpdateCard(iCard);
-        KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id responseData) {
-            
+    NSDictionary *parameters = ParametersToCreateOrUpdateCard(iCard);
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
+        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        dict[kInfoKeyExtra] = @{
+        kExtraKeyInterCard : iCard,
+        kExtraKeyCardModelType : [NSNumber numberWithInteger:cardType],
         };
-        [self postAction:action
-                   query:query
-              parameters:parameters
-                 success:success];
-    }
-    return result;
+        dict[kInfoKeyErrorCode] = @(code);
+        NSString *name = NameWithActionAndCode(action, code);
+        ALog(@"[II] 发送 Notification Name = %@", name);
+        [self postASAPNotificationName:name info:dict];
+    };
+    ALog(@"[II] 发送请求！");
+    [self postAction:action
+               query:query
+          parameters:parameters
+             success:success];
+    return YES;
 }
 /**
  删除我的名片 kinghhCardService.delete
@@ -341,36 +312,43 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(InterCard *iCard) {
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=181
  */
 - (BOOL)deleteCardByID:(NSNumber *)cardID ofType:(KHHCardModelType)cardType {
-    BOOL result = NO;
     if (!(cardID.integerValue > 0)) {
-        return result;
+        DLog(@"[II] 参数错误！");
+        return NO;
     }
-    NSString *IDKey;
     NSString *action = @"deleteCard";
     NSString *query;
+    NSString *IDKey;
     if (KHHCardModelTypeMyCard == cardType) {
-        IDKey = @"card.cardId";
         query = @"kinghhCardService.delete";
-        result = YES;
+        IDKey = @"card.cardId";
     } else if (KHHCardModelTypePrivateCard == cardType) {
-        IDKey = @"card.id";
         query = @"kinghhPrivateCardService.delete";
-        result = YES;
+        IDKey = @"card.id";
     }
     NSString *ID = [cardID stringValue];
     NSDictionary *parameters = @{
     IDKey : ID? ID: @"",
     };
-    if (result) {
-        KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id responseData) {
-            
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
+        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        dict[kInfoKeyExtra] = @{
+        kExtraKeyCardID : cardID,
+        kExtraKeyCardModelType : [NSNumber numberWithInteger:cardType],
         };
-        [self postAction:action
-                   query:query
-              parameters:parameters
-                 success:success];
-    }
-    return result;
+        dict[kInfoKeyErrorCode] = @(code);
+        NSString *name = NameWithActionAndCode(action, code);
+        DLog(@"[II] 发送 Notification Name = %@", name);
+        [self postASAPNotificationName:name info:dict];
+    };
+    DLog(@"[II] 发送请求！");
+    [self postAction:action
+               query:query
+          parameters:parameters
+             success:success];
+    return YES;
 }
 @end
 #pragma mark - ReceivedCard 联系人，即收到的他人名片
@@ -438,6 +416,7 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(InterCard *iCard) {
                       lastCard:(NSString *)lastCardID
                  expectedCount:(NSString *)count
                          extra:(NSDictionary *)extra {
+    NSString *action = @"receivedCardsAfterDateLastCardExpectedCount";
     NSDictionary *parameters = @{
             @"lastUpdTime" : (lastDate.length > 0? lastDate: @""),
             @"lastCardbookId" : lastCardID? lastCardID: @"",
@@ -453,32 +432,33 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(InterCard *iCard) {
         if (KHHNetworkStatusCodeSucceeded == code) {
             // count
             dict[kInfoKeyCount] = responseDict[JSONDataKeyCount];
-            if ([dict[kInfoKeyCount] integerValue]>0) {
-                // synTime -> syncTime
-                dict[kInfoKeySyncTime] = responseDict[JSONDataKeySynTime];
-                // lastCardbookId -> lastID
-                dict[kInfoKeyLastID] = responseDict[JSONDataKeyLastCardbookId];
-                // cardBookList -> receivedCardList
-                NSArray *oldList = responseDict[JSONDataKeyCardBookList];
-                NSMutableArray *receivedCardList = [NSMutableArray arrayWithCapacity:oldList.count];
-                for (NSDictionary *oldDict in oldList) {
-                    InterCard *iCard = [InterCard interCardWithReceivedCardJSON:oldDict];
-                    [receivedCardList addObject:iCard];
-                }
-                dict[kInfoKeyReceivedCardList] = receivedCardList;
+            
+            // synTime -> syncTime
+            NSString *syncTime = responseDict[JSONDataKeySynTime];
+            dict[kInfoKeySyncTime] = syncTime? syncTime: @"";
+            
+            // lastCardbookId -> lastID
+            NSString *lastID = responseDict[JSONDataKeyLastCardbookId];
+            dict[kInfoKeyLastID] = lastID? lastID: @"";
+            
+            // cardBookList -> receivedCardList
+            NSArray *oldList = responseDict[JSONDataKeyCardBookList];
+            NSMutableArray *receivedCardList = [NSMutableArray arrayWithCapacity:oldList.count];
+            for (NSDictionary *oldDict in oldList) {
+                InterCard *iCard = [InterCard interCardWithReceivedCardJSON:oldDict];
+                [receivedCardList addObject:iCard];
             }
+            dict[kInfoKeyReceivedCardList] = receivedCardList;
         }
         
         // errorCode 和 extra
         dict[kInfoKeyErrorCode] = @(code);
         dict[kInfoKeyExtra] = extra;
         // 把处理完的数据发出去。
-        NSString *noti = (KHHNetworkStatusCodeSucceeded == code)?
-        KHHNetworkReceivedCardsAfterDateLastCardExpectedCountSucceeded
-        : KHHNetworkReceivedCardsAfterDateLastCardExpectedCountFailed;
-        [self postASAPNotificationName:noti info:dict];
+        [self postASAPNotificationName:NameWithActionAndCode(action, code)
+                                  info:dict];
     };
-    [self postAction:@"receivedCardsAfterDateLastCardExpectedCount"
+    [self postAction:action
                query:@"exchangeCardService.getReceiverCardBookSyn"
           parameters:parameters
              success:success
@@ -488,30 +468,36 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(InterCard *iCard) {
  设置联系人的状态为已查看 sendCardService.updateReadState
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=208
  */
-- (BOOL)markReadReceivedCard:(ReceivedCard *)card {
-    if (![card isKindOfClass:[ReceivedCard class]]) {
+- (BOOL)markReadReceivedCard:(InterCard *)iCard {
+    if (!CardHasRequiredAttributes(iCard, KHHCardAttributeID
+                                   | KHHCardAttributeVersion
+                                   | KHHCardAttributeUserID)) {
         return NO;
     }
-    if (card.isReadValue) { // 已经读过的就不用继续执行了
-        return NO;
+    if (iCard.isRead.integerValue) { // 已经读过的就不用继续执行了
+        [self postASAPNotificationName:KHHNetworkMarkReadReceivedCardSucceeded
+                                  info:@{ kInfoKeyErrorCode : @(KHHNetworkStatusCodeSucceeded) }];
+        return YES;
     }
-    if (!CardHasRequiredAttributes(card, KHHCardAttributeID
-                                | KHHCardAttributeVersion
-                                | KHHCardAttributeUserID)) {
-        return NO;
-    }
-    NSString *ID = [[card valueForKey:kAttributeKeyID] stringValue];
-    NSString *version = [[card valueForKey:kAttributeKeyVersion] stringValue];
-    NSString *userID = [[card valueForKey:kAttributeKeyUserID] stringValue];
+    NSString *ID = [iCard.id stringValue];
+    NSString *version = [iCard.version stringValue];
+    NSString *userID = [iCard.userID stringValue];
+    NSString *action = @"markReadReceivedCard";
     NSDictionary *parameters = @{
             @"senderId" : (userID? userID: @""),
             @"cardId" : (ID? ID: @""),
             @"version" : (version? version: @"")
     };
-    [self postAction:@"markReadReceivedCard"
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
+        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        NSDictionary *dict = @{ kInfoKeyErrorCode : @(code) };
+        [self postASAPNotificationName:NameWithActionAndCode(action, code) info:dict];
+    };
+    [self postAction:action
                query:@"sendCardService.updateReadState"
           parameters:parameters
-             success:nil];
+             success:success];
     return YES;
 }
 

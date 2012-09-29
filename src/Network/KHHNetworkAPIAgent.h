@@ -57,6 +57,12 @@ typedef void (^KHHFailureBlock)(AFHTTPRequestOperation *operation, NSError *erro
  把http response body的base64数据，转成json，再解析为dictionary。
  */
 - (NSMutableDictionary *)JSONDictionaryWithResponse:(id)responseObject;
+/*!
+ 根据 Action 和 Status Code 生成 Notification Name。
+ KHHNetworkStatusCodeSucceeded 返回 action＋Succeeded
+ 其他返回action＋Failed
+ */
+NSString *NameWithActionAndCode(NSString *action, KHHNetworkStatusCode code);
 
 @end
 

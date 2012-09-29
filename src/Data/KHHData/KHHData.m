@@ -20,14 +20,29 @@
     if (self) {
         //
         _agent = [[KHHNetworkAPIAgent alloc] init];
+        //[self observeNotificationName:KHHNetwork selector:@"handle"];
         [self observeNotificationName:KHHNetworkAllDataAfterDateSucceeded
-                         selector:@"handleAllDataAfterDateSucceeded:"];
+                             selector:@"handleAllDataAfterDateSucceeded:"];
         [self observeNotificationName:KHHNetworkAllDataAfterDateFailed
-                         selector:@"handleAllDataAfterDateFailed:"];
-        [self observeNotificationName:KHHNetworkReceivedCardCountAfterDateLastCardSucceeded
-                         selector:@"handleReceivedCardCountAfterDateLastCardSucceeded:"];
-        [self observeNotificationName:KHHNetworkReceivedCardCountAfterDateLastCardFailed
-                         selector:@"handleReceivedCardCountAfterDateLastCardFailed:"];
+                             selector:@"handleAllDataAfterDateFailed:"];
+        // Card - Create, Update, Delete.
+        [self observeNotificationName:KHHNetworkCreateCardSucceeded
+                             selector:@"handleCreateCardSucceeded:"];
+        [self observeNotificationName:KHHNetworkCreateCardFailed
+                             selector:@"handleCreateCardFailed:"];
+        [self observeNotificationName:KHHNetworkUpdateCardSucceeded
+                             selector:@"handleUpdateCardSucceeded:"];
+        [self observeNotificationName:KHHNetworkUpdateCardFailed
+                             selector:@"handleUpdateCardFailed:"];
+        [self observeNotificationName:KHHNetworkDeleteCardSucceeded
+                             selector:@"handleDeleteCardSucceeded:"];
+        [self observeNotificationName:KHHNetworkDeleteCardFailed
+                             selector:@"handleDeleteCardFailed:"];
+        // ReceivedCard 联系人
+//        [self observeNotificationName:KHHNetworkReceivedCardCountAfterDateLastCardSucceeded
+//                             selector:@"handleReceivedCardCountAfterDateLastCardSucceeded:"];
+//        [self observeNotificationName:KHHNetworkReceivedCardCountAfterDateLastCardFailed
+//                             selector:@"handleReceivedCardCountAfterDateLastCardFailed:"];
         [self observeNotificationName:KHHNetworkReceivedCardsAfterDateLastCardExpectedCountSucceeded
                          selector:@"handleReceivedCardsAfterDateLastCardExpectedCountSucceeded:"];
         [self observeNotificationName:KHHNetworkReceivedCardsAfterDateLastCardExpectedCountFailed
