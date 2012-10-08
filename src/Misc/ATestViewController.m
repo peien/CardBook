@@ -7,6 +7,7 @@
 //
 
 #import "ATestViewController.h"
+#import "KHHData.h"
 
 @interface ATestViewController ()
 

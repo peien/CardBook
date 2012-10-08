@@ -86,17 +86,26 @@
 {
     _type = 1;
     self.actSheet = [[UIActionSheet alloc] initWithTitle:@"选择号码" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
-    [self.actSheet addButtonWithTitle:self.card.mobilePhone];
+    if (self.card.mobilePhone.length > 0) {
+        NSArray *mobielArr = [self.card.mobilePhone componentsSeparatedByString:@"|"];
+        for (int i = 0; i < mobielArr.count; i++) {
+             [self.actSheet addButtonWithTitle:[mobielArr objectAtIndex:i]];
+        }
+    }
     [self.actSheet showInView:_viewController.view];
     [self.popover dismissPopoverAnimated:YES];
-
 }
 //发短信
 - (void)sendMessage
 {
     _type = 2;
-    self.actSheet = [[UIActionSheet alloc] initWithTitle:@"选择号码" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
-    [self.actSheet addButtonWithTitle:self.card.mobilePhone];
+     self.actSheet = [[UIActionSheet alloc] initWithTitle:@"选择号码" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+    if (self.card.mobilePhone.length > 0) {
+        NSArray *mobielArray = [self.card.mobilePhone componentsSeparatedByString:@"|"];
+        for (int i = 0; i < mobielArray.count; i++) {
+            [self.actSheet addButtonWithTitle:[mobielArray objectAtIndex:i]];
+        }
+    }
     [self.actSheet showInView:_viewController.view];
     [self.popover dismissPopoverAnimated:YES];
     

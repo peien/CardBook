@@ -23,6 +23,8 @@
 #import "KHHVisitRecoardVC.h"
 #import "UIImageView+WebCache.h"
 
+#import "Company.h"
+
 #define POPDismiss [self.popover dismissPopoverAnimated:YES];
 
 @interface DetailInfoViewController ()
@@ -56,8 +58,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.title = @"详细信息";
-        [self.rightBtn setTitle:@"回赠" forState:UIControlStateNormal];
+        self.title = NSLocalizedString(@"详细信息", nil);
+        [self.rightBtn setTitle:NSLocalizedString(@"回赠", nil) forState:UIControlStateNormal];
         self.tabBarController.tabBar.hidden = YES;
 
     }
@@ -113,17 +115,17 @@
     [iconImgView addGestureRecognizer:tap];
     UIImage *iconImg = [UIImage imageNamed:@"logopic.png"];
     iconImgView.image = iconImg;
-    [iconImgView setImageWithURL:[NSURL URLWithString:self.cardM.logUrl] placeholderImage:iconImg];
+    [iconImgView setImageWithURL:[NSURL URLWithString:self.card.logo.url] placeholderImage:iconImg];
     iconImgView.backgroundColor = [UIColor clearColor];
     [headerView addSubview:iconImgView];
     _segmCtrl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(0, 75, 320, 30)];
-    [_segmCtrl insertSegmentWithTitle:@"客户评估" atIndex:0 animated:NO];
-    [_segmCtrl insertSegmentWithTitle:@"拜访日历" atIndex:1 animated:NO];
-    [_segmCtrl insertSegmentWithTitle:@"电子名片" atIndex:2 animated:NO];
+    [_segmCtrl insertSegmentWithTitle:NSLocalizedString(@"客户评估", nil) atIndex:0 animated:NO];
+    [_segmCtrl insertSegmentWithTitle:NSLocalizedString(@"拜访日历", nil) atIndex:1 animated:NO];
+    [_segmCtrl insertSegmentWithTitle:NSLocalizedString(@"电子名片", nil) atIndex:2 animated:NO];
     [_segmCtrl addTarget:self action:@selector(segCtrlClick:) forControlEvents:UIControlEventValueChanged];
     _segmCtrl.selectedSegmentIndex = 0;
     UILabel *nameLab = [[UILabel alloc] initWithFrame:CGRectMake(75, 10, 120, 20)];
-    nameLab.text = self.cardM.name;
+    nameLab.text = NSLocalizedString(self.card.name, nil);
     nameLab.backgroundColor = [UIColor clearColor];
     nameLab.font = [UIFont boldSystemFontOfSize:15];
     nameLab.textAlignment = UITextAlignmentLeft;
@@ -132,10 +134,10 @@
     companylab.font = [UIFont systemFontOfSize:11];
     companylab.textAlignment = UITextAlignmentLeft;
     companylab.backgroundColor = [UIColor clearColor];
-    companylab.text = @"浙江金汉弘软件有限公司";
+    companylab.text = NSLocalizedString(self.card.company.name, nil);
     [headerView addSubview:companylab];
     UILabel *jobLab = [[UILabel alloc] initWithFrame:CGRectMake(125, 10, 100, 20)];
-    jobLab.text = self.cardM.title;
+    jobLab.text = NSLocalizedString(self.card.title, nil);
     jobLab.textAlignment = UITextAlignmentLeft;
     jobLab.font = [UIFont systemFontOfSize:13];
     jobLab.backgroundColor = [UIColor clearColor];
@@ -146,7 +148,7 @@
         UIButton *headBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         headBtn.adjustsImageWhenHighlighted = NO;
         headBtn.frame = CGRectMake(0+i*(45+60), 63, 320/3, 37);
-        [headBtn setTitle:[arr objectAtIndex:i] forState:UIControlStateNormal];
+        [headBtn setTitle:NSLocalizedString([arr objectAtIndex:i], nil) forState:UIControlStateNormal];
         if (i == 0 || i == 2) {
             [headBtn setBackgroundImage:[UIImage imageNamed:@"xiangqing_btn13_normal.png"] forState:UIControlStateNormal];
         }else{
@@ -160,10 +162,11 @@
         [headBtn addTarget:self action:@selector(headBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [headerView addSubview:headBtn];
     }
+    //电子名片视图
     _cardView = [[[NSBundle mainBundle] loadNibNamed:@"KHHCardView" owner:self options:nil] objectAtIndex:0];
+    _cardView.myCard = self.card;
     [_cardView initView];
     _cardView.detailVC = self;
-    //暂时显示数据
     [_cardView initViewData];
     [self.containView addSubview:_cardView];
     _visitCalView = [[[NSBundle mainBundle] loadNibNamed:@"KHHVisitCalendarView" owner:self options:nil] objectAtIndex:0];
@@ -184,8 +187,8 @@
     UIButton *bottomBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     bottomBtn.tag = 323;
     [bottomBtn addTarget:self action:@selector(bottomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    bottomBtn.frame = CGRectMake(260, 360, 60, 60);
-    [bottomBtn setBackgroundImage:[UIImage imageNamed:@"editBtn_normal.png"] forState:UIControlStateNormal];
+    bottomBtn.frame = CGRectMake(260, 360, 66, 66);
+    [bottomBtn setBackgroundImage:[UIImage imageNamed:@"edit_Btn_Red.png"] forState:UIControlStateNormal];
     [self.view insertSubview:bottomBtn atIndex:100];
     
     //popView
@@ -275,7 +278,7 @@
     floatBarVC.viewController = self;
     self.popover = [[WEPopoverController alloc] initWithContentViewController:floatBarVC];
     floatBarVC.popover = self.popover;
-    floatBarVC.card = self.cardM;
+    floatBarVC.card = self.card;
     CGRect rect = CGRectMake(55, 5, 2, 40);
     UIPopoverArrowDirection arrowDirection = UIPopoverArrowDirectionLeft;
     [self.popover presentPopoverFromRect:rect inView:self.view permittedArrowDirections:arrowDirection animated:YES];

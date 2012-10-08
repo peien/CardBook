@@ -64,18 +64,20 @@
         [self.view addSubview:cardView];
     }else{
         KHHFrameCardView *cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(0, 0, 320, 220) isVer:NO];
+        [cardView showView];
         [self.view addSubview:cardView];
     }
-    NSArray *titleArray = [[NSArray alloc] initWithObjects:@"交换名片",@"发送至手机",@"收名片", nil];
+    //NSArray *titleArray = [[NSArray alloc] initWithObjects:@"交换名片",@"发送至手机",@"收名片", nil];
     for (int i = 0; i<3; i++) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         btn.titleLabel.font = [UIFont systemFontOfSize:14];
-        [btn setBackgroundImage:[[UIImage imageNamed:@"tongbu_normal.png"] stretchableImageWithLeftCapWidth:15 topCapHeight:10] forState:UIControlStateNormal];
+        NSString *imgStr = [NSString stringWithFormat:@"exch_%d.png",i];
+        [btn setBackgroundImage:[UIImage imageNamed:imgStr] forState:UIControlStateNormal];
         btn.tag = i + 111;
         [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
-        [btn setTitle:[titleArray objectAtIndex:i] forState:UIControlStateNormal];
-        btn.frame = CGRectMake(25+i*(80 + 15), 280, 90, 50);
+        //[btn setTitle:[titleArray objectAtIndex:i] forState:UIControlStateNormal];
+        btn.frame = CGRectMake(25+i*(80 + 15), 245, 79, 75);
         [self.view insertSubview:btn atIndex:10];
     }
     // 获取经度，纬度
@@ -111,17 +113,17 @@
     _scrView = nil;
     xlPage = nil;
 }
-- (void)pageCtrlClick:(id)sender
-{
-    XLPageControl *page = (XLPageControl *)sender;
-    int i  = page.currentPage;
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.3];
-    int w = _isVer?180:260;
-    _scrView.contentOffset = CGPointMake(i * w, 0);
-    [UIView commitAnimations];
-
-}
+//- (void)pageCtrlClick:(id)sender
+//{
+//    XLPageControl *page = (XLPageControl *)sender;
+//    int i  = page.currentPage;
+//    [UIView beginAnimations:nil context:nil];
+//    [UIView setAnimationDuration:0.3];
+//    int w = _isVer?180:260;
+//    _scrView.contentOffset = CGPointMake(i * w, 0);
+//    [UIView commitAnimations];
+//
+//}
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if ([scrollView isEqual:_scrView]) {

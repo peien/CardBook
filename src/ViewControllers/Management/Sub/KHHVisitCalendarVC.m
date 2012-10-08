@@ -42,7 +42,7 @@
     KHHVisitCalendarView *visitCalendar = [[[NSBundle mainBundle] loadNibNamed:@"KHHVisitCalendarView" owner:self options:nil] objectAtIndex:0];
     CGRect rect = visitCalendar.theTable.frame;
     rect.origin.y = 0;
-    rect.size.height = 370;
+    rect.size.height = 350;
     visitCalendar.theTable.frame = rect;
     visitCalendar.viewCtrl = self;
     [self.view addSubview:visitCalendar];
