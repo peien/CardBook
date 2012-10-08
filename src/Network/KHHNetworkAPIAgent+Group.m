@@ -70,13 +70,10 @@
         return NO;
     }
     NSDictionary *parameters = @{ @"group.id" : groupID };
-    KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
-#warning TODO
-    };
     [self postAction:@"deleteGroup"
                query:@"groupService.deleteGroup"
           parameters:parameters
-             success:success];
+             success:nil];
     return YES;
 }
 /**
@@ -109,12 +106,6 @@
         // fromGroup和toGroup都为nil或空
         return NO;
     }
-    
-    NSMutableDictionary * [NSMutableDictionary dictionaryWithCapacity:3];
-    [parameters setObject:fromGroupID
-                   forKey:@"delGroupId"];
-    [parameters setObject:toGroupID
-                   forKey:@"addGroupId"];
     NSMutableArray *idAndTypes = [NSMutableArray arrayWithCapacity:[cards count]];
     for (id card in cards) {
         if (![card isKindOfClass:[Card class]]
@@ -127,12 +118,13 @@
                               :@"private");
         [idAndTypes addObject:[NSString stringWithFormat:@"%@;%@", cardID, cardType]];
     }
-    [parameters setObject:
-                   forKey:];
     NSDictionary *parameters = @{
     @"cardIdAndTypes" : [idAndTypes componentsJoinedByString:@"|"],
+    @"delGroupId"     : fromGroupID?fromGroupID:@"",
+    @"addGroupId"     : toGroupID?toGroupID:@"",
     };
     DLog(@"[II] request parameters = %@", parameters);
+    
     [self postAction:@"moveCards"
                query:@"cardGroupService.addOrDelCardGroup"
           parameters:parameters
