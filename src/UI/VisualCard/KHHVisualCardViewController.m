@@ -111,10 +111,7 @@ static CGFloat const ratio = 300.f / 450.f;
     // 即删除所有imageview和label
     NSArray *allSubviews = [self.view subviews];
     for (UIView *aView in allSubviews) {
-        if ([aView isKindOfClass:[UILabel class]]
-            || [aView isKindOfClass:[UIImageView class]]) {
-            [aView removeFromSuperview];
-        }
+        [aView removeFromSuperview];
     }
     // 开始重建view
     Card *card = self.card;

@@ -14,7 +14,7 @@
 @implementation KHHNetworkAPIAgent (Account)
 /**
  用户登录: 对应"accountService.login"
- @warning: 此处不对user和password进行有效性检查。
+ @return: user或password为nil/@""返回NO。
  http://192.168.1.151/zentaopms/www/index.php?m=doc&f=view&docID=173
  */
 - (BOOL)login:(NSString *)user
@@ -79,6 +79,7 @@
 
 /**
  用户注册: 对应"accountService.registerAccount"
+ @return: account或password为nil/@""返回NO。
  http://192.168.1.151/zentaopms/www/index.php?m=doc&f=view&docID=172
  */
 - (BOOL)createAccount:(NSString *)account
@@ -125,13 +126,13 @@
 }
 /**
  修改密码: 对应"userPasswordService.updatePwd"
- @warning: 此处不对oldPassword和newPassword进行有效性检查。
+ @return: oldPassword或newPassword为nil/@""返回NO。
  http://192.168.1.151/zentaopms/www/index.php?m=doc&f=view&docID=176
  */
 - (BOOL)changePassword:(NSString *)oldPassword
          toNewPassword:(NSString *)newPassword {
     if (0 == [oldPassword length] || 0 == [newPassword length]) {
-        //oldPassword或newPassword为nil／@“”
+        //oldPassword或newPassword为nil/@""
         return NO;
     }
     NSString *encOld = [Encryptor encryptBase64String:oldPassword
@@ -151,12 +152,12 @@
 
 /**
  重置密码: 对应"userPasswordService.resetPwd"
- @warning: 此处不对mobile进行有效性检查。
+ @return: mobile为nil或@""返回NO。
  http://192.168.1.151/zentaopms/www/index.php?m=doc&f=view&docID=175
  */
 - (BOOL)resetPasswordWithMobileNumber:(NSString *)mobile {
     if (0 == mobile.length) {
-        // mobile为nil或@“”
+        // mobile为nil或@""
         return NO;
     }
     NSDictionary *parameters = @{
