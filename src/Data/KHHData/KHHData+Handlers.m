@@ -23,8 +23,8 @@
     NSDictionary *info = noti.userInfo;
     // 处理返回的数据
 #warning TODO
-    // 1.
-    // 2.
+    // 1. companyPromotionLinkList
+    // 2. ICPPromotionLinkList
     // template List {
     NSArray *templateList = info[kInfoKeyTemplateList];
     if (templateList.count) {

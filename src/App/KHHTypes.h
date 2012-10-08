@@ -31,9 +31,14 @@ typedef enum {
     KHHCardAttributeName       = 1UL << 2,
     KHHCardAttributeUserID     = 1UL << 3,
     KHHCardAttributeTemplateID = 1UL << 4,
-    //    KHHCardAttribute           = ,
     KHHCardAttributeAll        = ~KHHCardAttributeNone,
 } KHHCardAttributeType;
+
+// KHHScheduleAttributeType
+typedef enum  {
+    KHHScheduleAttributeNone = 0UL,
+    KHHScheduleAttributeID   = 1UL << 0,
+} KHHScheduleAttributeType;
 
 // KHHTemplateDomainType 模板共有私有
 typedef enum {

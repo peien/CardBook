@@ -7,15 +7,13 @@
 //
 
 #import "KHHNetworkAPIAgent.h"
-@class Schedule;
-typedef enum  {
-    KHHScheduleAttributeNone = 0UL,
-    KHHScheduleAttributeID = 1UL << 0,
-} KHHScheduleAttributes;
+#import "KHHTypes.h"
+#import "Schedule.h"
+
 BOOL ScheduleHasRequiredAttributes(Schedule *visitSchedule,
-                                   KHHScheduleAttributes attributes);
+                                   KHHScheduleAttributeType attributes);
 NSMutableDictionary * ParametersFromSchedule(Schedule *visitSchedule,
-                                             KHHScheduleAttributes attributes);
+                                             KHHScheduleAttributeType attributes);
 @interface KHHNetworkAPIAgent (VisitSchedule)
 /**
  新建拜访计划 kinghhVisitCustomPlanService.create

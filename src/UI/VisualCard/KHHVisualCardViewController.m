@@ -11,10 +11,9 @@
 #import "NSString+SM.h"
 #import "UIColor+HexColor.h"
 #import "UIImageView+WebCache.h"
-static CGFloat const ratio = 300.f / 450.f;
-@interface KHHVisualCardViewController ()
-
-@end
+static CGFloat const CARD_WIDTH = 300.f;
+static CGFloat const CARD_RATIO = CARD_WIDTH / 450.f;
+static CGFloat const CARD_WIDTH_PADDING = 5.f;
 
 @implementation KHHVisualCardViewController
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -71,13 +70,27 @@ static CGFloat const ratio = 300.f / 450.f;
  remarks                 n
  */
 - (void)drawViewWithCard {
+    NSDictionary *itemValuePair = @{
+    kVisualCardItemKeyCompanyEmail : kAttributeKeyPathCompanyEmail,
+    kVisualCardItemKeyCompanyLogo  : kAttributeKeyPathCompanyLogoURL,
+    kVisualCardItemKeyCompanyName  : kAttributeKeyPathCompanyName,
+    kVisualCardItemKeyEmail        : kAttributeKeyEmail,
+    kVisualCardItemKeyFax          : kAttributeKeyFax,
+    kVisualCardItemKeyLogo         : kAttributeKeyPathLogoURL,
+    kVisualCardItemKeyMobilePhone  : kAttributeKeyMobilePhone,
+    kVisualCardItemKeyMSN          : kAttributeKeyMSN,
+    kVisualCardItemKeyName         : kAttributeKeyName,
+    kVisualCardItemKeyQQ           : kAttributeKeyQQ,
+    kVisualCardItemKeyTelephone    : kAttributeKeyTelephone,
+    kVisualCardItemKeyTitle        : kAttributeKeyTitle,
+    };
     NSDictionary * const prefixPair = @{
-    kVisualCardItemKeyEmail:NSLocalizedString(@"email：", nil),
-    kVisualCardItemKeyFax:NSLocalizedString(@"传真：", nil),
-    kVisualCardItemKeyMobilePhone:NSLocalizedString(@"手机：", nil),
-    kVisualCardItemKeyMSN:NSLocalizedString(@"MSN：", nil),
-    kVisualCardItemKeyQQ:NSLocalizedString(@"QQ：", nil),
-    kVisualCardItemKeyTelephone:NSLocalizedString(@"固定电话：", nil),
+    kVisualCardItemKeyEmail       : NSLocalizedString(@"Email：", nil),
+    kVisualCardItemKeyFax         : NSLocalizedString(@"传真：", nil),
+    kVisualCardItemKeyMobilePhone : NSLocalizedString(@"手机：", nil),
+    kVisualCardItemKeyMSN         : NSLocalizedString(@"MSN：", nil),
+    kVisualCardItemKeyQQ          : NSLocalizedString(@"QQ：", nil),
+    kVisualCardItemKeyTelephone   : NSLocalizedString(@"固话：", nil),
     };
     NSArray * const labelItemNames = @[
     kVisualCardItemKeyAddress,
@@ -92,20 +105,6 @@ static CGFloat const ratio = 300.f / 450.f;
     kVisualCardItemKeyTelephone,
     kVisualCardItemKeyTitle,
     ];
-    NSDictionary *itemValuePair = @{
-    kVisualCardItemKeyCompanyEmail : kAttributeKeyPathCompanyEmail,
-    kVisualCardItemKeyCompanyLogo : kAttributeKeyPathCompanyLogoURL,
-    kVisualCardItemKeyCompanyName : kAttributeKeyPathCompanyName,
-    kVisualCardItemKeyEmail : kAttributeKeyEmail,
-    kVisualCardItemKeyFax : kAttributeKeyFax,
-    kVisualCardItemKeyLogo : kAttributeKeyPathLogoURL,
-    kVisualCardItemKeyMobilePhone : kAttributeKeyMobilePhone,
-    kVisualCardItemKeyMSN : kAttributeKeyMSN,
-    kVisualCardItemKeyName : kAttributeKeyName,
-    kVisualCardItemKeyQQ : kAttributeKeyQQ,
-    kVisualCardItemKeyTelephone : kAttributeKeyTelephone,
-    kVisualCardItemKeyTitle : kAttributeKeyTitle,
-    };
     
     // 删除背景,logo,公司logo和所有label
     // 即删除所有imageview和label
@@ -132,8 +131,6 @@ static CGFloat const ratio = 300.f / 450.f;
     for (CardTemplateItem *anItem in itemsSet) {
         DLog(@"[II] item = %@", anItem);
         if ([labelItemNames containsObject:anItem.name]) {
-            CGFloat originX = anItem.originXValue * ratio;
-            CGFloat originY = anItem.originYValue * ratio;
             id valueOfCard;
             if ([anItem.name isEqualToString:kVisualCardItemKeyAddress]) {
                 // 地址是多个字段组成的，单独处理
@@ -156,10 +153,17 @@ static CGFloat const ratio = 300.f / 450.f;
                                        [NSString stringByFilterNilFromString:valueText]
                                        ];
                 NSString *fontName = [anItem.fontWeight isEqualToString:@"bold"]?@"Helvetica-Bold":@"Helvetica";
-                CGFloat fontSize = anItem.fontSizeValue * ratio;
+                CGFloat fontSize = anItem.fontSizeValue * CARD_RATIO;
                 UIFont *font = [UIFont fontWithName:fontName size:fontSize];
                 CGSize textSize = [labelText sizeWithFont:font];
-                UILabel *aLabel = [[UILabel alloc] initWithFrame:CGRectMake(originX, originY, textSize.width, textSize.height)];
+                CGFloat originX = anItem.originXValue * CARD_RATIO;
+                CGFloat originY = anItem.originYValue * CARD_RATIO;
+                CGFloat width = (textSize.width > (CARD_WIDTH - originX - CARD_WIDTH_PADDING))
+                ?(CARD_WIDTH - originX - CARD_WIDTH_PADDING)
+                :textSize.width;
+//                CGFloat width = textSize.width;
+                CGFloat height = textSize.height;
+                UILabel *aLabel = [[UILabel alloc] initWithFrame:CGRectMake(originX, originY, width, height)];
                 aLabel.font = font;
                 aLabel.text = labelText;
                 aLabel.textColor = [UIColor colorWithHexString:anItem.fontColor];
@@ -170,10 +174,10 @@ static CGFloat const ratio = 300.f / 450.f;
         }
         // 单独处理logo和公司logo
         else if ([anItem.name hasSuffix:@"logo"]) {
-            CGFloat originX = anItem.originXValue * ratio;
-            CGFloat originY = anItem.originYValue * ratio;
-            CGFloat width = anItem.rectWidthValue * ratio;
-            CGFloat height = anItem.rectHeightValue * ratio;
+            CGFloat originX = anItem.originXValue * CARD_RATIO;
+            CGFloat originY = anItem.originYValue * CARD_RATIO;
+            CGFloat width = anItem.rectWidthValue * CARD_RATIO;
+            CGFloat height = anItem.rectHeightValue * CARD_RATIO;
             NSString *valueText = [card valueForKeyPath:itemValuePair[anItem.name]];
             if (valueText.length) {
                 UIImageView *logoView = [[UIImageView alloc] initWithFrame:CGRectMake(originX, originY, width, height)];

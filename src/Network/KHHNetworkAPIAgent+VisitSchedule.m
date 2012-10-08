@@ -10,7 +10,7 @@
 #import "Schedule.h"
 #pragma mark - Schedule参数整理函数
 BOOL ScheduleHasRequiredAttributes(Schedule *visitSchedule,
-                                   KHHScheduleAttributes attributes) {
+                                   KHHScheduleAttributeType attributes) {
     NSString *ID = [[visitSchedule valueForKey:kAttributeKeyID] stringValue];
     if ((attributes & KHHScheduleAttributeID) && ID.length == 0) {
         return NO;
@@ -18,7 +18,7 @@ BOOL ScheduleHasRequiredAttributes(Schedule *visitSchedule,
     return YES;
 }
 NSMutableDictionary * ParametersFromSchedule(Schedule *visitSchedule,
-                                             KHHScheduleAttributes attributes) {
+                                             KHHScheduleAttributeType attributes) {
     NSMutableDictionary *result = [NSMutableDictionary dictionary];
     NSString *ID = [[visitSchedule valueForKey:kAttributeKeyID] stringValue];
     if ((attributes & KHHScheduleAttributeID)) {
