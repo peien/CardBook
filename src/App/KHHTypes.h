@@ -34,6 +34,15 @@ typedef enum {
     KHHCardAttributeAll        = ~KHHCardAttributeNone,
 } KHHCardAttributeType;
 
+// KHHGroupAttributeType
+typedef enum {
+    KHHGroupAttributeNone     = 0UL,
+    KHHGroupAttributeID       = 1UL << 0,
+    KHHGroupAttributeName     = 1UL << 1,
+    KHHGroupAttributeParentID = 1UL << 2,
+    KHHGroupAttributeAll      = ~KHHGroupAttributeNone,
+} KHHGroupAttributeType;
+
 // KHHScheduleAttributeType
 typedef enum  {
     KHHScheduleAttributeNone = 0UL,
