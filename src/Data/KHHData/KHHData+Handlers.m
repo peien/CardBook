@@ -139,31 +139,6 @@
     // 发送成功消息
     [self postASAPNotificationName:KHHUIDeleteCardFailed];
 }
-//- (void)handleReceivedCardCountAfterDateLastCardSucceeded:(NSNotification *)noti {
-//    NSDictionary *info = noti.userInfo;
-//    NSNumber *count = info[kInfoKeyCount];
-//    DLog(@"[II] 新名片数量%@。", count);
-//    NSDictionary *extra= info[kInfoKeyExtra];
-//    BOOL isChained = NO;
-//    if (extra) {
-//        isChained = [extra[kExtraKeyChainedInvocation] boolValue];
-//    }
-//    if (isChained) {
-//        SyncMark *lastTime = [self syncMarkByKey:kSyncMarkKeyReceviedCardLastTime];
-//        SyncMark *lastCardID = [self syncMarkByKey:kSyncMarkKeyReceviedCardLastID];
-//        [self.agent receivedCardsAfterDate:lastTime.value
-//                                  lastCard:lastCardID.value
-//                             expectedCount:count.stringValue
-//                                     extra:extra];
-//    } else {
-//#warning TODO
-//        // 发消息？
-//    }
-//}
-//- (void)handleReceivedCardCountAfterDateLastCardFailed:(NSNotification *)noti {
-//    DLog(@"[II] handleReceivedCardCountAfterDateLastCardFailed:%@", noti);
-//#warning TODO
-//}
 - (void)handleReceivedCardsAfterDateLastCardExpectedCountSucceeded:(NSNotification *)noti {
     DLog(@"[II] handleReceivedCardsAfterDateLastCardExpectedCountSucceeded:%@", noti);
     NSDictionary *info = noti.userInfo;

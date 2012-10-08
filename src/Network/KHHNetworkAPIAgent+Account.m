@@ -96,7 +96,7 @@
     @"userPassword" : encPass
     };
     
-    // 返回数据的处理block
+    // 处理返回数据的block
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
         NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:8];
