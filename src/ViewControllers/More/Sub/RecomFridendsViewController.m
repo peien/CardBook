@@ -8,6 +8,7 @@
 
 #import "RecomFridendsViewController.h"
 #import "ShareSinaViewController.h"
+#import <Social/Social.h>
 
 @interface RecomFridendsViewController ()<MFMessageComposeViewControllerDelegate>
 
@@ -31,7 +32,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    _ItemArray = [NSArray arrayWithObjects:@"写信息",@"分享到新浪微薄",@"分享给QQ好友", nil];
+    _ItemArray = [NSArray arrayWithObjects:@"写信息",@"分享到新浪微薄",@"复制链接地址", nil];
 }
 
 - (void)viewDidUnload
@@ -70,10 +71,25 @@
         [self gotoSendSMS];
 
     }else if (indexPath.row ==1) {
+        //ios 6 集成了sina
         ShareSinaViewController *shareVC = [[ShareSinaViewController alloc] initWithNibName:@"ShareSinaViewController" bundle:nil];
         [self.navigationController pushViewController:shareVC animated:YES];
+//        if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeSinaWeibo]) {
+//            SLComposeViewController *sinaVC = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeSinaWeibo];
+//            [sinaVC setInitialText:@"我正在手机上用印象名片,可以发送电子名片,很方便哦,推荐你用一下。下载地址:http://t.cn/zOksmJo"];
+//            [sinaVC addImage:[UIImage imageNamed:@"logopic.png"]];
+//            [self presentModalViewController:sinaVC animated:YES];
+//        }
+    }else if (indexPath.row == 2){
+        [UIPasteboard generalPasteboard].string = @"http://t.cn/zOksmJo";
+        [[[UIAlertView alloc]
+           initWithTitle:nil
+           message:@"已成功复制链接"
+           delegate:nil
+           cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
+           otherButtonTitles:nil]
+           show];
     }
-
 }
 
 - (void) gotoSendSMS
@@ -81,7 +97,7 @@
     if (MFMessageComposeViewController.canSendText) {
         MFMessageComposeViewController *smsVC = [[MFMessageComposeViewController alloc] init];
         smsVC.messageComposeDelegate = self;
-        smsVC.body = [NSString stringWithFormat:@"我正在手机上用“爱心卡包“，可收录个人专属的会员卡和银行卡。推荐大家用一下，下载地址:%@",nil];
+        smsVC.body = [NSString stringWithFormat:@"我正在手机上用“印象名片“，可收录个人专属的会员卡和银行卡。推荐大家用一下，下载地址:%@",nil];
         [self presentModalViewController:smsVC animated:YES];
     } else {
         [[[UIAlertView alloc] 

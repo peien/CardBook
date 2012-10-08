@@ -12,6 +12,7 @@
 #import "KHHFrameCardView.h"
 #import "MyCard.h"
 #import "Image.h"
+#import "Card.h"
 #import "UIImageView+WebCache.h"
 #import "KHHAddressBook.h"
 
@@ -27,13 +28,14 @@
 @synthesize myCard = _myCard;
 @synthesize detailVC;
 @synthesize myDetailVC;
+@synthesize itemArray;
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        [self initView];
+        //[self initView];
     }
     return self;
 }
@@ -50,6 +52,8 @@
 {
     self.backgroundColor = [UIColor colorWithRed:241 green:238 blue:232 alpha:1.0];
     KHHFrameCardView *cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(0, 0, 320, 225) isVer:NO];
+    cardView.card = self.myCard;
+    [cardView showView];
     _theTable.tableHeaderView = cardView;
     
     UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 165.0f)];
@@ -77,12 +81,24 @@
 //初始化界面数据
 - (void)initViewData
 {
-    self.data = [KHHData sharedData];
-    self.dataArray = [self.data allMyCards];
-    _myCard = [self.dataArray objectAtIndex:0];
-    DLog(@"_myCard============%@",_myCard);
-    self.detailVC.card = _myCard;
-    self.myDetailVC.card = _myCard;
+    self.itemArray = [[NSMutableArray alloc] initWithCapacity:0];
+    if (_myCard.mobilePhone.length > 0) {
+        NSArray *phoneArr = [_myCard.mobilePhone componentsSeparatedByString:@"|"];
+        [self.itemArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[phoneArr objectAtIndex:0],@"value",@"手机",@"key", nil]];
+    }
+    if (_myCard.telephone.length > 0) {
+        NSArray *telArr = [_myCard.telephone componentsSeparatedByString:@"|"];
+        [self.itemArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[telArr objectAtIndex:0],@"value",@"电话",@"key", nil]];
+    }
+    if (_myCard.fax.length > 0) {
+        NSArray *faxArr = [_myCard.telephone componentsSeparatedByString:@"|"];
+        [self.itemArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[faxArr objectAtIndex:0],@"value",@"传真",@"key", nil]];
+    }
+    if (_myCard.email.length > 0) {
+        NSArray *faxArr = [_myCard.email componentsSeparatedByString:@"|"];
+        [self.itemArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[faxArr objectAtIndex:0],@"value",@"邮箱",@"key", nil]];
+    }
+
 }
 //跳转到全屏
 - (void)gotoFullFrame:(id)sender
@@ -114,7 +130,7 @@
             return 1;
             break;
         case 1:
-            return 4;
+            return [self.itemArray count];
             break;
         default:
             break;
@@ -147,53 +163,26 @@
     UILabel *lab = (UILabel *)[cell.contentView viewWithTag:LABEL_CELL_TAG];
     [lab setBackgroundColor:[UIColor clearColor]];
     UITextField *tf = (UITextField *)[cell.contentView viewWithTag:TEXTFIELD_CELL_TAG];
-    switch (indexPath.section) {
-        case 1:
-            switch (indexPath.row) {
-                case 0:
-                    lab.text = @"手机";
-                    tf.text = _myCard.mobilePhone;
-                    break;
-                case 1:
-                    lab.text = @"电话";
-                    tf.text = _myCard.telephone;
-                    break;
-                 case 2:
-                    lab.text = @"传真";
-                    tf.text = _myCard.fax;
-                    break;
-                 case 3:
-                    lab.text = @"邮箱";
-                    tf.text = _myCard.email;
-                    break;
-                default:
-                    break;
-            }
-            break;
-         case 0:
-            switch (indexPath.row) {
-                case 0:{
-                    //获取图片
-                    [cell.imageView setImageWithURL:[NSURL URLWithString:_myCard.logo.url] placeholderImage:[UIImage imageNamed:@"logopic.png"]];
-                    CGRect rectLab = lab.frame;
-                    rectLab.origin.x = 50;
-                    lab.frame = rectLab;
-                    CGRect rectTf = tf.frame;
-                    rectTf.origin.y = 30;
-                    rectTf.origin.x = 69;
-                    tf.frame = rectTf;
-                    lab.text = _myCard.name;
-                    tf.text = _myCard.title;
-                }
-                    break;
-                    
-                default:
-                    break;
-            }
-
-        default:
-            break;
-    }
+    
+    if (indexPath.section == 0) {
+        UIImageView *iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(13, 2, 55, 55)];
+        //iconImage.backgroundColor = [UIColor blackColor];
+        [cell addSubview:iconImage];
+        [iconImage setImageWithURL:[NSURL URLWithString:_myCard.logo.url] placeholderImage:[UIImage imageNamed:@"logopic.png"]];
+        CGRect rectLab = lab.frame;
+        rectLab.origin.x = 65;
+        lab.frame = rectLab;
+        CGRect rectTf = tf.frame;
+        rectTf.origin.y = 30;
+        rectTf.origin.x = 69;
+        tf.frame = rectTf;
+        lab.text = _myCard.name;
+        tf.text = _myCard.title;
+        
+    }else if (indexPath.section == 1){
+        lab.text = [[self.itemArray objectAtIndex:indexPath.row] objectForKey:@"key"];
+        tf.text = [[self.itemArray objectAtIndex:indexPath.row] objectForKey:@"value"];
+  }
     return cell;
 }
 //添加card到通讯录

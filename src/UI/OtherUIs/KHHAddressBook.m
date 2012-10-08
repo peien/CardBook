@@ -12,7 +12,7 @@
 #import <AddressBook/AddressBook.h>
 @implementation KHHAddressBook
 //保存到通讯录
-+ (BOOL)saveToCantactWithCard:(MyCard *)card
++ (BOOL)saveToCantactWithCard:(Card *)card
 {
     BOOL result = YES;
     ABMutableMultiValueRef phoneNumbers = ABMultiValueCreateMutable(kABMultiStringPropertyType);

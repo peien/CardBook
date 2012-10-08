@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MyCard.h"
+#import "Card.h"
 @interface KHHAddressBook : NSObject
-+ (BOOL)saveToCantactWithCard:(MyCard *)card;
++ (BOOL)saveToCantactWithCard:(Card *)card;
 @end

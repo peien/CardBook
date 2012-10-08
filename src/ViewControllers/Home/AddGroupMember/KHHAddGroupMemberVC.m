@@ -14,6 +14,7 @@
 #import "UIImageView+WebCache.h"
 
 #import "KHHCardMode.h"
+#import "Card.h"
 @interface KHHAddGroupMemberVC ()<UISearchBarDelegate,UISearchDisplayDelegate,
                                  UITableViewDataSource,UITableViewDelegate,SMCheckboxDelegate>
 
@@ -77,10 +78,21 @@
     }
     _addOrDelGroupArray = [[NSMutableArray alloc] initWithCapacity:0];
     
-    //构建搜索表
-    _searchArray = [[NSArray alloc] initWithObjects:@"孙悟空",@"孙三",@"孙四", nil];
-    _resultArray = [[NSArray alloc] init];
 }
+// 搜索结果，暂时只能用姓名搜索
+- (void)searcResult
+{
+    //搜索结果
+    _resultArray = [[NSArray alloc] init];
+    NSMutableArray *stringArr = [[NSMutableArray alloc] init];
+    for (int i = 0; i< self.handleArray.count; i++) {
+        KHHCardMode *card = [self.handleArray objectAtIndex:i];
+        [stringArr addObject:card.name];
+    }
+    _searchArray = stringArr;
+    
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -150,9 +162,11 @@
         static NSString *cellID = @"CELLID";
         KHHClientCellLNPC *cell = nil;
         cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+        Card *card = [self.handleArray objectAtIndex:indexPath.row];
         if (cell == nil) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"KHHClientCellLNPC" owner:self options:nil] objectAtIndex:0];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [cell.logoView setImageWithURL:[NSURL URLWithString:card.logo.url] placeholderImage:[UIImage imageNamed:@"logopic.png"]];
             
         }
         if ([[_selectedItemArray objectAtIndex:indexPath.row] isEqualToNumber:[NSNumber numberWithBool:YES]]) {
@@ -164,11 +178,9 @@
             imgView.frame = CGRectMake(280, 10, 30, 30);
             [cell addSubview:imgView];
         }
-        KHHCardMode *card = [self.handleArray objectAtIndex:indexPath.row];
         cell.nameLabel.text = card.name;
         cell.positionLabel.text = card.title;
-        cell.companyLabel.text = @"浙江金汉弘软件技术有限公司";
-        [cell.logoView setImageWithURL:[NSURL URLWithString:card.logUrl] placeholderImage:[UIImage imageNamed:@"logopic.png"]];
+        cell.companyLabel.text = card.company.name;
         return cell;
     }
 }
@@ -176,24 +188,34 @@ int num = 0;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    NSNumber *state = [_selectedItemArray objectAtIndex:indexPath.row];
-    if ([state isEqualToNumber:[NSNumber numberWithBool:YES]]) {
-        state = [NSNumber numberWithBool:NO];
-        num--;
+    if (tableView == self.searbarCtrl.searchResultsTableView) {
+        UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+        for (KHHCardMode *card in self.handleArray) {
+            if ([cell.textLabel.text isEqualToString:card.name]) {
+                [self.addOrDelGroupArray addObject:card];
+            }
+        }
+        self.searbarCtrl.active = NO;
     }else{
-        state = [NSNumber numberWithBool:YES];
-        num++;
+        NSNumber *state = [_selectedItemArray objectAtIndex:indexPath.row];
+        if ([state isEqualToNumber:[NSNumber numberWithBool:YES]]) {
+            state = [NSNumber numberWithBool:NO];
+            num--;
+        }else{
+            state = [NSNumber numberWithBool:YES];
+            num++;
+        }
+        NSString *s = [NSString stringWithFormat:@"(%d)",num];
+        self.numLab.text = s;
+        if (num == 0) {
+            self.numLab.hidden = YES;
+        }else{
+            self.numLab.hidden = NO;
+        }
+        [_selectedItemArray replaceObjectAtIndex:indexPath.row withObject:state];
+        [_theTableM reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        [_theTableM deselectRowAtIndexPath:indexPath animated:NO];
     }
-    NSString *s = [NSString stringWithFormat:@"(%d)",num];
-    self.numLab.text = s;
-    if (num == 0) {
-           self.numLab.hidden = YES;
-       }else{
-           self.numLab.hidden = NO;
-    }
-    [_selectedItemArray replaceObjectAtIndex:indexPath.row withObject:state];
-    [_theTableM reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
-    [_theTableM deselectRowAtIndexPath:indexPath animated:NO];
 }
 #pragma mark -
 #pragma mark ButtonClick
@@ -228,6 +250,10 @@ int num = 0;
     
 
 }
+- (void) searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller{
+    [self searcResult];
+}
+
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
     NSPredicate *resultPre = [NSPredicate predicateWithFormat:@"SELF contains[cd]%@",searchString];

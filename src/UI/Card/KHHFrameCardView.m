@@ -8,23 +8,27 @@
 
 #import "KHHFrameCardView.h"
 #import "UIImageView+WebCache.h"
+#import "KHHVisualCardViewController.h"
 
 @implementation KHHFrameCardView
 @synthesize scrView = _scrView;
 @synthesize isVer = _isVer;
 @synthesize xlPage;
+@synthesize cardTempVC;
+@synthesize card;
 - (id)initWithFrame:(CGRect)frame isVer:(BOOL)ver
 {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
         _isVer = ver;
-        [self showView];
+        //[self showView];
     }
     return self;
 }
 - (void)showView
 {
+    self.cardTempVC = [[KHHVisualCardViewController alloc] initWithNibName:nil bundle:nil];
     xlPage = [[XLPageControl alloc] initWithFrame:CGRectMake(130, 190, 60, 15)];
     [xlPage setBackgroundColor:[UIColor clearColor]];
     xlPage.activeImg = [UIImage imageNamed:@"p1.png"];
@@ -40,14 +44,19 @@
         [self creatCardTemplate:rect];
         xlPage.frame = CGRectMake(110, 260, 100, 15);
     }else{
-        CGRect rect = CGRectMake(30, 15, 260, 190);
+        CGRect rect = CGRectMake(10, 15, 300, 180);
         [self creatCardTemplate:rect];
         xlPage.frame = CGRectMake(100, 205, 100, 15);
     }
     [self addSubview:_scrView];
+    //self.backgroundColor = [UIColor redColor];
+    UIImageView *shadowCard = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cardTouying.png"]];
+    shadowCard.frame = CGRectMake(0, 195, 320, 20);
+    [self addSubview:shadowCard];
 }
 - (void)creatCardTemplate:(CGRect)frame
 {
+
     UIScrollView *scroll = [[UIScrollView alloc] initWithFrame:frame];
     scroll.showsHorizontalScrollIndicator = NO;
     scroll.delegate = self;
@@ -57,15 +66,19 @@
         frame = rect;
         UIImageView *imgView = [[UIImageView alloc] initWithFrame:frame];
         if (i == 0) {
-            imgView.backgroundColor = [UIColor clearColor];
-            imgView.image = [UIImage imageNamed:@"card_tesco.png"];
+            
+//            imgView.backgroundColor = [UIColor clearColor];
+//            imgView.image = [UIImage imageNamed:@"card_tesco.png"];
+            [scroll addSubview:self.cardTempVC.view];
+            self.cardTempVC.card = self.card;
         }else{
             //第二张从网络获取
-            imgView.backgroundColor = [UIColor clearColor];
-            imgView.image = [UIImage imageNamed:@"card_watsons.png"];
-            //[imgView setImageWithURL:[NSURL URLWithString:@""] placeholderImage:[UIImage imageNamed:@""]];
+            rect.origin.y = 0;
+            imgView.frame = rect;
+            imgView.backgroundColor = [UIColor darkGrayColor];
+            imgView.image = [UIImage imageNamed:@"template2FrameBg.jpg"];
+            [scroll addSubview:imgView];
         }
-        [scroll addSubview:imgView];
     }
     
     scroll.pagingEnabled = YES;
@@ -88,7 +101,7 @@
     int i  = page.currentPage;
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:0.3];
-    int w = _isVer?180:260;
+    int w = _isVer?180:300;
     _scrView.contentOffset = CGPointMake(i * w, 0);
     [UIView commitAnimations];
     
