@@ -324,11 +324,14 @@
                 textField.text = [_fieldValue objectAtIndex:indexPath.row];
                 for (int i = 0; i<2; i++) {
                     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-                    if (i== 0 || i == 1) {
-                        [btn setBackgroundImage:[UIImage imageNamed:@"locationImg.png"] forState:UIControlStateNormal];
+                    if (i== 0) {
+                        [btn setBackgroundImage:[UIImage imageNamed:@"dingwei_green.png"] forState:UIControlStateNormal];
                         [btn addTarget:self action:@selector(showMap:) forControlEvents:UIControlEventTouchUpInside];
+                    }else if (i == 1){
+                        [btn setBackgroundImage:[UIImage imageNamed:@"ic_shuaxin1.png"] forState:UIControlStateNormal];
+                        [btn addTarget:self action:@selector(updateLocation:) forControlEvents:UIControlEventTouchUpInside];
                     }
-                    btn.frame = CGRectMake(280, 5+i*(8+30), 30, 30);
+                    btn.frame = CGRectMake(280, 5+i*(8+30), 35, 35);
                     btn.tag = i + 778;
                     [cell.contentView addSubview:btn];
                 }
@@ -336,9 +339,10 @@
             
         }else if (indexPath.row == 5){
             [textField removeFromSuperview];
-            UIButton *warnBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+            UIButton *warnBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            [warnBtn setBackgroundImage:[[UIImage imageNamed:@"tongbu_normal.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 8, 0, 8)] forState:UIControlStateNormal];
             warnBtn.tag = 2277;
-            warnBtn.frame = CGRectMake(80, 8, 180, 30);
+            warnBtn.frame = CGRectMake(80, 8, 180, 37);
             [warnBtn setTitle:@"不提醒" forState:UIControlStateNormal];
             if (_isNeedWarn) {
                 [warnBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -494,6 +498,11 @@
     mapVC.companyAddr = address.text;
     mapVC.companyName = @"浙江金汉弘";
     [self.navigationController pushViewController:mapVC animated:YES];
+
+}
+- (void)updateLocation:(UIButton *)sender
+{
+
 
 }
 - (void)addImageBtnClick:(UIButton *)sender

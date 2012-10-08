@@ -59,7 +59,7 @@
     UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 165.0f)];
     footView.backgroundColor = [UIColor clearColor];
     UIButton *btnFooter = [UIButton buttonWithType:UIButtonTypeCustom];
-    [btnFooter setBackgroundImage:[[UIImage imageNamed:@"tongbu_normal.png"]stretchableImageWithLeftCapWidth:11 topCapHeight:4] forState:UIControlStateNormal];
+    [btnFooter setBackgroundImage:[[UIImage imageNamed:@"tongbu_normal.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10, 0, 10)] forState:UIControlStateNormal];
     btnFooter.frame = CGRectMake(60.0f, 5.0f, 200, 37);
     [btnFooter setTitle:@"保存至手机通讯录" forState:UIControlStateNormal];
     btnFooter.titleLabel.font = [UIFont systemFontOfSize:15];
@@ -70,7 +70,7 @@
     UIButton *btnFooterDel = [UIButton buttonWithType:UIButtonTypeCustom];
     btnFooterDel.frame = CGRectMake(60.0f, 55.0f, 200, 37);
     [btnFooterDel setTitle:@"删除名片" forState:UIControlStateNormal];
-    [btnFooterDel setBackgroundImage:[[UIImage imageNamed:@"tongbu_normal.png"]stretchableImageWithLeftCapWidth:11 topCapHeight:4] forState:UIControlStateNormal];
+    [btnFooterDel setBackgroundImage:[[UIImage imageNamed:@"tongbu_normal.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10, 0, 10)] forState:UIControlStateNormal];
     btnFooterDel.titleLabel.font = [UIFont systemFontOfSize:15];
     [btnFooterDel setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [btnFooterDel addTarget:self action:@selector(delCardBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -109,8 +109,8 @@
 {
 
 }
-#pragma mark - UITableViewDataSource
 
+#pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 2;
@@ -208,6 +208,4 @@
 //        
 //    }
 //}
-
-
 @end

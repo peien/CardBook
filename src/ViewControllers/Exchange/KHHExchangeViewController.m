@@ -35,8 +35,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.title = @"交换名片";
-        [self.leftBtn setTitle:@"切换名片" forState:UIControlStateNormal];
+        self.title = NSLocalizedString(@"交换名片", nil);
+        [self.leftBtn setTitle:NSLocalizedString(@"切换名片", nil) forState:UIControlStateNormal];
         [self.rightBtn setTitle:@"发送纪录" forState:UIControlStateNormal];
         self.httpAgent = [[KHHNetworkAPIAgent alloc] init];
     }
@@ -113,17 +113,6 @@
     _scrView = nil;
     xlPage = nil;
 }
-//- (void)pageCtrlClick:(id)sender
-//{
-//    XLPageControl *page = (XLPageControl *)sender;
-//    int i  = page.currentPage;
-//    [UIView beginAnimations:nil context:nil];
-//    [UIView setAnimationDuration:0.3];
-//    int w = _isVer?180:260;
-//    _scrView.contentOffset = CGPointMake(i * w, 0);
-//    [UIView commitAnimations];
-//
-//}
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     if ([scrollView isEqual:_scrView]) {

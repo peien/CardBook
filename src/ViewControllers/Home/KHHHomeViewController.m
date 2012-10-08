@@ -357,10 +357,10 @@ typedef enum {
                 [cell.button addTarget:self action:@selector(cellBtnClick:) forControlEvents:UIControlEventTouchUpInside];
                 UIEdgeInsets insets = {0, 0, 0, 25};
                 if (indexPath.row != _lastIndexPath.row) {
-                    [cell.button setBackgroundImage:[[UIImage imageNamed:@"left_btn_bg.png"] resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
+                    [cell.button setBackgroundImage:[[UIImage imageNamed:@"left_btn_bg.png"] resizableImageWithCapInsets:insets] forState:UIControlStateNormal];
                     [cell.button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                 }else{
-                    [cell.button setBackgroundImage:[[UIImage imageNamed:@"left_btn_bg_selected.png"] resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
+                    [cell.button setBackgroundImage:[[UIImage imageNamed:@"left_btn_bg_selected.png"] resizableImageWithCapInsets:insets] forState:UIControlStateNormal];
                     [cell.button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
                 }
                 return cell;
@@ -500,9 +500,7 @@ typedef enum {
     if (_lastIndexPath.row != indexPath.row) {
         KHHButtonCell *lastCell = (KHHButtonCell *)[_btnTable cellForRowAtIndexPath:_lastIndexPath];
         UIButton *lastBtn = lastCell.button;
-        //[lastBtn setBackgroundImage:[[[UIImage imageNamed:@""] transformHalf] stretchableImageWithLeftCapWidth:0 topCapHeight:0] forState:UIControlStateNormal];
-        [lastBtn setBackgroundImage:[[UIImage imageNamed:@"left_btn_bg.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 25) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
-
+        [lastBtn setBackgroundImage:[[UIImage imageNamed:@"left_btn_bg.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 25)] forState:UIControlStateNormal];
         [lastBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         _isShowData = YES;
     }else {
@@ -547,7 +545,7 @@ typedef enum {
             self.generalArray = self.oWnGroupArray;
         }
         UIEdgeInsets insets = {0,0,0,25};
-        [btn setBackgroundImage:[[UIImage imageNamed:@"left_btn_bg_selected.png"] resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
+        [btn setBackgroundImage:[[UIImage imageNamed:@"left_btn_bg_selected.png"] resizableImageWithCapInsets:insets] forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
         [_bigTable reloadData];
     }else{

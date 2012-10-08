@@ -14,13 +14,14 @@
 #define LoginPasswordFieldTag  1001
 
 @interface LoginViewController : SuperViewController
-@property (nonatomic, weak) IBOutlet UITableView *inputTable;
-@property (nonatomic, weak) IBOutlet UIButton *theLoginButton;
-@property (nonatomic, strong)        UIView   *latestView;
+@property (nonatomic, weak)   IBOutlet UITableView *inputTable;
+@property (nonatomic, weak)   IBOutlet UIButton    *theLoginButton;
+@property (nonatomic, strong)          UIView      *latestView;
 @property (nonatomic, strong) IBOutlet UITextField *accountTf;
 @property (nonatomic, strong) IBOutlet UITextField *passWordTf;
 @property (nonatomic, strong) IBOutlet UIButton    *showPasswordBtn;
 @property (nonatomic, strong) IBOutlet UIButton    *remberPasswordBtn;
+@property (nonatomic, strong) IBOutlet UIButton    *regiBtn;
 
 - (IBAction)login:(id)sender;
 - (IBAction)showResetPasswordPage:(id)sender;

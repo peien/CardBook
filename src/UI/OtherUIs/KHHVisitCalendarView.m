@@ -54,6 +54,8 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         cell.delegate = self;
     }
+    UIImage *imgBtn = [[UIImage imageNamed:@"tongbu_normal.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 8, 0, 8)];
+    [cell.finishBtn setBackgroundImage:imgBtn forState:UIControlStateNormal];
     if (indexPath.row%2 == 0) {
         cell.finishBtn.hidden = YES;
     }

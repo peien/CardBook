@@ -49,7 +49,6 @@
         xlPage.frame = CGRectMake(100, 205, 100, 15);
     }
     [self addSubview:_scrView];
-    //self.backgroundColor = [UIColor redColor];
     UIImageView *shadowCard = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cardTouying.png"]];
     shadowCard.frame = CGRectMake(0, 195, 320, 20);
     [self addSubview:shadowCard];

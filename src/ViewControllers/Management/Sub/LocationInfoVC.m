@@ -171,10 +171,14 @@
                 label.text = @"位置:";
                 for (int i = 0; i<2; i++) {
                     UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-                    if (i== 0 || i == 1) {
-                        [btn setBackgroundImage:[UIImage imageNamed:@"locationImg.png"] forState:UIControlStateNormal];
+                    if (i== 0) {
+                        [btn setBackgroundImage:[UIImage imageNamed:@"dingwei_green.png"] forState:UIControlStateNormal];
+                        [btn addTarget:self action:@selector(showLocation:) forControlEvents:UIControlEventTouchUpInside];
+                    }else if (i == 1){
+                        [btn setBackgroundImage:[UIImage imageNamed:@"ic_shuaxin1.png"] forState:UIControlStateNormal];
+                        [btn addTarget:self action:@selector(updateLocation:) forControlEvents:UIControlEventTouchUpInside];
                     }
-                    btn.frame = CGRectMake(265, 2+i*(5+30), 30, 30);
+                    btn.frame = CGRectMake(265, 2+i*(2+30), 35, 35);
                     btn.tag = i + 778;
                     [cell.contentView addSubview:btn];
                 }
@@ -225,6 +229,14 @@
     [actView addButtonWithTitle:@"本地相册"];
     [actView addButtonWithTitle:@"拍照"];
     [actView showInView:self.view];
+
+}
+- (void)showLocation:(id)sender
+{
+
+}
+- (void)updateLocation:(id)sender
+{
 
 }
 //上传地理位置
