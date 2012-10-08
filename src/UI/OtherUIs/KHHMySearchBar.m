@@ -25,7 +25,7 @@
             refreshBtn.frame = CGRectMake(250, 0, 65, 40);
             refreshBtn.titleLabel.font = [UIFont systemFontOfSize:12];
             [refreshBtn setBackgroundImage:[[UIImage imageNamed:@"tongbu_normal.png"] stretchableImageWithLeftCapWidth:8 topCapHeight:2] forState:UIControlStateNormal];
-            [refreshBtn setTitle:@"同步" forState:UIControlStateNormal];
+            [refreshBtn setTitle:NSLocalizedString(@"同步", nil) forState:UIControlStateNormal];
             [self addSubview:refreshBtn];
             self.synBtn = refreshBtn;
             

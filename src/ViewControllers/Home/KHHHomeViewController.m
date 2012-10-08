@@ -117,7 +117,7 @@ typedef enum {
 - (void)rightBarButtonClick:(id)sender
 {
     KHHMyDetailController *myDetailVC = [[KHHMyDetailController alloc] initWithNibName:nil bundle:nil];
-    myDetailVC.card = [self.myCardArray objectAtIndex:0];
+    myDetailVC.card = [self.myCardArray lastObject];
     [self.navigationController pushViewController:myDetailVC animated:YES];
 }
 #pragma mark -
@@ -128,11 +128,10 @@ typedef enum {
     // Do any additional setup after loading the view from its nib.
     [self.view setBackgroundColor:[UIColor colorWithRed:241 green:238 blue:232 alpha:1.0]];
     [_bigTable setBackgroundColor:[UIColor clearColor]];
-    _btnTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     
-      UIImage *bgimg = [[UIImage imageNamed:@"leftbtn_bg.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:1];
-//    UIImageView *bgimgView = [[UIImageView alloc] initWithImage:bgimg];
-//    [_btnTable setBackgroundView:bgimgView];
+    UIImage *bgimg = [[UIImage imageNamed:@"left_bg2.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:1];
+    UIImageView *bgimgView = [[UIImageView alloc] initWithImage:bgimg];
+    [_btnTable setBackgroundView:bgimgView];
       _imgview.image = bgimg;
     
     UIBarButtonItem *searchBarItem = [[UIBarButtonItem alloc] initWithCustomView:self.searchBar];
@@ -183,8 +182,8 @@ typedef enum {
     //初始化界面数据
     [self initViewData];
     //我的详情
-    Card *myCard = [self.myCardArray objectAtIndex:0];
-    [self.rightBtn setTitle:myCard.name forState:UIControlStateNormal];
+    Card *myCard = [self.myCardArray lastObject];
+    [self.rightBtn setTitle:NSLocalizedString(myCard.name, nil) forState:UIControlStateNormal];
     
 }
 // 搜索结果
@@ -202,6 +201,7 @@ typedef enum {
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [self initViewData];
     if (_isNormalSearchBar) {
         
     }else{
@@ -298,12 +298,9 @@ typedef enum {
 //        [self.ReceNewArray addObject:card];
 //        [self.allArray addObject:card];
 //    }
-    
     self.allArray = [self.dataControl allReceivedCards];
     self.generalArray = allArray;
     self.myCardArray = [self.dataControl allMyCards];
-    
-    
 }
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -356,13 +353,14 @@ typedef enum {
                 }else
                     DLog(@"recell!!========%@",indexPath);
                 cell.button.tag = indexPath.row + 100;
-                [cell.button setTitle:[_btnTitleArr objectAtIndex:indexPath.row] forState:UIControlStateNormal];
+                [cell.button setTitle:NSLocalizedString([_btnTitleArr objectAtIndex:indexPath.row], nil) forState:UIControlStateNormal];
                 [cell.button addTarget:self action:@selector(cellBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+                UIEdgeInsets insets = {0, 0, 0, 25};
                 if (indexPath.row != _lastIndexPath.row) {
-                    [cell.button setBackgroundImage:[[UIImage imageNamed:@"leftbtn_bg.png"]stretchableImageWithLeftCapWidth:0 topCapHeight:0] forState:UIControlStateNormal];
+                    [cell.button setBackgroundImage:[[UIImage imageNamed:@"left_btn_bg.png"] resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
                     [cell.button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                 }else{
-                    [cell.button setBackgroundImage:[[UIImage imageNamed:@"left_btn_bgscrol.png"]stretchableImageWithLeftCapWidth:2 topCapHeight:1] forState:UIControlStateNormal];
+                    [cell.button setBackgroundImage:[[UIImage imageNamed:@"left_btn_bg_selected.png"] resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
                     [cell.button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
                 }
                 return cell;
@@ -389,7 +387,7 @@ typedef enum {
                                           }
                                       }
                                       failure:^(NSError *error){
-                                          [cell.logoBtn setBackgroundImage:[UIImage imageNamed:@"logopic.png"] forState:UIControlStateNormal];
+                                        
                                       }];
                 
                 if (_isNormalSearchBar) {
@@ -503,7 +501,7 @@ typedef enum {
         KHHButtonCell *lastCell = (KHHButtonCell *)[_btnTable cellForRowAtIndexPath:_lastIndexPath];
         UIButton *lastBtn = lastCell.button;
         //[lastBtn setBackgroundImage:[[[UIImage imageNamed:@""] transformHalf] stretchableImageWithLeftCapWidth:0 topCapHeight:0] forState:UIControlStateNormal];
-        [lastBtn setBackgroundImage:[[UIImage imageNamed:@"leftbtn_bg.png"]stretchableImageWithLeftCapWidth:0 topCapHeight:0] forState:UIControlStateNormal];
+        [lastBtn setBackgroundImage:[[UIImage imageNamed:@"left_btn_bg.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 25) resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
 
         [lastBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         _isShowData = YES;
@@ -548,21 +546,24 @@ typedef enum {
             //调用接口，获得self.ownGroupArray
             self.generalArray = self.oWnGroupArray;
         }
-        
-        [btn setBackgroundImage:[[UIImage imageNamed:@"left_btn_bgscrol.png"] stretchableImageWithLeftCapWidth:2 topCapHeight:1] forState:UIControlStateNormal];
+        UIEdgeInsets insets = {0,0,0,25};
+        [btn setBackgroundImage:[[UIImage imageNamed:@"left_btn_bg_selected.png"] resizableImageWithCapInsets:insets resizingMode:UIImageResizingModeStretch] forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
         [_bigTable reloadData];
     }else{
-//        UIActionSheet *actSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+        
         _type = KUIActionSheetStyleEditGroupMember;
-//        [actSheet addButtonWithTitle:@"添加组员"];
-//        [actSheet addButtonWithTitle:@"移出组员"];
         if (btn.tag >= 107) {
-            UIActionSheet *actSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
-            [actSheet addButtonWithTitle:@"添加组员"];
-            [actSheet addButtonWithTitle:@"移出组员"];
-            [actSheet addButtonWithTitle:@"修改组名"];
-            [actSheet addButtonWithTitle:@"删除分组"];
+            UIActionSheet *actSheet = [[UIActionSheet alloc] initWithTitle:nil
+                                                                  delegate:self
+                                                         cancelButtonTitle:NSLocalizedString(@"取消",nil)
+                                                    destructiveButtonTitle:nil
+                                                         otherButtonTitles:nil, nil];
+            
+            [actSheet addButtonWithTitle:NSLocalizedString(@"添加组员", nil)];
+            [actSheet addButtonWithTitle:NSLocalizedString(@"移出组员", nil)];
+            [actSheet addButtonWithTitle:NSLocalizedString(@"修改组名", nil)];
+            [actSheet addButtonWithTitle:NSLocalizedString(@"删除分组", nil)];
             [actSheet showInView:self.view];
         }
     }
@@ -590,14 +591,18 @@ typedef enum {
         }else if (buttonIndex == 3){
             //修改组名
 //            myAlertView *alert = [[myAlertView alloc] initWithTitle:@"修改组名" message:nil delegate:self style:kMyAlertStyleTextField cancelButtonTitle:@"确定" otherButtonTitles:@"取消"];
-            _titleStr = @"修改组名";
+            _titleStr = NSLocalizedString(@"修改组名", nil);
             _isAddGroup = NO;
             _isDelGroup = NO;
             [_alert show];
             return;
         }else if (buttonIndex == 4){
             //删除分组
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"删除" message:@"将会删除该组" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:@"取消", nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"删除", nil) 
+                                                            message:NSLocalizedString(@"将会删除该组", nil) 
+                                                           delegate:self
+                                                  cancelButtonTitle:NSLocalizedString(@"确定", nil) 
+                                                  otherButtonTitles:NSLocalizedString(@"取消", nil), nil];
             _isDelGroup = YES;
             [alert show];
             return;
@@ -639,12 +644,16 @@ typedef enum {
 {
     //[self takePhotos];
     //录入上传
-    UIActionSheet *actSheet = [[UIActionSheet alloc] initWithTitle:@"选择上传方式" delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+    UIActionSheet *actSheet = [[UIActionSheet alloc] initWithTitle:NSLocalizedString(@"选择上传方式", nil)
+                                                          delegate:self
+                                                 cancelButtonTitle:nil
+                                            destructiveButtonTitle:nil
+                                                 otherButtonTitles:nil, nil];
     _type = KUIActionSheetStyleUpload;
-    [actSheet addButtonWithTitle:@"拍摄名片"];
-    [actSheet addButtonWithTitle:@"选择名片"];
-    [actSheet addButtonWithTitle:@"手动制作"];
-    [actSheet addButtonWithTitle:@"备份手机通讯录"];
+    [actSheet addButtonWithTitle:NSLocalizedString(@"拍摄名片", nil)];
+    [actSheet addButtonWithTitle:NSLocalizedString(@"选择名片", nil)];
+    [actSheet addButtonWithTitle:NSLocalizedString(@"手动制作", nil)];
+    [actSheet addButtonWithTitle:NSLocalizedString(@"备份手机通讯录", nil)];
     [actSheet showInView:self.view];
 }
 - (void)saveImage:(UIImage *)image
@@ -698,8 +707,13 @@ typedef enum {
 }
 #pragma mark - ShowAlertView
 - (IBAction)addBtnClick:(id)sender{
-    _titleStr = @"新建分组";
-   _alert = [[myAlertView alloc] initWithTitle:_titleStr message:nil delegate:self style:kMyAlertStyleTextField cancelButtonTitle:@"确定" otherButtonTitles:@"取消"];
+    _titleStr = NSLocalizedString(@"新建分组", nil) ;
+   _alert = [[myAlertView alloc] initWithTitle:_titleStr
+                                       message:nil
+                                      delegate:self
+                                         style:kMyAlertStyleTextField
+                             cancelButtonTitle:NSLocalizedString(@"确定", nil)
+                             otherButtonTitles:NSLocalizedString(@"取消",nil)];
     _isAddGroup = YES;
     _isDelGroup = NO;
     [_alert show];

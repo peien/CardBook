@@ -21,15 +21,21 @@
 
 @interface LoginViewController () <UITableViewDataSource, UITableViewDelegate,
                                     UITextFieldDelegate, SMCheckboxDelegate>
-@property (nonatomic, strong) SMCheckbox *showPasswordBox;
-@property (nonatomic, strong) SMCheckbox *remberPasswordBox;
+@property (nonatomic, strong) SMCheckbox  *showPasswordBox;
+@property (nonatomic, strong) SMCheckbox  *remberPasswordBox;
 @property (nonatomic, strong) KHHDefaults *defaults;
+@property (nonatomic, assign) bool        isShowPass;
+@property (nonatomic, assign) bool        isRemberPass;
 @end
 
 @implementation LoginViewController
 @synthesize latestView = _latestView;
 @synthesize accountTf = _accountTf;
 @synthesize passWordTf = _passWordTf;
+@synthesize showPasswordBtn;
+@synthesize remberPasswordBtn;
+@synthesize isShowPass;
+@synthesize isRemberPass;
 
 #pragma mark -
 - (void)dealloc {
@@ -68,20 +74,6 @@
         _passWordTf.text = self.defaults.currentPassword;
         _passWordTf.clearButtonMode = UITextFieldViewModeWhileEditing;
         
-        self.showPasswordBox = [[[NSBundle mainBundle] loadNibNamed:@"SMCheckbox"
-                                                              owner:self
-                                                            options:nil] objectAtIndex:0];
-        self.showPasswordBox.frame = CGRectMake(20, 132, 25, 25);
-        self.showPasswordBox.delegate = self;
-        [self.latestView addSubview:self.showPasswordBox];
-       
-        self.remberPasswordBox = [[[NSBundle mainBundle] loadNibNamed:@"SMCheckbox"
-                                                              owner:self
-                                                            options:nil] objectAtIndex:0];
-        self.remberPasswordBox.frame = CGRectMake(20, 160, 25, 25);
-        self.remberPasswordBox.delegate = self;
-        self.remberPasswordBox.selected = YES;
-        [self.latestView addSubview:self.remberPasswordBox];
     }
     return self;
 }
@@ -89,13 +81,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // show password checkbox
-//    self.showPasswordBox = [[[NSBundle mainBundle] loadNibNamed:@"SMCheckbox"
-//                                                          owner:self
-//                                                        options:nil] objectAtIndex:0];
-//    self.showPasswordBox.frame = CGRectMake(10, 110, 25, 25);
-//    self.showPasswordBox.delegate = self;
-//    [self.view addSubview:self.showPasswordBox];
     
     // 登录按钮
     UIImage *okButtonImage = [[UIImage imageNamed:@"OKButton.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:0];
@@ -119,6 +104,8 @@
     _latestView = nil;
     _passWordTf = nil;
     _accountTf = nil;
+    self.showPasswordBtn = nil;
+    self.remberPasswordBtn = nil;
 }
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -242,7 +229,6 @@
         }
     }
 }
-
 #pragma mark -
 - (IBAction)login:(id)sender {
     UITextField *accountField = ((UITextField*)[self.view viewWithTag:LoginAccountFieldTag]);
@@ -298,6 +284,39 @@
     [self pushViewControllerClass:[ResetPasswordViewController class]
                          animated:YES];
     self.defaults.loggedIn = NO;
+}
+// 显示密码
+- (IBAction)showPasswordBtnClick:(UIButton *)sender
+{
+    self.isShowPass = !self.isShowPass;
+    if (self.isShowPass) {
+        _passWordTf.enabled = NO;
+        _passWordTf.secureTextEntry = NO;
+        _passWordTf.enabled = YES;
+    }else{
+        _passWordTf.enabled = NO;
+        _passWordTf.secureTextEntry = YES;
+        _passWordTf.enabled = YES;
+    }
+    [self selectedOrUnselectFlag:sender isBool:self.isShowPass];
+    
+}
+// 记住密码
+- (IBAction)remberPasswordBtnClick:(UIButton *)sender
+{
+    self.isRemberPass = !self.isRemberPass;
+    [self selectedOrUnselectFlag:sender isBool:self.isRemberPass];
+    //UITextField *tf = (UITextField *)[self.view viewWithTag:LoginPasswordFieldTag];
+
+}
+- (void)selectedOrUnselectFlag:(UIButton *)sender isBool:(BOOL)select
+{
+    if (select) {
+        [sender setBackgroundImage:[UIImage imageNamed:@"checked.png"] forState:UIControlStateNormal];
+    }else{
+        [sender setBackgroundImage:[UIImage imageNamed:@"unchecked.png"] forState:UIControlStateNormal];
+    }
+
 }
 - (void)showTheKeyboard
 {

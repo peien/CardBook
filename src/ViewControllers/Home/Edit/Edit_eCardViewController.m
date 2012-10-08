@@ -17,6 +17,7 @@
 #import "KHHAddressCell.h"
 #import "TSLocateView.h"
 #import "KHHShowHideTabBar.h"
+#import "UIImageView+WebCache.h"
 
 #import "Card.h"
 #import "Company.h"
@@ -24,6 +25,10 @@
 #import "Group.h"
 #import "BankAccount.h"
 #import "KHHData+UI.h"
+#import "InterCard.h"
+#import "MyCard.h"
+#import "ReceivedCard.h"
+#import "PrivateCard.h"
 
 #define CARD_IMGVIEW_TAG 990
 #define CARDMOD_VIEW_TAG 991
@@ -43,6 +48,8 @@ NSString *const kECardListSeparator = @"|";
 @property (strong, nonatomic) NSString      *strStreet;
 @property (strong, nonatomic) NSString      *pc;
 @property (strong, nonatomic) NSArray       *placeName;
+@property (strong, nonatomic) InterCard     *interCard;
+@property (strong, nonatomic) KHHData       *dataCtrl;
 
 @end
 
@@ -73,6 +80,8 @@ NSString *const kECardListSeparator = @"|";
 @synthesize strStreet;
 @synthesize pc;
 @synthesize placeName;
+@synthesize interCard;
+@synthesize dataCtrl;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -80,22 +89,12 @@ NSString *const kECardListSeparator = @"|";
     if (self) {
         // Custom initialization
         [self.rightBtn setTitle:@"保存" forState:UIControlStateNormal];
-
+        self.interCard = [[InterCard alloc] init];
     }
     return self;
 }
 #pragma mark -
-#pragma mark UIButton Click
-- (void)saveToConcBtn:(id)sender
-{
-
-
-}
-- (void)delBtnClick:(id)sender
-{
-
-}
-
+#pragma mark saveCardInfo
 //save card info
 - (void)rightBarButtonClick:(id)sender
 {
@@ -228,7 +227,7 @@ NSString *const kECardListSeparator = @"|";
         [_fieldValue replaceObjectAtIndex:7 withObject:_glCard.company.name];
     }
 
-    if (_glCard.address.province.length > 0 || _glCard.address.street.length > 0) {
+    if (_glCard.address.province.length > 0 || _glCard.address.city.length > 0) {
         self.pc = [NSString stringWithFormat:@"%@ %@",_glCard.address.province,_glCard.address.city];
         if ([_glCard.address.district isEqualToString:@"(null)"]) {
             _glCard.address.district = @"";
@@ -240,6 +239,7 @@ NSString *const kECardListSeparator = @"|";
         NSString *allAddress = [NSString stringWithFormat:@"%@|%@",self.pc,self.strStreet];
         [_fieldValue replaceObjectAtIndex:8 withObject:allAddress];
     }
+
     
     if (_glCard.address.zip.length > 0) {
         [_fieldValue replaceObjectAtIndex:9 withObject:_glCard.address.zip];
@@ -311,6 +311,8 @@ NSString *const kECardListSeparator = @"|";
     self.pc = nil;
     self.strStreet = nil;
     self.placeName = nil;
+    self.interCard = nil;
+    self.dataCtrl = nil;
 }
 #pragma mark -
 #pragma mark UITableView Delegates
@@ -369,6 +371,7 @@ NSString *const kECardListSeparator = @"|";
             cell.jobValue.text = [_fieldValue objectAtIndex:1];
             cell.nameValue.placeholder = [[self.placeName objectAtIndex:2] objectAtIndex:0];
             cell.jobValue.placeholder = [[self.placeName objectAtIndex:2] objectAtIndex:1];
+            [cell.iconImg setImageWithURL:[NSURL URLWithString:_glCard.logo.url] placeholderImage:[UIImage imageNamed:@"logopic.png"]];
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapIconImage:)];
             tap.numberOfTapsRequired = 1;
             tap.numberOfTouchesRequired = 1;
@@ -488,36 +491,6 @@ NSString *const kECardListSeparator = @"|";
     return nil;
 
 }
-- (void)selectProvinceCity:(id)sender
-{
-    TSLocateView *locateView = [[TSLocateView alloc] initWithTitle:@"定位城市" delegate:self];
-    [locateView showInView:self.view];
-
-}
-//编辑头像
-- (void)tapIconImage:(UITapGestureRecognizer *)sender
-{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"不可编辑" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-    [alert show];
-
-}
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 0) {
-        return;
-    }else if (buttonIndex == 1){
-        DLog(@"select city:");
-        TSLocateView *locateView = (TSLocateView *)actionSheet;
-        TSLocation *location = locateView.locate;
-        NSLog(@"country:%@ city:%@ lat:%f lon:%f", location.state,location.city, location.latitude, location.longitude);
-        UIButton *btn = (UIButton *)[self.view viewWithTag:KBIGADDRESS_TAG];
-        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        NSString *addStr = [NSString stringWithFormat:@"%@ %@",location.state,location.city];
-        [btn setTitle:addStr forState:UIControlStateNormal];
-    }
-    
-}
-
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return YES;
@@ -544,7 +517,7 @@ NSString *const kECardListSeparator = @"|";
         }
     }
     return UITableViewCellEditingStyleNone;
-
+    
 }
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -562,9 +535,9 @@ NSString *const kECardListSeparator = @"|";
             pickVC.PickFlag = 2;
             _whichexternIndex = 2;
         }
-      [self tableAnimationDown];
+        [self tableAnimationDown];
         
-       // 判断是否添加
+        // 判断是否添加
         pickVC.tempArray = [self isHaveAddedItem];
         [self.navigationController pushViewController:pickVC animated:YES];
         
@@ -595,6 +568,36 @@ NSString *const kECardListSeparator = @"|";
             [_theTable deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
         }
     }
+}
+#pragma mark -
+- (void)selectProvinceCity:(id)sender
+{
+    TSLocateView *locateView = [[TSLocateView alloc] initWithTitle:@"定位城市" delegate:self];
+    [locateView showInView:self.view];
+
+}
+//编辑头像
+- (void)tapIconImage:(UITapGestureRecognizer *)sender
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"不可编辑" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alert show];
+
+}
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        return;
+    }else if (buttonIndex == 1){
+        DLog(@"select city:");
+        TSLocateView *locateView = (TSLocateView *)actionSheet;
+        TSLocation *location = locateView.locate;
+        NSLog(@"country:%@ city:%@ lat:%f lon:%f", location.state,location.city, location.latitude, location.longitude);
+        UIButton *btn = (UIButton *)[self.view viewWithTag:KBIGADDRESS_TAG];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        NSString *addStr = [NSString stringWithFormat:@"%@ %@",location.state,location.city];
+        [btn setTitle:addStr forState:UIControlStateNormal];
+    }
+    
 }
 //判断是否添加过
 - (NSMutableArray *)isHaveAddedItem
@@ -848,9 +851,10 @@ NSString *const kECardListSeparator = @"|";
     NSString *group = [_fieldValue objectAtIndex:2];
     [self saveToDictionary:name key:@"name"];
     [self saveToDictionary:job key:@"title"];
+    self.interCard.name = name;
+    self.interCard.title = job;
     //暂时用“分组”
     [self saveToDictionary:group key:@"分组"];
-    
     //把多个手机号，用@“｜”串联起来，然后保存
     NSMutableString *mobiles = [NSMutableString stringWithString:[_fieldValue objectAtIndex:3]];
     NSMutableString *phones = [NSMutableString stringWithString:[_fieldValue objectAtIndex:4]];
@@ -893,8 +897,10 @@ NSString *const kECardListSeparator = @"|";
     
     NSString *company = [_fieldValue objectAtIndex:7];
     NSString *address = [_fieldValue objectAtIndex:8];
+    NSArray *addressArr = [address componentsSeparatedByString:@"|"];
+    NSArray *pcArr = [[addressArr objectAtIndex:0] componentsSeparatedByString:@" "];
     NSString *zipCode = [_fieldValue objectAtIndex:9];
-    
+
     for (NSDictionary *dic in _fieldExternTwo) {
         NSString *key = [dic objectForKey:@"key"];
         NSString *value = [dic objectForKey:@"value"];
@@ -910,6 +916,17 @@ NSString *const kECardListSeparator = @"|";
     [self saveToDictionary:company key:@"company"];
     [self saveToDictionary:address key:@"address"];
     [self saveToDictionary:zipCode key:@"zipCode"];
+    self.interCard.companyName = company;
+    if (pcArr.count >= 2) {
+        self.interCard.addressProvince = [pcArr objectAtIndex:0];
+        self.interCard.addressCity = [pcArr objectAtIndex:1];
+    }
+    //self.interCard.addressCountry =
+    //self.interCard.addressDistrict =
+    if (addressArr.count >= 2) {
+        self.interCard.addressStreet = [addressArr objectAtIndex:1]; 
+    }
+    self.interCard.addressZip = zipCode;
     
     // 对是否为空或格式进行判断，然后把手机，电话，传真，邮箱保存起来
         if (mobiles.length==0 && phones.length==0) {
@@ -965,6 +982,10 @@ NSString *const kECardListSeparator = @"|";
     [self saveToDictionary:phones key:@"telephone"];
     [self saveToDictionary:faxes key:@"fax"];
     [self saveToDictionary:mails key:@"email"];
+    self.interCard.mobilePhone = mobiles;
+    self.interCard.telephone = phones;
+    self.interCard.fax = faxes;
+    self.interCard.email = mails;
     
     //save externThree;
     for (NSDictionary *dic in _fieldExternThree) {
@@ -973,47 +994,51 @@ NSString *const kECardListSeparator = @"|";
         NSString *value = [dic objectForKey:@"value"];
         if ([key isEqualToString:@"网址"]) {
             [self saveToDictionary:value key:@"web"];
-            
+            self.interCard.web = value;
         }else if ([key isEqualToString:@"QQ"]){
             [self saveToDictionary:value key:@"qq"];
+            self.interCard.qq = value;
             
         }else if ([key isEqualToString:@"MSN"]){
             [self saveToDictionary:value key:@"msn"];
+            self.interCard.msn = value;
             
         }else if ([key isEqualToString:@"旺旺"]){
             [self saveToDictionary:value key:@"aliWangWang"];
+            self.interCard.aliWangWang = value;
             
         }else if ([key isEqualToString:@"业务范围"]){
             [self saveToDictionary:value key:@"businessScope"];
+            self.interCard.businessScope = value;
             
         }else if ([key isEqualToString:@"开户行"]){
             [self saveToDictionary:value key:@"branch"];
              DLog(@"开户行======save:%@",value);
+            self.interCard.bankAccountBranch = value;
         }else if ([key isEqualToString:@"银行帐号"]){
             [self saveToDictionary:value key:@"number"];
              DLog(@"银行帐号 ======save:%@",value);
+            self.interCard.bankAccountNumber = value;
         }else if ([key isEqualToString:@"户名"]){
             DLog(@"户名======save:%@",value);
             [self saveToDictionary:value key:@"户名"];
+            self.interCard.bankAccountName = value;
             
         }else if ([key isEqualToString:@"其它信息"]){
             DLog(@"其它信息======save:%@",value);
             [self saveToDictionary:value key:@"moreInfo"];
+            self.interCard.moreInfo = value;
         }
     }
     // 保存到数据库或调用网络接口
-    KHHData *data = [KHHData sharedData];
-    //个人卡片
-//    if (_glCard.roleTypeValue == 1 && self.type == KCardViewControllerTypeShowInfo) {
-//        [data modifyMyCardWithDictionary:self.saveInfoDic];
-//    }else if (_glCard.roleTypeValue == 2){
-//    
-//    }else if (_glCard.roleTypeValue == 3){
-//    
-//    }else if (_glCard.roleTypeValue == 4){
-//    
-//    }
-    
+    //为了避免保存失败，先给这个临时card给值 InterCard
+    if ([_glCard isKindOfClass:[MyCard class]]) {
+        [self.dataCtrl modifyMyCardWithInterCard:self.interCard];
+    }else if ([_glCard isKindOfClass:[PrivateCard class]]){
+        [self.dataCtrl modifyPrivateCardWithInterCard:self.interCard];
+    }else if ([_glCard isKindOfClass:[ReceivedCard class]]){
+        
+    }
 }
 - (void)saveToDictionary:(NSString *)object key:(NSString *)key
 {

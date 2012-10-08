@@ -14,6 +14,7 @@
 #import "UIImageView+WebCache.h"
 
 #import "KHHCardMode.h"
+#import "Card.h"
 @interface KHHAddGroupMemberVC ()<UISearchBarDelegate,UISearchDisplayDelegate,
                                  UITableViewDataSource,UITableViewDelegate,SMCheckboxDelegate>
 
@@ -161,11 +162,11 @@
         static NSString *cellID = @"CELLID";
         KHHClientCellLNPC *cell = nil;
         cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-        KHHCardMode *card = [self.handleArray objectAtIndex:indexPath.row];
+        Card *card = [self.handleArray objectAtIndex:indexPath.row];
         if (cell == nil) {
             cell = [[[NSBundle mainBundle] loadNibNamed:@"KHHClientCellLNPC" owner:self options:nil] objectAtIndex:0];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            [cell.logoView setImageWithURL:[NSURL URLWithString:card.logUrl] placeholderImage:[UIImage imageNamed:@"logopic.png"]];
+            [cell.logoView setImageWithURL:[NSURL URLWithString:card.logo.url] placeholderImage:[UIImage imageNamed:@"logopic.png"]];
             
         }
         if ([[_selectedItemArray objectAtIndex:indexPath.row] isEqualToNumber:[NSNumber numberWithBool:YES]]) {
@@ -179,7 +180,7 @@
         }
         cell.nameLabel.text = card.name;
         cell.positionLabel.text = card.title;
-        cell.companyLabel.text = @"浙江金汉弘软件技术有限公司";
+        cell.companyLabel.text = card.company.name;
         return cell;
     }
 }

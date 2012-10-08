@@ -268,9 +268,10 @@
         UITextField *textField = (UITextField *)[cell.contentView viewWithTag:9693];
         UITextField *detail = (UITextField *)[cell.contentView viewWithTag:9694];
         if (indexPath.row == 0) {
-            UIButton *objectBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-            objectBtn.frame = CGRectMake(280, 2, 35, 35);
+            UIButton *objectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            objectBtn.frame = CGRectMake(280, -2, 45, 45);
             [objectBtn addTarget:self action:@selector(objectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+            [objectBtn setBackgroundImage:[UIImage imageNamed:@"contact_select.png"] forState:UIControlStateNormal];
             [cell.contentView addSubview:objectBtn];
             if (_style == KVisitRecoardVCStyleNewBuild) {
                 textField.placeholder = @"请输入拜访对象";

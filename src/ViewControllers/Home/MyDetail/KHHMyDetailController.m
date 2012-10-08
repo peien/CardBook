@@ -41,7 +41,7 @@
 {
     [super viewDidLoad];
     UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 37)];
-    [headerView setBackgroundColor:[UIColor grayColor]];
+    [headerView setBackgroundColor:[UIColor clearColor]];
     [self.view addSubview:headerView];
     for (int i = 0; i<2; i++) {
         UIButton *headBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -59,13 +59,16 @@
         [headBtn addTarget:self action:@selector(headBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [headerView addSubview:headBtn];
     }
+    UIView *line = [[UIView alloc] initWithFrame:CGRectMake(160, 4, 1, 29)];
+    line.backgroundColor = [UIColor lightGrayColor];
+    [headerView addSubview:line];
     
     //拜访日历界面
     _visitView = [[[NSBundle mainBundle] loadNibNamed:@"KHHVisitCalendarView" owner:self options:nil] objectAtIndex:0];
     CGRect rect = _visitView.footView.frame;
     CGRect rectTable = _visitView.theTable.frame;
-    rect.origin.y = 360;
-    rectTable.size.height = 350;
+    rect.origin.y = 340;
+    rectTable.size.height = 325;
     _visitView.footView.frame = rect;
     _visitView.theTable.frame = rectTable;
     _visitView.viewCtrl = self;
@@ -74,6 +77,9 @@
     _cardView = [[[NSBundle mainBundle] loadNibNamed:@"KHHCardView" owner:self options:nil] objectAtIndex:0];
     _cardView.myDetailVC = self;
     _cardView.myCard = self.card;
+    CGRect rectTableCard = _cardView.theTable.frame;
+    rectTableCard.origin.y = 25;
+    _cardView.theTable.frame = rectTableCard;
     [_cardView initView];
     [_cardView initViewData];
     [self.containView addSubview:_visitView];
@@ -88,7 +94,7 @@
         bottomBtn.tag = 323;
         [bottomBtn addTarget:self action:@selector(bottomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         bottomBtn.frame = CGRectMake(260, 360, 60, 60);
-        [bottomBtn setBackgroundImage:[UIImage imageNamed:@"editBtn_normal.png"] forState:UIControlStateNormal];
+        [bottomBtn setBackgroundImage:[UIImage imageNamed:@"edit_Btn_Red.png"] forState:UIControlStateNormal];
         [self.view insertSubview:bottomBtn atIndex:100];
     }
     //addressbook

@@ -41,7 +41,7 @@
 					<object class="IBUITableView" id="631065444">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">274</int>
-						<string key="NSFrame">{{-3, 302}, {320, 120}}</string>
+						<string key="NSFrame">{{-3, 302}, {320, 113}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -62,7 +62,7 @@
 					<object class="IBUIButton" id="510429065">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{12, 374}, {52, 48}}</string>
+						<string key="NSFrame">{{9, 359}, {66, 66}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -81,7 +81,7 @@
 						</object>
 						<object class="NSCustomResource" key="IBUINormalBackgroundImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">addBtnimg@2x.png</string>
+							<string key="NSResourceName">tianjia_Btn_Red@2x.png</string>
 						</object>
 						<object class="IBUIFontDescription" key="IBUIFontDescription">
 							<int key="type">2</int>
@@ -401,8 +401,8 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NS.key.0">addBtnimg@2x.png</string>
-			<string key="NS.object.0">{124, 119}</string>
+			<string key="NS.key.0">tianjia_Btn_Red@2x.png</string>
+			<string key="NS.object.0">{88, 88}</string>
 		</object>
 		<string key="IBCocoaTouchPluginVersion">1926</string>
 	</data>

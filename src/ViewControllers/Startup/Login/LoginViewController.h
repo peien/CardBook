@@ -19,8 +19,12 @@
 @property (nonatomic, strong)        UIView   *latestView;
 @property (nonatomic, strong) IBOutlet UITextField *accountTf;
 @property (nonatomic, strong) IBOutlet UITextField *passWordTf;
+@property (nonatomic, strong) IBOutlet UIButton    *showPasswordBtn;
+@property (nonatomic, strong) IBOutlet UIButton    *remberPasswordBtn;
 
 - (IBAction)login:(id)sender;
 - (IBAction)showResetPasswordPage:(id)sender;
 - (IBAction)registBtnClick:(id)sender;
+- (IBAction)showPasswordBtnClick:(id)sender;
+- (IBAction)remberPasswordBtnClick:(id)sender;
 @end
