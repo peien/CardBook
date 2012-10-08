@@ -7,16 +7,7 @@
 //
 
 #import "KHHNetworkAPIAgent.h"
-@class Card;
-
-//交换
-static NSString * const KHHNotificationExchangeCardSucceeded = @"ExchangeCardSucceeded";
-static NSString * const KHHNotificationExchangeCardFailed = @"ExchangeCardFailed";
-//发送
-static NSString * const KHHNotificationSendCardToPhoneSucceeded = @"SendCardToPhoneSucceeded";
-static NSString * const KHHNotificationSendCardToPhoneFailed = @"SendCardToPhoneFailed";
-static NSString * const KHHNotificationSendCardToUserSucceeded = @"SendCardToUserSucceeded";
-static NSString * const KHHNotificationSendCardToUserFailed = @"SendCardToUserFailed";
+#import "Card.h"
 
 @interface KHHNetworkAPIAgent (Exchange)
 /**

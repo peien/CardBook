@@ -7,12 +7,6 @@
 //
 
 #import "KHHNetworkAPIAgent.h"
-/*!
- Notification names
- */
-// listDepartments
-static NSString * const KHHNotificationListDepartmentsSucceeded = @"listDepartmentsSucceeded";
-static NSString * const KHHNotificationListDepartmentsFailed    = @"listDepartmentsFailed";
 
 @interface KHHNetworkAPIAgent (EnterpriseManagement)
 /*!
