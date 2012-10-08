@@ -82,7 +82,6 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-
     [self initView];
     self.view.backgroundColor = [UIColor clearColor];
     UIButton *btn = (UIButton *)[self.view viewWithTag:1000];
@@ -92,7 +91,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [KHHShowHideTabBar hideTabbar];
-
+    
 }
 - (void)viewWillDisappear:(BOOL)animated{
 
@@ -169,8 +168,8 @@
     _cardView.detailVC = self;
     [_cardView initViewData];
     [self.containView addSubview:_cardView];
-    _visitCalView = [[[NSBundle mainBundle] loadNibNamed:@"KHHVisitCalendarView" owner:self options:nil] objectAtIndex:0];
     
+    _visitCalView = [[[NSBundle mainBundle] loadNibNamed:@"KHHVisitCalendarView" owner:self options:nil] objectAtIndex:0];
     CGRect rect = _visitCalView.footView.frame;
     rect.origin.y = 290;
     _visitCalView.footView.frame = rect;

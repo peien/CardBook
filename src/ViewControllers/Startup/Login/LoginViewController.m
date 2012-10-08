@@ -74,6 +74,14 @@
         _passWordTf.text = self.defaults.currentPassword;
         _passWordTf.clearButtonMode = UITextFieldViewModeWhileEditing;
         
+        // 登录按钮
+        UIEdgeInsets inset = {0,5,0,5};
+        UIImage *okButtonImage = [[UIImage imageNamed:@"login_btn_selected.png"] resizableImageWithCapInsets:inset];
+        [self.theLoginButton setBackgroundImage:okButtonImage forState:UIControlStateNormal];
+        [self.theLoginButton setTitle:textLogin forState:UIControlStateNormal];
+        // 注册按钮
+        [self.regiBtn setBackgroundImage:okButtonImage forState:UIControlStateNormal];
+        
     }
     return self;
 }
@@ -81,11 +89,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    // 登录按钮
-    UIImage *okButtonImage = [[UIImage imageNamed:@"OKButton.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:0];
-    [self.theLoginButton setBackgroundImage:okButtonImage forState:UIControlStateNormal];
-    [self.theLoginButton setTitle:textLogin forState:UIControlStateNormal];
     
     // 更换背景
     UIImage *bgImage = [[UIImage imageNamed:@"activity_bg.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];

@@ -57,8 +57,8 @@
         // Custom initialization
         _theReceivers = [[NSMutableArray alloc] init];
         self.title = NSLocalizedString(@"发生至手机", nil);
-        [self.leftBtn setTitle:@"取消" forState:UIControlStateNormal];
-        [self.rightBtn setTitle:@"发送" forState:UIControlStateNormal];
+        [self.leftBtn setTitle:NSLocalizedString(@"取消", nil) forState:UIControlStateNormal];
+        [self.rightBtn setTitle:NSLocalizedString(@"发送", nil) forState:UIControlStateNormal];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(handleTokenFieldFrameDidChange:)
                                                      name:JSTokenFieldFrameDidChangeNotification
@@ -264,7 +264,6 @@
                otherButtonTitles:nil]
                show];
         }
-       
     }
     CFRelease(phones);
     return NO;

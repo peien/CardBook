@@ -36,7 +36,7 @@
     if (self) {
         // Custom initialization
         self.navigationItem.leftBarButtonItem = nil;
-        self.title = @"更多";
+        self.title = NSLocalizedString(@"更多", nil);
         self.defaultSet = [KHHDefaults sharedDefaults];
     }
     return self;
@@ -50,15 +50,15 @@
     [self.view setBackgroundColor:[UIColor colorWithRed:241 green:238 blue:232 alpha:1.0]];
     int index = [[self.defaultSet defaultMainUI] intValue];
     if (index == 100) {
-        _defaultPage.text = @"(名片夹界面)";
+        _defaultPage.text = NSLocalizedString(@"(名片夹界面)", nil);
     }else if (index == 101){
-        _defaultPage.text = @"(CRM管理界面)";
+        _defaultPage.text = NSLocalizedString(@"(CRM管理界面)", nil);
     }else if (index == 102){
-        _defaultPage.text = @"(交换名片界面)";
+        _defaultPage.text = NSLocalizedString(@"(交换名片界面)", nil);
     }else if (index == 103){
-        _defaultPage.text = @"(消息界面)";
+        _defaultPage.text = NSLocalizedString(@"(消息界面)", nil);
     }else{
-       _defaultPage.text = @"(名片夹界面)";
+       _defaultPage.text = NSLocalizedString(@"(名片夹界面)", nil);
     }
 }
 - (void)viewWillAppear:(BOOL)animated{
@@ -135,7 +135,7 @@
                         cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
                         cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     }
-                    cell.textLabel.text = @"修改密码";
+                    cell.textLabel.text = NSLocalizedString(@"修改密码", nil);
 
                 }
                     break;
@@ -147,7 +147,7 @@
                         cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
                         cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     }
-                    cell.textLabel.text = @"登出";
+                    cell.textLabel.text = NSLocalizedString(@"登出", nil);
                 }
                     break;
                 case 2:{
@@ -158,7 +158,7 @@
                         cell.accessoryView = _autoLog;
                         cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     }
-                    cell.textLabel.text = @"自动登陆";
+                    cell.textLabel.text = NSLocalizedString(@"自动登陆", nil);
                 }
                     break;
                 default:
@@ -176,7 +176,7 @@
                 cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
-            cell.textLabel.text = @"检查更新";
+            cell.textLabel.text = NSLocalizedString(@"检查更新", nil);
         }
             
             break;
@@ -208,7 +208,7 @@
                 cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
-            cell.textLabel.text = @"使用指南";
+            cell.textLabel.text = NSLocalizedString(@"使用指南", nil);
         }
             
             break;
@@ -220,8 +220,7 @@
                 cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
-            cell.textLabel.text = @"推荐给好友";
-        
+            cell.textLabel.text = NSLocalizedString(@"推荐给好友", nil);
         }
             break;
         case 2:{
@@ -232,7 +231,7 @@
                 cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
-            cell.textLabel.text = @"客户反馈";
+            cell.textLabel.text = NSLocalizedString(@"客户反馈", nil);
         
         }
             break;
@@ -244,7 +243,7 @@
                 cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
-            cell.textLabel.text = @"关于印象名片";
+            cell.textLabel.text = NSLocalizedString(@"关于印象名片", nil);
         }
             break;
             
@@ -264,12 +263,10 @@
                 cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
-            cell.textLabel.text = @"默认页面设置";
+            cell.textLabel.text = NSLocalizedString(@"默认页面设置", nil);
             _defaultPage.frame = CGRectMake(18, 36, 260, 20);
             [cell addSubview:_defaultPage];
-        
         }
-            
             break;
         case 1:{
             cellid = @"auto";
@@ -280,7 +277,7 @@
                 cell.accessoryView = _autoReturn;
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
-            cell.textLabel.text = @"自动回赠名片";
+            cell.textLabel.text = NSLocalizedString(@"自动回赠名片", nil);
             
         }
             break;

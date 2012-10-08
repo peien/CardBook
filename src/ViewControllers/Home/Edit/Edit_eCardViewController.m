@@ -88,7 +88,7 @@ NSString *const kECardListSeparator = @"|";
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        [self.rightBtn setTitle:@"保存" forState:UIControlStateNormal];
+        [self.rightBtn setTitle:NSLocalizedString(@"保存", nil) forState:UIControlStateNormal];
         self.interCard = [[InterCard alloc] init];
     }
     return self;
@@ -1036,8 +1036,8 @@ NSString *const kECardListSeparator = @"|";
         [self.dataCtrl modifyMyCardWithInterCard:self.interCard];
     }else if ([_glCard isKindOfClass:[PrivateCard class]]){
         [self.dataCtrl modifyPrivateCardWithInterCard:self.interCard];
-    }else if ([_glCard isKindOfClass:[ReceivedCard class]]){
-        
+    }else if ([_glCard isKindOfClass:[PrivateCard class]] && self.type == KCardViewControllerTypeNewCreate){
+        [self.dataCtrl createPrivateCardWithInterCard:self.interCard];
     }
 }
 - (void)saveToDictionary:(NSString *)object key:(NSString *)key

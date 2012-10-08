@@ -58,6 +58,12 @@
 		62A77FE4161696720015A969 /* myDetail_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A77FE2161696720015A969 /* myDetail_selected@2x.png */; };
 		62A9C99B16099AC100BF7D41 /* KHHAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A9C99A16099AC100BF7D41 /* KHHAddressBook.m */; };
 		62A9DF54162262F300310E92 /* qidong_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A9DF53162262F300310E92 /* qidong_logo@2x.png */; };
+		62A9DF6E16229A4300310E92 /* ic_shuaxin1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A9DF6816229A4300310E92 /* ic_shuaxin1@2x.png */; };
+		62A9DF6F16229A4300310E92 /* ic_shuaxin2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A9DF6916229A4300310E92 /* ic_shuaxin2@2x.png */; };
+		62A9DF7016229A4300310E92 /* ic_shuaxin3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A9DF6A16229A4300310E92 /* ic_shuaxin3@2x.png */; };
+		62A9DF7116229A4300310E92 /* ic_shuaxin4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A9DF6B16229A4300310E92 /* ic_shuaxin4@2x.png */; };
+		62A9DF7216229A4300310E92 /* ic_shuaxin5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A9DF6C16229A4300310E92 /* ic_shuaxin5@2x.png */; };
+		62A9DF7316229A4300310E92 /* ic_shuaxin6@@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A9DF6D16229A4300310E92 /* ic_shuaxin6@@2x.png */; };
 		62AB2984160C07270004A3E3 /* KHHBMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62AB2982160C07270004A3E3 /* KHHBMapViewController.m */; };
 		62AB2985160C07270004A3E3 /* KHHBMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62AB2983160C07270004A3E3 /* KHHBMapViewController.xib */; };
 		62AB29AC160C0AAB0004A3E3 /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 62AB29AB160C0AAB0004A3E3 /* mapapi.bundle */; };
@@ -567,6 +573,12 @@
 		62A9C99916099AC100BF7D41 /* KHHAddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHAddressBook.h; sourceTree = "<group>"; };
 		62A9C99A16099AC100BF7D41 /* KHHAddressBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHAddressBook.m; sourceTree = "<group>"; };
 		62A9DF53162262F300310E92 /* qidong_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qidong_logo@2x.png"; sourceTree = "<group>"; };
+		62A9DF6816229A4300310E92 /* ic_shuaxin1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_shuaxin1@2x.png"; sourceTree = "<group>"; };
+		62A9DF6916229A4300310E92 /* ic_shuaxin2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_shuaxin2@2x.png"; sourceTree = "<group>"; };
+		62A9DF6A16229A4300310E92 /* ic_shuaxin3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_shuaxin3@2x.png"; sourceTree = "<group>"; };
+		62A9DF6B16229A4300310E92 /* ic_shuaxin4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_shuaxin4@2x.png"; sourceTree = "<group>"; };
+		62A9DF6C16229A4300310E92 /* ic_shuaxin5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_shuaxin5@2x.png"; sourceTree = "<group>"; };
+		62A9DF6D16229A4300310E92 /* ic_shuaxin6@@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_shuaxin6@@2x.png"; sourceTree = "<group>"; };
 		62AB2981160C07270004A3E3 /* KHHBMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHBMapViewController.h; sourceTree = "<group>"; };
 		62AB2982160C07270004A3E3 /* KHHBMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHBMapViewController.m; sourceTree = "<group>"; };
 		62AB2983160C07270004A3E3 /* KHHBMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHBMapViewController.xib; sourceTree = "<group>"; };
@@ -2080,6 +2092,12 @@
 		98A84F871602D72E00A4A673 /* img */ = {
 			isa = PBXGroup;
 			children = (
+				62A9DF6816229A4300310E92 /* ic_shuaxin1@2x.png */,
+				62A9DF6916229A4300310E92 /* ic_shuaxin2@2x.png */,
+				62A9DF6A16229A4300310E92 /* ic_shuaxin3@2x.png */,
+				62A9DF6B16229A4300310E92 /* ic_shuaxin4@2x.png */,
+				62A9DF6C16229A4300310E92 /* ic_shuaxin5@2x.png */,
+				62A9DF6D16229A4300310E92 /* ic_shuaxin6@@2x.png */,
 				62A9DF53162262F300310E92 /* qidong_logo@2x.png */,
 				626626DA1616D9F7004A8D85 /* login_ic1@2x.png */,
 				626626DB1616D9F7004A8D85 /* login_ic2@2x.png */,
@@ -2715,6 +2733,12 @@
 				626626DC1616D9F7004A8D85 /* login_ic1@2x.png in Resources */,
 				626626DD1616D9F7004A8D85 /* login_ic2@2x.png in Resources */,
 				62A9DF54162262F300310E92 /* qidong_logo@2x.png in Resources */,
+				62A9DF6E16229A4300310E92 /* ic_shuaxin1@2x.png in Resources */,
+				62A9DF6F16229A4300310E92 /* ic_shuaxin2@2x.png in Resources */,
+				62A9DF7016229A4300310E92 /* ic_shuaxin3@2x.png in Resources */,
+				62A9DF7116229A4300310E92 /* ic_shuaxin4@2x.png in Resources */,
+				62A9DF7216229A4300310E92 /* ic_shuaxin5@2x.png in Resources */,
+				62A9DF7316229A4300310E92 /* ic_shuaxin6@@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

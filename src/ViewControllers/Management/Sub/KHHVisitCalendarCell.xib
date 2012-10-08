@@ -205,7 +205,7 @@
 							<object class="IBUIButton" id="354501882">
 								<reference key="NSNextResponder" ref="45255977"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{97, -12}, {66, 66}}</string>
+								<string key="NSFrame">{{115, 2}, {35, 35}}</string>
 								<reference key="NSSuperview" ref="45255977"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="248270606"/>
@@ -241,7 +241,7 @@
 							<object class="IBUIButton" id="248270606">
 								<reference key="NSNextResponder" ref="45255977"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{145, 4}, {65, 33}}</string>
+								<string key="NSFrame">{{152, 3}, {65, 33}}</string>
 								<reference key="NSSuperview" ref="45255977"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="209364978"/>
@@ -260,10 +260,6 @@
 									<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 								</object>
 								<reference key="IBUINormalTitleShadowColor" ref="977864340"/>
-								<object class="NSCustomResource" key="IBUINormalBackgroundImage">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">tongbu_normal@2x.png</string>
-								</object>
 								<reference key="IBUIFontDescription" ref="66546049"/>
 								<reference key="IBUIFont" ref="963515792"/>
 							</object>
@@ -283,7 +279,7 @@
 							<object class="IBUIImageView" id="368016156">
 								<reference key="NSNextResponder" ref="45255977"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{268, 22}, {66, 66}}</string>
+								<string key="NSFrame">{{275, 37}, {35, 35}}</string>
 								<reference key="NSSuperview" ref="45255977"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="769520577"/>
@@ -619,7 +615,6 @@
 			<string key="dingwei_green@2x.png">{66, 66}</string>
 			<string key="lingdang_Btn@2x.png">{66, 66}</string>
 			<string key="logopic@2x.png">{95, 89}</string>
-			<string key="tongbu_normal@2x.png">{56, 75}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1926</string>
 	</data>
