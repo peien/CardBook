@@ -43,7 +43,7 @@
  移动、删除、添加客户名片到分组 cardGroupService.addOrDelCardGroup
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=154
  */
-- (BOOL)moveCards:(NSArray *)cardIDs 
+- (BOOL)moveCards:(NSArray *)cards
         fromGroup:(NSString *)fromGroupID
           toGroup:(NSString *)toGroupID;
 @end
