@@ -105,7 +105,7 @@
     NSDictionary *info = noti.userInfo;
     ALog(@"[II] info = %@", info);
     // 发送成功消息
-    [self postASAPNotificationName:KHHUICreateCardFailed];
+    [self postASAPNotificationName:KHHUICreateCardFailed info:info];
 }
 - (void)handleUpdateCardSucceeded:(NSNotification *)noti {
     NSDictionary *info = noti.userInfo;
@@ -124,7 +124,7 @@
     NSDictionary *info = noti.userInfo;
     ALog(@"[II] info = %@", info);
     // 发送成功消息
-    [self postASAPNotificationName:KHHUIModifyCardFailed];
+    [self postASAPNotificationName:KHHUIModifyCardFailed info:info];
 }
 - (void)handleDeleteCardSucceeded:(NSNotification *)noti {
     NSDictionary *info = noti.userInfo;
@@ -137,7 +137,7 @@
     NSDictionary *info = noti.userInfo;
     ALog(@"[II] info = %@", info);
     // 发送成功消息
-    [self postASAPNotificationName:KHHUIDeleteCardFailed];
+    [self postASAPNotificationName:KHHUIDeleteCardFailed info:info];
 }
 - (void)handleReceivedCardsAfterDateLastCardExpectedCountSucceeded:(NSNotification *)noti {
     DLog(@"[II] handleReceivedCardsAfterDateLastCardExpectedCountSucceeded:%@", noti);
@@ -178,7 +178,11 @@
         // 根据 isChained 采取不同措施
         BOOL isChained = extra? [extra[kExtraKeyChainedInvocation] boolValue]: NO;
         if (isChained) {
-            [self syncAllDataEnded:YES];
+//            [self syncAllDataEnded:YES];
+            // 接下来同步拜访计划
+            SyncMark *lastTime = [self syncMarkByKey:kSyncMarkKeyVisitScheduleLastTime];
+            [self.agent visitSchedulesAfterDate:lastTime.value
+                                          extra:extra];
         }
         // 发送完成消息
         else {
@@ -192,3 +196,29 @@
     [self syncAllDataEnded:NO];
 }
 @end
+@implementation KHHData (Handlers_VisitSchedule)
+- (void)handleVisitSchedulesAfterDateSucceeded:(NSNotification *)noti {
+#warning TODO
+    NSDictionary *info = noti.userInfo;
+    NSDictionary *extra= info[kInfoKeyExtra];
+//    [self syncAllDataEnded:YES];
+    SyncMark *lastTime = [self syncMarkByKey:kSyncMarkKeyCustomerEvaluationLastTime];
+    [self.agent customerEvaluationListAfterDate:lastTime.value
+                                          extra:extra];
+}
+- (void)handleVisitSchedulesAfterDateFailed:(NSNotification *)noti {
+#warning TODO
+    DLog(@"[II] 失败啦！");
+}
+@end
+@implementation KHHData (Handlers_CustomerEvaluation)
+- (void)handleCustomerEvaluationListAfterDateSucceeded:(NSNotification *)noti {
+#warning TODO
+    [self syncAllDataEnded:YES];
+}
+- (void)handleCustomerEvaluationListAfterDateFailed:(NSNotification *)noti {
+#warning TODO
+    DLog(@"[II] 失败啦！");
+}
+@end
+

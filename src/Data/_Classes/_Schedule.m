@@ -6,8 +6,11 @@
 const struct ScheduleAttributes ScheduleAttributes = {
 	.companions = @"companions",
 	.content = @"content",
-	.date = @"date",
 	.id = @"id",
+	.isFinished = @"isFinished",
+	.name = @"name",
+	.plannedDate = @"plannedDate",
+	.version = @"version",
 };
 
 const struct ScheduleRelationships ScheduleRelationships = {
@@ -48,6 +51,14 @@ const struct ScheduleFetchedProperties ScheduleFetchedProperties = {
 		NSSet *affectingKey = [NSSet setWithObject:@"id"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
+	if ([key isEqualToString:@"isFinishedValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"isFinished"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"versionValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"version"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
 
 	return keyPaths;
 }
@@ -63,13 +74,6 @@ const struct ScheduleFetchedProperties ScheduleFetchedProperties = {
 
 
 @dynamic content;
-
-
-
-
-
-
-@dynamic date;
 
 
 
@@ -96,6 +100,72 @@ const struct ScheduleFetchedProperties ScheduleFetchedProperties = {
 
 - (void)setPrimitiveIdValue:(int64_t)value_ {
 	[self setPrimitiveId:[NSNumber numberWithLongLong:value_]];
+}
+
+
+
+
+
+@dynamic isFinished;
+
+
+
+- (BOOL)isFinishedValue {
+	NSNumber *result = [self isFinished];
+	return [result boolValue];
+}
+
+- (void)setIsFinishedValue:(BOOL)value_ {
+	[self setIsFinished:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveIsFinishedValue {
+	NSNumber *result = [self primitiveIsFinished];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveIsFinishedValue:(BOOL)value_ {
+	[self setPrimitiveIsFinished:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
+
+@dynamic name;
+
+
+
+
+
+
+@dynamic plannedDate;
+
+
+
+
+
+
+@dynamic version;
+
+
+
+- (int64_t)versionValue {
+	NSNumber *result = [self version];
+	return [result longLongValue];
+}
+
+- (void)setVersionValue:(int64_t)value_ {
+	[self setVersion:[NSNumber numberWithLongLong:value_]];
+}
+
+- (int64_t)primitiveVersionValue {
+	NSNumber *result = [self primitiveVersion];
+	return [result longLongValue];
+}
+
+- (void)setPrimitiveVersionValue:(int64_t)value_ {
+	[self setPrimitiveVersion:[NSNumber numberWithLongLong:value_]];
 }
 
 

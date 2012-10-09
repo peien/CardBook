@@ -31,6 +31,7 @@ extern const struct CardRelationships {
 	__unsafe_unretained NSString *address;
 	__unsafe_unretained NSString *bankAccount;
 	__unsafe_unretained NSString *company;
+	__unsafe_unretained NSString *evaluation;
 	__unsafe_unretained NSString *frames;
 	__unsafe_unretained NSString *groups;
 	__unsafe_unretained NSString *logo;
@@ -44,6 +45,7 @@ extern const struct CardFetchedProperties {
 @class Address;
 @class BankAccount;
 @class Company;
+@class CustomerEvaluation;
 @class Image;
 @class Group;
 @class Image;
@@ -285,6 +287,13 @@ extern const struct CardFetchedProperties {
 
 
 
+@property (nonatomic, strong) CustomerEvaluation* evaluation;
+
+//- (BOOL)validateEvaluation:(id*)value_ error:(NSError**)error_;
+
+
+
+
 @property (nonatomic, strong) NSSet* frames;
 
 - (NSMutableSet*)framesSet;
@@ -493,6 +502,11 @@ extern const struct CardFetchedProperties {
 
 - (Company*)primitiveCompany;
 - (void)setPrimitiveCompany:(Company*)value;
+
+
+
+- (CustomerEvaluation*)primitiveEvaluation;
+- (void)setPrimitiveEvaluation:(CustomerEvaluation*)value;
 
 
 

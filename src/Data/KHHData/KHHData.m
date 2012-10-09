@@ -47,6 +47,15 @@
                          selector:@"handleReceivedCardsAfterDateLastCardExpectedCountSucceeded:"];
         [self observeNotificationName:KHHNetworkReceivedCardsAfterDateLastCardExpectedCountFailed
                          selector:@"handleReceivedCardsAfterDateLastCardExpectedCountFailed:"];
+        
+        // 拜访计划
+        [self observeNotificationName:KHHNetworkVisitSchedulesAfterDateSucceeded
+                             selector:@"handleVisitSchedulesAfterDateSucceeded:"];
+        [self observeNotificationName:KHHNetworkVisitSchedulesAfterDateFailed
+                             selector:@"handleVisitSchedulesAfterDateFailed:"];
+        // 客户评估
+        [self observeNotificationName:KHHNetworkCustomerEvaluationListAfterDateSucceeded selector:@"handleCustomerEvaluationListAfterDateSucceeded:"];
+        [self observeNotificationName:KHHNetworkCustomerEvaluationListAfterDateFailed selector:@"handleCustomerEvaluationListAfterDateFailed:"];
     }
     return self;
 }

@@ -13,7 +13,7 @@
 
 @end
 
-@interface KHHData (Card)
+@interface KHHData (UI_Card)
 /*!
  MyCard: 我的名片
  */
@@ -36,5 +36,9 @@
 - (NSArray *)allReceivedCards; // 所有 收到的联系人 ReceivedCard 的数组
 - (ReceivedCard *)receivedCardByID:(NSNumber *)cardID; // 根据ID读取
 - (void)deleteReceivedCardByID:(NSNumber *)cardID;
+
+@end
+
+@interface KHHData (UI_VisitSchedule)
 
 @end

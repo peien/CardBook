@@ -266,3 +266,11 @@
     return result;
 }
 @end
+#pragma mark - VisitSchedule
+@implementation KHHData (CRUD_VisitSchedule)
+// 根据拜访计划ID查数据库。
+// 无则返回nil；
+- (Schedule *)scheduleByID:(NSNumber *)scheduleID {
+    return (Schedule *)[self objectByID:scheduleID ofClass:[Schedule entityName]];
+}
+@end

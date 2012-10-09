@@ -7,8 +7,11 @@
 extern const struct ScheduleAttributes {
 	__unsafe_unretained NSString *companions;
 	__unsafe_unretained NSString *content;
-	__unsafe_unretained NSString *date;
 	__unsafe_unretained NSString *id;
+	__unsafe_unretained NSString *isFinished;
+	__unsafe_unretained NSString *name;
+	__unsafe_unretained NSString *plannedDate;
+	__unsafe_unretained NSString *version;
 } ScheduleAttributes;
 
 extern const struct ScheduleRelationships {
@@ -21,6 +24,9 @@ extern const struct ScheduleFetchedProperties {
 
 @class Image;
 @class Card;
+
+
+
 
 
 
@@ -55,14 +61,6 @@ extern const struct ScheduleFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSString* date;
-
-
-//- (BOOL)validateDate:(id*)value_ error:(NSError**)error_;
-
-
-
-
 @property (nonatomic, strong) NSNumber* id;
 
 
@@ -71,6 +69,46 @@ extern const struct ScheduleFetchedProperties {
 - (void)setIdValue:(int64_t)value_;
 
 //- (BOOL)validateId:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSNumber* isFinished;
+
+
+@property BOOL isFinishedValue;
+- (BOOL)isFinishedValue;
+- (void)setIsFinishedValue:(BOOL)value_;
+
+//- (BOOL)validateIsFinished:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSString* name;
+
+
+//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSString* plannedDate;
+
+
+//- (BOOL)validatePlannedDate:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSNumber* version;
+
+
+@property int64_t versionValue;
+- (int64_t)versionValue;
+- (void)setVersionValue:(int64_t)value_;
+
+//- (BOOL)validateVersion:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -122,17 +160,41 @@ extern const struct ScheduleFetchedProperties {
 
 
 
-- (NSString*)primitiveDate;
-- (void)setPrimitiveDate:(NSString*)value;
-
-
-
-
 - (NSNumber*)primitiveId;
 - (void)setPrimitiveId:(NSNumber*)value;
 
 - (int64_t)primitiveIdValue;
 - (void)setPrimitiveIdValue:(int64_t)value_;
+
+
+
+
+- (NSNumber*)primitiveIsFinished;
+- (void)setPrimitiveIsFinished:(NSNumber*)value;
+
+- (BOOL)primitiveIsFinishedValue;
+- (void)setPrimitiveIsFinishedValue:(BOOL)value_;
+
+
+
+
+- (NSString*)primitiveName;
+- (void)setPrimitiveName:(NSString*)value;
+
+
+
+
+- (NSString*)primitivePlannedDate;
+- (void)setPrimitivePlannedDate:(NSString*)value;
+
+
+
+
+- (NSNumber*)primitiveVersion;
+- (void)setPrimitiveVersion:(NSNumber*)value;
+
+- (int64_t)primitiveVersionValue;
+- (void)setPrimitiveVersionValue:(int64_t)value_;
 
 
 

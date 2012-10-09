@@ -114,16 +114,22 @@ static NSString * const KHHNetworkMoveCardsSucceeded = @"moveCardsSucceeded";
 static NSString * const KHHNetworkMoveCardsFailed    = @"moveCardsFailed";
 //MARK: - 名片交换
 //交换
-static NSString * const KHHNotificationExchangeCardSucceeded = @"ExchangeCardSucceeded";
-static NSString * const KHHNotificationExchangeCardFailed = @"ExchangeCardFailed";
+static NSString * const KHHNetworkExchangeCardSucceeded = @"ExchangeCardSucceeded";
+static NSString * const KHHNetworkExchangeCardFailed = @"ExchangeCardFailed";
 //发送
-static NSString * const KHHNotificationSendCardToPhoneSucceeded = @"SendCardToPhoneSucceeded";
-static NSString * const KHHNotificationSendCardToPhoneFailed = @"SendCardToPhoneFailed";
-static NSString * const KHHNotificationSendCardToUserSucceeded = @"SendCardToUserSucceeded";
-static NSString * const KHHNotificationSendCardToUserFailed = @"SendCardToUserFailed";
+static NSString * const KHHNetworkSendCardToPhoneSucceeded = @"SendCardToPhoneSucceeded";
+static NSString * const KHHNetworkSendCardToPhoneFailed = @"SendCardToPhoneFailed";
+static NSString * const KHHNetworkSendCardToUserSucceeded = @"SendCardToUserSucceeded";
+static NSString * const KHHNetworkSendCardToUserFailed = @"SendCardToUserFailed";
+//MARK: - 拜访计划
+static NSString * const KHHNetworkVisitSchedulesAfterDateSucceeded = @"visitSchedulesAfterDateSucceeded";
+static NSString * const KHHNetworkVisitSchedulesAfterDateFailed = @"visitSchedulesAfterDateFailed";
+//MARK: - 客户评估
+static NSString * const KHHNetworkCustomerEvaluationListAfterDateSucceeded = @"customerEvaluationListAfterDateSucceeded";
+static NSString * const KHHNetworkCustomerEvaluationListAfterDateFailed = @"customerEvaluationListAfterDateFailed";
 //MARK: - 企业管理相关
 // listDepartments
-static NSString * const KHHNotificationListDepartmentsSucceeded = @"listDepartmentsSucceeded";
-static NSString * const KHHNotificationListDepartmentsFailed    = @"listDepartmentsFailed";
+static NSString * const KHHNetworkListDepartmentsSucceeded = @"listDepartmentsSucceeded";
+static NSString * const KHHNetworkListDepartmentsFailed    = @"listDepartmentsFailed";
 
 #endif

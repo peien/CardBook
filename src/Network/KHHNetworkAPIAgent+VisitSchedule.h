@@ -37,7 +37,8 @@ NSMutableDictionary * ParametersFromSchedule(Schedule *visitSchedule,
  拜访计划增量 kinghhVisitCustomPlanService.incList
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=155
  */
-- (void)visitSchedulesAfterDate:(NSString *)lastDate;
+- (void)visitSchedulesAfterDate:(NSString *)lastDate
+                          extra:(NSDictionary *)extra;
 /**
  上传拜访图片 kinghhVisitCustomPlanService.uploadImg
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=161

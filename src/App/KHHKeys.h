@@ -112,6 +112,7 @@ static NSString * const JSONDataKeyNote = @"note";
 static NSString * const JSONDataKeyOpenBank = @"openBank";
 static NSString * const JSONDataKeyOrgId = @"orgId";
 static NSString * const JSONDataKeyPermissionName = @"permissionName";
+static NSString * const JSONDataKeyPlanList = @"planList";
 static NSString * const JSONDataKeyProvince = @"province";
 static NSString * const JSONDataKeyQQ = @"qq";
 static NSString * const JSONDataKeyState = @"state";
@@ -155,6 +156,7 @@ static NSString * const kInfoKeySyncTime = @"syncTime";//NSString
 static NSString * const kInfoKeyTemplateList = @"templateList";//NSArray
 static NSString * const kInfoKeyUser = @"user";//NSString
 static NSString * const kInfoKeyUserID = @"userID";//NSNumber
+static NSString * const kInfoKeyVisitScheduleList = @"visitScheduleList";
 
 #pragma mark - kExtraKey* : "Extra" dictionary key
 /*!
@@ -185,9 +187,10 @@ static NSString * const kVisualCardItemKeyTitle = @"title";
 
 #pragma mark - kSyncMarkKey* : SyncMark keys
 //static NSString * const kSyncMarkKey<#Name#> = @"<#String#>";
+static NSString * const kSyncMarkKeyCustomerEvaluationLastTime = @"customerEvaluationLastTime";
 static NSString * const kSyncMarkKeyReceviedCardLastID = @"receviedCardLastID";
 static NSString * const kSyncMarkKeyReceviedCardLastTime = @"receviedCardLastTime";
 static NSString * const kSyncMarkKeySyncAllLastTime = @"syncAllLastTime";
-
+static NSString * const kSyncMarkKeyVisitScheduleLastTime = @"visitScheduleLastTime";
 
 #endif
