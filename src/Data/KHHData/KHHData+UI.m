@@ -14,7 +14,7 @@
 
 @end
 
-@implementation KHHData (Card)
+@implementation KHHData (UI_Card)
 
 /*!
  MyCard: 我的名片
@@ -65,7 +65,11 @@
     return result;
 }
 - (void)deleteReceivedCardByID:(NSNumber *)cardID {
-    [self deleteCardOfType:KHHCardModelTypeReceivedCard byID:cardID];
+    NSArray *IDList = @[cardID];
+    [self.agent deleteReceivedCards:IDList];
 }
+
+@end
+@implementation KHHData (UI_VisitSchedule)
 
 @end

@@ -69,3 +69,10 @@
 // 注意key为@""或nil，亦新建；
 - (SyncMark *)syncMarkByKey:(NSString *)key;
 @end
+
+#pragma mark - VisitSchedule
+@interface KHHData (CRUD_Schedule)
+// 根据拜访计划ID查数据库。
+// 无则返回nil；
+- (Schedule *)scheduleByID:(NSNumber *)scheduleID;
+@end

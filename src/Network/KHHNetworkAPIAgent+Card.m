@@ -279,12 +279,14 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(InterCard *iCard) {
     }
     NSString *action = @"updateCard";
     NSString *query;
+    NSMutableDictionary *parameters = ParametersToCreateOrUpdateCard(iCard);
     if (KHHCardModelTypeMyCard == cardType) {
         query = @"kinghhCardService.update";
+        parameters[@"card.cardId"] = iCard.id;
     } else if (KHHCardModelTypePrivateCard == cardType) {
         query = @"kinghhPrivateCardService.update";
+        parameters[@"card.id"] = iCard.id;
     }
-    NSDictionary *parameters = ParametersToCreateOrUpdateCard(iCard);
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
         NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];

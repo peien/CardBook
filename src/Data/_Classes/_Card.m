@@ -30,6 +30,7 @@ const struct CardRelationships CardRelationships = {
 	.address = @"address",
 	.bankAccount = @"bankAccount",
 	.company = @"company",
+	.evaluation = @"evaluation",
 	.frames = @"frames",
 	.groups = @"groups",
 	.logo = @"logo",
@@ -337,6 +338,10 @@ const struct CardFetchedProperties CardFetchedProperties = {
 	
 
 @dynamic company;
+
+	
+
+@dynamic evaluation;
 
 	
 

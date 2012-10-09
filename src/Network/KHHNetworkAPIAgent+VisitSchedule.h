@@ -7,15 +7,13 @@
 //
 
 #import "KHHNetworkAPIAgent.h"
-@class Schedule;
-typedef enum  {
-    KHHScheduleAttributeNone = 0UL,
-    KHHScheduleAttributeID = 1UL << 0,
-} KHHScheduleAttributes;
+#import "KHHTypes.h"
+#import "Schedule.h"
+
 BOOL ScheduleHasRequiredAttributes(Schedule *visitSchedule,
-                                   KHHScheduleAttributes attributes);
+                                   KHHScheduleAttributeType attributes);
 NSMutableDictionary * ParametersFromSchedule(Schedule *visitSchedule,
-                                             KHHScheduleAttributes attributes);
+                                             KHHScheduleAttributeType attributes);
 @interface KHHNetworkAPIAgent (VisitSchedule)
 /**
  新建拜访计划 kinghhVisitCustomPlanService.create
@@ -39,7 +37,8 @@ NSMutableDictionary * ParametersFromSchedule(Schedule *visitSchedule,
  拜访计划增量 kinghhVisitCustomPlanService.incList
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=155
  */
-- (void)visitSchedulesAfterDate:(NSString *)lastDate;
+- (void)visitSchedulesAfterDate:(NSString *)lastDate
+                          extra:(NSDictionary *)extra;
 /**
  上传拜访图片 kinghhVisitCustomPlanService.uploadImg
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=161

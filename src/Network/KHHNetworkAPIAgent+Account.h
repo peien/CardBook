@@ -7,10 +7,6 @@
 //
 
 #import "KHHNetworkAPIAgent.h"
-/*!
- Notification names
- */
-
 
 @interface KHHNetworkAPIAgent (Account)
 /**

@@ -7,38 +7,6 @@
 //
 
 #import "KHHNetworkAPIAgent.h"
-#import "Card.h"
-#import "Group.h"
-/*!
- Notification names
- */
-// Create group
-static NSString * const KHHNotificationCreateGroupSucceeded = @"createGroupSucceeded";
-static NSString * const KHHNotificationCreateGroupFailed    = @"createGroupFailed";
-// Update group
-static NSString * const KHHNotificationUpdateGroupSucceeded = @"updateGroupSucceeded";
-static NSString * const KHHNotificationUpdateGroupFailed    = @"updateGroupFailed";
-// Delete group
-static NSString * const KHHNotificationDeleteGroupSucceeded = @"deleteGroupSucceeded";
-static NSString * const KHHNotificationDeleteGroupFailed    = @"deleteGroupFailed";
-// card IDs in group
-static NSString * const KHHNotificationCardIDsWithinGroupSucceeded = @"cardIDsWithinGroupSucceeded";
-static NSString * const KHHNotificationCardIDsWithinGroupFailed    = @"cardIDsWithinGroupFailed";
-// Move cards from ... to ...
-static NSString * const KHHNotificationMoveCardsSucceeded = @"moveCardsSucceeded";
-static NSString * const KHHNotificationMoveCardsFailed    = @"moveCardsFailed";
-
-typedef enum {
-    KHHGroupAttributeNone     = 0UL,
-    KHHGroupAttributeID       = 1UL << 0,
-    KHHGroupAttributeName     = 1UL << 1,
-    KHHGroupAttributeParentID = 1UL << 2,
-    KHHGroupAttributeAll      = ~KHHGroupAttributeNone,
-} KHHGroupAttributes;
-
-NSMutableDictionary * ParametersFromGroup(Group *group,
-                                          KHHGroupAttributes requiredAttributes);
-BOOL GroupHasRequiredAttributes(Group *group, KHHGroupAttributes attributes);
 
 @interface KHHNetworkAPIAgent (Group)
 /*!
@@ -51,29 +19,31 @@ BOOL GroupHasRequiredAttributes(Group *group, KHHGroupAttributes attributes);
     YES 请求已发出
     NO  参数有问题
  */
-- (BOOL)createGroup:(Group *)group;
+- (BOOL)createGroup:(NSString *)groupName
+           userCard:(NSString *)cardID
+             parent:(NSString *)parentGroupID;
 /**
  修改分组 groupService.updateGroup
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=206
  */
-- (BOOL)updateGroup:(Group *)group
-            newName:(NSString *)name
-          newParent:(Group *)parent;
+- (BOOL)updateGroup:(NSString *)groupID
+            newName:(NSString *)newName
+          newParent:(NSString *)newParentGroupID;
 /**
  删除分组 groupService.deleteGroup
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=207
  */
-- (BOOL)deleteGroup:(Group *)group;
+- (BOOL)deleteGroup:(NSString *)groupID;
 /**
  获取分组下的客户名片id cardGroupService.getCardIdsByGroupId
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=164
  */
-- (BOOL)cardIDsWithinGroup:(Group *)group;
+- (BOOL)cardIDsWithinGroup:(NSString *)groupID;
 /**
  移动、删除、添加客户名片到分组 cardGroupService.addOrDelCardGroup
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=154
  */
 - (BOOL)moveCards:(NSArray *)cards
-        fromGroup:(Group *)fromGroup
-          toGroup:(Group *)toGroup;
+        fromGroup:(NSString *)fromGroupID
+          toGroup:(NSString *)toGroupID;
 @end

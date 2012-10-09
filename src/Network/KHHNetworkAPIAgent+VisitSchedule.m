@@ -10,7 +10,7 @@
 #import "Schedule.h"
 #pragma mark - Schedule参数整理函数
 BOOL ScheduleHasRequiredAttributes(Schedule *visitSchedule,
-                                   KHHScheduleAttributes attributes) {
+                                   KHHScheduleAttributeType attributes) {
     NSString *ID = [[visitSchedule valueForKey:kAttributeKeyID] stringValue];
     if ((attributes & KHHScheduleAttributeID) && ID.length == 0) {
         return NO;
@@ -18,7 +18,7 @@ BOOL ScheduleHasRequiredAttributes(Schedule *visitSchedule,
     return YES;
 }
 NSMutableDictionary * ParametersFromSchedule(Schedule *visitSchedule,
-                                             KHHScheduleAttributes attributes) {
+                                             KHHScheduleAttributeType attributes) {
     NSMutableDictionary *result = [NSMutableDictionary dictionary];
     NSString *ID = [[visitSchedule valueForKey:kAttributeKeyID] stringValue];
     if ((attributes & KHHScheduleAttributeID)) {
@@ -55,14 +55,49 @@ NSMutableDictionary * ParametersFromSchedule(Schedule *visitSchedule,
  拜访计划增量 kinghhVisitCustomPlanService.incList
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=155
  */
-- (void)visitSchedulesAfterDate:(NSString *)lastDate {
+- (void)visitSchedulesAfterDate:(NSString *)lastDate
+                          extra:(NSDictionary *)extra {
+    NSString *action = @"visitSchedulesAfterDate";
     NSDictionary *parameters = @{
             @"lastUpdTime" : [lastDate length] > 0? lastDate: @""
     };
-    [self postAction:@"visitSchedulesAfterDate"
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
+        DLog(@"[II] response keys = %@", [responseDict allKeys]);
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:8];
+        
+        // 把返回的数据转成本地数据
+        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        if (KHHNetworkStatusCodeSucceeded == code) {
+            // count
+            dict[kInfoKeyCount] = responseDict[JSONDataKeyCount];
+            
+            // synTime -> syncTime
+            NSString *syncTime = responseDict[JSONDataKeySynTime];
+            dict[kInfoKeySyncTime] = syncTime? syncTime: @"";
+            
+            // planList -> visitScheduleList
+            NSArray *planList = responseDict[JSONDataKeyPlanList];
+//            NSMutableArray *receivedCardList = [NSMutableArray arrayWithCapacity:oldList.count];
+//            for (NSDictionary *oldDict in oldList) {
+//                InterCard *iCard = [InterCard interCardWithReceivedCardJSON:oldDict];
+//                [receivedCardList addObject:iCard];
+//            }
+            dict[kInfoKeyVisitScheduleList] = planList;
+        }
+        
+        // errorCode 和 extra
+        dict[kInfoKeyErrorCode] = @(code);
+        dict[kInfoKeyExtra] = extra;
+        // 把处理完的数据发出去。
+        [self postASAPNotificationName:NameWithActionAndCode(action, code)
+                                  info:dict];
+    };
+    [self postAction:action
                query:@"kinghhVisitCustomPlanService.incList"
           parameters:parameters
-             success:nil];
+             success:success
+               extra:extra];
 }
 /**
  上传拜访图片 kinghhVisitCustomPlanService.uploadImg

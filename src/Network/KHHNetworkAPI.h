@@ -8,6 +8,7 @@
 #import "KHHNetworkAPIAgent.h"
 #import "KHHNetworkAPIAgent+Account.h"
 #import "KHHNetworkAPIAgent+Card.h"
+#import "KHHNetworkAPIAgent+CustomerEvaluation.h"
 #import "KHHNetworkAPIAgent+EnterpriseManagement.h"
 #import "KHHNetworkAPIAgent+Exchange.h"
 #import "KHHNetworkAPIAgent+Group.h"
