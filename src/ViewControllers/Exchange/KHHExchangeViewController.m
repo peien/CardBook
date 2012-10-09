@@ -12,6 +12,8 @@
 #import "XLPageControl.h"
 #import "UIImageView+WebCache.h"
 #import "KHHFrameCardView.h"
+#import "KHHData.h"
+#import "Card.h"
 
 #import <CoreLocation/CoreLocation.h>
 #import "KHHNetworkAPIAgent+Exchange.h"
@@ -21,6 +23,8 @@
 @property (strong, nonatomic) CLLocation *currentLocation;
 @property (strong, nonatomic) CLLocationManager *localM;
 @property (strong, nonatomic) KHHNetworkAPIAgent *httpAgent;
+@property (strong, nonatomic) KHHData            *dataCtrl;
+@property (strong, nonatomic) Card               *card;
 @end
 
 @implementation KHHExchangeViewController
@@ -30,6 +34,8 @@
 @synthesize currentLocation = _currentLocation;
 @synthesize localM = _localM;
 @synthesize httpAgent = _httpAgent;
+@synthesize dataCtrl;
+@synthesize card;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -39,6 +45,8 @@
         [self.leftBtn setTitle:NSLocalizedString(@"切换名片", nil) forState:UIControlStateNormal];
         [self.rightBtn setTitle:@"发送纪录" forState:UIControlStateNormal];
         self.httpAgent = [[KHHNetworkAPIAgent alloc] init];
+        self.dataCtrl = [KHHData sharedData];
+        self.card = [[self.dataCtrl allMyCards] lastObject];
     }
     return self;
 }
@@ -64,6 +72,7 @@
         [self.view addSubview:cardView];
     }else{
         KHHFrameCardView *cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(0, 0, 320, 220) isVer:NO];
+        cardView.card = self.card;
         [cardView showView];
         [self.view addSubview:cardView];
     }
@@ -112,6 +121,8 @@
     // e.g. self.myOutlet = nil;
     _scrView = nil;
     xlPage = nil;
+    self.dataCtrl = nil;
+    self.card = nil;
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {

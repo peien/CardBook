@@ -18,9 +18,11 @@
 #import "TSLocateView.h"
 #import "KHHShowHideTabBar.h"
 #import "UIImageView+WebCache.h"
+#import "MBProgressHUD.h"
 
 #import "Card.h"
 #import "Company.h"
+#import "CardTemplate.h"
 #import "Address.h"
 #import "Group.h"
 #import "BankAccount.h"
@@ -50,6 +52,7 @@ NSString *const kECardListSeparator = @"|";
 @property (strong, nonatomic) NSArray       *placeName;
 @property (strong, nonatomic) InterCard     *interCard;
 @property (strong, nonatomic) KHHData       *dataCtrl;
+@property (strong, nonatomic) MBProgressHUD *progressHud;
 
 @end
 
@@ -82,6 +85,7 @@ NSString *const kECardListSeparator = @"|";
 @synthesize placeName;
 @synthesize interCard;
 @synthesize dataCtrl;
+@synthesize progressHud;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -90,6 +94,7 @@ NSString *const kECardListSeparator = @"|";
         // Custom initialization
         [self.rightBtn setTitle:NSLocalizedString(@"保存", nil) forState:UIControlStateNormal];
         self.interCard = [[InterCard alloc] init];
+        self.dataCtrl = [KHHData sharedData];
     }
     return self;
 }
@@ -98,9 +103,36 @@ NSString *const kECardListSeparator = @"|";
 //save card info
 - (void)rightBarButtonClick:(id)sender
 {
+    //注册修改card 或 创建card消息
+    [self observeNotificationName:KHHUIModifyCardSucceeded selector:@"handleModifyCardSucceeded"];
+    [self observeNotificationName:KHHUIModifyCardFailed selector:@"handleModifyCardFailed:"];
+    [self observeNotificationName:KHHUICreateCardSucceeded selector:@"handleCreateCardSucceeded"];
+    [self observeNotificationName:KHHUICreateCardFailed selector:@"handleCreateCardFailed"];
     [self saveCardInfo];
 }
+#pragma mark - Handle Modify or Create Card Message
+- (void)handleModifyCardSucceeded
+{
+    DLog(@"ModifyCardSucceeded");
+}
+- (void)handleModifyCardFailed:(NSNotification *)noti
+{
+    DLog(@"ModifyCardFailed! noti = %@", noti);
+    [self.progressHud removeFromSuperview];
+    [self warnAlertMessage:@"修改失败"];
+}
+- (void)handleCreateCardSucceeded
+{
+    DLog(@"CreateCardSucceeded");
+    [self.progressHud removeFromSuperview];
+    [self.navigationController popViewControllerAnimated:YES];
 
+}
+- (void)handleCreateCardFailed
+{
+   [self.progressHud removeFromSuperview];
+    DLog(@"CreateCardFailed");
+}
 #pragma mark -
 #pragma mark UIViewController Life Cycle
 - (void)viewDidLoad
@@ -226,7 +258,10 @@ NSString *const kECardListSeparator = @"|";
     if (_glCard.company.name.length > 0) {
         [_fieldValue replaceObjectAtIndex:7 withObject:_glCard.company.name];
     }
-
+    
+    if (_glCard.company.email.length) {
+        [_fieldExternTwo addObject:[NSDictionary dictionaryWithObjectsAndKeys:_glCard.company.email,@"value",@"公司邮箱",@"key", nil]];
+    }
     if (_glCard.address.province.length > 0 || _glCard.address.city.length > 0) {
         self.pc = [NSString stringWithFormat:@"%@ %@",_glCard.address.province,_glCard.address.city];
         if ([_glCard.address.district isEqualToString:@"(null)"]) {
@@ -248,11 +283,6 @@ NSString *const kECardListSeparator = @"|";
     if (_glCard.department.length > 0) {
         [_fieldExternTwo addObject:[NSDictionary dictionaryWithObjectsAndKeys:_glCard.department,@"value",@"部门",@"key", nil]];
     }
-    //有改动 ＋＋＋＋＋＋＋ officeEmail
-    
-//    if (_glCard.officeEmail.length) {
-//        [_fieldExternTwo addObject:[NSDictionary dictionaryWithObjectsAndKeys:_glCard.officeEmail,@"value",@"公司邮箱",@"key", nil]];
-//    }
     //银行信息
     if (_glCard.bankAccount.bank.length > 0 || _glCard.bankAccount.branch.length > 0) {
         NSString *adds = [NSString stringWithFormat:@",%@",_glCard.bankAccount.branch];
@@ -313,6 +343,7 @@ NSString *const kECardListSeparator = @"|";
     self.placeName = nil;
     self.interCard = nil;
     self.dataCtrl = nil;
+    self.progressHud = nil;
 }
 #pragma mark -
 #pragma mark UITableView Delegates
@@ -907,9 +938,11 @@ NSString *const kECardListSeparator = @"|";
         if ([key isEqualToString:@"部门"]) {
             [self saveToDictionary:value key:@"department"];
             DLog(@"depart=====save:%@",value);
+            self.interCard.department = value;
         }else if ([key isEqualToString:@"公司邮箱"]){
             [self saveToDictionary:value key:@"officeEmail"];
             DLog(@"company mail=======save:%@",value);
+            self.interCard.companyEmail = value;
         }
     }
     
@@ -1030,13 +1063,22 @@ NSString *const kECardListSeparator = @"|";
             self.interCard.moreInfo = value;
         }
     }
+    // id，version，userid,templateID付给InterCard，否则不能通过
+    self.interCard.id = _glCard.id;
+    self.interCard.version = _glCard.version;
+    self.interCard.userID = _glCard.userID;
+    self.interCard.templateID = _glCard.template.id;
+    
     // 保存到数据库或调用网络接口
     //为了避免保存失败，先给这个临时card给值 InterCard
+    self.progressHud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     if ([_glCard isKindOfClass:[MyCard class]]) {
         [self.dataCtrl modifyMyCardWithInterCard:self.interCard];
     }else if ([_glCard isKindOfClass:[PrivateCard class]]){
         [self.dataCtrl modifyPrivateCardWithInterCard:self.interCard];
-    }else if ([_glCard isKindOfClass:[PrivateCard class]] && self.type == KCardViewControllerTypeNewCreate){
+    }else if (self.type == KCardViewControllerTypeNewCreate){
+        //暂时这样写 templateID不确定
+        self.interCard.templateID = [NSNumber numberWithInt:10];
         [self.dataCtrl createPrivateCardWithInterCard:self.interCard];
     }
 }

@@ -57,6 +57,9 @@ typedef enum {
 @property (strong, nonatomic)  NSArray                *myCardArray;
 @property (strong, nonatomic)  KHHFloatBarController  *floatBarVC;
 @property (assign, nonatomic)  bool                   isOwnGroup;
+@property (assign, nonatomic)  NSArray                *privateArr;
+@property (assign, nonatomic)  bool                   isNeedReloadTable;
+@property (assign, nonatomic)  int                    currentTag;
 @end
 
 @implementation KHHHomeViewController
@@ -97,6 +100,9 @@ typedef enum {
 @synthesize isOwnGroup;
 @synthesize oWnGroupArray;
 @synthesize myCardArray;
+@synthesize privateArr;
+@synthesize isNeedReloadTable;
+@synthesize currentTag;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -143,7 +149,7 @@ typedef enum {
     self.popover = [[WEPopoverController alloc] initWithContentViewController:floatBarVC];
     self.floatBarVC.popover = self.popover;
     
-    _btnTitleArr = [[NSMutableArray alloc] initWithObjects:@"全部",@"new",@"同事",@"已发送",@"拜访",@"重点",@"未分组", nil];
+    _btnTitleArr = [[NSMutableArray alloc] initWithObjects:@"全部",@"new",@"同事",@"已发送",@"重点",@"未分组",@"手机", nil];
     _btnArray = [[NSMutableArray alloc] initWithCapacity:0];
     _isShowData = YES;
     NSIndexPath *index = [NSIndexPath indexPathForRow:-1 inSection:0];
@@ -201,12 +207,13 @@ typedef enum {
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self initViewData];
     if (_isNormalSearchBar) {
         
     }else{
         [KHHShowHideTabBar showTabbar];
-        [_bigTable reloadData];
+        if (self.isNeedReloadTable) {
+            [self reloadTable];
+        }
     }
 }
 - (void)viewWillDisappear:(BOOL)animated{
@@ -246,6 +253,7 @@ typedef enum {
     self.floatBarVC = nil;
     self.oWnGroupArray = nil;
     self.myCardArray = nil;
+    self.privateArr = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -257,50 +265,18 @@ typedef enum {
 - (void)initViewData
 {
     //调用数据库接口，获取各个分组的array
-    // 暂时用model数据
-//    self.allArray = [[NSMutableArray alloc] init];
-//    for (int i = 0; i< 10; i++) {
-//        KHHCardMode *card = [[KHHCardMode alloc] init];
-//        card.name = [NSString stringWithFormat:@"张%d",i];
-//        card.title = @"软件设计师";
-//        //直接读，再引用
-//        card.company.name = @"浙江金汉弘软件技术有限公司";
-//        card.mobilePhone = [NSString stringWithFormat:@"1512564124%d",i];
-//        if (i%2 == 0) {
-//            card.logUrl = @"http://farm6.static.flickr.com/5094/5464787611_642ee9280d_m.jpg";
-//        }
-//        if (i%2 != 0) {
-//            card.logUrl = @"http://farm5.static.flickr.com/4078/4861715526_6ccb2b9a19_m.jpg";
-//        }
-//        if (i%3 == 0) {
-//            card.logUrl = @"http://farm6.static.flickr.com/5030/5605213905_a7124c8f23_m.jpg";
-//        }
-//        [self.allArray addObject:card];
-//    }
-//    self.generalArray = self.allArray;
-//    
-//    self.ReceNewArray = [[NSMutableArray alloc] init];
-//    for (int i = 0; i< 10; i++) {
-//        KHHCardMode *card = [[KHHCardMode alloc] init];
-//        card.name = [NSString stringWithFormat:@"李%d",i];
-//        card.title = @"UI设计师";
-//        card.company.name = @"浙江金汉弘软件技术有限公司";
-//        card.mobilePhone = [NSString stringWithFormat:@"1552564124%d",i];
-//        if (i%2 != 0) {
-//            card.logUrl = @"http://farm6.static.flickr.com/5094/5464787611_642ee9280d_m.jpg";
-//        }
-//        if (i%2 == 0) {
-//            card.logUrl = @"http://farm5.static.flickr.com/4078/4861715526_6ccb2b9a19_m.jpg";
-//        }
-//        if (i%3 == 0) {
-//            card.logUrl = @"http://farm6.static.flickr.com/5030/5605213905_a7124c8f23_m.jpg";
-//        }
-//        [self.ReceNewArray addObject:card];
-//        [self.allArray addObject:card];
-//    }
     self.allArray = [self.dataControl allReceivedCards];
     self.generalArray = allArray;
     self.myCardArray = [self.dataControl allMyCards];
+}
+- (void)reloadTable
+{
+    if (self.currentTag == 105) {
+        self.generalArray = [self.dataControl allPrivateCards];
+    }else if (self.currentTag == 100){
+        self.generalArray = [self.dataControl allReceivedCards];
+    }
+    [_bigTable reloadData];
 }
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -419,6 +395,7 @@ typedef enum {
                 //选中某一个对象并返回
                 [self.navigationController popViewControllerAnimated:YES];
             }else{
+                self.isNeedReloadTable = YES;
                 KHHClientCellLNPCC *cell = (KHHClientCellLNPCC*)[tableView cellForRowAtIndexPath:indexPath];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 DetailInfoViewController *detailVC = [[DetailInfoViewController alloc] initWithNibName:nil bundle:nil];
@@ -518,6 +495,7 @@ typedef enum {
         switch (btn.tag) {
             case 100:
                 //DLog(@"100 btn 数据源刷新");
+                self.currentTag = btn.tag;
                 self.generalArray = self.allArray;
                 break;
             case 101:
@@ -535,6 +513,13 @@ typedef enum {
                 break;
             case 105:
                 DLog(@"105 btn 数据源刷新");
+                self.currentTag = btn.tag;
+                self.privateArr = [self.dataControl allPrivateCards];
+                self.generalArray = self.privateArr;
+                break;
+            case 106:
+
+                break;
             default:
                 break;
         }
@@ -617,6 +602,7 @@ typedef enum {
             //选择名片;
         }else if (buttonIndex == 2){
             //手动制作;
+            self.isNeedReloadTable = YES;
             Edit_eCardViewController *creatCardVC = [[Edit_eCardViewController alloc] initWithNibName:nil bundle:nil];
             creatCardVC.type = KCardViewControllerTypeNewCreate;
             [self.navigationController pushViewController:creatCardVC animated:YES];

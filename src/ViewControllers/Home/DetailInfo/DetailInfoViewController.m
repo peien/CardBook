@@ -84,7 +84,7 @@
     // Do any additional setup after loading the view from its nib.
     [self initView];
     self.view.backgroundColor = [UIColor clearColor];
-    UIButton *btn = (UIButton *)[self.view viewWithTag:1000];
+    UIButton *btn = (UIButton *)[self.view viewWithTag:999];
     [self performSelector:@selector(headBtnClick:) withObject:btn afterDelay:0.1];
 
 }
@@ -135,7 +135,7 @@
     companylab.backgroundColor = [UIColor clearColor];
     companylab.text = NSLocalizedString(self.card.company.name, nil);
     [headerView addSubview:companylab];
-    UILabel *jobLab = [[UILabel alloc] initWithFrame:CGRectMake(125, 10, 100, 20)];
+    UILabel *jobLab = [[UILabel alloc] initWithFrame:CGRectMake(135, 10, 100, 20)];
     jobLab.text = NSLocalizedString(self.card.title, nil);
     jobLab.textAlignment = UITextAlignmentLeft;
     jobLab.font = [UIFont systemFontOfSize:13];
@@ -183,13 +183,15 @@
     _customView.customValue = 3;
     [self.containView addSubview:_customView];
     
-    UIButton *bottomBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    bottomBtn.tag = 323;
-    [bottomBtn addTarget:self action:@selector(bottomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    bottomBtn.frame = CGRectMake(260, 360, 66, 66);
-    [bottomBtn setBackgroundImage:[UIImage imageNamed:@"edit_Btn_Red.png"] forState:UIControlStateNormal];
-    [self.view insertSubview:bottomBtn atIndex:100];
-    
+    //接收到的卡片不能修改
+    if (![self.card isKindOfClass:[ReceivedCard class]]) {
+        UIButton *bottomBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        bottomBtn.tag = 323;
+        [bottomBtn addTarget:self action:@selector(bottomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        bottomBtn.frame = CGRectMake(260, 360, 66, 66);
+        [bottomBtn setBackgroundImage:[UIImage imageNamed:@"edit_Btn_Red.png"] forState:UIControlStateNormal];
+        [self.view insertSubview:bottomBtn atIndex:100];
+    }
     //popView
 
 }

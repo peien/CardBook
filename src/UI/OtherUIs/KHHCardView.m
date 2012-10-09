@@ -13,6 +13,8 @@
 #import "MyCard.h"
 #import "Image.h"
 #import "Card.h"
+#import "PrivateCard.h"
+#import "KHHData+UI.h"
 #import "UIImageView+WebCache.h"
 #import "KHHAddressBook.h"
 
@@ -29,6 +31,8 @@
 @synthesize detailVC;
 @synthesize myDetailVC;
 @synthesize itemArray;
+@synthesize dataCtrl;
+@synthesize progressHud;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -50,6 +54,7 @@
 */
 - (void)initView
 {
+    self.dataCtrl = [KHHData sharedData];
     self.backgroundColor = [UIColor colorWithRed:241 green:238 blue:232 alpha:1.0];
     KHHFrameCardView *cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(0, 0, 320, 225) isVer:NO];
     cardView.card = self.myCard;
@@ -76,6 +81,10 @@
     [btnFooterDel addTarget:self action:@selector(delCardBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [footView addSubview:btnFooterDel];
     _theTable.tableFooterView = footView;
+    //我的名片暂时不可以删除
+    if ([self.myCard isKindOfClass:[MyCard class]]) {
+        btnFooterDel.enabled = NO;
+    }
     
 }
 //初始化界面数据
@@ -194,18 +203,27 @@
 
 - (void)delCardBtnClick:(id)sender
 {
-#warning 现在不允许删除我自己的名片
-//    [self.data deleteMyCardByID:_myCard.id];
+    //注册删除卡片的消息
+    [self observeNotificationName:KHHUIDeleteCardSucceeded selector:@"handleDeleteCardSucceeded:"];
+    [self observeNotificationName:KHHUIDeleteCardFailed selector:@"handleDeleteCardFailed"];
+    self.progressHud = [MBProgressHUD showHUDAddedTo:self.superview animated:YES];
+    if ([self.myCard isKindOfClass:[PrivateCard class]]) {
+        [self.dataCtrl deletePrivateCardByID:self.myCard.id];
+    }else if ([self.myCard isKindOfClass:[ReceivedCard class]]){
+        [self.dataCtrl deleteReceivedCardByID:self.myCard.id];
+    }
 }
-#pragma mark - ScrollerDelegateMothed
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-//{
-//    if ([scrollView isEqual:_scroller]) {
-//        CGFloat scrollWidth = scrollView.frame.size.width;
-//        int page = ((scrollView.contentOffset.x-scrollWidth/2)/scrollWidth)+1;
-//        XLPageControl *pageCtrl = (XLPageControl *)[self viewWithTag:118];
-//        pageCtrl.currentPage = page;
-//        
-//    }
-//}
+#pragma mark - 
+- (void)handleDeleteCardSucceeded:(NSNotification *)info{
+    DLog(@"DeleteCardSucceeded:");
+    [self.progressHud removeFromSuperViewOnHide];
+    [self.detailVC.navigationController popViewControllerAnimated:YES];
+}
+- (void)handleDeleteCardFailed:(NSNotification *)info{
+    DLog(@"DeleteCardFailed:");
+    [self.progressHud removeFromSuperViewOnHide];
+    [self stopObservingNotificationName:KHHUIDeleteCardSucceeded];
+    [self stopObservingNotificationName:KHHUIDeleteCardFailed];
+}
+
 @end

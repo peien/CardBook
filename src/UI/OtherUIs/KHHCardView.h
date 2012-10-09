@@ -12,6 +12,8 @@
 #import "Card.h"
 #import "KHHMyDetailController.h"
 #import "DetailInfoViewController.h"
+#import "KHHData+UI.h"
+#import "MBProgressHUD.h"
 @class XLPageControl;
 
 @interface KHHCardView : UIView<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate>
@@ -25,6 +27,8 @@
 @property (strong, nonatomic) KHHMyDetailController    *myDetailVC;
 @property (strong, nonatomic) DetailInfoViewController *detailVC;
 @property (strong, nonatomic) NSMutableArray           *itemArray;
+@property (strong, nonatomic) KHHData                  *dataCtrl;
+@property (strong, nonatomic) MBProgressHUD            *progressHud;
 - (void)initView;
 - (void)initViewData;
 @end

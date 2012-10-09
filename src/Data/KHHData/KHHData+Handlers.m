@@ -8,6 +8,7 @@
 
 #import "KHHData+Handlers.h"
 #import "NSNumber+SM.h"
+#import "KHHData+Processors.h"
 
 @implementation KHHData (Handlers)
 - (void)syncAllDataEnded:(BOOL)succeed {
