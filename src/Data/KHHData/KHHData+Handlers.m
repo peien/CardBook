@@ -131,6 +131,13 @@
     NSDictionary *info = noti.userInfo;
     NSDictionary *extra = info[kInfoKeyExtra];
     ALog(@"[II] extra = %@", extra);
+    // 从数据库中删除它
+    NSNumber *cardID = extra[kExtraKeyCardID];
+    KHHCardModelType cardType = [extra[kExtraKeyCardModelType] integerValue];
+    Card *card = [self cardOfType:cardType byID:cardID];
+    [self.context deleteObject:card];
+    // 保存数据库
+    [self saveContext];
     // 发送成功消息
     [self postASAPNotificationName:KHHUIDeleteCardSucceeded];
 }
