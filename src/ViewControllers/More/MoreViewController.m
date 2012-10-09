@@ -306,7 +306,11 @@
             ModifyViewController *modVC = [[ModifyViewController alloc] initWithNibName:@"ModifyViewController" bundle:nil];
             [self.navigationController pushViewController:modVC animated:YES];
         }else if (indexPath.row == 1) {
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"确定要登出吗" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"登出", nil)
+                                                            message:@"确定要登出吗"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"取消"
+                                                  otherButtonTitles:@"确定", nil];
             [alert show];
 
         }
@@ -380,11 +384,11 @@
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 1) {
+    if ([alertView.title isEqualToString:NSLocalizedString(@"登出", nil)]
+        && buttonIndex == 1) {
         //登出将状态设置为No
         [self.defaultSet setLoggedIn:NO];
-        LoginViewController *loginVC = [[LoginViewController alloc] initWithNibName:@"LoginViewController2" bundle:nil];
-        [self.navigationController pushViewController:loginVC animated:YES];
+        [self postASAPNotificationName:KHHUIShowStartup];
     }
 
 }
