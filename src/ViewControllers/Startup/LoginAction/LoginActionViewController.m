@@ -137,7 +137,7 @@
         self.actionLabel.text = textStartAutoLogin;
         [self showCompanyLogo];
     } else {
-        NSString *notiName = KHHNetworkLoginFailed;
+        NSString *notiName = KHHNetworkLoginMenually;
         NSString *info = NSLocalizedString(@"自动登录条件不满足! ", nil);
         NSDictionary *infoDict = @{
                 kInfoKeyAutoLogin : @(YES),

@@ -56,6 +56,7 @@
         [self observeNotificationName:KHHUIStartLogin selector:@"handleStartLogin:"];
         [self observeNotificationName:KHHUIStartAutoLogin selector:@"handleStartAutoLogin:"];
         [self observeNotificationName:KHHNetworkLoginFailed selector:@"handleLoginFailed:"];
+        [self observeNotificationName:KHHNetworkLoginMenually selector:@"handleLoginMenually:"];
         
         //注册
         [self observeNotificationName:KHHUIStartSignUp selector:@"handleStartSignUp:"];
@@ -191,6 +192,16 @@
     NSLog(@"\n%@: 登录失败: %@", self, message);
     NSLog(@"\n%@: _navVC.view.subviews: %@", self, _navVC.view.subviews); 
 }
+
+- (void)handleLoginMenually:(NSNotification *)notification
+{
+    self.defaults.loggedIn = NO; // 设置标记避免自动重复登录
+    
+    //自动登录失败
+    //返回Login界面
+    [self showLoginView:UIViewAnimationOptionTransitionCrossDissolve];
+}
+
 - (void)handleStartSignUp:(NSNotification *)notification
 {
     //转到LoginAction界面

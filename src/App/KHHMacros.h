@@ -38,8 +38,8 @@
 static NSString * const KHHServer = @"www.kinghanhong.com";
 static NSString * const KHHURLFormat = @"http://%@/cardbook/%@";
 #else
-//static NSString * const KHHServer = @"s2.kinghanhong.com:9999";
-static NSString * const KHHServer = @"192.168.1.70:8081"; //海波
+static NSString * const KHHServer = @"s2.kinghanhong.com:9999";
+//static NSString * const KHHServer = @"192.168.1.70:8081"; //海波
 //static NSString * const KHHURLFormat = @"http://%@/XCardServerTest/%@";
 static NSString * const KHHURLFormat = @"http://%@/XCardServer/%@"; //海波
 #endif

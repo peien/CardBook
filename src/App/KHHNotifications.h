@@ -56,6 +56,7 @@ static NSString * const KHHUIDeleteCardFailed    = @"UIDeleteCardFailed";
 // 登录
 static NSString * const KHHNetworkLoginSucceeded = @"loginSucceeded";
 static NSString * const KHHNetworkLoginFailed = @"loginFailed";
+static NSString * const KHHNetworkLoginMenually = @"loginMenually";
 // 注册
 static NSString * const KHHNetworkCreateAccountSucceeded = @"createAccountSucceeded";
 static NSString * const KHHNetworkCreateAccountFailed = @"createAccountFailed";
