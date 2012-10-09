@@ -63,7 +63,8 @@
     return result;
 }
 - (void)deleteReceivedCardByID:(NSNumber *)cardID {
-    [self deleteCardOfType:KHHCardModelTypeReceivedCard byID:cardID];
+    NSArray *IDList = @[cardID];
+    [self.agent deleteReceivedCards:IDList];
 }
 
 @end
