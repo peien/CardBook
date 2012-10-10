@@ -105,8 +105,9 @@
 - (void)handleCreateCardFailed:(NSNotification *)noti {
     NSDictionary *info = noti.userInfo;
     ALog(@"[II] info = %@", info);
-    // 发送成功消息
-    [self postASAPNotificationName:KHHUICreateCardFailed info:info];
+    // 发送消息
+    [self postASAPNotificationName:KHHUICreateCardFailed
+                              info:info];
 }
 - (void)handleUpdateCardSucceeded:(NSNotification *)noti {
     NSDictionary *info = noti.userInfo;
@@ -124,8 +125,9 @@
 - (void)handleUpdateCardFailed:(NSNotification *)noti {
     NSDictionary *info = noti.userInfo;
     ALog(@"[II] info = %@", info);
-    // 发送成功消息
-    [self postASAPNotificationName:KHHUIModifyCardFailed info:info];
+    // 发送消息
+    [self postASAPNotificationName:KHHUIModifyCardFailed
+                              info:info];
 }
 - (void)handleDeleteCardSucceeded:(NSNotification *)noti {
     NSDictionary *info = noti.userInfo;
@@ -144,7 +146,7 @@
 - (void)handleDeleteCardFailed:(NSNotification *)noti {
     NSDictionary *info = noti.userInfo;
     ALog(@"[II] info = %@", info);
-    // 发送成功消息
+    // 发送消息
     [self postASAPNotificationName:KHHUIDeleteCardFailed info:info];
 }
 - (void)handleReceivedCardsAfterDateLastCardExpectedCountSucceeded:(NSNotification *)noti {
@@ -202,6 +204,37 @@
 - (void)handleReceivedCardsAfterDateLastCardExpectedCountFailed:(NSNotification *)noti {
     ALog(@"[II] handleReceivedCardsAfterDateLastCardExpectedCountFailed = %@", noti);
     [self syncAllDataEnded:NO];
+}
+- (void)handleLatestReceivedCardSucceeded:(NSNotification *)noti {
+    NSDictionary *info = noti.userInfo;
+    DLog(@"[II] info = %@", info);
+    InterCard *iCard = info[kInfoKeyInterCard];
+    KHHCardModelType cardType = KHHCardModelTypeReceivedCard;
+    // 填入数据库
+    ReceivedCard *rCard = (ReceivedCard *)[self processCard:iCard cardType:cardType];
+    [self saveContext];
+    // 发送消息
+    if (rCard) {
+        // 数据库操作成功
+        [self postASAPNotificationName:KHHUIPullLatestReceivedCardSucceeded
+                                  info:@{
+                 kInfoKeyReceivedCard : rCard
+         }];
+    } else {
+        // 虽然服务器返回成功，但本地数据库操作失败
+        [self postASAPNotificationName:KHHUIPullLatestReceivedCardFailed
+                                  info:@{
+                    kInfoKeyErrorCode : @(KHHStatusCodeLocalDataOperationFailed)
+         }];
+    }
+
+}
+- (void)handleLatestReceivedCardFailed:(NSNotification *)noti {
+    NSDictionary *info = noti.userInfo;
+    ALog(@"[II] info = %@", info);
+    // 发送消息
+    [self postASAPNotificationName:KHHUIPullLatestReceivedCardFailed
+                              info:info];
 }
 @end
 @implementation KHHData (Handlers_VisitSchedule)

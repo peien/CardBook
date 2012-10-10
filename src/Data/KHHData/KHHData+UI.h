@@ -37,8 +37,10 @@
 - (ReceivedCard *)receivedCardByID:(NSNumber *)cardID; // 根据ID读取
 - (void)deleteReceivedCardByID:(NSNumber *)cardID;
 
+/*!
+ 交换名片后取最新一张名片
+ */
+- (void)pullLatestReceivedCard;
 @end
 
-@interface KHHData (UI_VisitSchedule)
 
-@end

@@ -47,6 +47,9 @@ static NSString * const KHHUIModifyCardFailed    = @"UIModifyCardFailed";
 // deleteCard
 static NSString * const KHHUIDeleteCardSucceeded = @"UIDeleteCardSucceeded";
 static NSString * const KHHUIDeleteCardFailed    = @"UIDeleteCardFailed";
+// 取最后／最新一个ReceivedCard
+static NSString * const KHHUIPullLatestReceivedCardSucceeded  = @"UIPullLatestReceivedCardSucceeded";
+static NSString * const KHHUIPullLatestReceivedCardFailed  = @"UIPullLatestReceivedCardFailed";
 
 #pragma mark - Notifications for Network
 /*!
@@ -118,10 +121,10 @@ static NSString * const KHHNetworkMoveCardsFailed    = @"moveCardsFailed";
 static NSString * const KHHNetworkExchangeCardSucceeded = @"ExchangeCardSucceeded";
 static NSString * const KHHNetworkExchangeCardFailed = @"ExchangeCardFailed";
 //发送
-static NSString * const KHHNetworkSendCardToPhoneSucceeded = @"SendCardToPhoneSucceeded";
-static NSString * const KHHNetworkSendCardToPhoneFailed = @"SendCardToPhoneFailed";
-static NSString * const KHHNetworkSendCardToUserSucceeded = @"SendCardToUserSucceeded";
-static NSString * const KHHNetworkSendCardToUserFailed = @"SendCardToUserFailed";
+static NSString * const KHHNetworkSendCardToPhoneSucceeded = @"sendCardToPhoneSucceeded";
+static NSString * const KHHNetworkSendCardToPhoneFailed = @"sendCardToPhoneFailed";
+static NSString * const KHHNetworkSendCardToUserSucceeded = @"sendCardToUserSucceeded";
+static NSString * const KHHNetworkSendCardToUserFailed = @"sendCardToUserFailed";
 //MARK: - 拜访计划
 static NSString * const KHHNetworkVisitSchedulesAfterDateSucceeded = @"visitSchedulesAfterDateSucceeded";
 static NSString * const KHHNetworkVisitSchedulesAfterDateFailed = @"visitSchedulesAfterDateFailed";
