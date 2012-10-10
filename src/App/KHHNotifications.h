@@ -18,6 +18,7 @@ static NSString * const KHHUIShowMainUI = @"showMainUI";
 // Intro
 static NSString * const KHHUIShowIntro = @"ShowIntro";
 static NSString * const KHHUISkipIntro = @"SkipIntro";
+
 //MARK: - 帐户操作
 // Login
 // 注意设置userInfo: 包含的keys @"user" @"password"
@@ -32,11 +33,13 @@ static NSString * const KHHUISignUpAction = @"SignUpAction";
 static NSString * const KHHUIStartSignUp = @"StartSignUp";
 static NSString * const KHHUIStartResetPassword = @"StartResetPassword";
 static NSString * const KHHUIResetPasswordAction = @"ResetPasswordAction";
+
 //MARK: - 同步
 // Sync
 static NSString * const KHHUIStartSyncAll = @"UIStartSyncAll";
 static NSString * const KHHUISyncAllSucceeded = @"UISyncAllSucceeded";
 static NSString * const KHHUISyncAllFailed = @"UISyncAllFailed";
+
 //MARK: - 名片
 // createCard
 static NSString * const KHHUICreateCardSucceeded = @"UICreateCardSucceeded";
@@ -55,6 +58,7 @@ static NSString * const KHHUIPullLatestReceivedCardFailed  = @"UIPullLatestRecei
 /*!
  Notifications for Network
  */
+
 //MARK: - 帐户操作
 // 登录
 static NSString * const KHHNetworkLoginSucceeded = @"loginSucceeded";
@@ -72,6 +76,15 @@ static NSString * const KHHNetworkResetPasswordFailed = @"resetPasswordFailed";
 // markAutoReceive
 static NSString * const KHHNetworkMarkAutoReceiveSucceeded = @"markAutoReceiveSucceeded";
 static NSString * const KHHNetworkMarkAutoReceiveFailed = @"markAutoReceiveFailed";
+
+//MARK: - 同步数据
+// allDataAfterDate
+static NSString * const KHHNetworkAllDataAfterDateSucceeded = @"allDataAfterDateSucceeded";
+static NSString * const KHHNetworkAllDataAfterDateFailed    = @"allDataAfterDateFailed";
+// allDataAfterDate
+static NSString * const KHHNetworkLogoURLWithCompanyNameSucceeded = @"logoURLWithCompanyNameSucceeded";
+static NSString * const KHHNetworkLogoURLWithCompanyNameFailed    = @"logoURLWithCompanyNameFailed";
+
 //MARK: - 名片
 // createCard
 static NSString * const KHHNetworkCreateCardSucceeded = @"createCardSucceeded";
@@ -100,6 +113,7 @@ static NSString * const KHHNetworkMarkReadReceivedCardFailed    = @"markReadRece
 // privateCardsAfterDate
 static NSString * const KHHNetworkPrivateCardsAfterDateSucceeded = @"privateCardsAfterDateSucceeded";
 static NSString * const KHHNetworkPrivateCardsAfterDateFailed    = @"privateCardsAfterDateFailed";
+
 //MARK: - 分组
 // Create group
 static NSString * const KHHNetworkCreateGroupSucceeded = @"createGroupSucceeded";
@@ -116,6 +130,7 @@ static NSString * const KHHNetworkCardIDsWithinGroupFailed    = @"cardIDsWithinG
 // Move cards from ... to ...
 static NSString * const KHHNetworkMoveCardsSucceeded = @"moveCardsSucceeded";
 static NSString * const KHHNetworkMoveCardsFailed    = @"moveCardsFailed";
+
 //MARK: - 名片交换
 //交换
 static NSString * const KHHNetworkExchangeCardSucceeded = @"exchangeCardSucceeded";
@@ -125,15 +140,29 @@ static NSString * const KHHNetworkSendCardToPhoneSucceeded = @"sendCardToPhoneSu
 static NSString * const KHHNetworkSendCardToPhoneFailed = @"sendCardToPhoneFailed";
 static NSString * const KHHNetworkSendCardToUserSucceeded = @"sendCardToUserSucceeded";
 static NSString * const KHHNetworkSendCardToUserFailed = @"sendCardToUserFailed";
+
 //MARK: - 拜访计划
 static NSString * const KHHNetworkVisitSchedulesAfterDateSucceeded = @"visitSchedulesAfterDateSucceeded";
 static NSString * const KHHNetworkVisitSchedulesAfterDateFailed = @"visitSchedulesAfterDateFailed";
+
 //MARK: - 客户评估
 static NSString * const KHHNetworkCustomerEvaluationListAfterDateSucceeded = @"customerEvaluationListAfterDateSucceeded";
 static NSString * const KHHNetworkCustomerEvaluationListAfterDateFailed = @"customerEvaluationListAfterDateFailed";
+
 //MARK: - 企业管理相关
 // listDepartments
 static NSString * const KHHNetworkListDepartmentsSucceeded = @"listDepartmentsSucceeded";
 static NSString * const KHHNetworkListDepartmentsFailed    = @"listDepartmentsFailed";
+
+//MARK: - 消息
+// allMessages
+static NSString * const KHHNetworkAllMessagesSucceeded = @"allMessagesSucceeded";
+static NSString * const KHHNetworkAllMessagesFailed    = @"allMessagesFailed";
+// deleteMessages
+static NSString * const KHHNetworkDeleteMessagesSucceeded = @"deleteMessagesSucceeded";
+static NSString * const KHHNetworkDeleteMessagesFailed    = @"deleteMessagesFailed";
+// promotionMessagesWithType
+static NSString * const KHHNetworkPromotionMessagesWithTypeSucceeded = @"promotionMessagesWithTypeSucceeded";
+static NSString * const KHHNetworkPromotionMessagesWithTypeFailed    = @"promotionMessagesWithTypeFailed";
 
 #endif

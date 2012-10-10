@@ -70,9 +70,9 @@ typedef enum {
     [self waitUntilDone];
 }
 - (void)testLogoURLWithCompanyName {
-    [self observeNotificationName:KHHNotificationLogoURLWithCompanyNameSucceeded
+    [self observeNotificationName:KHHNetworkLogoURLWithCompanyNameSucceeded
                      selector:@"actionSucceeded:"];
-    [self observeNotificationName:KHHNotificationLogoURLWithCompanyNameFailed
+    [self observeNotificationName:KHHNetworkLogoURLWithCompanyNameFailed
                      selector:@"actionFailed:"];
     [self.agent logoURLWithCompanyName:@"浙江金汉弘软件有限公司"];
     [self waitUntilDone];

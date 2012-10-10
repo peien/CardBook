@@ -394,7 +394,7 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(InterCard *iCard) {
         dict[kInfoKeyErrorCode] = @(code);
         
         // cardBookVO -> InterCard
-        InterCard *iCard = [InterCard interCardWithReceivedCardJSON:dict[JSONDataKeyCardBookVO]];
+        InterCard *iCard = [InterCard interCardWithReceivedCardJSON:responseDict[JSONDataKeyCardBookVO]];
         dict[kInfoKeyInterCard] = iCard;
         
         NSString *name = NameWithActionAndCode(action, code);

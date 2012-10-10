@@ -8,18 +8,6 @@
 
 #import "KHHNetworkAPIAgent.h"
 #import "Message.h"
-/*!
- Notification names
- */
-// allMessages
-static NSString * const KHHNotificationAllMessagesSucceeded = @"allMessagesSucceeded";
-static NSString * const KHHNotificationAllMessagesFailed    = @"allMessagesFailed";
-// deleteMessages
-static NSString * const KHHNotificationDeleteMessagesSucceeded = @"deleteMessagesSucceeded";
-static NSString * const KHHNotificationDeleteMessagesFailed    = @"deleteMessagesFailed";
-// promotionMessagesWithType
-static NSString * const KHHNotificationPromotionMessagesWithTypeSucceeded = @"promotionMessagesWithTypeSucceeded";
-static NSString * const KHHNotificationPromotionMessagesWithTypeFailed    = @"promotionMessagesWithTypeFailed";
 
 @interface KHHNetworkAPIAgent (Message)
 /**

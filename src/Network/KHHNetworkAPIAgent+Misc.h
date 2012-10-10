@@ -7,16 +7,6 @@
 //
 
 #import "KHHNetworkAPIAgent.h"
-/*!
- Notification names
- */
-// allDataAfterDate
-static NSString * const KHHNotificationAllDataAfterDateBegin = @"allDataAfterDateBegin";
-static NSString * const KHHNetworkAllDataAfterDateSucceeded = @"allDataAfterDateSucceeded";
-static NSString * const KHHNetworkAllDataAfterDateFailed    = @"allDataAfterDateFailed";
-// allDataAfterDate
-static NSString * const KHHNotificationLogoURLWithCompanyNameSucceeded = @"logoURLWithCompanyNameSucceeded";
-static NSString * const KHHNotificationLogoURLWithCompanyNameFailed    = @"logoURLWithCompanyNameFailed";
 
 @interface KHHNetworkAPIAgent (Misc)
 /**
