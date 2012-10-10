@@ -136,8 +136,8 @@ static NSString * const KHHNetworkMoveCardsFailed    = @"moveCardsFailed";
 static NSString * const KHHNetworkExchangeCardSucceeded = @"exchangeCardSucceeded";
 static NSString * const KHHNetworkExchangeCardFailed = @"exchangeCardFailed";
 //发送
-static NSString * const KHHNetworkSendCardToPhoneSucceeded = @"sendCardToPhoneSucceeded";
-static NSString * const KHHNetworkSendCardToPhoneFailed = @"sendCardToPhoneFailed";
+static NSString * const KHHNetworkSendCardToPhoneSucceeded = @"sendCardToPhonesSucceeded";
+static NSString * const KHHNetworkSendCardToPhoneFailed = @"sendCardToPhonesFailed";
 static NSString * const KHHNetworkSendCardToUserSucceeded = @"sendCardToUserSucceeded";
 static NSString * const KHHNetworkSendCardToUserFailed = @"sendCardToUserFailed";
 

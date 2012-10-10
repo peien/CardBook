@@ -250,6 +250,7 @@
 - (void)handleVisitSchedulesAfterDateFailed:(NSNotification *)noti {
 #warning TODO
     DLog(@"[II] 失败啦！");
+    [self syncAllDataEnded:NO];
 }
 @end
 @implementation KHHData (Handlers_CustomerEvaluation)

@@ -15,8 +15,10 @@
 #import "KHHData.h"
 #import "Card.h"
 #import "MBProgressHUD.h"
+#import "DetailInfoViewController.h"
 
 #import <CoreLocation/CoreLocation.h>
+#import <AudioToolbox/AudioToolbox.h>
 #import "KHHNetworkAPIAgent+Exchange.h"
 
 @interface KHHExchangeViewController ()<UIScrollViewDelegate,CLLocationManagerDelegate>
@@ -29,6 +31,8 @@
 @property (strong, nonatomic) MBProgressHUD      *mbHUD;
 @property (strong, nonatomic) NSTimer            *timer;
 @property (assign, nonatomic) int                countDownNum;
+@property (assign, nonatomic) CFAbsoluteTime     exchangeStartTime;
+@property (strong, nonatomic) Card               *latestCard;
 @end
 
 @implementation KHHExchangeViewController
@@ -43,6 +47,9 @@
 @synthesize mbHUD;
 @synthesize timer;
 @synthesize countDownNum;
+@synthesize exchangeStartTime;
+@synthesize latestCard;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -108,7 +115,6 @@
     }else {
         _localM = nil;
     }
-
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -134,6 +140,7 @@
     self.card = nil;
     self.mbHUD = nil;
     self.timer = nil;
+    self.latestCard = nil;
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -155,6 +162,7 @@
         case 112:
         {
             KHHSendToViewController *sendToVC = [[KHHSendToViewController alloc] initWithNibName:nil bundle:nil];
+            sendToVC.theCard = self.card;
             [self.navigationController pushViewController:sendToVC animated:YES];
         }
             break;
@@ -206,21 +214,69 @@
     NSString *longitude = [NSString stringWithFormat:@"%f",self.currentLocation.coordinate.longitude];
     NSString *latitude = [NSString stringWithFormat:@"%f",self.currentLocation.coordinate.latitude];
     NSLog(@"%@++++++++%@",longitude,latitude);
-    [self warnNetWork];
+    CFAbsoluteTime interValTime = CFAbsoluteTimeGetCurrent() - self.exchangeStartTime;
+    if (interValTime < 2.0f) {
+        return;
+    }else if (interValTime < 20.0f){
+        [self warnNetWork:@"请不要频繁交换名片"];
+        return;
+    }
+    self.mbHUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.mbHUD.labelText = @"请稍后,正在交换名片...";
+    [self.httpAgent exchangeCard:self.card withCoordinate:self.currentLocation.coordinate];
+    self.exchangeStartTime = CFAbsoluteTimeGetCurrent();
+    AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
     self.countDownNum = 16;
     NSDictionary *info = [NSDictionary dictionaryWithObjectsAndKeys:self.mbHUD,@"Hud",self.mbHUD.labelText,@"label", nil];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countdownForMBHUD:) userInfo:info repeats:YES];
-    [self.httpAgent exchangeCard:self.card withCoordinate:self.currentLocation.coordinate];
 }
 #pragma mark -
+//交换成功
 - (void)handleExchangeCardSucceeded:(NSNotification *)info{
     DLog(@"ExchangeCardSucceeded!");
+    [self stopObservingNotificationName:KHHNetworkExchangeCardSucceeded];
+    [self stopObservingNotificationName:KHHNetworkExchangeCardFailed];
+    //注册取最新的一张卡片消息
+    [self observeNotificationName:KHHUIPullLatestReceivedCardSucceeded selector:@"handlePullLatestReceivedCardSucceeded:"];
+    [self observeNotificationName:KHHUIPullLatestReceivedCardFailed selector:@"handlePullLatestReceivedCardFailed:"];
+    [self.dataCtrl pullLatestReceivedCard];
 }
+//交换失败
 - (void)handleExchangeCardFailed:(NSNotification *)info{
-    DLog(@"ExchangeCardFailed!");
-    [self exchangeFailed];
+    DLog(@"ExchangeCardFailed! =======info is %@",info.userInfo);
+    if ([[info.userInfo objectForKey:@"errorCode"]intValue] == -21) {
+        DLog(@"没有相对应的卡片要交换");
+    }
+    [self exchangeFailed:@"没有匹配的名片可交换"];
 }
+//收到最新card成功
+- (void)handlePullLatestReceivedCardSucceeded:(NSNotification *)info{
+    DLog(@"handlePullLatestReceivedCardSucceeded! =======info is %@",info.userInfo);
+    [self stopObservingNotificationName:KHHUIPullLatestReceivedCardSucceeded];
+    [self stopObservingNotificationName:KHHUIPullLatestReceivedCardFailed];
+    self.latestCard = [info.userInfo objectForKey:@"receivedCard"];
+    [self.timer invalidate];
+    self.timer = nil;
+    [self.mbHUD removeFromSuperview];
+    [self warnNetWork:@"交换结束"];
+    [self performSelector:@selector(showNewCardInfo) withObject:nil afterDelay:2];
+}
+- (void)showNewCardInfo{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"收到新到名片"
+                                                    message:self.latestCard.name
+                                                   delegate:self
+                                          cancelButtonTitle:@"确定"
+                                          otherButtonTitles:nil, nil];
+    [alert show];
 
+}
+//收到最新card失败
+- (void)handlePullLatestReceivedCardFailed:(NSNotification *)info{
+    DLog(@"handlePullLatestReceivedCardFailed! =======info is %@",info.userInfo);
+    [self stopObservingNotificationName:KHHUIPullLatestReceivedCardSucceeded];
+    [self stopObservingNotificationName:KHHUIPullLatestReceivedCardFailed];
+     
+}
 //定位委托方法
 - (void)locationManager:(CLLocationManager *)manager
 	didUpdateToLocation:(CLLocation *)newLocation
@@ -243,31 +299,42 @@
     
 }
 //网络提示
-- (void)warnNetWork{
-    self.mbHUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    mbHUD.labelText =  NSLocalizedString(@"正在交换，请稍候。。。", nil);
+- (void)warnNetWork:(NSString *)warnString{
+    MBProgressHUD *progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    progress.labelText = NSLocalizedString(warnString, nil);
+    [progress hide:YES afterDelay:2.0];
     
 }
 - (void)countdownForMBHUD:(NSTimer *)timerr {
     --self.countDownNum;
     if (self.countDownNum <= 0) {
-        [self exchangeFailed];
+        //超时处理；
+        DLog(@"exchange failed because time out!!");
+        [self exchangeFailed:@"网络超时"];
     }else{
-        MBProgressHUD *hud = [timerr.userInfo objectForKey:@"Hud"];
+        self.mbHUD = [timerr.userInfo objectForKey:@"Hud"];
         NSString *label = [timerr.userInfo objectForKey:@"label"];
-        hud.labelText = [NSString stringWithFormat:@"%@ %d",label,self.countDownNum];
+        self.mbHUD.labelText = [NSString stringWithFormat:@"%@ %d",label,self.countDownNum];
     
     }
 }
-//交换失败
-- (void)exchangeFailed{
+//交换失败处理
+- (void)exchangeFailed:(NSString *)message{
     [self stopObservingNotificationName:KHHNetworkExchangeCardSucceeded];
     [self stopObservingNotificationName:KHHNetworkExchangeCardFailed];
     [self.timer invalidate];
     self.timer = nil;
     [MBProgressHUD hideHUDForView:self.view animated:YES];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"交换失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"交换失败" message:message delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alert show];
+}
+//收到新的名片，跳转到详细界面
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0) {
+        DetailInfoViewController *detail = [[DetailInfoViewController alloc] initWithNibName:nil bundle:nil];
+        detail.card = self.latestCard;
+        [self.navigationController pushViewController:detail animated:YES];
+    }
 }
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {

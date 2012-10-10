@@ -113,7 +113,7 @@
 - (void)reloadTable{
     if ([_myCard isKindOfClass:[PrivateCard class]]) {
         Card *card = [self.dataCtrl privateCardByID:_myCard.id];
-        self.cardView.card = card;
+        self.cardView.card = card;  
         self.myCard = card;
         self.detailVC.card = card;
     }else if ([_myCard isKindOfClass:[MyCard class]]){

@@ -28,6 +28,7 @@
 		6244214F1615B70800D2A9B9 /* left_btn_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6244214D1615B70800D2A9B9 /* left_btn_bg@2x.png */; };
 		624421511615BA1900D2A9B9 /* left_bg2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 624421501615BA1900D2A9B9 /* left_bg2@2x.png */; };
 		624421531615C5BB00D2A9B9 /* cardTouying@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 624421521615C5BB00D2A9B9 /* cardTouying@2x.png */; };
+		624595291625526A0028E944 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 624595281625526A0028E944 /* AudioToolbox.framework */; };
 		625BD93C16086FEF00F565AD /* KHHAddImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 625BD93B16086FEF00F565AD /* KHHAddImageCell.m */; };
 		625BD93F1608701E00F565AD /* KHHAddImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 625BD93E1608701E00F565AD /* KHHAddImageCell.xib */; };
 		626626BF1616A206004A8D85 /* crm__leida@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 626626BE1616A206004A8D85 /* crm__leida@2x.png */; };
@@ -543,6 +544,7 @@
 		6244214D1615B70800D2A9B9 /* left_btn_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_btn_bg@2x.png"; sourceTree = "<group>"; };
 		624421501615BA1900D2A9B9 /* left_bg2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_bg2@2x.png"; sourceTree = "<group>"; };
 		624421521615C5BB00D2A9B9 /* cardTouying@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardTouying@2x.png"; sourceTree = "<group>"; };
+		624595281625526A0028E944 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		625BD93A16086FEF00F565AD /* KHHAddImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHAddImageCell.h; sourceTree = "<group>"; };
 		625BD93B16086FEF00F565AD /* KHHAddImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHAddImageCell.m; sourceTree = "<group>"; };
 		625BD93E1608701E00F565AD /* KHHAddImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHAddImageCell.xib; sourceTree = "<group>"; };
@@ -1215,6 +1217,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				624595291625526A0028E944 /* AudioToolbox.framework in Frameworks */,
 				98A851051602EDDD00A4A673 /* CoreData.framework in Frameworks */,
 				98A851031602EDCC00A4A673 /* MessageUI.framework in Frameworks */,
 				98A851011602EDBC00A4A673 /* QuartzCore.framework in Frameworks */,
@@ -1447,6 +1450,7 @@
 		98A84D601602CD2500A4A673 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				624595281625526A0028E944 /* AudioToolbox.framework */,
 				98A850F01602EC1600A4A673 /* AddressBook.framework */,
 				98A850F11602EC1600A4A673 /* AddressBookUI.framework */,
 				98A851041602EDDD00A4A673 /* CoreData.framework */,

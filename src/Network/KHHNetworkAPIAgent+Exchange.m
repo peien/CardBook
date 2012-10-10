@@ -30,8 +30,8 @@
                    forKey:@"shakeInfo.latitude"];
     [parameters setObject:@(15*1000).stringValue
                    forKey:@"shakeInfo.invalidTime"];
-//    [parameters setObject:@"false"
-//                   forKey:@"shakeInfo.hasGps"];
+    [parameters setObject:@"true"
+                   forKey:@"shakeInfo.hasGps"];
     
     [self postAction:@"exchangeCard"
                query:@"shakeExchangeCardService.shakeExchangeCardNew"

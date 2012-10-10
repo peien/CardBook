@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SuperViewController.h"
 #import "JSTokenField.h"
+#import "Card.h"
 @interface CardReceiver : NSObject
 @property (retain, nonatomic) NSString *name;
 @property (retain, nonatomic) NSString *mobile;
@@ -24,6 +25,7 @@
 @property (strong, nonatomic) IBOutlet UIScrollView *theScroll;
 @property (retain, nonatomic) IBOutlet UIView       *theBgView;
 @property (strong, nonatomic) JSTokenField          *theTokenField;
+@property (strong, nonatomic) Card                  *theCard;
 
 
 @end

@@ -11,14 +11,15 @@
 #import <AddressBookUI/AddressBookUI.h>
 #import "NSString+Validation.h"
 #import "JSTokenField.h"
-#import "_Card.h"
+#import "Card.h"
 #import "KHHNetWorkAPIAgent+Card.h"
+#import "KHHNetworkAPIAgent+Exchange.h"
 
 #define TheScrollMaxHeight 180
 #define TheScrollMinHeight 42
 #define TheScrollHeightPadding 5
 
-#define textCardSent NSLocalizedString(@"名片已发出", @"")
+#define textCardSent NSLocalizedString(@"名片发送成功", @"")
 #define textOK NSLocalizedString(@"确定", @"")
 
 @implementation CardReceiver
@@ -41,7 +42,7 @@
 
 @interface KHHSendToViewController ()<ABPeoplePickerNavigationControllerDelegate,JSTokenFieldDelegate>
 @property (strong, nonatomic) NSMutableArray *theReceivers;
-@property (strong, nonatomic) _Card          *theCard;
+@property (strong, nonatomic) KHHNetworkAPIAgent *agent;
 @end
 
 @implementation KHHSendToViewController
@@ -49,6 +50,8 @@
 @synthesize theTokenField = _theTokenField;
 @synthesize theBgView = _theBgView;
 @synthesize theReceivers = _theReceivers;
+@synthesize theCard;
+@synthesize agent;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -56,6 +59,7 @@
     if (self) {
         // Custom initialization
         _theReceivers = [[NSMutableArray alloc] init];
+        self.agent = [[KHHNetworkAPIAgent alloc] init];
         self.title = NSLocalizedString(@"发生至手机", nil);
         [self.leftBtn setTitle:NSLocalizedString(@"取消", nil) forState:UIControlStateNormal];
         [self.rightBtn setTitle:NSLocalizedString(@"发送", nil) forState:UIControlStateNormal];
@@ -63,6 +67,7 @@
                                                  selector:@selector(handleTokenFieldFrameDidChange:)
                                                      name:JSTokenFieldFrameDidChangeNotification
                                                    object:nil];
+        
 
     }
     return self;
@@ -71,8 +76,14 @@
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+//发送
 - (void)rightBarButtonClick:(id)sender
 {
+    [self observeNotificationName:KHHNetworkSendCardToPhoneSucceeded selector:@"handleSendCardToPhoneSucceeded:"];
+    [self observeNotificationName:KHHNetworkSendCardToPhoneFailed selector:@"handleSendCardToPhoneFailed:"];
+    [self sendToReceivers];
+}
+- (void)sendToReceivers{
     //发送成功跳转到前一页,thecard 只是声明了下
 #ifdef DEBUG
     NSLog(@"发送按钮！");
@@ -96,31 +107,43 @@
                 }
                 NSRange rangeToDel = {mobileString.length - 1, 1};
                 [mobileString deleteCharactersInRange:rangeToDel];
-                NSString *cardIdString = self.theCard.id.stringValue;
-                NSString *versionString = self.theCard.version.stringValue;
-                NSString *cardContent = @"";
 #ifdef DEBUG
                 NSLog(@"接受者mobileString：%@", mobileString);
 #endif
-//                [_eCardReq sendCard:mobileString
-//                             cardId:cardIdString
-//                            version:versionString
-//                            context:cardContent];
-//              替换接口
+                [self.agent sendCard:self.theCard toPhones:self.theReceivers];
                 
-                [[[UIAlertView alloc] initWithTitle:nil
-                                             message:textCardSent
-                                            delegate:nil
-                                   cancelButtonTitle:textOK
-                                   otherButtonTitles:nil] show];
             }
         } else {
             // theCard 为 nil
             NSLog(@"theCard 为 %@", self.theCard);
         }
     }
+}
+#pragma mark -
+- (void)handleSendCardToPhoneSucceeded:(NSNotification *)info{
+    [self stopObservingNotificationName:KHHNetworkSendCardToPhoneSucceeded];
+    [self stopObservingNotificationName:KHHNetworkSendCardToPhoneFailed];
+    DLog(@"handleSendCardToPhoneSucceeded! ====== info is %@",info.userInfo);
+    [[[UIAlertView alloc] initWithTitle:nil
+                                message:textCardSent
+                               delegate:nil
+                      cancelButtonTitle:textOK
+                      otherButtonTitles:nil] show];
 
 }
+- (void)handleSendCardToPhoneFailed:(NSNotification *)info{
+    [self stopObservingNotificationName:KHHNetworkSendCardToPhoneSucceeded];
+    [self stopObservingNotificationName:KHHNetworkSendCardToPhoneFailed];
+    DLog(@"handleSendCardToPhoneFailed! ====== info is %@",info.userInfo);
+    if ([[info.userInfo objectForKey:@"errorCode"] intValue] == 1) {
+        [[[UIAlertView alloc] initWithTitle:nil
+                                    message:@"对方已有你的名片，无需发送"
+                                   delegate:nil
+                          cancelButtonTitle:textOK
+                          otherButtonTitles:nil] show];
+    }
+}
+#pragma mark -
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -160,6 +183,8 @@
     _theBgView = nil;
     _theScroll = nil;
     _theTokenField = nil;
+    self.theCard = nil;
+    self.agent = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 - (void)theAddButtonTapped

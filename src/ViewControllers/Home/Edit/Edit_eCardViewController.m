@@ -114,26 +114,34 @@ NSString *const kECardListSeparator = @"|";
 - (void)handleModifyCardSucceeded
 {
     DLog(@"ModifyCardSucceeded");
-    [self.progressHud removeFromSuperview];
+    [self stopobservingFor];
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)handleModifyCardFailed:(NSNotification *)noti
 {
     DLog(@"ModifyCardFailed! noti = %@", noti);
-    [self.progressHud removeFromSuperview];
+    [self stopobservingFor];
     [self warnAlertMessage:@"修改失败"];
 }
 - (void)handleCreateCardSucceeded
 {
     DLog(@"CreateCardSucceeded");
-    [self.progressHud removeFromSuperview];
+    [self stopobservingFor];
     [self.navigationController popViewControllerAnimated:YES];
 
 }
 - (void)handleCreateCardFailed
 {
-   [self.progressHud removeFromSuperview];
+   [self stopobservingFor];
     DLog(@"CreateCardFailed");
+}
+- (void)stopobservingFor{
+    [self stopObservingNotificationName:KHHUIModifyCardSucceeded];
+    [self stopObservingNotificationName:KHHUIModifyCardFailed];
+    [self stopObservingNotificationName:KHHUICreateCardSucceeded];
+    [self stopObservingNotificationName:KHHUICreateCardFailed];
+    [self.progressHud removeFromSuperview];
+
 }
 #pragma mark -
 #pragma mark UIViewController Life Cycle
@@ -1080,7 +1088,7 @@ NSString *const kECardListSeparator = @"|";
         [self.dataCtrl modifyPrivateCardWithInterCard:self.interCard];
     }else if (self.type == KCardViewControllerTypeNewCreate){
         //暂时这样写 templateID不确定
-        self.interCard.templateID = [NSNumber numberWithInt:10];
+        self.interCard.templateID = [NSNumber numberWithInt:28];
         [self.dataCtrl createPrivateCardWithInterCard:self.interCard];
     }
 }
