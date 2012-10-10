@@ -9,5 +9,6 @@
 #import "SMObject.h"
 
 @interface KHHLocationController : SMObject
-
++ (id)sharedController;
+- (void)refreshCurrentLocation;//更新当前位置信息
 @end
