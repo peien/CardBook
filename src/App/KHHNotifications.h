@@ -115,8 +115,8 @@ static NSString * const KHHNetworkMoveCardsSucceeded = @"moveCardsSucceeded";
 static NSString * const KHHNetworkMoveCardsFailed    = @"moveCardsFailed";
 //MARK: - 名片交换
 //交换
-static NSString * const KHHNetworkExchangeCardSucceeded = @"ExchangeCardSucceeded";
-static NSString * const KHHNetworkExchangeCardFailed = @"ExchangeCardFailed";
+static NSString * const KHHNetworkExchangeCardSucceeded = @"exchangeCardSucceeded";
+static NSString * const KHHNetworkExchangeCardFailed = @"exchangeCardFailed";
 //发送
 static NSString * const KHHNetworkSendCardToPhoneSucceeded = @"SendCardToPhoneSucceeded";
 static NSString * const KHHNetworkSendCardToPhoneFailed = @"SendCardToPhoneFailed";

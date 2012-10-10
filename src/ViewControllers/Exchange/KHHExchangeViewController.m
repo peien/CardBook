@@ -28,6 +28,7 @@
 @property (strong, nonatomic) Card               *card;
 @property (strong, nonatomic) MBProgressHUD      *mbHUD;
 @property (strong, nonatomic) NSTimer            *timer;
+@property (assign, nonatomic) int                countDownNum;
 @end
 
 @implementation KHHExchangeViewController
@@ -41,6 +42,7 @@
 @synthesize card;
 @synthesize mbHUD;
 @synthesize timer;
+@synthesize countDownNum;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -205,7 +207,9 @@
     NSString *latitude = [NSString stringWithFormat:@"%f",self.currentLocation.coordinate.latitude];
     NSLog(@"%@++++++++%@",longitude,latitude);
     [self warnNetWork];
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countdownForMBHUD) userInfo:nil repeats:YES];
+    self.countDownNum = 16;
+    NSDictionary *info = [NSDictionary dictionaryWithObjectsAndKeys:self.mbHUD,@"Hud",self.mbHUD.labelText,@"label", nil];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countdownForMBHUD:) userInfo:info repeats:YES];
     [self.httpAgent exchangeCard:self.card withCoordinate:self.currentLocation.coordinate];
 }
 #pragma mark -
@@ -214,8 +218,7 @@
 }
 - (void)handleExchangeCardFailed:(NSNotification *)info{
     DLog(@"ExchangeCardFailed!");
-    [self stopObservingNotificationName:KHHNetworkExchangeCardSucceeded];
-    [self stopObservingNotificationName:KHHNetworkExchangeCardFailed];
+    [self exchangeFailed];
 }
 
 //定位委托方法
@@ -242,10 +245,29 @@
 //网络提示
 - (void)warnNetWork{
     self.mbHUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    mbHUD.labelText =  NSLocalizedString(@"正在交换，请稍候。。。", nil);
     
 }
-- (void)countdownForMBHUD{
-
+- (void)countdownForMBHUD:(NSTimer *)timerr {
+    --self.countDownNum;
+    if (self.countDownNum <= 0) {
+        [self exchangeFailed];
+    }else{
+        MBProgressHUD *hud = [timerr.userInfo objectForKey:@"Hud"];
+        NSString *label = [timerr.userInfo objectForKey:@"label"];
+        hud.labelText = [NSString stringWithFormat:@"%@ %d",label,self.countDownNum];
+    
+    }
+}
+//交换失败
+- (void)exchangeFailed{
+    [self stopObservingNotificationName:KHHNetworkExchangeCardSucceeded];
+    [self stopObservingNotificationName:KHHNetworkExchangeCardFailed];
+    [self.timer invalidate];
+    self.timer = nil;
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"交换失败" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alert show];
 }
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
