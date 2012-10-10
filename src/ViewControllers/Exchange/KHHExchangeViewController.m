@@ -42,8 +42,10 @@
     if (self) {
         // Custom initialization
         self.title = NSLocalizedString(@"交换名片", nil);
-        [self.leftBtn setTitle:NSLocalizedString(@"切换名片", nil) forState:UIControlStateNormal];
-        [self.rightBtn setTitle:@"发送纪录" forState:UIControlStateNormal];
+        //[self.leftBtn setTitle:NSLocalizedString(@"切换名片", nil) forState:UIControlStateNormal];
+        //[self.rightBtn setTitle:@"发送纪录" forState:UIControlStateNormal];
+        self.leftBtn.hidden = YES;
+        self.rightBtn.hidden = YES;
         self.httpAgent = [[KHHNetworkAPIAgent alloc] init];
         self.dataCtrl = [KHHData sharedData];
         self.card = [[self.dataCtrl allMyCards] lastObject];
@@ -192,7 +194,7 @@
     NSString *longitude = [NSString stringWithFormat:@"%f",self.currentLocation.coordinate.longitude];
     NSString *latitude = [NSString stringWithFormat:@"%f",self.currentLocation.coordinate.latitude];
     NSLog(@"%@++++++++%@",longitude,latitude);
-    [self.httpAgent exchangeCard:nil withCoordinate:self.currentLocation.coordinate];
+    //[self.httpAgent exchangeCard:nil withCoordinate:self.currentLocation.coordinate];
 }
 //定位委托方法
 - (void)locationManager:(CLLocationManager *)manager
