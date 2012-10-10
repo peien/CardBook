@@ -14,6 +14,7 @@
 #import "KHHFrameCardView.h"
 #import "KHHData.h"
 #import "Card.h"
+#import "MBProgressHUD.h"
 
 #import <CoreLocation/CoreLocation.h>
 #import "KHHNetworkAPIAgent+Exchange.h"
@@ -25,6 +26,8 @@
 @property (strong, nonatomic) KHHNetworkAPIAgent *httpAgent;
 @property (strong, nonatomic) KHHData            *dataCtrl;
 @property (strong, nonatomic) Card               *card;
+@property (strong, nonatomic) MBProgressHUD      *mbHUD;
+@property (strong, nonatomic) NSTimer            *timer;
 @end
 
 @implementation KHHExchangeViewController
@@ -36,6 +39,8 @@
 @synthesize httpAgent = _httpAgent;
 @synthesize dataCtrl;
 @synthesize card;
+@synthesize mbHUD;
+@synthesize timer;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -125,6 +130,8 @@
     xlPage = nil;
     self.dataCtrl = nil;
     self.card = nil;
+    self.mbHUD = nil;
+    self.timer = nil;
 }
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
@@ -182,6 +189,9 @@
 //交换名片
 - (void)exchangeCard
 {
+    //注册交换成功，失败的消息
+    [self observeNotificationName:KHHNetworkExchangeCardSucceeded selector:@"handleExchangeCardSucceeded:"];
+    [self observeNotificationName:KHHNetworkExchangeCardFailed selector:@"handleExchangeCardFailed:"];
     if (!self.localM) {
         NSLog(@"你的设备无法开启定位");
         return;
@@ -194,8 +204,20 @@
     NSString *longitude = [NSString stringWithFormat:@"%f",self.currentLocation.coordinate.longitude];
     NSString *latitude = [NSString stringWithFormat:@"%f",self.currentLocation.coordinate.latitude];
     NSLog(@"%@++++++++%@",longitude,latitude);
-    //[self.httpAgent exchangeCard:nil withCoordinate:self.currentLocation.coordinate];
+    [self warnNetWork];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countdownForMBHUD) userInfo:nil repeats:YES];
+    [self.httpAgent exchangeCard:self.card withCoordinate:self.currentLocation.coordinate];
 }
+#pragma mark -
+- (void)handleExchangeCardSucceeded:(NSNotification *)info{
+    DLog(@"ExchangeCardSucceeded!");
+}
+- (void)handleExchangeCardFailed:(NSNotification *)info{
+    DLog(@"ExchangeCardFailed!");
+    [self stopObservingNotificationName:KHHNetworkExchangeCardSucceeded];
+    [self stopObservingNotificationName:KHHNetworkExchangeCardFailed];
+}
+
 //定位委托方法
 - (void)locationManager:(CLLocationManager *)manager
 	didUpdateToLocation:(CLLocation *)newLocation
@@ -217,7 +239,14 @@
     }
     
 }
+//网络提示
+- (void)warnNetWork{
+    self.mbHUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    
+}
+- (void)countdownForMBHUD{
 
+}
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
