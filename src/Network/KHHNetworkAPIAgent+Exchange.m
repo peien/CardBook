@@ -28,7 +28,7 @@
                    forKey:@"shakeInfo.longitude"];
     [parameters setObject:[NSString stringWithFormat:@"%f", coordinate.latitude]
                    forKey:@"shakeInfo.latitude"];
-    [parameters setObject:[NSString stringWithFormat:@"%f", KHHTimeOutIntervalExchange]
+    [parameters setObject:@(15*1000).stringValue
                    forKey:@"shakeInfo.invalidTime"];
 //    [parameters setObject:@"false"
 //                   forKey:@"shakeInfo.hasGps"];
