@@ -69,6 +69,12 @@
     [self.agent deleteReceivedCards:IDList];
 }
 
+/*!
+ 交换名片后取最新一张名片
+ */
+- (void)pullLatestReceivedCard {
+    [self.agent latestReceivedCard];
+}
 @end
 @implementation KHHData (UI_VisitSchedule)
 

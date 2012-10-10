@@ -385,10 +385,26 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(InterCard *iCard) {
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=196
  */
 - (void)latestReceivedCard {
-    [self postAction:@"latestReceivedCard"
+    NSString *action = @"latestReceivedCard";
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
+        DLog(@"[II] responseDict = %@", responseDict);
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
+        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        dict[kInfoKeyErrorCode] = @(code);
+        
+        // cardBookVO -> InterCard
+        InterCard *iCard = [InterCard interCardWithReceivedCardJSON:dict[JSONDataKeyCardBookVO]];
+        dict[kInfoKeyInterCard] = iCard;
+        
+        NSString *name = NameWithActionAndCode(action, code);
+        DLog(@"[II] 发送 Notification Name = %@", name);
+        [self postASAPNotificationName:name info:dict];
+    };
+    [self postAction:action
                query:@"exchangeCardService.getReceiverCardBookLast"
           parameters:nil
-             success:nil];
+             success:success];
 }
 
 /**

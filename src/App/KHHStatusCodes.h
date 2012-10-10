@@ -9,22 +9,26 @@
 #ifndef KHHStatusCodes_h
 #define KHHStatusCodes_h
 
-typedef enum {
-    //    KHHNetworkStatusCode
-    KHHNetworkStatusCodeSucceeded = 0,
-    KHHNetworkStatusCodeFailed = -1,
-    KHHNetworkStatusCodeDataServerError = -2,
-    KHHNetworkStatusCodeAlreadyCreated = -3,
-    KHHNetworkStatusCodeAlreadyEnqueued = -11,
-    KHHNetworkStatusCodeDuplication = -12, 
-    KHHNetworkStatusCodeOldPasswordWrong = -13, // 修改密码
-    KHHNetworkStatusCodeLatitudeOrLongitudeWrong = -14,
-    KHHNetworkStatusCodeNoneCounterpartCard = -21,
-    KHHNetworkStatusCodeSomethingWrong = -999,
-    KHHNetworkStatusCodeUnresolvableData = 10000, // 不可解析
-    KHHNetworkStatusCodeConnectionFailed,
-    KHHNetworkStatusCodeConnectionTimeOut,
-    KHHNetworkStatusCodeUnknownError = 3000, // 要你命3000
-} KHHNetworkStatusCode;
+typedef NSInteger KHHNetworkStatusCode;
+typedef NSInteger KHHStatusCode;
+
+// KHHNetworkStatusCode
+static const NSInteger KHHNetworkStatusCodeSucceeded = 0;
+static const NSInteger KHHNetworkStatusCodeFailed = -1;
+static const NSInteger KHHNetworkStatusCodeDataServerError = -2;
+static const NSInteger KHHNetworkStatusCodeAlreadyCreated = -3;
+static const NSInteger KHHNetworkStatusCodeAlreadyEnqueued = -11;
+static const NSInteger KHHNetworkStatusCodeDuplication = -12; 
+static const NSInteger KHHNetworkStatusCodeOldPasswordWrong = -13; // 修改密码
+static const NSInteger KHHNetworkStatusCodeLatitudeOrLongitudeWrong = -14;
+static const NSInteger KHHNetworkStatusCodeNoneCounterpartCard = -21;
+static const NSInteger KHHNetworkStatusCodeSomethingWrong = -999;
+static const NSInteger KHHNetworkStatusCodeUnresolvableData = 10000; // 不可解析
+static const NSInteger KHHNetworkStatusCodeConnectionFailed;
+static const NSInteger KHHNetworkStatusCodeConnectionTimeOut;
+static const NSInteger KHHNetworkStatusCodeUnknownError = 3000; // 要你命3000
+
+// KHHStatusCode
+static const NSInteger KHHStatusCodeLocalDataOperationFailed = 44001;//本地数据库操作失败
 
 #endif

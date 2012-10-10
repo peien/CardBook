@@ -24,6 +24,8 @@
 //- (void)handleReceivedCardCountAfterDateLastCardFailed:(NSNotification *)noti;
 - (void)handleReceivedCardsAfterDateLastCardExpectedCountSucceeded:(NSNotification *)noti;
 - (void)handleReceivedCardsAfterDateLastCardExpectedCountFailed:(NSNotification *)noti;
+- (void)handleLatestReceivedCardSucceeded:(NSNotification *)noti;
+- (void)handleLatestReceivedCardFailed:(NSNotification *)noti;
 @end
 @interface KHHData (Handlers_VisitSchedule)
 - (void)handleVisitSchedulesAfterDateSucceeded:(NSNotification *)noti;

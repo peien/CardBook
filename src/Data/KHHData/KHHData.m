@@ -47,6 +47,10 @@
                          selector:@"handleReceivedCardsAfterDateLastCardExpectedCountSucceeded:"];
         [self observeNotificationName:KHHNetworkReceivedCardsAfterDateLastCardExpectedCountFailed
                          selector:@"handleReceivedCardsAfterDateLastCardExpectedCountFailed:"];
+        [self observeNotificationName:KHHNetworkLatestReceivedCardSucceeded
+                             selector:@"handleLatestReceivedCardSucceeded:"];
+        [self observeNotificationName:KHHNetworkLatestReceivedCardFailed
+                             selector:@"handleLatestReceivedCardFailed:"];
         
         // 拜访计划
         [self observeNotificationName:KHHNetworkVisitSchedulesAfterDateSucceeded
