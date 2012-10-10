@@ -9,7 +9,6 @@
 #import "KHHCardView.h"
 #import "KHHClientCellLNP.h"
 #import "XLPageControl.h"
-#import "KHHFrameCardView.h"
 #import "MyCard.h"
 #import "Image.h"
 #import "Card.h"
@@ -33,6 +32,7 @@
 @synthesize itemArray;
 @synthesize dataCtrl;
 @synthesize progressHud;
+@synthesize cardView;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -56,10 +56,10 @@
 {
     self.dataCtrl = [KHHData sharedData];
     self.backgroundColor = [UIColor colorWithRed:241 green:238 blue:232 alpha:1.0];
-    KHHFrameCardView *cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(0, 0, 320, 225) isVer:NO];
-    cardView.card = self.myCard;
-    [cardView showView];
-    _theTable.tableHeaderView = cardView;
+    self.cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(0, 0, 320, 225) isVer:NO];
+    self.cardView.card = self.myCard;
+    [self.cardView showView];
+    _theTable.tableHeaderView = self.cardView;
     
     UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 165.0f)];
     footView.backgroundColor = [UIColor clearColor];
@@ -109,6 +109,22 @@
     }
 
 }
+// 刷新表
+- (void)reloadTable{
+    if ([_myCard isKindOfClass:[PrivateCard class]]) {
+        Card *card = [self.dataCtrl privateCardByID:_myCard.id];
+        self.cardView.card = card;
+        self.myCard = card;
+        self.detailVC.card = card;
+    }else if ([_myCard isKindOfClass:[MyCard class]]){
+        Card *card = [self.dataCtrl myCardByID:_myCard.id];
+        self.cardView.card = card;
+        self.myCard = card;
+    }
+    [self initViewData];
+    [_theTable reloadData];
+}
+
 //跳转到全屏
 - (void)gotoFullFrame:(id)sender
 {

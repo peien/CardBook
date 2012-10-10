@@ -26,6 +26,10 @@
 #import "Company.h"
 
 #define POPDismiss [self.popover dismissPopoverAnimated:YES];
+#define LABEL_NAME_TAG    98980
+#define LABEL_JOB_TAG     98981
+#define LABEL_COMPANY_TAG 98982
+#define LABEL_LOGIMG_TAG  98983
 
 @interface DetailInfoViewController ()
 @property (nonatomic, strong) WEPopoverController *popover;
@@ -34,6 +38,7 @@
 @property (nonatomic, strong) KHHCustomEvaluaView  *customView;
 @property (nonatomic, strong) UIActionSheet        *actSheet;
 @property (nonatomic, assign) int                  style;
+@property (nonatomic, assign) bool                 isNeedReloadTable;
 @end
 
 @implementation DetailInfoViewController
@@ -52,6 +57,7 @@
 @synthesize style = _style;
 @synthesize card;
 @synthesize cardM;
+@synthesize isNeedReloadTable;
 #pragma mark -
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -91,6 +97,11 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [KHHShowHideTabBar hideTabbar];
+    if (self.isNeedReloadTable) {
+        [_cardView reloadTable];
+        [_cardView initView];
+        [self updateViewData:self.card];
+    }
     
 }
 - (void)viewWillDisappear:(BOOL)animated{
@@ -106,6 +117,7 @@
     bgimgView.frame = headerView.frame;
     [headerView addSubview:bgimgView];
     UIImageView *iconImgView = [[UIImageView alloc] initWithFrame:CGRectMake(9, 7, 51, 51)];
+    iconImgView.tag = LABEL_LOGIMG_TAG;
     iconImgView.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOne:)];
     tap.numberOfTapsRequired = 1;
@@ -124,18 +136,21 @@
     [_segmCtrl addTarget:self action:@selector(segCtrlClick:) forControlEvents:UIControlEventValueChanged];
     _segmCtrl.selectedSegmentIndex = 0;
     UILabel *nameLab = [[UILabel alloc] initWithFrame:CGRectMake(75, 10, 120, 20)];
+    nameLab.tag = LABEL_NAME_TAG;
     nameLab.text = NSLocalizedString(self.card.name, nil);
     nameLab.backgroundColor = [UIColor clearColor];
     nameLab.font = [UIFont boldSystemFontOfSize:15];
     nameLab.textAlignment = UITextAlignmentLeft;
     [headerView addSubview:nameLab];
     UILabel *companylab = [[UILabel alloc] initWithFrame:CGRectMake(75, 25, 300, 20)];
+    companylab.tag = LABEL_COMPANY_TAG;
     companylab.font = [UIFont systemFontOfSize:11];
     companylab.textAlignment = UITextAlignmentLeft;
     companylab.backgroundColor = [UIColor clearColor];
     companylab.text = NSLocalizedString(self.card.company.name, nil);
     [headerView addSubview:companylab];
     UILabel *jobLab = [[UILabel alloc] initWithFrame:CGRectMake(135, 10, 100, 20)];
+    jobLab.tag = LABEL_JOB_TAG;
     jobLab.text = NSLocalizedString(self.card.title, nil);
     jobLab.textAlignment = UITextAlignmentLeft;
     jobLab.font = [UIFont systemFontOfSize:13];
@@ -195,9 +210,23 @@
     //popView
 
 }
+
+- (void)updateViewData:(Card *)temCard{
+    UILabel *nameLab = (UILabel *)[self.view viewWithTag:LABEL_NAME_TAG];
+    UILabel *jobLab = (UILabel *)[self.view viewWithTag:LABEL_JOB_TAG];
+    UILabel *companyLab = (UILabel *)[self.view viewWithTag:LABEL_COMPANY_TAG];
+    UIImageView *logImageview = (UIImageView *)[self.view viewWithTag:LABEL_LOGIMG_TAG];
+    nameLab.text = temCard.name;
+    jobLab.text = temCard.title;
+    companyLab.text = temCard.company.name;
+    UIImage *iconImg = [UIImage imageNamed:@"logopic.png"];
+    [logImageview setImageWithURL:[NSURL URLWithString:temCard.logo.url] placeholderImage:iconImg];
+    
+}
 - (void)bottomBtnClick:(id)sender
 {
     if (_isToeCardVC) {
+        self.isNeedReloadTable = YES;
         Edit_eCardViewController *editeCardVC = [[Edit_eCardViewController alloc] initWithNibName:@"Edit_eCardViewController" bundle:nil];
         editeCardVC.type = KCardViewControllerTypeShowInfo;
         editeCardVC.glCard = self.card;
