@@ -153,6 +153,9 @@ static NSString * const KHHNetworkCustomerEvaluationListAfterDateFailed = @"cust
 // listDepartments
 static NSString * const KHHNetworkListDepartmentsSucceeded = @"listDepartmentsSucceeded";
 static NSString * const KHHNetworkListDepartmentsFailed    = @"listDepartmentsFailed";
+// CheckIn
+static NSString * const KHHNetworkCheckInSucceeded = @"checkInSucceeded";
+static NSString * const KHHNetworkCheckInFailed = @"checkInFailed";
 
 //MARK: - 消息
 // allMessages

@@ -22,7 +22,7 @@
  *  非1 走正式流程
  */
 #ifndef KHH_TEST_VIEWCONTROLLER
-#define KHH_TEST_VIEWCONTROLLER 0
+#define KHH_TEST_VIEWCONTROLLER 1
 #endif
 /*
  *  KHH_JSON_BASE64

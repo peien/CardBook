@@ -7,6 +7,7 @@
 //
 
 #import "KHHNetworkAPIAgent+EnterpriseManagement.h"
+#import "NSString+SM.h"
 
 @implementation KHHNetworkAPIAgent (EnterpriseManagement)
 /*!
@@ -20,6 +21,49 @@
     [self postAction:@"listDepartments"
                query:@"employeeViewService.getOrgsByPermission"
           parameters:nil
+             success:nil];
+}
+
+#pragma mark - 签到
+/*!
+ 签到 kinghhEmployeeVisitCustomService.signInNew
+ http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=218
+ bean.cardId      Long 	 是 	 名片ID
+ bean.deviceToken 	 String 	 否 	 手机设备号
+ bean.country 	 String 	 否 	 国家
+ bean.province 	 String 	 否 	 省
+ bean.city 	 String 	 否 	 城市
+ bean.address 	 String 	 否 	 地址
+ bean.longitude 	 Double 	 否 	 经度
+ bean.latitude 	 Double 	 否 	 纬度
+ bean.col1 	 String 	 否 	 备忘录
+ imgFiles 	 File 	 否 	 签到图片(可传多张，名称相同即可)
+ bean.col3 	 String 	 否 	 备注
+ bean.col4 	 String 	 否 	 备注
+ bean.col5 	 String 	 否 	 备注
+ */
+- (void)checkIn:(ICheckIn *)iCheckIn {
+    NSString *action = @"checkIn";
+    DLog(@"[II] iCheckIn = %@", iCheckIn);
+    
+    NSDictionary *parameters = @{
+    @"bean.cardId"      : [NSString stringFromObject:iCheckIn.cardID],
+    @"bean.deviceToken" : [NSString stringFromObject:iCheckIn.deviceToken], 
+    @"bean.latitude"    : [NSString stringFromObject:iCheckIn.latitude],
+    @"bean.longitude"   : [NSString stringFromObject:iCheckIn.longitude],
+    @"bean.col1"        : [NSString stringFromObject:iCheckIn.memo],
+    };
+    
+//    KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
+//        
+//    };
+//    [self postAction:action
+//               query:@"kinghhEmployeeVisitCustomService.signInNew"
+//          parameters:parameters
+//             success:success];
+    [self postAction:action
+               query:@"kinghhEmployeeVisitCustomService.signInNew"
+          parameters:parameters
              success:nil];
 }
 @end
