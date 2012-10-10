@@ -30,14 +30,18 @@
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor blackColor];
     self.data = [KHHData sharedData];
-    self.card = [[self.data allMyCards] objectAtIndex:0];
-    if (self.card) {
-        self.visualCard = [[KHHVisualCardViewController alloc] initWithNibName:nil bundle:nil];
-        [self.view addSubview:self.visualCard.view];
-        CGRect newFrame = CGRectMake(10, 100, self.visualCard.view.frame.size.width, self.visualCard.view.frame.size.height);
-        self.visualCard.view.frame = newFrame;
-        self.visualCard.card = self.card;
-    }
+    // 试验模板显示
+//    self.card = [[self.data allMyCards] objectAtIndex:0];
+//    if (self.card) {
+//        self.visualCard = [[KHHVisualCardViewController alloc] initWithNibName:nil bundle:nil];
+//        [self.view addSubview:self.visualCard.view];
+//        CGRect newFrame = CGRectMake(10, 100, self.visualCard.view.frame.size.width, self.visualCard.view.frame.size.height);
+//        self.visualCard.view.frame = newFrame;
+//        self.visualCard.card = self.card;
+//    }
+    
+    // 试验取最后一张ReceivedCard
+    [self.data pullLatestReceivedCard];
 }
 
 - (void)didReceiveMemoryWarning

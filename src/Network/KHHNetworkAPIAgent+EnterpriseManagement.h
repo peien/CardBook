@@ -17,4 +17,14 @@
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=214
  */
 - (void)listDepartments;
+
+#pragma mark - 签到
+/*!
+ 签到
+ http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=218
+ */
+
+/*!
+ 获取员工签到列表
+ */
 @end

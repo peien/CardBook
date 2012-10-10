@@ -62,9 +62,9 @@ typedef enum {
 }
 #pragma mark -
 - (void)testAllMessages {
-    [self observeNotificationName:KHHNotificationAllMessagesSucceeded
+    [self observeNotificationName:KHHNetworkAllMessagesSucceeded
                      selector:@"actionSucceeded:"];
-    [self observeNotificationName:KHHNotificationAllMessagesFailed
+    [self observeNotificationName:KHHNetworkAllMessagesFailed
                      selector:@"actionFailed:"];
     [self.agent allMessages];
     [self waitUntilDone];
@@ -78,25 +78,25 @@ typedef enum {
 //    [self waitUntilDone];
 //}
 - (void)testPromotionMessagesWithTypeNil {
-    [self observeNotificationName:KHHNotificationPromotionMessagesWithTypeSucceeded
+    [self observeNotificationName:KHHNetworkPromotionMessagesWithTypeSucceeded
                      selector:@"actionSucceeded:"];
-    [self observeNotificationName:KHHNotificationPromotionMessagesWithTypeFailed
+    [self observeNotificationName:KHHNetworkPromotionMessagesWithTypeFailed
                      selector:@"actionFailed:"];
     [self.agent promotionMessagesWithType:nil];
     [self waitUntilDone];
 }
 - (void)testPromotionMessagesWithTypeIOS {
-    [self observeNotificationName:KHHNotificationPromotionMessagesWithTypeSucceeded
+    [self observeNotificationName:KHHNetworkPromotionMessagesWithTypeSucceeded
                      selector:@"actionSucceeded:"];
-    [self observeNotificationName:KHHNotificationPromotionMessagesWithTypeFailed
+    [self observeNotificationName:KHHNetworkPromotionMessagesWithTypeFailed
                      selector:@"actionFailed:"];
     [self.agent promotionMessagesWithType:nil];
     [self waitUntilDone];
 }
 - (void)testPromotionMessagesWithTypeAndroid {
-    [self observeNotificationName:KHHNotificationPromotionMessagesWithTypeSucceeded
+    [self observeNotificationName:KHHNetworkPromotionMessagesWithTypeSucceeded
                      selector:@"actionSucceeded:"];
-    [self observeNotificationName:KHHNotificationPromotionMessagesWithTypeFailed
+    [self observeNotificationName:KHHNetworkPromotionMessagesWithTypeFailed
                      selector:@"actionFailed:"];
     [self.agent promotionMessagesWithType:nil];
     [self waitUntilDone];
