@@ -122,6 +122,7 @@ typedef enum {
 
 - (void)rightBarButtonClick:(id)sender
 {
+    self.isNeedReloadTable = YES;
     KHHMyDetailController *myDetailVC = [[KHHMyDetailController alloc] initWithNibName:nil bundle:nil];
     myDetailVC.card = [self.myCardArray lastObject];
     [self.navigationController pushViewController:myDetailVC animated:YES];
@@ -277,6 +278,9 @@ typedef enum {
         self.generalArray = [self.dataControl allReceivedCards];
     }
     [_bigTable reloadData];
+    Card *card = [[self.dataControl allMyCards] lastObject];
+    [self.rightBtn setTitle:card.name forState:UIControlStateNormal];
+    
 }
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

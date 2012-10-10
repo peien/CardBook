@@ -114,6 +114,8 @@ NSString *const kECardListSeparator = @"|";
 - (void)handleModifyCardSucceeded
 {
     DLog(@"ModifyCardSucceeded");
+    [self.progressHud removeFromSuperview];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)handleModifyCardFailed:(NSNotification *)noti
 {

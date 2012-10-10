@@ -14,6 +14,7 @@
 
 
 @interface KHHMyDetailController ()
+@property (assign, nonatomic) bool isNeedReloadTable;
 
 @end
 
@@ -24,6 +25,7 @@
 @synthesize containView = _containView;
 @synthesize lastBtn = _lastBtn;
 @synthesize card;
+@synthesize isNeedReloadTable;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -103,6 +105,10 @@
 {
     [super viewWillAppear:animated];
     [KHHShowHideTabBar hideTabbar];
+    if (self.isNeedReloadTable) {
+        [_cardView reloadTable];
+        [_cardView initView];
+    }
     
 }
 - (void)viewDidUnload
@@ -138,6 +144,7 @@
 }
 - (void)bottomBtnClick:(id)sender
 {
+    self.isNeedReloadTable = YES;
     Edit_eCardViewController *editeCardVC = [[Edit_eCardViewController alloc] initWithNibName:@"Edit_eCardViewController" bundle:nil];
     editeCardVC.type = KCardViewControllerTypeShowInfo;
     editeCardVC.glCard = self.card;
