@@ -88,12 +88,14 @@
 		982AACC11609BE6B002B9BAD /* KHHData+UI.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACBE1609BE6B002B9BAD /* KHHData+UI.m */; };
 		98326D011623FFB700B5038E /* KHHNetworkAPIAgent+CustomerEvaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = 98326D001623FFB700B5038E /* KHHNetworkAPIAgent+CustomerEvaluation.m */; };
 		98326D051624076900B5038E /* ICustomerEvaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = 98326D041624076900B5038E /* ICustomerEvaluation.m */; };
+		98332A2316258B1500EEE582 /* KHHLocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98332A2216258B1500EEE582 /* KHHLocationController.m */; };
+		984B7FE116255AA400E8BDC0 /* ICheckIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 984B7FE016255AA400E8BDC0 /* ICheckIn.m */; };
+		984B7FE51625642800E8BDC0 /* SMObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 984B7FE41625642700E8BDC0 /* SMObject.m */; };
 		984C2854160AF02D007D4D13 /* PrivateCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 984C2853160AF02D007D4D13 /* PrivateCard.m */; };
 		984C2857160AF044007D4D13 /* _PrivateCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 984C2856160AF044007D4D13 /* _PrivateCard.m */; };
 		984FA6351610297D00344BDC /* KHHVisualCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 984FA6331610297D00344BDC /* KHHVisualCardViewController.m */; };
 		984FA6361610297D00344BDC /* KHHVisualCardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 984FA6341610297D00344BDC /* KHHVisualCardViewController.xib */; };
 		984FA63A16104AF000344BDC /* ATestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 984FA63816104AF000344BDC /* ATestViewController.m */; };
-		984FA63B16104AF000344BDC /* ATestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 984FA63916104AF000344BDC /* ATestViewController.xib */; };
 		98838DF11608624800CE2353 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A84D791602CD2500A4A673 /* SenTestingKit.framework */; };
 		98838DF21608624800CE2353 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A84D611602CD2500A4A673 /* UIKit.framework */; };
 		98838DF31608624800CE2353 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A84D631602CD2500A4A673 /* Foundation.framework */; };
@@ -643,6 +645,12 @@
 		98326D001623FFB700B5038E /* KHHNetworkAPIAgent+CustomerEvaluation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHNetworkAPIAgent+CustomerEvaluation.m"; sourceTree = "<group>"; };
 		98326D031624076900B5038E /* ICustomerEvaluation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICustomerEvaluation.h; sourceTree = "<group>"; };
 		98326D041624076900B5038E /* ICustomerEvaluation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICustomerEvaluation.m; sourceTree = "<group>"; };
+		98332A2116258B1500EEE582 /* KHHLocationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHLocationController.h; sourceTree = "<group>"; };
+		98332A2216258B1500EEE582 /* KHHLocationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHLocationController.m; sourceTree = "<group>"; };
+		984B7FDF16255AA400E8BDC0 /* ICheckIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICheckIn.h; sourceTree = "<group>"; };
+		984B7FE016255AA400E8BDC0 /* ICheckIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICheckIn.m; sourceTree = "<group>"; };
+		984B7FE31625642700E8BDC0 /* SMObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMObject.h; sourceTree = "<group>"; };
+		984B7FE41625642700E8BDC0 /* SMObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMObject.m; sourceTree = "<group>"; };
 		984C2852160AF02D007D4D13 /* PrivateCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivateCard.h; sourceTree = "<group>"; };
 		984C2853160AF02D007D4D13 /* PrivateCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrivateCard.m; sourceTree = "<group>"; };
 		984C2855160AF044007D4D13 /* _PrivateCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _PrivateCard.h; sourceTree = "<group>"; };
@@ -652,7 +660,6 @@
 		984FA6341610297D00344BDC /* KHHVisualCardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHVisualCardViewController.xib; sourceTree = "<group>"; };
 		984FA63716104AF000344BDC /* ATestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATestViewController.h; sourceTree = "<group>"; };
 		984FA63816104AF000344BDC /* ATestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATestViewController.m; sourceTree = "<group>"; };
-		984FA63916104AF000344BDC /* ATestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ATestViewController.xib; sourceTree = "<group>"; };
 		98838DF01608624800CE2353 /* CardBookLogicTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CardBookLogicTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		98838DF61608624800CE2353 /* CardBookLogicTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CardBookLogicTests-Info.plist"; sourceTree = "<group>"; };
 		98838DF81608624800CE2353 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1354,8 +1361,21 @@
 				98F296FA1623F9DC00F9D7B2 /* IImage.m */,
 				98E6F4001623CEB700AE81D3 /* ISchedule.h */,
 				98E6F4011623CEB700AE81D3 /* ISchedule.m */,
+				984B7FDF16255AA400E8BDC0 /* ICheckIn.h */,
+				984B7FE016255AA400E8BDC0 /* ICheckIn.m */,
+				984B7FE31625642700E8BDC0 /* SMObject.h */,
+				984B7FE41625642700E8BDC0 /* SMObject.m */,
 			);
 			path = InterClasses;
+			sourceTree = "<group>";
+		};
+		98332A1F16258A2F00EEE582 /* LocationController */ = {
+			isa = PBXGroup;
+			children = (
+				98332A2116258B1500EEE582 /* KHHLocationController.h */,
+				98332A2216258B1500EEE582 /* KHHLocationController.m */,
+			);
+			path = LocationController;
 			sourceTree = "<group>";
 		};
 		984FA630161028BF00344BDC /* VisualCard */ = {
@@ -1514,6 +1534,12 @@
 		98A84D9A1602D20000A4A673 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				982AACC31609C948002B9BAD /* KHHHeaders.h */,
+				98A84DA51602D2DA00A4A673 /* KHHKeys.h */,
+				98A84DA61602D2DA00A4A673 /* KHHMacros.h */,
+				98A84DA71602D2DA00A4A673 /* KHHNotifications.h */,
+				98A84DA81602D2DA00A4A673 /* KHHStatusCodes.h */,
+				982AACC21609C903002B9BAD /* KHHTypes.h */,
 				98A84D9C1602D21F00A4A673 /* App */,
 				98A84D9D1602D22600A4A673 /* Data */,
 				98A84D9E1602D23100A4A673 /* Misc */,
@@ -1527,18 +1553,13 @@
 		98A84D9C1602D21F00A4A673 /* App */ = {
 			isa = PBXGroup;
 			children = (
-				982AACC31609C948002B9BAD /* KHHHeaders.h */,
+				98332A1F16258A2F00EEE582 /* LocationController */,
 				98A84D701602CD2500A4A673 /* KHHAppDelegate.h */,
 				98A84D711602CD2500A4A673 /* KHHAppDelegate.m */,
 				98F83BE5160740100036A516 /* KHHApp.h */,
 				98F83BE6160740100036A516 /* KHHApp.m */,
 				98A84DA31602D2DA00A4A673 /* KHHDefaults.h */,
 				98A84DA41602D2DA00A4A673 /* KHHDefaults.m */,
-				98A84DA51602D2DA00A4A673 /* KHHKeys.h */,
-				98A84DA61602D2DA00A4A673 /* KHHMacros.h */,
-				98A84DA71602D2DA00A4A673 /* KHHNotifications.h */,
-				98A84DA81602D2DA00A4A673 /* KHHStatusCodes.h */,
-				982AACC21609C903002B9BAD /* KHHTypes.h */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -1558,6 +1579,8 @@
 		98A84D9E1602D23100A4A673 /* Misc */ = {
 			isa = PBXGroup;
 			children = (
+				984FA63716104AF000344BDC /* ATestViewController.h */,
+				984FA63816104AF000344BDC /* ATestViewController.m */,
 				98A84DFD1602D46000A4A673 /* Encryptor.h */,
 				98A84DFE1602D46000A4A673 /* Encryptor.m */,
 				98A84DFF1602D46000A4A673 /* KHHLog.h */,
@@ -1583,9 +1606,6 @@
 				98CFC96D1607201E001B9B17 /* UIImage+Resize.m */,
 				982AACB51609ABB3002B9BAD /* UIViewController+SM.h */,
 				982AACB61609ABB4002B9BAD /* UIViewController+SM.m */,
-				984FA63716104AF000344BDC /* ATestViewController.h */,
-				984FA63816104AF000344BDC /* ATestViewController.m */,
-				984FA63916104AF000344BDC /* ATestViewController.xib */,
 				0C23C26A1610BE42006FCD8A /* UIColor+HexColor.h */,
 				0C23C26B1610BE42006FCD8A /* UIColor+HexColor.m */,
 			);
@@ -2746,7 +2766,6 @@
 				62AB29AC160C0AAB0004A3E3 /* mapapi.bundle in Resources */,
 				62A6B6BC16153F000018F3DB /* KHHSinaViewController.xib in Resources */,
 				984FA6361610297D00344BDC /* KHHVisualCardViewController.xib in Resources */,
-				984FA63B16104AF000344BDC /* ATestViewController.xib in Resources */,
 				6244214A1615B38C00D2A9B9 /* template2FrameBg@2x.jpg in Resources */,
 				6244214E1615B70800D2A9B9 /* left_btn_bg_selected@2x.png in Resources */,
 				6244214F1615B70800D2A9B9 /* left_btn_bg@2x.png in Resources */,
@@ -3118,6 +3137,9 @@
 				98F296FB1623F9DC00F9D7B2 /* IImage.m in Sources */,
 				98326D011623FFB700B5038E /* KHHNetworkAPIAgent+CustomerEvaluation.m in Sources */,
 				98326D051624076900B5038E /* ICustomerEvaluation.m in Sources */,
+				984B7FE116255AA400E8BDC0 /* ICheckIn.m in Sources */,
+				984B7FE51625642800E8BDC0 /* SMObject.m in Sources */,
+				98332A2316258B1500EEE582 /* KHHLocationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

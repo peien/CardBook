@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SMObject.h"
 
-@interface IImage : NSObject
+@interface IImage : SMObject
 @property (nonatomic, strong) NSNumber *id; //id
 @property (nonatomic, strong) NSNumber *isDeleted; //isDelete
 @property (nonatomic, strong) NSString *url; // fileUrl

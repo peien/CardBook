@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SMObject.h"
 
-@interface InterCard : NSObject
+@interface InterCard : SMObject
 // 内部数据
 @property (nonatomic, strong) NSNumber *id;
 @property (nonatomic, strong) NSNumber *isDeleted;

@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "KHHNetworkAPI.h"
+#import "KHHData.h"
 #import "KHHVisualCardViewController.h"
 
 @interface ATestViewController : UIViewController
-@property (nonatomic, strong) KHHData *data;
+@property (nonatomic, strong) KHHNetworkAPIAgent *agent;
 @property (nonatomic, strong) Card *card;
+@property (nonatomic, strong) KHHData *data;
 @property (nonatomic, strong) KHHVisualCardViewController *visualCard;
 @end

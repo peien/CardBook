@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SMObject.h"
 
-@interface ICustomerEvaluation : NSObject
+@interface ICustomerEvaluation : SMObject
 @property (nonatomic, strong) NSNumber *id;//id = 2;
 @property (nonatomic, strong) NSNumber *version;//version = 1;
 @property (nonatomic, strong) NSNumber *isDeleted;//isDelete = n;

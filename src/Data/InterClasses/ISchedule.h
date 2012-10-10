@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SMObject.h"
 
-@interface ISchedule : NSObject
+@interface ISchedule : SMObject
 
 @property (nonatomic, strong) NSNumber *id; //id,
 @property (nonatomic, strong) NSNumber *version; //version,
