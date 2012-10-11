@@ -30,8 +30,7 @@
     [super viewDidAppear:animated];
     
     // LET'S TEST
-    [self testLocationController];
-//    [self testLocationController];
+    [self testCheckIn];
 }
 
 #pragma mark - 试验模板显示

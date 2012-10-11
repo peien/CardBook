@@ -53,6 +53,10 @@ typedef void (^KHHFailureBlock)(AFHTTPRequestOperation *operation, NSError *erro
         parameters:(NSDictionary *)parameters
            success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
              extra:(NSDictionary *)extra;
+- (void)postAction:(NSString *)action
+           request:(NSURLRequest *)request
+           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+             extra:(NSDictionary *)extra;
 /**
  把http response body的base64数据，转成json，再解析为dictionary。
  */

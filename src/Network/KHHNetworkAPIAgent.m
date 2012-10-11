@@ -103,6 +103,49 @@
                                    success:successBlock
                                    failure:failureBlock];
 }
+- (void)postAction:(NSString *)action
+           request:(NSURLRequest *)request
+           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+             extra:(NSDictionary *)extra {
+    KHHHTTPClient *httpClient = [KHHHTTPClient sharedClient];
+    KHHSuccessBlock successBlock;
+    if (success) {
+        successBlock = success;
+    } else {
+        successBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
+            ALog(@"[II] 缺少处理 %@ 返回结果的 successBlock！", action);
+            ALog(@"[II] 进入默认模式:");
+            // HTTP request 成功
+            // 把返回的 NSData 转成 NSDictionary
+            NSMutableDictionary *dict = [self JSONDictionaryWithResponse:responseObject];
+            KHHNetworkStatusCode code = [dict[kInfoKeyErrorCode] integerValue];
+            // 把extra也一并返回
+            if (extra) {
+                dict[kInfoKeyExtra] = extra;
+            }
+            NSString *name = NameWithActionAndCode(action, code);
+            ALog(@"[II] 发送 %@ 消息。", name);
+            [self postNowNotificationName:name info:dict];
+        };
+    }
+    KHHFailureBlock failureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
+        // HTTP request 失败
+        DLog(@"[II] action = %@\n operation = %@\n error = %@", action, operation, error);
+        NSString *name = [NSString stringWithFormat:@"%@Failed", action];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:3];
+        dict[kInfoKeyErrorCode] = @(error.code);
+        dict[kInfoKeyError] = error.localizedDescription;
+        // 把extra也一并返回
+        if (extra) {
+            dict[kInfoKeyExtra] = extra;
+        }
+        [self postASAPNotificationName:name info:dict];
+    };
+    AFHTTPRequestOperation *req = [httpClient HTTPRequestOperationWithRequest:request
+                                                                      success:successBlock
+                                                                      failure:failureBlock];
+    [httpClient enqueueHTTPRequestOperation:req];
+}
 #pragma mark - Utils
 - (NSString *)queryStringWithDictionary:(NSDictionary *)aDictionary {
     
