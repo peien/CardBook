@@ -25,7 +25,7 @@ const NSTimeInterval KHH_LOCATION_REFRESH_INTERVAL = 30 * 60; // 30 min.
     return _sharedObj;
 }
 
-- (void)refreshCurrentLocation // 更新当前位置信息
+- (void)updateLocation // 更新当前位置信息
 {
     if (nil == self.locationManager) { // 保证locationManager非nil
         self.locationManager = [[CLLocationManager alloc] init];

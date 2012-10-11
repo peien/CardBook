@@ -10,5 +10,12 @@
 
 @interface KHHLocationController : SMObject
 + (id)sharedController;
-- (void)refreshCurrentLocation;//更新当前位置信息
+
+/*!
+ 更新当前位置信息: 
+ 更新成功与否通过 notification KHHLocationUpdateSucceeded 和 KHHLocationUpdateFailed 返回。
+ 调用前注册监听这两个notification。
+ 在notification的处理方法里取消监听。
+ */
+- (void)updateLocation;
 @end

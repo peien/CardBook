@@ -29,7 +29,7 @@
     [super viewDidAppear:animated];
     
     // LET'S TEST
-    [self testCheckIn];
+    [self testLocationController];
 }
 
 #pragma mark - 试验模板显示
@@ -54,6 +54,11 @@
     self.card = [[self.data allMyCards] objectAtIndex:0];
     ICheckIn *iCheckIn = [[ICheckIn alloc] initWithCard:self.card];
     [self.agent checkIn:iCheckIn];
+}
+#pragma mark - 试验LocationController
+- (void)testLocationController {
+    [self showLabelWithText:@"试验LocationController"];
+    
 }
 @end
 @implementation ATestViewController (Utils)
