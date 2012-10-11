@@ -222,7 +222,7 @@
     //注册删除卡片的消息
     [self observeNotificationName:KHHUIDeleteCardSucceeded selector:@"handleDeleteCardSucceeded:"];
     [self observeNotificationName:KHHUIDeleteCardFailed selector:@"handleDeleteCardFailed"];
-    self.progressHud = [MBProgressHUD showHUDAddedTo:self.superview animated:YES];
+    self.progressHud = [MBProgressHUD showHUDAddedTo:self.detailVC.view animated:YES];
     if ([self.myCard isKindOfClass:[PrivateCard class]]) {
         [self.dataCtrl deletePrivateCardByID:self.myCard.id];
     }else if ([self.myCard isKindOfClass:[ReceivedCard class]]){
@@ -232,12 +232,14 @@
 #pragma mark - 
 - (void)handleDeleteCardSucceeded:(NSNotification *)info{
     DLog(@"DeleteCardSucceeded:");
-    [self.progressHud removeFromSuperViewOnHide];
+    [self stopObservingNotificationName:KHHUIDeleteCardSucceeded];
+    [self stopObservingNotificationName:KHHUIDeleteCardFailed];
+    [self.progressHud hide:YES];
     [self.detailVC.navigationController popViewControllerAnimated:YES];
 }
 - (void)handleDeleteCardFailed:(NSNotification *)info{
     DLog(@"DeleteCardFailed:");
-    [self.progressHud removeFromSuperViewOnHide];
+    [self.progressHud hide:YES];
     [self stopObservingNotificationName:KHHUIDeleteCardSucceeded];
     [self stopObservingNotificationName:KHHUIDeleteCardFailed];
 }

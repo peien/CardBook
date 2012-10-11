@@ -11,6 +11,5 @@
 
 @interface LocationInfoVC : SuperViewController<UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *theTable;
-@property (assign, nonatomic) bool isGetLocationInfo;
 @property (strong, nonatomic) NSMutableArray *imgArray;
 @end

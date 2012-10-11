@@ -33,6 +33,7 @@
 @property (assign, nonatomic) int                countDownNum;
 @property (assign, nonatomic) CFAbsoluteTime     exchangeStartTime;
 @property (strong, nonatomic) Card               *latestCard;
+@property (strong, nonatomic) KHHFrameCardView   *cardView;
 @end
 
 @implementation KHHExchangeViewController
@@ -49,6 +50,7 @@
 @synthesize countDownNum;
 @synthesize exchangeStartTime;
 @synthesize latestCard;
+@synthesize cardView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -84,14 +86,14 @@
     [self.view setBackgroundColor:[UIColor colorWithRed:241.0f green:238.0f blue:231.0f alpha:1.0f]];
     //竖屏
     if (NO) {
-        KHHFrameCardView *cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(0, 0, 320, 260) isVer:YES];
+        self.cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(0, 0, 320, 260) isVer:YES];
         [self.view addSubview:cardView];
     }else{
-        KHHFrameCardView *cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(0, 0, 320, 220) isVer:NO];
-        cardView.card = self.card;
-        [cardView showView];
-        [self.view addSubview:cardView];
+        self.cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(0, 0, 320, 220) isVer:NO];
     }
+    self.cardView.card = self.card;
+    [self.cardView showView];
+    [self.view addSubview:self.cardView];
     //NSArray *titleArray = [[NSArray alloc] initWithObjects:@"交换名片",@"发送至手机",@"收名片", nil];
     for (int i = 0; i<3; i++) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -120,6 +122,7 @@
     [super viewWillAppear:animated];
     [KHHShowHideTabBar showTabbar];
     [self becomeFirstResponder];
+    [self updateCardTempInfo];
     
 }
 - (void)viewWillDisappear:(BOOL)animated{
@@ -141,16 +144,17 @@
     self.mbHUD = nil;
     self.timer = nil;
     self.latestCard = nil;
+    self.cardView = nil;
 }
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    if ([scrollView isEqual:_scrView]) {
-        CGFloat scrollWidth = scrollView.frame.size.width;
-        int page = ((scrollView.contentOffset.x-scrollWidth/2)/scrollWidth)+1;
-        XLPageControl *pageCtrl = (XLPageControl *)[self.view viewWithTag:118];
-        pageCtrl.currentPage = page;
-    }
-}
+//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+//{
+//    if ([scrollView isEqual:_scrView]) {
+//        CGFloat scrollWidth = scrollView.frame.size.width;
+//        int page = ((scrollView.contentOffset.x-scrollWidth/2)/scrollWidth)+1;
+//        XLPageControl *pageCtrl = (XLPageControl *)[self.view viewWithTag:118];
+//        pageCtrl.currentPage = page;
+//    }
+//}
 
 - (void)btnClick:(id)sender
 {
@@ -173,6 +177,13 @@
             break;
     }
 
+}
+// 刷新卡片信息
+- (void)updateCardTempInfo{
+    self.card = [[self.dataCtrl allMyCards] lastObject];
+    self.cardView.card = self.card;
+    [self.cardView.xlPage removeFromSuperview];
+    [self.cardView showView];
 }
 // 摇摇交换
 - (BOOL)canBecomeFirstResponder
@@ -221,7 +232,7 @@
         [self warnNetWork:@"请不要频繁交换名片"];
         return;
     }
-    self.mbHUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    self.mbHUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     self.mbHUD.labelText = @"请稍后,正在交换名片...";
     [self.httpAgent exchangeCard:self.card withCoordinate:self.currentLocation.coordinate];
     self.exchangeStartTime = CFAbsoluteTimeGetCurrent();
@@ -257,7 +268,7 @@
     self.latestCard = [info.userInfo objectForKey:@"receivedCard"];
     [self.timer invalidate];
     self.timer = nil;
-    [self.mbHUD removeFromSuperview];
+    [self.mbHUD hide:YES];
     [self warnNetWork:@"交换结束"];
     [self performSelector:@selector(showNewCardInfo) withObject:nil afterDelay:2];
 }
@@ -300,7 +311,7 @@
 }
 //网络提示
 - (void)warnNetWork:(NSString *)warnString{
-    MBProgressHUD *progress = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    MBProgressHUD *progress = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     progress.labelText = NSLocalizedString(warnString, nil);
     [progress hide:YES afterDelay:2.0];
     
@@ -324,7 +335,7 @@
     [self stopObservingNotificationName:KHHNetworkExchangeCardFailed];
     [self.timer invalidate];
     self.timer = nil;
-    [MBProgressHUD hideHUDForView:self.view animated:YES];
+    [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"交换失败" message:message delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alert show];
 }

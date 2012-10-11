@@ -13,6 +13,7 @@
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
 			<string>IBUIButton</string>
+			<string>IBUIImageView</string>
 			<string>IBUIView</string>
 		</array>
 		<array key="IBDocument.PluginDependencies">
@@ -35,10 +36,25 @@
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">301</int>
 				<array class="NSMutableArray" key="NSSubviews">
+					<object class="IBUIImageView" id="211254463">
+						<reference key="NSNextResponder" ref="766578638"/>
+						<int key="NSvFlags">292</int>
+						<string key="NSFrame">{{21, 1}, {260, 252}}</string>
+						<reference key="NSSuperview" ref="766578638"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="142128797"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<bool key="IBUIUserInteractionEnabled">NO</bool>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<object class="NSCustomResource" key="IBUIImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">crm_bg@2x.png</string>
+						</object>
+					</object>
 					<object class="IBUIButton" id="142128797">
 						<reference key="NSNextResponder" ref="766578638"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{58, 28}, {57, 57}}</string>
+						<string key="NSFrame">{{50, 5}, {57, 57}}</string>
 						<reference key="NSSuperview" ref="766578638"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="228299245"/>
@@ -77,7 +93,7 @@
 					<object class="IBUIButton" id="215750471">
 						<reference key="NSNextResponder" ref="766578638"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{26, 142}, {57, 57}}</string>
+						<string key="NSFrame">{{8, 125}, {57, 57}}</string>
 						<reference key="NSSuperview" ref="766578638"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1039356587"/>
@@ -103,7 +119,7 @@
 					<object class="IBUIButton" id="671361323">
 						<reference key="NSNextResponder" ref="766578638"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{122, 223}, {57, 57}}</string>
+						<string key="NSFrame">{{123, 215}, {57, 57}}</string>
 						<reference key="NSSuperview" ref="766578638"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -128,7 +144,7 @@
 					<object class="IBUIButton" id="529770660">
 						<reference key="NSNextResponder" ref="766578638"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{217, 142}, {57, 57}}</string>
+						<string key="NSFrame">{{229, 148}, {57, 57}}</string>
 						<reference key="NSSuperview" ref="766578638"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="671361323"/>
@@ -154,7 +170,7 @@
 					<object class="IBUIButton" id="228299245">
 						<reference key="NSNextResponder" ref="766578638"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{183, 28}, {57, 57}}</string>
+						<string key="NSFrame">{{201, 8}, {57, 57}}</string>
 						<reference key="NSSuperview" ref="766578638"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="215750471"/>
@@ -180,7 +196,7 @@
 					<object class="IBUIButton" id="1039356587">
 						<reference key="NSNextResponder" ref="766578638"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{122, 121}, {57, 57}}</string>
+						<string key="NSFrame">{{126, 94}, {57, 57}}</string>
 						<reference key="NSSuperview" ref="766578638"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="529770660"/>
@@ -207,7 +223,7 @@
 				<string key="NSFrameSize">{300, 300}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="142128797"/>
+				<reference key="NSNextKeyView" ref="211254463"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
@@ -299,12 +315,13 @@
 						<int key="objectID">3</int>
 						<reference key="object" ref="766578638"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="1039356587"/>
+							<reference ref="211254463"/>
 							<reference ref="671361323"/>
-							<reference ref="215750471"/>
-							<reference ref="142128797"/>
-							<reference ref="228299245"/>
 							<reference ref="529770660"/>
+							<reference ref="228299245"/>
+							<reference ref="142128797"/>
+							<reference ref="215750471"/>
+							<reference ref="1039356587"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -338,12 +355,18 @@
 						<reference key="object" ref="1039356587"/>
 						<reference key="parent" ref="766578638"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">16</int>
+						<reference key="object" ref="211254463"/>
+						<reference key="parent" ref="766578638"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
 				<string key="-1.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="-2.CustomClassName">UIResponder</string>
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="16.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="3.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -356,7 +379,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">15</int>
+			<int key="maxID">16</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -419,6 +442,7 @@
 			<string key="crm__person@2X.png">{145, 142}</string>
 			<string key="crm__rili@2x.png">{145, 142}</string>
 			<string key="crm__weizhi@2x.png">{145, 142}</string>
+			<string key="crm_bg@2x.png">{480, 480}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1926</string>
 	</data>

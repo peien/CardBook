@@ -113,6 +113,7 @@ typedef enum {
         self.leftBtn.hidden = YES;
         //*****************
         self.dataControl = [KHHData sharedData];
+        [self.rightBtn setTitle:NSLocalizedString(@"我的名片", nil) forState:UIControlStateNormal];
     }
     return self;
 }
@@ -189,8 +190,7 @@ typedef enum {
     //初始化界面数据
     [self initViewData];
     //我的详情
-    Card *myCard = [self.myCardArray lastObject];
-    [self.rightBtn setTitle:NSLocalizedString(myCard.name, nil) forState:UIControlStateNormal];
+    //Card *myCard = [self.myCardArray lastObject];
     
 }
 // 搜索结果
@@ -278,8 +278,8 @@ typedef enum {
         self.generalArray = [self.dataControl allReceivedCards];
     }
     [_bigTable reloadData];
-    Card *card = [[self.dataControl allMyCards] lastObject];
-    [self.rightBtn setTitle:card.name forState:UIControlStateNormal];
+//    Card *card = [[self.dataControl allMyCards] lastObject];
+//    [self.rightBtn setTitle:card.name forState:UIControlStateNormal];
     
 }
 #pragma mark - UITableViewDataSource
