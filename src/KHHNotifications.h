@@ -7,10 +7,7 @@
 #ifndef KHHNotifications_h
 #define KHHNotifications_h
 
-#pragma mark - Notifications for UI
-/*!
- Notifications for UI
- */
+#pragma mark - UI Notifications
 // Startup
 static NSString * const KHHUIShowStartup = @"showStartup";
 // MainUI
@@ -54,11 +51,22 @@ static NSString * const KHHUIDeleteCardFailed    = @"UIDeleteCardFailed";
 static NSString * const KHHUIPullLatestReceivedCardSucceeded  = @"UIPullLatestReceivedCardSucceeded";
 static NSString * const KHHUIPullLatestReceivedCardFailed  = @"UIPullLatestReceivedCardFailed";
 
-#pragma mark - Notifications for Network
+#pragma mark - Misc
+//MARK: - 位置
 /*!
- Notifications for Network
+ KHHLocationUpdateSucceeded userInfo keys
+ kInfoKeyLocationAddress   : NSString,
+ kInfoKeyLocationLatitude  : NSNumber,
+ kInfoKeyLocationLongitude : NSNumber,
  */
+static NSString * const KHHLocationUpdateSucceeded = @"KHHLocationUpdateSucceeded";
+/*!
+ KHHLocationUpdateFailed userInfo keys
+ kInfoKeyError : NSError,
+ */
+static NSString * const KHHLocationUpdateFailed = @"KHHLocationUpdateFailed";
 
+#pragma mark - Network Notifications
 //MARK: - 帐户操作
 // 登录
 static NSString * const KHHNetworkLoginSucceeded = @"loginSucceeded";
