@@ -31,6 +31,7 @@
     
     // LET'S TEST
     [self testLocationController];
+//    [self testLocationController];
 }
 
 #pragma mark - 试验模板显示
@@ -59,7 +60,13 @@
 #pragma mark - 试验LocationController
 - (void)testLocationController {
     [self showLabelWithText:@"试验LocationController"];
+    [self observeNotificationName:KHHLocationUpdateSucceeded selector:@"handleLocationUpdateSucceeded:"];
     [[KHHLocationController sharedController] updateLocation];
+}
+- (void)handleLocationUpdateSucceeded:(NSNotification *)noti {
+    static int num = 0;
+    num = num + 1;
+    ALog(@"[II] 第 %d 次！", num);
 }
 @end
 @implementation ATestViewController (Utils)
@@ -67,7 +74,6 @@
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 220, 320, 21)];
     label.textAlignment = NSTextAlignmentCenter;
     label.text = text;
-    DLog(@"[II] label = %@", label);
     [self.view addSubview:label];
 }
 @end

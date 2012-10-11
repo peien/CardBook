@@ -211,12 +211,12 @@
 }
 - (void)handleSyncAfterLoginSucceeded:(NSNotification *)noti {
     // 进主界面。
-    [self postASAPNotificationName:KHHUIShowMainUI];
+    [self postNowNotificationName:KHHUIShowMainUI];
 }
 - (void)handleSyncAfterLoginFailed:(NSNotification *)noti {
     [self alertWithTitle:alertTitleSyncFailed message:textNotAllDataAvailable];
     // 进主界面。
-    [self postASAPNotificationName:KHHUIShowMainUI];
+    [self postNowNotificationName:KHHUIShowMainUI];
 }
 
 #pragma mark - UIAlertViewDelegate

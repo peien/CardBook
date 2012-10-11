@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "SMObject.h"
 #import "Card.h"
+#import "IAddress.h"
+
 /*!
  签到 kinghhEmployeeVisitCustomService.signInNew
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=218
@@ -31,6 +33,7 @@
 @property (nonatomic, strong) NSString *deviceToken; // bean.deviceToken 否 手机设备号
 @property (nonatomic, strong) NSNumber *latitude;// bean.latitude
 @property (nonatomic, strong) NSNumber *longitude;// bean.longitude
+@property (nonatomic, strong) IAddress *address;
 @property (nonatomic, strong) NSString *memo; //bean.col1 否 备忘录
 @end
 

@@ -9,6 +9,9 @@
 #ifndef KHHKeys_h
 #define KHHKeys_h
 
+// KHH Error Domain
+static NSString * const KHHErrorDomain = @"KHHErrorDomain";
+
 // 暂时空着的占位符号
 static NSString * const KHHPlaceholderForEmptyString = @"";
 
@@ -155,6 +158,7 @@ static NSString * const kInfoKeyLocationLongitude = @"locationLongitude";
 static NSString * const kInfoKeyMyCardList = @"myCardList";//NSArray
 static NSString * const kInfoKeyPassword = @"password";//NSString
 static NSString * const kInfoKeyPermission = @"permission";//NSString
+static NSString * const kInfoKeyPlacemark = @"placemark";// CLPlacemark
 static NSString * const kInfoKeyPrivateCardList = @"privateCardList";//NSArray
 static NSString * const kInfoKeyReceivedCard = @"receivedCard"; // ReceivedCard
 static NSString * const kInfoKeyReceivedCardList = @"receivedCardList";//NSArray

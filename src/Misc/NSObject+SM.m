@@ -33,9 +33,9 @@
 - (void)postASAPNotificationName:(NSString *)name {
     [self postASAPNotificationName:name info:nil];
 }
-//暂时改了now，不知道具体针对哪一条修改 //// NSPostASAP
+// NSPostASAP
 - (void)postASAPNotificationName:(NSString *)name info:(NSDictionary *)dict {
-    [self postQueueNotificationName:name info:dict postingStyle:NSPostNow];
+    [self postQueueNotificationName:name info:dict postingStyle:NSPostASAP];
 }
 // now == YES：发出的消息被立即处理
 - (void)postQueueNotificationName:(NSString *)name

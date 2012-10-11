@@ -55,7 +55,7 @@ static NSString * const KHHUIPullLatestReceivedCardFailed  = @"UIPullLatestRecei
 //MARK: - 位置
 /*!
  KHHLocationUpdateSucceeded userInfo keys
- kInfoKeyLocationAddress   : NSString,
+ kInfoKeyPlacemark         : CLPlacemark,
  kInfoKeyLocationLatitude  : NSNumber,
  kInfoKeyLocationLongitude : NSNumber,
  */
