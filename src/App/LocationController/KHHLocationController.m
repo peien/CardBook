@@ -95,6 +95,7 @@ const NSTimeInterval KHH_LOCATION_REFRESH_INTERVAL = 30 * 60; // 30 min.
                               info:info];
 }
 - (void)processUpdatedLocation {
+    ALog(@"[II] 获取到位置 location = %@", self.locationManager.location);
     [self.locationManager stopUpdatingLocation];
     if (self.geocoder.geocoding) {
         // geocoder 正在解析数据

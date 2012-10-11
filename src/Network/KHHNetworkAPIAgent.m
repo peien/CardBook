@@ -29,11 +29,19 @@
     [[KHHHTTPClient sharedClient] clearAuthorizationHeader];
 }
 #pragma mark - 发请求
+- (void)postAction:(NSString *)action
+             query:(NSString *)query
+        parameters:(NSDictionary *)parameters {
+    [self postAction:action
+               query:query
+          parameters:parameters
+             success:nil];
+}
 // 发请求，默认 pathRoot 为 @"rest"，extra 为 nil；
 - (void)postAction:(NSString *)action
              query:(NSString *)query
         parameters:(NSDictionary *)parameters
-           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success {
+           success:(KHHSuccessBlock)success {
     [self postAction:action
                query:query
           parameters:parameters
@@ -44,13 +52,14 @@
 - (void)postAction:(NSString *)action
              query:(NSString *)query
         parameters:(NSDictionary *)parameters
-           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+           success:(KHHSuccessBlock)success
              extra:(NSDictionary *)extra {
     [self postAction:action
             pathRoot:@"rest"
                query:query
           parameters:parameters
              success:success
+             failure:nil
                extra:extra];
 }
 // 发请求
@@ -58,93 +67,75 @@
           pathRoot:(NSString *)pathRoot
              query:(NSString *)query
         parameters:(NSDictionary *)parameters
-           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+           success:(KHHSuccessBlock)success
+           failure:(KHHFailureBlock)failure
              extra:(NSDictionary *)extra {
-    // 组织 path
-    NSMutableString *path = [NSMutableString stringWithString:pathRoot];
-    NSDictionary *queries = @{ @"method" : query };
-    [path appendFormat:@"?%@",[self queryStringWithDictionary:queries]];
-    //
-    KHHSuccessBlock successBlock;
-    if (success) {
-        successBlock = success;
-    } else {
-        successBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
-            ALog(@"[II] 缺少处理 %@ 返回结果的 successBlock！", action);
-            ALog(@"[II] 进入默认模式:");
-            // HTTP request 成功
-            // 把返回的 NSData 转成 NSDictionary
-            NSMutableDictionary *dict = [self JSONDictionaryWithResponse:responseObject];
-            KHHNetworkStatusCode code = [dict[kInfoKeyErrorCode] integerValue];
-            // 把extra也一并返回
-            if (extra) {
-                dict[kInfoKeyExtra] = extra;
-            }
-            NSString *name = NameWithActionAndCode(action, code);
-            ALog(@"[II] 发送 %@ 消息。", name);
-            [self postNowNotificationName:name info:dict];
-        };
-    }
-    KHHFailureBlock failureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
-        // HTTP request 失败
-        DLog(@"[II] action = %@\n operation = %@\n error = %@", action, operation, error);
-        NSString *name = [NSString stringWithFormat:@"%@Failed", action];
-        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:3];
-        dict[kInfoKeyErrorCode] = @(error.code);
-        dict[kInfoKeyError] = error.localizedDescription;
-        // 把extra也一并返回
-        if (extra) {
-            dict[kInfoKeyExtra] = extra;
-        }
-        [self postASAPNotificationName:name info:dict];
-    };
-    [[KHHHTTPClient sharedClient] postPath:path
-                                parameters:parameters
-                                   success:successBlock
-                                   failure:failureBlock];
+    [self postAction:action
+            pathRoot:pathRoot
+               query:query
+          parameters:parameters
+    constructingBody:nil
+             success:success
+             failure:failure
+               extra:extra];
 }
 - (void)postAction:(NSString *)action
-           request:(NSURLRequest *)request
-           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+             query:(NSString *)query
+        parameters:(NSDictionary *)parameters
+  constructingBody:(KHHConstructionBlock)construction
+           success:(KHHSuccessBlock)success {
+    [self postAction:action
+            pathRoot:@"rest"
+               query:query
+          parameters:parameters
+    constructingBody:construction
+             success:success
+             failure:nil
+               extra:nil];
+}
+- (void)postAction:(NSString *)action
+          pathRoot:(NSString *)pathRoot
+             query:(NSString *)query
+        parameters:(NSDictionary *)parameters
+  constructingBody:(KHHConstructionBlock)construction
+           success:(KHHSuccessBlock)success
+           failure:(KHHFailureBlock)failure
              extra:(NSDictionary *)extra {
-    KHHHTTPClient *httpClient = [KHHHTTPClient sharedClient];
-    KHHSuccessBlock successBlock;
-    if (success) {
-        successBlock = success;
-    } else {
-        successBlock = ^(AFHTTPRequestOperation *operation, id responseObject) {
-            ALog(@"[II] 缺少处理 %@ 返回结果的 successBlock！", action);
-            ALog(@"[II] 进入默认模式:");
-            // HTTP request 成功
-            // 把返回的 NSData 转成 NSDictionary
-            NSMutableDictionary *dict = [self JSONDictionaryWithResponse:responseObject];
-            KHHNetworkStatusCode code = [dict[kInfoKeyErrorCode] integerValue];
-            // 把extra也一并返回
-            if (extra) {
-                dict[kInfoKeyExtra] = extra;
-            }
-            NSString *name = NameWithActionAndCode(action, code);
-            ALog(@"[II] 发送 %@ 消息。", name);
-            [self postNowNotificationName:name info:dict];
-        };
-    }
-    KHHFailureBlock failureBlock = ^(AFHTTPRequestOperation *operation, NSError *error) {
-        // HTTP request 失败
-        DLog(@"[II] action = %@\n operation = %@\n error = %@", action, operation, error);
-        NSString *name = [NSString stringWithFormat:@"%@Failed", action];
-        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:3];
-        dict[kInfoKeyErrorCode] = @(error.code);
-        dict[kInfoKeyError] = error.localizedDescription;
-        // 把extra也一并返回
-        if (extra) {
-            dict[kInfoKeyExtra] = extra;
-        }
-        [self postASAPNotificationName:name info:dict];
+    
+    // 处理成功的请求
+    KHHSuccessBlock successBlock = success? success:
+    ^(AFHTTPRequestOperation *operation, id responseObject) {
+        [self defaultSuccessProcessWithAction:action
+                                        extra:extra
+                                 responseData:responseObject];
     };
-    AFHTTPRequestOperation *req = [httpClient HTTPRequestOperationWithRequest:request
-                                                                      success:successBlock
-                                                                      failure:failureBlock];
-    [httpClient enqueueHTTPRequestOperation:req];
+    // 处理失败的请求
+    KHHFailureBlock failureBlock = failure? failure:
+    ^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self defaultFailureProcessWithAction:action
+                                        extra:extra
+                                        error:error];
+    };
+    
+    // 组合query url
+    NSDictionary *queryDict = @{ @"method" : query };
+    NSString *path = [NSString stringWithFormat:@"%@?%@",
+                      pathRoot,
+                      [self queryStringWithDictionary:queryDict]];
+    
+    // 创建请求
+    KHHHTTPClient *httpClient = [KHHHTTPClient sharedClient];
+    NSURLRequest *request = [httpClient
+                             multipartFormRequestWithMethod:@"POST"
+                             path:path
+                             parameters:parameters
+                             constructingBodyWithBlock:construction];
+    AFHTTPRequestOperation *reqOperation = [httpClient
+                                            HTTPRequestOperationWithRequest:request
+                                            success:successBlock
+                                            failure:failureBlock];
+    // 实际发送请求
+    [httpClient enqueueHTTPRequestOperation:reqOperation];
 }
 #pragma mark - Utils
 - (NSString *)queryStringWithDictionary:(NSDictionary *)aDictionary {
@@ -215,5 +206,43 @@ NSString *NameWithActionAndCode(NSString *action, KHHNetworkStatusCode code) {
     NSString *name = [NSString stringWithFormat:@"%@%@", action, suffix];
     ALog(@"[II] Notification name = %@", name);
     return name;
+}
+/*!
+ 默认的成功处理流程
+ */
+- (void)defaultSuccessProcessWithAction:(NSString *)action
+                                  extra:(id)extra
+                           responseData:(id)responseData {
+    ALog(@"[II] 缺少处理 %@ 返回结果的 successBlock！", action);
+    ALog(@"[II] 进入默认模式:");
+    // 把返回的 NSData 转成 NSDictionary
+    NSMutableDictionary *dict = [self JSONDictionaryWithResponse:responseData];
+    KHHNetworkStatusCode code = [dict[kInfoKeyErrorCode] integerValue];
+    // 把extra也一并返回
+    if (extra) {
+        dict[kInfoKeyExtra] = extra;
+    }
+    NSString *name = NameWithActionAndCode(action, code);
+    ALog(@"[II] 发送 %@ 消息。", name);
+    [self postNowNotificationName:name
+                             info:dict];
+}
+/*!
+ 默认的失败处理流程
+ */
+- (void)defaultFailureProcessWithAction:(NSString *)action
+                                  extra:(id)extra
+                                  error:(NSError *)error {
+    DLog(@"[II] action = %@\n error = %@", action, error);
+    NSString *name = [NSString stringWithFormat:@"%@Failed", action];
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:3];
+    dict[kInfoKeyErrorCode] = @(error.code);
+    dict[kInfoKeyError] = error.localizedDescription;
+    // 把extra也一并返回
+    if (extra) {
+        dict[kInfoKeyExtra] = extra;
+    }
+    [self postASAPNotificationName:name
+                              info:dict];
 }
 @end

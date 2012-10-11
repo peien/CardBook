@@ -44,37 +44,41 @@
  bean.col5 	 String 	 否 	 备注
  */
 - (void)checkIn:(ICheckIn *)iCheckIn {
-    NSString *action = @"checkIn";
     DLog(@"[II] iCheckIn = %@", iCheckIn);
     
-    NSString *cardID = [NSString stringFromObject:iCheckIn.cardID];
-    NSString *deviceToken = [NSString stringFromObject:iCheckIn.deviceToken];
-    NSString *latitude = [NSString stringFromObject:iCheckIn.latitude];
-    NSString *longitude = [NSString stringFromObject:iCheckIn.longitude];
-    NSString *memo = [NSString stringFromObject:iCheckIn.memo];
-    NSData *image = UIImageJPEGRepresentation([UIImage imageNamed:@"crm__managerEm@2x.png"], 0.5);
-    
+    // 组合string参数
     NSDictionary *parameters = @{
-    @"bean.cardId"      : cardID,
-    @"bean.deviceToken" : deviceToken,
-    @"bean.latitude"    : latitude,
-    @"bean.longitude"   : longitude,
-    @"bean.col1"        : memo,
+    @"bean.cardId"      : [NSString stringFromObject:iCheckIn.cardID],
+    @"bean.deviceToken" : [NSString stringFromObject:iCheckIn.deviceToken],
+    @"bean.latitude"    : [NSString stringFromObject:iCheckIn.latitude],
+    @"bean.longitude"   : [NSString stringFromObject:iCheckIn.longitude],
+    @"bean.country"     : [NSString stringFromObject:iCheckIn.placemark.country],
+    @"bean.province"    : [NSString stringFromObject:iCheckIn.placemark.administrativeArea],
+    @"bean.city"        : [NSString stringFromObject:iCheckIn.placemark.locality],
+    @"bean.address"     : [NSString stringFromObject:iCheckIn.placemark.thoroughfare],
+    @"bean.col1"        : [NSString stringFromObject:iCheckIn.memo],
     };
+    
     // 打包图片
-    void (^construction)(id <AFMultipartFormData>formData);
-    construction = ^(id <AFMultipartFormData>formData) {
-        [formData appendPartWithFileData:image name:@"imgFiles[0]" fileName:@"imgFiles[0].jpg" mimeType:@"image/jpeg"];
+    KHHConstructionBlock construction = ^(id <AFMultipartFormData>formData) {
+        NSArray *imageArray = iCheckIn.imageArray;
+        for (UIImage *image in imageArray) {
+            NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
+            [formData appendPartWithFileData:imageData
+                                        name:@"imgFiles"
+                                    fileName:@"imgFiles"
+                                    mimeType:@"image/jpeg"];
+        }
     };
-    NSDictionary *queries = @{ @"method" : @"kinghhEmployeeVisitCustomService.signInNew" };
-    NSString *path = [NSString stringWithFormat:@"%@?%@",@"rest",[self queryStringWithDictionary:queries]];
-    NSURLRequest *request = [[KHHHTTPClient sharedClient] multipartFormRequestWithMethod:@"POST"
-                                                            path:path
-                                                      parameters:parameters
-                                       constructingBodyWithBlock:construction];
+    
+    // 发请求
+    NSString *action = @"checkIn";
+    NSString *query = @"kinghhEmployeeVisitCustomService.signInNew";
+    
     [self postAction:action
-             request:request
-             success:nil
-               extra:nil];
+               query:query
+          parameters:parameters
+    constructingBody:construction
+             success:nil];
 }
 @end

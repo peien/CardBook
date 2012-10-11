@@ -15,6 +15,7 @@
 
 typedef void (^KHHSuccessBlock)(AFHTTPRequestOperation *operation, id responseObject);
 typedef void (^KHHFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
+typedef void (^KHHConstructionBlock)(id <AFMultipartFormData> formData);
 
 /**
  该类及其扩展封装了所有的服务器接口。
@@ -40,22 +41,35 @@ typedef void (^KHHFailureBlock)(AFHTTPRequestOperation *operation, NSError *erro
  */
 - (void)postAction:(NSString *)action
              query:(NSString *)query
-        parameters:(NSDictionary *)parameters
-           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success;
+        parameters:(NSDictionary *)parameters;
 - (void)postAction:(NSString *)action
              query:(NSString *)query
         parameters:(NSDictionary *)parameters
-           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+           success:(KHHSuccessBlock)success;
+- (void)postAction:(NSString *)action
+             query:(NSString *)query
+        parameters:(NSDictionary *)parameters
+           success:(KHHSuccessBlock)success
              extra:(NSDictionary *)extra;
 - (void)postAction:(NSString *)action
           pathRoot:(NSString *)pathRoot
              query:(NSString *)query
         parameters:(NSDictionary *)parameters
-           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+           success:(KHHSuccessBlock)success
+           failure:(KHHFailureBlock)failure
              extra:(NSDictionary *)extra;
 - (void)postAction:(NSString *)action
-           request:(NSURLRequest *)request
-           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+             query:(NSString *)query
+        parameters:(NSDictionary *)parameters
+  constructingBody:(KHHConstructionBlock)construction
+           success:(KHHSuccessBlock)success;
+- (void)postAction:(NSString *)action
+          pathRoot:(NSString *)pathRoot
+             query:(NSString *)query
+        parameters:(NSDictionary *)parameters
+  constructingBody:(KHHConstructionBlock)construction
+           success:(KHHSuccessBlock)success
+           failure:(KHHFailureBlock)failure
              extra:(NSDictionary *)extra;
 /**
  把http response body的base64数据，转成json，再解析为dictionary。

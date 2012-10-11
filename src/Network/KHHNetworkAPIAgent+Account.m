@@ -73,6 +73,7 @@
                query:query
           parameters:parameters
              success:success
+             failure:nil
                extra:nil];
     return YES;
 }
@@ -121,6 +122,7 @@
                query:query
           parameters:parameters
              success:success
+             failure:nil
                extra:nil];
     return YES;
 }
@@ -168,6 +170,7 @@
                query:@"userPasswordService.resetPwd"
           parameters:parameters
              success:nil
+             failure:nil
                extra:nil];
     return YES;
 }

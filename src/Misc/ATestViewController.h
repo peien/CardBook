@@ -13,7 +13,9 @@
 
 @interface ATestViewController : UIViewController
 @property (nonatomic, strong) KHHNetworkAPIAgent *agent;
-@property (nonatomic, strong) Card *card;
 @property (nonatomic, strong) KHHData *data;
+@property (nonatomic, strong) Card *card;
 @property (nonatomic, strong) KHHVisualCardViewController *visualCard;
+@property (nonatomic, strong) CLLocation *location;
+@property (nonatomic, strong) CLPlacemark *placemark;
 @end
