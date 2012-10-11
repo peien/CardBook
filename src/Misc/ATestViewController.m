@@ -8,6 +8,7 @@
 
 #import "ATestViewController.h"
 #import "ICheckIn.h"
+#import "KHHLocationController.h"
 
 @interface ATestViewController (Utils)
 - (void)showLabelWithText:(NSString *)text;
@@ -58,12 +59,13 @@
 #pragma mark - 试验LocationController
 - (void)testLocationController {
     [self showLabelWithText:@"试验LocationController"];
-    
+    [[KHHLocationController sharedController] updateLocation];
 }
 @end
 @implementation ATestViewController (Utils)
 - (void)showLabelWithText:(NSString *)text {
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 220, 320, 21)];
+    label.textAlignment = NSTextAlignmentCenter;
     label.text = text;
     DLog(@"[II] label = %@", label);
     [self.view addSubview:label];

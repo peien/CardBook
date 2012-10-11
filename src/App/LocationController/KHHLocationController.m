@@ -35,7 +35,8 @@ const NSTimeInterval KHH_LOCATION_REFRESH_INTERVAL = 30 * 60; // 30 min.
     }
     self.lastLocation = self.locationManager.location;
     NSDate *now = [NSDate date];
-    if ([now timeIntervalSinceDate:self.lastLocation.timestamp] > KHH_LOCATION_REFRESH_INTERVAL) { // 两次刷新之间的时间间隔
+    if (nil == self.lastLocation || // 之前未获取过
+        [now timeIntervalSinceDate:self.lastLocation.timestamp] > KHH_LOCATION_REFRESH_INTERVAL) { // 两次刷新之间的时间间隔
         // 刷新位置
         [self.locationManager startUpdatingLocation];
     } else { // 间隔太短，立即返回之前的位置
