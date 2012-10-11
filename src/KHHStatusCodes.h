@@ -11,6 +11,7 @@
 
 typedef NSInteger KHHNetworkStatusCode;
 typedef NSInteger KHHStatusCode;
+typedef NSInteger KHHErrorCode;
 
 // KHHNetworkStatusCode
 static const NSInteger KHHNetworkStatusCodeSucceeded = 0;
@@ -30,5 +31,8 @@ static const NSInteger KHHNetworkStatusCodeUnknownError = 3000; // 要你命3000
 
 // KHHStatusCode
 static const NSInteger KHHStatusCodeLocalDataOperationFailed = 44001;//本地数据库操作失败
+
+// KHHErrorCode
+static const NSInteger KHHErrorCodeBusy = 880001;//忙！因此不能完成操作，稍后再试！
 
 #endif

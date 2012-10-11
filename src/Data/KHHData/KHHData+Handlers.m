@@ -13,9 +13,9 @@
 @implementation KHHData (Handlers)
 - (void)syncAllDataEnded:(BOOL)succeed {
     if (succeed) {
-        [self postASAPNotificationName:KHHUISyncAllSucceeded];
+        [self postNowNotificationName:KHHUISyncAllSucceeded];
     } else {
-        [self postASAPNotificationName:KHHUISyncAllFailed];
+        [self postNowNotificationName:KHHUISyncAllFailed];
     }
 }
 #pragma mark - Notification handlers
