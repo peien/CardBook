@@ -61,10 +61,9 @@
     }
     iCheckIn.memo = @"HELLO你好";
     iCheckIn.imageArray = @[
-    [UIImage imageNamed:@"ic_shuaxin1@2x.png"],
-    [UIImage imageNamed:@"ic_shuaxin2@2x.png"],
-    [UIImage imageNamed:@"ic_shuaxin3@2x.png"],
-    [UIImage imageNamed:@"ic_shuaxin4@2x.png"],
+    [UIImage imageWithContentsOfFile:@"/Users/msun/Sceenshot/1.png"],
+    [UIImage imageWithContentsOfFile:@"/Users/msun/Sceenshot/2.png"],
+    [UIImage imageWithContentsOfFile:@"/Users/msun/Sceenshot/3.png"],
     ];
     [self.agent checkIn:iCheckIn];
 }

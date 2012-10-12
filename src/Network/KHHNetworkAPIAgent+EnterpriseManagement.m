@@ -9,6 +9,7 @@
 #import "KHHNetworkAPIAgent+EnterpriseManagement.h"
 #import "NSString+SM.h"
 #import "NSString+Networking.h"
+#import "UIImage+KHH.h"
 
 @implementation KHHNetworkAPIAgent (EnterpriseManagement)
 /*!
@@ -46,16 +47,22 @@
 - (void)checkIn:(ICheckIn *)iCheckIn {
     DLog(@"[II] iCheckIn = %@", iCheckIn);
     
+    CLPlacemark *placemark = iCheckIn.placemark;
     // 组合string参数
     NSDictionary *parameters = @{
     @"bean.cardId"      : [NSString stringFromObject:iCheckIn.cardID],
     @"bean.deviceToken" : [NSString stringFromObject:iCheckIn.deviceToken],
     @"bean.latitude"    : [NSString stringFromObject:iCheckIn.latitude],
     @"bean.longitude"   : [NSString stringFromObject:iCheckIn.longitude],
-    @"bean.country"     : [NSString stringFromObject:iCheckIn.placemark.country],
-    @"bean.province"    : [NSString stringFromObject:iCheckIn.placemark.administrativeArea],
-    @"bean.city"        : [NSString stringFromObject:iCheckIn.placemark.locality],
-    @"bean.address"     : [NSString stringFromObject:iCheckIn.placemark.thoroughfare],
+    @"bean.country"     : [NSString stringFromObject:placemark.country],
+    @"bean.province"    : [NSString stringWithFormat:@"%@",
+                           [NSString stringFromObject:placemark.administrativeArea]],
+    @"bean.city"        : [NSString stringWithFormat:@"%@%@",
+                           [NSString stringFromObject:placemark.locality],
+                           [NSString stringFromObject:placemark.subLocality]],
+    @"bean.address"     : [NSString stringWithFormat:@"%@%@",
+                           [NSString stringFromObject:placemark.thoroughfare],
+                           [NSString stringFromObject:placemark.subThoroughfare]],
     @"bean.col1"        : [NSString stringFromObject:iCheckIn.memo],
     };
     
@@ -63,7 +70,8 @@
     KHHConstructionBlock construction = ^(id <AFMultipartFormData>formData) {
         NSArray *imageArray = iCheckIn.imageArray;
         for (UIImage *image in imageArray) {
-            NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
+//            NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
+            NSData *imageData = [image resizedImageDataForKHHUpload];
             [formData appendPartWithFileData:imageData
                                         name:@"imgFiles"
                                     fileName:@"imgFiles"
