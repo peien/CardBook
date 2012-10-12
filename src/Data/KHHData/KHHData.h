@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 #import "KHHApp.h"
+#import "KHHClasses.h"
 #import "KHHNetworkAPI.h"
 
 

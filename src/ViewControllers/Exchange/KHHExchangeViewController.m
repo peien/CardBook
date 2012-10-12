@@ -12,8 +12,7 @@
 #import "XLPageControl.h"
 #import "UIImageView+WebCache.h"
 #import "KHHFrameCardView.h"
-#import "KHHData.h"
-#import "Card.h"
+#import "KHHDataAPI.h"
 #import "MBProgressHUD.h"
 #import "DetailInfoViewController.h"
 

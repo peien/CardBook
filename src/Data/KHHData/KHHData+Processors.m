@@ -6,7 +6,7 @@
 //  Copyright (c) 2012年 Kinghanhong. All rights reserved.
 //
 
-#import "KHHData+Processors.h"
+#import "KHHDataAPI.h"
 #import "NSNumber+SM.h"
 #import "NSString+SM.h"
 
@@ -237,6 +237,7 @@
         card.address.other = interCard.addressOther;
         card.address.province = interCard.addressProvince;
         card.address.street = interCard.addressStreet;
+        card.address.zip = interCard.addressZip;
         // }
         
         // 银行帐户 {

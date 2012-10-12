@@ -6,7 +6,8 @@
 //  Copyright (c) 2012年 Kinghanhong. All rights reserved.
 //
 
-#import "KHHData.h"
+#import "KHHDataAPI.h"
+#import "KHHDefaults.h"
 
 @implementation KHHData
 @synthesize context = _context;

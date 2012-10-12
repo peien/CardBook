@@ -7,7 +7,8 @@
 //
 
 #import "ATestViewController.h"
-#import "ICheckIn.h"
+#import "KHHClasses.h"
+#import "KHHDataAPI.h"
 #import "KHHLocationController.h"
 
 @interface ATestViewController (Utils)
