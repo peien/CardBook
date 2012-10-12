@@ -14,7 +14,7 @@
 #import "UIImageView+WebCache.h"
 
 #import "KHHCardMode.h"
-#import "Card.h"
+#import "KHHClasses.h"
 @interface KHHAddGroupMemberVC ()<UISearchBarDelegate,UISearchDisplayDelegate,
                                  UITableViewDataSource,UITableViewDelegate,SMCheckboxDelegate>
 

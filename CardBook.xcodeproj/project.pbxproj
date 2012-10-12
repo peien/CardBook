@@ -656,7 +656,6 @@
 		982AACBD1609BE6B002B9BAD /* KHHData+UI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHData+UI.h"; sourceTree = "<group>"; };
 		982AACBE1609BE6B002B9BAD /* KHHData+UI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHData+UI.m"; sourceTree = "<group>"; };
 		982AACC21609C903002B9BAD /* KHHTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHHTypes.h; sourceTree = "<group>"; };
-		982AACC31609C948002B9BAD /* KHHHeaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHHHeaders.h; sourceTree = "<group>"; };
 		98326CFF1623FFB600B5038E /* KHHNetworkAPIAgent+CustomerEvaluation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHNetworkAPIAgent+CustomerEvaluation.h"; sourceTree = "<group>"; };
 		98326D001623FFB700B5038E /* KHHNetworkAPIAgent+CustomerEvaluation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHNetworkAPIAgent+CustomerEvaluation.m"; sourceTree = "<group>"; };
 		98326D031624076900B5038E /* ICustomerEvaluation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICustomerEvaluation.h; sourceTree = "<group>"; };
@@ -673,6 +672,8 @@
 		984C2853160AF02D007D4D13 /* PrivateCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PrivateCard.m; sourceTree = "<group>"; };
 		984C2855160AF044007D4D13 /* _PrivateCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _PrivateCard.h; sourceTree = "<group>"; };
 		984C2856160AF044007D4D13 /* _PrivateCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _PrivateCard.m; sourceTree = "<group>"; };
+		984C48F81627F0DC007A152B /* KHHClasses.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHHClasses.h; sourceTree = "<group>"; };
+		984C48FA1627F15E007A152B /* KHHDataAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHHDataAPI.h; sourceTree = "<group>"; };
 		984FA6321610297D00344BDC /* KHHVisualCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHVisualCardViewController.h; sourceTree = "<group>"; };
 		984FA6331610297D00344BDC /* KHHVisualCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHVisualCardViewController.m; sourceTree = "<group>"; };
 		984FA6341610297D00344BDC /* KHHVisualCardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHVisualCardViewController.xib; sourceTree = "<group>"; };
@@ -1382,8 +1383,6 @@
 				98E6F4011623CEB700AE81D3 /* ISchedule.m */,
 				984B7FDF16255AA400E8BDC0 /* ICheckIn.h */,
 				984B7FE016255AA400E8BDC0 /* ICheckIn.m */,
-				984B7FE31625642700E8BDC0 /* SMObject.h */,
-				984B7FE41625642700E8BDC0 /* SMObject.m */,
 				98332A451626919300EEE582 /* IAddress.h */,
 				98332A461626919300EEE582 /* IAddress.m */,
 			);
@@ -1556,12 +1555,13 @@
 		98A84D9A1602D20000A4A673 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				982AACC31609C948002B9BAD /* KHHHeaders.h */,
-				98A84DA51602D2DA00A4A673 /* KHHKeys.h */,
 				98A84DA61602D2DA00A4A673 /* KHHMacros.h */,
+				984C48F81627F0DC007A152B /* KHHClasses.h */,
+				984C48FA1627F15E007A152B /* KHHDataAPI.h */,
+				982AACC21609C903002B9BAD /* KHHTypes.h */,
+				98A84DA51602D2DA00A4A673 /* KHHKeys.h */,
 				98A84DA71602D2DA00A4A673 /* KHHNotifications.h */,
 				98A84DA81602D2DA00A4A673 /* KHHStatusCodes.h */,
-				982AACC21609C903002B9BAD /* KHHTypes.h */,
 				98A84D9C1602D21F00A4A673 /* App */,
 				98A84D9D1602D22600A4A673 /* Data */,
 				98A84D9E1602D23100A4A673 /* Misc */,
@@ -1603,6 +1603,8 @@
 			children = (
 				984FA63716104AF000344BDC /* ATestViewController.h */,
 				984FA63816104AF000344BDC /* ATestViewController.m */,
+				984B7FE31625642700E8BDC0 /* SMObject.h */,
+				984B7FE41625642700E8BDC0 /* SMObject.m */,
 				98A84DFD1602D46000A4A673 /* Encryptor.h */,
 				98A84DFE1602D46000A4A673 /* Encryptor.m */,
 				98A84DFF1602D46000A4A673 /* KHHLog.h */,

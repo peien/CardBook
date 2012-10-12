@@ -7,6 +7,7 @@
 //
 
 #import "KHHVisualCardViewController.h"
+#import "KHHClasses.h"
 #import "NSNumber+SM.h"
 #import "NSString+SM.h"
 #import "UIColor+HexColor.h"

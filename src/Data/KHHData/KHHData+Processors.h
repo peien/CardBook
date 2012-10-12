@@ -7,6 +7,7 @@
 //
 
 #import "KHHData.h"
+#import "CardTemplate.h"
 #import "InterCard.h"
 
 @interface KHHData (Processors)

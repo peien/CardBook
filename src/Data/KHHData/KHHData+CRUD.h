@@ -7,6 +7,7 @@
 //
 
 #import "KHHData.h"
+#import "KHHClasses.h"
 
 @interface KHHData (CRUD)
 // 没有符合条件的返回空数组，出错返回nil。

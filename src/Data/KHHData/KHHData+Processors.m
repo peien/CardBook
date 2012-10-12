@@ -6,7 +6,7 @@
 //  Copyright (c) 2012年 Kinghanhong. All rights reserved.
 //
 
-#import "KHHData+Processors.h"
+#import "KHHDataAPI.h"
 #import "NSNumber+SM.h"
 #import "NSString+SM.h"
 

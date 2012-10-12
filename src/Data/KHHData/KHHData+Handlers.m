@@ -6,9 +6,8 @@
 //  Copyright (c) 2012年 Kinghanhong. All rights reserved.
 //
 
-#import "KHHData+Handlers.h"
+#import "KHHDataAPI.h"
 #import "NSNumber+SM.h"
-#import "KHHData+Processors.h"
 
 @implementation KHHData (Handlers)
 - (void)syncAllDataEnded:(BOOL)succeed {
