@@ -237,6 +237,7 @@
         card.address.other = interCard.addressOther;
         card.address.province = interCard.addressProvince;
         card.address.street = interCard.addressStreet;
+        card.address.zip = interCard.addressZip;
         // }
         
         // 银行帐户 {
