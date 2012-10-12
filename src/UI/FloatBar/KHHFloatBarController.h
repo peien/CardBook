@@ -19,7 +19,7 @@
 @property (strong, nonatomic) WEPopoverController *popover;
 @property (assign, nonatomic) int                 type;
 @property (strong, nonatomic) Card                *card;
-
+@property (assign, nonatomic) bool                *isContactCellClick;
 
 - (IBAction)BtnClick:(id)sender;
 @end

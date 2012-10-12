@@ -117,10 +117,23 @@ SAVEADDRESSFROMCARDEND:
     CFIndex n = ABAddressBookGetPersonCount(addressBook);
     for (int i = 0; i < n; i++) {
         ABRecordRef person = CFArrayGetValueAtIndex((__bridge CFArrayRef)(allPeople), i);
-        NSString *name = (__bridge NSString *)ABRecordCopyCompositeName(person);
+        NSString *name = (__bridge NSString *)(ABRecordCopyCompositeName(person));
         NSString *company = (__bridge NSString *)(ABRecordCopyValue(person, kABPersonOrganizationProperty));
         NSString *job = (__bridge NSString *)(ABRecordCopyValue(person, kABPersonJobTitleProperty));
-        [result addObject:[NSDictionary dictionaryWithObjectsAndKeys:name,@"name",company,@"company",job,@"job", nil]];
+        
+        ABMultiValueRef phones = ABRecordCopyValue(person, kABPersonPhoneProperty);
+        NSMutableArray *phoneArr = [NSMutableArray arrayWithCapacity:ABMultiValueGetCount(phones)];
+        NSString *phone = nil; 
+        if (ABMultiValueGetCount(phones) > 0) {
+            phone = (__bridge NSString *)ABMultiValueCopyValueAtIndex(phones, 0);
+        }
+        for(int j=0; j<ABMultiValueGetCount(phones); j++){
+            NSString *number = (__bridge NSString *)ABMultiValueCopyValueAtIndex(phones, j);
+            [phoneArr addObject:number];
+        }
+
+        DLog(@"phoneArr ====== %@",phoneArr);
+        [result addObject:[NSDictionary dictionaryWithObjectsAndKeys:name,@"name",company,@"company",job,@"job",phoneArr,@"phone", nil]];
     }
     if (result.count > 0) {
         return result;

@@ -121,15 +121,19 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [KHHShowHideTabBar showTabbar];
-    [self becomeFirstResponder];
+    //[self becomeFirstResponder];
+    DLog(@"becomeFirstResponder ====== %i",[self becomeFirstResponder]);
     [self updateCardTempInfo];
     
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    //[KHHShowHideTabBar hideTabbar];
     [self resignFirstResponder];
     
+}
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self becomeFirstResponder];
 }
 
 - (void)viewDidUnload

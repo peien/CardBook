@@ -28,6 +28,7 @@
 #import "Edit_eCardViewController.h"
 #import "KHHData+UI.h"
 #import "KHHAddressBook.h"
+#import "KHHClientCellLNPC.h"
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 
@@ -198,15 +199,26 @@ typedef enum {
     //Card *myCard = [self.myCardArray lastObject];
     
 }
-// 搜索结果
+// 搜索结果 临时搜索
 - (void)searcResult
 {
-    //搜索结果
+    //搜索结果,
+    //通讯录
     _resultArray = [[NSArray alloc] init];
     NSMutableArray *stringArr = [[NSMutableArray alloc] init];
-    for (int i = 0; i< self.generalArray.count; i++) {
-        KHHCardMode *card = [self.generalArray objectAtIndex:i];
-        [stringArr addObject:card.name];
+    
+    if (self.isAddressBookData) {
+        for (int i = 0; i< self.generalArray.count; i++) {
+            NSDictionary *dic = [self.generalArray objectAtIndex:i];
+            if ([dic objectForKey:@"name"] != nil) {
+               [stringArr addObject:[dic objectForKey:@"name"]]; 
+            }
+        }
+    }else{
+        for (int i = 0; i< self.generalArray.count; i++) {
+            KHHCardMode *card = [self.generalArray objectAtIndex:i];
+            [stringArr addObject:card.name];
+        }
     }
     _searchArray = stringArr;
 
@@ -305,7 +317,7 @@ typedef enum {
             return 40;
             break;
         case KHHTableIndexClient:
-            return 56;
+            return 58;
         default:
             return 44;
             break;
@@ -355,18 +367,18 @@ typedef enum {
             case KHHTableIndexClient: {
                 
                 //通讯录信息显示
-                if (NO) {
+                if (self.isAddressBookData) {
                     cellId = @"contactID";
-                    KHHClientCellLNPCC *cell = nil;
+                    KHHClientCellLNPC *cell = nil;
                     cell = [tableView dequeueReusableCellWithIdentifier:cellId];
                     if (cell == nil) {
-                        cell = [[[NSBundle mainBundle] loadNibNamed:@"KHHClientCellLNPCC"
+                        cell = [[[NSBundle mainBundle] loadNibNamed:@"KHHClientCellLNPC"
                                                               owner:self
                                                             options:nil] objectAtIndex:0];
                         cell.selectionStyle = UITableViewCellSelectionStyleNone;
                         
                     }
-                    [cell.logoBtn setBackgroundImage:[UIImage imageNamed:@"logopic.png"] forState:UIControlStateNormal];
+                    //cell.logoView.image = [UIImage imageNamed:@"logopic.png"];
                     cell.nameLabel.text = [[self.generalArray objectAtIndex:indexPath.row] objectForKey:@"name"];
                     cell.positionLabel.text = [[self.generalArray objectAtIndex:indexPath.row] objectForKey:@"job"];
                     cell.companyLabel.text = [[self.generalArray objectAtIndex:indexPath.row] objectForKey:@"company"];
@@ -425,23 +437,34 @@ typedef enum {
                 //选中某一个对象并返回
                 [self.navigationController popViewControllerAnimated:YES];
             }else{
-                if (self.currentTag == 106) {
+                if (self.isAddressBookData) {
                     DLog(@"contact item click!");
-                    return;
+                    KHHClientCellLNPC *cell = (KHHClientCellLNPC *)[tableView cellForRowAtIndexPath:indexPath];
+                    CGRect cellRect = cell.logoView.frame;
+                    cellRect.origin.x = 98;
+                    CGRect rect = [cell convertRect:cellRect toView:self.view];
+                    rect.size.height = 45;
+                    self.floatBarVC.card = nil;
+                    //DLog(@"[II] logo = %@, frame = %@, converted frame = %@", cell.logoView, NSStringFromCGRect(cell.logoView.frame), NSStringFromCGRect(rect));
+                    UIPopoverArrowDirection arrowDirection = rect.origin.y < self.view.bounds.size.height/2?UIPopoverArrowDirectionUp:UIPopoverArrowDirectionDown;
+                    [self.popover presentPopoverFromRect:rect inView:self.view permittedArrowDirections:arrowDirection animated:YES];
+                }else{
+                    self.isNeedReloadTable = YES;
+                    KHHClientCellLNPCC *cell = (KHHClientCellLNPCC*)[tableView cellForRowAtIndexPath:indexPath];
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    DetailInfoViewController *detailVC = [[DetailInfoViewController alloc] initWithNibName:nil bundle:nil];
+                    detailVC.card = [self.generalArray objectAtIndex:indexPath.row];
+                    [self.navigationController pushViewController:detailVC animated:YES];
                 }
-                ////////////////////////////////////////////////////////////////
-                self.isNeedReloadTable = YES;
-                KHHClientCellLNPCC *cell = (KHHClientCellLNPCC*)[tableView cellForRowAtIndexPath:indexPath];
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                DetailInfoViewController *detailVC = [[DetailInfoViewController alloc] initWithNibName:nil bundle:nil];
-                detailVC.card = [self.generalArray objectAtIndex:indexPath.row];
-                [self.navigationController pushViewController:detailVC animated:YES];
             }
             break;
         }
     }
     
     if (tableView == self.searCtrl.searchResultsTableView) {
+        if (self.isAddressBookData) {
+            return;
+        }
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         for (Card *card in self.generalArray) {
             if ([cell.textLabel.text isEqualToString:card.name]) {
@@ -506,9 +529,7 @@ typedef enum {
 {
     UIButton *btn = (UIButton *)sender;
     DLog(@"btn.tag=======%d",btn.tag);
-    if (self.currentTag != 6) {
-        self.isAddressBookData = NO;
-    }
+    self.isAddressBookData = NO;
     KHHButtonCell *cell = (KHHButtonCell *)[[btn superview] superview];
     NSIndexPath *indexPath = [_btnTable indexPathForCell:cell];
     DLog(@"%@",indexPath);
@@ -538,16 +559,20 @@ typedef enum {
                 break;
             case 101:
                 DLog(@"101 btn 数据源刷新");
+                self.currentTag = btn.tag;
                 self.generalArray = self.ReceNewArray;
                 break;
             case 102:
                 DLog(@"102 btn 数据源刷新");
+                self.currentTag = btn.tag;
                 break;
             case 103:
                 DLog(@"103 btn 数据源刷新");
+                self.currentTag = btn.tag;
                 break;
             case 104:
                 DLog(@"104 btn 数据源刷新");
+                self.currentTag = btn.tag;
                 break;
             case 105:
                 DLog(@"105 btn 数据源刷新");
@@ -556,11 +581,10 @@ typedef enum {
                 self.generalArray = self.privateArr;
                 break;
             case 106:{
-                //self.isAddressBookData = YES;
+                self.isAddressBookData = YES;
                 self.currentTag = btn.tag;
                 NSArray *addressArr = [KHHAddressBook getAllPeppleFromAddressBook];
-                //self.generalArray = addressArr;
-                //DLog(@"addressArr=======%@",addressArr);
+                self.generalArray = addressArr;
             }
                 break;
             default:

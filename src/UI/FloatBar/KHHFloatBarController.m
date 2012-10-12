@@ -25,6 +25,7 @@
 @synthesize popover = _popover;
 @synthesize type = _type;
 @synthesize card;
+@synthesize isContactCellClick;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
