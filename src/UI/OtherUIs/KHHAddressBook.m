@@ -10,6 +10,7 @@
 #import "Company.h"
 #import "Address.h"
 #import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
 @implementation KHHAddressBook
 //保存到通讯录
 + (BOOL)saveToCantactWithCard:(Card *)card
@@ -74,9 +75,9 @@
     ABRecordSetValue(newPerson, kABPersonFirstNameProperty, (__bridge CFTypeRef)card.name, NULL);
    //判断公司名字,
     if (card.company && card.company.name.length > 0) {
-		ABRecordSetValue(newPerson, kABPersonNoteProperty, (__bridge CFTypeRef)card.company.name, NULL);
+		ABRecordSetValue(newPerson, kABPersonOrganizationProperty, (__bridge CFTypeRef)card.company.name, NULL);
 	}else{
-		ABRecordSetValue(newPerson, kABPersonNoteProperty, @"", NULL);
+		ABRecordSetValue(newPerson, kABPersonOrganizationProperty, @"", NULL);
 	}
     if (card.title && card.title.length > 0) {
         ABRecordSetValue(newPerson, kABPersonJobTitleProperty, (__bridge CFTypeRef)card.title, NULL);
@@ -108,5 +109,23 @@ SAVEADDRESSFROMCARDEND:
     }
 
     return result;
+}
++ (NSMutableArray *)getAllPeppleFromAddressBook{
+    NSMutableArray *result = [[NSMutableArray alloc] initWithCapacity:0];
+    ABAddressBookRef addressBook = ABAddressBookCreate();
+    NSArray *allPeople = (__bridge NSArray *)(ABAddressBookCopyArrayOfAllPeople(addressBook));
+    CFIndex n = ABAddressBookGetPersonCount(addressBook);
+    for (int i = 0; i < n; i++) {
+        ABRecordRef person = CFArrayGetValueAtIndex((__bridge CFArrayRef)(allPeople), i);
+        NSString *name = (__bridge NSString *)ABRecordCopyCompositeName(person);
+        NSString *company = (__bridge NSString *)(ABRecordCopyValue(person, kABPersonOrganizationProperty));
+        NSString *job = (__bridge NSString *)(ABRecordCopyValue(person, kABPersonJobTitleProperty));
+        [result addObject:[NSDictionary dictionaryWithObjectsAndKeys:name,@"name",company,@"company",job,@"job", nil]];
+    }
+    if (result.count > 0) {
+        return result;
+    }
+    return nil;
+    
 }
 @end

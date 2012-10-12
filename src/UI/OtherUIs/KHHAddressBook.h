@@ -10,4 +10,5 @@
 #import "Card.h"
 @interface KHHAddressBook : NSObject
 + (BOOL)saveToCantactWithCard:(Card *)card;
++ (NSMutableArray *)getAllPeppleFromAddressBook;
 @end

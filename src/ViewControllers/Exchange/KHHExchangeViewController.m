@@ -146,15 +146,6 @@
     self.latestCard = nil;
     self.cardView = nil;
 }
-//- (void)scrollViewDidScroll:(UIScrollView *)scrollView
-//{
-//    if ([scrollView isEqual:_scrView]) {
-//        CGFloat scrollWidth = scrollView.frame.size.width;
-//        int page = ((scrollView.contentOffset.x-scrollWidth/2)/scrollWidth)+1;
-//        XLPageControl *pageCtrl = (XLPageControl *)[self.view viewWithTag:118];
-//        pageCtrl.currentPage = page;
-//    }
-//}
 
 - (void)btnClick:(id)sender
 {
@@ -183,6 +174,7 @@
     self.card = [[self.dataCtrl allMyCards] lastObject];
     self.cardView.card = self.card;
     [self.cardView.xlPage removeFromSuperview];
+    [self.cardView.shadowCard removeFromSuperview];
     [self.cardView showView];
 }
 // 摇摇交换
@@ -236,7 +228,7 @@
     self.mbHUD.labelText = @"请稍后,正在交换名片...";
     [self.httpAgent exchangeCard:self.card withCoordinate:self.currentLocation.coordinate];
     self.exchangeStartTime = CFAbsoluteTimeGetCurrent();
-    AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
+    AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
     self.countDownNum = 16;
     NSDictionary *info = [NSDictionary dictionaryWithObjectsAndKeys:self.mbHUD,@"Hud",self.mbHUD.labelText,@"label", nil];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(countdownForMBHUD:) userInfo:info repeats:YES];

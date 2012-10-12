@@ -19,6 +19,9 @@
 #import "Card.h"
 #import "Address.h"
 #import "ICheckIn.h"
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
+
 
 #define UPDATE_LOCATION_BTN_TAG     4401
 #define TEXTFIELD_DATE_TAG          5501
@@ -42,8 +45,9 @@
 @property (strong, nonatomic) ICheckIn          *checkIn;
 @property (strong, nonatomic) NSNumber          *locationLatitude;
 @property (strong, nonatomic) NSNumber          *locationLongitude;
-@property (strong, nonatomic) NSString          *locationAddress;
 @property (assign, nonatomic) bool              isFirstLocation;
+@property (strong, nonatomic) NSString          *address;
+@property (strong, nonatomic) CLPlacemark       *placeMark;
 
 @end
 
@@ -61,10 +65,11 @@
 @synthesize dataCtrl;
 @synthesize card;
 @synthesize checkIn;
-@synthesize locationAddress;
 @synthesize locationLatitude;
 @synthesize locationLongitude;
 @synthesize isFirstLocation;
+@synthesize address;
+@synthesize placeMark;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -131,9 +136,10 @@
     self.time = nil;
     self.dataCtrl = nil;
     self.card = nil;
-    self.locationAddress = nil;
     self.locationLatitude = nil;
     self.locationLongitude = nil;
+    self.address = nil;
+    self.placeMark = nil;
     
 }
 - (void)viewWillAppear:(BOOL)animated
@@ -213,8 +219,9 @@
             }else if (indexPath.row == 3){
                 label.text = @"位置:";
                 textField.tag = TEXTFIELD_LOCATION_TAG;
-                textField.text = self.locationAddress;
+                //textField.text = self.locationAddress;
                 textField.enabled = NO;
+                textField.text = self.address;
                 self.updateImageView = [[UIImageView alloc] initWithImage:[self.imageArray objectAtIndex:0]];
                 self.updateImageView.userInteractionEnabled = YES;
                 self.updateImageView.frame = CGRectMake(265, 8, 35, 35);
@@ -313,6 +320,7 @@
     self.checkIn.latitude =  self.locationLatitude;
     self.checkIn.longitude = self.locationLongitude;
     self.checkIn.cardID = self.card.id;
+    self.checkIn.placemark = self.placeMark;
     //数组所含有的图片
     KHHNetworkAPIAgent *agent = [[KHHNetworkAPIAgent alloc] init];
     [agent checkIn:self.checkIn];
@@ -323,14 +331,19 @@
     [self stopObservingForUpdateLocation];
     [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
     [self performSelector:@selector(stopAnimatingForUPdateLoca) withObject:nil afterDelay:0.5];
-    self.locationAddress = [info.userInfo objectForKey:@"locationAddress"];
+    
     self.locationLatitude = [info.userInfo objectForKey:@"locationLatitude"];
     self.locationLongitude = [info.userInfo objectForKey:@"locationLongitude"];
-    UITextField *address = (UITextField *)[self.view viewWithTag:TEXTFIELD_LOCATION_TAG];
-    address.text = [NSString stringWithFormat:@"%@,%@",self.locationLatitude,self.locationLongitude];
-    self.locationAddress = address.text;
+    self.placeMark = [info.userInfo objectForKey:@"placemark"];
+    UITextField *addressTf = (UITextField *)[self.view viewWithTag:TEXTFIELD_LOCATION_TAG];
+    //NSString *addressString = CFBridgingRelease((__bridge CFTypeRef)(ABCreateStringWithAddressDictionary(self.placeMark.addressDictionary, NO)));
+    NSString *addressString = ABCreateStringWithAddressDictionary(self.placeMark.addressDictionary, NO);
+    if (addressString.length > 0) {
+        addressTf.text = addressString;
+    }
+    
     if (self.isFirstLocation) {
-        self.locationAddress = [NSString stringWithFormat:@"%@,%@",self.locationLatitude,self.locationLongitude];
+        self.address = ABCreateStringWithAddressDictionary(self.placeMark.addressDictionary, NO);
         [_theTable reloadData];
     }
     

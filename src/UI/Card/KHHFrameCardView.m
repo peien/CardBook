@@ -16,6 +16,8 @@
 @synthesize xlPage;
 @synthesize cardTempVC;
 @synthesize card;
+@synthesize shadowCard;
+
 - (id)initWithFrame:(CGRect)frame isVer:(BOOL)ver
 {
     self = [super initWithFrame:frame];
@@ -49,9 +51,9 @@
         xlPage.frame = CGRectMake(100, 205, 100, 15);
     }
     [self addSubview:_scrView];
-    UIImageView *shadowCard = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cardTouying.png"]];
-    shadowCard.frame = CGRectMake(0, 195, 320, 20);
-    [self addSubview:shadowCard];
+    self.shadowCard = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cardTouying.png"]];
+    self.shadowCard.frame = CGRectMake(0, 195, 320, 20);
+    [self addSubview:self.shadowCard];
 }
 - (void)creatCardTemplate:(CGRect)frame
 {
