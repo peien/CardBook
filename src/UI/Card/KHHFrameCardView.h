@@ -16,6 +16,8 @@
 @property (strong, nonatomic) XLPageControl *xlPage;
 @property (nonatomic, strong) KHHVisualCardViewController *cardTempVC;
 @property (nonatomic, strong) Card                        *card;
+@property (nonatomic, strong) UIImageView                 *shadowCard;
+
 - (id)initWithFrame:(CGRect)frame isVer:(BOOL)ver;
 - (void)showView;
 @end

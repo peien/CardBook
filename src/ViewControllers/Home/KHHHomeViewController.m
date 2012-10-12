@@ -27,6 +27,9 @@
 #import "UIButton+WebCache.h"
 #import "Edit_eCardViewController.h"
 #import "KHHData+UI.h"
+#import "KHHAddressBook.h"
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
 
 #import "Group.h"
 #import "KHHCardMode.h"
@@ -60,6 +63,7 @@ typedef enum {
 @property (assign, nonatomic)  NSArray                *privateArr;
 @property (assign, nonatomic)  bool                   isNeedReloadTable;
 @property (assign, nonatomic)  int                    currentTag;
+@property (assign, nonatomic)  bool                   isAddressBookData;
 @end
 
 @implementation KHHHomeViewController
@@ -103,6 +107,7 @@ typedef enum {
 @synthesize privateArr;
 @synthesize isNeedReloadTable;
 @synthesize currentTag;
+@synthesize isAddressBookData;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -113,6 +118,7 @@ typedef enum {
         self.leftBtn.hidden = YES;
         //*****************
         self.dataControl = [KHHData sharedData];
+        [self.rightBtn setTitle:NSLocalizedString(@"我的名片", nil) forState:UIControlStateNormal];
     }
     return self;
 }
@@ -189,8 +195,7 @@ typedef enum {
     //初始化界面数据
     [self initViewData];
     //我的详情
-    Card *myCard = [self.myCardArray lastObject];
-    [self.rightBtn setTitle:NSLocalizedString(myCard.name, nil) forState:UIControlStateNormal];
+    //Card *myCard = [self.myCardArray lastObject];
     
 }
 // 搜索结果
@@ -278,8 +283,8 @@ typedef enum {
         self.generalArray = [self.dataControl allReceivedCards];
     }
     [_bigTable reloadData];
-    Card *card = [[self.dataControl allMyCards] lastObject];
-    [self.rightBtn setTitle:card.name forState:UIControlStateNormal];
+//    Card *card = [[self.dataControl allMyCards] lastObject];
+//    [self.rightBtn setTitle:card.name forState:UIControlStateNormal];
     
 }
 #pragma mark - UITableViewDataSource
@@ -291,6 +296,7 @@ typedef enum {
         NSInteger tableTag = tableView.tag;
         return (tableTag == KHHTableIndexGroup?_btnTitleArr.count:(tableTag == KHHTableIndexClient)?[self.generalArray count]:0);
     }
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -347,39 +353,59 @@ typedef enum {
                 break;
             }
             case KHHTableIndexClient: {
-                cellId = NSStringFromClass([KHHClientCellLNPCC class]);
-                KHHClientCellLNPCC *cell = nil;
-                cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-                if (cell == nil) {
-                    cell = [[[NSBundle mainBundle] loadNibNamed:cellId
-                                                          owner:self
-                                                        options:nil] objectAtIndex:0];
-                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                    
-                }
-                //从网络获取头像
-                Card *card = [self.generalArray objectAtIndex:indexPath.row];
-                [cell.logoBtn setImageWithURL:[NSURL URLWithString:card.logo.url]
-                             placeholderImage:[UIImage imageNamed:@"logopic.png"]
-                                      success:^(UIImage *image, BOOL cached){
-                                          if(CGSizeEqualToSize(image.size, CGSizeZero)){
-                                              [cell.logoBtn setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-                                          }
-                                      }
-                                      failure:^(NSError *error){
-                                        
-                                      }];
                 
-                if (_isNormalSearchBar) {
-                    
+                //通讯录信息显示
+                if (NO) {
+                    cellId = @"contactID";
+                    KHHClientCellLNPCC *cell = nil;
+                    cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+                    if (cell == nil) {
+                        cell = [[[NSBundle mainBundle] loadNibNamed:@"KHHClientCellLNPCC"
+                                                              owner:self
+                                                            options:nil] objectAtIndex:0];
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        
+                    }
+                    [cell.logoBtn setBackgroundImage:[UIImage imageNamed:@"logopic.png"] forState:UIControlStateNormal];
+                    cell.nameLabel.text = [[self.generalArray objectAtIndex:indexPath.row] objectForKey:@"name"];
+                    cell.positionLabel.text = [[self.generalArray objectAtIndex:indexPath.row] objectForKey:@"job"];
+                    cell.companyLabel.text = [[self.generalArray objectAtIndex:indexPath.row] objectForKey:@"company"];
+                    return cell;
                 }else{
-                    [cell.logoBtn addTarget:self action:@selector(logoBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+                    cellId = NSStringFromClass([KHHClientCellLNPCC class]);
+                    KHHClientCellLNPCC *cell = nil;
+                    cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+                    if (cell == nil) {
+                        cell = [[[NSBundle mainBundle] loadNibNamed:cellId
+                                                              owner:self
+                                                            options:nil] objectAtIndex:0];
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                        
+                    }
+                    //从网络获取头像
+                    Card *card = [self.generalArray objectAtIndex:indexPath.row];
+                    [cell.logoBtn setImageWithURL:[NSURL URLWithString:card.logo.url]
+                                 placeholderImage:[UIImage imageNamed:@"logopic.png"]
+                                          success:^(UIImage *image, BOOL cached){
+                                              if(CGSizeEqualToSize(image.size, CGSizeZero)){
+                                                  [cell.logoBtn setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+                                              }
+                                          }
+                                          failure:^(NSError *error){
+                                              
+                                          }];
+                    
+                    if (_isNormalSearchBar) {
+                        
+                    }else{
+                        [cell.logoBtn addTarget:self action:@selector(logoBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+                    }
+                    //填充单元格数据
+                    cell.nameLabel.text = card.name;
+                    cell.positionLabel.text = card.title;
+                    cell.companyLabel.text =card.company.name;
+                    return cell;
                 }
-                //填充单元格数据
-                cell.nameLabel.text = card.name;
-                cell.positionLabel.text = card.title;
-                cell.companyLabel.text =card.company.name;
-                return cell;
                 break;
             }
         }
@@ -399,6 +425,11 @@ typedef enum {
                 //选中某一个对象并返回
                 [self.navigationController popViewControllerAnimated:YES];
             }else{
+                if (self.currentTag == 106) {
+                    DLog(@"contact item click!");
+                    return;
+                }
+                ////////////////////////////////////////////////////////////////
                 self.isNeedReloadTable = YES;
                 KHHClientCellLNPCC *cell = (KHHClientCellLNPCC*)[tableView cellForRowAtIndexPath:indexPath];
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -475,6 +506,9 @@ typedef enum {
 {
     UIButton *btn = (UIButton *)sender;
     DLog(@"btn.tag=======%d",btn.tag);
+    if (self.currentTag != 6) {
+        self.isAddressBookData = NO;
+    }
     KHHButtonCell *cell = (KHHButtonCell *)[[btn superview] superview];
     NSIndexPath *indexPath = [_btnTable indexPathForCell:cell];
     DLog(@"%@",indexPath);
@@ -521,8 +555,13 @@ typedef enum {
                 self.privateArr = [self.dataControl allPrivateCards];
                 self.generalArray = self.privateArr;
                 break;
-            case 106:
-
+            case 106:{
+                //self.isAddressBookData = YES;
+                self.currentTag = btn.tag;
+                NSArray *addressArr = [KHHAddressBook getAllPeppleFromAddressBook];
+                //self.generalArray = addressArr;
+                //DLog(@"addressArr=======%@",addressArr);
+            }
                 break;
             default:
                 break;

@@ -940,6 +940,8 @@ NSString *const kECardListSeparator = @"|";
     NSString *address = [_fieldValue objectAtIndex:8];
     NSArray *addressArr = [address componentsSeparatedByString:@"|"];
     NSArray *pcArr = [[addressArr objectAtIndex:0] componentsSeparatedByString:@" "];
+    UIButton *pcBtn = (UIButton *)[self.view viewWithTag:KBIGADDRESS_TAG];
+    NSArray *pcArrBtn = [pcBtn.titleLabel.text componentsSeparatedByString:@" "];
     NSString *zipCode = [_fieldValue objectAtIndex:9];
 
     for (NSDictionary *dic in _fieldExternTwo) {
@@ -964,13 +966,16 @@ NSString *const kECardListSeparator = @"|";
         self.interCard.addressProvince = [pcArr objectAtIndex:0];
         self.interCard.addressCity = [pcArr objectAtIndex:1];
     }
+    if (pcArrBtn.count >=2) {
+        self.interCard.addressProvince = [pcArrBtn objectAtIndex:0];
+        self.interCard.addressCity = [pcArrBtn objectAtIndex:1];
+    }
     //self.interCard.addressCountry =
     //self.interCard.addressDistrict =
     if (addressArr.count >= 2) {
         self.interCard.addressStreet = [addressArr objectAtIndex:1]; 
     }
     self.interCard.addressZip = zipCode;
-    
     // 对是否为空或格式进行判断，然后把手机，电话，传真，邮箱保存起来
         if (mobiles.length==0 && phones.length==0) {
             //[self showMessage:@"名片上的电话未空!请至少填写一个手机号码或者电话号码!" withTitile:nil];

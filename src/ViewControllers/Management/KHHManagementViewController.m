@@ -7,19 +7,25 @@
 //
 
 #import "KHHManagementViewController.h"
+#import "KHHMyDetailController.h"
 #import "LocationInfoVC.h"
 #import "EmployeesManageVC.h"
 #import "KHHRadarViewController.h"
 #import "KHHFunnelViewController.h"
 #import "KHHVisitCalendarVC.h"
 #import "KHHShowHideTabBar.h"
-@interface KHHManagementViewController ()
+#import "KHHData+UI.h"
+#import "Card.h"
 
+@interface KHHManagementViewController ()
+@property (strong, nonatomic) KHHData *dataCtrl;
+@property (strong, nonatomic) Card    *myCard;
 @end
 
 @implementation KHHManagementViewController
 @synthesize entranceView = _entranceView;
 @synthesize isBoss = _isBoss;
+@synthesize dataCtrl;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,6 +34,8 @@
         // Custom initialization
         self.title = @"员工管理";
         _isBoss = YES;
+        self.dataCtrl = [KHHData sharedData];
+        self.myCard = [[self.dataCtrl allMyCards] lastObject];
         if (_isBoss) {
            _entranceView = [[[NSBundle mainBundle] loadNibNamed:@"KHHBossEntrance" owner:self options:nil] objectAtIndex:0]; 
         }else
@@ -59,6 +67,7 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    self.dataCtrl = nil;
 }
 
 - (IBAction)radarBtnClick:(id)sender{
@@ -91,7 +100,9 @@
 }
 - (IBAction)personBtnClick:(id)sender
 {
-    [self showAlert];
+    KHHMyDetailController *myDetailVC = [[KHHMyDetailController alloc] initWithNibName:nil bundle:nil];
+    myDetailVC.card = self.myCard;
+    [self.navigationController pushViewController:myDetailVC animated:YES];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
