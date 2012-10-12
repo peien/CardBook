@@ -122,6 +122,10 @@ static NSString * const KHHNetworkMarkReadReceivedCardFailed    = @"markReadRece
 static NSString * const KHHNetworkPrivateCardsAfterDateSucceeded = @"privateCardsAfterDateSucceeded";
 static NSString * const KHHNetworkPrivateCardsAfterDateFailed    = @"privateCardsAfterDateFailed";
 
+//MARK: - 模板
+static NSString * const KHHNetworkTemplatesAfterDateSucceeded = @"templatesAfterDateSucceeded";
+static NSString * const KHHNetworkTemplatesAfterDateFailed = @"templatesAfterDateFailed";
+
 //MARK: - 分组
 // Create group
 static NSString * const KHHNetworkCreateGroupSucceeded = @"createGroupSucceeded";

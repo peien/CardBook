@@ -10,13 +10,61 @@
 #import "NSNumber+SM.h"
 
 @implementation KHHData (Handlers)
-- (void)syncAllDataEnded:(BOOL)succeed {
-    if (succeed) {
-        [self postNowNotificationName:KHHUISyncAllSucceeded];
-    } else {
-        [self postNowNotificationName:KHHUISyncAllFailed];
-    }
+- (void)registerHandlersForNotifications {
+    
+    //[self observeNotificationName:KHHNetwork selector:@"handle"];
+    [self observeNotificationName:KHHNetworkAllDataAfterDateSucceeded
+                         selector:@"handleAllDataAfterDateSucceeded:"];
+    [self observeNotificationName:KHHNetworkAllDataAfterDateFailed
+                         selector:@"handleAllDataAfterDateFailed:"];
+    // Card - Create, Update, Delete.
+    [self observeNotificationName:KHHNetworkCreateCardSucceeded
+                         selector:@"handleCreateCardSucceeded:"];
+    [self observeNotificationName:KHHNetworkCreateCardFailed
+                         selector:@"handleCreateCardFailed:"];
+    [self observeNotificationName:KHHNetworkUpdateCardSucceeded
+                         selector:@"handleUpdateCardSucceeded:"];
+    [self observeNotificationName:KHHNetworkUpdateCardFailed
+                         selector:@"handleUpdateCardFailed:"];
+    [self observeNotificationName:KHHNetworkDeleteCardSucceeded
+                         selector:@"handleDeleteCardSucceeded:"];
+    [self observeNotificationName:KHHNetworkDeleteCardFailed
+                         selector:@"handleDeleteCardFailed:"];
+    [self observeNotificationName:KHHNetworkDeleteReceivedCardsSucceeded
+                         selector:@"handleDeleteReceivedCardsSucceeded:"];
+    [self observeNotificationName:KHHNetworkDeleteReceivedCardsFailed
+                         selector:@"handleDeleteReceivedCardsFailed:"];
+    // ReceivedCard 联系人
+    //        [self observeNotificationName:KHHNetworkReceivedCardCountAfterDateLastCardSucceeded
+    //                             selector:@"handleReceivedCardCountAfterDateLastCardSucceeded:"];
+    //        [self observeNotificationName:KHHNetworkReceivedCardCountAfterDateLastCardFailed
+    //                             selector:@"handleReceivedCardCountAfterDateLastCardFailed:"];
+    [self observeNotificationName:KHHNetworkReceivedCardsAfterDateLastCardExpectedCountSucceeded
+                         selector:@"handleReceivedCardsAfterDateLastCardExpectedCountSucceeded:"];
+    [self observeNotificationName:KHHNetworkReceivedCardsAfterDateLastCardExpectedCountFailed
+                         selector:@"handleReceivedCardsAfterDateLastCardExpectedCountFailed:"];
+    [self observeNotificationName:KHHNetworkLatestReceivedCardSucceeded
+                         selector:@"handleLatestReceivedCardSucceeded:"];
+    [self observeNotificationName:KHHNetworkLatestReceivedCardFailed
+                         selector:@"handleLatestReceivedCardFailed:"];
+    // 模板
+    [self observeNotificationName:KHHNetworkTemplatesAfterDateSucceeded
+                         selector:@"handleTemplatesAfterDateSucceeded:"];
+    [self observeNotificationName:KHHNetworkTemplatesAfterDateFailed
+                         selector:@"handleTemplatesAfterDateFailed:"];
+    
+    // 拜访计划
+    [self observeNotificationName:KHHNetworkVisitSchedulesAfterDateSucceeded
+                         selector:@"handleVisitSchedulesAfterDateSucceeded:"];
+    [self observeNotificationName:KHHNetworkVisitSchedulesAfterDateFailed
+                         selector:@"handleVisitSchedulesAfterDateFailed:"];
+    // 客户评估
+    [self observeNotificationName:KHHNetworkCustomerEvaluationListAfterDateSucceeded
+                         selector:@"handleCustomerEvaluationListAfterDateSucceeded:"];
+    [self observeNotificationName:KHHNetworkCustomerEvaluationListAfterDateFailed
+                         selector:@"handleCustomerEvaluationListAfterDateFailed:"];
 }
+
 #pragma mark - Notification handlers
 - (void)handleAllDataAfterDateSucceeded:(NSNotification *)noti {
     DLog(@"[II] noti userInfo keys = %@", [noti.userInfo allKeys]);
@@ -56,15 +104,10 @@
     [self saveContext];
     // 处理结束
     NSDictionary *extra = info[kInfoKeyExtra];
-    BOOL isChained = extra? [extra[kExtraKeyChainedInvocation] boolValue]: NO;
-    if (isChained) {
-        // 接下来，同步联系人
-        SyncMark *lastTime = [self syncMarkByKey:kSyncMarkKeyReceviedCardLastTime];
-        SyncMark *lastCardID = [self syncMarkByKey:kSyncMarkKeyReceviedCardLastID];
-        [self.agent receivedCardsAfterDate:lastTime.value
-                                  lastCard:lastCardID.value
-                             expectedCount:@"50"
-                                     extra:extra];
+    // 根据 queue 采取不同措施
+    NSMutableArray *queue = extra[kExtraKeySyncQueue];
+    if (queue) {
+        [self startNextSync:queue];
     } else {
         ALog(@"[EE] ERROR!! 怎么会走到这里？");
     }
@@ -204,16 +247,13 @@
                              expectedCount:@"50"
                                      extra:extra];
     } else { // count <= 1
-        // 根据 isChained 采取不同措施
-        BOOL isChained = extra? [extra[kExtraKeyChainedInvocation] boolValue]: NO;
-        if (isChained) {
-//            [self syncAllDataEnded:YES];
-            // 接下来同步拜访计划
-            SyncMark *lastTime = [self syncMarkByKey:kSyncMarkKeyVisitScheduleLastTime];
-            [self.agent visitSchedulesAfterDate:lastTime.value
-                                          extra:extra];
+        // 根据 queue 采取不同措施
+        NSMutableArray *queue = extra[kExtraKeySyncQueue];
+        if (queue) {
+            [self startNextSync:queue];
         }
         // 发送完成消息
+#warning TODO
         else {
             ALog(@"[EE] ERROR!! 怎么会走到这里？");
         }
@@ -255,6 +295,44 @@
     [self postASAPNotificationName:KHHUIPullLatestReceivedCardFailed
                               info:info];
 }
+@end
+@implementation KHHData (Handlers_Template)
+
+- (void)handleTemplatesAfterDateSucceeded:(NSNotification *)noti {
+    NSDictionary *info = noti.userInfo;
+    DLog(@"[II] info = %@", [info allKeys]);
+    
+    //1.TemplateList {
+    NSArray *list = info[kInfoKeyTemplateList];
+    if (list.count) {
+        [self processCardTemplateList:list];
+    }
+    // }
+    //2.syncTime {
+    NSString *syncTime = info[kInfoKeySyncTime];
+    if (syncTime.length) {
+        SyncMark *timeMark = [self syncMarkByKey:kSyncMarkKeyTemplatesLastTime];
+        timeMark.value = syncTime;
+    }
+    // }
+    // 3.保存
+    ALog(@"[II] 同步联系人 save context!");
+    [self saveContext];
+    
+    // 根据 queue 采取不同措施
+    NSDictionary *extra= info[kInfoKeyExtra];
+    NSMutableArray *queue = extra[kExtraKeySyncQueue];
+    if (queue) {
+        [self startNextSync:queue];
+    }
+}
+- (void)handleTemplatesAfterDateFailed:(NSNotification *)noti {
+    NSDictionary *info = noti.userInfo;
+#warning TODO
+    ALog(@"[II] info = %@", info);
+    [self syncAllDataEnded:NO];
+}
+
 @end
 @implementation KHHData (Handlers_VisitSchedule)
 - (void)handleVisitSchedulesAfterDateSucceeded:(NSNotification *)noti {

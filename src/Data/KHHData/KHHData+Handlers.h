@@ -9,7 +9,7 @@
 #import "KHHData.h"
 
 @interface KHHData (Handlers)
-//- (void)handle:(NSNotification *)noti;
+- (void)registerHandlersForNotifications;
 - (void)handleAllDataAfterDateSucceeded:(NSNotification *)noti;
 - (void)handleAllDataAfterDateFailed:(NSNotification *)noti;
 @end
@@ -28,6 +28,10 @@
 - (void)handleReceivedCardsAfterDateLastCardExpectedCountFailed:(NSNotification *)noti;
 - (void)handleLatestReceivedCardSucceeded:(NSNotification *)noti;
 - (void)handleLatestReceivedCardFailed:(NSNotification *)noti;
+@end
+@interface KHHData (Handlers_Template)
+- (void)handleTemplatesAfterDateSucceeded:(NSNotification *)noti;
+- (void)handleTemplatesAfterDateFailed:(NSNotification *)noti;
 @end
 @interface KHHData (Handlers_VisitSchedule)
 - (void)handleVisitSchedulesAfterDateSucceeded:(NSNotification *)noti;

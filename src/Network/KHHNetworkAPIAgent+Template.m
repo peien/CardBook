@@ -38,13 +38,43 @@
  模板增量接口 kinghhTemplateService.synTemplate
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=174
  */
-- (void)templatesAfterDate:(NSString *)lastDate {
+- (void)templatesAfterDate:(NSString *)lastDate
+                     extra:(NSDictionary *)extra {
+    NSString *action = @"templatesAfterDate";
+    NSString *query = @"kinghhTemplateService.synTemplate";
     NSDictionary *parameters = @{
     @"lastUpdateDateStr" : [lastDate length] > 0? lastDate: @""
     };
-    [self postAction:@"templatesAfterDate"
-               query:@"kinghhTemplateService.synTemplate"
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:responseObject];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
+        
+        // 把返回的数据转成本地数据
+        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        if (KHHNetworkStatusCodeSucceeded == code) {
+            // count
+            dict[kInfoKeyCount] = responseDict[JSONDataKeyCount];
+            
+            // synTime -> syncTime
+            NSString *syncTime = responseDict[JSONDataKeySynTime];
+            dict[kInfoKeySyncTime] = syncTime? syncTime: @"";
+            
+            // templatelist -> templatelist
+            NSArray *oldList = responseDict[JSONDataKeyTemplateList];
+            dict[kInfoKeyTemplateList] = oldList;
+        }
+        
+        // errorCode 和 extra
+        dict[kInfoKeyErrorCode] = @(code);
+        dict[kInfoKeyExtra] = extra;
+        // 把处理完的数据发出去。
+        [self postASAPNotificationName:NameWithActionAndCode(action, code)
+                                  info:dict];
+    };
+    [self postAction:action
+               query:query
           parameters:parameters
-             success:nil];
+             success:success
+               extra:extra];
 }
 @end

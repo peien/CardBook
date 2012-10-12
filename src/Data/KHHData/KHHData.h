@@ -20,14 +20,20 @@
 @property (readonly, strong, nonatomic) KHHNetworkAPIAgent *agent;
 // create OR obtain the singleton instance
 + (id)sharedData;
-
 //
 - (void)saveContext;   // 保存更改。
 - (void)cleanContext;  // 清除未保存的更改。
 - (void)removeContext; // 删除Context。登出或登入时使用。
+@end
 
-#pragma mark - Sync
+@interface KHHData (Syncs)
 // 开始批量同步所有信息
 - (void)startSyncAllData;
-
+- (void)syncAllDataEnded:(BOOL)succeed;
+- (void)startNextSync:(NSMutableArray *)queue;
+//
+- (void)syncPartly:(NSMutableArray *)queue; // 所谓的syncAll接口
+- (void)syncReceivedCards:(NSMutableArray *)queue;
+- (void)syncGroups:(NSMutableArray *)queue;
+- (void)syncTemplates:(NSMutableArray *)queue;
 @end

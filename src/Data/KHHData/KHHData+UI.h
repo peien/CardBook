@@ -40,7 +40,7 @@
 @end
 
 @interface KHHData (UI_Template)
-//- ()
+
 @end
 
 @interface KHHData (UI_Utils)
