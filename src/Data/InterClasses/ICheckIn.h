@@ -30,12 +30,13 @@
  bean.col5 	 String 	 否 	 备注
  */
 @interface ICheckIn : SMObject
-@property (nonatomic, strong) NSNumber *cardID; // bean.cardId 是 名片ID
-@property (nonatomic, strong) NSString *deviceToken; // bean.deviceToken 否 手机设备号
-@property (nonatomic, strong) NSNumber *latitude;// bean.latitude
-@property (nonatomic, strong) NSNumber *longitude;// bean.longitude
+@property (nonatomic, strong) NSNumber    *cardID; // bean.cardId 是 名片ID
+@property (nonatomic, strong) NSString    *deviceToken; // bean.deviceToken 否 手机设备号
+@property (nonatomic, strong) NSNumber    *latitude;// bean.latitude
+@property (nonatomic, strong) NSNumber    *longitude;// bean.longitude
 @property (nonatomic, strong) CLPlacemark *placemark;// 详细的地址信息
-@property (nonatomic, strong) NSString *memo; //bean.col1 否 备忘录
+@property (nonatomic, strong) NSString    *memo; //bean.col1 否 备忘录
+@property (nonatomic, strong) NSArray     *imageArray;//UIImage数组
 @end
 
 @interface ICheckIn (Methods)

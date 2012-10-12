@@ -8,6 +8,7 @@
 
 #import "KHHNetworkAPIAgent+EnterpriseManagement.h"
 #import "NSString+SM.h"
+#import "NSString+Networking.h"
 
 @implementation KHHNetworkAPIAgent (EnterpriseManagement)
 /*!
@@ -43,27 +44,41 @@
  bean.col5 	 String 	 否 	 备注
  */
 - (void)checkIn:(ICheckIn *)iCheckIn {
-    NSString *action = @"checkIn";
     DLog(@"[II] iCheckIn = %@", iCheckIn);
     
+    // 组合string参数
     NSDictionary *parameters = @{
     @"bean.cardId"      : [NSString stringFromObject:iCheckIn.cardID],
-    @"bean.deviceToken" : [NSString stringFromObject:iCheckIn.deviceToken], 
+    @"bean.deviceToken" : [NSString stringFromObject:iCheckIn.deviceToken],
     @"bean.latitude"    : [NSString stringFromObject:iCheckIn.latitude],
     @"bean.longitude"   : [NSString stringFromObject:iCheckIn.longitude],
+    @"bean.country"     : [NSString stringFromObject:iCheckIn.placemark.country],
+    @"bean.province"    : [NSString stringFromObject:iCheckIn.placemark.administrativeArea],
+    @"bean.city"        : [NSString stringFromObject:iCheckIn.placemark.locality],
+    @"bean.address"     : [NSString stringFromObject:iCheckIn.placemark.thoroughfare],
     @"bean.col1"        : [NSString stringFromObject:iCheckIn.memo],
     };
     
-//    KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
-//        
-//    };
-//    [self postAction:action
-//               query:@"kinghhEmployeeVisitCustomService.signInNew"
-//          parameters:parameters
-//             success:success];
+    // 打包图片
+    KHHConstructionBlock construction = ^(id <AFMultipartFormData>formData) {
+        NSArray *imageArray = iCheckIn.imageArray;
+        for (UIImage *image in imageArray) {
+            NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
+            [formData appendPartWithFileData:imageData
+                                        name:@"imgFiles"
+                                    fileName:@"imgFiles"
+                                    mimeType:@"image/jpeg"];
+        }
+    };
+    
+    // 发请求
+    NSString *action = @"checkIn";
+    NSString *query = @"kinghhEmployeeVisitCustomService.signInNew";
+    
     [self postAction:action
-               query:@"kinghhEmployeeVisitCustomService.signInNew"
+               query:query
           parameters:parameters
+    constructingBody:construction
              success:nil];
 }
 @end

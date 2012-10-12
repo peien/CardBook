@@ -31,7 +31,6 @@
     
     // LET'S TEST
     [self testLocationController];
-//    [self testLocationController];
 }
 
 #pragma mark - 试验模板显示
@@ -55,6 +54,18 @@
     [self showLabelWithText:@"试验CheckIn"];
     self.card = [[self.data allMyCards] objectAtIndex:0];
     ICheckIn *iCheckIn = [[ICheckIn alloc] initWithCard:self.card];
+    if (self.placemark) {
+        iCheckIn.placemark = self.placemark;
+        iCheckIn.latitude = [NSNumber numberWithDouble:self.location.coordinate.latitude];
+        iCheckIn.longitude = [NSNumber numberWithDouble:self.location.coordinate.longitude];
+    }
+    iCheckIn.memo = @"HELLO你好";
+    iCheckIn.imageArray = @[
+    [UIImage imageNamed:@"ic_shuaxin1@2x.png"],
+    [UIImage imageNamed:@"ic_shuaxin2@2x.png"],
+    [UIImage imageNamed:@"ic_shuaxin3@2x.png"],
+    [UIImage imageNamed:@"ic_shuaxin4@2x.png"],
+    ];
     [self.agent checkIn:iCheckIn];
 }
 #pragma mark - 试验LocationController
@@ -67,6 +78,12 @@
     static int num = 0;
     num = num + 1;
     ALog(@"[II] 第 %d 次！", num);
+    CLPlacemark *placemark = noti.userInfo[kInfoKeyPlacemark];
+    if (placemark) {
+        self.location = placemark.location;
+        self.placemark = placemark;
+    }
+    [self testCheckIn];
 }
 @end
 @implementation ATestViewController (Utils)
