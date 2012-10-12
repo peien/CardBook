@@ -20,6 +20,7 @@
     self = [super initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil];
     if (self) {
         self.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
+        self.view.backgroundColor = [UIColor whiteColor];
         _agent = [[KHHNetworkAPIAgent alloc] init];
         _data = [KHHData sharedData];
     }
@@ -28,9 +29,14 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    button.frame = CGRectMake(110, 200, 100, 44);
+    [self.view addSubview:button];
     
-    // LET'S TEST
-    [self testLocationController];
+    [button setTitle:@"Action!" forState:UIControlStateNormal];
+    [button addTarget:self
+               action:@selector(testLocationController) // TEST
+     forControlEvents:UIControlEventTouchUpInside];
 }
 
 #pragma mark - 试验模板显示
@@ -70,7 +76,8 @@
 #pragma mark - 试验LocationController
 - (void)testLocationController {
     [self showLabelWithText:@"试验LocationController"];
-    [self observeNotificationName:KHHLocationUpdateSucceeded selector:@"handleLocationUpdateSucceeded:"];
+    [self observeNotificationName:KHHLocationUpdateSucceeded
+                         selector:@"handleLocationUpdateSucceeded:"];
     [[KHHLocationController sharedController] updateLocation];
 }
 - (void)handleLocationUpdateSucceeded:(NSNotification *)noti {
@@ -87,7 +94,7 @@
 @end
 @implementation ATestViewController (Utils)
 - (void)showLabelWithText:(NSString *)text {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 220, 320, 21)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 300, 320, 21)];
     label.textAlignment = NSTextAlignmentCenter;
     label.text = text;
     [self.view addSubview:label];

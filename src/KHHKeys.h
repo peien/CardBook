@@ -173,6 +173,7 @@ static NSString * const kInfoKeyVisitScheduleList = @"visitScheduleList";
  kExtraKey* : "Extra" dictionary key
  */
 static NSString * const kExtraKeyCardID = @"cardID";// Card ID, NSNumber
+static NSString * const kExtraKeyCardList = @"cardList";// Card Array, NSArray
 static NSString * const kExtraKeyCardModelType = @"cardModelType";// CardModelType , NSNumber
 static NSString * const kExtraKeyChainedInvocation = @"chainedInvocation";//NSNumber(BOOL), 是否为链式调用
 static NSString * const kExtraKeyInterCard = @"interCard";// InterCard

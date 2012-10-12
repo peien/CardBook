@@ -226,7 +226,7 @@
     if ([self.myCard isKindOfClass:[PrivateCard class]]) {
         [self.dataCtrl deletePrivateCardByID:self.myCard.id];
     }else if ([self.myCard isKindOfClass:[ReceivedCard class]]){
-        [self.dataCtrl deleteReceivedCardByID:self.myCard.id];
+        [self.dataCtrl deleteReceivedCard:(ReceivedCard *)self.myCard];
     }
 }
 #pragma mark - 

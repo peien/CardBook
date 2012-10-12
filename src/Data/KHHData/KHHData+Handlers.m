@@ -149,6 +149,26 @@
     // 发送消息
     [self postASAPNotificationName:KHHUIDeleteCardFailed info:info];
 }
+- (void)handleDeleteReceivedCardsSucceeded:(NSNotification *)noti {
+    NSDictionary *info = noti.userInfo;
+    NSDictionary *extra = info[kInfoKeyExtra];
+    ALog(@"[II] extra = %@", extra);
+    // 从数据库中删除它
+    NSArray *cardList = extra[kExtraKeyCardList];
+    for (id aCard in cardList) {
+        [self.context deleteObject:aCard];
+    }
+    // 保存数据库
+    [self saveContext];
+    // 发送成功消息
+    [self postASAPNotificationName:KHHUIDeleteCardSucceeded];
+}
+- (void)handleDeleteReceivedCardsFailed:(NSNotification *)noti {
+    NSDictionary *info = noti.userInfo;
+    ALog(@"[II] info = %@", info);
+    // 发送消息
+    [self postASAPNotificationName:KHHUIDeleteCardFailed info:info];
+}
 - (void)handleReceivedCardsAfterDateLastCardExpectedCountSucceeded:(NSNotification *)noti {
     DLog(@"[II] handleReceivedCardsAfterDateLastCardExpectedCountSucceeded:%@", noti);
     NSDictionary *info = noti.userInfo;

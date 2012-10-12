@@ -38,6 +38,10 @@
                              selector:@"handleDeleteCardSucceeded:"];
         [self observeNotificationName:KHHNetworkDeleteCardFailed
                              selector:@"handleDeleteCardFailed:"];
+        [self observeNotificationName:KHHNetworkDeleteReceivedCardsSucceeded
+                             selector:@"handleDeleteReceivedCardsSucceeded:"];
+        [self observeNotificationName:KHHNetworkDeleteReceivedCardsFailed
+                             selector:@"handleDeleteReceivedCardsFailed:"];
         // ReceivedCard 联系人
 //        [self observeNotificationName:KHHNetworkReceivedCardCountAfterDateLastCardSucceeded
 //                             selector:@"handleReceivedCardCountAfterDateLastCardSucceeded:"];
@@ -58,8 +62,10 @@
         [self observeNotificationName:KHHNetworkVisitSchedulesAfterDateFailed
                              selector:@"handleVisitSchedulesAfterDateFailed:"];
         // 客户评估
-        [self observeNotificationName:KHHNetworkCustomerEvaluationListAfterDateSucceeded selector:@"handleCustomerEvaluationListAfterDateSucceeded:"];
-        [self observeNotificationName:KHHNetworkCustomerEvaluationListAfterDateFailed selector:@"handleCustomerEvaluationListAfterDateFailed:"];
+        [self observeNotificationName:KHHNetworkCustomerEvaluationListAfterDateSucceeded
+                             selector:@"handleCustomerEvaluationListAfterDateSucceeded:"];
+        [self observeNotificationName:KHHNetworkCustomerEvaluationListAfterDateFailed
+                             selector:@"handleCustomerEvaluationListAfterDateFailed:"];
     }
     return self;
 }

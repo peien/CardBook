@@ -376,7 +376,8 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(InterCard *iCard) {
     [self postAction:@"deleteReceivedCards"
                query:@"relationGroupService.deleteCardBook"
           parameters:parameters
-             success:nil];
+             success:nil
+               extra:@{ kExtraKeyCardList : cards }];
     return YES;
 }
 

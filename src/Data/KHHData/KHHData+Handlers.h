@@ -20,6 +20,8 @@
 - (void)handleUpdateCardFailed:(NSNotification *)noti;
 - (void)handleDeleteCardSucceeded:(NSNotification *)noti;
 - (void)handleDeleteCardFailed:(NSNotification *)noti;
+- (void)handleDeleteReceivedCardsSucceeded:(NSNotification *)noti;
+- (void)handleDeleteReceivedCardsFailed:(NSNotification *)noti;
 //- (void)handleReceivedCardCountAfterDateLastCardSucceeded:(NSNotification *)noti;
 //- (void)handleReceivedCardCountAfterDateLastCardFailed:(NSNotification *)noti;
 - (void)handleReceivedCardsAfterDateLastCardExpectedCountSucceeded:(NSNotification *)noti;
