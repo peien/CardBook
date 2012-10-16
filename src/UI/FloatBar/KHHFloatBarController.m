@@ -108,21 +108,25 @@
 {
     _type = 1;
     UIActionSheet *act = [[UIActionSheet alloc] initWithTitle:@"选择号码" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
-     NSArray *phones = [self.contactDic objectForKey:@"phone"];
-    
-    if (self.isContactCellClick && phones.count > 0) {
-        for (int i = 0; i < phones.count; i++) {
-            [act addButtonWithTitle:[phones objectAtIndex:i]];
-            [act showInView:_viewController.view];
+    //NSArray *phones = [self.contactDic objectForKey:@"phone"];
+    if (self.isContactCellClick) {
+        NSArray *phones = [self.contactDic objectForKey:@"phone"];
+        if (phones.count > 0) {
+            for (int i = 0; i < phones.count; i++) {
+                [act addButtonWithTitle:[phones objectAtIndex:i]];
+                [act showInView:_viewController.view];
+            }
         }
+        
     }else{
         if (self.card.mobilePhone.length > 0) {
             NSArray *mobielArr = [self.card.mobilePhone componentsSeparatedByString:@"|"];
             for (int i = 0; i < mobielArr.count; i++) {
                 [act addButtonWithTitle:[mobielArr objectAtIndex:i]];
+                [act showInView:_viewController.view];
             }
-            [act showInView:_viewController.view];
         }
+    
     
     }
     
@@ -133,12 +137,25 @@
 {
     _type = 2;
     UIActionSheet *actS = [[UIActionSheet alloc] initWithTitle:@"选择号码" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
-    if (self.card.mobilePhone.length > 0) {
-        NSArray *mobielArray = [self.card.mobilePhone componentsSeparatedByString:@"|"];
-        for (int i = 0; i < mobielArray.count; i++) {
-            [actS addButtonWithTitle:[mobielArray objectAtIndex:i]];
-            [actS showInView:_viewController.view];
+    if (self.isContactCellClick) {
+        NSArray *phones = [self.contactDic objectForKey:@"phone"];
+        if (phones.count > 0) {
+            for (int i = 0; i < phones.count; i++) {
+                [actS addButtonWithTitle:[phones objectAtIndex:i]];
+                [actS showInView:_viewController.view];
+            }
         }
+        
+    }else{
+        if (self.card.mobilePhone.length > 0) {
+            NSArray *mobielArray = [self.card.mobilePhone componentsSeparatedByString:@"|"];
+            for (int i = 0; i < mobielArray.count; i++) {
+                [actS addButtonWithTitle:[mobielArray objectAtIndex:i]];
+                [actS showInView:_viewController.view];
+                
+            }
+        }
+    
     }
     
     [self.popover dismissPopoverAnimated:YES];

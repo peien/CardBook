@@ -36,6 +36,7 @@
 #import "KHHCardMode.h"
 #import "Image.h"
 #import "Card.h"
+#import "KHHDataAPI.h"
 
 #import <MessageUI/MessageUI.h>
 
@@ -66,6 +67,8 @@ typedef enum {
 @property (assign, nonatomic)  int                    currentTag;
 @property (assign, nonatomic)  bool                   isAddressBookData;
 @property (strong, nonatomic)  NSMutableArray         *selectedItemArr;
+@property (strong, nonatomic)  NSArray                *OwnGroupArr;
+@property (strong, nonatomic)  NSIndexPath            *currentIndexPath;
 
 @end
 
@@ -112,6 +115,8 @@ typedef enum {
 @synthesize currentTag;
 @synthesize isAddressBookData;
 @synthesize selectedItemArr;
+@synthesize OwnGroupArr;
+@synthesize currentIndexPath;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -159,7 +164,7 @@ typedef enum {
     //cell是nil;
     [self performSelector:@selector(defaultSelectBtn) withObject:nil afterDelay:0.3];
     
-    _btnTitleArr = [[NSMutableArray alloc] initWithObjects:@"全部",@"new",@"同事",@"已发送",@"重点",@"未分组",@"手机", nil];
+    _btnTitleArr = [[NSMutableArray alloc] initWithObjects:@"所有",@"new",@"同事",@"拜访",@"重点",@"未分组",@"手机", nil];
     _btnArray = [[NSMutableArray alloc] initWithCapacity:0];
     _isShowData = YES;
     NSIndexPath *index = [NSIndexPath indexPathForRow:-1 inSection:0];
@@ -287,6 +292,8 @@ typedef enum {
     self.myCardArray = nil;
     self.privateArr = nil;
     self.selectedItemArr = nil;
+    self.OwnGroupArr = nil;
+    self.currentIndexPath = nil;
 
 }
 
@@ -299,9 +306,23 @@ typedef enum {
 - (void)initViewData
 {
     //调用数据库接口，获取各个分组的array
+    //所有
     self.allArray = [self.dataControl allReceivedCards];
     self.generalArray = allArray;
+    //我的卡片
     self.myCardArray = [self.dataControl allMyCards];
+    //获取分组
+    [self getAllGroups];
+    
+}
+//获取分组
+- (void)getAllGroups{
+    self.OwnGroupArr = [self.dataControl allTopLevelGroups];
+    for (int i = 0; i < self.OwnGroupArr.count; i++) {
+        Group *group = [self.OwnGroupArr objectAtIndex:i];
+        [_btnTitleArr addObject:group.name];
+    }
+
 }
 - (void)reloadTable
 {
@@ -363,6 +384,10 @@ typedef enum {
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 }
                 cell.button.tag = indexPath.row + 100;
+//                if (indexPath.row > 6) {
+//                    Group *group = [self.OwnGroupArr objectAtIndex:indexPath.row - 7];
+//                    cell.button.tag = [group.id intValue] + indexPath.row;
+//                }
                 [cell.button setTitle:NSLocalizedString([_btnTitleArr objectAtIndex:indexPath.row], nil) forState:UIControlStateNormal];
                 [cell.button addTarget:self action:@selector(cellBtnClick:) forControlEvents:UIControlEventTouchUpInside];
                 UIEdgeInsets insets = {0, 0, 0, 25};
@@ -581,6 +606,7 @@ typedef enum {
 
     KHHButtonCell *cell = (KHHButtonCell *)[[btn superview] superview];
     NSIndexPath *indexPath = [_btnTable indexPathForCell:cell];
+    self.currentIndexPath = indexPath;
     DLog(@"%@",indexPath);
     if (_lastIndexPath.row != indexPath.row) {
         KHHButtonCell *lastCell = (KHHButtonCell *)[_btnTable cellForRowAtIndexPath:_lastIndexPath];
@@ -591,9 +617,11 @@ typedef enum {
     }else {
         _isShowData = NO;
     }
+    
     _lastIndexPath = indexPath;
     _currentBtn = btn;
-    if (btn.tag <= 106) {
+    
+    if (indexPath.row <= 6) {
         self.isOwnGroup = NO;
     }else{
         self.isOwnGroup = YES;
@@ -635,9 +663,9 @@ typedef enum {
                 break;
             case 106:{
                 self.isAddressBookData = YES;
-                //self.floatBarVC.isContactCellClick = YES;
+                self.floatBarVC.isContactCellClick = YES;
                 self.currentTag = btn.tag;
-                NSArray *addressArr = [KHHAddressBook getAllPeppleFromAddressBook];
+                NSArray *addressArr = [KHHAddressBook getAddressBookData];
                 self.generalArray = addressArr;
                 
             }
@@ -654,7 +682,15 @@ typedef enum {
         //当是自定义分组时，把btn的tag用groupid进行设置，再根据tag进行读取各个分组的成员
         if (self.isOwnGroup) {
             //调用接口，获得self.ownGroupArray
-            self.generalArray = self.oWnGroupArray;
+            Group *group = [self.OwnGroupArr objectAtIndex:btn.tag - 100 - 7];
+            NSSet *set = group.cards;
+            NSArray *cards = [set allObjects];
+            if (cards.count == 0) {
+                self.generalArray = nil;
+            }else{
+                self.generalArray = cards;
+            }
+            
         }
         UIEdgeInsets insets = {0,0,0,25};
         [btn setBackgroundImage:[[UIImage imageNamed:@"left_btn_bg_selected.png"] resizableImageWithCapInsets:insets] forState:UIControlStateNormal];
@@ -663,7 +699,7 @@ typedef enum {
     }else{
         
         _type = KUIActionSheetStyleEditGroupMember;
-        if (btn.tag >= 107) {
+        if (indexPath.row >= 7) {
             UIActionSheet *actSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                                   delegate:self
                                                          cancelButtonTitle:NSLocalizedString(@"取消",nil)
@@ -700,11 +736,11 @@ typedef enum {
             addMemVC.handleArray = self.generalArray;
         }else if (buttonIndex == 3){
             //修改组名
-//            myAlertView *alert = [[myAlertView alloc] initWithTitle:@"修改组名" message:nil delegate:self style:kMyAlertStyleTextField cancelButtonTitle:@"确定" otherButtonTitles:@"取消"];
+            myAlertView *alert = [[myAlertView alloc] initWithTitle:@"修改组名" message:nil delegate:self style:kMyAlertStyleTextField cancelButtonTitle:@"确定" otherButtonTitles:@"取消"];
             _titleStr = NSLocalizedString(@"修改组名", nil);
             _isAddGroup = NO;
             _isDelGroup = NO;
-            [_alert show];
+            [alert show];
             return;
         }else if (buttonIndex == 4){
             //删除分组
@@ -836,9 +872,9 @@ typedef enum {
                 UITextField *tf = (UITextField *)view;
                 if (tf.text.length > 0 && _isAddGroup) {
                     [_btnTitleArr addObject:tf.text];
+                    //同步，从新调用自定义的所有分组，然后再刷新表
                     [_btnTable reloadData];
                     [_btnTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_btnTitleArr count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-                    //此时创建一个组，保存到数据库
                     
                 }else{
                     //修改组名，
@@ -856,6 +892,7 @@ typedef enum {
             return;
         }
         [_btnTitleArr removeObjectAtIndex:_currentBtn.tag - 100];
+        //[_btnTitleArr removeObjectAtIndex:currentIndexPath.row];
         [_btnTable reloadData];
     }
     if (buttonIndex == 1) {
