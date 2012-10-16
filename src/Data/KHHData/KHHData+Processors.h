@@ -27,6 +27,10 @@
 - (NSMutableArray *)processPrivateCardList:(NSArray *)list;
 - (NSMutableArray *)processReceivedCardList:(NSArray *)list;
 
+// Group
+- (NSMutableArray *)processIGroupList:(NSArray *)list;
+- (void)processICardGroupMapList:(NSArray *)list;
+
 // template
 // CardTemplate数组
 - (NSMutableArray *)processCardTemplateList:(NSArray *)list;
@@ -37,6 +41,9 @@
 @interface KHHData (Processors_Object)
 // 返回各种Card对象
 - (Card *)processCard:(InterCard *)iCard cardType:(KHHCardModelType)type;
+// group
+- (Group *)processIGroup:(IGroup *)igroup;
+- (void)processICardGroupMap:(ICardGroupMap *)icgm;
 // 返回CardTemplate
 - (CardTemplate *)processCardTemplate:(NSDictionary *)cardTemplate;
 // 返回CardTemplateItem

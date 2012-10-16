@@ -24,6 +24,7 @@
         self.view.backgroundColor = [UIColor whiteColor];
         _agent = [[KHHNetworkAPIAgent alloc] init];
         _data = [KHHData sharedData];
+        _card = [[self.data allMyCards] objectAtIndex:0];
     }
     return self;
 }
@@ -36,8 +37,17 @@
     
     [button setTitle:@"Action!" forState:UIControlStateNormal];
     [button addTarget:self
-               action:@selector(testLocationController) // TEST
+               action:@selector(testGroups) // TEST
      forControlEvents:UIControlEventTouchUpInside];
+}
+
+#pragma mark - 试验Groups
+- (void)testGroups {
+    [self showLabelWithText:@"试验Groups"];
+//    [self.agent childGroupsOfGroupID:nil
+//                          withCardID:nil
+//                               extra:nil];
+    [self.agent cardIDsInAllGroupWithExtra:nil];
 }
 
 #pragma mark - 试验模板显示
@@ -59,7 +69,6 @@
 #pragma mark - 试验CheckIn
 - (void)testCheckIn {
     [self showLabelWithText:@"试验CheckIn"];
-    self.card = [[self.data allMyCards] objectAtIndex:0];
     ICheckIn *iCheckIn = [[ICheckIn alloc] initWithCard:self.card];
     if (self.placemark) {
         iCheckIn.placemark = self.placemark;

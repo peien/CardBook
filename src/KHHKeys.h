@@ -64,17 +64,16 @@ static NSString * const kAttributeKeyPathLogoURL = @"logo.url";
 static NSString * const kAttributeKeyPathParentID = @"parent.id";
 static NSString * const kAttributeKeyPathTemplateID = @"template.id";
 
-#pragma mark - JSONDataKey* : result dictionary key path 
-/*!
- JSONDataKey* : result dictionary key path
- */
+#pragma mark - JSONDataKey* : result dictionary key path
 static NSString * const JSONDataKeyAddress = @"address";
 static NSString * const JSONDataKeyBankNO = @"bankNO";
 static NSString * const JSONDataKeyBusinessScope = @"businessScope";
 static NSString * const JSONDataKeyCardId = @"cardId";
 static NSString * const JSONDataKeyCardBookList = @"cardBookList";
 static NSString * const JSONDataKeyCardBookVO = @"cardBookVo";
+static NSString * const JSONDataKeyCardGroupList = @"cardGroupList";
 static NSString * const JSONDataKeyCardLinkList = @"cardLinkList";
+static NSString * const JSONDataKeyCardType = @"cardType";// linkman, me...
 static NSString * const JSONDataKeyCardTypeId = @"cardTypeId"; // 对应 roleType
 static NSString * const JSONDataKeyCity = @"city";
 static NSString * const JSONDataKeyCol1 = @"col1";
@@ -94,6 +93,9 @@ static NSString * const JSONDataKeyFax = @"fax";
 static NSString * const JSONDataKeyFuctionIds = @"fuctionIds";
 static NSString * const JSONDataKeyGmtCreateTime = @"gmtCreateTime";
 static NSString * const JSONDataKeyGmtModTime = @"gmtModTime";
+static NSString * const JSONDataKeyGroupId = @"groupId";
+static NSString * const JSONDataKeyGroupList = @"groupList";
+static NSString * const JSONDataKeyGroupName = @"groupName";
 static NSString * const JSONDataKeyID = @"id";
 static NSString * const JSONDataKeyImageUrl = @"imageUrl";
 static NSString * const JSONDataKeyIsAutoReceive = @"isAutoReceive";
@@ -115,6 +117,7 @@ static NSString * const JSONDataKeyName = @"name";
 static NSString * const JSONDataKeyNote = @"note";
 static NSString * const JSONDataKeyOpenBank = @"openBank";
 static NSString * const JSONDataKeyOrgId = @"orgId";
+static NSString * const JSONDataKeyParentID = @"parentId";
 static NSString * const JSONDataKeyPermissionName = @"permissionName";
 static NSString * const JSONDataKeyPlanList = @"planList";
 static NSString * const JSONDataKeyProvince = @"province";
@@ -134,9 +137,6 @@ static NSString * const JSONDataKeyWeb = @"web";
 static NSString * const JSONDataKeyZipcode = @"zipcode";
 
 #pragma mark - kInfoKey* : Info dictionary key
-/*!
- kInfoKey* : Info dictionary key
- */
 static NSString * const kInfoKeyAuthorizationID = @"authorizationID";//NSNumber
 static NSString * const kInfoKeyAutoLogin = @"autoLogin";//NSNumber(BOOL)
 static NSString * const kInfoKeyAutoReceive = @"autoReceive";//NSNumber(BOOL)
@@ -148,11 +148,13 @@ static NSString * const kInfoKeyDepartmentID = @"departmentID";//NSNumber
 static NSString * const kInfoKeyError = @"error";
 static NSString * const kInfoKeyErrorCode = @"errorCode";//NSNumber
 static NSString * const kInfoKeyErrorMessage = @"errorMessage";//NSString
+static NSString * const kInfoKeyGroupList = @"groupList";//NSArray
+static NSString * const kInfoKeyICardGroupMapList = @"iCardGroupMapList";
 static NSString * const kInfoKeyICPPromotionLinkList = @"ICPPromotionLinkList";//NSArray
 static NSString * const kInfoKeyID = @"id";
 static NSString * const kInfoKeyInterCard = @"InterCard";
 static NSString * const kInfoKeyLastID = @"lastID";//NSNumber
-static NSString * const kInfoKeyLocationAddress = @"locationAddress";
+static NSString * const kInfoKeyLocationAddress = @"locationAddress";//NSString
 static NSString * const kInfoKeyLocationLatitude = @"locationLatitude";
 static NSString * const kInfoKeyLocationLongitude = @"locationLongitude";
 static NSString * const kInfoKeyMyCardList = @"myCardList";//NSArray
@@ -169,19 +171,14 @@ static NSString * const kInfoKeyUserID = @"userID";//NSNumber
 static NSString * const kInfoKeyVisitScheduleList = @"visitScheduleList";
 
 #pragma mark - kExtraKey* : "Extra" dictionary key
-/*!
- kExtraKey* : "Extra" dictionary key
- */
 static NSString * const kExtraKeyCardID = @"cardID";// Card ID, NSNumber
 static NSString * const kExtraKeyCardList = @"cardList";// Card Array, NSArray
 static NSString * const kExtraKeyCardModelType = @"cardModelType";// CardModelType , NSNumber
 static NSString * const kExtraKeyChainedInvocation = @"chainedInvocation";//NSNumber(BOOL), 是否为链式调用
 static NSString * const kExtraKeyInterCard = @"interCard";// InterCard
+static NSString * const kExtraKeySyncQueue = @"syncQueue";// NSMutableArray
 
 #pragma mark - kVisualCardItem* : 
-/*!
- static NSString * const kVisualCardItemKey<#Name#> = @"<#String#>";
- */
 static NSString * const kVisualCardItemKeyAddress = @"address";
 static NSString * const kVisualCardItemKeyCompanyEmail = @"cpemail";
 static NSString * const kVisualCardItemKeyCompanyName = @"company";
@@ -197,11 +194,12 @@ static NSString * const kVisualCardItemKeyTelephone = @"telephone";
 static NSString * const kVisualCardItemKeyTitle = @"title";
 
 #pragma mark - kSyncMarkKey* : SyncMark keys
-//static NSString * const kSyncMarkKey<#Name#> = @"<#String#>";
 static NSString * const kSyncMarkKeyCustomerEvaluationLastTime = @"customerEvaluationLastTime";
+static NSString * const kSyncMarkKeyGroupsLastTime = @"groupsLastTime";
 static NSString * const kSyncMarkKeyReceviedCardLastID = @"receviedCardLastID";
 static NSString * const kSyncMarkKeyReceviedCardLastTime = @"receviedCardLastTime";
 static NSString * const kSyncMarkKeySyncAllLastTime = @"syncAllLastTime";
+static NSString * const kSyncMarkKeyTemplatesLastTime = @"templatesLastTime";
 static NSString * const kSyncMarkKeyVisitScheduleLastTime = @"visitScheduleLastTime";
 
 #endif

@@ -122,6 +122,10 @@ static NSString * const KHHNetworkMarkReadReceivedCardFailed    = @"markReadRece
 static NSString * const KHHNetworkPrivateCardsAfterDateSucceeded = @"privateCardsAfterDateSucceeded";
 static NSString * const KHHNetworkPrivateCardsAfterDateFailed    = @"privateCardsAfterDateFailed";
 
+//MARK: - 模板
+static NSString * const KHHNetworkTemplatesAfterDateSucceeded = @"templatesAfterDateSucceeded";
+static NSString * const KHHNetworkTemplatesAfterDateFailed = @"templatesAfterDateFailed";
+
 //MARK: - 分组
 // Create group
 static NSString * const KHHNetworkCreateGroupSucceeded = @"createGroupSucceeded";
@@ -133,11 +137,16 @@ static NSString * const KHHNetworkUpdateGroupFailed    = @"updateGroupFailed";
 static NSString * const KHHNetworkDeleteGroupSucceeded = @"deleteGroupSucceeded";
 static NSString * const KHHNetworkDeleteGroupFailed    = @"deleteGroupFailed";
 // card IDs in group
-static NSString * const KHHNetworkCardIDsWithinGroupSucceeded = @"cardIDsWithinGroupSucceeded";
-static NSString * const KHHNetworkCardIDsWithinGroupFailed    = @"cardIDsWithinGroupFailed";
+static NSString * const KHHNetworkCardIDsInGroupSucceeded = @"cardIDsInGroupSucceeded";
+static NSString * const KHHNetworkCardIDsInGroupFailed    = @"cardIDsInGroupFailed";
+static NSString * const KHHNetworkCardIDsInAllGroupSucceeded = @"NetworkCardIDsInAllGroupSucceeded";
+static NSString * const KHHNetworkCardIDsInAllGroupFailed    = @"NetworkCardIDsInAllGroupFailed";
 // Move cards from ... to ...
 static NSString * const KHHNetworkMoveCardsSucceeded = @"moveCardsSucceeded";
 static NSString * const KHHNetworkMoveCardsFailed    = @"moveCardsFailed";
+// Child groups
+static NSString * const KHHNetworkChildGroupsOfGroupIDSucceeded = @"NetworkChildGroupsOfGroupIDSucceeded";
+static NSString * const KHHNetworkChildGroupsOfGroupIDFailed = @"NetworkChildGroupsOfGroupIDFailed";
 
 //MARK: - 名片交换
 //交换

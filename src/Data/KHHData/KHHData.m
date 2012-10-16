@@ -21,52 +21,7 @@
     if (self) {
         //
         _agent = [[KHHNetworkAPIAgent alloc] init];
-        //[self observeNotificationName:KHHNetwork selector:@"handle"];
-        [self observeNotificationName:KHHNetworkAllDataAfterDateSucceeded
-                             selector:@"handleAllDataAfterDateSucceeded:"];
-        [self observeNotificationName:KHHNetworkAllDataAfterDateFailed
-                             selector:@"handleAllDataAfterDateFailed:"];
-        // Card - Create, Update, Delete.
-        [self observeNotificationName:KHHNetworkCreateCardSucceeded
-                             selector:@"handleCreateCardSucceeded:"];
-        [self observeNotificationName:KHHNetworkCreateCardFailed
-                             selector:@"handleCreateCardFailed:"];
-        [self observeNotificationName:KHHNetworkUpdateCardSucceeded
-                             selector:@"handleUpdateCardSucceeded:"];
-        [self observeNotificationName:KHHNetworkUpdateCardFailed
-                             selector:@"handleUpdateCardFailed:"];
-        [self observeNotificationName:KHHNetworkDeleteCardSucceeded
-                             selector:@"handleDeleteCardSucceeded:"];
-        [self observeNotificationName:KHHNetworkDeleteCardFailed
-                             selector:@"handleDeleteCardFailed:"];
-        [self observeNotificationName:KHHNetworkDeleteReceivedCardsSucceeded
-                             selector:@"handleDeleteReceivedCardsSucceeded:"];
-        [self observeNotificationName:KHHNetworkDeleteReceivedCardsFailed
-                             selector:@"handleDeleteReceivedCardsFailed:"];
-        // ReceivedCard 联系人
-//        [self observeNotificationName:KHHNetworkReceivedCardCountAfterDateLastCardSucceeded
-//                             selector:@"handleReceivedCardCountAfterDateLastCardSucceeded:"];
-//        [self observeNotificationName:KHHNetworkReceivedCardCountAfterDateLastCardFailed
-//                             selector:@"handleReceivedCardCountAfterDateLastCardFailed:"];
-        [self observeNotificationName:KHHNetworkReceivedCardsAfterDateLastCardExpectedCountSucceeded
-                         selector:@"handleReceivedCardsAfterDateLastCardExpectedCountSucceeded:"];
-        [self observeNotificationName:KHHNetworkReceivedCardsAfterDateLastCardExpectedCountFailed
-                         selector:@"handleReceivedCardsAfterDateLastCardExpectedCountFailed:"];
-        [self observeNotificationName:KHHNetworkLatestReceivedCardSucceeded
-                             selector:@"handleLatestReceivedCardSucceeded:"];
-        [self observeNotificationName:KHHNetworkLatestReceivedCardFailed
-                             selector:@"handleLatestReceivedCardFailed:"];
-        
-        // 拜访计划
-        [self observeNotificationName:KHHNetworkVisitSchedulesAfterDateSucceeded
-                             selector:@"handleVisitSchedulesAfterDateSucceeded:"];
-        [self observeNotificationName:KHHNetworkVisitSchedulesAfterDateFailed
-                             selector:@"handleVisitSchedulesAfterDateFailed:"];
-        // 客户评估
-        [self observeNotificationName:KHHNetworkCustomerEvaluationListAfterDateSucceeded
-                             selector:@"handleCustomerEvaluationListAfterDateSucceeded:"];
-        [self observeNotificationName:KHHNetworkCustomerEvaluationListAfterDateFailed
-                             selector:@"handleCustomerEvaluationListAfterDateFailed:"];
+        [self registerHandlersForNotifications];
     }
     return self;
 }
@@ -154,42 +109,108 @@
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
-        /*
-         Replace this implementation with code to handle the error appropriately.
-         
-         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-         
-         Typical reasons for an error here include:
-         * The persistent store is not accessible;
-         * The schema for the persistent store is incompatible with current managed object model.
-         Check the error message to determine what the actual problem was.
-         
-         
-         If the persistent store is not accessible, there is typically something wrong with the file path. Often, a file URL is pointing into the application's resources directory instead of a writeable directory.
-         
-         If you encounter schema incompatibility errors during development, you can reduce their frequency by:
-         * Simply deleting the existing store:
-         [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil]
-         
-         * Performing automatic lightweight migration by passing the following dictionary as the options parameter:
-         @{NSMigratePersistentStoresAutomaticallyOption:@YES, NSInferMappingModelAutomaticallyOption:@YES}
-         
-         Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
-         
-         */
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
+//        abort();
+        // 由于所有数据都在服务器端，一旦出错可直接删除本地数据，重新同步。
+        [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil];
     }
     
     return _persistentStoreCoordinator;
 }
+@end
 #pragma mark - Sync
+@implementation KHHData (Syncs)
 // 开始批量同步所有信息
 - (void)startSyncAllData {
     // 启动调用链！
-    NSDictionary *extra = @{kExtraKeyChainedInvocation : [NSNumber numberWithBool:YES]};
-    SyncMark *lastSyncTime = [self syncMarkByKey:kSyncMarkKeySyncAllLastTime];
-    [self.agent allDataAfterDate:lastSyncTime.value extra:extra];
+    NSMutableArray *queue = [NSMutableArray array];
+    [queue addObject:@(KHHSyncActionSyncPartly)];
+    [queue addObject:@(KHHSyncActionSyncTemplates)];
+    [queue addObject:@(KHHSyncActionSyncGroups)];
+    [queue addObject:@(KHHSyncActionSyncReceivedCards)];
+    [queue addObject:@(KHHSyncActionSyncCardGroupMaps)];
+    [self startNextSync:queue];
 }
+- (void)syncAllDataEnded:(BOOL)succeed {
+    if (succeed) {
+        [self postNowNotificationName:KHHUISyncAllSucceeded];
+    } else {
+        [self postNowNotificationName:KHHUISyncAllFailed];
+    }
+}
+- (void)startNextSync:(NSMutableArray *)queue {
+    DLog(@"[II] 待同步的queue = %@", queue);
+    if (0 == queue.count) {
+        [self syncAllDataEnded:YES];
+        return;
+    }
+    KHHSyncActionType syncAction = [queue[0] integerValue];
+    [queue removeObjectAtIndex:0];
+    switch (syncAction) {
+        case KHHSyncActionSyncPartly: {
+            [self syncPartly:queue];
+            break;
+        }
+        case KHHSyncActionSyncTemplates: {
+            [self syncTemplates:queue];
+            break;
+        }
+        case KHHSyncActionSyncGroups: {
+            [self syncGroups:queue];
+            break;
+        }
+        case KHHSyncActionSyncReceivedCards: {
+            [self syncReceivedCards:queue];
+            break;
+        }
+        case KHHSyncActionSyncCardGroupMaps: {
+            [self syncCardGroupMaps:queue];
+            break;
+        }
+    }
+}
+//
+- (void)syncPartly:(NSMutableArray *)queue // 所谓的syncAll接口
+{
+    NSDictionary *extra = @{ kExtraKeySyncQueue : queue };
+    SyncMark *lastSyncTime = [self syncMarkByKey:kSyncMarkKeySyncAllLastTime];
+    [self.agent allDataAfterDate:lastSyncTime.value
+                           extra:extra];
+}
+- (void)syncReceivedCards:(NSMutableArray *)queue {
+    // 同步联系人
+    NSDictionary *extra = @{ kExtraKeySyncQueue : queue };
+    SyncMark *lastTime = [self syncMarkByKey:kSyncMarkKeyReceviedCardLastTime];
+    SyncMark *lastCardID = [self syncMarkByKey:kSyncMarkKeyReceviedCardLastID];
+    [self.agent receivedCardsAfterDate:lastTime.value
+                              lastCard:lastCardID.value
+                         expectedCount:@"50"
+                                 extra:extra];
+}
+- (void)syncCardGroupMaps:(NSMutableArray *)queue {
+    //
+    NSDictionary *extra = @{ kExtraKeySyncQueue : queue };
+    [self.agent cardIDsInAllGroupWithExtra:extra];
+}
+- (void)syncTemplates:(NSMutableArray *)queue {
+    NSDictionary *extra = @{ kExtraKeySyncQueue : queue };
+    SyncMark *lastTime = [self syncMarkByKey:kSyncMarkKeyGroupsLastTime];
+    [self.agent templatesAfterDate:lastTime.value
+                             extra:extra];
+}
+- (void)syncGroups:(NSMutableArray *)queue {
+    NSDictionary *extra = @{ kExtraKeySyncQueue : queue };
+    [self.agent childGroupsOfGroupID:nil
+                          withCardID:nil
+                               extra:extra];
+}
+- (void)syncVisitSchedules:(NSMutableArray *)queue {
+    // 同步拜访计划
+    NSDictionary *extra = @{ kExtraKeySyncQueue : queue };
+    SyncMark *lastTime = [self syncMarkByKey:kSyncMarkKeyVisitScheduleLastTime];
+    [self.agent visitSchedulesAfterDate:lastTime.value
+                                  extra:extra];
+}
+
 
 @end

@@ -50,6 +50,13 @@
 - (void)deleteCardOfType:(KHHCardModelType)cardType byID:(NSNumber *)cardID;//联网
 @end
 
+#pragma mark - Group
+@interface KHHData (CRUD_Group)
+// 根据分组ID查数据库。
+// 无则新建。
+- (Group *)groupByID:(NSNumber *)groupID;
+@end
+
 #pragma mark - Company
 @interface KHHData (CRUD_Company)
 // 根据公司ID查数据库。

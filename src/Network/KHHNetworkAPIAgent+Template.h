@@ -24,5 +24,6 @@
  模板增量接口 kinghhTemplateService.synTemplate
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=174
  */
-- (void)templatesAfterDate:(NSString *)lastDate;
+- (void)templatesAfterDate:(NSString *)lastDate
+                     extra:(NSDictionary *)extra;
 @end

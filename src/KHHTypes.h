@@ -54,4 +54,15 @@ typedef enum {
     KHHTemplateDomainTypePublic   = 1,
     KHHTemplateDomainTypePrivate  = 2,
 } KHHTemplateDomainType;
+
+// KHHSyncActionType
+typedef enum {
+    KHHSyncActionSyncPartly = 0,
+    KHHSyncActionSyncGroups,
+    KHHSyncActionSyncTemplates,
+    KHHSyncActionSyncReceivedCards,
+    KHHSyncActionSyncCardGroupMaps,
+} KHHSyncActionType;
+
+
 #endif
