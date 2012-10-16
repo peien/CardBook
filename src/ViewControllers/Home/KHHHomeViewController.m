@@ -65,6 +65,8 @@ typedef enum {
 @property (assign, nonatomic)  bool                   isNeedReloadTable;
 @property (assign, nonatomic)  int                    currentTag;
 @property (assign, nonatomic)  bool                   isAddressBookData;
+@property (strong, nonatomic)  NSMutableArray         *selectedItemArr;
+
 @end
 
 @implementation KHHHomeViewController
@@ -109,6 +111,7 @@ typedef enum {
 @synthesize isNeedReloadTable;
 @synthesize currentTag;
 @synthesize isAddressBookData;
+@synthesize selectedItemArr;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -152,16 +155,21 @@ typedef enum {
     UIBarButtonItem *addButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:nil];
     [self.toolBar setItems:[NSArray arrayWithObjects:searchBarItem, addButtonItem, nil] animated:YES];
     
-    self.floatBarVC = [[KHHFloatBarController alloc] initWithNibName:nil bundle:nil];
-    self.floatBarVC.viewController = self;
-    self.popover = [[WEPopoverController alloc] initWithContentViewController:floatBarVC];
-    self.floatBarVC.popover = self.popover;
+    //默认选中哪个按钮
+    //cell是nil;
+    [self performSelector:@selector(defaultSelectBtn) withObject:nil afterDelay:0.3];
     
     _btnTitleArr = [[NSMutableArray alloc] initWithObjects:@"全部",@"new",@"同事",@"已发送",@"重点",@"未分组",@"手机", nil];
     _btnArray = [[NSMutableArray alloc] initWithCapacity:0];
     _isShowData = YES;
     NSIndexPath *index = [NSIndexPath indexPathForRow:-1 inSection:0];
     _lastIndexPath = index;
+    
+    self.floatBarVC = [[KHHFloatBarController alloc] initWithNibName:nil bundle:nil];
+    self.floatBarVC.viewController = self;
+    self.popover = [[WEPopoverController alloc] initWithContentViewController:floatBarVC];
+    self.floatBarVC.popover = self.popover;
+    
     KHHMySearchBar *mySearchBar = [[KHHMySearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44) simple:_isNormalSearchBar];
     [mySearchBar.synBtn addTarget:self action:@selector(synBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [mySearchBar.takePhoto addTarget:self action:@selector(takePhotoClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -183,10 +191,6 @@ typedef enum {
     disCtrl.searchResultsDelegate = self;
     _searCtrl = disCtrl;
     
-    //默认选中哪个按钮
-    //cell是nil;
-    [self performSelector:@selector(defaultSelectBtn) withObject:nil afterDelay:0.3];
-
     //添加一个长按动作（bigtable）
     UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressFunc:)];
     longPress.numberOfTouchesRequired = 1;
@@ -197,7 +201,17 @@ typedef enum {
     [self initViewData];
     //我的详情
     //Card *myCard = [self.myCardArray lastObject];
-    
+    self.selectedItemArr = [[NSMutableArray alloc] initWithCapacity:0];
+
+    if (self.isNormalSearchBar) {
+        [self mutilyFlagForSelected];
+    }
+}
+// 多选标记
+- (void)mutilyFlagForSelected{
+    for (int i = 0; i < self.generalArray.count; i++) {
+        [self.selectedItemArr addObject:[NSNumber numberWithBool:NO]];
+    }
 }
 // 搜索结果 临时搜索
 - (void)searcResult
@@ -272,6 +286,8 @@ typedef enum {
     self.oWnGroupArray = nil;
     self.myCardArray = nil;
     self.privateArr = nil;
+    self.selectedItemArr = nil;
+
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -295,9 +311,6 @@ typedef enum {
         self.generalArray = [self.dataControl allReceivedCards];
     }
     [_bigTable reloadData];
-//    Card *card = [[self.dataControl allMyCards] lastObject];
-//    [self.rightBtn setTitle:card.name forState:UIControlStateNormal];
-    
 }
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -348,8 +361,7 @@ typedef enum {
                                                           owner:self
                                                         options:nil] objectAtIndex:0];
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                }else
-                    DLog(@"recell!!========%@",indexPath);
+                }
                 cell.button.tag = indexPath.row + 100;
                 [cell.button setTitle:NSLocalizedString([_btnTitleArr objectAtIndex:indexPath.row], nil) forState:UIControlStateNormal];
                 [cell.button addTarget:self action:@selector(cellBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -383,41 +395,60 @@ typedef enum {
                     cell.positionLabel.text = [[self.generalArray objectAtIndex:indexPath.row] objectForKey:@"job"];
                     cell.companyLabel.text = [[self.generalArray objectAtIndex:indexPath.row] objectForKey:@"company"];
                     return cell;
-                }else{
-                    cellId = NSStringFromClass([KHHClientCellLNPCC class]);
-                    KHHClientCellLNPCC *cell = nil;
-                    cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-                    if (cell == nil) {
-                        cell = [[[NSBundle mainBundle] loadNibNamed:cellId
-                                                              owner:self
-                                                            options:nil] objectAtIndex:0];
-                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-                        
-                    }
-                    //从网络获取头像
-                    Card *card = [self.generalArray objectAtIndex:indexPath.row];
-                    [cell.logoBtn setImageWithURL:[NSURL URLWithString:card.logo.url]
-                                 placeholderImage:[UIImage imageNamed:@"logopic.png"]
-                                          success:^(UIImage *image, BOOL cached){
-                                              if(CGSizeEqualToSize(image.size, CGSizeZero)){
-                                                  [cell.logoBtn setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-                                              }
-                                          }
-                                          failure:^(NSError *error){
-                                              
-                                          }];
-                    
-                    if (_isNormalSearchBar) {
-                        
-                    }else{
-                        [cell.logoBtn addTarget:self action:@selector(logoBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-                    }
-                    //填充单元格数据
-                    cell.nameLabel.text = card.name;
-                    cell.positionLabel.text = card.title;
-                    cell.companyLabel.text =card.company.name;
-                    return cell;
                 }
+                
+                cellId = NSStringFromClass([KHHClientCellLNPCC class]);
+                KHHClientCellLNPCC *cell = nil;
+                cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+                if (cell == nil) {
+                    cell = [[[NSBundle mainBundle] loadNibNamed:cellId
+                                                          owner:self
+                                                        options:nil] objectAtIndex:0];
+                    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    
+                }
+                //多选标记
+//                if (self.isNormalSearchBar) {
+//                    if ([[self.selectedItemArr objectAtIndex:indexPath.row] isEqualToNumber:[NSNumber numberWithBool:YES]]) {
+//                        UIImageView *cellImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checked.png"]];
+//                        cellImageView.frame = CGRectMake(200, 10, 30, 30);
+//                        [cell addSubview:cellImageView];
+//                        //cell.accessoryType = UITableViewCellAccessoryCheckmark;
+//                    }else{
+//                        UIImageView *cellImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"unchecked.png"]];
+//                        cellImageView.frame = CGRectMake(200, 10, 30, 30);
+//                        [cell addSubview:cellImageView];
+//                        //cell.accessoryType = UITableViewCellAccessoryNone;
+//                    }
+//                }
+                //从网络获取头像
+                if ([[self.generalArray objectAtIndex:indexPath.row] isKindOfClass:[NSDictionary class]]) {
+                    DLog(@"self.generalArray 应该是card 类型，但是却是字典类型，所以挂掉了");
+                    //return nil;
+                }
+                Card *card = [self.generalArray objectAtIndex:indexPath.row];
+                [cell.logoBtn setImageWithURL:[NSURL URLWithString:card.logo.url]
+                             placeholderImage:[UIImage imageNamed:@"logopic.png"]
+                                      success:^(UIImage *image, BOOL cached){
+                                          if(CGSizeEqualToSize(image.size, CGSizeZero)){
+                                              [cell.logoBtn setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+                                          }
+                                      }
+                                      failure:^(NSError *error){
+                                          
+                                      }];
+                
+                if (_isNormalSearchBar) {
+                    
+    
+                }else{
+                    [cell.logoBtn addTarget:self action:@selector(logoBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+                }
+                //填充单元格数据
+                cell.nameLabel.text = card.name;
+                cell.positionLabel.text = card.title;
+                cell.companyLabel.text =card.company.name;
+                return cell;
                 break;
             }
         }
@@ -435,19 +466,32 @@ typedef enum {
         case KHHTableIndexClient: {
             if (_isNormalSearchBar) {
                 //选中某一个对象并返回
-                [self.navigationController popViewControllerAnimated:YES];
+                //[self.navigationController popViewControllerAnimated:YES];
+                NSNumber *state = [self.selectedItemArr objectAtIndex:indexPath.row];
+                if ([state isEqualToNumber:[NSNumber numberWithBool:YES]]) {
+                    state = [NSNumber numberWithBool:NO];
+                }else{
+                    state = [NSNumber numberWithBool:YES];
+                }
+                [self.selectedItemArr replaceObjectAtIndex:indexPath.row withObject:state];
+                [_bigTable reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+                [_bigTable deselectRowAtIndexPath:indexPath animated:NO];
             }else{
                 if (self.isAddressBookData) {
                     DLog(@"contact item click!");
-                    KHHClientCellLNPC *cell = (KHHClientCellLNPC *)[tableView cellForRowAtIndexPath:indexPath];
+                    KHHClientCellLNPC *cell = (KHHClientCellLNPC *)[_bigTable cellForRowAtIndexPath:indexPath];
+                    self.floatBarVC.contactDic = [self.generalArray objectAtIndex:indexPath.row];
+                    self.floatBarVC.isContactCellClick = YES;
                     CGRect cellRect = cell.logoView.frame;
                     cellRect.origin.x = 98;
                     CGRect rect = [cell convertRect:cellRect toView:self.view];
                     rect.size.height = 45;
-                    self.floatBarVC.card = nil;
+                    
                     //DLog(@"[II] logo = %@, frame = %@, converted frame = %@", cell.logoView, NSStringFromCGRect(cell.logoView.frame), NSStringFromCGRect(rect));
                     UIPopoverArrowDirection arrowDirection = rect.origin.y < self.view.bounds.size.height/2?UIPopoverArrowDirectionUp:UIPopoverArrowDirectionDown;
                     [self.popover presentPopoverFromRect:rect inView:self.view permittedArrowDirections:arrowDirection animated:YES];
+
+                    return;
                 }else{
                     self.isNeedReloadTable = YES;
                     KHHClientCellLNPCC *cell = (KHHClientCellLNPCC*)[tableView cellForRowAtIndexPath:indexPath];
@@ -505,6 +549,9 @@ typedef enum {
 //长按单元格弹出横框
 - (void)longPressFunc:(id)sender
 {
+    if (self.isAddressBookData) {
+        return;
+    }
     if (!_isNormalSearchBar) {
         if ([(UILongPressGestureRecognizer *)sender state] == UIGestureRecognizerStateBegan) {
             CGPoint p = [(UILongPressGestureRecognizer *)sender locationInView:_bigTable];
@@ -530,6 +577,8 @@ typedef enum {
     UIButton *btn = (UIButton *)sender;
     DLog(@"btn.tag=======%d",btn.tag);
     self.isAddressBookData = NO;
+    self.floatBarVC.isContactCellClick = NO;
+
     KHHButtonCell *cell = (KHHButtonCell *)[[btn superview] superview];
     NSIndexPath *indexPath = [_btnTable indexPathForCell:cell];
     DLog(@"%@",indexPath);
@@ -555,6 +604,7 @@ typedef enum {
             case 100:
                 //DLog(@"100 btn 数据源刷新");
                 self.currentTag = btn.tag;
+                self.allArray = [self.dataControl allReceivedCards];
                 self.generalArray = self.allArray;
                 break;
             case 101:
@@ -565,14 +615,17 @@ typedef enum {
             case 102:
                 DLog(@"102 btn 数据源刷新");
                 self.currentTag = btn.tag;
+                self.generalArray = self.ReceNewArray;
                 break;
             case 103:
                 DLog(@"103 btn 数据源刷新");
                 self.currentTag = btn.tag;
+                self.generalArray = self.ReceNewArray;
                 break;
             case 104:
                 DLog(@"104 btn 数据源刷新");
                 self.currentTag = btn.tag;
+                self.generalArray = self.ReceNewArray;
                 break;
             case 105:
                 DLog(@"105 btn 数据源刷新");
@@ -582,13 +635,20 @@ typedef enum {
                 break;
             case 106:{
                 self.isAddressBookData = YES;
+                //self.floatBarVC.isContactCellClick = YES;
                 self.currentTag = btn.tag;
                 NSArray *addressArr = [KHHAddressBook getAllPeppleFromAddressBook];
                 self.generalArray = addressArr;
+                
             }
                 break;
             default:
                 break;
+        }
+        if (self.isNormalSearchBar) {
+            //self.selectedItemArr = nil;
+            [self.selectedItemArr removeAllObjects];
+            [self mutilyFlagForSelected];
         }
         //DLog(@"刷新表");
         //当是自定义分组时，把btn的tag用groupid进行设置，再根据tag进行读取各个分组的成员

@@ -251,7 +251,6 @@
         }else{
             UIImage *img = [[UIImage imageNamed:@"xiangqing_btn2_normal.png"] stretchableImageWithLeftCapWidth:2 topCapHeight:2];
             [lastBtn setBackgroundImage:img forState:UIControlStateNormal];
-
         }
     }
     if (btn.tag != 1000) {

@@ -26,6 +26,7 @@
 @synthesize type = _type;
 @synthesize card;
 @synthesize isContactCellClick;
+@synthesize contactDic;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -41,9 +42,29 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-}
 
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    if (self.isContactCellClick) {
+        self.btn1.hidden = YES;
+        self.btn2.hidden = YES;
+        self.btn3.hidden = YES;
+        CGRect rect = self.btn0.frame;
+        rect.origin.x = 195;
+        self.btn0.frame = rect;
+
+    }else{
+        self.btn1.hidden = NO;
+        self.btn2.hidden = NO;
+        self.btn3.hidden = NO;
+        CGRect rect = self.btn0.frame;
+        rect.origin.x = 60;
+        self.btn0.frame = rect;
+    
+    }
+
+}
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -53,7 +74,7 @@
     self.actSheet = nil;
     _popover = nil;
     self.card = nil;
-    
+    self.contactDic = nil;
 }
 
 - (IBAction)BtnClick:(UIButton *)sender
@@ -86,28 +107,40 @@
 - (void)callPhone
 {
     _type = 1;
-    self.actSheet = [[UIActionSheet alloc] initWithTitle:@"选择号码" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
-    if (self.card.mobilePhone.length > 0) {
-        NSArray *mobielArr = [self.card.mobilePhone componentsSeparatedByString:@"|"];
-        for (int i = 0; i < mobielArr.count; i++) {
-             [self.actSheet addButtonWithTitle:[mobielArr objectAtIndex:i]];
+    UIActionSheet *act = [[UIActionSheet alloc] initWithTitle:@"选择号码" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+     NSArray *phones = [self.contactDic objectForKey:@"phone"];
+    
+    if (self.isContactCellClick && phones.count > 0) {
+        for (int i = 0; i < phones.count; i++) {
+            [act addButtonWithTitle:[phones objectAtIndex:i]];
+            [act showInView:_viewController.view];
         }
+    }else{
+        if (self.card.mobilePhone.length > 0) {
+            NSArray *mobielArr = [self.card.mobilePhone componentsSeparatedByString:@"|"];
+            for (int i = 0; i < mobielArr.count; i++) {
+                [act addButtonWithTitle:[mobielArr objectAtIndex:i]];
+            }
+            [act showInView:_viewController.view];
+        }
+    
     }
-    [self.actSheet showInView:_viewController.view];
+    
     [self.popover dismissPopoverAnimated:YES];
 }
 //发短信
 - (void)sendMessage
 {
     _type = 2;
-     self.actSheet = [[UIActionSheet alloc] initWithTitle:@"选择号码" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+    UIActionSheet *actS = [[UIActionSheet alloc] initWithTitle:@"选择号码" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
     if (self.card.mobilePhone.length > 0) {
         NSArray *mobielArray = [self.card.mobilePhone componentsSeparatedByString:@"|"];
         for (int i = 0; i < mobielArray.count; i++) {
-            [self.actSheet addButtonWithTitle:[mobielArray objectAtIndex:i]];
+            [actS addButtonWithTitle:[mobielArray objectAtIndex:i]];
+            [actS showInView:_viewController.view];
         }
     }
-    [self.actSheet showInView:_viewController.view];
+    
     [self.popover dismissPopoverAnimated:YES];
     
 }
