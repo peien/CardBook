@@ -39,8 +39,25 @@
 - (void)deleteReceivedCard:(ReceivedCard *)receivedCard;
 @end
 
-@interface KHHApp (UI_Group)
-- (NSArray *)allTopLevelGroups;// 所有 顶级分组（即父分组 id 为 0）
+@interface KHHData (UI_Group)
+// 所有 顶级用户自定义分组（即父分组 id 为 0）
+- (NSArray *)allTopLevelGroups;// 结果为Group组成的数组
+
+// 内部固定分组
+// 所有（联系人与自建联系人的总和，过滤掉同事）
+- (NSArray *)cardsOfAll;
+// new（即isRead为no，过滤掉同事）
+- (NSArray *)cardsOfNew;
+// 同事（companyid与自己相同）
+- (NSArray *)cardsOfColleague;
+// 拜访 (先把所有的拜访记录的客户ID,再从联系人与自建联系人中查询id在拜访列表中的数据):
+- (NSArray *)cardsOfVisited;
+// 重点 (客户评估在3星以上的，先从5星查5星有数据就返回此星下的客户，没数据就查4星，以此类推，下面语句只是5星的，其它星值只是把5换成其它星值)
+- (NSArray *)cardsOfVIP;
+// 未分组（不在其它分组的，过滤掉同事）
+- (NSArray *)cardsOfUngrouped;
+// 手机（就是手机上的通讯录）????
+
 @end
 
 @interface KHHData (UI_Template)

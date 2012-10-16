@@ -37,7 +37,7 @@
     
     [button setTitle:@"Action!" forState:UIControlStateNormal];
     [button addTarget:self
-               action:@selector(testGroups) // TEST
+               action:@selector(testCardsInGroups) // TEST
      forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -48,6 +48,13 @@
 //                          withCardID:nil
 //                               extra:nil];
     [self.agent cardIDsInAllGroupWithExtra:nil];
+}
+- (void)testCardsInGroups {
+    [self showLabelWithText:@"试验CardsInGroups"];
+    ALog(@"[II] 所有名片：%d个", ([self.data cardsOfAll]).count);
+    ALog(@"[II] 同事名片：%d个", [self.data cardsOfColleague].count);
+    ALog(@"[II] 新到名片：%d个", [self.data cardsOfNew].count);
+    ALog(@"[II] 未分组名片：%d个", [self.data cardsOfUngrouped].count);
 }
 
 #pragma mark - 试验模板显示
