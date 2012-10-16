@@ -7,6 +7,7 @@
 //
 
 #import "KHHData+UI.h"
+#import "KHHClasses.h"
 #import "KHHTypes.h"
 #import "KHHData+CRUD.h"
 #import "KHHDefaults.h"
@@ -15,7 +16,6 @@
 @end
 
 @implementation KHHData (UI_Card)
-
 /*!
  MyCard: 我的名片
  */
@@ -167,10 +167,25 @@
 NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
     NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:oldArray.count];
     for (Card *card in oldArray) {
-        if (card.idValue) {
+        if (card.idValue && (![card isKindOfClass:[MyCard class]])) {
             [newArray addObject:card];
         }
     }
     return newArray;
+}
+
+// 分组增删改
+- (void)createGroup:(IGroup *)iGroup
+         withMyCard:(MyCard *)myCard {
+    NSString *myCardID = myCard.id.stringValue;
+    [self.agent createGroup:iGroup
+                 userCardID:myCardID];
+}
+- (void)updateGroup:(IGroup *)iGroup {
+    [self.agent updateGroup:iGroup];
+    
+}
+- (void)deleteGroup:(Group *)group {
+    [self.agent deleteGroup:group];
 }
 @end

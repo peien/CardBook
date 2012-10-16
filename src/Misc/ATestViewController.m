@@ -56,6 +56,12 @@
     ALog(@"[II] 新到名片：%d个", [self.data cardsOfNew].count);
     ALog(@"[II] 未分组名片：%d个", [self.data cardsOfUngrouped].count);
 }
+- (void)testCreateGroup {
+    [self showLabelWithText:@"试验CreateGroup"];
+    IGroup *igrp = [[IGroup alloc] init];
+    igrp.name = [NSString stringWithFormat:@"%@", [NSDate date]];
+    [self.data createGroup:igrp withMyCard:(MyCard *)self.card];
+}
 
 #pragma mark - 试验模板显示
 - (void)testVisualCardViewController {

@@ -19,26 +19,23 @@
     YES 请求已发出
     NO  参数有问题
  */
-- (BOOL)createGroup:(NSString *)groupName
-           userCard:(NSString *)cardID
-             parent:(NSString *)parentGroupID;
+- (BOOL)createGroup:(IGroup *)igrp
+         userCardID:(NSString *)cardID;
 /**
  修改分组 groupService.updateGroup
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=206
  */
-- (BOOL)updateGroup:(NSString *)groupID
-            newName:(NSString *)newName
-          newParent:(NSString *)newParentGroupID;
+- (BOOL)updateGroup:(IGroup *)igrp;
 /**
  删除分组 groupService.deleteGroup
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=207
  */
-- (BOOL)deleteGroup:(NSString *)groupID;
+- (BOOL)deleteGroup:(Group *)group;
 /**
  获取分组下的客户名片id cardGroupService.getCardIdsByGroupId
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=164
  */
-- (BOOL)cardIDsInGroup:(NSString *)groupID;
+//- (BOOL)cardIDsInGroup:(NSString *)groupID;
 /*!
  获得当前登录的所有分组下的联系人 cardGroupService.getCardIdsByCurrUser
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=221
