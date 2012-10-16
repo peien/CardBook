@@ -47,6 +47,15 @@
                          selector:@"handleLatestReceivedCardSucceeded:"];
     [self observeNotificationName:KHHNetworkLatestReceivedCardFailed
                          selector:@"handleLatestReceivedCardFailed:"];
+    // 分组
+    [self observeNotificationName:KHHNetworkChildGroupsOfGroupIDSucceeded
+                         selector:@"handleNetworkChildGroupsOfGroupIDSucceeded:"];
+    [self observeNotificationName:KHHNetworkChildGroupsOfGroupIDFailed
+                         selector:@"handleNetworkChildGroupsOfGroupIDFailed:"];
+    [self observeNotificationName:KHHNetworkCardIDsInAllGroupSucceeded
+                         selector:@"handleNetworkCardIDsInAllGroupSucceeded:"];
+    [self observeNotificationName:KHHNetworkCardIDsInAllGroupFailed
+                         selector:@"handleNetworkCardIDsInAllGroupFailed:"];
     // 模板
     [self observeNotificationName:KHHNetworkTemplatesAfterDateSucceeded
                          selector:@"handleTemplatesAfterDateSucceeded:"];
@@ -128,9 +137,7 @@
         ALog(@"[EE] ERROR!! 怎么会走到这里？");
     }
 }
-@end
 
-@implementation KHHData (Handlers_Card)
 - (void)handleCreateCardSucceeded:(NSNotification *)noti {
     NSDictionary *info = noti.userInfo;
     NSDictionary *extra = info[kInfoKeyExtra];
@@ -265,9 +272,9 @@
     [self syncAllDataEnded:NO];
 }
 - (void)handleLatestReceivedCardSucceeded:(NSNotification *)noti {
-    NSDictionary *info = noti.userInfo;
-    DLog(@"[II] info = %@", info);
-    InterCard *iCard = info[kInfoKeyInterCard];
+    NSDictionary *userInfo = noti.userInfo;
+    DLog(@"[II] info = %@", userInfo);
+    InterCard *iCard = userInfo[kInfoKeyInterCard];
     KHHCardModelType cardType = KHHCardModelTypeReceivedCard;
     // 填入数据库
     ReceivedCard *rCard = (ReceivedCard *)[self processCard:iCard cardType:cardType];
@@ -275,16 +282,14 @@
     // 发送消息
     if (rCard) {
         // 数据库操作成功
+        NSDictionary *info = @{ kInfoKeyReceivedCard : rCard };
         [self postASAPNotificationName:KHHUIPullLatestReceivedCardSucceeded
-                                  info:@{
-                 kInfoKeyReceivedCard : rCard
-         }];
+                                  info:info];
     } else {
         // 虽然服务器返回成功，但本地数据库操作失败
+        NSDictionary *info = @{ kInfoKeyErrorCode : @(KHHStatusCodeLocalDataOperationFailed) };
         [self postASAPNotificationName:KHHUIPullLatestReceivedCardFailed
-                                  info:@{
-                    kInfoKeyErrorCode : @(KHHStatusCodeLocalDataOperationFailed)
-         }];
+                                  info:info];
     }
 
 }
@@ -295,8 +300,49 @@
     [self postASAPNotificationName:KHHUIPullLatestReceivedCardFailed
                               info:info];
 }
-@end
-@implementation KHHData (Handlers_Template)
+
+- (void)handleNetworkChildGroupsOfGroupIDSucceeded:(NSNotification *)noti {
+    NSDictionary *oldInfo = noti.userInfo;
+    ALog(@"[II] info = %@", oldInfo);
+    NSArray *iGroupList = oldInfo[kInfoKeyGroupList];
+    // 插入数据库
+    [self processIGroupList:iGroupList];
+    [self saveContext];
+    // 发成功消息
+    // 根据 queue 采取不同措施
+    NSDictionary *extra= oldInfo[kInfoKeyExtra];
+    NSMutableArray *queue = extra[kExtraKeySyncQueue];
+    if (queue) {
+        [self startNextSync:queue];
+    }
+}
+- (void)handleNetworkChildGroupsOfGroupIDFailed:(NSNotification *)noti {
+    NSDictionary *info = noti.userInfo;
+#warning TODO
+    ALog(@"[II] info = %@", info);
+    [self syncAllDataEnded:NO];
+}
+- (void)handleNetworkCardIDsInAllGroupSucceeded:(NSNotification *)noti {
+    NSDictionary *oldInfo = noti.userInfo;
+    ALog(@"[II] info = %@", oldInfo);
+    NSArray *iCardGroupMapList = oldInfo[kInfoKeyICardGroupMapList];
+    // 插入数据库
+    [self processICardGroupMapList:iCardGroupMapList];
+    [self saveContext];
+    // 发成功消息
+    // 根据 queue 采取不同措施
+    NSDictionary *extra= oldInfo[kInfoKeyExtra];
+    NSMutableArray *queue = extra[kExtraKeySyncQueue];
+    if (queue) {
+        [self startNextSync:queue];
+    }
+}
+- (void)handleNetworkCardIDsInAllGroupFailed:(NSNotification *)noti {
+    NSDictionary *info = noti.userInfo;
+#warning TODO
+    ALog(@"[II] info = %@", info);
+    [self syncAllDataEnded:NO];
+}
 
 - (void)handleTemplatesAfterDateSucceeded:(NSNotification *)noti {
     NSDictionary *info = noti.userInfo;
@@ -333,8 +379,6 @@
     [self syncAllDataEnded:NO];
 }
 
-@end
-@implementation KHHData (Handlers_VisitSchedule)
 - (void)handleVisitSchedulesAfterDateSucceeded:(NSNotification *)noti {
 #warning TODO
     NSDictionary *info = noti.userInfo;
@@ -349,8 +393,7 @@
     DLog(@"[II] 失败啦！");
     [self syncAllDataEnded:YES];
 }
-@end
-@implementation KHHData (Handlers_CustomerEvaluation)
+
 - (void)handleCustomerEvaluationListAfterDateSucceeded:(NSNotification *)noti {
 #warning TODO
     [self syncAllDataEnded:YES];

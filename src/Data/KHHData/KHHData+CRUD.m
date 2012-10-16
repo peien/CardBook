@@ -207,9 +207,15 @@
         DLog(@"[II] deleteCardByID:withInterCard: 参数有误，未发送请求。");
     }
 }
-
 @end
-
+#pragma mark - Group
+@implementation KHHData (CRUD_Group)
+// 根据分组ID查数据库。
+// 无则新建。
+- (Group *)groupByID:(NSNumber *)groupID {
+    return (Group *)[self objectByID:groupID ofClass:[Group entityName] createIfNone:YES];
+}
+@end
 @implementation KHHData (CRUD_Company)
 // 根据公司ID查数据库。
 // 无则返回nil；

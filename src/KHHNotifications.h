@@ -137,11 +137,16 @@ static NSString * const KHHNetworkUpdateGroupFailed    = @"updateGroupFailed";
 static NSString * const KHHNetworkDeleteGroupSucceeded = @"deleteGroupSucceeded";
 static NSString * const KHHNetworkDeleteGroupFailed    = @"deleteGroupFailed";
 // card IDs in group
-static NSString * const KHHNetworkCardIDsWithinGroupSucceeded = @"cardIDsWithinGroupSucceeded";
-static NSString * const KHHNetworkCardIDsWithinGroupFailed    = @"cardIDsWithinGroupFailed";
+static NSString * const KHHNetworkCardIDsInGroupSucceeded = @"cardIDsInGroupSucceeded";
+static NSString * const KHHNetworkCardIDsInGroupFailed    = @"cardIDsInGroupFailed";
+static NSString * const KHHNetworkCardIDsInAllGroupSucceeded = @"NetworkCardIDsInAllGroupSucceeded";
+static NSString * const KHHNetworkCardIDsInAllGroupFailed    = @"NetworkCardIDsInAllGroupFailed";
 // Move cards from ... to ...
 static NSString * const KHHNetworkMoveCardsSucceeded = @"moveCardsSucceeded";
 static NSString * const KHHNetworkMoveCardsFailed    = @"moveCardsFailed";
+// Child groups
+static NSString * const KHHNetworkChildGroupsOfGroupIDSucceeded = @"NetworkChildGroupsOfGroupIDSucceeded";
+static NSString * const KHHNetworkChildGroupsOfGroupIDFailed = @"NetworkChildGroupsOfGroupIDFailed";
 
 //MARK: - 名片交换
 //交换

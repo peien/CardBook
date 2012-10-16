@@ -61,6 +61,7 @@ typedef enum {
     KHHSyncActionSyncGroups,
     KHHSyncActionSyncTemplates,
     KHHSyncActionSyncReceivedCards,
+    KHHSyncActionSyncCardGroupMaps,
 } KHHSyncActionType;
 
 

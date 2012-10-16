@@ -38,7 +38,13 @@
  获取分组下的客户名片id cardGroupService.getCardIdsByGroupId
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=164
  */
-- (BOOL)cardIDsWithinGroup:(NSString *)groupID;
+- (BOOL)cardIDsInGroup:(NSString *)groupID;
+/*!
+ 获得当前登录的所有分组下的联系人 cardGroupService.getCardIdsByCurrUser
+ http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=221
+ */
+- (void)cardIDsInAllGroupWithExtra:(NSDictionary *)extra;
+
 /**
  移动、删除、添加客户名片到分组 cardGroupService.addOrDelCardGroup
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=154
@@ -46,4 +52,12 @@
 - (BOOL)moveCards:(NSArray *)cards
         fromGroup:(NSString *)fromGroupID
           toGroup:(NSString *)toGroupID;
+/*!
+ 获得(某张名片的)父分组下的所有子分组列表(new) groupService.getAllGroups
+ http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=219
+ */
+- (void)childGroupsOfGroupID:(NSString *)groupID
+                  withCardID:(NSString *)cardID
+                       extra:(NSDictionary *)extra;
+
 @end

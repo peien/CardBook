@@ -35,5 +35,6 @@
 - (void)syncPartly:(NSMutableArray *)queue; // 所谓的syncAll接口
 - (void)syncReceivedCards:(NSMutableArray *)queue;
 - (void)syncGroups:(NSMutableArray *)queue;
+- (void)syncCardGroupMaps:(NSMutableArray *)queue;
 - (void)syncTemplates:(NSMutableArray *)queue;
 @end

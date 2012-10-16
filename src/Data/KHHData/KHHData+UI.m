@@ -11,7 +11,6 @@
 #import "KHHData+CRUD.h"
 
 @implementation KHHData (UI)
-
 @end
 
 @implementation KHHData (UI_Card)
@@ -76,6 +75,13 @@
     [self.agent latestReceivedCard];
 }
 @end
-@implementation KHHData (UI_VisitSchedule)
-
+@implementation KHHData (UI_Group)
+// 所有 顶级分组（即父分组 id 为 0）
+- (NSArray *)allTopLevelGroups {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"group.id = %@", @(0)];
+    NSArray *result = [self fetchEntityName:[Group entityName]
+                                  predicate:predicate
+                            sortDescriptors:nil];
+    return result;
+}
 @end

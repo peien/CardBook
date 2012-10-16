@@ -16,6 +16,7 @@
 #ifndef KHH_RELEASE_SERVER
 #define KHH_RELEASE_SERVER 0
 #endif
+
 /*
  *  KHH_TEST_VIEWCONTROLLER
  *  1   启动后进TestViewController
@@ -24,6 +25,16 @@
 #ifndef KHH_TEST_VIEWCONTROLLER
 #define KHH_TEST_VIEWCONTROLLER 0
 #endif
+
+/*
+ *  KHH_MULTI_COMPANY 是否支持单用户属于多公司
+ *  0 不支持，一个用户属于一个公司
+ *  1 支持。
+ */
+#ifndef KHH_MULTI_COMPANY 
+#define KHH_MULTI_COMPANY 0
+#endif
+
 /*
  *  KHH_JSON_BASE64
  *  1   Json是用base64转码的

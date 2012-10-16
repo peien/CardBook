@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 #import "KHHClasses.h"
+#import "KHHActions.h"
 #import "KHHKeys.h"
 #import "KHHStatusCodes.h"
 #import "KHHHTTPClient.h"

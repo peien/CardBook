@@ -94,6 +94,36 @@
     return [self processCardList:list cardType:KHHCardModelTypeReceivedCard];
 }
 // }
+
+// Group
+- (NSMutableArray *)processIGroupList:(NSArray *)list {
+    NSMutableArray *result = [NSMutableArray array];
+    if (0 == list.count) {
+        return result;
+    }
+    for (id obj in list) {
+        if (nil == obj) {
+            continue;
+        }
+        Group *grp = [self processIGroup:obj];
+        if (grp) {
+            [result addObject:grp];
+        }
+    }
+    return result;
+}
+- (void)processICardGroupMapList:(NSArray *)list {
+    if (0 == list.count) {
+        return;
+    }
+    for (id obj in list) {
+        if (nil == obj) {
+            continue;
+        }
+        [self processICardGroupMap:obj];
+    }
+}
+
 - (NSMutableArray *)processCardTemplateList:(NSArray *)list {
     NSMutableArray *result = [NSMutableArray array];
     if (0 == list.count) {
@@ -156,6 +186,36 @@
     }
 //    DLog(@"[II] card = %@", result);
     return result;
+}
+// group
+- (Group *)processIGroup:(IGroup *)igroup {
+    Group *result = nil;
+    if (igroup) {
+        if (nil == igroup.id) {
+            // ID无法解析就不操作
+            return result;
+        }
+        // 按ID从数据库里查询
+        // 无则新建。
+        result = [self groupByID:igroup.id];
+        // 填充数据
+        result.id = igroup.id;
+        result.name = igroup.name;
+        result.parent = [self groupByID:igroup.parentID];
+    }
+    DLog(@"[II] group = %@", result);
+    return result;
+}
+- (void)processICardGroupMap:(ICardGroupMap *)icgm {
+    if (nil == icgm) {
+        return;
+    }
+    // 查名片
+    Card *card = [self cardOfType:icgm.cardModelType byID:icgm.cardID createIfNone:YES];
+    // 查group
+    Group *group = [self groupByID:icgm.groupID];
+    // 名片添加到group
+    [group.cardsSet addObject:card];
 }
 - (CardTemplate *)processCardTemplate:(NSDictionary *)dict {
     NSString *className = [CardTemplate entityName];

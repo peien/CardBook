@@ -25,9 +25,12 @@
 
 #pragma mark - Internal/Intermediate Classes
 #import "InterCard.h"
+#import "IAddress.h"
+#import "ICheckIn.h"
 #import "ICustomerEvaluation.h"
+#import "IGroup.h"
+#import "ICardGroupMap.h"
 #import "IImage.h"
 #import "ISchedule.h"
-#import "ICheckIn.h"
-#import "IAddress.h"
+
 #endif

@@ -39,6 +39,10 @@
 - (void)deleteReceivedCard:(ReceivedCard *)receivedCard;
 @end
 
+@interface KHHApp (UI_Group)
+- (NSArray *)allTopLevelGroups;// 所有 顶级分组（即父分组 id 为 0）
+@end
+
 @interface KHHData (UI_Template)
 
 @end

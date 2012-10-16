@@ -126,7 +126,9 @@
     NSMutableArray *queue = [NSMutableArray array];
     [queue addObject:@(KHHSyncActionSyncPartly)];
     [queue addObject:@(KHHSyncActionSyncTemplates)];
+    [queue addObject:@(KHHSyncActionSyncGroups)];
     [queue addObject:@(KHHSyncActionSyncReceivedCards)];
+    [queue addObject:@(KHHSyncActionSyncCardGroupMaps)];
     [self startNextSync:queue];
 }
 - (void)syncAllDataEnded:(BOOL)succeed {
@@ -161,6 +163,10 @@
             [self syncReceivedCards:queue];
             break;
         }
+        case KHHSyncActionSyncCardGroupMaps: {
+            [self syncCardGroupMaps:queue];
+            break;
+        }
     }
 }
 //
@@ -181,6 +187,11 @@
                          expectedCount:@"50"
                                  extra:extra];
 }
+- (void)syncCardGroupMaps:(NSMutableArray *)queue {
+    //
+    NSDictionary *extra = @{ kExtraKeySyncQueue : queue };
+    [self.agent cardIDsInAllGroupWithExtra:extra];
+}
 - (void)syncTemplates:(NSMutableArray *)queue {
     NSDictionary *extra = @{ kExtraKeySyncQueue : queue };
     SyncMark *lastTime = [self syncMarkByKey:kSyncMarkKeyGroupsLastTime];
@@ -189,9 +200,9 @@
 }
 - (void)syncGroups:(NSMutableArray *)queue {
     NSDictionary *extra = @{ kExtraKeySyncQueue : queue };
-    SyncMark *lastTime = [self syncMarkByKey:kSyncMarkKeyTemplatesLastTime];
-#warning TODO
-//    [self.agent ]
+    [self.agent childGroupsOfGroupID:nil
+                          withCardID:nil
+                               extra:extra];
 }
 - (void)syncVisitSchedules:(NSMutableArray *)queue {
     // 同步拜访计划
