@@ -9,6 +9,7 @@
 #import "KHHData+UI.h"
 #import "KHHTypes.h"
 #import "KHHData+CRUD.h"
+#import "KHHDefaults.h"
 
 @implementation KHHData (UI)
 @end
@@ -83,5 +84,93 @@
                                   predicate:predicate
                             sortDescriptors:nil];
     return result;
+}
+// 内部固定分组
+// 所有（联系人与自建联系人的总和，过滤掉同事）
+- (NSArray *)cardsOfAll {
+    NSNumber *myComID = [KHHDefaults sharedDefaults].currentCompanyID;
+    NSPredicate *predicate = nil;
+    if (myComID.integerValue) {
+        // 自己属于某公司
+        // 用公司ID过滤掉同事
+        predicate = [NSPredicate predicateWithFormat:@"company.id <> %@", myComID];
+    }
+    NSArray *fetched = [self fetchEntityName:[Card entityName]
+                                  predicate:predicate
+                            sortDescriptors:nil];
+    // 过滤掉意外情况
+    NSMutableArray *result = FilterUnexpectedCardsFromArray(fetched);
+    return result;
+}
+// new（即isRead为no，过滤掉同事）
+- (NSArray *)cardsOfNew {
+    NSNumber *myComID = [KHHDefaults sharedDefaults].currentCompanyID;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isRead <> YES"];
+    if (myComID.integerValue) {
+        // 自己属于某公司
+        predicate = [NSPredicate predicateWithFormat:@"(isRead <> YES) && (company.id <> %@)", myComID];
+    }
+    NSArray *fetched = [self fetchEntityName:[ReceivedCard entityName]
+                                  predicate:predicate
+                            sortDescriptors:nil];
+    // 过滤掉意外情况
+    NSMutableArray *result = FilterUnexpectedCardsFromArray(fetched);
+    return result;
+}
+// 同事（companyid与自己相同）
+- (NSArray *)cardsOfColleague {
+    NSNumber *myComID = [KHHDefaults sharedDefaults].currentCompanyID;
+    NSMutableArray *result = [NSMutableArray array];
+    if (myComID.integerValue) {
+        // 自己属于某公司
+        NSPredicate *predicate =  [NSPredicate predicateWithFormat:@"company.id == %@", myComID];
+        NSArray *fetched = [self fetchEntityName:[Card entityName]
+                             predicate:predicate
+                       sortDescriptors:nil];
+        // 过滤掉意外情况
+        result = FilterUnexpectedCardsFromArray(fetched);
+    }
+    return result;
+}
+// 拜访 (先把所有的拜访记录的客户ID,再从联系人与自建联系人中查询id在拜访列表中的数据):
+- (NSArray *)cardsOfVisited {
+#warning TODO
+    return [NSArray array];
+}
+// 重点 (客户评估在3星以上的，先从5星查5星有数据就返回此星下的客户，没数据就查4星，以此类推，下面语句只是5星的，其它星值只是把5换成其它星值)
+- (NSArray *)cardsOfVIP {
+#warning TODO
+    return [NSArray array];
+}
+// 未分组（不在其它分组的，过滤掉同事）
+- (NSArray *)cardsOfUngrouped {
+    NSNumber *myComID = [KHHDefaults sharedDefaults].currentCompanyID;
+    NSPredicate *predicate = nil;
+    if (myComID.integerValue) {
+        // 自己属于某公司
+        predicate = [NSPredicate predicateWithFormat:@"company.id <> %@", myComID];
+    }
+    NSArray *fetched = [self fetchEntityName:[Card entityName]
+                                  predicate:predicate
+                            sortDescriptors:nil];
+    NSMutableArray *filtered = [NSMutableArray arrayWithCapacity:fetched.count];
+    for (Card *card in fetched) {
+        if (card.groups.count < 1) {
+            [filtered addObject:card];
+        }
+    }
+    // 过滤掉意外情况
+    NSMutableArray *result = FilterUnexpectedCardsFromArray(filtered);
+    return result;
+}
+// 过滤掉意外的名片：比如cardid＝＝0
+NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
+    NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:oldArray.count];
+    for (Card *card in oldArray) {
+        if (card.idValue) {
+            [newArray addObject:card];
+        }
+    }
+    return newArray;
 }
 @end
