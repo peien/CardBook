@@ -201,7 +201,9 @@
         // 填充数据
         result.id = igroup.id;
         result.name = igroup.name;
-        result.parent = [self groupByID:igroup.parentID];
+        NSNumber *parentID = [NSNumber numberFromObject:igroup.parentID
+                                    zeroIfUnresolvable:YES];
+        result.parent = [self groupByID:parentID];
     }
     DLog(@"[II] group = %@", result);
     return result;
@@ -220,13 +222,13 @@
 - (CardTemplate *)processCardTemplate:(NSDictionary *)dict {
     NSString *className = [CardTemplate entityName];
     NSNumber *ID = [NSNumber numberFromObject:dict[JSONDataKeyID]
-                           zeroIfUnresolvable:NO];
+                           zeroIfUnresolvable:YES];
     return (CardTemplate *)[self processObject:dict ofClass:className withID:ID];
 }
 - (CardTemplateItem *)processCardTemplateItem:(NSDictionary *)dict {
     NSString *className = [CardTemplateItem entityName];
     NSNumber *ID = [NSNumber numberFromObject:dict[JSONDataKeyID]
-                           zeroIfUnresolvable:NO];
+                           zeroIfUnresolvable:YES];
     return (CardTemplateItem *)[self processObject:dict ofClass:className withID:ID];
 }
 @end

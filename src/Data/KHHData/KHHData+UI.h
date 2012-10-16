@@ -42,7 +42,7 @@
 @interface KHHData (UI_Group)
 // 所有 顶级用户自定义分组（即父分组 id 为 0）
 - (NSArray *)allTopLevelGroups;// 结果为Group组成的数组
-
+#pragma mark - 内部 固定 分组数据
 // 内部固定分组
 // 所有（联系人与自建联系人的总和，过滤掉同事）
 - (NSArray *)cardsOfAll;
@@ -56,7 +56,11 @@
 - (NSArray *)cardsOfVIP;
 // 未分组（不在其它分组的，过滤掉同事）
 - (NSArray *)cardsOfUngrouped;
-// 手机（就是手机上的通讯录）????
+#pragma mark - 增删改分组
+// 分组增删改
+- (void)createGroup:(IGroup *)iGroup withMyCard:(MyCard *)myCard;
+- (void)updateGroup:(IGroup *)iGroup;
+- (void)deleteGroup:(Group *)group;
 
 @end
 

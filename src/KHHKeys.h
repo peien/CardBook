@@ -158,6 +158,7 @@ static NSString * const kInfoKeyLocationAddress = @"locationAddress";//NSString
 static NSString * const kInfoKeyLocationLatitude = @"locationLatitude";
 static NSString * const kInfoKeyLocationLongitude = @"locationLongitude";
 static NSString * const kInfoKeyMyCardList = @"myCardList";//NSArray
+static NSString * const kInfoKeyObject = @"object";//id?
 static NSString * const kInfoKeyPassword = @"password";//NSString
 static NSString * const kInfoKeyPermission = @"permission";//NSString
 static NSString * const kInfoKeyPlacemark = @"placemark";// CLPlacemark

@@ -48,6 +48,18 @@
     [self observeNotificationName:KHHNetworkLatestReceivedCardFailed
                          selector:@"handleLatestReceivedCardFailed:"];
     // 分组
+    [self observeNotificationName:KHHNetworkCreateGroupSucceeded
+                         selector:@"handleNetworkCreateGroupSucceeded:"];
+    [self observeNotificationName:KHHNetworkCreateGroupFailed
+                         selector:@"handleNetworkCreateGroupFailed:"];
+    [self observeNotificationName:KHHNetworkUpdateGroupSucceeded
+                         selector:@"handleNetworkUpdateGroupSucceeded:"];
+    [self observeNotificationName:KHHNetworkUpdateGroupFailed
+                         selector:@"handleNetworkUpdateGroupFailed:"];
+    [self observeNotificationName:KHHNetworkDeleteGroupSucceeded
+                         selector:@"handleNetworkDeleteGroupSucceeded:"];
+    [self observeNotificationName:KHHNetworkDeleteGroupFailed
+                         selector:@"handleNetworkDeleteGroupFailed:"];
     [self observeNotificationName:KHHNetworkChildGroupsOfGroupIDSucceeded
                          selector:@"handleNetworkChildGroupsOfGroupIDSucceeded:"];
     [self observeNotificationName:KHHNetworkChildGroupsOfGroupIDFailed
@@ -74,7 +86,7 @@
                          selector:@"handleCustomerEvaluationListAfterDateFailed:"];
 }
 
-#pragma mark - Notification handlers
+#pragma mark - Handlers
 - (void)handleAllDataAfterDateSucceeded:(NSNotification *)noti {
     DLog(@"[II] noti userInfo keys = %@", [noti.userInfo allKeys]);
     NSDictionary *info = noti.userInfo;
@@ -137,7 +149,7 @@
         ALog(@"[EE] ERROR!! 怎么会走到这里？");
     }
 }
-
+#pragma mark - Handlers_Card
 - (void)handleCreateCardSucceeded:(NSNotification *)noti {
     NSDictionary *info = noti.userInfo;
     NSDictionary *extra = info[kInfoKeyExtra];
@@ -301,6 +313,52 @@
                               info:info];
 }
 
+#pragma mark - Handlers_Group
+- (void)handleNetworkCreateGroupSucceeded:(NSNotification *)noti {
+    NSDictionary *oldInfo = noti.userInfo;
+    ALog(@"[II] info = %@", oldInfo);
+    IGroup *igrp = oldInfo[kInfoKeyObject];
+    // 插入数据库
+    [self processIGroup:igrp];
+    [self saveContext];
+    // 发成功消息
+    [self postASAPNotificationName:KHHUICreateGroupSucceeded];
+}
+- (void)handleNetworkCreateGroupFailed:(NSNotification *)noti {
+    NSDictionary *info = noti.userInfo;
+    ALog(@"[II] info = %@", info);
+    [self postASAPNotificationName:KHHUICreateGroupFailed info:info];
+}
+- (void)handleNetworkUpdateGroupSucceeded:(NSNotification *)noti {
+    NSDictionary *oldInfo = noti.userInfo;
+    ALog(@"[II] info = %@", oldInfo);
+    IGroup *igrp = oldInfo[kInfoKeyObject];
+    // 插入数据库
+    [self processIGroup:igrp];
+    [self saveContext];
+    // 发成功消息
+    [self postASAPNotificationName:KHHUIUpdateGroupSucceeded];
+}
+- (void)handleNetworkUpdateGroupFailed:(NSNotification *)noti {
+    NSDictionary *info = noti.userInfo;
+    ALog(@"[II] info = %@", info);
+    [self postASAPNotificationName:KHHUIUpdateGroupFailed info:info];
+}
+- (void)handleNetworkDeleteGroupSucceeded:(NSNotification *)noti {
+    NSDictionary *oldInfo = noti.userInfo;
+    ALog(@"[II] info = %@", oldInfo);
+    Group *grp = oldInfo[kInfoKeyObject];
+    // 从数据库中删除
+    [self.context deleteObject:grp];
+    [self saveContext];
+    // 发送成功消息
+    [self postASAPNotificationName:KHHUIDeleteGroupSucceeded];
+}
+- (void)handleNetworkDeleteGroupFailed:(NSNotification *)noti {
+    NSDictionary *info = noti.userInfo;
+    ALog(@"[II] info = %@", info);
+    [self postASAPNotificationName:KHHUIDeleteGroupFailed info:info];
+}
 - (void)handleNetworkChildGroupsOfGroupIDSucceeded:(NSNotification *)noti {
     NSDictionary *oldInfo = noti.userInfo;
     ALog(@"[II] info = %@", oldInfo);
@@ -308,7 +366,6 @@
     // 插入数据库
     [self processIGroupList:iGroupList];
     [self saveContext];
-    // 发成功消息
     // 根据 queue 采取不同措施
     NSDictionary *extra= oldInfo[kInfoKeyExtra];
     NSMutableArray *queue = extra[kExtraKeySyncQueue];
@@ -344,6 +401,7 @@
     [self syncAllDataEnded:NO];
 }
 
+#pragma mark - Handlers_Template
 - (void)handleTemplatesAfterDateSucceeded:(NSNotification *)noti {
     NSDictionary *info = noti.userInfo;
     DLog(@"[II] info = %@", [info allKeys]);
@@ -379,6 +437,7 @@
     [self syncAllDataEnded:NO];
 }
 
+#pragma mark - Handlers_Schedule
 - (void)handleVisitSchedulesAfterDateSucceeded:(NSNotification *)noti {
 #warning TODO
     NSDictionary *info = noti.userInfo;
@@ -394,6 +453,7 @@
     [self syncAllDataEnded:YES];
 }
 
+#pragma mark - Handlers_Evaluation
 - (void)handleCustomerEvaluationListAfterDateSucceeded:(NSNotification *)noti {
 #warning TODO
     [self syncAllDataEnded:YES];

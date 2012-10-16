@@ -8,27 +8,39 @@
 
 #import "KHHNetworkAPIAgent+Group.h"
 #import "KHHNetworkAPIAgent+Card.h"
+#import "NSNumber+SM.h"
 
 @implementation KHHNetworkAPIAgent (Group)
 /**
  增加分组 groupService.addGroup
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=205
  */
-- (BOOL)createGroup:(NSString *)groupName
-           userCard:(NSString *)cardID
-             parent:(NSString *)parentGroupID {
-    if (![groupName length] || ![cardID length]) {
+- (BOOL)createGroup:(IGroup *)igrp
+         userCardID:(NSString *)cardID {
+    if (![igrp.name length]) {
         return NO;
     }
     NSDictionary *parameters = @{
-    @"group.groupName" : groupName,
+    @"group.groupName" : igrp.name,
     @"group.cardId"    : cardID,
-    @"group.parentId"  : parentGroupID?parentGroupID:@"",
+    @"group.parentId"  : igrp.parentID?igrp.parentID:@"",
     };
-    KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
-#warning TODO
+    NSString *action = @"createGroup";
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:responseObject];
+        DLog(@"[II] responseDict = %@", responseDict);
+        KHHErrorCode errCode = [responseDict[kInfoKeyErrorCode] integerValue];
+        // 把返回的数据转成本地数据
+        igrp.id = [NSNumber numberFromObject:responseDict[JSONDataKeyID] zeroIfUnresolvable:NO];
+        NSDictionary *dict = @{
+        kInfoKeyObject    : igrp,
+        kInfoKeyErrorCode : @(errCode),
+        };
+        NSString *name = NameWithActionAndCode(action, errCode);
+        DLog(@"[II] 发送 Notification Name = %@", name);
+        [self postASAPNotificationName:name info:dict];
     };
-    [self postAction:@"createGroup"
+    [self postAction:action
                query:@"groupService.addGroup"
           parameters:parameters
              success:success];
@@ -38,24 +50,33 @@
  修改分组 groupService.updateGroup
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=206
  */
-- (BOOL)updateGroup:(NSString *)groupID
-            newName:(NSString *)newName
-          newParent:(NSString *)newParentGroupID {
-    if (![groupID length]) {
+- (BOOL)updateGroup:(IGroup *)igrp {
+    if (!(igrp.id.integerValue)) {
         return NO;
     }
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithCapacity:3];
-    parameters[@"group.id"] = groupID;
-    if ([newName length]) {
-        parameters[@"group.groupName"] = newName;
+    parameters[@"group.id"] = igrp.id.stringValue;
+    if ([igrp.name length]) {
+        parameters[@"group.groupName"] = igrp.name;
     }
-    if (newParentGroupID) {
-        parameters[@"group.parentId"] = newParentGroupID;
+    if (igrp.parentID.integerValue) {
+        parameters[@"group.parentId"] = igrp.parentID.stringValue;
     }
-    KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
-#warning TODO
+    NSString *action = @"updateGroup";
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:responseObject];
+        DLog(@"[II] responseDict = %@", responseDict);
+        KHHErrorCode errCode = [responseDict[kInfoKeyErrorCode] integerValue];
+        // 把返回的数据转成本地数据
+        NSDictionary *dict = @{
+        kInfoKeyObject    : igrp,
+        kInfoKeyErrorCode : @(errCode),
+        };
+        NSString *name = NameWithActionAndCode(action, errCode);
+        DLog(@"[II] 发送 Notification Name = %@", name);
+        [self postASAPNotificationName:name info:dict];
     };
-    [self postAction:@"updateGroup"
+    [self postAction:action
                query:@"groupService.updateGroup"
           parameters:parameters
              success:success];
@@ -65,31 +86,27 @@
  删除分组 groupService.deleteGroup
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=207
  */
-- (BOOL)deleteGroup:(NSString *)groupID {
-    if (![groupID length]) {
+- (BOOL)deleteGroup:(Group *)group {
+    if (!(group.idValue)) {
         return NO;
     }
-    NSDictionary *parameters = @{ @"group.id" : groupID };
-    [self postAction:@"deleteGroup"
-               query:@"groupService.deleteGroup"
-          parameters:parameters
-             success:nil];
-    return YES;
-}
-/**
- 获取分组下的客户名片id cardGroupService.getCardIdsByGroupId
- http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=164
- */
-- (BOOL)cardIDsInGroup:(NSString *)groupID {
-    if (![groupID length]) {
-        return NO;
-    }
-    NSDictionary *parameters = @{ @"cardGroup.groupId": groupID };
-    KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
-#warning TODO
+    NSDictionary *parameters = @{ @"group.id" : group.id.stringValue };
+    NSString *action = @"deleteGroup";
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:responseObject];
+        DLog(@"[II] responseDict = %@", responseDict);
+        KHHErrorCode errCode = [responseDict[kInfoKeyErrorCode] integerValue];
+        // 把待删除的Group也返回
+        NSDictionary *dict = @{
+        kInfoKeyObject    : group,
+        kInfoKeyErrorCode : @(errCode)
+        };
+        NSString *name = NameWithActionAndCode(action, errCode);
+        DLog(@"[II] 发送 Notification Name = %@", name);
+        [self postASAPNotificationName:name info:dict];
     };
-    [self postAction:@"cardIDsInGroup"
-               query:@"cardGroupService.getCardIdsByGroupId"
+    [self postAction:action
+               query:@"groupService.deleteGroup"
           parameters:parameters
              success:success];
     return YES;

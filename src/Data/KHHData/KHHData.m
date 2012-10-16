@@ -125,9 +125,9 @@
     // 启动调用链！
     NSMutableArray *queue = [NSMutableArray array];
     [queue addObject:@(KHHSyncActionSyncPartly)];
+    [queue addObject:@(KHHSyncActionSyncReceivedCards)];
     [queue addObject:@(KHHSyncActionSyncTemplates)];
     [queue addObject:@(KHHSyncActionSyncGroups)];
-    [queue addObject:@(KHHSyncActionSyncReceivedCards)];
     [queue addObject:@(KHHSyncActionSyncCardGroupMaps)];
     [self startNextSync:queue];
 }
