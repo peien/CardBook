@@ -38,3 +38,7 @@
 - (void)syncCardGroupMaps:(NSMutableArray *)queue;
 - (void)syncTemplates:(NSMutableArray *)queue;
 @end
+
+@interface KHHData (SortDescripters)
+NSSortDescriptor *KHHNameSortDescriptor();
+@end

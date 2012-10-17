@@ -82,7 +82,7 @@
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"parent.id = %@", @(0)];
     NSArray *result = [self fetchEntityName:[Group entityName]
                                   predicate:predicate
-                            sortDescriptors:nil];
+                            sortDescriptors:@[KHHNameSortDescriptor()]];
     return result;
 }
 // 内部固定分组
@@ -97,7 +97,7 @@
     }
     NSArray *fetched = [self fetchEntityName:[Card entityName]
                                   predicate:predicate
-                            sortDescriptors:nil];
+                            sortDescriptors:@[KHHNameSortDescriptor()]];
     // 过滤掉意外情况
     NSMutableArray *result = FilterUnexpectedCardsFromArray(fetched);
     return result;
@@ -112,7 +112,7 @@
     }
     NSArray *fetched = [self fetchEntityName:[ReceivedCard entityName]
                                   predicate:predicate
-                            sortDescriptors:nil];
+                            sortDescriptors:@[KHHNameSortDescriptor()]];
     // 过滤掉意外情况
     NSMutableArray *result = FilterUnexpectedCardsFromArray(fetched);
     return result;
@@ -126,7 +126,7 @@
         NSPredicate *predicate =  [NSPredicate predicateWithFormat:@"company.id == %@", myComID];
         NSArray *fetched = [self fetchEntityName:[Card entityName]
                              predicate:predicate
-                       sortDescriptors:nil];
+                       sortDescriptors:@[KHHNameSortDescriptor()]];
         // 过滤掉意外情况
         result = FilterUnexpectedCardsFromArray(fetched);
     }
@@ -152,7 +152,7 @@
     }
     NSArray *fetched = [self fetchEntityName:[Card entityName]
                                   predicate:predicate
-                            sortDescriptors:nil];
+                            sortDescriptors:@[KHHNameSortDescriptor()]];
     NSMutableArray *filtered = [NSMutableArray arrayWithCapacity:fetched.count];
     for (Card *card in fetched) {
         if (card.groups.count < 1) {
