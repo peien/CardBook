@@ -61,6 +61,7 @@
 - (void)createGroup:(IGroup *)iGroup withMyCard:(MyCard *)myCard;
 - (void)updateGroup:(IGroup *)iGroup;
 - (void)deleteGroup:(Group *)group;
+- (void)moveCards:(NSArray *)cards fromGroup:(Group *)fromGroup toGroup:(Group *)toGroup;//cards是Card类型组成的数组
 
 @end
 

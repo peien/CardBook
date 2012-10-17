@@ -178,14 +178,28 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
 - (void)createGroup:(IGroup *)iGroup
          withMyCard:(MyCard *)myCard {
     NSString *myCardID = myCard.id.stringValue;
-    [self.agent createGroup:iGroup
-                 userCardID:myCardID];
+    if (![self.agent createGroup:iGroup
+                      userCardID:myCardID]) {
+        ALog(@"[EE] ERROR!!参数错误！");
+    }
 }
 - (void)updateGroup:(IGroup *)iGroup {
-    [self.agent updateGroup:iGroup];
-    
+    if (![self.agent updateGroup:iGroup]) {
+        ALog(@"[EE] ERROR!!参数错误！");
+    }
 }
 - (void)deleteGroup:(Group *)group {
-    [self.agent deleteGroup:group];
+    if (![self.agent deleteGroup:group]) {
+        ALog(@"[EE] ERROR!!参数错误！");
+    }
+}
+- (void)moveCards:(NSArray *)cards
+        fromGroup:(Group *)fromGroup
+          toGroup:(Group *)toGroup {
+    if (![self.agent moveCards:cards
+                     fromGroup:fromGroup
+                       toGroup:toGroup]) {
+        ALog(@"[EE] ERROR!!参数错误！");
+    }
 }
 @end
