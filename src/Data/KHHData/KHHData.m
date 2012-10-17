@@ -212,5 +212,15 @@
                                   extra:extra];
 }
 
+@end
+
+@implementation KHHData (SortDescripters)
+
+NSSortDescriptor *KHHNameSortDescriptor() {
+    NSSortDescriptor *result = [NSSortDescriptor sortDescriptorWithKey:kAttributeKeyName
+                                                             ascending:YES
+                                                              selector:@selector(caseInsensitiveCompare:)];
+    return result;
+}
 
 @end
