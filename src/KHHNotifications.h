@@ -15,6 +15,8 @@ static NSString * const KHHUIShowMainUI  = @"UIshowMainUI";
 // Intro
 static NSString * const KHHUIShowIntro   = @"UIShowIntro";
 static NSString * const KHHUISkipIntro   = @"UISkipIntro";
+// Logout
+static NSString * const KHHAppLogout     = @"AppLogout";
 
 //MARK: - 帐户操作
 // Login
