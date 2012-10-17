@@ -28,7 +28,6 @@ typedef void (^KHHConstructionBlock)(id <AFMultipartFormData> formData);
  */
 - (BOOL)authenticateWithFakeID:(NSString *)fakeID
                       password:(NSString *)password;
-- (void)clearAuthorizationHeader;
 /**
  生成所谓的系统级别参数
  */

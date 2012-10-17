@@ -25,9 +25,6 @@
                                                             password:password];
     return YES;
 }
-- (void)clearAuthorizationHeader {
-    [[KHHHTTPClient sharedClient] clearAuthorizationHeader];
-}
 #pragma mark - 发请求
 - (void)postAction:(NSString *)action
              query:(NSString *)query
