@@ -15,10 +15,14 @@
 
 #import "KHHCardMode.h"
 #import "KHHClasses.h"
+#import "KHHDataAPI.h"
+#import "MBProgressHUD.h"
 @interface KHHAddGroupMemberVC ()<UISearchBarDelegate,UISearchDisplayDelegate,
                                  UITableViewDataSource,UITableViewDelegate,SMCheckboxDelegate>
 
 @property (strong, nonatomic) SMCheckbox *box;
+@property (strong, nonatomic) KHHData    *dataCtrl;
+@property (strong, nonatomic) MBProgressHUD *hud;
 
 @end
 
@@ -37,6 +41,8 @@
 @synthesize searchArray = _searchArray;
 @synthesize handleArray;
 @synthesize homeVC;
+@synthesize dataCtrl;
+@synthesize group;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -44,6 +50,10 @@
     if (self) {
         // Custom initialization
         self.navigationItem.rightBarButtonItem = nil;
+        self.dataCtrl = [KHHData sharedData];
+        //注册移动卡片消息
+        [self observeNotificationName:KHHUIMoveCardsSucceeded selector:@"handleMoveCardsSucceeded:"];
+        [self observeNotificationName:KHHUIMoveCardsFailed selector:@"handleMoveCardsFailed:"];
         
     }
     return self;
@@ -65,6 +75,8 @@
     searCtrl.searchResultsDelegate = self;
     self.searbarCtrl = searCtrl;
     [self.view addSubview:searchBar];
+    [_sureBtn setBackgroundImage:[[UIImage imageNamed:@"tongbu_normal.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 8, 0, 8)] forState:UIControlStateNormal];
+    [_cancelBtn setBackgroundImage:[[UIImage imageNamed:@"tongbu_normal.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 8, 0, 8)] forState:UIControlStateNormal];
     if (_isAdd) {
         [_sureBtn setTitle:NSLocalizedString(@"添加",nil) forState:UIControlStateNormal];
         self.title = NSLocalizedString(@"添加组员", nil);
@@ -72,11 +84,13 @@
         [_sureBtn setTitle:NSLocalizedString(@"移出",nil) forState:UIControlStateNormal];
         self.title = NSLocalizedString(@"移出组员", nil);
     }
+    [self initViewData];
     _selectedItemArray = [[NSMutableArray alloc] initWithCapacity:0];
     for (int i = 0; i<handleArray.count; i++) {
         [_selectedItemArray addObject:[NSNumber numberWithBool:NO]];
     }
     _addOrDelGroupArray = [[NSMutableArray alloc] initWithCapacity:0];
+    
     
 }
 // 搜索结果，暂时只能用姓名搜索
@@ -87,7 +101,10 @@
     NSMutableArray *stringArr = [[NSMutableArray alloc] init];
     for (int i = 0; i< self.handleArray.count; i++) {
         KHHCardMode *card = [self.handleArray objectAtIndex:i];
-        [stringArr addObject:card.name];
+        if (card.name.length) {
+            [stringArr addObject:card.name];
+        }
+        
     }
     _searchArray = stringArr;
     
@@ -116,6 +133,9 @@
     _selectedItemArray = nil;
     self.handleArray = nil;
     self.homeVC = nil;
+    self.dataCtrl = nil;
+    self.group = nil;
+    self.hud = nil;
 }
 // 初始化界面数据
 #pragma mark -
@@ -124,6 +144,7 @@
 {
     if (_isAdd) {
         //获取添加组员界面数据，调用数据库接口（获取非本组下的客户名片列表）
+        self.handleArray = [self.dataCtrl cardsOfUngrouped];
     }else{
         //获取删除组员界面数据，获取本组下的客户名片列表
     }
@@ -228,17 +249,23 @@ int num = 0;
     }
     
     //调用接口
+    if (!self.group) {
+        return;
+    }
+    self.hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     if (_isAdd) {
-       //调用添加组员接口,暂时测试显示数据
-        self.homeVC.generalArray = _addOrDelGroupArray;
-        self.homeVC.oWnGroupArray = _addOrDelGroupArray;
+       //调用添加组员接口,
+        [self.dataCtrl moveCards:_addOrDelGroupArray fromGroup:nil toGroup:self.group];
+
     }else{
        //调用移出组员接口
+        [self.dataCtrl moveCards:_addOrDelGroupArray fromGroup:self.group toGroup:nil];
     }
      num = 0;
-    [self.navigationController popViewControllerAnimated:YES];
+    
    
 }
+#pragma mark -
 - (IBAction)cancelBtn:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -260,6 +287,34 @@ int num = 0;
     _resultArray = [_searchArray filteredArrayUsingPredicate:resultPre];
     return YES;
 }
+#pragma mark -
+- (void)handleMoveCardsSucceeded:(NSNotification *)info{
+    [self stopObservingForMoveCards];
+    DLog(@"handleMoveCardsSucceeded! info is ====== %@",info);
+    [self.hud hide:YES];
+    [self.navigationController popViewControllerAnimated:YES];
+   
+    
+
+}
+- (void)handleMoveCardsFailed:(NSNotification *)info{
+    [self stopObservingForMoveCards];
+    DLog(@"handleMoveCardsFailed! info is ====== %@",info);
+    if (_isAdd) {
+        self.hud.labelText = NSLocalizedString(@"添加组员失败", nil);
+    }else{
+        self.hud.labelText = NSLocalizedString(@"删除组员失败", nil);
+    }
+    [self.hud hide:YES];
+    
+
+}
+- (void)stopObservingForMoveCards{
+    [self stopObservingNotificationName:KHHUIMoveCardsSucceeded];
+    [self stopObservingNotificationName:KHHUIMoveCardsFailed];
+
+}
+
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {

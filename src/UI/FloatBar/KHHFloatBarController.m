@@ -10,6 +10,8 @@
 #import "MapController.h"
 #import "KHHVisitRecoardVC.h"
 #import "KHHBMapViewController.h"
+#import "Address.h"
+#import "Company.h"
 #import <MessageUI/MessageUI.h>
 
 @interface KHHFloatBarController ()<UIImagePickerControllerDelegate, UIActionSheetDelegate,
@@ -110,7 +112,7 @@
     UIActionSheet *act = [[UIActionSheet alloc] initWithTitle:@"选择号码" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
     //NSArray *phones = [self.contactDic objectForKey:@"phone"];
     if (self.isContactCellClick) {
-        NSArray *phones = [self.contactDic objectForKey:@"phone"];
+        NSArray *phones = [self.contactDic objectForKey:@"phoneArr"];
         if (phones.count > 0) {
             for (int i = 0; i < phones.count; i++) {
                 [act addButtonWithTitle:[phones objectAtIndex:i]];
@@ -138,7 +140,7 @@
     _type = 2;
     UIActionSheet *actS = [[UIActionSheet alloc] initWithTitle:@"选择号码" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
     if (self.isContactCellClick) {
-        NSArray *phones = [self.contactDic objectForKey:@"phone"];
+        NSArray *phones = [self.contactDic objectForKey:@"phoneArr"];
         if (phones.count > 0) {
             for (int i = 0; i < phones.count; i++) {
                 [actS addButtonWithTitle:[phones objectAtIndex:i]];
@@ -180,10 +182,21 @@
 {
     [self.popover dismissPopoverAnimated:YES];
     MapController *mapVC = [[MapController alloc] initWithNibName:nil bundle:nil];
-    mapVC.companyAddr = @"浙江滨江区南环路4280号元光德大厦501室";
-    mapVC.companyName = @"浙江金汉弘";
-    [self.viewController.navigationController pushViewController:mapVC animated:YES];
-//    KHHBMapViewController *mapVC = [[KHHBMapViewController alloc] initWithNibName:nil bundle:nil];
+    if (self.card.address.province.length > 0 && self.card.address.city.length > 0 && self.card.company.name.length > 0) {
+        NSString *address = [NSString stringWithFormat:@"%@%@",self.card.address.province,self.card.address.city];
+        mapVC.companyAddr = address;
+        mapVC.companyName = self.card.company.name;
+        [self.viewController.navigationController pushViewController:mapVC animated:YES];
+    }else{
+        [[[UIAlertView alloc] initWithTitle:nil
+                                   message:NSLocalizedString(@"没有地址或公司名称可定位", nil)
+                                  delegate:nil
+                         cancelButtonTitle:NSLocalizedString(@"确定", nil)
+                         otherButtonTitles: nil] show];
+    }
+
+    
+    //    KHHBMapViewController *mapVC = [[KHHBMapViewController alloc] initWithNibName:nil bundle:nil];
 //    [self.navigationController pushViewController:mapVC animated:YES];
 
 }
@@ -232,7 +245,7 @@
             if ([messageClass canSendText]) {
                 MFMessageComposeViewController *messageVC = [[MFMessageComposeViewController alloc] init];
                 messageVC.messageComposeDelegate = self;
-                messageVC.body = @"发送短信内容1122";
+                //messageVC.body = @"发送短信内容1122";
                 //号码：
                 messageVC.recipients = [NSArray arrayWithObjects:phone,nil];
                 [self.viewController presentModalViewController:messageVC animated:YES];

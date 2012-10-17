@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SuperViewController.h"
 #import "KHHHomeViewController.h"
+#import "Group.h"
 @interface KHHAddGroupMemberVC : SuperViewController
 @property (strong, nonatomic) UISearchDisplayController *searbarCtrl;
 @property (strong, nonatomic) IBOutlet UITableView *theTableM;
@@ -23,6 +24,7 @@
 @property (strong, nonatomic) NSArray          *searchArray;
 @property (strong, nonatomic) NSArray          *handleArray;
 @property (strong, nonatomic) KHHHomeViewController *homeVC;
+@property (strong, nonatomic) Group                 *group;
 
 - (IBAction)sureBtnClick:(id)sender;
 - (IBAction)cancelBtn:(id)sender;

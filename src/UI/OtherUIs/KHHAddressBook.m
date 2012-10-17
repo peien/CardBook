@@ -110,52 +110,7 @@ SAVEADDRESSFROMCARDEND:
 
     return result;
 }
-//+ (NSMutableArray *)getAllPeppleFromAddressBook{
-//    NSMutableArray *result = [[NSMutableArray alloc] initWithCapacity:0];
-//    ABAddressBookRef addressBook = ABAddressBookCreate();
-//    NSArray *allPeople = (__bridge NSArray *)(ABAddressBookCopyArrayOfAllPeople(addressBook));
-//    CFIndex n = ABAddressBookGetPersonCount(addressBook);
-//    for (int i = 0; i < n; i++) {
-//        ABRecordRef person = CFArrayGetValueAtIndex((__bridge CFArrayRef)(allPeople), i);
-//        //NSString *name = (__bridge NSString *)(ABRecordCopyCompositeName(person));
-//        NSString *company = (__bridge NSString *)(ABRecordCopyValue(person, kABPersonOrganizationProperty));
-//        NSString *job = (__bridge NSString *)(ABRecordCopyValue(person, kABPersonJobTitleProperty));
-//        
-//        ABMultiValueRef phones = ABRecordCopyValue(person, kABPersonPhoneProperty);
-//        NSMutableArray *phoneArr = [NSMutableArray arrayWithCapacity:ABMultiValueGetCount(phones)];
-//        NSString *phone = nil; 
-//        if (ABMultiValueGetCount(phones) > 0) {
-//            phone = (__bridge NSString *)ABMultiValueCopyValueAtIndex(phones, 0);
-//        }
-//        for(int j=0; j<ABMultiValueGetCount(phones); j++){
-//            NSString *number = (__bridge NSString *)ABMultiValueCopyValueAtIndex(phones, j);
-//            [phoneArr addObject:number];
-//        }
-//
-//        
-//        NSString *first = (__bridge NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
-//        NSString *last = (__bridge NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);
-//        NSString *name = [NSString stringWithFormat:@"%@%@", last?:@"", first?:@""];
-//        if([name stringByReplacingOccurrencesOfString:@" " withString:@""].length == 0){
-//            name = phone;
-//            if(name.length == 0){
-//                ABMultiValueRef emailsMultiRef = ABRecordCopyValue(person, kABPersonEmailProperty);
-//                
-//                NSArray *emails =  (__bridge NSArray *)ABMultiValueCopyArrayOfAllValues(emailsMultiRef);
-//                name = emails.count>0 ? [emails objectAtIndex:0] : @"无名称";
-//                
-//                CFRelease(emailsMultiRef);
-//            }
-//        }
-//        DLog(@"phoneArr ====== %@",phoneArr);
-//        [result addObject:[NSDictionary dictionaryWithObjectsAndKeys:name,@"name",company,@"company",job,@"job",phoneArr,@"phone", nil]];
-//    }
-//    if (result.count > 0) {
-//        return result;
-//    }
-//    return nil;
-//    
-//}
+
 + (NSArray *)getAddressBookData
 {
     NSMutableArray *datas = [NSMutableArray arrayWithCapacity:12];
