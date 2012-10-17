@@ -61,6 +61,9 @@ static NSString * const KHHUIUpdateGroupFailed    = @"UIUpdateGroupFailed";
 // 删除
 static NSString * const KHHUIDeleteGroupSucceeded = @"UIDeleteGroupSucceeded";
 static NSString * const KHHUIDeleteGroupFailed    = @"UIDeleteGroupFailed";
+// 添加组员／删除组员
+static NSString * const KHHUIMoveCardsSucceeded = @"UIMoveCardsSucceeded";
+static NSString * const KHHUIMoveCardsFailed    = @"UIMoveCardsFailed";
 
 #pragma mark - Misc
 //MARK: - 位置

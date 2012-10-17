@@ -37,7 +37,7 @@
     
     [button setTitle:@"Action!" forState:UIControlStateNormal];
     [button addTarget:self
-               action:@selector(testCardsInGroups) // TEST
+               action:@selector(testMoveCards) // TEST
      forControlEvents:UIControlEventTouchUpInside];
 }
 
@@ -61,6 +61,12 @@
     IGroup *igrp = [[IGroup alloc] init];
     igrp.name = [NSString stringWithFormat:@"%@", [NSDate date]];
     [self.data createGroup:igrp withMyCard:(MyCard *)self.card];
+}
+- (void)testMoveCards {
+    [self showLabelWithText:@"试验MoveCards"];
+    Card *card = [self.data allReceivedCards].lastObject;
+    Group *group = [self.data allTopLevelGroups].lastObject;
+    [self.data moveCards:@[card] fromGroup:nil toGroup:group];
 }
 
 #pragma mark - 试验模板显示

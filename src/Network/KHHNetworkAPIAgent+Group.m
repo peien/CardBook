@@ -156,19 +156,15 @@
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=154
  */
 - (BOOL)moveCards:(NSArray *)cards
-        fromGroup:(NSString *)fromGroupID
-          toGroup:(NSString *)toGroupID {
-    if (![cards count] || !([fromGroupID length] || [toGroupID length])) {
+        fromGroup:(Group *)fromGroup
+          toGroup:(Group *)toGroup {
+    if (![cards count] || !(fromGroup || toGroup)) {
         // cards为nil或不包含任何元素
         // fromGroup和toGroup都为nil或空
         return NO;
     }
     NSMutableArray *idAndTypes = [NSMutableArray arrayWithCapacity:[cards count]];
     for (id card in cards) {
-        if (![card isKindOfClass:[Card class]]
-            || !CardHasRequiredAttributes(card, KHHCardAttributeID)) {
-            return NO;
-        }
         NSString *cardID = [[card valueForKey:kAttributeKeyID] stringValue];
         NSString *cardType = [card isKindOfClass:[ReceivedCard class]]?@"linkman"
                             :([card isKindOfClass:[PrivateCard class]]?@"me"
@@ -177,15 +173,33 @@
     }
     NSDictionary *parameters = @{
     @"cardIdAndTypes" : [idAndTypes componentsJoinedByString:@"|"],
-    @"delGroupId"     : fromGroupID?fromGroupID:@"",
-    @"addGroupId"     : toGroupID?toGroupID:@"",
+    @"delGroupId"     : fromGroup?fromGroup.id.stringValue:@"",
+    @"addGroupId"     : toGroup?toGroup.id.stringValue:@"",
     };
     DLog(@"[II] request parameters = %@", parameters);
-    
-    [self postAction:@"moveCards"
+    NSString *action = @"moveCards";
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:responseObject];
+        DLog(@"[II] responseDict = %@", responseDict);
+        KHHErrorCode errCode = [responseDict[kInfoKeyErrorCode] integerValue];
+        // 把cards fromGroupID toGroupID也返回
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:4];
+        dict[kInfoKeyErrorCode]  = @(errCode);
+        dict[kInfoKeyObjectList] = cards;
+        if (fromGroup) {
+            dict[kInfoKeyFromGroup]  = fromGroup;
+        }
+        if (toGroup) {
+            dict[kInfoKeyToGroup]    = toGroup;
+        }
+        NSString *name = NameWithActionAndCode(action, errCode);
+        DLog(@"[II] 发送 Notification Name = %@", name);
+        [self postASAPNotificationName:name info:dict];
+    };
+    [self postAction:action
                query:@"cardGroupService.addOrDelCardGroup"
           parameters:parameters
-             success:nil];
+             success:success];
     return YES;
 }
 

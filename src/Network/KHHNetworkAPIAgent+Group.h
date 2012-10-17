@@ -47,8 +47,8 @@
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=154
  */
 - (BOOL)moveCards:(NSArray *)cards
-        fromGroup:(NSString *)fromGroupID
-          toGroup:(NSString *)toGroupID;
+        fromGroup:(Group *)fromGroup
+          toGroup:(Group *)toGroup;
 /*!
  获得(某张名片的)父分组下的所有子分组列表(new) groupService.getAllGroups
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=219

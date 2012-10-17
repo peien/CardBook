@@ -68,6 +68,10 @@
                          selector:@"handleNetworkCardIDsInAllGroupSucceeded:"];
     [self observeNotificationName:KHHNetworkCardIDsInAllGroupFailed
                          selector:@"handleNetworkCardIDsInAllGroupFailed:"];
+    [self observeNotificationName:KHHNetworkMoveCardsSucceeded
+                         selector:@"handleNetworkMoveCardsSucceeded:"];
+    [self observeNotificationName:KHHNetworkMoveCardsFailed
+                         selector:@"handleNetworkMoveCardsFailed:"];
     // 模板
     [self observeNotificationName:KHHNetworkTemplatesAfterDateSucceeded
                          selector:@"handleTemplatesAfterDateSucceeded:"];
@@ -399,6 +403,29 @@
 #warning TODO
     ALog(@"[II] info = %@", info);
     [self syncAllDataEnded:NO];
+}
+- (void)handleNetworkMoveCardsSucceeded:(NSNotification *)noti {
+    NSDictionary *oldInfo = noti.userInfo;
+    ALog(@"[II] info = %@", oldInfo);
+    Group *fromGroup = oldInfo[kInfoKeyFromGroup];
+    Group *toGroup   = oldInfo[kInfoKeyToGroup];
+    NSArray *cards = oldInfo[kInfoKeyObjectList];
+    for (Card *card in cards) {
+        if (fromGroup) {
+            [card.groupsSet removeObject:fromGroup];
+        }
+        if (toGroup) {
+            [card.groupsSet addObject:toGroup];
+        }
+    }
+    [self saveContext];
+    // 发送成功消息
+    [self postASAPNotificationName:KHHUIMoveCardsSucceeded];
+}
+- (void)handleNetworkMoveCardsFailed:(NSNotification *)noti {
+    NSDictionary *info = noti.userInfo;
+    ALog(@"[II] info = %@", info);
+    [self postASAPNotificationName:KHHUIMoveCardsFailed info:info];
 }
 
 #pragma mark - Handlers_Template
