@@ -487,37 +487,36 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(InterCard *iCard) {
  设置联系人的状态为已查看 sendCardService.updateReadState
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=208
  */
-- (BOOL)markReadReceivedCard:(InterCard *)iCard {
-    if (!CardHasRequiredAttributes(iCard, KHHCardAttributeID
-                                   | KHHCardAttributeVersion
-                                   | KHHCardAttributeUserID)) {
-        return NO;
-    }
-    if (iCard.isRead.integerValue) { // 已经读过的就不用继续执行了
+- (void)markReadReceivedCard:(ReceivedCard *)aCard {
+    if (aCard.isRead.integerValue) { // 已经读过的就不用继续执行了
         [self postASAPNotificationName:KHHNetworkMarkReadReceivedCardSucceeded
-                                  info:@{ kInfoKeyErrorCode : @(KHHNetworkStatusCodeSucceeded) }];
-        return YES;
+                                  info:@{
+                    kInfoKeyErrorCode : @(KHHNetworkStatusCodeSucceeded),
+                       kInfoKeyObject : aCard,
+         }];
+        return;
     }
-    NSString *ID = [iCard.id stringValue];
-    NSString *version = [iCard.version stringValue];
-    NSString *userID = [iCard.userID stringValue];
+    NSString *ID = [aCard.id stringValue];
+    NSString *version = [aCard.version stringValue];
+    NSString *userID = [aCard.userID stringValue];
     NSString *action = @"markReadReceivedCard";
     NSDictionary *parameters = @{
             @"senderId" : (userID? userID: @""),
-            @"cardId" : (ID? ID: @""),
-            @"version" : (version? version: @"")
+            @"cardId"   : (ID? ID: @""),
+            @"version"  : (version? version: @"")
     };
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
         NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
         KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
-        NSDictionary *dict = @{ kInfoKeyErrorCode : @(code) };
+        NSDictionary *dict = @{
+        kInfoKeyErrorCode : @(code),
+        kInfoKeyObject : aCard, };
         [self postASAPNotificationName:NameWithActionAndCode(action, code) info:dict];
     };
     [self postAction:action
                query:@"sendCardService.updateReadState"
           parameters:parameters
              success:success];
-    return YES;
 }
 
 @end
