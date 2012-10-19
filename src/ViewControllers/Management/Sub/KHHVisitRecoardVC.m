@@ -305,8 +305,9 @@
             }else if (_style == KVisitRecoardVCStyleShowInfo){
                 textField.text = [_fieldValue objectAtIndex:indexPath.row];
                 if (_isFinishTask) {
-                    UIButton *noteBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+                    UIButton *noteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
                     noteBtn.frame = CGRectMake(280, 5, 30, 30);
+                    [noteBtn setBackgroundImage:[UIImage imageNamed:@"beizhu_btn.png"] forState:UIControlStateNormal];
                     noteBtn.tag = NOTE_BTN_TAG;
                     [noteBtn addTarget:self action:@selector(noteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
                     [cell.contentView addSubview:noteBtn];

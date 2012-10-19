@@ -64,6 +64,8 @@
 		62A77FE0161691D70015A969 /* contact_select@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A77FDF161691D70015A969 /* contact_select@2x.png */; };
 		62A77FE3161696720015A969 /* myDetail_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A77FE1161696720015A969 /* myDetail_normal@2x.png */; };
 		62A77FE4161696720015A969 /* myDetail_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A77FE2161696720015A969 /* myDetail_selected@2x.png */; };
+		62A83C6A162B9DAA0006B5A4 /* beizhu_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A83C69162B9DAA0006B5A4 /* beizhu_btn@2x.png */; };
+		62A83C6D162BAF2E0006B5A4 /* LoginImage_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A83C6C162BAF2E0006B5A4 /* LoginImage_bg@2x.png */; };
 		62A9C99B16099AC100BF7D41 /* KHHAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A9C99A16099AC100BF7D41 /* KHHAddressBook.m */; };
 		62A9DF54162262F300310E92 /* qidong_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A9DF53162262F300310E92 /* qidong_logo@2x.png */; };
 		62A9DF6E16229A4300310E92 /* ic_shuaxin1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A9DF6816229A4300310E92 /* ic_shuaxin1@2x.png */; };
@@ -592,6 +594,8 @@
 		62A77FDF161691D70015A969 /* contact_select@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contact_select@2x.png"; sourceTree = "<group>"; };
 		62A77FE1161696720015A969 /* myDetail_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "myDetail_normal@2x.png"; sourceTree = "<group>"; };
 		62A77FE2161696720015A969 /* myDetail_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "myDetail_selected@2x.png"; sourceTree = "<group>"; };
+		62A83C69162B9DAA0006B5A4 /* beizhu_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beizhu_btn@2x.png"; sourceTree = "<group>"; };
+		62A83C6C162BAF2E0006B5A4 /* LoginImage_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LoginImage_bg@2x.png"; sourceTree = "<group>"; };
 		62A9C99916099AC100BF7D41 /* KHHAddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHAddressBook.h; sourceTree = "<group>"; };
 		62A9C99A16099AC100BF7D41 /* KHHAddressBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHAddressBook.m; sourceTree = "<group>"; };
 		62A9DF53162262F300310E92 /* qidong_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qidong_logo@2x.png"; sourceTree = "<group>"; };
@@ -2199,6 +2203,8 @@
 		98A84F871602D72E00A4A673 /* img */ = {
 			isa = PBXGroup;
 			children = (
+				62A83C6C162BAF2E0006B5A4 /* LoginImage_bg@2x.png */,
+				62A83C69162B9DAA0006B5A4 /* beizhu_btn@2x.png */,
 				629D35A01626D7D40064C8F4 /* crm_leida_selected@2x.png */,
 				629D35A11626D7D40064C8F4 /* crm_loudou_selected@2x.png */,
 				629D35A21626D7D40064C8F4 /* crm_managerEm_selected@2x.png */,
@@ -2852,6 +2858,8 @@
 				629D35A91626D7D40064C8F4 /* crm_person_selected@2x.png in Resources */,
 				629D35AA1626D7D40064C8F4 /* crm_rili_selected@2x.png in Resources */,
 				629D35AB1626D7D40064C8F4 /* crm_weizhi_selected@2x.png in Resources */,
+				62A83C6A162B9DAA0006B5A4 /* beizhu_btn@2x.png in Resources */,
+				62A83C6D162BAF2E0006B5A4 /* LoginImage_bg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

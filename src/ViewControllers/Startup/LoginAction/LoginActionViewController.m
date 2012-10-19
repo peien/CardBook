@@ -85,6 +85,8 @@
     [super viewDidLoad];
     DLog(@"[II] viewDidLoad...");
     self.companyImageView.image = [UIImage imageNamed:KHHLogoFileName];
+    self.bgImageView.image = [UIImage imageNamed:@"LoginImage_bg.png"];
+    
 }
 - (void)viewDidUnload
 {

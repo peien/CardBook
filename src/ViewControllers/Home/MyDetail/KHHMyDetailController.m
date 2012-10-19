@@ -91,7 +91,7 @@
     UIButton *defBtn = (UIButton *)[self.view viewWithTag:667];
     [self performSelector:@selector(headBtnClick:) withObject:defBtn afterDelay:0.1];
     //判断公司名片还是个人名片，个人名片有编辑按钮
-    if (YES) {
+    if ([self.card isKindOfClass:[MyCard class]]) {
         UIButton *bottomBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         bottomBtn.tag = 323;
         [bottomBtn addTarget:self action:@selector(bottomBtnClick:) forControlEvents:UIControlEventTouchUpInside];

@@ -70,6 +70,7 @@ static NSString * const KHHHttpSignatureKey = @"xcardpassword";
 // 默认的公司Logo图片－－金汉弘的Logo
 static NSString * const KHHLogoFileName = @"fafampLogo.png";
 
+
 // 默认模板ID
 static const NSInteger KHHDefaultTemplateID = 41;
 

@@ -15,6 +15,7 @@
 #import "KHHDataAPI.h"
 #import "MBProgressHUD.h"
 #import "DetailInfoViewController.h"
+#import "MBProgressHUD.h"
 
 #import <CoreLocation/CoreLocation.h>
 #import <AudioToolbox/AudioToolbox.h>
@@ -107,28 +108,24 @@
         [self.view insertSubview:btn atIndex:10];
     }
     // 获取经度，纬度
-    _localM = [[CLLocationManager alloc] init];
-    if (_localM && [CLLocationManager locationServicesEnabled]) {
-        _localM.delegate = self;
-        _localM.distanceFilter = 100;
-        _localM.desiredAccuracy = kCLLocationAccuracyBest;
-        [_localM startUpdatingLocation];
-    }else {
-        _localM = nil;
-    }
+    [self getLocationForExChange];
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [KHHShowHideTabBar showTabbar];
-    [self becomeFirstResponder];
+    //[self becomeFirstResponder];
+    DLog(@"becomeFirstResponder ====== %i",[self becomeFirstResponder]);
     [self updateCardTempInfo];
     
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    //[KHHShowHideTabBar hideTabbar];
     [self resignFirstResponder];
     
+}
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self becomeFirstResponder];
 }
 
 - (void)viewDidUnload
@@ -172,6 +169,7 @@
 - (void)updateCardTempInfo{
     self.card = [[self.dataCtrl allMyCards] lastObject];
     self.cardView.card = self.card;
+    [self.cardView.scrView removeFromSuperview];
     [self.cardView.xlPage removeFromSuperview];
     [self.cardView.shadowCard removeFromSuperview];
     [self.cardView showView];
@@ -198,18 +196,41 @@
 {
 
 }
+//获取地理位置
+- (void)getLocationForExChange
+{
+    _localM = [[CLLocationManager alloc] init];
+    if (_localM && [CLLocationManager locationServicesEnabled]) {
+        _localM.delegate = self;
+        _localM.distanceFilter = 100;
+        _localM.desiredAccuracy = kCLLocationAccuracyBest;
+        [_localM startUpdatingLocation];
+    }else {
+        _localM = nil;
+    }
+
+}
 //交换名片
 - (void)exchangeCard
 {
     //注册交换成功，失败的消息
+    [self getLocationForExChange];
     [self observeNotificationName:KHHNetworkExchangeCardSucceeded selector:@"handleExchangeCardSucceeded:"];
     [self observeNotificationName:KHHNetworkExchangeCardFailed selector:@"handleExchangeCardFailed:"];
     if (!self.localM) {
-        NSLog(@"你的设备无法开启定位");
+        NSLog(@"你的设备未开启定位服务");
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"设备未开启定位服务", nil)
+                                   message:NSLocalizedString(@"请在系统设置里开启定位服务。", nil)
+                                  delegate:nil
+                         cancelButtonTitle:NSLocalizedString(@"确定", nil)
+                         otherButtonTitles:nil] show];
         return;
     }
     if (self.currentLocation == nil) {
         NSLog(@"正在获取位置，请稍等");
+        MBProgressHUD *progess = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        progess.labelText = NSLocalizedString(@"正在获取位置，请稍等", nil);
+        [progess hide:YES afterDelay:3];
         return;
     }
     NSLog(@"everything is ok !!");
@@ -241,6 +262,9 @@
     //注册取最新的一张卡片消息
     [self observeNotificationName:KHHUIPullLatestReceivedCardSucceeded selector:@"handlePullLatestReceivedCardSucceeded:"];
     [self observeNotificationName:KHHUIPullLatestReceivedCardFailed selector:@"handlePullLatestReceivedCardFailed:"];
+    [self.timer invalidate];
+    self.timer = nil;
+    [self.mbHUD hide:YES];
     [self.dataCtrl pullLatestReceivedCard];
 }
 //交换失败
@@ -257,9 +281,9 @@
     [self stopObservingNotificationName:KHHUIPullLatestReceivedCardSucceeded];
     [self stopObservingNotificationName:KHHUIPullLatestReceivedCardFailed];
     self.latestCard = [info.userInfo objectForKey:@"receivedCard"];
-    [self.timer invalidate];
-    self.timer = nil;
-    [self.mbHUD hide:YES];
+//    [self.timer invalidate];
+//    self.timer = nil;
+//    [self.mbHUD hide:YES];
     [self warnNetWork:@"交换结束"];
     [self performSelector:@selector(showNewCardInfo) withObject:nil afterDelay:2];
 }
@@ -270,7 +294,6 @@
                                           cancelButtonTitle:@"确定"
                                           otherButtonTitles:nil, nil];
     [alert show];
-
 }
 //收到最新card失败
 - (void)handlePullLatestReceivedCardFailed:(NSNotification *)info{
@@ -317,7 +340,6 @@
         self.mbHUD = [timerr.userInfo objectForKey:@"Hud"];
         NSString *label = [timerr.userInfo objectForKey:@"label"];
         self.mbHUD.labelText = [NSString stringWithFormat:@"%@ %d",label,self.countDownNum];
-    
     }
 }
 //交换失败处理
