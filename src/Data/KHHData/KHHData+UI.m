@@ -9,11 +9,8 @@
 #import "KHHData+UI.h"
 #import "KHHClasses.h"
 #import "KHHTypes.h"
-#import "KHHData+CRUD.h"
 #import "KHHDefaults.h"
-
-@implementation KHHData (UI)
-@end
+#import "NSManagedObject+KHH.h"
 
 @implementation KHHData (UI_Card)
 /*!
@@ -21,48 +18,77 @@
  */
 // 所有 我自己的名片 MyCard 的数组
 - (NSArray *)allMyCards {
-    NSArray *result = [self allCardsOfType:KHHCardModelTypeMyCard];
-    return result;
+    NSArray *array;
+    array = [MyCard objectArrayByPredicate:nil
+                           sortDescriptors:@[[Card nameSortDescriptor]]];
+    return array;
 }
 - (MyCard *)myCardByID:(NSNumber *)cardID {
-    id result = [self cardOfType:KHHCardModelTypeMyCard byID:cardID];
-    return result;
+    MyCard *aCard;
+    aCard = [MyCard objectByID:cardID createIfNone:NO];
+    return aCard;
 }
 - (void)modifyMyCardWithInterCard:(InterCard *)iCard {
-    [self modifyCardOfType:KHHCardModelTypeMyCard withInterCard:iCard];
+    if (![self.agent updateCard:iCard
+                         ofType:KHHCardModelTypeMyCard])
+    {
+        // 参数有误，未发送请求。
+        DLog(@"[II] modifyCardOfType:withInterCard: 参数有误，未发送请求。");
+    }
 }
 
 /*!
  PrivateCard: 我自己创建的联系人, 即 PrivateCard 私有联系人
  */
 - (NSArray *)allPrivateCards {
-    NSArray *result = [self allCardsOfType:KHHCardModelTypePrivateCard];
-    return result;
+    NSArray *array;
+    array = [PrivateCard objectArrayByPredicate:nil
+                                sortDescriptors:@[[Card nameSortDescriptor]]];
+    return array;
 }
 - (PrivateCard *)privateCardByID:(NSNumber *)cardID {
-    id result = [self cardOfType:KHHCardModelTypePrivateCard byID:cardID];
-    return result;
+    PrivateCard *aCard = [PrivateCard objectByID:cardID
+                                    createIfNone:NO];
+    return aCard;
 }
 - (void)createPrivateCardWithInterCard:(InterCard *)iCard {
-    [self createCardOfType:KHHCardModelTypePrivateCard withInterCard:iCard];
+    if (![self.agent createCard:iCard
+                         ofType:KHHCardModelTypePrivateCard])
+    {
+        // 参数有误，未发送请求。
+        DLog(@"[II] createCardOfType:withInterCard: 参数有误，未发送请求。");
+    }
 }
 - (void)modifyPrivateCardWithInterCard:(InterCard *)iCard {
-    [self modifyCardOfType:KHHCardModelTypePrivateCard withInterCard:iCard];
+    if (![self.agent updateCard:iCard
+                         ofType:KHHCardModelTypePrivateCard])
+    {
+        // 参数有误，未发送请求。
+        DLog(@"[II] modifyCardOfType:withInterCard: 参数有误，未发送请求。");
+    }
 }
 - (void)deletePrivateCardByID:(NSNumber *)cardID {
-    [self deleteCardOfType:KHHCardModelTypePrivateCard byID:cardID];
+    if (![self.agent deleteCardByID:cardID
+                             ofType:KHHCardModelTypePrivateCard])
+    {
+        // 参数有误，未发送请求。
+        DLog(@"[II] deleteCardByID:withInterCard: 参数有误，未发送请求。");
+    }
 }
 
 /*!
  ReceivedCard: 收到的联系人, 即通常所说的“联系人”
  */
 - (NSArray *)allReceivedCards {
-    NSArray *result = [self allCardsOfType:KHHCardModelTypeReceivedCard];
-    return result;
+    NSArray *array;
+    array = [ReceivedCard objectArrayByPredicate:nil
+                                 sortDescriptors:@[[Card nameSortDescriptor]]];
+    return array;
 }
 - (ReceivedCard *)receivedCardByID:(NSNumber *)cardID {
-    id result = [self cardOfType:KHHCardModelTypeReceivedCard byID:cardID];
-    return result;
+    ReceivedCard *aCard = [ReceivedCard objectByID:cardID
+                                      createIfNone:NO];
+    return aCard;
 }
 - (void)deleteReceivedCard:(ReceivedCard *)receivedCard; {
     NSArray *cardList = @[receivedCard];
@@ -77,13 +103,22 @@
 }
 @end
 @implementation KHHData (UI_Group)
+// 过滤掉意外的名片：比如cardid＝＝0
+NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
+    NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:oldArray.count];
+    for (Card *card in oldArray) {
+        if (card.idValue && (![card isKindOfClass:[MyCard class]])) {
+            [newArray addObject:card];
+        }
+    }
+    return newArray;
+}
 // 所有 顶级分组（即父分组 id 为 0）
 - (NSArray *)allTopLevelGroups {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"parent.id = %@", @(0)];
-    NSArray *result = [self fetchEntityName:[Group entityName]
-                                  predicate:predicate
-                            sortDescriptors:@[KHHNameSortDescriptor()]];
-    return result;
+    NSArray *array = [Group objectArrayByPredicate:predicate
+                                   sortDescriptors:@[[Group nameSortDescriptor]]];
+    return array;
 }
 // 内部固定分组
 // 所有（联系人与自建联系人的总和，过滤掉同事）
@@ -95,9 +130,9 @@
         // 用公司ID过滤掉同事
         predicate = [NSPredicate predicateWithFormat:@"company.id <> %@", myComID];
     }
-    NSArray *fetched = [self fetchEntityName:[Card entityName]
-                                  predicate:predicate
-                            sortDescriptors:@[KHHNameSortDescriptor()]];
+    NSArray *fetched;
+    fetched = [Card objectArrayByPredicate:predicate
+                           sortDescriptors:@[[Card nameSortDescriptor]]];
     // 过滤掉意外情况
     NSMutableArray *result = FilterUnexpectedCardsFromArray(fetched);
     return result;
@@ -110,9 +145,9 @@
         // 自己属于某公司
         predicate = [NSPredicate predicateWithFormat:@"(isRead <> YES) && (company.id <> %@)", myComID];
     }
-    NSArray *fetched = [self fetchEntityName:[ReceivedCard entityName]
-                                  predicate:predicate
-                            sortDescriptors:@[KHHNameSortDescriptor()]];
+    NSArray *fetched;
+    fetched = [Card objectArrayByPredicate:predicate
+                           sortDescriptors:@[[Card nameSortDescriptor]]];
     // 过滤掉意外情况
     NSMutableArray *result = FilterUnexpectedCardsFromArray(fetched);
     return result;
@@ -124,9 +159,9 @@
     if (myComID.integerValue) {
         // 自己属于某公司
         NSPredicate *predicate =  [NSPredicate predicateWithFormat:@"company.id == %@", myComID];
-        NSArray *fetched = [self fetchEntityName:[Card entityName]
-                             predicate:predicate
-                       sortDescriptors:@[KHHNameSortDescriptor()]];
+        NSArray *fetched;
+        fetched = [Card objectArrayByPredicate:predicate
+                               sortDescriptors:@[[Card nameSortDescriptor]]];
         // 过滤掉意外情况
         result = FilterUnexpectedCardsFromArray(fetched);
     }
@@ -150,9 +185,9 @@
         // 自己属于某公司
         predicate = [NSPredicate predicateWithFormat:@"company.id <> %@", myComID];
     }
-    NSArray *fetched = [self fetchEntityName:[Card entityName]
-                                  predicate:predicate
-                            sortDescriptors:@[KHHNameSortDescriptor()]];
+    NSArray *fetched;
+    fetched = [Card objectArrayByPredicate:predicate
+                           sortDescriptors:@[[Card nameSortDescriptor]]];
     NSMutableArray *filtered = [NSMutableArray arrayWithCapacity:fetched.count];
     for (Card *card in fetched) {
         if (card.groups.count < 1) {
@@ -163,17 +198,6 @@
     NSMutableArray *result = FilterUnexpectedCardsFromArray(filtered);
     return result;
 }
-// 过滤掉意外的名片：比如cardid＝＝0
-NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
-    NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:oldArray.count];
-    for (Card *card in oldArray) {
-        if (card.idValue && (![card isKindOfClass:[MyCard class]])) {
-            [newArray addObject:card];
-        }
-    }
-    return newArray;
-}
-
 // 分组增删改
 - (void)createGroup:(IGroup *)iGroup
          withMyCard:(MyCard *)myCard {

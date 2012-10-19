@@ -9,7 +9,28 @@
 #import <Foundation/Foundation.h>
 #import "SMObject.h"
 
+//keys example:
+//{
+//    cardId = 0;
+//    col1 = "\U91ce\U732a";                      n
+//    col2 = "";                                  n
+//    customCardId = 126;
+//    customCost = 5;
+//    customPosition = "";                        n
+//    customType = me;
+//    gmtCreateTime = "2012-09-07 14:16:27";      n
+//    gmtModTime = "2012-09-07 14:16:27";         n
+//    id = 3;
+//    isDelete = n;
+//    knowAddress = "";
+//    knowTime = "<null>";
+//    relateDepth = 5;
+//    userId = 23795;                             n
+//    version = 0;
+//}
+
 @interface ICustomerEvaluation : SMObject
+
 @property (nonatomic, strong) NSNumber *id;//id = 2;
 @property (nonatomic, strong) NSNumber *version;//version = 1;
 @property (nonatomic, strong) NSNumber *isDeleted;//isDelete = n;
@@ -23,11 +44,8 @@
 @property (nonatomic, strong) NSString *firstMeetAddress;//knowAddress = "\U4e0a\U6d77";
 @property (nonatomic, strong) NSString *firstMeetDate;//knowTime = "2011-12-13 18:59:59";
 
-//customPosition = "\U6d66\U4e1c";
-//userId = 11136;
-//cardId = 102322;
-//col1 = "\U5907\U6ce81";
-//col2 = "\U5907\U6ce82";
-//gmtCreateTime = "2012-09-06 15:29:43";
-//gmtModTime = "2012-09-06 15:29:43";
+@end
+
+@interface ICustomerEvaluation (Methods)
++ (ICustomerEvaluation *)iCustomerEvaluationWithJSON:(NSDictionary *)json;
 @end

@@ -35,13 +35,20 @@
             dict[kInfoKeySyncTime] = syncTime? syncTime: @"";
             
             // customerAppraise -> customerEvaluationList
-//            NSArray *oldList = responseDict[JSONDataKeyPlanList];
-//            dict[kInfoKeyVisitScheduleList] = oldList;
+            NSArray *oldList = responseDict[JSONDataKeyCustomerAppraiseList];
+            NSMutableArray *newList = [NSMutableArray arrayWithCapacity:oldList.count];
+            for (id obj in oldList) {
+                ICustomerEvaluation *icv = [ICustomerEvaluation iCustomerEvaluationWithJSON:obj];
+                [newList addObject:icv];
+            }
+            dict[kInfoKeyObjectList] = newList;
         }
         
         // errorCode 和 extra
         dict[kInfoKeyErrorCode] = @(code);
-        dict[kInfoKeyExtra] = extra;
+        if (extra) {
+            dict[kInfoKeyExtra] = extra;
+        }
         // 把处理完的数据发出去。
         [self postASAPNotificationName:NameWithActionAndCode(action, code)
                                   info:dict];

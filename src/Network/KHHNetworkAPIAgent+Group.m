@@ -129,7 +129,7 @@
         for (NSDictionary *cgm in oldList) {
             ICardGroupMap *icgm = [[ICardGroupMap alloc] init];
             icgm.cardID = cgm[JSONDataKeyCardId];
-            icgm.cardModelType = TypeOfCardModelName(cgm[JSONDataKeyCardType]);
+            icgm.cardModelType = [Card CardModelTypeForServerName:cgm[JSONDataKeyCardType]];
             icgm.groupID = cgm[JSONDataKeyGroupId];
             [newList addObject:icgm];
         }

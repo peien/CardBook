@@ -83,7 +83,7 @@ NSMutableDictionary * ParametersFromSchedule(Schedule *visitSchedule,
 //                InterCard *iCard = [InterCard interCardWithReceivedCardJSON:oldDict];
 //                [receivedCardList addObject:iCard];
 //            }
-            dict[kInfoKeyVisitScheduleList] = planList;
+            dict[kInfoKeyObjectList] = planList;
         }
         
         // errorCode 和 extra

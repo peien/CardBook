@@ -10,11 +10,6 @@
 #import "KHHClasses.h"
 #import "InterCard.h"
 
-
-@interface KHHData (UI)
-
-@end
-
 @interface KHHData (UI_Card)
 /*!
  交换名片后取最新一张名片
@@ -62,13 +57,4 @@
 - (void)updateGroup:(IGroup *)iGroup;
 - (void)deleteGroup:(Group *)group;
 - (void)moveCards:(NSArray *)cards fromGroup:(Group *)fromGroup toGroup:(Group *)toGroup;//cards是Card类型组成的数组
-
-@end
-
-@interface KHHData (UI_Template)
-
-@end
-
-@interface KHHData (UI_Utils)
-
 @end

@@ -81,12 +81,9 @@
 		9803EBA7160DA88D00402B53 /* NSObject+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 9803EBA6160DA88D00402B53 /* NSObject+SM.m */; };
 		9803EBA8160DA88D00402B53 /* NSObject+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 9803EBA6160DA88D00402B53 /* NSObject+SM.m */; };
 		9803EBA9160DA88D00402B53 /* NSObject+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 9803EBA6160DA88D00402B53 /* NSObject+SM.m */; };
-		9803EBAC160DBB6300402B53 /* KHHData+CRUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 9803EBAB160DBB6300402B53 /* KHHData+CRUD.m */; };
-		9803EBAD160DBB6300402B53 /* KHHData+CRUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 9803EBAB160DBB6300402B53 /* KHHData+CRUD.m */; };
-		9803EBAE160DBB6300402B53 /* KHHData+CRUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 9803EBAB160DBB6300402B53 /* KHHData+CRUD.m */; };
-		9803EBB1160DBC8E00402B53 /* KHHData+Processors.m in Sources */ = {isa = PBXBuildFile; fileRef = 9803EBB0160DBC8E00402B53 /* KHHData+Processors.m */; };
-		9803EBB2160DBC8E00402B53 /* KHHData+Processors.m in Sources */ = {isa = PBXBuildFile; fileRef = 9803EBB0160DBC8E00402B53 /* KHHData+Processors.m */; };
-		9803EBB3160DBC8E00402B53 /* KHHData+Processors.m in Sources */ = {isa = PBXBuildFile; fileRef = 9803EBB0160DBC8E00402B53 /* KHHData+Processors.m */; };
+		981BA0F7162EB4520036A4B8 /* CustomerEvaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = 981BA0F6162EB4520036A4B8 /* CustomerEvaluation.m */; };
+		981BA0FB162EB49E0036A4B8 /* _CustomerEvaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = 981BA0FA162EB49E0036A4B8 /* _CustomerEvaluation.m */; };
+		981BA0FE162EB8EF0036A4B8 /* NSManagedObject+KHH.m in Sources */ = {isa = PBXBuildFile; fileRef = 981BA0FD162EB8EE0036A4B8 /* NSManagedObject+KHH.m */; };
 		982AACB71609ABB4002B9BAD /* UIViewController+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACB61609ABB4002B9BAD /* UIViewController+SM.m */; };
 		982AACBA1609BD08002B9BAD /* KHHData+Handlers.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACB91609BD08002B9BAD /* KHHData+Handlers.m */; };
 		982AACBB1609BD08002B9BAD /* KHHData+Handlers.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACB91609BD08002B9BAD /* KHHData+Handlers.m */; };
@@ -646,10 +643,13 @@
 		62D3F40D1603188500E011E2 /* KHHEditMSGViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHEditMSGViewController.xib; sourceTree = "<group>"; };
 		9803EBA5160DA88D00402B53 /* NSObject+SM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SM.h"; sourceTree = "<group>"; };
 		9803EBA6160DA88D00402B53 /* NSObject+SM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SM.m"; sourceTree = "<group>"; };
-		9803EBAA160DBB6300402B53 /* KHHData+CRUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHData+CRUD.h"; sourceTree = "<group>"; };
-		9803EBAB160DBB6300402B53 /* KHHData+CRUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHData+CRUD.m"; sourceTree = "<group>"; };
-		9803EBAF160DBC8E00402B53 /* KHHData+Processors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHData+Processors.h"; sourceTree = "<group>"; };
-		9803EBB0160DBC8E00402B53 /* KHHData+Processors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHData+Processors.m"; sourceTree = "<group>"; };
+		981BA0F5162EB4520036A4B8 /* CustomerEvaluation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerEvaluation.h; sourceTree = "<group>"; };
+		981BA0F6162EB4520036A4B8 /* CustomerEvaluation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerEvaluation.m; sourceTree = "<group>"; };
+		981BA0F9162EB49E0036A4B8 /* _CustomerEvaluation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _CustomerEvaluation.h; sourceTree = "<group>"; };
+		981BA0FA162EB49E0036A4B8 /* _CustomerEvaluation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _CustomerEvaluation.m; sourceTree = "<group>"; };
+		981BA0FC162EB8EE0036A4B8 /* NSManagedObject+KHH.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObject+KHH.h"; path = "Data/Classes/NSManagedObject+KHH.h"; sourceTree = "<group>"; };
+		981BA0FD162EB8EE0036A4B8 /* NSManagedObject+KHH.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSManagedObject+KHH.m"; path = "Data/Classes/NSManagedObject+KHH.m"; sourceTree = "<group>"; };
+		981BA0FF162FE6410036A4B8 /* KHHTransformation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHHTransformation.h; sourceTree = "<group>"; };
 		982AACAE16096C3D002B9BAD /* KHHNetworkAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHHNetworkAPI.h; sourceTree = "<group>"; };
 		982AACB51609ABB3002B9BAD /* UIViewController+SM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SM.h"; sourceTree = "<group>"; };
 		982AACB61609ABB4002B9BAD /* UIViewController+SM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SM.m"; sourceTree = "<group>"; };
@@ -1574,6 +1574,9 @@
 				98542230162BA46500A9E50A /* KHHActions.h */,
 				98A84DA71602D2DA00A4A673 /* KHHNotifications.h */,
 				98A84DA81602D2DA00A4A673 /* KHHStatusCodes.h */,
+				981BA0FF162FE6410036A4B8 /* KHHTransformation.h */,
+				981BA0FC162EB8EE0036A4B8 /* NSManagedObject+KHH.h */,
+				981BA0FD162EB8EE0036A4B8 /* NSManagedObject+KHH.m */,
 				98A84D9C1602D21F00A4A673 /* App */,
 				98A84D9D1602D22600A4A673 /* Data */,
 				98A84D9E1602D23100A4A673 /* Misc */,
@@ -1728,6 +1731,8 @@
 				98A84DB41602D3A300A4A673 /* _CardTemplateItem.m */,
 				98A84DB51602D3A300A4A673 /* _Company.h */,
 				98A84DB61602D3A300A4A673 /* _Company.m */,
+				981BA0F9162EB49E0036A4B8 /* _CustomerEvaluation.h */,
+				981BA0FA162EB49E0036A4B8 /* _CustomerEvaluation.m */,
 				98A84DB91602D3A300A4A673 /* _Group.h */,
 				98A84DBA1602D3A300A4A673 /* _Group.m */,
 				98A84DBB1602D3A300A4A673 /* _Image.h */,
@@ -1757,24 +1762,26 @@
 				98A84DCB1602D3A300A4A673 /* BankAccount.m */,
 				98A84DCC1602D3A300A4A673 /* Card.h */,
 				98A84DCD1602D3A300A4A673 /* Card.m */,
-				98A84DCE1602D3A300A4A673 /* CardTemplate.h */,
-				98A84DCF1602D3A300A4A673 /* CardTemplate.m */,
-				98A84DD01602D3A300A4A673 /* CardTemplateItem.h */,
-				98A84DD11602D3A300A4A673 /* CardTemplateItem.m */,
-				98A84DD21602D3A300A4A673 /* Company.h */,
-				98A84DD31602D3A300A4A673 /* Company.m */,
-				98A84DD61602D3A300A4A673 /* Group.h */,
-				98A84DD71602D3A300A4A673 /* Group.m */,
-				98A84DD81602D3A300A4A673 /* Image.h */,
-				98A84DD91602D3A300A4A673 /* Image.m */,
-				98A84DDA1602D3A300A4A673 /* Message.h */,
-				98A84DDB1602D3A300A4A673 /* Message.m */,
 				98A84DDC1602D3A300A4A673 /* MyCard.h */,
 				98A84DDD1602D3A300A4A673 /* MyCard.m */,
 				984C2852160AF02D007D4D13 /* PrivateCard.h */,
 				984C2853160AF02D007D4D13 /* PrivateCard.m */,
 				98A84DDE1602D3A300A4A673 /* ReceivedCard.h */,
 				98A84DDF1602D3A300A4A673 /* ReceivedCard.m */,
+				98A84DCE1602D3A300A4A673 /* CardTemplate.h */,
+				98A84DCF1602D3A300A4A673 /* CardTemplate.m */,
+				98A84DD01602D3A300A4A673 /* CardTemplateItem.h */,
+				98A84DD11602D3A300A4A673 /* CardTemplateItem.m */,
+				98A84DD21602D3A300A4A673 /* Company.h */,
+				98A84DD31602D3A300A4A673 /* Company.m */,
+				981BA0F5162EB4520036A4B8 /* CustomerEvaluation.h */,
+				981BA0F6162EB4520036A4B8 /* CustomerEvaluation.m */,
+				98A84DD61602D3A300A4A673 /* Group.h */,
+				98A84DD71602D3A300A4A673 /* Group.m */,
+				98A84DD81602D3A300A4A673 /* Image.h */,
+				98A84DD91602D3A300A4A673 /* Image.m */,
+				98A84DDA1602D3A300A4A673 /* Message.h */,
+				98A84DDB1602D3A300A4A673 /* Message.m */,
 				98A84DE01602D3A300A4A673 /* Schedule.h */,
 				98A84DE11602D3A300A4A673 /* Schedule.m */,
 				98F6491B16118012008DE515 /* SyncMark.h */,
@@ -2552,10 +2559,6 @@
 				982AACBE1609BE6B002B9BAD /* KHHData+UI.m */,
 				982AACB81609BD08002B9BAD /* KHHData+Handlers.h */,
 				982AACB91609BD08002B9BAD /* KHHData+Handlers.m */,
-				9803EBAA160DBB6300402B53 /* KHHData+CRUD.h */,
-				9803EBAB160DBB6300402B53 /* KHHData+CRUD.m */,
-				9803EBAF160DBC8E00402B53 /* KHHData+Processors.h */,
-				9803EBB0160DBC8E00402B53 /* KHHData+Processors.m */,
 			);
 			path = KHHData;
 			sourceTree = "<group>";
@@ -2985,8 +2988,6 @@
 				982AACBC1609BD08002B9BAD /* KHHData+Handlers.m in Sources */,
 				982AACC11609BE6B002B9BAD /* KHHData+UI.m in Sources */,
 				9803EBA9160DA88D00402B53 /* NSObject+SM.m in Sources */,
-				9803EBAE160DBB6300402B53 /* KHHData+CRUD.m in Sources */,
-				9803EBB3160DBC8E00402B53 /* KHHData+Processors.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3169,8 +3170,6 @@
 				62A6C4DE160AAECE00ADA43E /* KHHFullFrameController.m in Sources */,
 				62AB2984160C07270004A3E3 /* KHHBMapViewController.m in Sources */,
 				9803EBA7160DA88D00402B53 /* NSObject+SM.m in Sources */,
-				9803EBAC160DBB6300402B53 /* KHHData+CRUD.m in Sources */,
-				9803EBB1160DBC8E00402B53 /* KHHData+Processors.m in Sources */,
 				984FA6351610297D00344BDC /* KHHVisualCardViewController.m in Sources */,
 				984FA63A16104AF000344BDC /* ATestViewController.m in Sources */,
 				0C23C26C1610BE42006FCD8A /* UIColor+HexColor.m in Sources */,
@@ -3192,6 +3191,9 @@
 				98D2438D1627B75C00AC1C38 /* UIImage+KHH.m in Sources */,
 				98542234162BDE1100A9E50A /* IGroup.m in Sources */,
 				98542237162C0B3C00A9E50A /* ICardGroupMap.m in Sources */,
+				981BA0F7162EB4520036A4B8 /* CustomerEvaluation.m in Sources */,
+				981BA0FB162EB49E0036A4B8 /* _CustomerEvaluation.m in Sources */,
+				981BA0FE162EB8EF0036A4B8 /* NSManagedObject+KHH.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3203,8 +3205,6 @@
 				982AACBB1609BD08002B9BAD /* KHHData+Handlers.m in Sources */,
 				982AACC01609BE6B002B9BAD /* KHHData+UI.m in Sources */,
 				9803EBA8160DA88D00402B53 /* NSObject+SM.m in Sources */,
-				9803EBAD160DBB6300402B53 /* KHHData+CRUD.m in Sources */,
-				9803EBB2160DBC8E00402B53 /* KHHData+Processors.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -19,12 +19,12 @@
  @see
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=214
  */
-- (void)listDepartments {
-    [self postAction:@"listDepartments"
-               query:@"employeeViewService.getOrgsByPermission"
-          parameters:nil
-             success:nil];
-}
+//- (void)listDepartments {
+//    [self postAction:@"listDepartments"
+//               query:@"employeeViewService.getOrgsByPermission"
+//          parameters:nil
+//             success:nil];
+//}
 
 #pragma mark - 签到
 /*!
@@ -70,7 +70,6 @@
     KHHConstructionBlock construction = ^(id <AFMultipartFormData>formData) {
         NSArray *imageArray = iCheckIn.imageArray;
         for (UIImage *image in imageArray) {
-//            NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
             NSData *imageData = [image resizedImageDataForKHHUpload];
             [formData appendPartWithFileData:imageData
                                         name:@"imgFiles"

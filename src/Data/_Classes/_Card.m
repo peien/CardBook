@@ -10,6 +10,7 @@ const struct CardAttributes CardAttributes = {
 	.email = @"email",
 	.fax = @"fax",
 	.id = @"id",
+	.isFull = @"isFull",
 	.microblog = @"microblog",
 	.mobilePhone = @"mobilePhone",
 	.modelType = @"modelType",
@@ -69,6 +70,10 @@ const struct CardFetchedProperties CardFetchedProperties = {
 	
 	if ([key isEqualToString:@"idValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"id"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"isFullValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"isFull"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 	if ([key isEqualToString:@"modelTypeValue"]) {
@@ -149,6 +154,32 @@ const struct CardFetchedProperties CardFetchedProperties = {
 
 - (void)setPrimitiveIdValue:(int64_t)value_ {
 	[self setPrimitiveId:[NSNumber numberWithLongLong:value_]];
+}
+
+
+
+
+
+@dynamic isFull;
+
+
+
+- (BOOL)isFullValue {
+	NSNumber *result = [self isFull];
+	return [result boolValue];
+}
+
+- (void)setIsFullValue:(BOOL)value_ {
+	[self setIsFull:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveIsFullValue {
+	NSNumber *result = [self primitiveIsFull];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveIsFullValue:(BOOL)value_ {
+	[self setPrimitiveIsFull:[NSNumber numberWithBool:value_]];
 }
 
 

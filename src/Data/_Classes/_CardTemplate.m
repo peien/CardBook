@@ -7,6 +7,7 @@ const struct CardTemplateAttributes CardTemplateAttributes = {
 	.descriptionInfo = @"descriptionInfo",
 	.domainType = @"domainType",
 	.id = @"id",
+	.isFull = @"isFull",
 	.ownerID = @"ownerID",
 	.style = @"style",
 	.version = @"version",
@@ -53,6 +54,10 @@ const struct CardTemplateFetchedProperties CardTemplateFetchedProperties = {
 	}
 	if ([key isEqualToString:@"idValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"id"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"isFullValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"isFull"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 	if ([key isEqualToString:@"ownerIDValue"]) {
@@ -123,6 +128,32 @@ const struct CardTemplateFetchedProperties CardTemplateFetchedProperties = {
 
 - (void)setPrimitiveIdValue:(int64_t)value_ {
 	[self setPrimitiveId:[NSNumber numberWithLongLong:value_]];
+}
+
+
+
+
+
+@dynamic isFull;
+
+
+
+- (BOOL)isFullValue {
+	NSNumber *result = [self isFull];
+	return [result boolValue];
+}
+
+- (void)setIsFullValue:(BOOL)value_ {
+	[self setIsFull:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveIsFullValue {
+	NSNumber *result = [self primitiveIsFull];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveIsFullValue:(BOOL)value_ {
+	[self setPrimitiveIsFull:[NSNumber numberWithBool:value_]];
 }
 
 

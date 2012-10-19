@@ -37,8 +37,13 @@
     
     [button setTitle:@"Action!" forState:UIControlStateNormal];
     [button addTarget:self
-               action:@selector(testMoveCards) // TEST
+               action:@selector(testCustomerEvaluation) // TEST
      forControlEvents:UIControlEventTouchUpInside];
+}
+#pragma mark - 试验用户评估
+- (void)testCustomerEvaluation {
+    [self showLabelWithText:@"试验用户评估"];
+    [self.agent customerEvaluationListAfterDate:nil extra:nil];
 }
 
 #pragma mark - 试验Groups

@@ -10,6 +10,7 @@
 
 // KHHCardModelType 名片模型，对应于数据库里的类
 typedef enum {
+    KHHCardModelTypeCard         = 0,
     KHHCardModelTypeMyCard       = 1,
     KHHCardModelTypePrivateCard  = 2,
     KHHCardModelTypeReceivedCard = 3,
@@ -57,11 +58,13 @@ typedef enum {
 
 // KHHSyncActionType
 typedef enum {
-    KHHSyncActionSyncPartly = 0,
-    KHHSyncActionSyncGroups,
-    KHHSyncActionSyncTemplates,
-    KHHSyncActionSyncReceivedCards,
-    KHHSyncActionSyncCardGroupMaps,
+    KHHSyncActionPartly = 0,
+    KHHSyncActionReceivedCards,
+    KHHSyncActionTemplates,
+    KHHSyncActionGroups,
+    KHHSyncActionCardGroupMaps,
+    KHHSyncActionCustomerEvaluations,
+    KHHSyncActionVisitSchedules,
 } KHHSyncActionType;
 
 

@@ -15,6 +15,7 @@
 #import "CardTemplate.h"
 #import "CardTemplateItem.h"
 #import "Company.h"
+#import "CustomerEvaluation.h"
 #import "Group.h"
 #import "Image.h"
 #import "MyCard.h"

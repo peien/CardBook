@@ -1,5 +1,7 @@
 #import "_Company.h"
 
 @interface Company : _Company {}
-// Custom logic goes here.
+@end
+
+@interface Company (KHH)
 @end

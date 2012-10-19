@@ -17,7 +17,7 @@
  @see
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=214
  */
-- (void)listDepartments;
+//- (void)listDepartments;
 
 #pragma mark - 签到
 /*!

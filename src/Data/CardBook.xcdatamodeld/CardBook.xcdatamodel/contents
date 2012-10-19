@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1810" systemVersion="12C60" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1811" systemVersion="12C60" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Address" representedClassName="Address" syncable="YES">
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
@@ -24,9 +24,10 @@
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="fax" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" syncable="YES"/>
+        <attribute name="isFull" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="microblog" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mobilePhone" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="modelType" optional="YES" attributeType="Integer 32" syncable="YES"/>
+        <attribute name="modelType" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="moreInfo" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="msn" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
@@ -52,12 +53,13 @@
         <attribute name="descriptionInfo" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="domainType" optional="YES" attributeType="Integer 32" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" syncable="YES"/>
+        <attribute name="isFull" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="ownerID" optional="YES" attributeType="Integer 64" syncable="YES"/>
         <attribute name="style" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="version" optional="YES" attributeType="Integer 64" syncable="YES"/>
         <relationship name="bgImage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Image" inverseName="templates" inverseEntity="Image" syncable="YES"/>
         <relationship name="cards" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Card" inverseName="template" inverseEntity="Card" syncable="YES"/>
-        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CardTemplateItem" inverseName="templates" inverseEntity="CardTemplateItem" syncable="YES"/>
+        <relationship name="items" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CardTemplateItem" inverseName="template" inverseEntity="CardTemplateItem" syncable="YES"/>
     </entity>
     <entity name="CardTemplateItem" representedClassName="CardTemplateItem" syncable="YES">
         <attribute name="fontColor" optional="YES" attributeType="String" syncable="YES"/>
@@ -70,7 +72,7 @@
         <attribute name="rectHeight" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="rectWidth" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="style" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="templates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CardTemplate" inverseName="items" inverseEntity="CardTemplate" syncable="YES"/>
+        <relationship name="template" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CardTemplate" inverseName="items" inverseEntity="CardTemplate" syncable="YES"/>
     </entity>
     <entity name="Company" representedClassName="Company" syncable="YES">
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
@@ -137,8 +139,8 @@
     <elements>
         <element name="Address" positionX="0" positionY="0" width="128" height="165"/>
         <element name="BankAccount" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="Card" positionX="0" positionY="0" width="128" height="480"/>
-        <element name="CardTemplate" positionX="0" positionY="0" width="128" height="180"/>
+        <element name="Card" positionX="0" positionY="0" width="128" height="495"/>
+        <element name="CardTemplate" positionX="0" positionY="0" width="128" height="195"/>
         <element name="CardTemplateItem" positionX="0" positionY="0" width="128" height="210"/>
         <element name="Company" positionX="0" positionY="0" width="128" height="120"/>
         <element name="CustomerEvaluation" positionX="160" positionY="192" width="128" height="150"/>
