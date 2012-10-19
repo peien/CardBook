@@ -7,6 +7,8 @@
 @end
 
 @interface Card (Type_And_Name)
+- (NSString *)nameForServer;
+- (KHHCardModelType)modelType;
 + (NSString *)ServerNameForCardModelType:(KHHCardModelType)type;
 + (KHHCardModelType)CardModelTypeForServerName:(NSString *)name;
 

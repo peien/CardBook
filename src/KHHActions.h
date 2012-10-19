@@ -12,4 +12,6 @@
 static NSString * const kActionNetworkChildGroupsOfGroupID = @"NetworkChildGroupsOfGroupID";
 static NSString * const kActionNetworkCardIDsInAllGroup = @"NetworkCardIDsInAllGroup";
 
+static NSString * const kActionNetworkCreateOrUpdateEvaluation = @"NetworkCreateOrUpdateEvaluation";
+
 #endif

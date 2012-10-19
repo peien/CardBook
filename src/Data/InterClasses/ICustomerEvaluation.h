@@ -40,6 +40,7 @@
 
 @property (nonatomic, strong) NSNumber *value;//customCost = "";
 @property (nonatomic, strong) NSNumber *degree;//relateDepth = 3;
+@property (nonatomic, strong) NSString *remarks;//重要标记？
 
 @property (nonatomic, strong) NSString *firstMeetAddress;//knowAddress = "\U4e0a\U6d77";
 @property (nonatomic, strong) NSString *firstMeetDate;//knowTime = "2011-12-13 18:59:59";

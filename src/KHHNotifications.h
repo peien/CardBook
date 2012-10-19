@@ -52,6 +52,9 @@ static NSString * const KHHUIDeleteCardFailed    = @"UIDeleteCardFailed";
 // 取最后／最新一个ReceivedCard
 static NSString * const KHHUIPullLatestReceivedCardSucceeded  = @"UIPullLatestReceivedCardSucceeded";
 static NSString * const KHHUIPullLatestReceivedCardFailed     = @"UIPullLatestReceivedCardFailed";
+// 标记为已读
+static NSString * const KHHUIMarkCardIsReadSucceeded = @"UIMarkCardIsReadSucceeded";
+static NSString * const KHHUIMarkCardIsReadFailed    = @"UIMarkCardIsReadFailed";
 
 //MARK: - 分组
 // 创建
@@ -66,6 +69,10 @@ static NSString * const KHHUIDeleteGroupFailed    = @"UIDeleteGroupFailed";
 // 添加组员／删除组员
 static NSString * const KHHUIMoveCardsSucceeded = @"UIMoveCardsSucceeded";
 static NSString * const KHHUIMoveCardsFailed    = @"UIMoveCardsFailed";
+
+//MARK: - 客户评估
+static NSString * const KHHUISaveEvaluationSucceeded = @"UISaveEvaluationSucceeded";
+static NSString * const KHHUISaveEvaluationFailed    = @"UISaveEvaluationFailed";
 
 #pragma mark - Misc
 //MARK: - 位置
@@ -181,6 +188,8 @@ static NSString * const KHHNetworkVisitSchedulesAfterDateFailed    = @"visitSche
 //MARK: - 客户评估
 static NSString * const KHHNetworkCustomerEvaluationListAfterDateSucceeded = @"customerEvaluationListAfterDateSucceeded";
 static NSString * const KHHNetworkCustomerEvaluationListAfterDateFailed    = @"customerEvaluationListAfterDateFailed";
+static NSString * const KHHNetworkCreateOrUpdateEvaluationSucceeded = @"NetworkCreateOrUpdateEvaluationSucceeded";
+static NSString * const KHHNetworkCreateOrUpdateEvaluationFailed    = @"NetworkCreateOrUpdateEvaluationFailed";
 
 //MARK: - 企业管理相关
 // listDepartments
