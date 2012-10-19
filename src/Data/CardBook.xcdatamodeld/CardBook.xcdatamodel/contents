@@ -86,6 +86,7 @@
         <attribute name="firstMeetAddress" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="firstMeetDate" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="remarks" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="value" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="version" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <relationship name="customerCard" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Card" inverseName="evaluation" inverseEntity="Card" syncable="YES"/>
@@ -143,7 +144,7 @@
         <element name="CardTemplate" positionX="0" positionY="0" width="128" height="195"/>
         <element name="CardTemplateItem" positionX="0" positionY="0" width="128" height="210"/>
         <element name="Company" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="CustomerEvaluation" positionX="160" positionY="192" width="128" height="150"/>
+        <element name="CustomerEvaluation" positionX="160" positionY="192" width="128" height="165"/>
         <element name="Group" positionX="0" positionY="0" width="128" height="120"/>
         <element name="Image" positionX="0" positionY="0" width="128" height="165"/>
         <element name="Message" positionX="0" positionY="0" width="128" height="135"/>
