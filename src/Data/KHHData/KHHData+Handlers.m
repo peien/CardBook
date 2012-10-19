@@ -15,8 +15,6 @@
 
 @implementation KHHData (Handlers)
 - (void)registerHandlersForNotifications {
-    
-    //[self observeNotificationName:KHHNetwork selector:@"handle"];
     [self observeNotificationName:KHHNetworkAllDataAfterDateSucceeded
                          selector:@"handleAllDataAfterDateSucceeded:"];
     [self observeNotificationName:KHHNetworkAllDataAfterDateFailed
@@ -92,6 +90,10 @@
                          selector:@"handleCustomerEvaluationListAfterDateSucceeded:"];
     [self observeNotificationName:KHHNetworkCustomerEvaluationListAfterDateFailed
                          selector:@"handleCustomerEvaluationListAfterDateFailed:"];
+    [self observeNotificationName:KHHNetworkCreateOrUpdateEvaluationSucceeded
+                         selector:@"handleNetworkCreateOrUpdateEvaluationSucceeded:"];
+    [self observeNotificationName:KHHNetworkCreateOrUpdateEvaluationFailed
+                         selector:@"handleNetworkCreateOrUpdateEvaluationFailed:"];
 }
 
 #pragma mark - Handlers
@@ -503,6 +505,23 @@
     // 根据 queue 采取不同措施
     NSDictionary *extra= info[kInfoKeyExtra];
     [self startNextSync:extra[kExtraKeySyncQueue]];
+}
+- (void)handleNetworkCreateOrUpdateEvaluationSucceeded:(NSNotification *)noti {
+    NSDictionary *info = noti.userInfo;
+    ICustomerEvaluation *icv = info[kInfoKeyObject];
+    // 填入数据库
+    CustomerEvaluation *cv = [CustomerEvaluation objectByID:icv.id
+                                               createIfNone:YES];
+    [cv updateWithICustomerEvaluation:icv];
+    // 保存数据库
+    [self saveContext];
+    // 发送成功消息
+    [self postASAPNotificationName:KHHUISaveEvaluationSucceeded];
+}
+- (void)handleNetworkCreateOrUpdateEvaluationFailed:(NSNotification *)noti {
+    NSDictionary *info = noti.userInfo;
+    ALog(@"[II] info = %@", info);
+    [self postASAPNotificationName:KHHUISaveEvaluationFailed info:info];
 }
 @end
 

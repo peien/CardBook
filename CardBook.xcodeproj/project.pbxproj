@@ -153,7 +153,6 @@
 		98838E3A160865D600CE2353 /* _BankAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DAE1602D3A300A4A673 /* _BankAccount.m */; };
 		98838E3B160865D600CE2353 /* _Card.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DB01602D3A300A4A673 /* _Card.m */; };
 		98838E3C160865D600CE2353 /* _CardTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DB21602D3A300A4A673 /* _CardTemplate.m */; };
-		98838E3D160865D600CE2353 /* _CardTemplateItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DB41602D3A300A4A673 /* _CardTemplateItem.m */; };
 		98838E3E160865D600CE2353 /* _Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DB61602D3A300A4A673 /* _Company.m */; };
 		98838E40160865D600CE2353 /* _Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DBA1602D3A300A4A673 /* _Group.m */; };
 		98838E41160865D600CE2353 /* _Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DBC1602D3A300A4A673 /* _Image.m */; };
@@ -205,6 +204,7 @@
 		98838E7D160886EC00CE2353 /* NSString+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 98838E7C160886EC00CE2353 /* NSString+SM.m */; };
 		98838E7E16089A7600CE2353 /* NSNumber+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 98838E79160879C300CE2353 /* NSNumber+SM.m */; };
 		98838E7F16089A7D00CE2353 /* NSString+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 98838E7C160886EC00CE2353 /* NSString+SM.m */; };
+		989EAED116314C7400B0DA2A /* _CardTemplateItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 989EAED016314C7400B0DA2A /* _CardTemplateItem.m */; };
 		98A84D621602CD2500A4A673 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A84D611602CD2500A4A673 /* UIKit.framework */; };
 		98A84D641602CD2500A4A673 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A84D631602CD2500A4A673 /* Foundation.framework */; };
 		98A84D6C1602CD2500A4A673 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 98A84D6A1602CD2500A4A673 /* InfoPlist.strings */; };
@@ -220,7 +220,6 @@
 		98A84DE31602D3A300A4A673 /* _BankAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DAE1602D3A300A4A673 /* _BankAccount.m */; };
 		98A84DE41602D3A300A4A673 /* _Card.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DB01602D3A300A4A673 /* _Card.m */; };
 		98A84DE51602D3A300A4A673 /* _CardTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DB21602D3A300A4A673 /* _CardTemplate.m */; };
-		98A84DE61602D3A300A4A673 /* _CardTemplateItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DB41602D3A300A4A673 /* _CardTemplateItem.m */; };
 		98A84DE71602D3A300A4A673 /* _Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DB61602D3A300A4A673 /* _Company.m */; };
 		98A84DE91602D3A300A4A673 /* _Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DBA1602D3A300A4A673 /* _Group.m */; };
 		98A84DEA1602D3A300A4A673 /* _Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DBC1602D3A300A4A673 /* _Image.m */; };
@@ -716,6 +715,8 @@
 		98838E79160879C300CE2353 /* NSNumber+SM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+SM.m"; sourceTree = "<group>"; };
 		98838E7B160886EB00CE2353 /* NSString+SM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SM.h"; sourceTree = "<group>"; };
 		98838E7C160886EC00CE2353 /* NSString+SM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SM.m"; sourceTree = "<group>"; };
+		989EAECF16314C7400B0DA2A /* _CardTemplateItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _CardTemplateItem.h; sourceTree = "<group>"; };
+		989EAED016314C7400B0DA2A /* _CardTemplateItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _CardTemplateItem.m; sourceTree = "<group>"; };
 		98A84D5D1602CD2500A4A673 /* CardBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98A84D611602CD2500A4A673 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		98A84D631602CD2500A4A673 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -746,8 +747,6 @@
 		98A84DB01602D3A300A4A673 /* _Card.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Card.m; sourceTree = "<group>"; };
 		98A84DB11602D3A300A4A673 /* _CardTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _CardTemplate.h; sourceTree = "<group>"; };
 		98A84DB21602D3A300A4A673 /* _CardTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _CardTemplate.m; sourceTree = "<group>"; };
-		98A84DB31602D3A300A4A673 /* _CardTemplateItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _CardTemplateItem.h; sourceTree = "<group>"; };
-		98A84DB41602D3A300A4A673 /* _CardTemplateItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _CardTemplateItem.m; sourceTree = "<group>"; };
 		98A84DB51602D3A300A4A673 /* _Company.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Company.h; sourceTree = "<group>"; };
 		98A84DB61602D3A300A4A673 /* _Company.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Company.m; sourceTree = "<group>"; };
 		98A84DB91602D3A300A4A673 /* _Group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Group.h; sourceTree = "<group>"; };
@@ -1723,6 +1722,8 @@
 		98A84DAA1602D3A300A4A673 /* _Classes */ = {
 			isa = PBXGroup;
 			children = (
+				989EAECF16314C7400B0DA2A /* _CardTemplateItem.h */,
+				989EAED016314C7400B0DA2A /* _CardTemplateItem.m */,
 				98A84DAB1602D3A300A4A673 /* _Address.h */,
 				98A84DAC1602D3A300A4A673 /* _Address.m */,
 				98A84DAD1602D3A300A4A673 /* _BankAccount.h */,
@@ -1731,8 +1732,6 @@
 				98A84DB01602D3A300A4A673 /* _Card.m */,
 				98A84DB11602D3A300A4A673 /* _CardTemplate.h */,
 				98A84DB21602D3A300A4A673 /* _CardTemplate.m */,
-				98A84DB31602D3A300A4A673 /* _CardTemplateItem.h */,
-				98A84DB41602D3A300A4A673 /* _CardTemplateItem.m */,
 				98A84DB51602D3A300A4A673 /* _Company.h */,
 				98A84DB61602D3A300A4A673 /* _Company.m */,
 				981BA0F9162EB49E0036A4B8 /* _CustomerEvaluation.h */,
@@ -2962,7 +2961,6 @@
 				98838E3A160865D600CE2353 /* _BankAccount.m in Sources */,
 				98838E3B160865D600CE2353 /* _Card.m in Sources */,
 				98838E3C160865D600CE2353 /* _CardTemplate.m in Sources */,
-				98838E3D160865D600CE2353 /* _CardTemplateItem.m in Sources */,
 				98838E3E160865D600CE2353 /* _Company.m in Sources */,
 				98838E40160865D600CE2353 /* _Group.m in Sources */,
 				98838E41160865D600CE2353 /* _Image.m in Sources */,
@@ -3010,7 +3008,6 @@
 				98A84DE31602D3A300A4A673 /* _BankAccount.m in Sources */,
 				98A84DE41602D3A300A4A673 /* _Card.m in Sources */,
 				98A84DE51602D3A300A4A673 /* _CardTemplate.m in Sources */,
-				98A84DE61602D3A300A4A673 /* _CardTemplateItem.m in Sources */,
 				98A84DE71602D3A300A4A673 /* _Company.m in Sources */,
 				98A84DE91602D3A300A4A673 /* _Group.m in Sources */,
 				98A84DEA1602D3A300A4A673 /* _Image.m in Sources */,
@@ -3202,6 +3199,7 @@
 				981BA0F7162EB4520036A4B8 /* CustomerEvaluation.m in Sources */,
 				981BA0FB162EB49E0036A4B8 /* _CustomerEvaluation.m in Sources */,
 				981BA0FE162EB8EF0036A4B8 /* NSManagedObject+KHH.m in Sources */,
+				989EAED116314C7400B0DA2A /* _CardTemplateItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

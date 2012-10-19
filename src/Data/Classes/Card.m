@@ -1,4 +1,7 @@
 #import "Card.h"
+#import "MyCard.h"
+#import "PrivateCard.h"
+#import "ReceivedCard.h"
 #import "KHHLog.h"
 #import "NSManagedObject+KHH.h"
 #import "InterCard.h"
@@ -13,6 +16,21 @@
 @end
 
 @implementation Card (Type_And_Name)
+- (NSString *)nameForServer {
+    if ([self isKindOfClass:[MyCard class]]) {
+        return @"private";
+    }
+    if ([self isKindOfClass:[PrivateCard class]]) {
+        return @"me";
+    }
+    if ([self isKindOfClass:[ReceivedCard class]]) {
+        return @"linkman";
+    }
+    return nil;
+}
+- (KHHCardModelType)modelType {
+    return [Card CardModelTypeForServerName:[self nameForServer]];
+}
 + (NSString *)ServerNameForCardModelType:(KHHCardModelType)type {
     NSString *result = nil;
     switch (type) {

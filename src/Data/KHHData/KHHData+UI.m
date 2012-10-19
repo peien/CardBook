@@ -13,6 +13,10 @@
 #import "NSManagedObject+KHH.h"
 
 @implementation KHHData (UI_Card)
+// 交换名片后取最新一张名片
+- (void)pullLatestReceivedCard {
+    [self.agent latestReceivedCard];
+}
 /*!
  MyCard: 我的名片
  */
@@ -94,13 +98,12 @@
     NSArray *cardList = @[receivedCard];
     [self.agent deleteReceivedCards:cardList];
 }
-
-/*!
- 交换名片后取最新一张名片
- */
-- (void)pullLatestReceivedCard {
-    [self.agent latestReceivedCard];
+- (void)markIsRead {
+#warning TODO
+    [self postASAPNotificationName:KHHUIMarkCardIsReadFailed
+                              info:@{kInfoKeyErrorMessage : @"！！！尚未实现！！！"}];
 }
+
 @end
 @implementation KHHData (UI_Group)
 // 过滤掉意外的名片：比如cardid＝＝0
@@ -172,8 +175,9 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
 #warning TODO
     return [NSArray array];
 }
-// 重点 (客户评估在3星以上的，先从5星查5星有数据就返回此星下的客户，没数据就查4星，以此类推，下面语句只是5星的，其它星值只是把5换成其它星值)
+// 重点 (客户评估在3星以上的，先从5星查5星有数据就返回此星下的客户，没数据就查4星，以此类推。)
 - (NSArray *)cardsOfVIP {
+//    NSMutableArray *result = 
 #warning TODO
     return [NSArray array];
 }
@@ -225,5 +229,15 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
                        toGroup:toGroup]) {
         ALog(@"[EE] ERROR!!参数错误！");
     }
+}
+@end
+
+@implementation KHHData (UI_CustomerEvaluation)
+- (void)saveEvaluation:(ICustomerEvaluation *)icv //
+         aboutCustomer:(Card *)aCard              // 客户的名片
+            withMyCard:(MyCard *)myCard {
+    [self.agent createOrUpdateEvaluation:icv
+                           aboutCustomer:aCard
+                              withMyCard:myCard];
 }
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "KHHNetworkAPIAgent+CustomerEvaluation.h"
+#import "KHHActions.h"
 
 @implementation KHHNetworkAPIAgent (CustomerEvaluation)
 /**
@@ -22,7 +23,7 @@
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
         NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
         DLog(@"[II] response keys = %@", [responseDict allKeys]);
-        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:8];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
         
         // 把返回的数据转成本地数据
         KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
@@ -58,5 +59,79 @@
           parameters:parameters
              success:success
                extra:extra];
+}
+
+/*!
+ 客户评估信息新增和修改
+ 新增：
+ customerAppraiseService.addCustomerAppraise
+ 修改：
+ customerAppraiseService.updateCustomerAppraise
+ 参数：
+ customerAppraise.id 	 Long 	 否 	 id（andriod客户端没有这张表不使用）
+ customerAppraise.cardId 	 Long 	 否 	 当前用户对应名片ID
+ customerAppraise.version 	 int 	 否 	 当前用户对应名片版本号
+ customerAppraise.customCardId 	 Long 	 是 	 客户名片ID
+ customerAppraise.customType 	 String 	 是 客户类型（决定客户手机的类型）linkman---名片ID|me---私有名片ID）
+ customerAppraise.customPosition 	 String 	 否 	 客户所在位置
+ customerAppraise.relateDepth 	 String 	 否 	 关系深度
+ customerAppraise.customCost String 否 	 客户价值
+ knowTimeTemp 	 String 	 否 	 认识时间
+ customerAppraise.knowAddress 	 String 	 否 	 认识地址
+ customerAppraise.col1 	 String 	 否 	 备注1
+ customerAppraise.col2 	 String 	 否 	 备注2
+ */
+- (void)createOrUpdateEvaluation:(ICustomerEvaluation *)icv
+                   aboutCustomer:(Card *)aCard
+                      withMyCard:(MyCard *)myCard {
+    NSMutableDictionary *parameters;
+    parameters = [NSMutableDictionary dictionaryWithDictionary:@{
+                  @"customerAppraise.id"             : (icv.id         ? icv.id.stringValue         : @""),
+                  @"customerAppraise.cardId"         : (myCard.id      ? myCard.id.stringValue      : @""),
+                  @"customerAppraise.version"        : (myCard.version ? myCard.version.stringValue : @""),
+                  @"customerAppraise.customCardId"   : (aCard.id       ? aCard.id.stringValue       : @""),
+                  @"customerAppraise.customType"     : (aCard          ? [aCard nameForServer]      : @""),
+                  @"customerAppraise.customPosition" : @"",
+                  @"customerAppraise.relateDepth"    : (icv.degree     ? icv.degree.stringValue     : @""),
+                  @"customerAppraise.customCost"     : (icv.value      ? icv.value.stringValue      : @""),
+                  @"knowTimeTemp"                    : (icv.firstMeetDate    ? icv.firstMeetDate    : @""),
+                  @"customerAppraise.knowAddress"    : (icv.firstMeetAddress ? icv.firstMeetAddress : @""),
+                  @"customerAppraise.col1"           : @"",
+                  @"customerAppraise.col2"           : @"",
+                  }];
+    NSString *action = kActionNetworkCreateOrUpdateEvaluation;
+    NSString *query;
+    if (aCard.evaluation) {
+        query = @"customerAppraiseService.updateCustomerAppraise";
+    } else {
+        query = @"customerAppraiseService.addCustomerAppraise";
+    }
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:responseObject];
+        DLog(@"[II] response = %@", responseDict);
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
+        // 把返回的数据转成本地数据
+        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        if (KHHNetworkStatusCodeSucceeded == code) {
+            NSNumber *ID = responseDict[JSONDataKeyID];
+            if (nil == aCard.evaluation) {
+                icv.id = ID;
+            }
+            if (nil == icv.customerCardID) {
+                icv.customerCardID = aCard.id;
+            }
+            icv.customerCardModelType = [aCard modelType];
+            dict[kInfoKeyObject] = icv;
+        }
+        // errorCode
+        dict[kInfoKeyErrorCode] = @(code);
+        // 把处理完的数据发出去。
+        [self postASAPNotificationName:NameWithActionAndCode(action, code)
+                                  info:dict];
+    };
+    [self postAction:action
+               query:query
+          parameters:parameters
+             success:success];
 }
 @end
