@@ -9,10 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "SuperViewController.h"
 #import "KHHCustomEvaluaView.h"
+#import "Card.h"
 @interface KHHEditCustomValueVC : SuperViewController
-@property (strong, nonatomic)NSString  *importFlag;
-@property (assign, nonatomic)CGFloat relationEx;
-@property (assign, nonatomic)CGFloat customValue;
-@property (strong, nonatomic)UITextField *tf;
-@property (strong, nonatomic) KHHCustomEvaluaView *cusView;
+@property (strong, nonatomic) NSString             *importFlag;
+@property (assign, nonatomic) CGFloat              relationEx;
+@property (assign, nonatomic) CGFloat              customValue;
+@property (strong, nonatomic) UITextField          *tf;
+@property (strong, nonatomic) KHHCustomEvaluaView  *cusView;
+@property (strong, nonatomic) Card                 *card;
 @end

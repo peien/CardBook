@@ -9,13 +9,19 @@
 #import "KHHCustomEvaluaView.h"
 #import "KHHLabFieldCell.h"
 #import "DLStarRatingControl.h"
+#import "KHHClasses.h"
+#import "KHHDataAPI.h"
+
 @implementation KHHCustomEvaluaView
+
 @synthesize theTableOne = _theTableOne;
 @synthesize isFieldValueEdit = _isFieldValueEdit;
 @synthesize delegate = _delegate;
 @synthesize importFlag = _importFlag;
 @synthesize relationEx = _relationEx;
 @synthesize customValue = _customValue;
+@synthesize card;
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -58,6 +64,7 @@
     }
     if (_isFieldValueEdit) {
         cell.fieldValue.enabled = YES;
+        cell.fieldValue.placeholder = @"请输入重要标记";
     }else{
         cell.fieldValue.enabled = NO;
     }
@@ -95,6 +102,7 @@
     [_delegate handleStarNum:control startNum:rating];
 
 }
+#pragma mark -
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
@@ -110,6 +118,14 @@
 {
     [_delegate handleTextfieldValue:textField];
 
+}
+
+- (void)reloadTable{
+    
+    _importFlag = @"update";
+    _relationEx = [self.card.evaluation.degree floatValue];
+    _customValue = [self.card.evaluation.value floatValue];
+    [_theTableOne reloadData];
 }
 
 @end

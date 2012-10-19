@@ -8,8 +8,11 @@
 
 #import "KHHEditCustomValueVC.h"
 #import "KHHCustomEvaluaView.h"
+#import "KHHClasses.h"
+#import "MBProgressHUD.h"
 
 @interface KHHEditCustomValueVC ()<KHHCustomEvaluaViewDelegate>
+@property (strong, nonatomic) ICustomerEvaluation *icustomerEva;
 
 @end
 
@@ -19,6 +22,8 @@
 @synthesize customValue = _customValue;
 @synthesize tf = _tf;
 @synthesize cusView = _cusView;
+@synthesize card;
+@synthesize icustomerEva;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -26,25 +31,36 @@
     if (self) {
         // Custom initialization
         [self.rightBtn setTitle:@"保存" forState:UIControlStateNormal];
+        self.icustomerEva = [[ICustomerEvaluation alloc] init];
     }
     return self;
 }
 - (void)rightBarButtonClick:(id)sender
 {
     [_tf resignFirstResponder];
-    
     //保存，如果没有修改重要标记，直接保存importFlag
+    [self saveCustomValue];
+
+    
+}
+- (void)saveCustomValue{
+   
     if (!_tf.text) {
         DLog(@"直接保存重要标记");
     }else{
         _importFlag = _tf.text;
     }
-    //保存成功，和服务器做一次同步
-    //保存过慢，提示用户
-    //保存失败，停留在本页面
-        
+//    self.icustomerEva.customerCardID = self.card.id;
+//    self.icustomerEva.firstMeetAddress = @"";
+//    self.icustomerEva.firstMeetDate = @"";
+//    self.icustomerEva.id = self.card.id;
+//    self.icustomerEva.isDeleted = @"";
+//    self.icustomerEva.version = @"";
+    //self.icustomerEva.degree = self.card.evaluation.degree;
+    //self.icustomerEva.value = self.card.evaluation.value;
+    DLog(@"self.icustomerEva ====== %@",self.icustomerEva);
     
-  
+    
 }
 - (void)viewDidLoad
 {
@@ -52,8 +68,10 @@
     // Do any additional setup after loading the view from its nib.
     KHHCustomEvaluaView *view = [[[NSBundle mainBundle] loadNibNamed:@"KHHCustomEvaluaView" owner:self options:nil] objectAtIndex:0];
     view.importFlag = _cusView.importFlag;
-    view.relationEx = _cusView.relationEx;
-    view.customValue = _cusView.customValue;
+    //view.relationEx = _cusView.relationEx;
+    //view.customValue = _cusView.customValue;
+    view.relationEx = [self.card.evaluation.degree floatValue];
+    view.customValue = [self.card.evaluation.value floatValue];
     view.delegate = self;
     view.isFieldValueEdit = YES;
     [self.view addSubview:view];
@@ -68,6 +86,8 @@
     // e.g. self.myOutlet = nil;
     _importFlag = nil;
     _cusView = nil;
+    self.card = nil;
+    self.icustomerEva = nil;
 
 }
 - (void)handleTextfieldValue:(UITextField *)textf
@@ -79,11 +99,15 @@
 - (void)handleStarNum:(DLStarRatingControl *)control startNum:(CGFloat)num
 {
     if (control.tag == 7788) {
-        _relationEx = num;
+        //_relationEx = num;
+        self.icustomerEva.degree = [NSNumber numberWithFloat:num];
     }else
     {
-        _customValue = num;
+        //_customValue = num;
+        self.icustomerEva.value = [NSNumber numberWithFloat:num];
     }
+   
+    
 
 }
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

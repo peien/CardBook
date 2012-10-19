@@ -15,14 +15,15 @@
 @class eCardViewController;
 
 @interface DetailInfoViewController : SuperViewController
-@property (strong, nonatomic) IBOutlet UIButton *right_bottomBtn;
+@property (strong, nonatomic) IBOutlet UIButton   *right_bottomBtn;
 @property (strong, nonatomic) eCardViewController *eCardVC;
-@property (assign, nonatomic) bool isToeCardVC;
-@property (strong, nonatomic) IBOutlet UIView *containView;
-@property (strong, nonatomic) UISegmentedControl *segmCtrl;
-@property (assign, nonatomic) NSUInteger         lastBtn;
-@property (assign, nonatomic) KHHAppDelegate    *app;
-@property (strong, nonatomic) Card              *card;
-@property (strong, nonatomic) KHHCardMode       *cardM;
+@property (assign, nonatomic) bool                isToeCardVC;
+@property (strong, nonatomic) IBOutlet UIView     *containView;
+@property (strong, nonatomic) UISegmentedControl  *segmCtrl;
+@property (assign, nonatomic) NSUInteger          lastBtn;
+@property (assign, nonatomic) KHHAppDelegate      *app;
+@property (strong, nonatomic) Card                *card;
+@property (strong, nonatomic) KHHCardMode         *cardM;
+@property (assign, nonatomic) bool                isCompanyColleagues;
 
 @end

@@ -14,12 +14,15 @@
 #import "MapController.h"
 #import "KHHAddImageCell.h"
 #import "KHHFullFrameController.h"
+#import "Card.h"
 
-#define TEXTFIELD_DATE_TAG 5551
-#define TEXTFIELD_TIME_TAG 5552
-#define NOTE_BTN_TAG       3312
-#define NOTE_FIELD_TAG     3313
+#define TEXTFIELD_OBJECT_TAG  5550
+#define TEXTFIELD_DATE_TAG    5551
+#define TEXTFIELD_TIME_TAG    5552
+#define NOTE_BTN_TAG          3312
+#define NOTE_FIELD_TAG        3313
 #define TEXTFIELD_ADDRESS_TAG 3314
+
 @interface KHHVisitRecoardVC ()<UITextFieldDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (strong, nonatomic)UIImageView     *imgview;
 @property (assign, nonatomic)int             currentTag;
@@ -52,7 +55,9 @@
 @synthesize timeArr = _timeArr;
 @synthesize timeInterval = _timeInterval;
 @synthesize tapImgview = _tapImgview;
+@synthesize objectNameArr;
 
+#pragma mark -
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -97,6 +102,54 @@
     }
 
 }
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [KHHShowHideTabBar hideTabbar];
+    //[_theTable reloadData];
+
+    
+}
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self getVisitObjects];
+
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+    _theTable = nil;
+    _noteArray = nil;
+    _datePicker = nil;
+    _dateStr = nil;
+    _timeStr = nil;
+    _pick = nil;
+    _warnTitleArr = nil;
+    _tempPickArr = nil;
+    _fieldValue = nil;
+    _editLabel = nil;
+    _fieldName = nil;
+    _imgview = nil;
+    _imgArray = nil;
+    self.objectNameArr = nil;
+}
+#pragma mark -
+- (void)getVisitObjects{
+    if (self.objectNameArr.count > 0) {
+        NSMutableString *nameObj = [[NSMutableString alloc] init];
+        for (int i = 0; i < self.objectNameArr.count; i++) {
+            Card *card = [self.objectNameArr objectAtIndex:i];
+            if (card.name.length > 0) {
+                [nameObj appendString:[NSString stringWithFormat:@" %@",card.name]];
+            }
+        }
+        UITextField *objectTf = (UITextField *)[self.view viewWithTag:TEXTFIELD_OBJECT_TAG];
+        objectTf.text = nameObj;
+    }
+}
 //动态显示时间
 - (void)updateTime
 {
@@ -123,7 +176,6 @@
         notification.userInfo = info;
         [[UIApplication sharedApplication] scheduleLocalNotification:notification];
     }
-
 }
 //从网络或数据库获得数据
 - (void)initViewData
@@ -141,8 +193,6 @@
     if (YES) {
         [_fieldValue replaceObjectAtIndex:6 withObject:@"小刘"];
     }
-
-
 }
 - (void)rightBarButtonClick:(id)sender
 {
@@ -165,31 +215,7 @@
     //调用数据库接口，或者是网络接口
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-    _theTable = nil;
-    _noteArray = nil;
-    _datePicker = nil;
-    _dateStr = nil;
-    _timeStr = nil;
-    _pick = nil;
-    _warnTitleArr = nil;
-    _tempPickArr = nil;
-    _fieldValue = nil;
-    _editLabel = nil;
-    _fieldName = nil;
-    _imgview = nil;
-    _imgArray = nil;
-}
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [KHHShowHideTabBar hideTabbar];
-    //[_theTable reloadData];
-}
+#pragma mark -
 - (void)datePickerValueChanged:(id)sender
 {
     UIDatePicker *datePicker = (UIDatePicker *)sender;
@@ -219,6 +245,7 @@
     _datePicker.frame = rect;
     [UIView commitAnimations];
 }
+#pragma mark - TABLEVIEW_DELEGATE
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return 8;
@@ -269,10 +296,11 @@
         UITextField *detail = (UITextField *)[cell.contentView viewWithTag:9694];
         if (indexPath.row == 0) {
             UIButton *objectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-            objectBtn.frame = CGRectMake(280, -2, 45, 45);
+            objectBtn.frame = CGRectMake(280, 0, 35, 35);
             [objectBtn addTarget:self action:@selector(objectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
             [objectBtn setBackgroundImage:[UIImage imageNamed:@"contact_select.png"] forState:UIControlStateNormal];
             [cell.contentView addSubview:objectBtn];
+            textField.tag = TEXTFIELD_OBJECT_TAG;
             if (_style == KVisitRecoardVCStyleNewBuild) {
                 textField.placeholder = @"请输入拜访对象";
             }else if (_style == KVisitRecoardVCStyleShowInfo){
@@ -478,6 +506,7 @@
     }
    
 }
+#pragma mark -
 - (void)warnBtnClick:(id)sender
 {
     _isWarnBtnClick = YES;
@@ -522,7 +551,7 @@
     _index = 1;
     if (sender.state == UIGestureRecognizerStateBegan) {
         UIActionSheet *actSheet = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
-        [actSheet addButtonWithTitle:@"设为头像"];
+        //[actSheet addButtonWithTitle:@"设为头像"];
         [actSheet addButtonWithTitle:@"删除图片"];
         [actSheet showInView:self.view];
         UIImageView *imgview = (UIImageView *)[sender view];
@@ -555,8 +584,10 @@
     //拜访页面
     KHHHomeViewController *homeVC = [[KHHHomeViewController alloc] initWithNibName:nil bundle:nil];
     homeVC.isNormalSearchBar = YES;
+    homeVC.visitVC = self;
     [self.navigationController pushViewController:homeVC animated:YES];
 }
+#pragma mark - ACTIONSHEET_DELEGATE
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 0 && _index == 0) {
@@ -593,9 +624,9 @@
     }
     if (_index == 1) {
        //长按小图片
-        if (buttonIndex == 1) {
+        if (buttonIndex == 2) {
             //设为头像
-        }else if (buttonIndex == 2){
+        }else if (buttonIndex == 1){
             //删除暂时不能处理
             NSIndexPath *indexPath = [NSIndexPath indexPathForRow:7 inSection:0];
             [_imgArray removeObjectAtIndex:_currentTag - 100];

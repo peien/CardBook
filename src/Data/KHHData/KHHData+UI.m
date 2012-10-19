@@ -146,7 +146,7 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
         predicate = [NSPredicate predicateWithFormat:@"(isRead <> YES) && (company.id <> %@)", myComID];
     }
     NSArray *fetched;
-    fetched = [Card objectArrayByPredicate:predicate
+    fetched = [ReceivedCard objectArrayByPredicate:predicate
                            sortDescriptors:@[[Card nameSortDescriptor]]];
     // 过滤掉意外情况
     NSMutableArray *result = FilterUnexpectedCardsFromArray(fetched);

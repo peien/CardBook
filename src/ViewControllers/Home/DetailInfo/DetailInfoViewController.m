@@ -22,6 +22,7 @@
 #import "KHHShowHideTabBar.h"
 #import "KHHVisitRecoardVC.h"
 #import "UIImageView+WebCache.h"
+#import "KHHDataAPI.h"
 
 #import "Company.h"
 
@@ -32,16 +33,19 @@
 #define LABEL_LOGIMG_TAG  98983
 
 @interface DetailInfoViewController ()
-@property (nonatomic, strong) WEPopoverController *popover;
-@property (nonatomic, strong) KHHCardView         *cardView;
+
+@property (nonatomic, strong) WEPopoverController  *popover;
+@property (nonatomic, strong) KHHCardView          *cardView;
 @property (nonatomic, strong) KHHVisitCalendarView *visitCalView;
 @property (nonatomic, strong) KHHCustomEvaluaView  *customView;
 @property (nonatomic, strong) UIActionSheet        *actSheet;
 @property (nonatomic, assign) int                  style;
 @property (nonatomic, assign) bool                 isNeedReloadTable;
+@property (nonatomic, strong) KHHData              *dataCtrl;
 @end
 
 @implementation DetailInfoViewController
+
 @synthesize right_bottomBtn = _right_bottomBtn;
 @synthesize eCardVC = _eCardVC;
 @synthesize isToeCardVC = _isToeCardVC;
@@ -58,6 +62,9 @@
 @synthesize card;
 @synthesize cardM;
 @synthesize isNeedReloadTable;
+@synthesize isCompanyColleagues;
+@synthesize dataCtrl;
+
 #pragma mark -
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -67,6 +74,7 @@
         self.title = NSLocalizedString(@"详细信息", nil);
         [self.rightBtn setTitle:NSLocalizedString(@"回赠", nil) forState:UIControlStateNormal];
         self.tabBarController.tabBar.hidden = YES;
+        self.dataCtrl = [KHHData sharedData];
 
     }
     return self;
@@ -95,12 +103,21 @@
 
 }
 - (void)viewWillAppear:(BOOL)animated{
+    
     [super viewWillAppear:animated];
     [KHHShowHideTabBar hideTabbar];
     if (self.isNeedReloadTable) {
         [_cardView reloadTable];
         [_cardView initView];
         [self updateViewData:self.card];
+        //刷新客户评估表
+        if ([self.card isKindOfClass:[ReceivedCard class]]) {
+            self.card = [self.dataCtrl receivedCardByID:self.card.id];
+        }else if ([self.card isKindOfClass:[PrivateCard class]]){
+            self.card = [self.dataCtrl privateCardByID:self.card.id];
+        }
+        _customView.card = self.card;
+        [_customView reloadTable];
     }
     
 }
@@ -193,19 +210,22 @@
     
     //客户评估视图
     _customView = [[[NSBundle mainBundle] loadNibNamed:@"KHHCustomEvaluaView" owner:self options:nil] objectAtIndex:0];
-    _customView.importFlag = @"与谁有关系";
-    _customView.relationEx = 3;
-    _customView.customValue = 3;
+    if (self.card.evaluation != nil) {
+        _customView.importFlag = @"......";
+        _customView.relationEx = [self.card.evaluation.degree floatValue];
+        _customView.customValue = [self.card.evaluation.value floatValue];
+    }
     [self.containView addSubview:_customView];
     
     //接收到的卡片不能修改
-    if (![self.card isKindOfClass:[ReceivedCard class]]) {
-        UIButton *bottomBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        bottomBtn.tag = 323;
-        [bottomBtn addTarget:self action:@selector(bottomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        bottomBtn.frame = CGRectMake(260, 360, 66, 66);
-        [bottomBtn setBackgroundImage:[UIImage imageNamed:@"edit_Btn_Red.png"] forState:UIControlStateNormal];
-        [self.view insertSubview:bottomBtn atIndex:100];
+    UIButton *bottomBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    bottomBtn.tag = 323;
+    [bottomBtn addTarget:self action:@selector(bottomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    bottomBtn.frame = CGRectMake(260, 360, 66, 66);
+    [bottomBtn setBackgroundImage:[UIImage imageNamed:@"edit_Btn_Red.png"] forState:UIControlStateNormal];
+    [self.view addSubview:bottomBtn];
+    if ([self.card isKindOfClass:[ReceivedCard class]]) {
+        bottomBtn.hidden = YES;
     }
     //popView
 
@@ -233,10 +253,14 @@
         [self.navigationController pushViewController:editeCardVC animated:YES];
         
     }else{
+        
         KHHEditCustomValueVC *editCustomVC = [[KHHEditCustomValueVC alloc] initWithNibName:nil bundle:nil];
         editCustomVC.cusView = _customView;
+        editCustomVC.card = self.card;
+        self.isNeedReloadTable = YES;
         [self.navigationController pushViewController:editCustomVC animated:YES];
     }
+    
 }
 
 - (void)headBtnClick:(id)sender
@@ -263,7 +287,9 @@
     
     if (btn.tag == 999) {
         [self.containView bringSubviewToFront:_cardView];
-        bottomBtn.hidden = NO;
+        if ([self.card isKindOfClass:[ReceivedCard class]]) {
+            bottomBtn.hidden = YES;
+        }
         _isToeCardVC  = YES;
         
     }else if (btn.tag == 1000){
@@ -280,9 +306,11 @@
         [self.containView bringSubviewToFront:_customView];
         _isToeCardVC = NO;
         bottomBtn.hidden = NO;
+        //同事的客户评估及手机不能编辑
+        if (self.isCompanyColleagues) {
+            bottomBtn.hidden = YES;
+        }
     }
-
-
 }
 
 - (void)viewDidUnload
@@ -299,6 +327,7 @@
     _actSheet = nil;
     self.card = nil;
     self.cardM = nil;
+    self.dataCtrl = nil;
 }
 #pragma mark -
 - (void)tapOne:(id)sender

@@ -54,7 +54,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.title = NSLocalizedString(@"Map", @"Title for map tab");
-
+        self.rightBtn.hidden = YES;
     }
     return self;
 }

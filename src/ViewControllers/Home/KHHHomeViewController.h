@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SuperViewController.h"
+#import "KHHVisitRecoardVC.h"
 typedef enum {
     KUIActionSheetStylePhone,
     KUIActionSheetStyleMessage,
@@ -42,6 +43,7 @@ typedef enum {
 @property (assign, nonatomic) KUIActionSheetHomeType    type;
 @property (strong, nonatomic) NSArray                   *generalArray;
 @property (strong, nonatomic) NSArray                   *oWnGroupArray;
+@property (strong, nonatomic) KHHVisitRecoardVC         *visitVC;
 
 - (IBAction)addBtnClick:(id)sender;
 - (IBAction)cancelBtnClick:(id)sender;

@@ -30,7 +30,7 @@
 #define TEXTFIELD_LOCATION_TAG      5504
 
 @interface LocationInfoVC ()<UIActionSheetDelegate,UINavigationControllerDelegate,
-                            UIImagePickerControllerDelegate,UITextFieldDelegate>
+                            UIImagePickerControllerDelegate,UITextFieldDelegate,UIAlertViewDelegate>
 
 @property (strong, nonatomic) UIImageView       *imgview;
 @property (assign, nonatomic) int               currentTag;
@@ -358,11 +358,20 @@
 - (void)handleCheckInSucceeded:(NSNotification *)info{
     DLog(@"handleCheckInSucceeded! ====== info is %@",info.userInfo);
     [self stopObservingForCheckIn];
-    [[[UIAlertView alloc] initWithTitle:nil message:@"签到成功" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil] show];
+    [[[UIAlertView alloc] initWithTitle:nil
+                                message:@"签到成功"
+                               delegate:self
+                      cancelButtonTitle:@"确定"
+                      otherButtonTitles:nil, nil] show];
 }
 - (void)handleCheckInFailed:(NSNotification *)info{
     DLog(@"handleCheckInFailed! ====== info is %@",info.userInfo);
     [self stopObservingForCheckIn];
+    [[[UIAlertView alloc] initWithTitle:nil
+                                message:@"签到失败"
+                               delegate:nil
+                      cancelButtonTitle:@"确定"
+                      otherButtonTitles:nil, nil] show];
 }
 - (void)stopObservingForUpdateLocation{
     [self stopObservingNotificationName:KHHLocationUpdateSucceeded];
@@ -479,6 +488,13 @@
     rect.origin.y = 0;
     _theTable.frame = rect;
     [UIView commitAnimations];
+
+}
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+       [self.navigationController popViewControllerAnimated:YES]; 
+    }
 
 }
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

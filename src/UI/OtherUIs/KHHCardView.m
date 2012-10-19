@@ -100,7 +100,7 @@
         [self.itemArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[telArr objectAtIndex:0],@"value",@"电话",@"key", nil]];
     }
     if (_myCard.fax.length > 0) {
-        NSArray *faxArr = [_myCard.telephone componentsSeparatedByString:@"|"];
+        NSArray *faxArr = [_myCard.fax componentsSeparatedByString:@"|"];
         [self.itemArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[faxArr objectAtIndex:0],@"value",@"传真",@"key", nil]];
     }
     if (_myCard.email.length > 0) {
@@ -239,6 +239,7 @@
 }
 - (void)handleDeleteCardFailed:(NSNotification *)info{
     DLog(@"DeleteCardFailed:");
+    self.progressHud.labelText = NSLocalizedString(@"删除失败", nil);
     [self.progressHud hide:YES];
     [self stopObservingNotificationName:KHHUIDeleteCardSucceeded];
     [self stopObservingNotificationName:KHHUIDeleteCardFailed];

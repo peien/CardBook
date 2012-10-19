@@ -25,6 +25,7 @@
 @implementation CardReceiver
 @synthesize name = _name;
 @synthesize mobile = _mobile;
+
 - (CardReceiver *)initWithName:(NSString *)name andMobile:(NSString *)mobile
 {
     self = [super init];
@@ -60,7 +61,7 @@
         // Custom initialization
         _theReceivers = [[NSMutableArray alloc] init];
         self.agent = [[KHHNetworkAPIAgent alloc] init];
-        self.title = NSLocalizedString(@"发生至手机", nil);
+        self.title = NSLocalizedString(@"发送至手机", nil);
         [self.leftBtn setTitle:NSLocalizedString(@"取消", nil) forState:UIControlStateNormal];
         [self.rightBtn setTitle:NSLocalizedString(@"发送", nil) forState:UIControlStateNormal];
         [[NSNotificationCenter defaultCenter] addObserver:self
