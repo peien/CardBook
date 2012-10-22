@@ -6,5 +6,6 @@
 @end
 
 @interface Image (Transformation) <KHHTransformation>
++ (id)objectWithIObject:(IImage *)iObj;
 - (id)updateWithIObject:(IImage *)iObj;
 @end

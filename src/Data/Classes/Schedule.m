@@ -53,8 +53,10 @@
         //imageList, IImage数组
         [self.imagesSet removeAllObjects];
         for (IImage *ii in iObj.imageList) {
-            Image *img = [[Image objectByID:ii.id createIfNone:YES] updateWithIObject:ii];
-            [self.imagesSet addObject:img];
+            Image *img = [Image objectWithIObject:ii];
+            if (img) {
+                [self.imagesSet addObject:img];
+            }
         }
         // 地址信息
         if (nil == self.address) { // 无则新建
