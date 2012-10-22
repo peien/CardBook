@@ -8,6 +8,7 @@
 
 #import "KHHNetworkAPIAgent+CustomerEvaluation.h"
 #import "KHHActions.h"
+#import "NSNumber+SM.h"
 
 @implementation KHHNetworkAPIAgent (CustomerEvaluation)
 /**
@@ -125,7 +126,8 @@
         // 把返回的数据转成本地数据
         KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
         if (KHHNetworkStatusCodeSucceeded == code) {
-            NSNumber *ID = responseDict[JSONDataKeyID];
+            NSNumber *ID = [NSNumber numberFromObject:responseDict[JSONDataKeyID]
+                                   zeroIfUnresolvable:NO];
             if (nil == aCard.evaluation) {
                 icv.id = ID;
             }
