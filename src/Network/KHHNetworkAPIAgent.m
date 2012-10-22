@@ -233,6 +233,7 @@ NSString *NameWithActionAndCode(NSString *action, KHHNetworkStatusCode code) {
     DLog(@"[II] action = %@\n error = %@", action, error);
     NSString *name = [NSString stringWithFormat:@"%@Failed", action];
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:3];
+    dict[kInfoKeyAction] = action;
     dict[kInfoKeyErrorCode] = @(error.code);
     dict[kInfoKeyError] = error.localizedDescription;
     // 把extra也一并返回
