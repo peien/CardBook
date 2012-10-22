@@ -98,10 +98,8 @@
     NSArray *cardList = @[receivedCard];
     [self.agent deleteReceivedCards:cardList];
 }
-- (void)markIsRead {
-#warning TODO
-    [self postASAPNotificationName:KHHUIMarkCardIsReadFailed
-                              info:@{kInfoKeyErrorMessage : @"！！！尚未实现！！！"}];
+- (void)markIsRead:(ReceivedCard *)aCard {
+    [self.agent markReadReceivedCard:aCard];
 }
 
 @end

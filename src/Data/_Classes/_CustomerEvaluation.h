@@ -9,6 +9,7 @@ extern const struct CustomerEvaluationAttributes {
 	__unsafe_unretained NSString *firstMeetAddress;
 	__unsafe_unretained NSString *firstMeetDate;
 	__unsafe_unretained NSString *id;
+	__unsafe_unretained NSString *remarks;
 	__unsafe_unretained NSString *value;
 	__unsafe_unretained NSString *version;
 } CustomerEvaluationAttributes;
@@ -21,6 +22,7 @@ extern const struct CustomerEvaluationFetchedProperties {
 } CustomerEvaluationFetchedProperties;
 
 @class Card;
+
 
 
 
@@ -77,6 +79,14 @@ extern const struct CustomerEvaluationFetchedProperties {
 - (void)setIdValue:(int64_t)value_;
 
 //- (BOOL)validateId:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSString* remarks;
+
+
+//- (BOOL)validateRemarks:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -149,6 +159,12 @@ extern const struct CustomerEvaluationFetchedProperties {
 
 - (int64_t)primitiveIdValue;
 - (void)setPrimitiveIdValue:(int64_t)value_;
+
+
+
+
+- (NSString*)primitiveRemarks;
+- (void)setPrimitiveRemarks:(NSString*)value;
 
 
 

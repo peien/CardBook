@@ -49,6 +49,10 @@
                          selector:@"handleLatestReceivedCardSucceeded:"];
     [self observeNotificationName:KHHNetworkLatestReceivedCardFailed
                          selector:@"handleLatestReceivedCardFailed:"];
+    [self observeNotificationName:KHHNetworkMarkReadReceivedCardSucceeded
+                         selector:@"handleNetworkMarkReadReceivedCardSucceeded:"];
+    [self observeNotificationName:KHHNetworkMarkReadReceivedCardFailed
+                         selector:@"handleNetworkMarkReadReceivedCardFailed:"];
     // 分组
     [self observeNotificationName:KHHNetworkCreateGroupSucceeded
                          selector:@"handleNetworkCreateGroupSucceeded:"];
@@ -305,6 +309,23 @@
     [self postASAPNotificationName:KHHUIPullLatestReceivedCardFailed
                               info:info];
 }
+- (void)handleNetworkMarkReadReceivedCardSucceeded:(NSNotification *)noti {
+    NSDictionary *info = noti.userInfo;
+    ReceivedCard *rCard = info[kInfoKeyObject];
+    // 填入数据库
+    rCard.isReadValue = YES;
+    // 保存数据库
+    [self saveContext];
+    // 发送成功消息
+    [self postASAPNotificationName:KHHUIMarkCardIsReadSucceeded];
+}
+- (void)handleNetworkMarkReadReceivedCardFailed:(NSNotification *)noti {
+    NSDictionary *info = noti.userInfo;
+    ALog(@"[II] info = %@", info);
+    // 发送消息
+    [self postASAPNotificationName:KHHUIMarkCardIsReadFailed
+                              info:info];
+}
 
 #pragma mark - Handlers_Group
 - (void)handleNetworkCreateGroupSucceeded:(NSNotification *)noti {
@@ -521,7 +542,9 @@
 - (void)handleNetworkCreateOrUpdateEvaluationFailed:(NSNotification *)noti {
     NSDictionary *info = noti.userInfo;
     ALog(@"[II] info = %@", info);
-    [self postASAPNotificationName:KHHUISaveEvaluationFailed info:info];
+    // 发送消息
+    [self postASAPNotificationName:KHHUISaveEvaluationFailed
+                              info:info];
 }
 @end
 

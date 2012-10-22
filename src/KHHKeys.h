@@ -145,6 +145,7 @@ static NSString * const JSONDataKeyWeb = @"web";
 static NSString * const JSONDataKeyZipcode = @"zipcode";
 
 #pragma mark - kInfoKey* : Info dictionary key
+static NSString * const kInfoKeyAction = @"action";//NSString
 static NSString * const kInfoKeyAuthorizationID = @"authorizationID";//NSNumber
 static NSString * const kInfoKeyAutoLogin = @"autoLogin";//NSNumber(BOOL)
 static NSString * const kInfoKeyAutoReceive = @"autoReceive";//NSNumber(BOOL)

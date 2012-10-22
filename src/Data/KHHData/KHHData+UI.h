@@ -30,7 +30,7 @@
 - (NSArray *)allReceivedCards;// 所有 收到的联系人 ReceivedCard 的数组
 - (ReceivedCard *)receivedCardByID:(NSNumber *)cardID;// 根据ID查询
 - (void)deleteReceivedCard:(ReceivedCard *)receivedCard;
-- (void)markIsRead;
+- (void)markIsRead:(ReceivedCard *)iCard;
 @end
 
 @interface KHHData (UI_Group)
