@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "KHHVisitCalendarCell.h"
+#import "DetailInfoViewController.h"
 
 @interface KHHVisitCalendarView : UIView<UITableViewDataSource,UITableViewDelegate,KHHVisitCalendarCellDelegate>
-@property (strong, nonatomic) IBOutlet UITableView *theTable;
-@property (strong, nonatomic) IBOutlet UIView *footView;
-@property (strong, nonatomic) UIViewController *viewCtrl;
-@property (strong, nonatomic) NSMutableArray   *imgArr;
-@property (strong, nonatomic) UIImageView      *imgview;
+@property (strong, nonatomic) IBOutlet UITableView     *theTable;
+@property (strong, nonatomic) IBOutlet UIView          *footView;
+@property (strong, nonatomic) UIViewController         *viewCtrl;
+@property (strong, nonatomic) NSMutableArray           *imgArr;
+@property (strong, nonatomic) UIImageView              *imgview;
+
 - (IBAction)VisitCalendarBtnClick:(id)sender;
 @end

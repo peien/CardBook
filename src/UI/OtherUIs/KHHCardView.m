@@ -16,6 +16,7 @@
 #import "KHHData+UI.h"
 #import "UIImageView+WebCache.h"
 #import "KHHAddressBook.h"
+#import "KHHAppDelegate.h"
 
 #define CARD_IMGVIEW_TAG 333
 #define CARDMOD_VIEW_TAG 444
@@ -85,7 +86,6 @@
     if ([self.myCard isKindOfClass:[MyCard class]]) {
         btnFooterDel.enabled = NO;
     }
-    
 }
 //初始化界面数据
 - (void)initViewData
@@ -222,6 +222,7 @@
     //注册删除卡片的消息
     [self observeNotificationName:KHHUIDeleteCardSucceeded selector:@"handleDeleteCardSucceeded:"];
     [self observeNotificationName:KHHUIDeleteCardFailed selector:@"handleDeleteCardFailed"];
+    //KHHAppDelegate *app = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
     self.progressHud = [MBProgressHUD showHUDAddedTo:self.detailVC.view animated:YES];
     if ([self.myCard isKindOfClass:[PrivateCard class]]) {
         [self.dataCtrl deletePrivateCardByID:self.myCard.id];

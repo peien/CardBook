@@ -18,7 +18,7 @@
     [self observeNotificationName:KHHNetworkAllDataAfterDateSucceeded
                          selector:@"handleAllDataAfterDateSucceeded:"];
     [self observeNotificationName:KHHNetworkAllDataAfterDateFailed
-                         selector:@"handleAllDataAfterDateFailed:"];
+                         selector:@"handleNetworkActionQueueFailed:"];
     // Card - Create, Update, Delete.
     [self observeNotificationName:KHHNetworkCreateCardSucceeded
                          selector:@"handleCreateCardSucceeded:"];
@@ -44,7 +44,7 @@
     [self observeNotificationName:KHHNetworkReceivedCardsAfterDateLastCardExpectedCountSucceeded
                          selector:@"handleReceivedCardsAfterDateLastCardExpectedCountSucceeded:"];
     [self observeNotificationName:KHHNetworkReceivedCardsAfterDateLastCardExpectedCountFailed
-                         selector:@"handleReceivedCardsAfterDateLastCardExpectedCountFailed:"];
+                         selector:@"handleNetworkActionQueueFailed:"];
     [self observeNotificationName:KHHNetworkLatestReceivedCardSucceeded
                          selector:@"handleLatestReceivedCardSucceeded:"];
     [self observeNotificationName:KHHNetworkLatestReceivedCardFailed
@@ -69,11 +69,11 @@
     [self observeNotificationName:KHHNetworkChildGroupsOfGroupIDSucceeded
                          selector:@"handleNetworkChildGroupsOfGroupIDSucceeded:"];
     [self observeNotificationName:KHHNetworkChildGroupsOfGroupIDFailed
-                         selector:@"handleNetworkChildGroupsOfGroupIDFailed:"];
+                         selector:@"handleNetworkActionQueueFailed:"];
     [self observeNotificationName:KHHNetworkCardIDsInAllGroupSucceeded
                          selector:@"handleNetworkCardIDsInAllGroupSucceeded:"];
     [self observeNotificationName:KHHNetworkCardIDsInAllGroupFailed
-                         selector:@"handleNetworkCardIDsInAllGroupFailed:"];
+                         selector:@"handleNetworkActionQueueFailed:"];
     [self observeNotificationName:KHHNetworkMoveCardsSucceeded
                          selector:@"handleNetworkMoveCardsSucceeded:"];
     [self observeNotificationName:KHHNetworkMoveCardsFailed
@@ -82,18 +82,18 @@
     [self observeNotificationName:KHHNetworkTemplatesAfterDateSucceeded
                          selector:@"handleTemplatesAfterDateSucceeded:"];
     [self observeNotificationName:KHHNetworkTemplatesAfterDateFailed
-                         selector:@"handleTemplatesAfterDateFailed:"];
+                         selector:@"handleNetworkActionQueueFailed:"];
     
     // 拜访计划
     [self observeNotificationName:KHHNetworkVisitSchedulesAfterDateSucceeded
                          selector:@"handleVisitSchedulesAfterDateSucceeded:"];
     [self observeNotificationName:KHHNetworkVisitSchedulesAfterDateFailed
-                         selector:@"handleVisitSchedulesAfterDateFailed:"];
+                         selector:@"handleNetworkActionQueueFailed:"];
     // 客户评估
     [self observeNotificationName:KHHNetworkCustomerEvaluationListAfterDateSucceeded
                          selector:@"handleCustomerEvaluationListAfterDateSucceeded:"];
     [self observeNotificationName:KHHNetworkCustomerEvaluationListAfterDateFailed
-                         selector:@"handleCustomerEvaluationListAfterDateFailed:"];
+                         selector:@"handleNetworkActionQueueFailed:"];
     [self observeNotificationName:KHHNetworkCreateOrUpdateEvaluationSucceeded
                          selector:@"handleNetworkCreateOrUpdateEvaluationSucceeded:"];
     [self observeNotificationName:KHHNetworkCreateOrUpdateEvaluationFailed
@@ -101,6 +101,13 @@
 }
 
 #pragma mark - Handlers
+- (void)handleNetworkActionQueueFailed:(NSNotification *)noti {
+    NSDictionary *info = noti.userInfo;
+    ALog(@"[II] info = %@", info);
+    // 根据 queue 采取不同措施
+    NSDictionary *extra= info[kInfoKeyExtra];
+    [self startNextSync:extra[kExtraKeySyncQueue]];
+}
 - (void)handleAllDataAfterDateSucceeded:(NSNotification *)noti {
     DLog(@"[II] noti userInfo keys = %@", [noti.userInfo allKeys]);
     NSDictionary *info = noti.userInfo;
@@ -133,12 +140,6 @@
     NSDictionary *extra= info[kInfoKeyExtra];
     [self startNextSync:extra[kExtraKeySyncQueue]];
 }
-- (void)handleAllDataAfterDateFailed:(NSNotification *)noti {
-    NSDictionary *info = noti.userInfo;
-    // 根据 queue 采取不同措施
-    NSDictionary *extra= info[kInfoKeyExtra];
-    [self startNextSync:extra[kExtraKeySyncQueue]];
-}
 #pragma mark - Handlers_Card
 - (void)handleCreateCardSucceeded:(NSNotification *)noti {
     NSDictionary *info = noti.userInfo;
@@ -146,7 +147,7 @@
     DLog(@"[II] extra = %@", extra);
     InterCard *iCard = extra[kExtraKeyInterCard];
     // 填入数据库
-    switch (iCard.modelType.integerValue) {
+    switch (iCard.modelType) {
         case KHHCardModelTypeMyCard:
             [MyCard objectWithIObject:iCard];
             break;
@@ -174,7 +175,7 @@
     DLog(@"[II] extra = %@", extra);
     InterCard *iCard = extra[kExtraKeyInterCard];
     // 填入数据库
-    switch (iCard.modelType.integerValue) {
+    switch (iCard.modelType) {
         case KHHCardModelTypeMyCard:
             [MyCard objectWithIObject:iCard];
             break;
@@ -272,13 +273,6 @@
         [self startNextSync:extra[kExtraKeySyncQueue]];
     }
     
-}
-- (void)handleReceivedCardsAfterDateLastCardExpectedCountFailed:(NSNotification *)noti {
-    NSDictionary *info = noti.userInfo;
-    ALog(@"[II] info = %@", info);
-    // 根据 queue 采取不同措施
-    NSDictionary *extra= info[kInfoKeyExtra];
-    [self startNextSync:extra[kExtraKeySyncQueue]];
 }
 - (void)handleLatestReceivedCardSucceeded:(NSNotification *)noti {
     NSDictionary *userInfo = noti.userInfo;
@@ -386,13 +380,6 @@
     NSDictionary *extra= oldInfo[kInfoKeyExtra];
     [self startNextSync:extra[kExtraKeySyncQueue]];
 }
-- (void)handleNetworkChildGroupsOfGroupIDFailed:(NSNotification *)noti {
-    NSDictionary *info = noti.userInfo;
-    ALog(@"[II] info = %@", info);
-    // 根据 queue 采取不同措施
-    NSDictionary *extra= info[kInfoKeyExtra];
-    [self startNextSync:extra[kExtraKeySyncQueue]];
-}
 - (void)handleNetworkCardIDsInAllGroupSucceeded:(NSNotification *)noti {
     NSDictionary *oldInfo = noti.userInfo;
     DLog(@"[II] info = %@", oldInfo);
@@ -405,13 +392,6 @@
     // 发成功消息
     // 根据 queue 采取不同措施
     NSDictionary *extra= oldInfo[kInfoKeyExtra];
-    [self startNextSync:extra[kExtraKeySyncQueue]];
-}
-- (void)handleNetworkCardIDsInAllGroupFailed:(NSNotification *)noti {
-    NSDictionary *info = noti.userInfo;
-    ALog(@"[II] info = %@", info);
-    // 根据 queue 采取不同措施
-    NSDictionary *extra= info[kInfoKeyExtra];
     [self startNextSync:extra[kExtraKeySyncQueue]];
 }
 - (void)handleNetworkMoveCardsSucceeded:(NSNotification *)noti {
@@ -458,13 +438,6 @@
     NSDictionary *extra= info[kInfoKeyExtra];
     [self startNextSync:extra[kExtraKeySyncQueue]];
 }
-- (void)handleTemplatesAfterDateFailed:(NSNotification *)noti {
-    NSDictionary *info = noti.userInfo;
-    ALog(@"[II] info = %@", info);
-    // 根据 queue 采取不同措施
-    NSDictionary *extra= info[kInfoKeyExtra];
-    [self startNextSync:extra[kExtraKeySyncQueue]];
-}
 
 #pragma mark - Handlers_Schedule
 - (void)handleVisitSchedulesAfterDateSucceeded:(NSNotification *)noti {
@@ -472,21 +445,12 @@
     DLog(@"[II] info = %@", info);
     // 1.List
     NSArray *list = info[kInfoKeyObjectList];
-    for (id obj in list) {
-//        [self processIVisitSchedule:obj];
-    }
+    [Schedule processIObjectList:list];
     // 2.Timestamp
     [SyncMark UpdateKey:kSyncMarkKeyVisitScheduleLastTime
                   value:info[kInfoKeySyncTime]];
     // 3.保存
     [self saveContext];
-    // 根据 queue 采取不同措施
-    NSDictionary *extra= info[kInfoKeyExtra];
-    [self startNextSync:extra[kExtraKeySyncQueue]];
-}
-- (void)handleVisitSchedulesAfterDateFailed:(NSNotification *)noti {
-    NSDictionary *info = noti.userInfo;
-    ALog(@"[II] info = %@", info);
     // 根据 queue 采取不同措施
     NSDictionary *extra= info[kInfoKeyExtra];
     [self startNextSync:extra[kExtraKeySyncQueue]];
@@ -508,7 +472,7 @@
             [self.context deleteObject:ce];
         } else {
             // 未删除，则填数据。
-            [ce updateWithICustomerEvaluation:icv];
+            [ce updateWithIObject:icv];
         }
     }
     // 2.Timestamp
@@ -520,20 +484,13 @@
     NSDictionary *extra= info[kInfoKeyExtra];
     [self startNextSync:extra[kExtraKeySyncQueue]];
 }
-- (void)handleCustomerEvaluationListAfterDateFailed:(NSNotification *)noti {
-    NSDictionary *info = noti.userInfo;
-    ALog(@"[II] info = %@", info);
-    // 根据 queue 采取不同措施
-    NSDictionary *extra= info[kInfoKeyExtra];
-    [self startNextSync:extra[kExtraKeySyncQueue]];
-}
 - (void)handleNetworkCreateOrUpdateEvaluationSucceeded:(NSNotification *)noti {
     NSDictionary *info = noti.userInfo;
     ICustomerEvaluation *icv = info[kInfoKeyObject];
     // 填入数据库
     CustomerEvaluation *cv = [CustomerEvaluation objectByID:icv.id
                                                createIfNone:YES];
-    [cv updateWithICustomerEvaluation:icv];
+    [cv updateWithIObject:icv];
     // 保存数据库
     [self saveContext];
     // 发送成功消息

@@ -18,6 +18,7 @@
 #import "CustomerEvaluation.h"
 #import "Group.h"
 #import "Image.h"
+#import "ContactCard.h"
 #import "MyCard.h"
 #import "PrivateCard.h"
 #import "ReceivedCard.h"

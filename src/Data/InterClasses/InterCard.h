@@ -14,7 +14,7 @@
 @property (nonatomic, strong) NSNumber *id;
 @property (nonatomic, strong) NSNumber *isDeleted;
 @property (nonatomic, strong) NSNumber *isRead; // 已读 cardbook col3? // received Card
-@property (nonatomic, strong) NSNumber *modelType;// KHHCardModelType
+@property (nonatomic) KHHCardModelType modelType;// KHHCardModelType
 @property (nonatomic, strong) NSNumber *roleType;
 @property (nonatomic, strong) NSNumber *userID;
 @property (nonatomic, strong) NSNumber *version;

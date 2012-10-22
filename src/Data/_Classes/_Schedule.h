@@ -7,14 +7,17 @@
 extern const struct ScheduleAttributes {
 	__unsafe_unretained NSString *companions;
 	__unsafe_unretained NSString *content;
+	__unsafe_unretained NSString *customer;
 	__unsafe_unretained NSString *id;
 	__unsafe_unretained NSString *isFinished;
-	__unsafe_unretained NSString *name;
+	__unsafe_unretained NSString *minutesToRemind;
 	__unsafe_unretained NSString *plannedDate;
+	__unsafe_unretained NSString *remind;
 	__unsafe_unretained NSString *version;
 } ScheduleAttributes;
 
 extern const struct ScheduleRelationships {
+	__unsafe_unretained NSString *address;
 	__unsafe_unretained NSString *images;
 	__unsafe_unretained NSString *targets;
 } ScheduleRelationships;
@@ -22,8 +25,11 @@ extern const struct ScheduleRelationships {
 extern const struct ScheduleFetchedProperties {
 } ScheduleFetchedProperties;
 
+@class Address;
 @class Image;
 @class Card;
+
+
 
 
 
@@ -61,6 +67,14 @@ extern const struct ScheduleFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSString* customer;
+
+
+//- (BOOL)validateCustomer:(id*)value_ error:(NSError**)error_;
+
+
+
+
 @property (nonatomic, strong) NSNumber* id;
 
 
@@ -85,18 +99,34 @@ extern const struct ScheduleFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSString* name;
+@property (nonatomic, strong) NSNumber* minutesToRemind;
 
 
-//- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
+@property int32_t minutesToRemindValue;
+- (int32_t)minutesToRemindValue;
+- (void)setMinutesToRemindValue:(int32_t)value_;
+
+//- (BOOL)validateMinutesToRemind:(id*)value_ error:(NSError**)error_;
 
 
 
 
-@property (nonatomic, strong) NSString* plannedDate;
+@property (nonatomic, strong) NSDate* plannedDate;
 
 
 //- (BOOL)validatePlannedDate:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSNumber* remind;
+
+
+@property BOOL remindValue;
+- (BOOL)remindValue;
+- (void)setRemindValue:(BOOL)value_;
+
+//- (BOOL)validateRemind:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -110,6 +140,13 @@ extern const struct ScheduleFetchedProperties {
 
 //- (BOOL)validateVersion:(id*)value_ error:(NSError**)error_;
 
+
+
+
+
+@property (nonatomic, strong) Address* address;
+
+//- (BOOL)validateAddress:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -160,6 +197,12 @@ extern const struct ScheduleFetchedProperties {
 
 
 
+- (NSString*)primitiveCustomer;
+- (void)setPrimitiveCustomer:(NSString*)value;
+
+
+
+
 - (NSNumber*)primitiveId;
 - (void)setPrimitiveId:(NSNumber*)value;
 
@@ -178,14 +221,26 @@ extern const struct ScheduleFetchedProperties {
 
 
 
-- (NSString*)primitiveName;
-- (void)setPrimitiveName:(NSString*)value;
+- (NSNumber*)primitiveMinutesToRemind;
+- (void)setPrimitiveMinutesToRemind:(NSNumber*)value;
+
+- (int32_t)primitiveMinutesToRemindValue;
+- (void)setPrimitiveMinutesToRemindValue:(int32_t)value_;
 
 
 
 
-- (NSString*)primitivePlannedDate;
-- (void)setPrimitivePlannedDate:(NSString*)value;
+- (NSDate*)primitivePlannedDate;
+- (void)setPrimitivePlannedDate:(NSDate*)value;
+
+
+
+
+- (NSNumber*)primitiveRemind;
+- (void)setPrimitiveRemind:(NSNumber*)value;
+
+- (BOOL)primitiveRemindValue;
+- (void)setPrimitiveRemindValue:(BOOL)value_;
 
 
 
@@ -197,6 +252,11 @@ extern const struct ScheduleFetchedProperties {
 - (void)setPrimitiveVersionValue:(int64_t)value_;
 
 
+
+
+
+- (Address*)primitiveAddress;
+- (void)setPrimitiveAddress:(Address*)value;
 
 
 

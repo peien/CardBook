@@ -195,12 +195,13 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(80, 0, 220, 44)];
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 70, 44)];
+            label.font = [UIFont systemFontOfSize:12];
             label.backgroundColor = [UIColor clearColor];
             label.textAlignment = UITextAlignmentLeft;
             textField.leftViewMode = UITextFieldViewModeAlways;
             textField.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
             textField.userInteractionEnabled = YES;
-            textField.font = [UIFont systemFontOfSize:15.0f];
+            textField.font = [UIFont systemFontOfSize:13.0f];
             textField.delegate = self;
             [cell.contentView addSubview:label];
             [cell.contentView addSubview:textField];
@@ -490,6 +491,7 @@
     [UIView commitAnimations];
 
 }
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 0) {

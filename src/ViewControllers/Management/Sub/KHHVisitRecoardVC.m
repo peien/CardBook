@@ -15,6 +15,11 @@
 #import "KHHAddImageCell.h"
 #import "KHHFullFrameController.h"
 #import "Card.h"
+#import "KHHLocationController.h"
+#import "MBProgressHUD.h"
+
+#import <AddressBook/AddressBook.h>
+#import <AddressBookUI/AddressBookUI.h>
 
 #define TEXTFIELD_OBJECT_TAG  5550
 #define TEXTFIELD_DATE_TAG    5551
@@ -22,12 +27,20 @@
 #define NOTE_BTN_TAG          3312
 #define NOTE_FIELD_TAG        3313
 #define TEXTFIELD_ADDRESS_TAG 3314
+#define TEXTFIELD_JOINER_TAG  3315
 
 @interface KHHVisitRecoardVC ()<UITextFieldDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
-@property (strong, nonatomic)UIImageView     *imgview;
-@property (assign, nonatomic)int             currentTag;
-@property (assign, nonatomic)double          timeInterval;
-@property (strong, nonatomic)NSTimer         *timer;
+@property (strong, nonatomic) UIImageView     *imgview;
+@property (assign, nonatomic) int             currentTag;
+@property (assign, nonatomic) double          timeInterval;
+@property (strong, nonatomic) NSTimer         *timer;
+@property (strong, nonatomic) UIImageView     *updateImageView;
+@property (strong, nonatomic) NSArray         *imageArray;
+@property (assign, nonatomic) bool            isFirstLocation;
+@property (strong, nonatomic) NSNumber        *locationLatitude;
+@property (strong, nonatomic) NSNumber        *locationLongitude;
+@property (strong, nonatomic) NSString        *address;
+@property (strong, nonatomic) CLPlacemark     *placeMark;
 @end
 
 @implementation KHHVisitRecoardVC
@@ -56,6 +69,13 @@
 @synthesize timeInterval = _timeInterval;
 @synthesize tapImgview = _tapImgview;
 @synthesize objectNameArr;
+@synthesize updateImageView;
+@synthesize imageArray;
+@synthesize isFirstLocation;
+@synthesize locationLatitude;
+@synthesize locationLongitude;
+@synthesize address;
+@synthesize placeMark;
 
 #pragma mark -
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -73,6 +93,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    self.isFirstLocation = YES;
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTime) userInfo:nil repeats:YES];
     NSDate *now = [NSDate date];
     NSDateFormatter *dateForm = [[NSDateFormatter alloc] init];
@@ -91,8 +112,18 @@
     _fieldName = [[NSArray alloc] initWithObjects:@"对象",@"日期",@"时间",@"备注",@"位置",@"提醒",@"参与者",@"", nil];
     _imgArray = [[NSMutableArray alloc] init];
     _fieldValue = [[NSMutableArray alloc] initWithObjects:@"",_dateStr,_timeStr,@"",@"",@"",@"", nil];
+    
+    self.imageArray = [NSArray arrayWithObjects:[UIImage imageNamed:@"ic_shuaxin1.png"],
+                       [UIImage imageNamed:@"ic_shuaxin2.png"],
+                       [UIImage imageNamed:@"ic_shuaxin3.png"],
+                       [UIImage imageNamed:@"ic_shuaxin4.png"],
+                       [UIImage imageNamed:@"ic_shuaxin5.png"],
+                       [UIImage imageNamed:@"ic_shuaxin6.png"],
+                       nil];
+    
+    //默认有的图片
     if (_isHaveImage) {
-        [_imgArray addObject:[UIImage imageNamed:@"logopic.png"]];
+        //[_imgArray addObject:[UIImage imageNamed:@"logopic.png"]];
         
     }
 
@@ -135,8 +166,15 @@
     _imgview = nil;
     _imgArray = nil;
     self.objectNameArr = nil;
+    self.updateImageView = nil;
+    self.imageArray = nil;
+    self.locationLongitude = nil;
+    self.locationLatitude = nil;
+    self.address = nil;
+    self.placeMark = nil;
 }
 #pragma mark -
+//选择多个拜访对象
 - (void)getVisitObjects{
     if (self.objectNameArr.count > 0) {
         NSMutableString *nameObj = [[NSMutableString alloc] init];
@@ -201,17 +239,21 @@
 // 保存
 - (void)saveVisitRecordInfo
 {
+    UITextField *objects = (UITextField *)[self.view viewWithTag:TEXTFIELD_OBJECT_TAG];
     UITextField *date = (UITextField *)[self.view viewWithTag:TEXTFIELD_DATE_TAG];
     UITextField *time = (UITextField *)[self.view viewWithTag:TEXTFIELD_TIME_TAG];
     UITextField *note = (UITextField *)[self.view viewWithTag:NOTE_FIELD_TAG];
     UIButton *noteBtn = (UIButton *)[self.view viewWithTag:2277];
     NSString *warnStr = noteBtn.titleLabel.text;
-    UITextField *address = (UITextField *)[self.view viewWithTag:TEXTFIELD_ADDRESS_TAG];
+    UITextField *addressIn = (UITextField *)[self.view viewWithTag:TEXTFIELD_ADDRESS_TAG];
+    UITextField *joiner = (UITextField *)[self.view viewWithTag:TEXTFIELD_JOINER_TAG];
+    DLog(@"objects>>>>>>>>>>%@",objects.text);
     DLog(@"date>>>>>>>>>>%@",date.text);
     DLog(@"time>>>>>>>>>>%@",time.text);
     DLog(@"note>>>>>>>>>>%@",note.text);
     DLog(@"warnStr>>>>>>>>>>%@",warnStr);
-    DLog(@"address>>>>>>>>>>%@",address.text);
+    DLog(@"address>>>>>>>>>>%@",addressIn.text);
+    DLog(@"joiner>>>>>>>>>>%@",joiner.text);
     //调用数据库接口，或者是网络接口
 }
 
@@ -253,7 +295,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 4) {
-        return 75;
+        return 44;
     }else if (indexPath.row == 7){
         return 75;
     }
@@ -280,17 +322,6 @@
             tf.delegate = self;
             [cell.contentView addSubview:tf];
             
-            UITextField *detailAddress = [[UITextField alloc] initWithFrame:CGRectMake(80, 35, 280, 37)];
-            detailAddress.tag = 9694;
-            detailAddress.hidden = YES;
-            [detailAddress setBackgroundColor:[UIColor clearColor]];
-            detailAddress.leftViewMode = UITextFieldViewModeAlways;
-            detailAddress.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-            detailAddress.font = [UIFont systemFontOfSize:13];
-            detailAddress.delegate = self;
-            detailAddress.placeholder = @"请输入详细地址";
-            [cell.contentView addSubview:detailAddress];
-            
         }
         UITextField *textField = (UITextField *)[cell.contentView viewWithTag:9693];
         UITextField *detail = (UITextField *)[cell.contentView viewWithTag:9694];
@@ -310,60 +341,48 @@
         }else if (indexPath.row == 1){
             textField.enabled = NO;
             textField.tag = TEXTFIELD_DATE_TAG;
-            if (_style == KVisitRecoardVCStyleNewBuild) {
-                textField.placeholder = @"请输入拜访日期";
-                textField.text = _dateStr;
-            }else if (_style == KVisitRecoardVCStyleShowInfo){
-                textField.text = [_fieldValue objectAtIndex:indexPath.row];
-            }
+            textField.text = _dateStr;
+
         }else if (indexPath.row == 2){
             textField.enabled = NO;
             textField.tag = TEXTFIELD_TIME_TAG;
+        }else if (indexPath.row == 3){
+            textField.placeholder = @"请输入备注信息（限制400字内）";
+            textField.tag = NOTE_FIELD_TAG;
             if (_style == KVisitRecoardVCStyleNewBuild) {
-                textField.placeholder = @"请输入拜访时间";
-                //textField.text = _timeStr;
             }else if (_style == KVisitRecoardVCStyleShowInfo){
                 textField.text = [_fieldValue objectAtIndex:indexPath.row];
             }
-        }else if (indexPath.row == 3){
-            textField.placeholder = @"限制400字内";
-            textField.tag = NOTE_FIELD_TAG;
-            if (_style == KVisitRecoardVCStyleNewBuild) {
-                
-            }else if (_style == KVisitRecoardVCStyleShowInfo){
-                textField.text = [_fieldValue objectAtIndex:indexPath.row];
-                if (_isFinishTask) {
-                    UIButton *noteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-                    noteBtn.frame = CGRectMake(280, 5, 30, 30);
-                    [noteBtn setBackgroundImage:[UIImage imageNamed:@"beizhu_btn.png"] forState:UIControlStateNormal];
-                    noteBtn.tag = NOTE_BTN_TAG;
-                    [noteBtn addTarget:self action:@selector(noteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-                    [cell.contentView addSubview:noteBtn];
-                }
-                
+            if (YES) {
+                UIButton *noteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+                noteBtn.frame = CGRectMake(280, 5, 30, 30);
+                [noteBtn setBackgroundImage:[UIImage imageNamed:@"beizhu_btn.png"] forState:UIControlStateNormal];
+                noteBtn.tag = NOTE_BTN_TAG;
+                [noteBtn addTarget:self action:@selector(noteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+                [cell.contentView addSubview:noteBtn];
             }
             
         }else if (indexPath.row == 4){
             textField.enabled = NO;
             textField.tag = TEXTFIELD_ADDRESS_TAG;
             if (_style == KVisitRecoardVCStyleNewBuild) {
-                textField.placeholder = @"请输入城市名称";
                 detail.hidden = NO;
+                self.updateImageView = [[UIImageView alloc] initWithImage:[self.imageArray objectAtIndex:0]];
+                self.updateImageView.userInteractionEnabled = YES;
+                self.updateImageView.frame = CGRectMake(280, 5, 35, 35);
+                UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(updateLocation:)];
+                tap.numberOfTapsRequired = 1;
+                tap.numberOfTouchesRequired = 1;
+                [self.updateImageView addGestureRecognizer:tap];
+                [cell addSubview:self.updateImageView];
+
             }else{
                 textField.text = [_fieldValue objectAtIndex:indexPath.row];
-                for (int i = 0; i<2; i++) {
-                    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-                    if (i== 0) {
-                        [btn setBackgroundImage:[UIImage imageNamed:@"dingwei_green.png"] forState:UIControlStateNormal];
-                        [btn addTarget:self action:@selector(showMap:) forControlEvents:UIControlEventTouchUpInside];
-                    }else if (i == 1){
-                        [btn setBackgroundImage:[UIImage imageNamed:@"ic_shuaxin1.png"] forState:UIControlStateNormal];
-                        [btn addTarget:self action:@selector(updateLocation:) forControlEvents:UIControlEventTouchUpInside];
-                    }
-                    btn.frame = CGRectMake(280, 5+i*(8+30), 35, 35);
-                    btn.tag = i + 778;
-                    [cell.contentView addSubview:btn];
-                }
+                UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+                [btn setBackgroundImage:[UIImage imageNamed:@"dingwei_green.png"] forState:UIControlStateNormal];
+                [btn addTarget:self action:@selector(showMap:) forControlEvents:UIControlEventTouchUpInside];
+                btn.frame = CGRectMake(280, 5, 35, 35);
+                [cell.contentView addSubview:btn];
             }
             
         }else if (indexPath.row == 5){
@@ -384,7 +403,8 @@
             [cell.contentView addSubview:warnBtn];
             
         }else if (indexPath.row == 6){
-            textField.placeholder = @"请输入参与者人员";
+            textField.placeholder = @"请输入参与者姓名";
+            textField.tag = TEXTFIELD_JOINER_TAG;
             if (_style == KVisitRecoardVCStyleShowInfo) {
                 textField.text = [_fieldValue objectAtIndex:indexPath.row];
             }
@@ -454,8 +474,8 @@
     }else if (indexPath.row == 4 && _style == KVisitRecoardVCStyleNewBuild){
         //弹出地址插件；
         _isAddress = YES;
-        TSLocateView *locateView = [[TSLocateView alloc] initWithTitle:@"定位城市" delegate:self];
-        [locateView showInView:self.view];
+//        TSLocateView *locateView = [[TSLocateView alloc] initWithTitle:@"定位城市" delegate:self];
+//        [locateView showInView:self.view];
     }
 }
 
@@ -497,8 +517,8 @@
     }else if ([cell.textLabel.text isEqualToString:@"位置"]){
         UITextField *tf = (UITextField *)[self.view viewWithTag:TEXTFIELD_ADDRESS_TAG];
         NSString *s = [NSString stringWithFormat:@"%@|",tf.text];
-        NSString *address = [NSString stringWithFormat:@"%@%@",s,textField.text];
-        DLog(@"address>>>>>>>>%@",address);
+        NSString *addressStr = [NSString stringWithFormat:@"%@%@",s,textField.text];
+        DLog(@"address>>>>>>>>%@",addressStr);
     
     }else if ([cell.textLabel.text isEqualToString:@"参与者"]){
         [_fieldValue replaceObjectAtIndex:6 withObject:textField.text];
@@ -523,18 +543,76 @@
 }
 - (void)showMap:(id)sender
 {
-    UITextField *address = (UITextField *)[self.view viewWithTag:TEXTFIELD_ADDRESS_TAG];
+    UITextField *addressMap = (UITextField *)[self.view viewWithTag:TEXTFIELD_ADDRESS_TAG];
     MapController *mapVC = [[MapController alloc] initWithNibName:nil bundle:nil];
-    mapVC.companyAddr = address.text;
+    mapVC.companyAddr = addressMap.text;
     mapVC.companyName = @"浙江金汉弘";
     [self.navigationController pushViewController:mapVC animated:YES];
 
 }
+
 - (void)updateLocation:(UIButton *)sender
 {
-
-
+    self.isFirstLocation = NO;
+    [self locaIconAnimationIsEnd:NO];
+    [self getLocalAddress];
 }
+//动画
+- (void)locaIconAnimationIsEnd:(BOOL)endAnimation{
+    self.updateImageView.animationImages = self.imageArray;
+    self.updateImageView.animationDuration = 0.3;
+    if (endAnimation) {
+        [self.updateImageView stopAnimating];
+    }else{
+        [self.updateImageView startAnimating];
+    }
+}
+//得到地址
+- (void)getLocalAddress{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.labelText = NSLocalizedString(@"正在获取地址...", nil);
+    [self observeNotificationName:KHHLocationUpdateSucceeded selector:@"handleLocationUpdateSucceeded:"];
+    [self observeNotificationName:KHHLocationUpdateFailed selector:@"handleLocationUpdateFailed:"];
+    KHHLocationController *locaVC = [KHHLocationController sharedController];
+    [locaVC updateLocation];
+}
+- (void)handleLocationUpdateSucceeded:(NSNotification *)info{
+    DLog(@"handleLocationUpdateSucceeded! ====== info is %@",info.userInfo);
+    [self stopObservingForUpdateLocation];
+    [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+    [self performSelector:@selector(stopAnimatingForUPdateLoca) withObject:nil afterDelay:0.5];
+    
+    self.locationLatitude = [info.userInfo objectForKey:@"locationLatitude"];
+    self.locationLongitude = [info.userInfo objectForKey:@"locationLongitude"];
+    self.placeMark = [info.userInfo objectForKey:@"placemark"];
+    UITextField *addressTf = (UITextField *)[self.view viewWithTag:TEXTFIELD_ADDRESS_TAG];
+    //NSString *addressString = CFBridgingRelease((__bridge CFTypeRef)(ABCreateStringWithAddressDictionary(self.placeMark.addressDictionary, NO)));
+    NSString *addressString = ABCreateStringWithAddressDictionary(self.placeMark.addressDictionary, NO);
+    if (addressString.length > 0) {
+        addressTf.text = addressString;
+    }
+    
+    if (self.isFirstLocation) {
+        self.address = ABCreateStringWithAddressDictionary(self.placeMark.addressDictionary, NO);
+        [_theTable reloadData];
+    }
+    
+}
+- (void)handleLocationUpdateFailed:(NSNotification *)info{
+    DLog(@"handleLocationUpdateFailed! ====== info is %@",info.userInfo);
+    [self stopObservingForUpdateLocation];
+    //更新失败还显示原来的位置.
+    [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+    [self performSelector:@selector(stopAnimatingForUPdateLoca) withObject:nil afterDelay:0.5];
+}
+- (void)stopObservingForUpdateLocation{
+    [self stopObservingNotificationName:KHHLocationUpdateSucceeded];
+    [self stopObservingNotificationName:KHHLocationUpdateFailed];
+}
+- (void)stopAnimatingForUPdateLoca{
+    [self locaIconAnimationIsEnd:YES];
+}
+#pragma mark -
 - (void)addImageBtnClick:(UIButton *)sender
 {
     _isHaveImage = YES;

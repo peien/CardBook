@@ -5,5 +5,5 @@
 @end
 
 @interface CustomerEvaluation (Transformation)
-- (id)updateWithICustomerEvaluation:(ICustomerEvaluation *)icv;
+- (id)updateWithIObject:(ICustomerEvaluation *)icv;
 @end

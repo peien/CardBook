@@ -271,7 +271,6 @@
     }
 
     NSDate *date = [self firstDayOfMonthContainingDate:self.monthShowing];
-    DLog(@"date=============%@",date);
     NSUInteger dateButtonPosition = 0;
     while ([self dateIsInMonthShowing:date]) {
         DateButton *dateButton = [self.dateButtons objectAtIndex:dateButtonPosition];
@@ -298,12 +297,6 @@
 
         date = [self nextDay:date];
         dateButtonPosition++;
-//        NSString *date = dateButton.titleLabel.text;
-//        int n = [date intValue];
-//        if (n%2 == 0) {
-//            dateButton.backgroundColor = [UIColor redColor];
-//        }
-
     }
 }
 

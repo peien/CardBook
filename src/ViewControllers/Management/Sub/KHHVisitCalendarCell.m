@@ -16,6 +16,7 @@
 @synthesize imgviewIco2;
 @synthesize imgviewIco3;
 @synthesize imgviewIco4;
+@synthesize showLocBtn;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -40,5 +41,10 @@
     }
 
 }
+- (IBAction)showLocBtnClick:(id)sender{
+    if ([_delegate respondsToSelector:@selector(KHHVisitCalendarCellBtnClick:)]) {
+        [_delegate showLocaButtonClick:sender];
+    }
 
+}
 @end

@@ -38,6 +38,7 @@
 #import "KHHDataAPI.h"
 #import "MBProgressHUD.h"
 #import "SMCheckbox.h"
+#import "KHHClasses.h"
 
 #import <MessageUI/MessageUI.h>
 #import <AddressBook/AddressBook.h>
@@ -551,7 +552,11 @@ typedef enum {
                     if (self.currentIndexPath.row == 2) {
                         detailVC.isCompanyColleagues = YES;
                     }
-                    detailVC.card = [self.generalArray objectAtIndex:indexPath.row];
+                    Card *card = (Card *)[self.generalArray objectAtIndex:indexPath.row];
+                    detailVC.card = card;
+                    if ([card isKindOfClass:[ReceivedCard class]]){
+                        [self.dataControl markIsRead:(ReceivedCard *)card];
+                    }
                     [self.navigationController pushViewController:detailVC animated:YES];
                 }
             }
@@ -1044,7 +1049,8 @@ typedef enum {
 
 }
 - (void)showHudForNetWorkWarn{
-    self.hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    KHHAppDelegate *app = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
+    self.hud = [MBProgressHUD showHUDAddedTo:app.window animated:YES];
 
 }
 #pragma mark - test

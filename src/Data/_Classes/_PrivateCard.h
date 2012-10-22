@@ -2,7 +2,7 @@
 // Make changes to PrivateCard.h instead.
 
 #import <CoreData/CoreData.h>
-#import "Card.h"
+#import "ContactCard.h"
 
 extern const struct PrivateCardAttributes {
 } PrivateCardAttributes;
@@ -18,7 +18,7 @@ extern const struct PrivateCardFetchedProperties {
 @interface PrivateCardID : NSManagedObjectID {}
 @end
 
-@interface _PrivateCard : Card {}
+@interface _PrivateCard : ContactCard {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;

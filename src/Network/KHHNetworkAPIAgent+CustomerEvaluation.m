@@ -84,6 +84,7 @@
 - (void)createOrUpdateEvaluation:(ICustomerEvaluation *)icv
                    aboutCustomer:(Card *)aCard
                       withMyCard:(MyCard *)myCard {
+    // 参数
     NSMutableDictionary *parameters;
     parameters = [NSMutableDictionary dictionaryWithDictionary:@{
                   @"customerAppraise.id"             : (icv.id         ? icv.id.stringValue         : @""),
@@ -91,21 +92,32 @@
                   @"customerAppraise.version"        : (myCard.version ? myCard.version.stringValue : @""),
                   @"customerAppraise.customCardId"   : (aCard.id       ? aCard.id.stringValue       : @""),
                   @"customerAppraise.customType"     : (aCard          ? [aCard nameForServer]      : @""),
-                  @"customerAppraise.customPosition" : @"",
-                  @"customerAppraise.relateDepth"    : (icv.degree     ? icv.degree.stringValue     : @""),
-                  @"customerAppraise.customCost"     : (icv.value      ? icv.value.stringValue      : @""),
-                  @"knowTimeTemp"                    : (icv.firstMeetDate    ? icv.firstMeetDate    : @""),
-                  @"customerAppraise.knowAddress"    : (icv.firstMeetAddress ? icv.firstMeetAddress : @""),
-                  @"customerAppraise.col1"           : @"",
-                  @"customerAppraise.col2"           : @"",
                   }];
+//    @"customerAppraise.customPosition" : @"",
+//    @"customerAppraise.col1"           : @"",
+//    @"customerAppraise.col2"           : @"",
+    if (icv.degree) {
+        parameters[@"customerAppraise.relateDepth" ] = icv.degree.stringValue;
+    }
+    if (icv.value) {
+        parameters[@"customerAppraise.customCost"] = icv.value.stringValue;
+    }
+    if (icv.firstMeetDate) {
+        parameters[@"knowTimeTemp" ] = icv.firstMeetDate;
+    }
+    if (icv.firstMeetAddress) {
+        parameters[@"customerAppraise.knowAddress"] = icv.firstMeetAddress;
+    }
+    // action
     NSString *action = kActionNetworkCreateOrUpdateEvaluation;
+    // query
     NSString *query;
     if (aCard.evaluation) {
         query = @"customerAppraiseService.updateCustomerAppraise";
     } else {
         query = @"customerAppraiseService.addCustomerAppraise";
     }
+    // 
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *responseDict = [self JSONDictionaryWithResponse:responseObject];
         DLog(@"[II] response = %@", responseDict);
@@ -120,7 +132,7 @@
             if (nil == icv.customerCardID) {
                 icv.customerCardID = aCard.id;
             }
-            icv.customerCardModelType = [aCard modelType];
+            icv.customerCardModelType = aCard.modelTypeValue;
             dict[kInfoKeyObject] = icv;
         }
         // errorCode
@@ -129,6 +141,7 @@
         [self postASAPNotificationName:NameWithActionAndCode(action, code)
                                   info:dict];
     };
+    // 发请求
     [self postAction:action
                query:query
           parameters:parameters

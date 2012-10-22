@@ -2,7 +2,7 @@
 // Make changes to ReceivedCard.h instead.
 
 #import <CoreData/CoreData.h>
-#import "Card.h"
+#import "ContactCard.h"
 
 extern const struct ReceivedCardAttributes {
 	__unsafe_unretained NSString *isRead;
@@ -22,7 +22,7 @@ extern const struct ReceivedCardFetchedProperties {
 @interface ReceivedCardID : NSManagedObjectID {}
 @end
 
-@interface _ReceivedCard : Card {}
+@interface _ReceivedCard : ContactCard {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;

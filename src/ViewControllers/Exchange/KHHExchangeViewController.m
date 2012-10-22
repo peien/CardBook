@@ -16,6 +16,7 @@
 #import "MBProgressHUD.h"
 #import "DetailInfoViewController.h"
 #import "MBProgressHUD.h"
+#import "KHHAppDelegate.h"
 
 #import <CoreLocation/CoreLocation.h>
 #import <AudioToolbox/AudioToolbox.h>
@@ -34,6 +35,7 @@
 @property (assign, nonatomic) CFAbsoluteTime     exchangeStartTime;
 @property (strong, nonatomic) Card               *latestCard;
 @property (strong, nonatomic) KHHFrameCardView   *cardView;
+@property (strong, nonatomic) KHHAppDelegate     *app;
 @end
 
 @implementation KHHExchangeViewController
@@ -51,6 +53,7 @@
 @synthesize exchangeStartTime;
 @synthesize latestCard;
 @synthesize cardView;
+@synthesize app;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -65,6 +68,7 @@
         self.httpAgent = [[KHHNetworkAPIAgent alloc] init];
         self.dataCtrl = [KHHData sharedData];
         self.card = [[self.dataCtrl allMyCards] lastObject];
+        self.app  = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
     }
     return self;
 }
@@ -141,6 +145,7 @@
     self.timer = nil;
     self.latestCard = nil;
     self.cardView = nil;
+    self.app = nil;
 }
 
 - (void)btnClick:(id)sender
@@ -244,7 +249,7 @@
         [self warnNetWork:@"请不要频繁交换名片"];
         return;
     }
-    self.mbHUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    self.mbHUD = [MBProgressHUD showHUDAddedTo:self.app.window animated:YES];
     self.mbHUD.labelText = @"请稍后,正在交换名片...";
     [self.httpAgent exchangeCard:self.card withCoordinate:self.currentLocation.coordinate];
     self.exchangeStartTime = CFAbsoluteTimeGetCurrent();
@@ -273,6 +278,7 @@
     if ([[info.userInfo objectForKey:@"errorCode"]intValue] == -21) {
         DLog(@"没有相对应的卡片要交换");
     }
+    [self.mbHUD hide:YES];
     [self exchangeFailed:@"没有匹配的名片可交换"];
 }
 //收到最新card成功
@@ -325,7 +331,8 @@
 }
 //网络提示
 - (void)warnNetWork:(NSString *)warnString{
-    MBProgressHUD *progress = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    
+    MBProgressHUD *progress = [MBProgressHUD showHUDAddedTo:self.app.aTabBarController.view animated:YES];
     progress.labelText = NSLocalizedString(warnString, nil);
     [progress hide:YES afterDelay:2.0];
     

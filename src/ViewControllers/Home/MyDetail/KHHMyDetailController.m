@@ -54,7 +54,7 @@
         if (i == 0) {
             [headBtn setTitle:@"电子名片" forState:UIControlStateNormal];
         }else{
-            [headBtn setTitle:@"沟通拜访纪录" forState:UIControlStateNormal];
+            [headBtn setTitle:@"拜访日志" forState:UIControlStateNormal];
         }
         [headBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         headBtn.titleLabel.font = [UIFont boldSystemFontOfSize:15];

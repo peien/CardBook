@@ -211,7 +211,7 @@
     //客户评估视图
     _customView = [[[NSBundle mainBundle] loadNibNamed:@"KHHCustomEvaluaView" owner:self options:nil] objectAtIndex:0];
     if (self.card.evaluation != nil) {
-        _customView.importFlag = @"......";
+        _customView.importFlag = @".....";
         _customView.relationEx = [self.card.evaluation.degree floatValue];
         _customView.customValue = [self.card.evaluation.value floatValue];
     }
@@ -258,6 +258,8 @@
         editCustomVC.cusView = _customView;
         editCustomVC.card = self.card;
         self.isNeedReloadTable = YES;
+        editCustomVC.relationEx = [self.card.evaluation.degree floatValue];
+        editCustomVC.customValue = [self.card.evaluation.value floatValue];
         [self.navigationController pushViewController:editCustomVC animated:YES];
     }
     

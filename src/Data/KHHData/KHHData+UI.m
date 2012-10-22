@@ -108,7 +108,7 @@
 NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
     NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:oldArray.count];
     for (Card *card in oldArray) {
-        if (card.idValue && (![card isKindOfClass:[MyCard class]])) {
+        if (card.idValue && card.isFullValue) {
             [newArray addObject:card];
         }
     }
@@ -132,8 +132,8 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
         predicate = [NSPredicate predicateWithFormat:@"company.id <> %@", myComID];
     }
     NSArray *fetched;
-    fetched = [Card objectArrayByPredicate:predicate
-                           sortDescriptors:@[[Card nameSortDescriptor]]];
+    fetched = [ContactCard objectArrayByPredicate:predicate
+                                  sortDescriptors:@[[Card nameSortDescriptor]]];
     // 过滤掉意外情况
     NSMutableArray *result = FilterUnexpectedCardsFromArray(fetched);
     return result;
@@ -148,7 +148,7 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
     }
     NSArray *fetched;
     fetched = [ReceivedCard objectArrayByPredicate:predicate
-                           sortDescriptors:@[[Card nameSortDescriptor]]];
+                                   sortDescriptors:@[[Card nameSortDescriptor]]];
     // 过滤掉意外情况
     NSMutableArray *result = FilterUnexpectedCardsFromArray(fetched);
     return result;
@@ -161,8 +161,8 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
         // 自己属于某公司
         NSPredicate *predicate =  [NSPredicate predicateWithFormat:@"company.id == %@", myComID];
         NSArray *fetched;
-        fetched = [Card objectArrayByPredicate:predicate
-                               sortDescriptors:@[[Card nameSortDescriptor]]];
+        fetched = [ContactCard objectArrayByPredicate:predicate
+                                      sortDescriptors:@[[Card nameSortDescriptor]]];
         // 过滤掉意外情况
         result = FilterUnexpectedCardsFromArray(fetched);
     }
@@ -175,9 +175,14 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
 }
 // 重点 (客户评估在3星以上的，先从5星查5星有数据就返回此星下的客户，没数据就查4星，以此类推。)
 - (NSArray *)cardsOfVIP {
-//    NSMutableArray *result = 
-#warning TODO
-    return [NSArray array];
+    NSMutableArray *result;
+    NSArray *fetched;
+    NSPredicate *predicate =  [NSPredicate predicateWithFormat:@"evaluation.value >= 3.0"];
+    fetched = [ContactCard objectArrayByPredicate:predicate
+                                  sortDescriptors:@[[Card nameSortDescriptor]]];
+    // 过滤掉意外情况
+    result = FilterUnexpectedCardsFromArray(fetched);
+    return result;
 }
 // 未分组（不在其它分组的，过滤掉同事）
 - (NSArray *)cardsOfUngrouped {
@@ -188,8 +193,8 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
         predicate = [NSPredicate predicateWithFormat:@"company.id <> %@", myComID];
     }
     NSArray *fetched;
-    fetched = [Card objectArrayByPredicate:predicate
-                           sortDescriptors:@[[Card nameSortDescriptor]]];
+    fetched = [ContactCard objectArrayByPredicate:predicate
+                                  sortDescriptors:@[[Card nameSortDescriptor]]];
     NSMutableArray *filtered = [NSMutableArray arrayWithCapacity:fetched.count];
     for (Card *card in fetched) {
         if (card.groups.count < 1) {

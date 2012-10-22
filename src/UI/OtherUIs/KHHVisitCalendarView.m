@@ -12,6 +12,7 @@
 #import "KHHFinishVisitVC.h"
 #import "KHHVisitRecoardVC.h"
 #import "KHHFullFrameController.h"
+#import "MapController.h"
 
 @implementation KHHVisitCalendarView
 @synthesize theTable = _theTable;
@@ -38,11 +39,15 @@
 */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 11;
+    return 1;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 140;
+    if (YES) {//没有图片
+        return 80;
+    }else{
+        return 140;
+    }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -56,6 +61,7 @@
     }
     UIImage *imgBtn = [[UIImage imageNamed:@"tongbu_normal.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 8, 0, 8)];
     [cell.finishBtn setBackgroundImage:imgBtn forState:UIControlStateNormal];
+   
     if (indexPath.row%2 == 0) {
         cell.finishBtn.hidden = YES;
     }
@@ -73,7 +79,15 @@
             [cell.imgviewIco4 addGestureRecognizer:tap];
         }
     }
-    
+    if (YES) {
+        cell.objValueLab.text = @"王文";
+    }
+    if (YES) {
+        cell.locValueLab.text = @"浙江省杭州市滨江区南环路4280号";
+    }
+    if (YES) {
+        cell.noteValueLab.text = @"请客吃饭";
+    } 
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -97,6 +111,14 @@
         finishVC.style = KVisitRecoardVCStyleShowInfo;
         [self.viewCtrl.navigationController pushViewController:finishVC animated:YES];
     }
+}
+- (void)showLocaButtonClick:(id)sender{
+    DLog(@"showMap");
+    MapController *mapVC = [[MapController alloc] initWithNibName:nil bundle:nil];
+    mapVC.companyAddr = @"浙江杭州";
+    //mapVC.companyName = @"xx";
+    [self.viewCtrl.navigationController pushViewController:mapVC animated:YES];
+    
 }
 - (IBAction)VisitCalendarBtnClick:(id)sender
 {

@@ -48,28 +48,15 @@
 }
 - (void)calendar:(CKCalendarView *)calendar didSelectDate:(NSDate *)date
 {
-    DLog(@"date click!");
-    KHHVisitRecoardVC *visitRVC = [[KHHVisitRecoardVC alloc] initWithNibName:nil bundle:nil];
-    visitRVC.style = KVisitRecoardVCStyleNewBuild;
-    visitRVC.isNeedWarn = YES;
-    [self.navigationController pushViewController:visitRVC animated:YES];
+    DLog(@"date click ====== %@!",date);
+//    KHHVisitRecoardVC *visitRVC = [[KHHVisitRecoardVC alloc] initWithNibName:nil bundle:nil];
+//    visitRVC.style = KVisitRecoardVCStyleNewBuild;
+//    visitRVC.isNeedWarn = YES;
+//    [self.navigationController pushViewController:visitRVC animated:YES];
+    
 }
 - (void)calendarChangeFrame:(CKCalendarView *)calendar
 {
-//    int height = (int)calendar.frame.size.height;
-//    if (height == 272) {
-//        CGRect rect = _theTable.frame;
-//        rect.size.height = 120;
-//        rect.origin.y = 302;
-//        _theTable.frame = rect;
-//        
-//    }else if (height == 238){
-//        CGRect rect = _theTable.frame;
-//        rect.size.height = 150;
-//        rect.origin.y = 270;
-//        _theTable.frame = rect;
-//      
-//    }
 
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
