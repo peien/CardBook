@@ -29,7 +29,6 @@
     [super updateWithIObject:iCard];
     // 更新MyCard部分
     self.modelType = @(KHHCardModelTypeMyCard);
-    self.isFull    = @(YES);
     return self;
 }
 @end

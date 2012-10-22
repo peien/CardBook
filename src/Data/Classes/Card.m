@@ -13,6 +13,26 @@
 #import "Image.h"
 
 @implementation Card
+// 根据ID和type查询。
+// 无则新建
+// 如果不是MyCard，PrivateCard，ReceivedCard则返回nil。
++ (id)cardByID:(NSNumber *)ID modelType:(KHHCardModelType)type {
+    id card = nil;
+    switch (type) {
+        case KHHCardModelTypeMyCard:
+            card = [MyCard objectByID:ID createIfNone:YES];
+            break;
+        case KHHCardModelTypePrivateCard:
+            card = [PrivateCard objectByID:ID createIfNone:YES];
+            break;
+        case KHHCardModelTypeReceivedCard:
+            card = [ReceivedCard objectByID:ID createIfNone:YES];
+            break;
+        default:
+            break;
+    }
+    return card;
+}
 @end
 
 @implementation Card (Type_And_Name)
@@ -27,9 +47,6 @@
         return @"linkman";
     }
     return nil;
-}
-- (KHHCardModelType)modelType {
-    return [Card CardModelTypeForServerName:[self nameForServer]];
 }
 + (NSString *)ServerNameForCardModelType:(KHHCardModelType)type {
     NSString *result = nil;
@@ -95,6 +112,9 @@
 - (id)updateWithIObject:(InterCard *)iCard {
     if (iCard) {
         self.name      = iCard.name;
+        if (self.name.length) {
+            self.isFull = @(YES);
+        }
         self.userID    = iCard.userID;
         self.version   = iCard.version;
         self.modelType = @(KHHCardModelTypeCard);

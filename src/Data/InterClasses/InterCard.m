@@ -19,7 +19,7 @@
     
     iCard.id = [NSNumber numberFromObject:json[JSONDataKeyCardId] zeroIfUnresolvable:NO];// 解不出为nil
     iCard.isDeleted = [NSNumber numberFromObject:json[JSONDataKeyIsDelete] zeroIfUnresolvable:YES];
-    iCard.modelType = @(KHHCardModelTypeCard);
+    iCard.modelType = KHHCardModelTypeCard;
     iCard.roleType = [NSNumber numberFromObject:json[JSONDataKeyCardTypeId] defaultValue:1 defaultIfUnresolvable:YES];// 默认1
     iCard.userID = [NSNumber numberFromObject:json[JSONDataKeyUserId] zeroIfUnresolvable:NO];// 解不出为nil
     iCard.version = [NSNumber numberFromObject:json[JSONDataKeyVersion] defaultValue:1 defaultIfUnresolvable:YES];// 默认1
@@ -75,14 +75,14 @@
     // 先填入普通名片
     InterCard *iCard = [self interCardWithJSON:json];
     // 再填MyCard相关的数据
-    iCard.modelType = @(KHHCardModelTypeMyCard);
+    iCard.modelType = KHHCardModelTypeMyCard;
     return iCard;
 }
 + (InterCard *)interCardWithPrivateCardJSON:(NSDictionary *)json {
     // 先填入普通名片
     InterCard * iCard = [self interCardWithJSON:json];
     // 再填PrivateCard相关的数据
-    iCard.modelType = @(KHHCardModelTypePrivateCard);
+    iCard.modelType = KHHCardModelTypePrivateCard;
     iCard.id = [NSNumber numberFromObject:json[JSONDataKeyID]
                        zeroIfUnresolvable:NO];// 解不出为nil
     return iCard;
@@ -93,7 +93,7 @@
     InterCard * iCard = [self interCardWithJSON:card];
     // 再填ReceivedCard相关的数据
     // isRead(col3),(col1?),memo
-    iCard.modelType = @(KHHCardModelTypeReceivedCard);
+    iCard.modelType = KHHCardModelTypeReceivedCard;
     iCard.isDeleted = [NSNumber numberFromObject:json[JSONDataKeyIsDelete] zeroIfUnresolvable:YES];
     iCard.isRead = [NSNumber numberFromObject:json[JSONDataKeyCol3] zeroIfUnresolvable:YES];
     iCard.memo = [NSString stringFromObject:json[JSONDataKeyMemo]];

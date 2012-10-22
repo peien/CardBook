@@ -38,7 +38,7 @@ NSMutableDictionary * ParametersFromSchedule(Schedule *visitSchedule,
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=155
  */
 - (void)visitSchedulesAfterDate:(NSString *)lastDate
-                          extra:(NSDictionary *)extra;
+                          queue:(NSArray *)queue;
 /**
  上传拜访图片 kinghhVisitCustomPlanService.uploadImg
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=161

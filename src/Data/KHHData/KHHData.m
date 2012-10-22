@@ -222,9 +222,8 @@
 }
 - (void)syncVisitSchedules:(NSMutableArray *)queue {
     // 同步拜访计划
-    NSDictionary *extra = @{ kExtraKeySyncQueue : queue };
     SyncMark *lastTime = [SyncMark syncMarkByKey:kSyncMarkKeyVisitScheduleLastTime];
     [self.agent visitSchedulesAfterDate:lastTime.value
-                                  extra:extra];
+                                  queue:queue];
 }
 @end

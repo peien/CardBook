@@ -6,7 +6,7 @@
 
 @implementation CustomerEvaluation (Transformation)
 
-- (id)updateWithICustomerEvaluation:(ICustomerEvaluation *)icv {
+- (id)updateWithIObject:(ICustomerEvaluation *)icv {
     self.id               = icv.id;
     self.version          = icv.version;
     self.value            = icv.value;

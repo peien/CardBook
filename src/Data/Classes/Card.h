@@ -4,16 +4,16 @@
 #import "KHHTransformation.h"
 
 @interface Card : _Card {}
+// 根据ID和type查询。
+// 无则新建。
++ (id)cardByID:(NSNumber *)ID modelType:(KHHCardModelType)type;
 @end
 
 @interface Card (Type_And_Name)
 - (NSString *)nameForServer;
-- (KHHCardModelType)modelType;
 + (NSString *)ServerNameForCardModelType:(KHHCardModelType)type;
 + (KHHCardModelType)CardModelTypeForServerName:(NSString *)name;
-
-// cardType -> entityName: 出错返回nil。
-+ (NSString *)EntityNameForCardModelType:(KHHCardModelType)cardType;
++ (NSString *)EntityNameForCardModelType:(KHHCardModelType)cardType;//出错返回nil。
 @end
 
 @interface Card (Transformation) <KHHTransformation>

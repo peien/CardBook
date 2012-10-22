@@ -9,6 +9,7 @@
         <attribute name="street" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="zip" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="card" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Card" inverseName="address" inverseEntity="Card" syncable="YES"/>
+        <relationship name="schedule" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Schedule" inverseName="address" inverseEntity="Schedule" syncable="YES"/>
     </entity>
     <entity name="BankAccount" representedClassName="BankAccount" syncable="YES">
         <attribute name="bank" optional="YES" attributeType="String" syncable="YES"/>
@@ -81,6 +82,7 @@
         <relationship name="cards" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Card" inverseName="company" inverseEntity="Card" syncable="YES"/>
         <relationship name="logo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Image" inverseName="companies" inverseEntity="Image" syncable="YES"/>
     </entity>
+    <entity name="ContactCard" representedClassName="ContactCard" parentEntity="Card" syncable="YES"/>
     <entity name="CustomerEvaluation" representedClassName="CustomerEvaluation" syncable="YES">
         <attribute name="degree" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="firstMeetAddress" optional="YES" attributeType="String" syncable="YES"/>
@@ -117,19 +119,22 @@
         <relationship name="image" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Image" inverseName="messages" inverseEntity="Image" syncable="YES"/>
     </entity>
     <entity name="MyCard" representedClassName="MyCard" parentEntity="Card" syncable="YES"/>
-    <entity name="PrivateCard" representedClassName="PrivateCard" parentEntity="Card" syncable="YES"/>
-    <entity name="ReceivedCard" representedClassName="ReceivedCard" parentEntity="Card" syncable="YES">
+    <entity name="PrivateCard" representedClassName="PrivateCard" parentEntity="ContactCard" syncable="YES"/>
+    <entity name="ReceivedCard" representedClassName="ReceivedCard" parentEntity="ContactCard" syncable="YES">
         <attribute name="isRead" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="memo" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Schedule" representedClassName="Schedule" syncable="YES">
         <attribute name="companions" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="customer" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" syncable="YES"/>
         <attribute name="isFinished" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="plannedDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="minutesToRemind" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="plannedDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="remind" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="version" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="address" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Address" inverseName="schedule" inverseEntity="Address" syncable="YES"/>
         <relationship name="images" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Image" inverseName="schedules" inverseEntity="Image" syncable="YES"/>
         <relationship name="targets" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Card" inverseName="schedules" inverseEntity="Card" syncable="YES"/>
     </entity>
@@ -138,7 +143,7 @@
         <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Address" positionX="0" positionY="0" width="128" height="165"/>
+        <element name="Address" positionX="0" positionY="0" width="128" height="180"/>
         <element name="BankAccount" positionX="0" positionY="0" width="128" height="120"/>
         <element name="Card" positionX="0" positionY="0" width="128" height="495"/>
         <element name="CardTemplate" positionX="0" positionY="0" width="128" height="195"/>
@@ -151,7 +156,8 @@
         <element name="MyCard" positionX="0" positionY="0" width="128" height="45"/>
         <element name="PrivateCard" positionX="160" positionY="192" width="128" height="45"/>
         <element name="ReceivedCard" positionX="0" positionY="0" width="128" height="75"/>
-        <element name="Schedule" positionX="0" positionY="0" width="128" height="180"/>
+        <element name="Schedule" positionX="0" positionY="0" width="128" height="225"/>
         <element name="SyncMark" positionX="160" positionY="192" width="128" height="75"/>
+        <element name="ContactCard" positionX="160" positionY="192" width="128" height="45"/>
     </elements>
 </model>

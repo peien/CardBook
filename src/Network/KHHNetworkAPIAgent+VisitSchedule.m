@@ -56,15 +56,13 @@ NSMutableDictionary * ParametersFromSchedule(Schedule *visitSchedule,
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=155
  */
 - (void)visitSchedulesAfterDate:(NSString *)lastDate
-                          extra:(NSDictionary *)extra {
+                          queue:(NSArray *)queue {
     NSString *action = @"visitSchedulesAfterDate";
-    NSDictionary *parameters = @{
-            @"lastUpdTime" : [lastDate length] > 0? lastDate: @""
-    };
+    NSDictionary *extra = @{ kExtraKeySyncQueue : (queue?queue:[NSArray array]) };
+    
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
         NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
-        DLog(@"[II] response keys = %@", [responseDict allKeys]);
-        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:8];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
         
         // 把返回的数据转成本地数据
         KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
@@ -78,12 +76,14 @@ NSMutableDictionary * ParametersFromSchedule(Schedule *visitSchedule,
             
             // planList -> visitScheduleList
             NSArray *planList = responseDict[JSONDataKeyPlanList];
-//            NSMutableArray *receivedCardList = [NSMutableArray arrayWithCapacity:oldList.count];
-//            for (NSDictionary *oldDict in oldList) {
-//                InterCard *iCard = [InterCard interCardWithReceivedCardJSON:oldDict];
-//                [receivedCardList addObject:iCard];
-//            }
-            dict[kInfoKeyObjectList] = planList;
+            NSMutableArray *newList = [NSMutableArray arrayWithCapacity:planList.count];
+            for (id obj in planList) {
+                DLog(@"[II] obj keys = %@, obj = %@", [obj allKeys], obj);
+                ISchedule *iSchedule = [[[ISchedule alloc] init] updateWithJSON:obj];
+                DLog(@"[II] iSchedule = %@", iSchedule);
+                [newList addObject:iSchedule];
+            }
+            dict[kInfoKeyObjectList] = newList;
         }
         
         // errorCode 和 extra
@@ -92,6 +92,10 @@ NSMutableDictionary * ParametersFromSchedule(Schedule *visitSchedule,
         // 把处理完的数据发出去。
         [self postASAPNotificationName:NameWithActionAndCode(action, code)
                                   info:dict];
+    };
+    
+    NSDictionary *parameters = @{
+    @"lastUpdTime" : [lastDate length] > 0? lastDate: @""
     };
     [self postAction:action
                query:@"kinghhVisitCustomPlanService.incList"

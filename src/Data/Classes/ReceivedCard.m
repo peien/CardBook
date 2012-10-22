@@ -29,7 +29,6 @@
     [super updateWithIObject:iCard];
     // 更新ReceivedCard部分
     self.modelType = @(KHHCardModelTypeReceivedCard);
-    self.isFull    = @(YES);
     self.isRead    = iCard.isRead;
     self.memo      = iCard.memo;
     return self;
