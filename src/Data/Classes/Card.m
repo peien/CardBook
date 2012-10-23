@@ -16,7 +16,7 @@
         case KHHCardModelTypeReceivedCard:
             card = [ReceivedCard objectByID:ID createIfNone:YES];
             break;
-        default:
+        case KHHCardModelTypeCard:
             break;
     }
     return card;
@@ -25,15 +25,9 @@
 
 @implementation Card (Type_And_Name)
 - (NSString *)nameForServer {
-    if ([self isKindOfClass:[MyCard class]]) {
-        return @"private";
-    }
-    if ([self isKindOfClass:[PrivateCard class]]) {
-        return @"me";
-    }
-    if ([self isKindOfClass:[ReceivedCard class]]) {
-        return @"linkman";
-    }
+    if ([self isKindOfClass:[MyCard class]])       return @"private";
+    if ([self isKindOfClass:[PrivateCard class]])  return @"me";
+    if ([self isKindOfClass:[ReceivedCard class]]) return @"linkman";
     return nil;
 }
 + (NSString *)ServerNameForCardModelType:(KHHCardModelType)type {
@@ -54,9 +48,10 @@
     return result;
 }
 + (KHHCardModelType)CardModelTypeForServerName:(NSString *)name {
-    return [name isEqualToString:@"linkman"]? KHHCardModelTypeReceivedCard
-    :([name isEqualToString:@"me"]? KHHCardModelTypePrivateCard
-      :KHHCardModelTypeMyCard);
+    if ([name isEqualToString:@"linkman"]) return KHHCardModelTypeReceivedCard;
+    if ([name isEqualToString:@"me"])      return KHHCardModelTypePrivateCard;
+    if ([name isEqualToString:@"private"]) return KHHCardModelTypeMyCard;
+    return KHHCardModelTypeCard;
 }
 
 // cardType -> entityName: 出错返回nil。
@@ -80,7 +75,7 @@
 @end
 
 @implementation Card (Transformation)
-+ (id)objectWithIObject:(InterCard *)iCard {
++ (id)processIObject:(InterCard *)iCard {
     Card *card = nil;
     if (iCard.id) {
         // 按ID从数据库里查询，无则新建。
@@ -99,74 +94,79 @@
 }
 - (id)updateWithIObject:(InterCard *)iCard {
     if (iCard) {
-        self.name      = iCard.name;
-        if (self.name.length) {
-            self.isFull = @(YES);
+        if (iCard.name.length) {
+            self.name      = iCard.name;
+            self.isFull    = @(YES);
         }
-        self.userID    = iCard.userID;
-        self.version   = iCard.version;
-        self.modelType = @(KHHCardModelTypeCard);
-        self.roleType  = iCard.roleType;
+        self.modelType     = @(KHHCardModelTypeCard);
+        
+        if (iCard.userID)   self.userID    = iCard.userID;
+        if (iCard.version)  self.version   = iCard.version;
+        if (iCard.roleType) self.roleType  = iCard.roleType;
+        
         // 工作相关
-        self.title         = iCard.title;
-        self.businessScope = iCard.businessScope;
+        if (iCard.title.length)         self.title         = iCard.title;
+        if (iCard.businessScope.length) self.businessScope = iCard.businessScope;
         
         // 联系方式
-        self.fax         = iCard.fax;
-        self.mobilePhone = iCard.mobilePhone;
-        self.telephone   = iCard.telephone;
-        self.aliWangWang = iCard.aliWangWang;
-        self.email       = iCard.email;
-        self.microblog   = iCard.microblog;
-        self.msn         = iCard.msn;
-        self.qq          = iCard.qq;
-        self.web         = iCard.web;
+        if (iCard.fax.length)         self.fax         = iCard.fax;
+        if (iCard.mobilePhone.length) self.mobilePhone = iCard.mobilePhone;
+        if (iCard.telephone.length)   self.telephone   = iCard.telephone;
+        if (iCard.aliWangWang.length) self.aliWangWang = iCard.aliWangWang;
+        if (iCard.email.length)       self.email       = iCard.email;
+        if (iCard.microblog.length)   self.microblog   = iCard.microblog;
+        if (iCard.msn.length)         self.msn         = iCard.msn;
+        if (iCard.qq.length)          self.qq          = iCard.qq;
+        if (iCard.web.length)         self.web         = iCard.web;
         
         // 杂项
-        self.moreInfo    = iCard.moreInfo;
+        if (iCard.moreInfo.length)    self.moreInfo    = iCard.moreInfo;
         
         // 模板 {
         // 根据ID查，不存在则新建
-        self.template    = [CardTemplate objectByID:iCard.templateID createIfNone:YES];
+        if (iCard.templateID)
+            self.template = [CardTemplate objectByID:iCard.templateID createIfNone:YES];
         // }
         
         // 公司 {
-        NSString *companyName = iCard.companyName;
-        if (companyName.length) {
-            // 公司名字存在才值得修改。
-            NSNumber *companyID = iCard.companyID;
+        NSNumber *companyID = iCard.companyID;
+            // 保证公司对象存在
             if (companyID) {
                 self.company = [Company objectByID:companyID createIfNone:YES];
             } else {
-                // 公司有名字却无ID，通常是PrivateCard。
-                self.company = [Company newObject];
+                // 公司无ID，通常是PrivateCard。
+                if (nil == self.company) self.company = [Company newObject];
             }
-            self.company.name = companyName;
-        }
+        NSString *companyName = iCard.companyName;
+        if (companyName.length) self.company.name = companyName;
         // }
         
         // logo {
-        self.logo = [Image objectByKey:@"url" value:iCard.logoURL createIfNone:YES];
+        if (iCard.logoURL.length)
+            self.logo = [Image objectByKey:@"url" value:iCard.logoURL createIfNone:YES];
         // }
         
         // 地址 {
-        if (nil == self.address) { // 无则新建
-            self.address = [Address newObject];
-        }
-        self.address.city     = iCard.addressCity;
-        self.address.country  = iCard.addressCountry;
-        self.address.district = iCard.addressDistrict;
-        self.address.other    = iCard.addressOther;
-        self.address.province = iCard.addressProvince;
-        self.address.street   = iCard.addressStreet;
-        self.address.zip      = iCard.addressZip;
+        if (nil == self.address) self.address = [Address newObject];
+        if (iCard.addressCity.length)
+            self.address.city     = iCard.addressCity;
+        if (iCard.addressCountry.length)
+            self.address.country  = iCard.addressCountry;
+        if (iCard.addressDistrict.length)
+            self.address.district = iCard.addressDistrict;
+        if (iCard.addressOther.length)
+            self.address.other    = iCard.addressOther;
+        if (iCard.addressProvince.length)
+            self.address.province = iCard.addressProvince;
+        if (iCard.addressStreet.length)
+            self.address.street   = iCard.addressStreet;
+        if (iCard.addressZip.length)
+            self.address.zip      = iCard.addressZip;
         // }
         
         // 银行帐户 {
         if (iCard.bankAccountNumber.length) {
-            if (nil == self.bankAccount) {
-                self.bankAccount = [BankAccount newObject];
-            }
+            if (nil == self.bankAccount) self.bankAccount = [BankAccount newObject];
             self.bankAccount.bank   = iCard.bankAccountBank;
             self.bankAccount.branch = iCard.bankAccountBranch;
             self.bankAccount.name   = iCard.bankAccountName;

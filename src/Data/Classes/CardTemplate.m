@@ -4,7 +4,7 @@
 @end
 
 @implementation CardTemplate (Transformation)
-+ (id)objectWithJSON:(NSDictionary *)json {
++ (id)processJSON:(NSDictionary *)json {
     NSNumber *ID = [NSNumber numberFromObject:json[JSONDataKeyID]
                            zeroIfUnresolvable:YES];
     // 根据ID查询，无则新建。

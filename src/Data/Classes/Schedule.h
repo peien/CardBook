@@ -6,6 +6,6 @@
 @end
 
 @interface Schedule (Transformation) <KHHTransformation>
-+ (id)objectWithIObject:(ISchedule *)iObj;
++ (id)processIObject:(ISchedule *)iObj;
 - (id)updateWithIObject:(ISchedule *)iObj;
 @end

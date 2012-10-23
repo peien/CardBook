@@ -4,7 +4,7 @@
 @end
 
 @implementation PrivateCard (Transformation)
-+ (id)objectWithIObject:(InterCard *)iCard {
++ (id)processIObject:(InterCard *)iCard {
     PrivateCard *card = nil;
     if (iCard.id) {
         // 按ID从数据库里查询，无则新建。

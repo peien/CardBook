@@ -653,8 +653,8 @@
 		981BA0F6162EB4520036A4B8 /* CustomerEvaluation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerEvaluation.m; sourceTree = "<group>"; };
 		981BA0F9162EB49E0036A4B8 /* _CustomerEvaluation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _CustomerEvaluation.h; sourceTree = "<group>"; };
 		981BA0FA162EB49E0036A4B8 /* _CustomerEvaluation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _CustomerEvaluation.m; sourceTree = "<group>"; };
-		981BA0FC162EB8EE0036A4B8 /* NSManagedObject+KHH.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSManagedObject+KHH.h"; path = "Data/Classes/NSManagedObject+KHH.h"; sourceTree = "<group>"; };
-		981BA0FD162EB8EE0036A4B8 /* NSManagedObject+KHH.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSManagedObject+KHH.m"; path = "Data/Classes/NSManagedObject+KHH.m"; sourceTree = "<group>"; };
+		981BA0FC162EB8EE0036A4B8 /* NSManagedObject+KHH.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+KHH.h"; sourceTree = "<group>"; };
+		981BA0FD162EB8EE0036A4B8 /* NSManagedObject+KHH.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+KHH.m"; sourceTree = "<group>"; };
 		981BA0FF162FE6410036A4B8 /* KHHTransformation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHHTransformation.h; sourceTree = "<group>"; };
 		982AACAE16096C3D002B9BAD /* KHHNetworkAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHHNetworkAPI.h; sourceTree = "<group>"; };
 		982AACB51609ABB3002B9BAD /* UIViewController+SM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SM.h"; sourceTree = "<group>"; };
@@ -1589,8 +1589,6 @@
 				98A84DA71602D2DA00A4A673 /* KHHNotifications.h */,
 				98A84DA81602D2DA00A4A673 /* KHHStatusCodes.h */,
 				981BA0FF162FE6410036A4B8 /* KHHTransformation.h */,
-				981BA0FC162EB8EE0036A4B8 /* NSManagedObject+KHH.h */,
-				981BA0FD162EB8EE0036A4B8 /* NSManagedObject+KHH.m */,
 				98A84D9C1602D21F00A4A673 /* App */,
 				98A84D9D1602D22600A4A673 /* Data */,
 				98A84D9E1602D23100A4A673 /* Misc */,
@@ -1772,6 +1770,8 @@
 		98A84DC71602D3A300A4A673 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				981BA0FC162EB8EE0036A4B8 /* NSManagedObject+KHH.h */,
+				981BA0FD162EB8EE0036A4B8 /* NSManagedObject+KHH.m */,
 				98A84DC81602D3A300A4A673 /* Address.h */,
 				98A84DC91602D3A300A4A673 /* Address.m */,
 				98A84DCA1602D3A300A4A673 /* BankAccount.h */,
