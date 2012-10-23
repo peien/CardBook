@@ -7,48 +7,136 @@
 //
 
 #import "KHHNetworkAPIAgent+VisitSchedule.h"
-#import "Schedule.h"
-#pragma mark - Schedule参数整理函数
-BOOL ScheduleHasRequiredAttributes(Schedule *visitSchedule,
-                                   KHHScheduleAttributeType attributes) {
-    NSString *ID = [[visitSchedule valueForKey:kAttributeKeyID] stringValue];
-    if ((attributes & KHHScheduleAttributeID) && ID.length == 0) {
-        return NO;
-    }
-    return YES;
-}
-NSMutableDictionary * ParametersFromSchedule(Schedule *visitSchedule,
-                                             KHHScheduleAttributeType attributes) {
-    NSMutableDictionary *result = [NSMutableDictionary dictionary];
-    NSString *ID = [[visitSchedule valueForKey:kAttributeKeyID] stringValue];
-    if ((attributes & KHHScheduleAttributeID)) {
-        [result setObject:(ID.length > 0? ID: @"") forKey:kAttributeKeyID];
-    }
-    return result;
-}
+#import "KHHLog.h"
+#import "NSNumber+SM.h"
+#import "NSObject+SM.h"
+#import "UIImage+KHH.h"
+
 @implementation KHHNetworkAPIAgent (VisitSchedule)
 /**
  新建拜访计划 kinghhVisitCustomPlanService.create
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=156
  */
-- (BOOL)createVisitSchedule:(Schedule *)visitSchedule {
+- (void)createVisitSchedule:(OSchedule *)oSchedule withMyCard:(MyCard *)myCard {
+    NSString *action = kActionNetworkCreateVisitSchedule;
+    NSString *query = @"kinghhVisitCustomPlanService.create";
+    // 检查参数
+    if (nil == myCard.id || 0 == oSchedule.content.length) {
+        // 缺少必要的参数
+        WarnParametersNotMeetRequirement(action);
+        return;
+    }
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithCapacity:10];
+    parameters[@"cardId"]           = myCard.id.stringValue;
+    parameters[@"visitContext"]     = oSchedule.content;
+    if (oSchedule.customer)
+        parameters[@"customName"]   = oSchedule.customer;
+    if (oSchedule.plannedDate)
+        parameters[@"planTimeTemp"] = KHHDateStringFromDate(oSchedule.plannedDate);
+    if (oSchedule.isRemind)
+        parameters[@"isRemind"]     = oSchedule.isRemind.stringValue;
+    if (oSchedule.minutesToRemind)
+        parameters[@"remindDate"]   = oSchedule.minutesToRemind.stringValue;
+    if (oSchedule.addressProvince)
+        parameters[@"province"]     = oSchedule.addressProvince;
+    if (oSchedule.addressCity)
+        parameters[@"city"]         = oSchedule.addressCity;
+    if (oSchedule.addressOther)
+        parameters[@"address"]      = oSchedule.addressOther;
+    if (oSchedule.companion)
+        parameters[@"withPerson"]   = oSchedule.companion;
+    parameters[@"isFinished"]       = @"n";
     
+    NSMutableString *cardIDs = [NSMutableString string];
+    NSMutableString *cardTypes = [NSMutableString string];
+    for (Card *card in oSchedule.targetCardList) {
+        [cardIDs appendFormat:@"%@|",card.id.stringValue];
+        [cardTypes appendFormat:@"%@|",card.nameForServer];
+    }
+    if (cardIDs.length) {
+        parameters[@"customCardIds"] = cardIDs;
+        parameters[@"customTypes"]   = cardTypes;
+    }
+    
+    // 图片
+    KHHConstructionBlock construction = ^(id <AFMultipartFormData> formData) {
+        for (UIImage *image in oSchedule.imageList) {
+            NSData *imageData = [image resizedImageDataForKHHUpload];
+            [formData appendPartWithFileData:imageData
+                                        name:@"imgs"
+                                    fileName:@"imgs"
+                                    mimeType:@"image/jpeg"];
+        }
+    };
+    
+    // 处理返回
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:responseObject];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
+        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        // 把返回的数据转成本地数据
+        // 返回的ID
+        oSchedule.id = [NSNumber numberFromObject:responseDict[JSONDataKeyID]
+                               zeroIfUnresolvable:NO];
+        dict[kInfoKeyObject]    = oSchedule;
+        dict[kInfoKeyErrorCode] = @(code);
+        NSString *name = NameWithActionAndCode(action, code);
+        DLog(@"[II] 发送 Notification Name = %@", name);
+        [self postASAPNotificationName:name info:dict];
+    };
+    
+    [self postAction:action
+               query:query
+          parameters:parameters
+    constructingBody:construction
+             success:success];
 }
 
 /**
  修改拜访计划 kinghhVisitCustomPlanService.update
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=158
  */
-- (BOOL)updateVisitSchedule:(Schedule *)visitSchedule {
-    
+- (void)updateVisitSchedule:(OSchedule *)oSchedule {
+    NSString *action = kActionNetworkUpdateVisitSchedule;
+    NSString *query = @"kinghhVisitCustomPlanService.update";
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithCapacity:10];
+//    parameters[@""] = ;
+//    parameters[@""] = ;
+//    parameters[@""] = ;
+//    parameters[@""] = ;
+//    parameters[@""] = ;
+//    parameters[@""] = ;
+//    parameters[@""] = ;
+//    parameters[@""] = ;
+//    parameters[@""] = ;
+//    parameters[@""] = ;
+//    parameters[@""] = ;
+//    parameters[@""] = ;
+//    parameters[@""] = ;
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+    };
+    [self postAction:action
+               query:query
+          parameters:parameters
+             success:success];
 }
 
 /**
  删除拜访计划 kinghhVisitCustomPlanService.delete
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=159
  */
-- (BOOL)deleteVisitSchedule:(Schedule *)visitSchedule {
-    
+- (void)deleteVisitSchedule:(ISchedule *)schedule {
+    NSString *action = kActionNetworkDeleteVisitSchedule;
+    NSString *query = @"kinghhVisitCustomPlanService.delete";
+    NSMutableDictionary *parameters;
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        
+    };
+    [self postAction:action
+               query:query
+          parameters:parameters
+             success:success];
 }
 
 /**
@@ -56,9 +144,9 @@ NSMutableDictionary * ParametersFromSchedule(Schedule *visitSchedule,
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=155
  */
 - (void)visitSchedulesAfterDate:(NSString *)lastDate
-                          queue:(NSArray *)queue {
+                          extra:(NSDictionary *)extra {
+    
     NSString *action = @"visitSchedulesAfterDate";
-    NSDictionary *extra = @{ kExtraKeySyncQueue : (queue?queue:[NSArray array]) };
     
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
         NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
@@ -78,7 +166,6 @@ NSMutableDictionary * ParametersFromSchedule(Schedule *visitSchedule,
             NSArray *planList = responseDict[JSONDataKeyPlanList];
             NSMutableArray *newList = [NSMutableArray arrayWithCapacity:planList.count];
             for (id obj in planList) {
-                DLog(@"[II] obj keys = %@, obj = %@", [obj allKeys], obj);
                 ISchedule *iSchedule = [[[ISchedule alloc] init] updateWithJSON:obj];
                 DLog(@"[II] iSchedule = %@", iSchedule);
                 [newList addObject:iSchedule];
@@ -107,25 +194,25 @@ NSMutableDictionary * ParametersFromSchedule(Schedule *visitSchedule,
  上传拜访图片 kinghhVisitCustomPlanService.uploadImg
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=161
  */
-- (BOOL)uploadImage:(NSString *)imgPath
-   forVisitSchedule:(Schedule *)visitSchedule {
-    if (!ScheduleHasRequiredAttributes(visitSchedule, KHHScheduleAttributeID)) {
-        return NO;
-    }
-    NSString *standardizedPath = [imgPath stringByStandardizingPath];
-    UIImage *img = [UIImage imageWithContentsOfFile:standardizedPath];
-    if (nil == img) {
-        return NO;
-    }
-    NSMutableDictionary *parameters = ParametersFromSchedule(visitSchedule, KHHScheduleAttributeID);
-    [parameters setObject:img
-                   forKey:@"imgs"];
-    [self postAction:@"uploadImageForVisitSchedule"
-               query:@"kinghhVisitCustomPlanService.uploadImg"
-          parameters:parameters
-             success:nil];
-    return YES;
-}
+//- (BOOL)uploadImage:(NSString *)imgPath
+//   forVisitSchedule:(Schedule *)visitSchedule {
+//    if (!ScheduleHasRequiredAttributes(visitSchedule, KHHScheduleAttributeID)) {
+//        return NO;
+//    }
+//    NSString *standardizedPath = [imgPath stringByStandardizingPath];
+//    UIImage *img = [UIImage imageWithContentsOfFile:standardizedPath];
+//    if (nil == img) {
+//        return NO;
+//    }
+//    NSMutableDictionary *parameters = ParametersFromSchedule(visitSchedule, KHHScheduleAttributeID);
+//    [parameters setObject:img
+//                   forKey:@"imgs"];
+//    [self postAction:@"uploadImageForVisitSchedule"
+//               query:@"kinghhVisitCustomPlanService.uploadImg"
+//          parameters:parameters
+//             success:nil];
+//    return YES;
+//}
 /**
  删除拜访图片 kinghhVisitCustomPlanService.delImg
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=160

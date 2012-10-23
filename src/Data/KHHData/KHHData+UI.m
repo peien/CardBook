@@ -244,3 +244,19 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
                               withMyCard:myCard];
 }
 @end
+
+@implementation KHHData (UI_Schedule)
+
+- (void)createSchedule:(OSchedule *)oSchedule
+            withMyCard:(MyCard *)myCard {
+    [self.agent createVisitSchedule:oSchedule
+                         withMyCard:myCard];
+}
+- (void)updateSchedule:(OSchedule *)oSchedule {
+    DLog(@"[II] 未实现！！！");
+}
+- (void)deleteSchedule:(Schedule *)schedule {
+    DLog(@"[II] 未实现！！！");
+}
+
+@end

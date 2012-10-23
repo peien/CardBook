@@ -7,6 +7,24 @@
 //
 
 #import "NSObject+SM.h"
+/*!
+ */
+NSString *KHHDateStringFromDate(NSDate *aDate) {
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    df.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+    df.timeZone = [NSTimeZone timeZoneWithName:@"Asia/Shanghai"];
+    NSString *string = [df stringFromDate:aDate];
+    DLog(@"[II] date = %@, timezone = %@", string, df.timeZone);
+    return string;
+}
+NSDate *DateFromKHHDateString(NSString *aString) {
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    df.dateFormat = @"yyyy-MM-dd HH:mm:ss";
+    df.timeZone = [NSTimeZone timeZoneWithName:@"Asia/Shanghai"];
+    NSDate *date = [df dateFromString:aString];
+    DLog(@"[II] date = %@, timezone = %@", date, df.timeZone);
+    return date;
+}
 
 @implementation NSObject (SMNotification)
 - (void)observeNotificationName:(NSString *)name selector:(NSString *)selector {

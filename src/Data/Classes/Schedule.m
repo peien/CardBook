@@ -1,10 +1,12 @@
 #import "Schedule.h"
+#import "NSObject+SM.h"
 #import "NSManagedObject+KHH.h"
 #import "Address.h"
 #import "InterCard.h"
 #import "Card.h"
 #import "Image.h"
 #import "IImage.h"
+#import "KHHLog.h"
 
 @implementation Schedule
 @end
@@ -36,11 +38,7 @@
         self.customer = iObj.customer;
         self.companions = iObj.companion;
         self.content = iObj.content;
-        NSDateFormatter *df = [[NSDateFormatter alloc] init];
-        [df setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-        self.plannedDate = [df dateFromString:iObj.plannedDate];
-        DLog(@"[II] date = %@", self.plannedDate);
-        
+        self.plannedDate = DateFromKHHDateString(iObj.plannedDate);        
         self.remind = iObj.isRemind;
         self.minutesToRemind = iObj.minutesToRemind;
         

@@ -65,6 +65,7 @@ typedef enum {
     KHHSyncActionCardGroupMaps,
     KHHSyncActionCustomerEvaluations,
     KHHSyncActionVisitSchedules,
+    KHHSyncActionVisitSchedulesAfterCreationSucceeded,
 } KHHSyncActionType;
 
 

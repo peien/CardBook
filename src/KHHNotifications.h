@@ -74,6 +74,15 @@ static NSString * const KHHUIMoveCardsFailed    = @"UIMoveCardsFailed";
 static NSString * const KHHUISaveEvaluationSucceeded = @"UISaveEvaluationSucceeded";
 static NSString * const KHHUISaveEvaluationFailed    = @"UISaveEvaluationFailed";
 
+//MARK: - 拜访计划
+static NSString * const KHHUICreateVisitScheduleSucceeded = @"UICreateVisitScheduleSucceeded";
+static NSString * const KHHUICreateVisitScheduleFailed    = @"UICreateVisitScheduleFailed";
+static NSString * const KHHUIUpdateVisitScheduleSucceeded = @"UIUpdateVisitScheduleSucceeded";
+static NSString * const KHHUIUpdateVisitScheduleFailed    = @"UIUpdateVisitScheduleFailed";
+static NSString * const KHHUIDeleteVisitScheduleSucceeded = @"UIDeleteVisitScheduleSucceeded";
+static NSString * const KHHUIDeleteVisitScheduleFailed    = @"UIDeleteVisitScheduleFailed";
+
+
 #pragma mark - Misc
 //MARK: - 位置
 /*!
@@ -184,6 +193,12 @@ static NSString * const KHHNetworkSendCardToUserFailed    = @"sendCardToUserFail
 //MARK: - 拜访计划
 static NSString * const KHHNetworkVisitSchedulesAfterDateSucceeded = @"visitSchedulesAfterDateSucceeded";
 static NSString * const KHHNetworkVisitSchedulesAfterDateFailed    = @"visitSchedulesAfterDateFailed";
+static NSString * const KHHNetworkCreateVisitScheduleSucceeded = @"NetworkCreateVisitScheduleSucceeded";
+static NSString * const KHHNetworkCreateVisitScheduleFailed    = @"NetworkCreateVisitScheduleFailed";
+static NSString * const KHHNetworkUpdateVisitScheduleSucceeded = @"NetworkUpdateVisitScheduleSucceeded";
+static NSString * const KHHNetworkUpdateVisitScheduleFailed    = @"NetworkUpdateVisitScheduleFailed";
+static NSString * const KHHNetworkDeleteVisitScheduleSucceeded = @"NetworkDeleteVisitScheduleSucceeded";
+static NSString * const KHHNetworkDeleteVisitScheduleFailed    = @"NetworkDeleteVisitScheduleFailed";
 
 //MARK: - 客户评估
 static NSString * const KHHNetworkCustomerEvaluationListAfterDateSucceeded = @"customerEvaluationListAfterDateSucceeded";

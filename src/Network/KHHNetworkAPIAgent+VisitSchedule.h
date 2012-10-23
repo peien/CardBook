@@ -9,42 +9,40 @@
 #import "KHHNetworkAPIAgent.h"
 #import "KHHTypes.h"
 #import "Schedule.h"
+#import "ISchedule.h"
+#import "OSchedule.h"
 
-BOOL ScheduleHasRequiredAttributes(Schedule *visitSchedule,
-                                   KHHScheduleAttributeType attributes);
-NSMutableDictionary * ParametersFromSchedule(Schedule *visitSchedule,
-                                             KHHScheduleAttributeType attributes);
 @interface KHHNetworkAPIAgent (VisitSchedule)
 /**
  新建拜访计划 kinghhVisitCustomPlanService.create
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=156
  */
-- (BOOL)createVisitSchedule:(Schedule *)visitSchedule;
+- (void)createVisitSchedule:(OSchedule *)oSchedule withMyCard:(MyCard *)myCard;
 
 /**
  修改拜访计划 kinghhVisitCustomPlanService.update
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=158
  */
-- (BOOL)updateVisitSchedule:(Schedule *)visitSchedule;
+- (void)updateVisitSchedule:(OSchedule *)oSchedule;
 
 /**
  删除拜访计划 kinghhVisitCustomPlanService.delete
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=159
  */
-- (BOOL)deleteVisitSchedule:(Schedule *)visitSchedule;
+- (void)deleteVisitSchedule:(Schedule *)schedule;
 
 /**
  拜访计划增量 kinghhVisitCustomPlanService.incList
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=155
  */
 - (void)visitSchedulesAfterDate:(NSString *)lastDate
-                          queue:(NSArray *)queue;
+                          extra:(NSDictionary *)extra;
 /**
  上传拜访图片 kinghhVisitCustomPlanService.uploadImg
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=161
  */
-- (BOOL)uploadImage:(NSString *)imgPath
-   forVisitSchedule:(Schedule *)visitSchedule;
+//- (BOOL)uploadImage:(NSString *)imgPath
+//   forVisitSchedule:(Schedule *)visitSchedule;
 /**
  删除拜访图片 kinghhVisitCustomPlanService.delImg
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=160

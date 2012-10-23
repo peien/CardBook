@@ -34,5 +34,6 @@
 #import "ICardGroupMap.h"
 #import "IImage.h"
 #import "ISchedule.h"
+#import "OSchedule.h"
 
 #endif

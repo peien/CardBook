@@ -8,6 +8,9 @@
 
 #import "KHHDataAPI.h"
 #import "KHHDefaults.h"
+#import "KHHNotifications.h"
+#import "NSObject+SM.h"
+#import "KHHLog.h"
 
 @implementation KHHData
 @synthesize context = _context;
@@ -177,6 +180,10 @@
             [self syncVisitSchedules:queue];
             break;
         }
+        case KHHSyncActionVisitSchedulesAfterCreationSucceeded: {
+            [self syncVisitSchedulesAfterCreationSucceeded];
+            break;
+        }
     }
 }
 //
@@ -222,8 +229,13 @@
 }
 - (void)syncVisitSchedules:(NSMutableArray *)queue {
     // 同步拜访计划
+    NSDictionary *extra = @{ kExtraKeySyncQueue : queue };
     SyncMark *lastTime = [SyncMark syncMarkByKey:kSyncMarkKeyVisitScheduleLastTime];
     [self.agent visitSchedulesAfterDate:lastTime.value
-                                  queue:queue];
+                                  extra:extra];
+}
+- (void)syncVisitSchedulesAfterCreationSucceeded {
+    // 创建同步拜访计划成功
+    [self postASAPNotificationName:KHHUICreateVisitScheduleSucceeded];
 }
 @end
