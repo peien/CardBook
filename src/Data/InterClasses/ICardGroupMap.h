@@ -7,6 +7,7 @@
 //
 
 #import "SMObject.h"
+#import "KHHTypes.h"
 
 @interface ICardGroupMap : SMObject
 @property (nonatomic, strong) NSNumber *cardID;

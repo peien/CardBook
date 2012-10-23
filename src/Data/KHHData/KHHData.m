@@ -9,8 +9,7 @@
 #import "KHHDataAPI.h"
 #import "KHHDefaults.h"
 #import "KHHNotifications.h"
-#import "NSObject+SM.h"
-#import "KHHLog.h"
+
 
 @implementation KHHData
 @synthesize context = _context;

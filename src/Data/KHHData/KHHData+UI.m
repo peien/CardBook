@@ -8,7 +8,6 @@
 
 #import "KHHData+UI.h"
 #import "KHHClasses.h"
-#import "KHHLog.h"
 #import "KHHTypes.h"
 #import "KHHDefaults.h"
 #import "NSManagedObject+KHH.h"

@@ -12,13 +12,12 @@
 #import "KHHShowHideTabBar.h"
 #import "KHHAddImageCell.h"
 #import "KHHFullFrameController.h"
-#import "KHHNetworkAPIAgent+EnterpriseManagement.h"
 #import "KHHLocationController.h"
 #import "MBProgressHUD.h"
-#import "KHHData+UI.h"
-#import "Card.h"
-#import "Address.h"
-#import "ICheckIn.h"
+#import "KHHClasses.h"
+#import "KHHDataAPI.h"
+#import "KHHNetworkAPI.h"
+#import "KHHNotifications.h"
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 

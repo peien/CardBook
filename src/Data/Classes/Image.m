@@ -1,5 +1,4 @@
-#import "Image.h"
-#import "NSManagedObject+KHH.h"
+#import "KHHClasses.h"
 
 @implementation Image
 @end

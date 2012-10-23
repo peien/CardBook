@@ -1,12 +1,4 @@
-#import "Schedule.h"
-#import "NSObject+SM.h"
-#import "NSManagedObject+KHH.h"
-#import "Address.h"
-#import "InterCard.h"
-#import "Card.h"
-#import "Image.h"
-#import "IImage.h"
-#import "KHHLog.h"
+#import "KHHClasses.h"
 
 @implementation Schedule
 @end

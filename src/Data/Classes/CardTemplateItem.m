@@ -1,8 +1,4 @@
-#import "NSManagedObject+KHH.h"
-#import "CardTemplateItem.h"
-#import "CardTemplate.h"
-#import "NSNumber+SM.h"
-#import "NSString+SM.h"
+#import "KHHClasses.h"
 
 @implementation CardTemplateItem
 @end

@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 KingHanHong. All rights reserved.
 //
 
-#import "KHHNetworkAPIAgent+Group.h"
-#import "KHHNetworkAPIAgent+Card.h"
+#import "KHHNetworkAPI.h"
+#import "KHHNotifications.h"
 #import "NSNumber+SM.h"
 
 @implementation KHHNetworkAPIAgent (Group)

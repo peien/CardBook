@@ -7,10 +7,8 @@
 //
 
 #import "KHHDataAPI.h"
-#import "KHHLog.h"
 #import "KHHNotifications.h"
 #import "NSNumber+SM.h"
-#import "NSObject+SM.h"
 #import "NSManagedObject+KHH.h"
 
 @implementation KHHData (Handlers)

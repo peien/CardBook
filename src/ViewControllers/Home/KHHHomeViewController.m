@@ -26,18 +26,14 @@
 #import "MapController.h"
 #import "UIButton+WebCache.h"
 #import "Edit_eCardViewController.h"
-#import "KHHData+UI.h"
 #import "KHHAddressBook.h"
 #import "KHHClientCellLNPC.h"
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 
-#import "Group.h"
-#import "IGroup.h"
-#import "KHHCardMode.h"
-#import "Image.h"
-#import "Card.h"
+#import "KHHClasses.h"
 #import "KHHDataAPI.h"
+#import "KHHNotifications.h"
 #import "MBProgressHUD.h"
 
 #import <MessageUI/MessageUI.h>

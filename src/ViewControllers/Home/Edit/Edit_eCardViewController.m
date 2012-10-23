@@ -20,17 +20,9 @@
 #import "UIImageView+WebCache.h"
 #import "MBProgressHUD.h"
 
-#import "Card.h"
-#import "Company.h"
-#import "CardTemplate.h"
-#import "Address.h"
-#import "Group.h"
-#import "BankAccount.h"
-#import "KHHData+UI.h"
-#import "InterCard.h"
-#import "MyCard.h"
-#import "ReceivedCard.h"
-#import "PrivateCard.h"
+#import "KHHClasses.h"
+#import "KHHDataAPI.h"
+#import "KHHNotifications.h"
 
 #define CARD_IMGVIEW_TAG 990
 #define CARDMOD_VIEW_TAG 991

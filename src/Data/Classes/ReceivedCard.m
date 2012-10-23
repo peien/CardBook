@@ -1,6 +1,4 @@
-#import "ReceivedCard.h"
-#import "KHHLog.h"
-#import "NSManagedObject+KHH.h"
+#import "KHHClasses.h"
 
 @implementation ReceivedCard
 @end

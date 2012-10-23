@@ -12,11 +12,13 @@
 #import "KHHShowHideTabBar.h"
 #import "KHHMySearchBar.h"
 #import "UIImageView+WebCache.h"
+#import "MBProgressHUD.h"
 
 #import "KHHCardMode.h"
 #import "KHHClasses.h"
 #import "KHHDataAPI.h"
-#import "MBProgressHUD.h"
+#import "KHHNotifications.h"
+
 @interface KHHAddGroupMemberVC ()<UISearchBarDelegate,UISearchDisplayDelegate,
                                  UITableViewDataSource,UITableViewDelegate,SMCheckboxDelegate>
 

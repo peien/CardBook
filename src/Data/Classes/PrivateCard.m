@@ -1,7 +1,4 @@
-#import "PrivateCard.h"
-#import "InterCard.h"
-#import "KHHLog.h"
-#import "NSManagedObject+KHH.h"
+#import "KHHClasses.h"
 
 @implementation PrivateCard
 @end

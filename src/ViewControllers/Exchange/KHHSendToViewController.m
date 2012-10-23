@@ -14,6 +14,7 @@
 #import "Card.h"
 #import "KHHNetWorkAPIAgent+Card.h"
 #import "KHHNetworkAPIAgent+Exchange.h"
+#import "KHHNotifications.h"
 
 #define TheScrollMaxHeight 180
 #define TheScrollMinHeight 42

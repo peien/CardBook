@@ -7,9 +7,7 @@
 //
 
 #import "KHHNetworkAPIAgent+VisitSchedule.h"
-#import "KHHLog.h"
 #import "NSNumber+SM.h"
-#import "NSObject+SM.h"
 #import "UIImage+KHH.h"
 
 @implementation KHHNetworkAPIAgent (VisitSchedule)

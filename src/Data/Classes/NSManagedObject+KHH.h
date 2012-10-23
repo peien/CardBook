@@ -7,6 +7,7 @@
 //
 
 #import <CoreData/CoreData.h>
+#import "KHHLog.h"
 #import "KHHTransformation.h"
 
 @interface NSManagedObject (KHH)

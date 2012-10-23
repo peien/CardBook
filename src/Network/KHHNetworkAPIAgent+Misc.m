@@ -7,6 +7,7 @@
 //
 
 #import "KHHNetworkAPIAgent+Misc.h"
+#import "KHHKeys.h"
 
 @implementation KHHNetworkAPIAgent (Misc)
 /**
