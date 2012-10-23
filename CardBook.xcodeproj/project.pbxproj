@@ -64,6 +64,8 @@
 		62A77FE0161691D70015A969 /* contact_select@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A77FDF161691D70015A969 /* contact_select@2x.png */; };
 		62A77FE3161696720015A969 /* myDetail_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A77FE1161696720015A969 /* myDetail_normal@2x.png */; };
 		62A77FE4161696720015A969 /* myDetail_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A77FE2161696720015A969 /* myDetail_selected@2x.png */; };
+		62A83C6A162B9DAA0006B5A4 /* beizhu_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A83C69162B9DAA0006B5A4 /* beizhu_btn@2x.png */; };
+		62A83C6D162BAF2E0006B5A4 /* LoginImage_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A83C6C162BAF2E0006B5A4 /* LoginImage_bg@2x.png */; };
 		62A9C99B16099AC100BF7D41 /* KHHAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A9C99A16099AC100BF7D41 /* KHHAddressBook.m */; };
 		62A9DF54162262F300310E92 /* qidong_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A9DF53162262F300310E92 /* qidong_logo@2x.png */; };
 		62A9DF6E16229A4300310E92 /* ic_shuaxin1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A9DF6816229A4300310E92 /* ic_shuaxin1@2x.png */; };
@@ -81,12 +83,9 @@
 		9803EBA7160DA88D00402B53 /* NSObject+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 9803EBA6160DA88D00402B53 /* NSObject+SM.m */; };
 		9803EBA8160DA88D00402B53 /* NSObject+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 9803EBA6160DA88D00402B53 /* NSObject+SM.m */; };
 		9803EBA9160DA88D00402B53 /* NSObject+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 9803EBA6160DA88D00402B53 /* NSObject+SM.m */; };
-		9803EBAC160DBB6300402B53 /* KHHData+CRUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 9803EBAB160DBB6300402B53 /* KHHData+CRUD.m */; };
-		9803EBAD160DBB6300402B53 /* KHHData+CRUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 9803EBAB160DBB6300402B53 /* KHHData+CRUD.m */; };
-		9803EBAE160DBB6300402B53 /* KHHData+CRUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 9803EBAB160DBB6300402B53 /* KHHData+CRUD.m */; };
-		9803EBB1160DBC8E00402B53 /* KHHData+Processors.m in Sources */ = {isa = PBXBuildFile; fileRef = 9803EBB0160DBC8E00402B53 /* KHHData+Processors.m */; };
-		9803EBB2160DBC8E00402B53 /* KHHData+Processors.m in Sources */ = {isa = PBXBuildFile; fileRef = 9803EBB0160DBC8E00402B53 /* KHHData+Processors.m */; };
-		9803EBB3160DBC8E00402B53 /* KHHData+Processors.m in Sources */ = {isa = PBXBuildFile; fileRef = 9803EBB0160DBC8E00402B53 /* KHHData+Processors.m */; };
+		981BA0F7162EB4520036A4B8 /* CustomerEvaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = 981BA0F6162EB4520036A4B8 /* CustomerEvaluation.m */; };
+		981BA0FB162EB49E0036A4B8 /* _CustomerEvaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = 981BA0FA162EB49E0036A4B8 /* _CustomerEvaluation.m */; };
+		981BA0FE162EB8EF0036A4B8 /* NSManagedObject+KHH.m in Sources */ = {isa = PBXBuildFile; fileRef = 981BA0FD162EB8EE0036A4B8 /* NSManagedObject+KHH.m */; };
 		982AACB71609ABB4002B9BAD /* UIViewController+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACB61609ABB4002B9BAD /* UIViewController+SM.m */; };
 		982AACBA1609BD08002B9BAD /* KHHData+Handlers.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACB91609BD08002B9BAD /* KHHData+Handlers.m */; };
 		982AACBB1609BD08002B9BAD /* KHHData+Handlers.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACB91609BD08002B9BAD /* KHHData+Handlers.m */; };
@@ -98,6 +97,7 @@
 		98326D051624076900B5038E /* ICustomerEvaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = 98326D041624076900B5038E /* ICustomerEvaluation.m */; };
 		98332A2316258B1500EEE582 /* KHHLocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98332A2216258B1500EEE582 /* KHHLocationController.m */; };
 		98332A471626919300EEE582 /* IAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 98332A461626919300EEE582 /* IAddress.m */; };
+		984ABA02163662ED0047AFB2 /* OSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 984ABA01163662ED0047AFB2 /* OSchedule.m */; };
 		984B7FE116255AA400E8BDC0 /* ICheckIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 984B7FE016255AA400E8BDC0 /* ICheckIn.m */; };
 		984B7FE51625642800E8BDC0 /* SMObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 984B7FE41625642700E8BDC0 /* SMObject.m */; };
 		984C2854160AF02D007D4D13 /* PrivateCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 984C2853160AF02D007D4D13 /* PrivateCard.m */; };
@@ -105,6 +105,8 @@
 		984FA6351610297D00344BDC /* KHHVisualCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 984FA6331610297D00344BDC /* KHHVisualCardViewController.m */; };
 		984FA6361610297D00344BDC /* KHHVisualCardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 984FA6341610297D00344BDC /* KHHVisualCardViewController.xib */; };
 		984FA63A16104AF000344BDC /* ATestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 984FA63816104AF000344BDC /* ATestViewController.m */; };
+		98542234162BDE1100A9E50A /* IGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 98542233162BDE1100A9E50A /* IGroup.m */; };
+		98542237162C0B3C00A9E50A /* ICardGroupMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 98542236162C0B3C00A9E50A /* ICardGroupMap.m */; };
 		98838DF11608624800CE2353 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A84D791602CD2500A4A673 /* SenTestingKit.framework */; };
 		98838DF21608624800CE2353 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A84D611602CD2500A4A673 /* UIKit.framework */; };
 		98838DF31608624800CE2353 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A84D631602CD2500A4A673 /* Foundation.framework */; };
@@ -152,7 +154,6 @@
 		98838E3A160865D600CE2353 /* _BankAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DAE1602D3A300A4A673 /* _BankAccount.m */; };
 		98838E3B160865D600CE2353 /* _Card.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DB01602D3A300A4A673 /* _Card.m */; };
 		98838E3C160865D600CE2353 /* _CardTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DB21602D3A300A4A673 /* _CardTemplate.m */; };
-		98838E3D160865D600CE2353 /* _CardTemplateItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DB41602D3A300A4A673 /* _CardTemplateItem.m */; };
 		98838E3E160865D600CE2353 /* _Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DB61602D3A300A4A673 /* _Company.m */; };
 		98838E40160865D600CE2353 /* _Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DBA1602D3A300A4A673 /* _Group.m */; };
 		98838E41160865D600CE2353 /* _Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DBC1602D3A300A4A673 /* _Image.m */; };
@@ -204,6 +205,9 @@
 		98838E7D160886EC00CE2353 /* NSString+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 98838E7C160886EC00CE2353 /* NSString+SM.m */; };
 		98838E7E16089A7600CE2353 /* NSNumber+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 98838E79160879C300CE2353 /* NSNumber+SM.m */; };
 		98838E7F16089A7D00CE2353 /* NSString+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 98838E7C160886EC00CE2353 /* NSString+SM.m */; };
+		989B5FA116354316004DD8B3 /* ContactCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 989B5FA016354316004DD8B3 /* ContactCard.m */; };
+		989B5FA51635432E004DD8B3 /* _ContactCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 989B5FA41635432E004DD8B3 /* _ContactCard.m */; };
+		989EAED116314C7400B0DA2A /* _CardTemplateItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 989EAED016314C7400B0DA2A /* _CardTemplateItem.m */; };
 		98A84D621602CD2500A4A673 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A84D611602CD2500A4A673 /* UIKit.framework */; };
 		98A84D641602CD2500A4A673 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A84D631602CD2500A4A673 /* Foundation.framework */; };
 		98A84D6C1602CD2500A4A673 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 98A84D6A1602CD2500A4A673 /* InfoPlist.strings */; };
@@ -219,7 +223,6 @@
 		98A84DE31602D3A300A4A673 /* _BankAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DAE1602D3A300A4A673 /* _BankAccount.m */; };
 		98A84DE41602D3A300A4A673 /* _Card.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DB01602D3A300A4A673 /* _Card.m */; };
 		98A84DE51602D3A300A4A673 /* _CardTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DB21602D3A300A4A673 /* _CardTemplate.m */; };
-		98A84DE61602D3A300A4A673 /* _CardTemplateItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DB41602D3A300A4A673 /* _CardTemplateItem.m */; };
 		98A84DE71602D3A300A4A673 /* _Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DB61602D3A300A4A673 /* _Company.m */; };
 		98A84DE91602D3A300A4A673 /* _Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DBA1602D3A300A4A673 /* _Group.m */; };
 		98A84DEA1602D3A300A4A673 /* _Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DBC1602D3A300A4A673 /* _Image.m */; };
@@ -593,6 +596,8 @@
 		62A77FDF161691D70015A969 /* contact_select@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "contact_select@2x.png"; sourceTree = "<group>"; };
 		62A77FE1161696720015A969 /* myDetail_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "myDetail_normal@2x.png"; sourceTree = "<group>"; };
 		62A77FE2161696720015A969 /* myDetail_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "myDetail_selected@2x.png"; sourceTree = "<group>"; };
+		62A83C69162B9DAA0006B5A4 /* beizhu_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "beizhu_btn@2x.png"; sourceTree = "<group>"; };
+		62A83C6C162BAF2E0006B5A4 /* LoginImage_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LoginImage_bg@2x.png"; sourceTree = "<group>"; };
 		62A9C99916099AC100BF7D41 /* KHHAddressBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHAddressBook.h; sourceTree = "<group>"; };
 		62A9C99A16099AC100BF7D41 /* KHHAddressBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHAddressBook.m; sourceTree = "<group>"; };
 		62A9DF53162262F300310E92 /* qidong_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "qidong_logo@2x.png"; sourceTree = "<group>"; };
@@ -644,10 +649,13 @@
 		62D3F40D1603188500E011E2 /* KHHEditMSGViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHEditMSGViewController.xib; sourceTree = "<group>"; };
 		9803EBA5160DA88D00402B53 /* NSObject+SM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SM.h"; sourceTree = "<group>"; };
 		9803EBA6160DA88D00402B53 /* NSObject+SM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SM.m"; sourceTree = "<group>"; };
-		9803EBAA160DBB6300402B53 /* KHHData+CRUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHData+CRUD.h"; sourceTree = "<group>"; };
-		9803EBAB160DBB6300402B53 /* KHHData+CRUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHData+CRUD.m"; sourceTree = "<group>"; };
-		9803EBAF160DBC8E00402B53 /* KHHData+Processors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHData+Processors.h"; sourceTree = "<group>"; };
-		9803EBB0160DBC8E00402B53 /* KHHData+Processors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHData+Processors.m"; sourceTree = "<group>"; };
+		981BA0F5162EB4520036A4B8 /* CustomerEvaluation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerEvaluation.h; sourceTree = "<group>"; };
+		981BA0F6162EB4520036A4B8 /* CustomerEvaluation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomerEvaluation.m; sourceTree = "<group>"; };
+		981BA0F9162EB49E0036A4B8 /* _CustomerEvaluation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _CustomerEvaluation.h; sourceTree = "<group>"; };
+		981BA0FA162EB49E0036A4B8 /* _CustomerEvaluation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _CustomerEvaluation.m; sourceTree = "<group>"; };
+		981BA0FC162EB8EE0036A4B8 /* NSManagedObject+KHH.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObject+KHH.h"; sourceTree = "<group>"; };
+		981BA0FD162EB8EE0036A4B8 /* NSManagedObject+KHH.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObject+KHH.m"; sourceTree = "<group>"; };
+		981BA0FF162FE6410036A4B8 /* KHHTransformation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHHTransformation.h; sourceTree = "<group>"; };
 		982AACAE16096C3D002B9BAD /* KHHNetworkAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHHNetworkAPI.h; sourceTree = "<group>"; };
 		982AACB51609ABB3002B9BAD /* UIViewController+SM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SM.h"; sourceTree = "<group>"; };
 		982AACB61609ABB4002B9BAD /* UIViewController+SM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SM.m"; sourceTree = "<group>"; };
@@ -664,6 +672,8 @@
 		98332A2216258B1500EEE582 /* KHHLocationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHLocationController.m; sourceTree = "<group>"; };
 		98332A451626919300EEE582 /* IAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAddress.h; sourceTree = "<group>"; };
 		98332A461626919300EEE582 /* IAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAddress.m; sourceTree = "<group>"; };
+		984ABA00163662ED0047AFB2 /* OSchedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSchedule.h; sourceTree = "<group>"; };
+		984ABA01163662ED0047AFB2 /* OSchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSchedule.m; sourceTree = "<group>"; };
 		984B7FDF16255AA400E8BDC0 /* ICheckIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICheckIn.h; sourceTree = "<group>"; };
 		984B7FE016255AA400E8BDC0 /* ICheckIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICheckIn.m; sourceTree = "<group>"; };
 		984B7FE31625642700E8BDC0 /* SMObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMObject.h; sourceTree = "<group>"; };
@@ -679,6 +689,11 @@
 		984FA6341610297D00344BDC /* KHHVisualCardViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHVisualCardViewController.xib; sourceTree = "<group>"; };
 		984FA63716104AF000344BDC /* ATestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATestViewController.h; sourceTree = "<group>"; };
 		984FA63816104AF000344BDC /* ATestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATestViewController.m; sourceTree = "<group>"; };
+		98542230162BA46500A9E50A /* KHHActions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHHActions.h; sourceTree = "<group>"; };
+		98542232162BDE1100A9E50A /* IGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGroup.h; sourceTree = "<group>"; };
+		98542233162BDE1100A9E50A /* IGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGroup.m; sourceTree = "<group>"; };
+		98542235162C0B3B00A9E50A /* ICardGroupMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICardGroupMap.h; sourceTree = "<group>"; };
+		98542236162C0B3C00A9E50A /* ICardGroupMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICardGroupMap.m; sourceTree = "<group>"; };
 		98838DF01608624800CE2353 /* CardBookLogicTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CardBookLogicTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		98838DF61608624800CE2353 /* CardBookLogicTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CardBookLogicTests-Info.plist"; sourceTree = "<group>"; };
 		98838DF81608624800CE2353 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -705,6 +720,12 @@
 		98838E79160879C300CE2353 /* NSNumber+SM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumber+SM.m"; sourceTree = "<group>"; };
 		98838E7B160886EB00CE2353 /* NSString+SM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SM.h"; sourceTree = "<group>"; };
 		98838E7C160886EC00CE2353 /* NSString+SM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SM.m"; sourceTree = "<group>"; };
+		989B5F9F16354316004DD8B3 /* ContactCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactCard.h; sourceTree = "<group>"; };
+		989B5FA016354316004DD8B3 /* ContactCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactCard.m; sourceTree = "<group>"; };
+		989B5FA31635432E004DD8B3 /* _ContactCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _ContactCard.h; sourceTree = "<group>"; };
+		989B5FA41635432E004DD8B3 /* _ContactCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _ContactCard.m; sourceTree = "<group>"; };
+		989EAECF16314C7400B0DA2A /* _CardTemplateItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _CardTemplateItem.h; sourceTree = "<group>"; };
+		989EAED016314C7400B0DA2A /* _CardTemplateItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _CardTemplateItem.m; sourceTree = "<group>"; };
 		98A84D5D1602CD2500A4A673 /* CardBook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardBook.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98A84D611602CD2500A4A673 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		98A84D631602CD2500A4A673 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -735,8 +756,6 @@
 		98A84DB01602D3A300A4A673 /* _Card.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Card.m; sourceTree = "<group>"; };
 		98A84DB11602D3A300A4A673 /* _CardTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _CardTemplate.h; sourceTree = "<group>"; };
 		98A84DB21602D3A300A4A673 /* _CardTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _CardTemplate.m; sourceTree = "<group>"; };
-		98A84DB31602D3A300A4A673 /* _CardTemplateItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _CardTemplateItem.h; sourceTree = "<group>"; };
-		98A84DB41602D3A300A4A673 /* _CardTemplateItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _CardTemplateItem.m; sourceTree = "<group>"; };
 		98A84DB51602D3A300A4A673 /* _Company.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Company.h; sourceTree = "<group>"; };
 		98A84DB61602D3A300A4A673 /* _Company.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _Company.m; sourceTree = "<group>"; };
 		98A84DB91602D3A300A4A673 /* _Group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _Group.h; sourceTree = "<group>"; };
@@ -1375,16 +1394,22 @@
 			children = (
 				98DF0ABE1612945E004826D5 /* InterCard.h */,
 				98DF0ABF1612945E004826D5 /* InterCard.m */,
+				984B7FDF16255AA400E8BDC0 /* ICheckIn.h */,
+				984B7FE016255AA400E8BDC0 /* ICheckIn.m */,
 				98326D031624076900B5038E /* ICustomerEvaluation.h */,
 				98326D041624076900B5038E /* ICustomerEvaluation.m */,
+				98332A451626919300EEE582 /* IAddress.h */,
+				98332A461626919300EEE582 /* IAddress.m */,
+				98542232162BDE1100A9E50A /* IGroup.h */,
+				98542233162BDE1100A9E50A /* IGroup.m */,
+				98542235162C0B3B00A9E50A /* ICardGroupMap.h */,
+				98542236162C0B3C00A9E50A /* ICardGroupMap.m */,
 				98F296F91623F9DC00F9D7B2 /* IImage.h */,
 				98F296FA1623F9DC00F9D7B2 /* IImage.m */,
 				98E6F4001623CEB700AE81D3 /* ISchedule.h */,
 				98E6F4011623CEB700AE81D3 /* ISchedule.m */,
-				984B7FDF16255AA400E8BDC0 /* ICheckIn.h */,
-				984B7FE016255AA400E8BDC0 /* ICheckIn.m */,
-				98332A451626919300EEE582 /* IAddress.h */,
-				98332A461626919300EEE582 /* IAddress.m */,
+				984ABA00163662ED0047AFB2 /* OSchedule.h */,
+				984ABA01163662ED0047AFB2 /* OSchedule.m */,
 			);
 			path = InterClasses;
 			sourceTree = "<group>";
@@ -1560,8 +1585,10 @@
 				984C48FA1627F15E007A152B /* KHHDataAPI.h */,
 				982AACC21609C903002B9BAD /* KHHTypes.h */,
 				98A84DA51602D2DA00A4A673 /* KHHKeys.h */,
+				98542230162BA46500A9E50A /* KHHActions.h */,
 				98A84DA71602D2DA00A4A673 /* KHHNotifications.h */,
 				98A84DA81602D2DA00A4A673 /* KHHStatusCodes.h */,
+				981BA0FF162FE6410036A4B8 /* KHHTransformation.h */,
 				98A84D9C1602D21F00A4A673 /* App */,
 				98A84D9D1602D22600A4A673 /* Data */,
 				98A84D9E1602D23100A4A673 /* Misc */,
@@ -1704,6 +1731,10 @@
 		98A84DAA1602D3A300A4A673 /* _Classes */ = {
 			isa = PBXGroup;
 			children = (
+				989B5FA31635432E004DD8B3 /* _ContactCard.h */,
+				989B5FA41635432E004DD8B3 /* _ContactCard.m */,
+				989EAECF16314C7400B0DA2A /* _CardTemplateItem.h */,
+				989EAED016314C7400B0DA2A /* _CardTemplateItem.m */,
 				98A84DAB1602D3A300A4A673 /* _Address.h */,
 				98A84DAC1602D3A300A4A673 /* _Address.m */,
 				98A84DAD1602D3A300A4A673 /* _BankAccount.h */,
@@ -1712,10 +1743,10 @@
 				98A84DB01602D3A300A4A673 /* _Card.m */,
 				98A84DB11602D3A300A4A673 /* _CardTemplate.h */,
 				98A84DB21602D3A300A4A673 /* _CardTemplate.m */,
-				98A84DB31602D3A300A4A673 /* _CardTemplateItem.h */,
-				98A84DB41602D3A300A4A673 /* _CardTemplateItem.m */,
 				98A84DB51602D3A300A4A673 /* _Company.h */,
 				98A84DB61602D3A300A4A673 /* _Company.m */,
+				981BA0F9162EB49E0036A4B8 /* _CustomerEvaluation.h */,
+				981BA0FA162EB49E0036A4B8 /* _CustomerEvaluation.m */,
 				98A84DB91602D3A300A4A673 /* _Group.h */,
 				98A84DBA1602D3A300A4A673 /* _Group.m */,
 				98A84DBB1602D3A300A4A673 /* _Image.h */,
@@ -1739,30 +1770,36 @@
 		98A84DC71602D3A300A4A673 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				981BA0FC162EB8EE0036A4B8 /* NSManagedObject+KHH.h */,
+				981BA0FD162EB8EE0036A4B8 /* NSManagedObject+KHH.m */,
 				98A84DC81602D3A300A4A673 /* Address.h */,
 				98A84DC91602D3A300A4A673 /* Address.m */,
 				98A84DCA1602D3A300A4A673 /* BankAccount.h */,
 				98A84DCB1602D3A300A4A673 /* BankAccount.m */,
 				98A84DCC1602D3A300A4A673 /* Card.h */,
 				98A84DCD1602D3A300A4A673 /* Card.m */,
-				98A84DCE1602D3A300A4A673 /* CardTemplate.h */,
-				98A84DCF1602D3A300A4A673 /* CardTemplate.m */,
-				98A84DD01602D3A300A4A673 /* CardTemplateItem.h */,
-				98A84DD11602D3A300A4A673 /* CardTemplateItem.m */,
-				98A84DD21602D3A300A4A673 /* Company.h */,
-				98A84DD31602D3A300A4A673 /* Company.m */,
-				98A84DD61602D3A300A4A673 /* Group.h */,
-				98A84DD71602D3A300A4A673 /* Group.m */,
-				98A84DD81602D3A300A4A673 /* Image.h */,
-				98A84DD91602D3A300A4A673 /* Image.m */,
-				98A84DDA1602D3A300A4A673 /* Message.h */,
-				98A84DDB1602D3A300A4A673 /* Message.m */,
+				989B5F9F16354316004DD8B3 /* ContactCard.h */,
+				989B5FA016354316004DD8B3 /* ContactCard.m */,
 				98A84DDC1602D3A300A4A673 /* MyCard.h */,
 				98A84DDD1602D3A300A4A673 /* MyCard.m */,
 				984C2852160AF02D007D4D13 /* PrivateCard.h */,
 				984C2853160AF02D007D4D13 /* PrivateCard.m */,
 				98A84DDE1602D3A300A4A673 /* ReceivedCard.h */,
 				98A84DDF1602D3A300A4A673 /* ReceivedCard.m */,
+				98A84DCE1602D3A300A4A673 /* CardTemplate.h */,
+				98A84DCF1602D3A300A4A673 /* CardTemplate.m */,
+				98A84DD01602D3A300A4A673 /* CardTemplateItem.h */,
+				98A84DD11602D3A300A4A673 /* CardTemplateItem.m */,
+				98A84DD21602D3A300A4A673 /* Company.h */,
+				98A84DD31602D3A300A4A673 /* Company.m */,
+				981BA0F5162EB4520036A4B8 /* CustomerEvaluation.h */,
+				981BA0F6162EB4520036A4B8 /* CustomerEvaluation.m */,
+				98A84DD61602D3A300A4A673 /* Group.h */,
+				98A84DD71602D3A300A4A673 /* Group.m */,
+				98A84DD81602D3A300A4A673 /* Image.h */,
+				98A84DD91602D3A300A4A673 /* Image.m */,
+				98A84DDA1602D3A300A4A673 /* Message.h */,
+				98A84DDB1602D3A300A4A673 /* Message.m */,
 				98A84DE01602D3A300A4A673 /* Schedule.h */,
 				98A84DE11602D3A300A4A673 /* Schedule.m */,
 				98F6491B16118012008DE515 /* SyncMark.h */,
@@ -2180,6 +2217,8 @@
 		98A84F871602D72E00A4A673 /* img */ = {
 			isa = PBXGroup;
 			children = (
+				62A83C6C162BAF2E0006B5A4 /* LoginImage_bg@2x.png */,
+				62A83C69162B9DAA0006B5A4 /* beizhu_btn@2x.png */,
 				629D35A01626D7D40064C8F4 /* crm_leida_selected@2x.png */,
 				629D35A11626D7D40064C8F4 /* crm_loudou_selected@2x.png */,
 				629D35A21626D7D40064C8F4 /* crm_managerEm_selected@2x.png */,
@@ -2540,10 +2579,6 @@
 				982AACBE1609BE6B002B9BAD /* KHHData+UI.m */,
 				982AACB81609BD08002B9BAD /* KHHData+Handlers.h */,
 				982AACB91609BD08002B9BAD /* KHHData+Handlers.m */,
-				9803EBAA160DBB6300402B53 /* KHHData+CRUD.h */,
-				9803EBAB160DBB6300402B53 /* KHHData+CRUD.m */,
-				9803EBAF160DBC8E00402B53 /* KHHData+Processors.h */,
-				9803EBB0160DBC8E00402B53 /* KHHData+Processors.m */,
 			);
 			path = KHHData;
 			sourceTree = "<group>";
@@ -2837,6 +2872,8 @@
 				629D35A91626D7D40064C8F4 /* crm_person_selected@2x.png in Resources */,
 				629D35AA1626D7D40064C8F4 /* crm_rili_selected@2x.png in Resources */,
 				629D35AB1626D7D40064C8F4 /* crm_weizhi_selected@2x.png in Resources */,
+				62A83C6A162B9DAA0006B5A4 /* beizhu_btn@2x.png in Resources */,
+				62A83C6D162BAF2E0006B5A4 /* LoginImage_bg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2939,7 +2976,6 @@
 				98838E3A160865D600CE2353 /* _BankAccount.m in Sources */,
 				98838E3B160865D600CE2353 /* _Card.m in Sources */,
 				98838E3C160865D600CE2353 /* _CardTemplate.m in Sources */,
-				98838E3D160865D600CE2353 /* _CardTemplateItem.m in Sources */,
 				98838E3E160865D600CE2353 /* _Company.m in Sources */,
 				98838E40160865D600CE2353 /* _Group.m in Sources */,
 				98838E41160865D600CE2353 /* _Image.m in Sources */,
@@ -2973,8 +3009,6 @@
 				982AACBC1609BD08002B9BAD /* KHHData+Handlers.m in Sources */,
 				982AACC11609BE6B002B9BAD /* KHHData+UI.m in Sources */,
 				9803EBA9160DA88D00402B53 /* NSObject+SM.m in Sources */,
-				9803EBAE160DBB6300402B53 /* KHHData+CRUD.m in Sources */,
-				9803EBB3160DBC8E00402B53 /* KHHData+Processors.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2989,7 +3023,6 @@
 				98A84DE31602D3A300A4A673 /* _BankAccount.m in Sources */,
 				98A84DE41602D3A300A4A673 /* _Card.m in Sources */,
 				98A84DE51602D3A300A4A673 /* _CardTemplate.m in Sources */,
-				98A84DE61602D3A300A4A673 /* _CardTemplateItem.m in Sources */,
 				98A84DE71602D3A300A4A673 /* _Company.m in Sources */,
 				98A84DE91602D3A300A4A673 /* _Group.m in Sources */,
 				98A84DEA1602D3A300A4A673 /* _Image.m in Sources */,
@@ -3157,8 +3190,6 @@
 				62A6C4DE160AAECE00ADA43E /* KHHFullFrameController.m in Sources */,
 				62AB2984160C07270004A3E3 /* KHHBMapViewController.m in Sources */,
 				9803EBA7160DA88D00402B53 /* NSObject+SM.m in Sources */,
-				9803EBAC160DBB6300402B53 /* KHHData+CRUD.m in Sources */,
-				9803EBB1160DBC8E00402B53 /* KHHData+Processors.m in Sources */,
 				984FA6351610297D00344BDC /* KHHVisualCardViewController.m in Sources */,
 				984FA63A16104AF000344BDC /* ATestViewController.m in Sources */,
 				0C23C26C1610BE42006FCD8A /* UIColor+HexColor.m in Sources */,
@@ -3178,6 +3209,15 @@
 				98332A2316258B1500EEE582 /* KHHLocationController.m in Sources */,
 				98332A471626919300EEE582 /* IAddress.m in Sources */,
 				98D2438D1627B75C00AC1C38 /* UIImage+KHH.m in Sources */,
+				98542234162BDE1100A9E50A /* IGroup.m in Sources */,
+				98542237162C0B3C00A9E50A /* ICardGroupMap.m in Sources */,
+				981BA0F7162EB4520036A4B8 /* CustomerEvaluation.m in Sources */,
+				981BA0FB162EB49E0036A4B8 /* _CustomerEvaluation.m in Sources */,
+				981BA0FE162EB8EF0036A4B8 /* NSManagedObject+KHH.m in Sources */,
+				989EAED116314C7400B0DA2A /* _CardTemplateItem.m in Sources */,
+				989B5FA116354316004DD8B3 /* ContactCard.m in Sources */,
+				989B5FA51635432E004DD8B3 /* _ContactCard.m in Sources */,
+				984ABA02163662ED0047AFB2 /* OSchedule.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3189,8 +3229,6 @@
 				982AACBB1609BD08002B9BAD /* KHHData+Handlers.m in Sources */,
 				982AACC01609BE6B002B9BAD /* KHHData+UI.m in Sources */,
 				9803EBA8160DA88D00402B53 /* NSObject+SM.m in Sources */,
-				9803EBAD160DBB6300402B53 /* KHHData+CRUD.m in Sources */,
-				9803EBB2160DBC8E00402B53 /* KHHData+Processors.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

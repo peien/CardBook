@@ -8,9 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
+#import "KHHActions.h"
 #import "KHHClasses.h"
 #import "KHHKeys.h"
+#import "KHHMacros.h"
+#import "KHHNotifications.h"
 #import "KHHStatusCodes.h"
+#import "KHHTypes.h"
 #import "KHHHTTPClient.h"
 
 /**
@@ -23,7 +27,6 @@
  */
 - (BOOL)authenticateWithFakeID:(NSString *)fakeID
                       password:(NSString *)password;
-- (void)clearAuthorizationHeader;
 /**
  生成所谓的系统级别参数
  */
@@ -77,6 +80,11 @@
  其他返回action＋Failed
  */
 NSString *NameWithActionAndCode(NSString *action, KHHNetworkStatusCode code);
+/*!
+ 根据 Action 发 notification，提醒参数错误。
+ 返回action＋Failed。
+ */
+void WarnParametersNotMeetRequirement(NSString *action);
 
 @end
 

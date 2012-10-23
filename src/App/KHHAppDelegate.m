@@ -7,6 +7,11 @@
 //
 
 #import "KHHAppDelegate.h"
+#import "KHHDataAPI.h"
+#import "KHHDefaults.h"
+#import "KHHHTTPClient.h"
+#import "KHHNetworkAPI.h"
+#import "KHHNotifications.h"
 #import "MyTabBarController.h"
 #import "ATestViewController.h"
 
@@ -20,6 +25,7 @@
     // 注册响应的消息
     [self observeNotificationName:KHHUIShowStartup selector:@"handleShowStartup:"]; // 显示主界面消息
     [self observeNotificationName:KHHUIShowMainUI  selector:@"handleShowMainUI:"]; // 显示主界面消息
+    [self observeNotificationName:KHHAppLogout     selector:@"handleLogout:"];// 登出
     
     // 显示Startup界面
     [self.window makeKeyAndVisible];
@@ -78,6 +84,18 @@
 //    [[NSNotificationCenter defaultCenter] postNotificationName:@"KNotificationNewMsgNum" object:dic];
 //    [[NSNotificationCenter defaultCenter] postNotificationName:@"KNotificationNewContactNum" object:dic];
 #endif
+}
+- (void)handleLogout:(NSNotification *)noti {
+    // 清除UserDefaults用户的数据
+    [[KHHDefaults sharedDefaults] clearSettingsAfterLogout];
+    // 停掉httpclient的operation queue
+    [[[KHHHTTPClient sharedClient] operationQueue] cancelAllOperations];
+    // 清除httpclient AuthorizationHeader
+    [[KHHHTTPClient sharedClient] clearAuthorizationHeader];
+    // 清除core data context
+    [[KHHData sharedData] removeContext];
+    // 切换到登陆界面
+    [self postASAPNotificationName:KHHUIShowStartup];
 }
 //设置时间触发
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification

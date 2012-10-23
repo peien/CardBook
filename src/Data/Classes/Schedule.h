@@ -1,5 +1,11 @@
 #import "_Schedule.h"
+#import "KHHTransformation.h"
+#import "ISchedule.h"
 
 @interface Schedule : _Schedule {}
-// Custom logic goes here.
+@end
+
+@interface Schedule (Transformation) <KHHTransformation>
++ (id)processIObject:(ISchedule *)iObj;
+- (id)updateWithIObject:(ISchedule *)iObj;
 @end

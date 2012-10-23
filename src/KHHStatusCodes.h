@@ -34,5 +34,6 @@ static const NSInteger KHHStatusCodeLocalDataOperationFailed = 44001;//本地数
 
 // KHHErrorCode
 static const NSInteger KHHErrorCodeBusy = 880001;//忙！因此不能完成操作，稍后再试！
+static const NSInteger KHHErrorCodeParametersNotMeetRequirement = 880002; // 参数不符合要求
 
 #endif

@@ -20,17 +20,9 @@
 #import "UIImageView+WebCache.h"
 #import "MBProgressHUD.h"
 
-#import "Card.h"
-#import "Company.h"
-#import "CardTemplate.h"
-#import "Address.h"
-#import "Group.h"
-#import "BankAccount.h"
-#import "KHHData+UI.h"
-#import "InterCard.h"
-#import "MyCard.h"
-#import "ReceivedCard.h"
-#import "PrivateCard.h"
+#import "KHHClasses.h"
+#import "KHHDataAPI.h"
+#import "KHHNotifications.h"
 
 #define CARD_IMGVIEW_TAG 990
 #define CARDMOD_VIEW_TAG 991
@@ -192,7 +184,7 @@ NSString *const kECardListSeparator = @"|";
     
     _fieldName = [NSArray arrayWithObjects:[NSMutableArray arrayWithObjects:@"手机",@"电话",@"传真",@"邮箱", nil],
                                            [NSMutableArray arrayWithObjects:@"公司",@"地址",@"邮编", nil],
-                                           [NSMutableArray arrayWithObjects:@"网址",@"QQ",@"MSN",@"旺旺",@"业务范围",@"银行信息",@"其它信息", nil],
+                                           [NSMutableArray arrayWithObjects:@"网页",@"QQ",@"MSN",@"旺旺",@"业务范围",@"银行信息",@"其它信息", nil],
                                            [NSMutableArray arrayWithObjects:@"部门",@"公司邮箱", nil],
                  nil];
     self.placeName = [NSArray arrayWithObjects:[NSMutableArray arrayWithObjects:@"请输入手机号",@"请输入电话号码",@"请输入传真",@"请输入邮箱",nil],
@@ -269,22 +261,24 @@ NSString *const kECardListSeparator = @"|";
         [_fieldValue replaceObjectAtIndex:7 withObject:_glCard.company.name];
     }
     
-    if (_glCard.company.email.length) {
-        [_fieldExternTwo addObject:[NSDictionary dictionaryWithObjectsAndKeys:_glCard.company.email,@"value",@"公司邮箱",@"key", nil]];
-    }
-    if (_glCard.address.province.length > 0 || _glCard.address.city.length > 0) {
+    if (_glCard.address.province.length > 0 && _glCard.address.city.length > 0) {
         self.pc = [NSString stringWithFormat:@"%@ %@",_glCard.address.province,_glCard.address.city];
-        if ([_glCard.address.district isEqualToString:@"(null)"]) {
-            _glCard.address.district = @"";
-        }
-        if ([_glCard.address.street isEqualToString:@"(null)"]) {
-            _glCard.address.street = @"";
-        }
-        self.strStreet = [NSString stringWithFormat:@"%@%@",_glCard.address.district,_glCard.address.street];
+    }
+    if (_glCard.address.district.length > 0 && _glCard.address.street.length > 0) {
+         self.strStreet = [NSString stringWithFormat:@"%@%@",_glCard.address.district,_glCard.address.street];
+    }
+    if (self.type == KCardViewControllerTypeNewCreate || _glCard.address.province == nil) {
+        NSString *allAddress = @"点击选择省市";
+        [_fieldValue replaceObjectAtIndex:8 withObject:allAddress];
+    }
+    if (self.pc.length > 0) {
+        NSString *allAddress = self.pc;
+        [_fieldValue replaceObjectAtIndex:8 withObject:allAddress];
+    }
+    if (self.pc.length > 0 && self.strStreet.length > 0) {
         NSString *allAddress = [NSString stringWithFormat:@"%@|%@",self.pc,self.strStreet];
         [_fieldValue replaceObjectAtIndex:8 withObject:allAddress];
     }
-
     
     if (_glCard.address.zip.length > 0) {
         [_fieldValue replaceObjectAtIndex:9 withObject:_glCard.address.zip];
@@ -293,16 +287,24 @@ NSString *const kECardListSeparator = @"|";
     if (_glCard.department.length > 0) {
         [_fieldExternTwo addObject:[NSDictionary dictionaryWithObjectsAndKeys:_glCard.department,@"value",@"部门",@"key", nil]];
     }
+    if (_glCard.company.email.length) {
+        [_fieldExternTwo addObject:[NSDictionary dictionaryWithObjectsAndKeys:_glCard.company.email,@"value",@"公司邮箱",@"key", nil]];
+    }
     //银行信息
     if (_glCard.bankAccount.bank.length > 0 || _glCard.bankAccount.branch.length > 0) {
-        NSString *adds = [NSString stringWithFormat:@",%@",_glCard.bankAccount.branch];
-        NSString *bankName = [_glCard.bankAccount.bank stringByAppendingString:adds];
-       [_fieldExternTwo addObject:[NSDictionary dictionaryWithObjectsAndKeys:bankName,@"value",@"开户行",@"key", nil]];
+        if (_glCard.bankAccount.bank == nil) {
+           _glCard.bankAccount.bank = @"";
+        }
+        NSString *bankName = [NSString stringWithFormat:@"%@%@",_glCard.bankAccount.bank,_glCard.bankAccount.branch];
+       [_fieldExternThree addObject:[NSDictionary dictionaryWithObjectsAndKeys:bankName,@"value",@"开户行",@"key", nil]];
     }
+    
     if (_glCard.bankAccount.number.length > 0) {
         [_fieldExternThree addObject:[NSDictionary dictionaryWithObjectsAndKeys:_glCard.bankAccount.number,@"value",@"银行帐号",@"key", nil]];
     }
-    //
+    if (_glCard.bankAccount.name.length > 0) {
+        [_fieldExternThree addObject:[NSDictionary dictionaryWithObjectsAndKeys:_glCard.bankAccount.name,@"value",@"户名",@"key", nil]];
+    }
     
     if (_glCard.web.length > 0) {
         [_fieldExternThree addObject:[NSDictionary dictionaryWithObjectsAndKeys:_glCard.web,@"value",@"网页",@"key", nil]];
@@ -500,12 +502,17 @@ NSString *const kECardListSeparator = @"|";
             cell.bigAdress.adjustsImageWhenHighlighted = NO;
             cell.bigAdress.tag = KBIGADDRESS_TAG;
             [cell.bigAdress setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+            if (self.type == KCardViewControllerTypeNewCreate || _glCard.address.province == nil) {
+                [cell.bigAdress setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+            }
             cell.detailAdress.tag = indexPath.row + 7 + _fieldExternOne.count + kBaseTag;
             NSString *all = [_fieldValue objectAtIndex:8];
             NSArray *arr = [all componentsSeparatedByString:@"|"];
-            if (arr.count >= 2) {
+            if (arr.count >= 1) {
                 [cell.bigAdress setTitle:[arr objectAtIndex:0] forState:UIControlStateNormal];
-                cell.detailAdress.text = [arr objectAtIndex:1];
+                if (self.strStreet.length > 0) {
+                   cell.detailAdress.text = [arr objectAtIndex:1]; 
+                }
             }
             return cell;
         }
@@ -875,6 +882,7 @@ NSString *const kECardListSeparator = @"|";
         NSString *s1 = cell.bigAdress.titleLabel.text;
         NSString *s2 = cell.detailAdress.text;
         [_fieldValue replaceObjectAtIndex:8 withObject:[NSString stringWithFormat:@"%@|%@",s1,s2]];
+        //这个地方用户自己输入的详细地址，区，以及街道无法保存。
     }
     self.beginEditLabel = nil;
     
@@ -940,9 +948,11 @@ NSString *const kECardListSeparator = @"|";
     NSString *address = [_fieldValue objectAtIndex:8];
     NSArray *addressArr = [address componentsSeparatedByString:@"|"];
     NSArray *pcArr = [[addressArr objectAtIndex:0] componentsSeparatedByString:@" "];
+    //区街道无法保存
     UIButton *pcBtn = (UIButton *)[self.view viewWithTag:KBIGADDRESS_TAG];
     NSArray *pcArrBtn = [pcBtn.titleLabel.text componentsSeparatedByString:@" "];
     NSString *zipCode = [_fieldValue objectAtIndex:9];
+    self.interCard.addressZip = zipCode;
 
     for (NSDictionary *dic in _fieldExternTwo) {
         NSString *key = [dic objectForKey:@"key"];
@@ -958,9 +968,6 @@ NSString *const kECardListSeparator = @"|";
         }
     }
     
-    [self saveToDictionary:company key:@"company"];
-    [self saveToDictionary:address key:@"address"];
-    [self saveToDictionary:zipCode key:@"zipCode"];
     self.interCard.companyName = company;
     if (pcArr.count >= 2) {
         self.interCard.addressProvince = [pcArr objectAtIndex:0];
@@ -975,7 +982,7 @@ NSString *const kECardListSeparator = @"|";
     if (addressArr.count >= 2) {
         self.interCard.addressStreet = [addressArr objectAtIndex:1]; 
     }
-    self.interCard.addressZip = zipCode;
+    
     // 对是否为空或格式进行判断，然后把手机，电话，传真，邮箱保存起来
         if (mobiles.length==0 && phones.length==0) {
             //[self showMessage:@"名片上的电话未空!请至少填写一个手机号码或者电话号码!" withTitile:nil];
@@ -1040,7 +1047,7 @@ NSString *const kECardListSeparator = @"|";
         NSString *key = [dic objectForKey:@"key"];
         DLog(@"key======%@",key);
         NSString *value = [dic objectForKey:@"value"];
-        if ([key isEqualToString:@"网址"]) {
+        if ([key isEqualToString:@"网页"]) {
             [self saveToDictionary:value key:@"web"];
             self.interCard.web = value;
         }else if ([key isEqualToString:@"QQ"]){

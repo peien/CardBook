@@ -8,6 +8,7 @@ const struct CustomerEvaluationAttributes CustomerEvaluationAttributes = {
 	.firstMeetAddress = @"firstMeetAddress",
 	.firstMeetDate = @"firstMeetDate",
 	.id = @"id",
+	.remarks = @"remarks",
 	.value = @"value",
 	.version = @"version",
 };
@@ -129,6 +130,13 @@ const struct CustomerEvaluationFetchedProperties CustomerEvaluationFetchedProper
 - (void)setPrimitiveIdValue:(int64_t)value_ {
 	[self setPrimitiveId:[NSNumber numberWithLongLong:value_]];
 }
+
+
+
+
+
+@dynamic remarks;
+
 
 
 

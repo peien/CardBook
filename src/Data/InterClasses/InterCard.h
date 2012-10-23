@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "KHHTypes.h"
 #import "SMObject.h"
 
 @interface InterCard : SMObject
@@ -14,6 +15,7 @@
 @property (nonatomic, strong) NSNumber *id;
 @property (nonatomic, strong) NSNumber *isDeleted;
 @property (nonatomic, strong) NSNumber *isRead; // 已读 cardbook col3? // received Card
+@property (nonatomic) KHHCardModelType modelType;// KHHCardModelType
 @property (nonatomic, strong) NSNumber *roleType;
 @property (nonatomic, strong) NSNumber *userID;
 @property (nonatomic, strong) NSNumber *version;
@@ -48,7 +50,6 @@
 @property (nonatomic, strong) NSNumber *companyID;
 @property (nonatomic, strong) NSString *companyName;
 @property (nonatomic, strong) NSString *companyEmail; // card col1
-//@property (nonatomic, strong) NSString *companyLogoURL;
 
 // 地址信息
 @property (nonatomic, strong) NSString *addressCity;

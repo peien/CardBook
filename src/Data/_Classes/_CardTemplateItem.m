@@ -17,7 +17,7 @@ const struct CardTemplateItemAttributes CardTemplateItemAttributes = {
 };
 
 const struct CardTemplateItemRelationships CardTemplateItemRelationships = {
-	.templates = @"templates",
+	.template = @"template",
 };
 
 const struct CardTemplateItemFetchedProperties CardTemplateItemFetchedProperties = {
@@ -264,17 +264,8 @@ const struct CardTemplateItemFetchedProperties CardTemplateItemFetchedProperties
 
 
 
-@dynamic templates;
+@dynamic template;
 
-	
-- (NSMutableSet*)templatesSet {
-	[self willAccessValueForKey:@"templates"];
-  
-	NSMutableSet *result = (NSMutableSet*)[self mutableSetValueForKey:@"templates"];
-  
-	[self didAccessValueForKey:@"templates"];
-	return result;
-}
 	
 
 

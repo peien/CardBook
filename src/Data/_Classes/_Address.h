@@ -16,12 +16,14 @@ extern const struct AddressAttributes {
 
 extern const struct AddressRelationships {
 	__unsafe_unretained NSString *card;
+	__unsafe_unretained NSString *schedule;
 } AddressRelationships;
 
 extern const struct AddressFetchedProperties {
 } AddressFetchedProperties;
 
 @class Card;
+@class Schedule;
 
 
 
@@ -107,6 +109,13 @@ extern const struct AddressFetchedProperties {
 
 
 
+@property (nonatomic, strong) Schedule* schedule;
+
+//- (BOOL)validateSchedule:(id*)value_ error:(NSError**)error_;
+
+
+
+
 
 @end
 
@@ -162,6 +171,11 @@ extern const struct AddressFetchedProperties {
 
 - (Card*)primitiveCard;
 - (void)setPrimitiveCard:(Card*)value;
+
+
+
+- (Schedule*)primitiveSchedule;
+- (void)setPrimitiveSchedule:(Schedule*)value;
 
 
 @end

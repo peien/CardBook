@@ -15,6 +15,7 @@ const struct AddressAttributes AddressAttributes = {
 
 const struct AddressRelationships AddressRelationships = {
 	.card = @"card",
+	.schedule = @"schedule",
 };
 
 const struct AddressFetchedProperties AddressFetchedProperties = {
@@ -103,6 +104,10 @@ const struct AddressFetchedProperties AddressFetchedProperties = {
 
 
 @dynamic card;
+
+	
+
+@dynamic schedule;
 
 	
 

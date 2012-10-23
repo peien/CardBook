@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "KHHKeys.h"
+#import "KHHTypes.h"
 
 @interface SMObject : NSObject
 - (NSString *)description;

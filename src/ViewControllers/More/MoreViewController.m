@@ -15,6 +15,7 @@
 #import "FeedBackViewController.h"
 #import "AboutController.h"
 #import "KHHDefaults.h"
+#import "KHHNotifications.h"
 
 
 @interface MoreViewController ()<UIActionSheetDelegate,UIAlertViewDelegate>
@@ -386,11 +387,8 @@
 {
     if ([alertView.title isEqualToString:NSLocalizedString(@"登出", nil)]
         && buttonIndex == 1) {
-        //登出将状态设置为No
-        [self.defaultSet setLoggedIn:NO];
-        [self postASAPNotificationName:KHHUIShowStartup];
+        [self postASAPNotificationName:KHHAppLogout];
     }
-
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

@@ -15,8 +15,10 @@
 #import "CardTemplate.h"
 #import "CardTemplateItem.h"
 #import "Company.h"
+#import "CustomerEvaluation.h"
 #import "Group.h"
 #import "Image.h"
+#import "ContactCard.h"
 #import "MyCard.h"
 #import "PrivateCard.h"
 #import "ReceivedCard.h"
@@ -25,9 +27,19 @@
 
 #pragma mark - Internal/Intermediate Classes
 #import "InterCard.h"
+#import "IAddress.h"
+#import "ICheckIn.h"
 #import "ICustomerEvaluation.h"
+#import "IGroup.h"
+#import "ICardGroupMap.h"
 #import "IImage.h"
 #import "ISchedule.h"
-#import "ICheckIn.h"
-#import "IAddress.h"
+#import "OSchedule.h"
+
+#pragma mark - Utils
+#import "NSManagedObject+KHH.h"
+#import "NSNumber+SM.h"
+#import "NSObject+SM.h"
+#import "NSString+SM.h"
+
 #endif

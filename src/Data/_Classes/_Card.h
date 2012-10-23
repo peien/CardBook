@@ -11,6 +11,7 @@ extern const struct CardAttributes {
 	__unsafe_unretained NSString *email;
 	__unsafe_unretained NSString *fax;
 	__unsafe_unretained NSString *id;
+	__unsafe_unretained NSString *isFull;
 	__unsafe_unretained NSString *microblog;
 	__unsafe_unretained NSString *mobilePhone;
 	__unsafe_unretained NSString *modelType;
@@ -51,6 +52,7 @@ extern const struct CardFetchedProperties {
 @class Image;
 @class Schedule;
 @class CardTemplate;
+
 
 
 
@@ -133,6 +135,18 @@ extern const struct CardFetchedProperties {
 - (void)setIdValue:(int64_t)value_;
 
 //- (BOOL)validateId:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSNumber* isFull;
+
+
+@property BOOL isFullValue;
+- (BOOL)isFullValue;
+- (void)setIsFullValue:(BOOL)value_;
+
+//- (BOOL)validateIsFull:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -389,6 +403,15 @@ extern const struct CardFetchedProperties {
 
 - (int64_t)primitiveIdValue;
 - (void)setPrimitiveIdValue:(int64_t)value_;
+
+
+
+
+- (NSNumber*)primitiveIsFull;
+- (void)setPrimitiveIsFull:(NSNumber*)value;
+
+- (BOOL)primitiveIsFullValue;
+- (void)setPrimitiveIsFullValue:(BOOL)value_;
 
 
 

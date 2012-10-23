@@ -7,6 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "KHHNotifications.h"
+/*!
+ */
+NSString *KHHDateStringFromDate(NSDate *aDate);
+NSDate *DateFromKHHDateString(NSString *aString);
 
 @interface NSObject (SMNotification)
 - (void)observeNotificationName:(NSString *)name selector:(NSString *)selector;

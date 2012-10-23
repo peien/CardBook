@@ -7,6 +7,7 @@
 //
 
 #import "AgreementViewController.h"
+#import "KHHMacros.h"
 
 #define textAgreement NSLocalizedString(@"隐私声明", @"")
 

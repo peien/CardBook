@@ -1,5 +1,10 @@
 #import "_Address.h"
+#import "IAddress.h"
+#import "KHHTransformation.h"
 
 @interface Address : _Address {}
-// Custom logic goes here.
+@end
+
+@interface Address (Transformation) <KHHTransformation>
+- (id)updateWithIObject:(IAddress *)iObj;
 @end

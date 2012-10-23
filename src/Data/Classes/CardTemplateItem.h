@@ -1,5 +1,10 @@
 #import "_CardTemplateItem.h"
+#import "KHHTransformation.h"
 
 @interface CardTemplateItem : _CardTemplateItem {}
-// Custom logic goes here.
+@end
+
+@interface CardTemplateItem (Transformation) <KHHTransformation>
++ (id)processJSON:(NSDictionary *)jsonDict;
+- (id)updateWithJSON:(NSDictionary *)jsonDict;
 @end

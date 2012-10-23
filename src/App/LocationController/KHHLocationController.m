@@ -8,7 +8,11 @@
 
 #import "KHHLocationController.h"
 #import <CoreLocation/CoreLocation.h>
-#import "IAddress.h"
+#import "KHHClasses.h"
+#import "KHHMacros.h"
+#import "KHHNotifications.h"
+#import "KHHStatusCodes.h"
+#import "KHHTypes.h"
 
 const NSTimeInterval KHH_LOCATION_REFRESH_INTERVAL = 30 * 60; // 30 min.
 

@@ -11,8 +11,10 @@
 #import "NSString+Validation.h"
 #import "AgreementViewController.h"
 #import "SMCheckBox.h"
-#import "KHHNetworkAPIAgent+Account.h"
 #import "KHHDefaults.h"
+#import "KHHKeys.h"
+#import "KHHNetworkAPI.h"
+#import "KHHNotifications.h"
 
 #define textOK NSLocalizedString(@"确定", @"OK")
 #define textRegister NSLocalizedString(@"注册",nil)

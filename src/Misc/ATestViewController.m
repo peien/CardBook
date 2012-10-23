@@ -24,6 +24,7 @@
         self.view.backgroundColor = [UIColor whiteColor];
         _agent = [[KHHNetworkAPIAgent alloc] init];
         _data = [KHHData sharedData];
+        _card = [[self.data allMyCards] objectAtIndex:0];
     }
     return self;
 }
@@ -36,8 +37,41 @@
     
     [button setTitle:@"Action!" forState:UIControlStateNormal];
     [button addTarget:self
-               action:@selector(testLocationController) // TEST
+               action:@selector(testCustomerEvaluation) // TEST
      forControlEvents:UIControlEventTouchUpInside];
+}
+#pragma mark - 试验用户评估
+- (void)testCustomerEvaluation {
+    [self showLabelWithText:@"试验用户评估"];
+    [self.agent customerEvaluationListAfterDate:nil extra:nil];
+}
+
+#pragma mark - 试验Groups
+- (void)testGroups {
+    [self showLabelWithText:@"试验Groups"];
+//    [self.agent childGroupsOfGroupID:nil
+//                          withCardID:nil
+//                               extra:nil];
+    [self.agent cardIDsInAllGroupWithExtra:nil];
+}
+- (void)testCardsInGroups {
+    [self showLabelWithText:@"试验CardsInGroups"];
+    ALog(@"[II] 所有名片：%d个", ([self.data cardsOfAll]).count);
+    ALog(@"[II] 同事名片：%d个", [self.data cardsOfColleague].count);
+    ALog(@"[II] 新到名片：%d个", [self.data cardsOfNew].count);
+    ALog(@"[II] 未分组名片：%d个", [self.data cardsOfUngrouped].count);
+}
+- (void)testCreateGroup {
+    [self showLabelWithText:@"试验CreateGroup"];
+    IGroup *igrp = [[IGroup alloc] init];
+    igrp.name = [NSString stringWithFormat:@"%@", [NSDate date]];
+    [self.data createGroup:igrp withMyCard:(MyCard *)self.card];
+}
+- (void)testMoveCards {
+    [self showLabelWithText:@"试验MoveCards"];
+    Card *card = [self.data allReceivedCards].lastObject;
+    Group *group = [self.data allTopLevelGroups].lastObject;
+    [self.data moveCards:@[card] fromGroup:nil toGroup:group];
 }
 
 #pragma mark - 试验模板显示
@@ -59,7 +93,6 @@
 #pragma mark - 试验CheckIn
 - (void)testCheckIn {
     [self showLabelWithText:@"试验CheckIn"];
-    self.card = [[self.data allMyCards] objectAtIndex:0];
     ICheckIn *iCheckIn = [[ICheckIn alloc] initWithCard:self.card];
     if (self.placemark) {
         iCheckIn.placemark = self.placemark;

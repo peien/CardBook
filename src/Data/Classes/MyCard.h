@@ -1,5 +1,11 @@
 #import "_MyCard.h"
+#import "InterCard.h"
+#import "KHHTransformation.h"
 
 @interface MyCard : _MyCard {}
-// Custom logic goes here.
+@end
+
+@interface MyCard (Transformation) <KHHTransformation>
++ (id)processIObject:(InterCard *)iObj;
+- (id)updateWithIObject:(InterCard *)iObj;
 @end

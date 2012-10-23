@@ -17,6 +17,7 @@ typedef void (^KHHConstructionBlock)(id <AFMultipartFormData> formData);
 
 // KHHCardModelType 名片模型，对应于数据库里的类
 typedef enum {
+    KHHCardModelTypeCard         = 0,
     KHHCardModelTypeMyCard       = 1,
     KHHCardModelTypePrivateCard  = 2,
     KHHCardModelTypeReceivedCard = 3,
@@ -62,13 +63,18 @@ typedef enum {
     KHHTemplateDomainTypePrivate  = 2,
 } KHHTemplateDomainType;
 
-// KHHSyncActionType
+// KHHQueuedOperationSyncType
 typedef enum {
-    KHHSyncActionSyncPartly = 0,
-    KHHSyncActionSyncGroups,
-    KHHSyncActionSyncTemplates,
-    KHHSyncActionSyncReceivedCards,
-} KHHSyncActionType;
+    KHHQueuedOperationSyncPartly = 0,
+    KHHQueuedOperationSyncReceivedCards,
+    KHHQueuedOperationSyncTemplates,
+    KHHQueuedOperationSyncGroups,
+    KHHQueuedOperationSyncCardGroupMaps,
+    KHHQueuedOperationSyncCustomerEvaluations,
+    KHHQueuedOperationSyncVisitSchedules,
+    KHHQueuedOperationSyncVisitSchedulesAfterCreation,
+    KHHQueuedOperationSyncVisitSchedulesAfterUpdate,
+} KHHQueuedOperationSyncType;
 
 
 #endif

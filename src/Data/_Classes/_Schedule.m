@@ -6,14 +6,17 @@
 const struct ScheduleAttributes ScheduleAttributes = {
 	.companions = @"companions",
 	.content = @"content",
+	.customer = @"customer",
 	.id = @"id",
 	.isFinished = @"isFinished",
-	.name = @"name",
+	.minutesToRemind = @"minutesToRemind",
 	.plannedDate = @"plannedDate",
+	.remind = @"remind",
 	.version = @"version",
 };
 
 const struct ScheduleRelationships ScheduleRelationships = {
+	.address = @"address",
 	.images = @"images",
 	.targets = @"targets",
 };
@@ -55,6 +58,14 @@ const struct ScheduleFetchedProperties ScheduleFetchedProperties = {
 		NSSet *affectingKey = [NSSet setWithObject:@"isFinished"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
+	if ([key isEqualToString:@"minutesToRemindValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"minutesToRemind"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"remindValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"remind"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
 	if ([key isEqualToString:@"versionValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"version"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
@@ -74,6 +85,13 @@ const struct ScheduleFetchedProperties ScheduleFetchedProperties = {
 
 
 @dynamic content;
+
+
+
+
+
+
+@dynamic customer;
 
 
 
@@ -132,8 +150,27 @@ const struct ScheduleFetchedProperties ScheduleFetchedProperties = {
 
 
 
-@dynamic name;
+@dynamic minutesToRemind;
 
+
+
+- (int32_t)minutesToRemindValue {
+	NSNumber *result = [self minutesToRemind];
+	return [result intValue];
+}
+
+- (void)setMinutesToRemindValue:(int32_t)value_ {
+	[self setMinutesToRemind:[NSNumber numberWithInt:value_]];
+}
+
+- (int32_t)primitiveMinutesToRemindValue {
+	NSNumber *result = [self primitiveMinutesToRemind];
+	return [result intValue];
+}
+
+- (void)setPrimitiveMinutesToRemindValue:(int32_t)value_ {
+	[self setPrimitiveMinutesToRemind:[NSNumber numberWithInt:value_]];
+}
 
 
 
@@ -141,6 +178,32 @@ const struct ScheduleFetchedProperties ScheduleFetchedProperties = {
 
 @dynamic plannedDate;
 
+
+
+
+
+
+@dynamic remind;
+
+
+
+- (BOOL)remindValue {
+	NSNumber *result = [self remind];
+	return [result boolValue];
+}
+
+- (void)setRemindValue:(BOOL)value_ {
+	[self setRemind:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveRemindValue {
+	NSNumber *result = [self primitiveRemind];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveRemindValue:(BOOL)value_ {
+	[self setPrimitiveRemind:[NSNumber numberWithBool:value_]];
+}
 
 
 
@@ -171,6 +234,10 @@ const struct ScheduleFetchedProperties ScheduleFetchedProperties = {
 
 
 
+
+@dynamic address;
+
+	
 
 @dynamic images;
 

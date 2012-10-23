@@ -13,6 +13,7 @@
 #import "NSString+MD5.h"
 #import "NSString+Networking.h"
 
+
 @implementation KHHNetworkAPIAgent
 /**
  登录成功后，一定要调用这个设置authentication。
@@ -25,9 +26,6 @@
     [[KHHHTTPClient sharedClient] setAuthorizationHeaderWithUsername:fakeID
                                                             password:password];
     return YES;
-}
-- (void)clearAuthorizationHeader {
-    [[KHHHTTPClient sharedClient] clearAuthorizationHeader];
 }
 #pragma mark - 发请求
 - (void)postAction:(NSString *)action
@@ -209,6 +207,18 @@ NSString *NameWithActionAndCode(NSString *action, KHHNetworkStatusCode code) {
     return name;
 }
 /*!
+ 根据 Action 发 notification，提醒参数错误。
+ 返回action＋Failed。
+ */
+void WarnParametersNotMeetRequirement(NSString *action) {
+    KHHErrorCode errCode = KHHErrorCodeParametersNotMeetRequirement;
+    NSString *errMessage = NSLocalizedString(@"参数不满足要求！", nil);
+    NSNotificationCenter *dc = [NSNotificationCenter defaultCenter];
+    [dc postASAPNotificationName:NameWithActionAndCode(action, errCode)
+                            info:@{ kInfoKeyErrorMessage : errMessage }];
+}
+
+/*!
  默认的成功处理流程
  */
 - (void)defaultSuccessProcessWithAction:(NSString *)action
@@ -237,6 +247,7 @@ NSString *NameWithActionAndCode(NSString *action, KHHNetworkStatusCode code) {
     DLog(@"[II] action = %@\n error = %@", action, error);
     NSString *name = [NSString stringWithFormat:@"%@Failed", action];
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:3];
+    dict[kInfoKeyAction] = action;
     dict[kInfoKeyErrorCode] = @(error.code);
     dict[kInfoKeyError] = error.localizedDescription;
     // 把extra也一并返回

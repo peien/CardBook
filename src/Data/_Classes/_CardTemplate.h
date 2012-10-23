@@ -8,6 +8,7 @@ extern const struct CardTemplateAttributes {
 	__unsafe_unretained NSString *descriptionInfo;
 	__unsafe_unretained NSString *domainType;
 	__unsafe_unretained NSString *id;
+	__unsafe_unretained NSString *isFull;
 	__unsafe_unretained NSString *ownerID;
 	__unsafe_unretained NSString *style;
 	__unsafe_unretained NSString *version;
@@ -25,6 +26,7 @@ extern const struct CardTemplateFetchedProperties {
 @class Image;
 @class Card;
 @class CardTemplateItem;
+
 
 
 
@@ -73,6 +75,18 @@ extern const struct CardTemplateFetchedProperties {
 - (void)setIdValue:(int64_t)value_;
 
 //- (BOOL)validateId:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSNumber* isFull;
+
+
+@property BOOL isFullValue;
+- (BOOL)isFullValue;
+- (void)setIsFullValue:(BOOL)value_;
+
+//- (BOOL)validateIsFull:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -171,6 +185,15 @@ extern const struct CardTemplateFetchedProperties {
 
 - (int64_t)primitiveIdValue;
 - (void)setPrimitiveIdValue:(int64_t)value_;
+
+
+
+
+- (NSNumber*)primitiveIsFull;
+- (void)setPrimitiveIsFull:(NSNumber*)value;
+
+- (BOOL)primitiveIsFullValue;
+- (void)setPrimitiveIsFullValue:(BOOL)value_;
 
 
 

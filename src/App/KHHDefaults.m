@@ -7,6 +7,10 @@
 //
 
 #import "KHHDefaults.h"
+#import "KHHKeys.h"
+#import "KHHTypes.h"
+#import "KHHNotifications.h"
+
 static NSString * const SettingsFileName = @"KHHAppSettings";
 static NSString * const SettingsFileType = @"plist";
 

@@ -17,14 +17,17 @@
 @property (strong, nonatomic) UIImageView *message;
 @property (strong, nonatomic) UIImageView *contact;
 @property (assign, nonatomic) int          index;
+@property (strong, nonatomic) UIView      *cornerView;
 @end
 
 @implementation MyTabBarController
+@synthesize cornerView;
 
 -(void)dealloc
 {  
     self.tabBarView = nil;
     self.bgimgView = nil;
+    self.cornerView = nil;
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -164,7 +167,6 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 #pragma mark- change viewcontroller
-UIView *view = nil;
 -(void)buttonClick:(UIButton *)btn
 {
     if (btn.tag - 100 == self.selectedIndex) {
@@ -172,20 +174,20 @@ UIView *view = nil;
     }
     self.selectedIndex = btn.tag - 100; 
     //UIImageView *bgimgview = (UIImageView *)[self.tabBarView viewWithTag:btn.tag];
-    if (view == nil) {
-        view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 64, 45)];
-        [view setBackgroundColor:[UIColor clearColor]];
-        [self.tabBarView addSubview:view];
+    if (self.cornerView == nil) {
+        self.cornerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 64, 45)];
+        [self.cornerView setBackgroundColor:[UIColor clearColor]];
+        [self.tabBarView addSubview:self.cornerView];
         UIImageView *imgview = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"tabbar_jianjiao.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0]];
         imgview.frame = CGRectMake(0, 34, 65, 15);
-        [view addSubview:imgview];
+        [self.cornerView addSubview:imgview];
 
     }
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:0.3];
-    CGRect rect = view.frame;
+    CGRect rect = self.cornerView.frame;
     rect.origin.x = self.selectedIndex*64;
-    view.frame = rect;
+    self.cornerView.frame = rect;
     [UIView commitAnimations];
     
     

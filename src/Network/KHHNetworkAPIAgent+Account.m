@@ -6,10 +6,13 @@
 //  Copyright (c) 2012 KingHanHong. All rights reserved.
 //
 
-#import "KHHNetworkAPIAgent+Account.h"
+#import "KHHNetworkAPI.h"
 #import "Encryptor.h"
 #import "NSString+SM.h"
 #import "NSNumber+SM.h"
+#import "KHHKeys.h"
+#import "KHHTypes.h"
+#import "KHHNotifications.h"
 
 @implementation KHHNetworkAPIAgent (Account)
 /**

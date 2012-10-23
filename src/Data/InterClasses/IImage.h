@@ -14,3 +14,7 @@
 @property (nonatomic, strong) NSNumber *isDeleted; //isDelete
 @property (nonatomic, strong) NSString *url; // fileUrl
 @end
+
+@interface IImage (Transformation)
+- (id)updateWithJSON:(NSDictionary *)json;
+@end

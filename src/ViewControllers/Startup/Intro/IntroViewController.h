@@ -6,10 +6,6 @@
 
 #import <UIKit/UIKit.h>
 
-//Notifications
-extern NSString * const KHHUIShowIntro;
-extern NSString * const KHHUISkipIntro;
-
 @interface IntroViewController : UIViewController <UIScrollViewDelegate>
 
 @property (nonatomic, weak) IBOutlet UIScrollView *theScrollView;

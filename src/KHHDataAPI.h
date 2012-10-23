@@ -12,7 +12,5 @@
 #import "KHHData.h"
 #import "KHHData+Handlers.h"
 #import "KHHData+UI.h"
-#import "KHHData+CRUD.h"
-#import "KHHData+Processors.h"
 
 #endif

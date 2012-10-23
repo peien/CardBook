@@ -8,6 +8,8 @@
 
 #import "KHHDataAPI.h"
 #import "KHHDefaults.h"
+#import "KHHNotifications.h"
+
 
 @implementation KHHData
 @synthesize context = _context;
@@ -109,46 +111,78 @@
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
-        /*
-         Replace this implementation with code to handle the error appropriately.
-         
-         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-         
-         Typical reasons for an error here include:
-         * The persistent store is not accessible;
-         * The schema for the persistent store is incompatible with current managed object model.
-         Check the error message to determine what the actual problem was.
-         
-         
-         If the persistent store is not accessible, there is typically something wrong with the file path. Often, a file URL is pointing into the application's resources directory instead of a writeable directory.
-         
-         If you encounter schema incompatibility errors during development, you can reduce their frequency by:
-         * Simply deleting the existing store:
-         [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil]
-         
-         * Performing automatic lightweight migration by passing the following dictionary as the options parameter:
-         @{NSMigratePersistentStoresAutomaticallyOption:@YES, NSInferMappingModelAutomaticallyOption:@YES}
-         
-         Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
-         
-         */
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
+        // 由于所有数据都在服务器端，一旦出错可直接删除本地数据，重新同步。
+        ALog(@"[EE] ERROR!!删除 %@ 文件！", fileName);
+        [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil];
+        _persistentStoreCoordinator = nil;
     }
-    
-    return _persistentStoreCoordinator;
+    return self.persistentStoreCoordinator;
 }
 @end
 #pragma mark - Sync
 @implementation KHHData (Syncs)
+- (void)startNextQueuedOperation:(NSMutableArray *)queue {
+    DLog(@"[II] 待同步的queue = %@", queue);
+    if (0 == queue.count) {
+        [self syncAllDataEnded:YES];
+        return;
+    }
+    KHHQueuedOperationSyncType syncAction = [queue[0] integerValue];
+    [queue removeObjectAtIndex:0];
+    switch (syncAction) {
+        case KHHQueuedOperationSyncPartly: {
+            [self syncPartly:queue];
+            break;
+        }
+        case KHHQueuedOperationSyncReceivedCards: {
+            [self syncReceivedCards:queue];
+            break;
+        }
+        case KHHQueuedOperationSyncTemplates: {
+            [self syncTemplates:queue];
+            break;
+        }
+        case KHHQueuedOperationSyncGroups: {
+            [self syncGroups:queue];
+            break;
+        }
+        case KHHQueuedOperationSyncCardGroupMaps: {
+            [self syncCardGroupMaps:queue];
+            break;
+        }
+        case KHHQueuedOperationSyncCustomerEvaluations: {
+            [self syncCustomerEvaluations:queue];
+            break;
+        }
+        case KHHQueuedOperationSyncVisitSchedules: {
+            [self syncVisitSchedules:queue];
+            break;
+        }
+        case KHHQueuedOperationSyncVisitSchedulesAfterCreation: {
+            // 创建拜访计划成功
+            [self postASAPNotificationName:KHHUICreateVisitScheduleSucceeded];
+            break;
+        }
+        case KHHQueuedOperationSyncVisitSchedulesAfterUpdate: {
+            // 更新拜访计划成功
+            [self postASAPNotificationName:KHHUIUpdateVisitScheduleSucceeded];
+            break;
+        }
+    }
+}
 // 开始批量同步所有信息
 - (void)startSyncAllData {
     // 启动调用链！
     NSMutableArray *queue = [NSMutableArray array];
-    [queue addObject:@(KHHSyncActionSyncPartly)];
-    [queue addObject:@(KHHSyncActionSyncTemplates)];
-    [queue addObject:@(KHHSyncActionSyncReceivedCards)];
-    [self startNextSync:queue];
+    [queue addObject:@(KHHQueuedOperationSyncPartly)];
+    [queue addObject:@(KHHQueuedOperationSyncReceivedCards)];
+    [queue addObject:@(KHHQueuedOperationSyncTemplates)];
+    [queue addObject:@(KHHQueuedOperationSyncGroups)];
+    [queue addObject:@(KHHQueuedOperationSyncCardGroupMaps)];
+    [queue addObject:@(KHHQueuedOperationSyncCustomerEvaluations)];
+    [queue addObject:@(KHHQueuedOperationSyncVisitSchedules)];
+    [self startNextQueuedOperation:queue];
 }
 - (void)syncAllDataEnded:(BOOL)succeed {
     if (succeed) {
@@ -157,70 +191,52 @@
         [self postNowNotificationName:KHHUISyncAllFailed];
     }
 }
-- (void)startNextSync:(NSMutableArray *)queue {
-    DLog(@"[II] 待同步的queue = %@", queue);
-    if (0 == queue.count) {
-        [self syncAllDataEnded:YES];
-        return;
-    }
-    KHHSyncActionType syncAction = [queue[0] integerValue];
-    [queue removeObjectAtIndex:0];
-    switch (syncAction) {
-        case KHHSyncActionSyncPartly: {
-            [self syncPartly:queue];
-            break;
-        }
-        case KHHSyncActionSyncTemplates: {
-            [self syncTemplates:queue];
-            break;
-        }
-        case KHHSyncActionSyncGroups: {
-            [self syncGroups:queue];
-            break;
-        }
-        case KHHSyncActionSyncReceivedCards: {
-            [self syncReceivedCards:queue];
-            break;
-        }
-    }
-}
 //
 - (void)syncPartly:(NSMutableArray *)queue // 所谓的syncAll接口
 {
-    NSDictionary *extra = @{ kExtraKeySyncQueue : queue };
-    SyncMark *lastSyncTime = [self syncMarkByKey:kSyncMarkKeySyncAllLastTime];
+    NSDictionary *extra = @{ kExtraKeyQueue : queue };
+    SyncMark *lastSyncTime = [SyncMark syncMarkByKey:kSyncMarkKeySyncAllLastTime];
     [self.agent allDataAfterDate:lastSyncTime.value
                            extra:extra];
 }
 - (void)syncReceivedCards:(NSMutableArray *)queue {
     // 同步联系人
-    NSDictionary *extra = @{ kExtraKeySyncQueue : queue };
-    SyncMark *lastTime = [self syncMarkByKey:kSyncMarkKeyReceviedCardLastTime];
-    SyncMark *lastCardID = [self syncMarkByKey:kSyncMarkKeyReceviedCardLastID];
+    NSDictionary *extra = @{ kExtraKeyQueue : queue };
+    SyncMark *lastTime = [SyncMark syncMarkByKey:kSyncMarkKeyReceviedCardLastTime];
+    SyncMark *lastCardID = [SyncMark syncMarkByKey:kSyncMarkKeyReceviedCardLastID];
     [self.agent receivedCardsAfterDate:lastTime.value
                               lastCard:lastCardID.value
                          expectedCount:@"50"
                                  extra:extra];
 }
+- (void)syncCardGroupMaps:(NSMutableArray *)queue {
+    //
+    NSDictionary *extra = @{ kExtraKeyQueue : queue };
+    [self.agent cardIDsInAllGroupWithExtra:extra];
+}
 - (void)syncTemplates:(NSMutableArray *)queue {
-    NSDictionary *extra = @{ kExtraKeySyncQueue : queue };
-    SyncMark *lastTime = [self syncMarkByKey:kSyncMarkKeyGroupsLastTime];
+    NSDictionary *extra = @{ kExtraKeyQueue : queue };
+    SyncMark *lastTime = [SyncMark syncMarkByKey:kSyncMarkKeyGroupsLastTime];
     [self.agent templatesAfterDate:lastTime.value
                              extra:extra];
 }
 - (void)syncGroups:(NSMutableArray *)queue {
-    NSDictionary *extra = @{ kExtraKeySyncQueue : queue };
-    SyncMark *lastTime = [self syncMarkByKey:kSyncMarkKeyTemplatesLastTime];
-#warning TODO
-//    [self.agent ]
+    NSDictionary *extra = @{ kExtraKeyQueue : queue };
+    [self.agent childGroupsOfGroupID:nil
+                          withCardID:nil
+                               extra:extra];
+}
+- (void)syncCustomerEvaluations:(NSMutableArray *)queue {
+    NSDictionary *extra = @{ kExtraKeyQueue : queue };
+    SyncMark *lastTime = [SyncMark syncMarkByKey:kSyncMarkKeyCustomerEvaluationLastTime];
+    [self.agent customerEvaluationListAfterDate:lastTime.value
+                                          extra:extra];
 }
 - (void)syncVisitSchedules:(NSMutableArray *)queue {
     // 同步拜访计划
-    NSDictionary *extra = @{ kExtraKeySyncQueue : queue };
-    SyncMark *lastTime = [self syncMarkByKey:kSyncMarkKeyVisitScheduleLastTime];
+    NSDictionary *extra = @{ kExtraKeyQueue : queue };
+    SyncMark *lastTime = [SyncMark syncMarkByKey:kSyncMarkKeyVisitScheduleLastTime];
     [self.agent visitSchedulesAfterDate:lastTime.value
                                   extra:extra];
 }
-
-
 @end

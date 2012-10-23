@@ -7,9 +7,11 @@
 //
 
 #import "LoginActionViewController.h"
-#import "KHHData.h"
+#import "KHHDataAPI.h"
 #import "KHHDefaults.h"
-#import "KHHNetworkAPIAgent+Account.h"
+#import "KHHMacros.h"
+#import "KHHNetworkAPI.h"
+#import "KHHNotifications.h"
 #import "UIImageView+WebCache.h"
 #import "UIViewController+SM.h"
 
@@ -85,6 +87,8 @@
     [super viewDidLoad];
     DLog(@"[II] viewDidLoad...");
     self.companyImageView.image = [UIImage imageNamed:KHHLogoFileName];
+    self.bgImageView.image = [UIImage imageNamed:@"LoginImage_bg.png"];
+    
 }
 - (void)viewDidUnload
 {

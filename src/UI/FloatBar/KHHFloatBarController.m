@@ -10,6 +10,8 @@
 #import "MapController.h"
 #import "KHHVisitRecoardVC.h"
 #import "KHHBMapViewController.h"
+#import "Address.h"
+#import "Company.h"
 #import <MessageUI/MessageUI.h>
 
 @interface KHHFloatBarController ()<UIImagePickerControllerDelegate, UIActionSheetDelegate,
@@ -25,6 +27,8 @@
 @synthesize popover = _popover;
 @synthesize type = _type;
 @synthesize card;
+@synthesize isContactCellClick;
+@synthesize contactDic;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -40,9 +44,29 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
-}
 
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    if (self.isContactCellClick) {
+        self.btn1.hidden = YES;
+        self.btn2.hidden = YES;
+        self.btn3.hidden = YES;
+        CGRect rect = self.btn0.frame;
+        rect.origin.x = 195;
+        self.btn0.frame = rect;
+
+    }else{
+        self.btn1.hidden = NO;
+        self.btn2.hidden = NO;
+        self.btn3.hidden = NO;
+        CGRect rect = self.btn0.frame;
+        rect.origin.x = 60;
+        self.btn0.frame = rect;
+    
+    }
+
+}
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -52,7 +76,7 @@
     self.actSheet = nil;
     _popover = nil;
     self.card = nil;
-    
+    self.contactDic = nil;
 }
 
 - (IBAction)BtnClick:(UIButton *)sender
@@ -85,28 +109,57 @@
 - (void)callPhone
 {
     _type = 1;
-    self.actSheet = [[UIActionSheet alloc] initWithTitle:@"选择号码" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
-    if (self.card.mobilePhone.length > 0) {
-        NSArray *mobielArr = [self.card.mobilePhone componentsSeparatedByString:@"|"];
-        for (int i = 0; i < mobielArr.count; i++) {
-             [self.actSheet addButtonWithTitle:[mobielArr objectAtIndex:i]];
+    UIActionSheet *act = [[UIActionSheet alloc] initWithTitle:@"选择号码" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+    //NSArray *phones = [self.contactDic objectForKey:@"phone"];
+    if (self.isContactCellClick) {
+        NSArray *phones = [self.contactDic objectForKey:@"phoneArr"];
+        if (phones.count > 0) {
+            for (int i = 0; i < phones.count; i++) {
+                [act addButtonWithTitle:[phones objectAtIndex:i]];
+                [act showInView:_viewController.view];
+            }
         }
+        
+    }else{
+        if (self.card.mobilePhone.length > 0) {
+            NSArray *mobielArr = [self.card.mobilePhone componentsSeparatedByString:@"|"];
+            for (int i = 0; i < mobielArr.count; i++) {
+                [act addButtonWithTitle:[mobielArr objectAtIndex:i]];
+                [act showInView:_viewController.view];
+            }
+        }
+    
+    
     }
-    [self.actSheet showInView:_viewController.view];
+    
     [self.popover dismissPopoverAnimated:YES];
 }
 //发短信
 - (void)sendMessage
 {
     _type = 2;
-     self.actSheet = [[UIActionSheet alloc] initWithTitle:@"选择号码" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
-    if (self.card.mobilePhone.length > 0) {
-        NSArray *mobielArray = [self.card.mobilePhone componentsSeparatedByString:@"|"];
-        for (int i = 0; i < mobielArray.count; i++) {
-            [self.actSheet addButtonWithTitle:[mobielArray objectAtIndex:i]];
+    UIActionSheet *actS = [[UIActionSheet alloc] initWithTitle:@"选择号码" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+    if (self.isContactCellClick) {
+        NSArray *phones = [self.contactDic objectForKey:@"phoneArr"];
+        if (phones.count > 0) {
+            for (int i = 0; i < phones.count; i++) {
+                [actS addButtonWithTitle:[phones objectAtIndex:i]];
+                [actS showInView:_viewController.view];
+            }
         }
+        
+    }else{
+        if (self.card.mobilePhone.length > 0) {
+            NSArray *mobielArray = [self.card.mobilePhone componentsSeparatedByString:@"|"];
+            for (int i = 0; i < mobielArray.count; i++) {
+                [actS addButtonWithTitle:[mobielArray objectAtIndex:i]];
+                [actS showInView:_viewController.view];
+                
+            }
+        }
+    
     }
-    [self.actSheet showInView:_viewController.view];
+    
     [self.popover dismissPopoverAnimated:YES];
     
 }
@@ -129,10 +182,21 @@
 {
     [self.popover dismissPopoverAnimated:YES];
     MapController *mapVC = [[MapController alloc] initWithNibName:nil bundle:nil];
-    mapVC.companyAddr = @"浙江滨江区南环路4280号元光德大厦501室";
-    mapVC.companyName = @"浙江金汉弘";
-    [self.viewController.navigationController pushViewController:mapVC animated:YES];
-//    KHHBMapViewController *mapVC = [[KHHBMapViewController alloc] initWithNibName:nil bundle:nil];
+    if (self.card.address.province.length > 0 && self.card.address.city.length > 0 && self.card.company.name.length > 0) {
+        NSString *address = [NSString stringWithFormat:@"%@%@",self.card.address.province,self.card.address.city];
+        mapVC.companyAddr = address;
+        mapVC.companyName = self.card.company.name;
+        [self.viewController.navigationController pushViewController:mapVC animated:YES];
+    }else{
+        [[[UIAlertView alloc] initWithTitle:nil
+                                   message:NSLocalizedString(@"没有地址或公司名称可定位", nil)
+                                  delegate:nil
+                         cancelButtonTitle:NSLocalizedString(@"确定", nil)
+                         otherButtonTitles: nil] show];
+    }
+
+    
+    //    KHHBMapViewController *mapVC = [[KHHBMapViewController alloc] initWithNibName:nil bundle:nil];
 //    [self.navigationController pushViewController:mapVC animated:YES];
 
 }
@@ -181,7 +245,7 @@
             if ([messageClass canSendText]) {
                 MFMessageComposeViewController *messageVC = [[MFMessageComposeViewController alloc] init];
                 messageVC.messageComposeDelegate = self;
-                messageVC.body = @"发送短信内容1122";
+                //messageVC.body = @"发送短信内容1122";
                 //号码：
                 messageVC.recipients = [NSArray arrayWithObjects:phone,nil];
                 [self.viewController presentModalViewController:messageVC animated:YES];
