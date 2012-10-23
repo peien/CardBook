@@ -8,9 +8,12 @@
 
 #import "KHHNetworkAPIAgent.h"
 #import "NSData+Base64.h"
+#import "NSObject+SM.h"
 #import "NSString+Base64.h"
 #import "NSString+MD5.h"
 #import "NSString+Networking.h"
+#import "KHHLog.h"
+#import "KHHMacros.h"
 
 @implementation KHHNetworkAPIAgent
 /**
@@ -204,6 +207,18 @@ NSString *NameWithActionAndCode(NSString *action, KHHNetworkStatusCode code) {
     ALog(@"[II] Notification name = %@", name);
     return name;
 }
+/*!
+ 根据 Action 发 notification，提醒参数错误。
+ 返回action＋Failed。
+ */
+void WarnParametersNotMeetRequirement(NSString *action) {
+    KHHErrorCode errCode = KHHErrorCodeParametersNotMeetRequirement;
+    NSString *errMessage = NSLocalizedString(@"参数不满足要求！", nil);
+    NSNotificationCenter *dc = [NSNotificationCenter defaultCenter];
+    [dc postASAPNotificationName:NameWithActionAndCode(action, errCode)
+                            info:@{ kInfoKeyErrorMessage : errMessage }];
+}
+
 /*!
  默认的成功处理流程
  */

@@ -97,6 +97,7 @@
 		98326D051624076900B5038E /* ICustomerEvaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = 98326D041624076900B5038E /* ICustomerEvaluation.m */; };
 		98332A2316258B1500EEE582 /* KHHLocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98332A2216258B1500EEE582 /* KHHLocationController.m */; };
 		98332A471626919300EEE582 /* IAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 98332A461626919300EEE582 /* IAddress.m */; };
+		984ABA02163662ED0047AFB2 /* OSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 984ABA01163662ED0047AFB2 /* OSchedule.m */; };
 		984B7FE116255AA400E8BDC0 /* ICheckIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 984B7FE016255AA400E8BDC0 /* ICheckIn.m */; };
 		984B7FE51625642800E8BDC0 /* SMObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 984B7FE41625642700E8BDC0 /* SMObject.m */; };
 		984C2854160AF02D007D4D13 /* PrivateCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 984C2853160AF02D007D4D13 /* PrivateCard.m */; };
@@ -671,6 +672,8 @@
 		98332A2216258B1500EEE582 /* KHHLocationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHLocationController.m; sourceTree = "<group>"; };
 		98332A451626919300EEE582 /* IAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IAddress.h; sourceTree = "<group>"; };
 		98332A461626919300EEE582 /* IAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IAddress.m; sourceTree = "<group>"; };
+		984ABA00163662ED0047AFB2 /* OSchedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSchedule.h; sourceTree = "<group>"; };
+		984ABA01163662ED0047AFB2 /* OSchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSchedule.m; sourceTree = "<group>"; };
 		984B7FDF16255AA400E8BDC0 /* ICheckIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICheckIn.h; sourceTree = "<group>"; };
 		984B7FE016255AA400E8BDC0 /* ICheckIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICheckIn.m; sourceTree = "<group>"; };
 		984B7FE31625642700E8BDC0 /* SMObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMObject.h; sourceTree = "<group>"; };
@@ -1405,6 +1408,8 @@
 				98F296FA1623F9DC00F9D7B2 /* IImage.m */,
 				98E6F4001623CEB700AE81D3 /* ISchedule.h */,
 				98E6F4011623CEB700AE81D3 /* ISchedule.m */,
+				984ABA00163662ED0047AFB2 /* OSchedule.h */,
+				984ABA01163662ED0047AFB2 /* OSchedule.m */,
 			);
 			path = InterClasses;
 			sourceTree = "<group>";
@@ -3212,6 +3217,7 @@
 				989EAED116314C7400B0DA2A /* _CardTemplateItem.m in Sources */,
 				989B5FA116354316004DD8B3 /* ContactCard.m in Sources */,
 				989B5FA51635432E004DD8B3 /* _ContactCard.m in Sources */,
+				984ABA02163662ED0047AFB2 /* OSchedule.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

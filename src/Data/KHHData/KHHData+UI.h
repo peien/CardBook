@@ -8,7 +8,6 @@
 
 #import "KHHData.h"
 #import "KHHClasses.h"
-#import "InterCard.h"
 
 @interface KHHData (UI_Card)
 // 交换名片后取最新一张名片
@@ -63,3 +62,10 @@
          aboutCustomer:(Card *)aCard              // 客户的名片
             withMyCard:(MyCard *)myCard;          // 我自己当前的名片
 @end
+
+@interface KHHData (UI_Schedule)
+- (void)createSchedule:(OSchedule *)oSchedule withMyCard:(MyCard *)myCard;
+- (void)updateSchedule:(OSchedule *)oSchedule;
+- (void)deleteSchedule:(Schedule *)schedule;
+@end
+

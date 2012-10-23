@@ -198,6 +198,7 @@ static NSString * const kInfoKeyUserID = @"userID";//NSNumber
 static NSString * const kInfoKeyVisitScheduleList = @"visitScheduleList";
 
 #pragma mark - kExtraKey* : "Extra" dictionary key
+static NSString * const kExtraKeyAction = @"action";
 static NSString * const kExtraKeyCardID = @"cardID";// Card ID, NSNumber
 static NSString * const kExtraKeyCardList = @"cardList";// Card Array, NSArray
 static NSString * const kExtraKeyCardModelType = @"cardModelType";// CardModelType , NSNumber

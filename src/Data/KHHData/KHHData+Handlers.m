@@ -88,7 +88,19 @@
     [self observeNotificationName:KHHNetworkVisitSchedulesAfterDateSucceeded
                          selector:@"handleVisitSchedulesAfterDateSucceeded:"];
     [self observeNotificationName:KHHNetworkVisitSchedulesAfterDateFailed
-                         selector:@"handleNetworkActionQueueFailed:"];
+                         selector:@"handleVisitSchedulesAfterDateFailed:"];
+    [self observeNotificationName:KHHNetworkCreateVisitScheduleSucceeded
+                         selector:@"handleCreateVisitScheduleSucceeded:"];
+    [self observeNotificationName:KHHNetworkCreateVisitScheduleFailed
+                         selector:@"handleCreateVisitScheduleFailed:"];
+    [self observeNotificationName:KHHNetworkUpdateVisitScheduleSucceeded
+                         selector:@"handleUpdateVisitScheduleSucceeded:"];
+    [self observeNotificationName:KHHNetworkUpdateVisitScheduleFailed
+                         selector:@"handleUpdateVisitScheduleFailed:"];
+    [self observeNotificationName:KHHNetworkDeleteVisitScheduleSucceeded
+                         selector:@"handleDeleteVisitScheduleSucceeded:"];
+    [self observeNotificationName:KHHNetworkDeleteVisitScheduleFailed
+                         selector:@"handleDeleteVisitScheduleFailed:"];
     // 客户评估
     [self observeNotificationName:KHHNetworkCustomerEvaluationListAfterDateSucceeded
                          selector:@"handleCustomerEvaluationListAfterDateSucceeded:"];
@@ -163,11 +175,8 @@
     [self postASAPNotificationName:KHHUICreateCardSucceeded];
 }
 - (void)handleCreateCardFailed:(NSNotification *)noti {
-    NSDictionary *info = noti.userInfo;
-    ALog(@"[II] info = %@", info);
-    // 发送消息
     [self postASAPNotificationName:KHHUICreateCardFailed
-                              info:info];
+                              info:noti.userInfo];
 }
 - (void)handleUpdateCardSucceeded:(NSNotification *)noti {
     NSDictionary *info = noti.userInfo;
@@ -191,11 +200,8 @@
     [self postASAPNotificationName:KHHUIModifyCardSucceeded];
 }
 - (void)handleUpdateCardFailed:(NSNotification *)noti {
-    NSDictionary *info = noti.userInfo;
-    ALog(@"[II] info = %@", info);
-    // 发送消息
     [self postASAPNotificationName:KHHUIModifyCardFailed
-                              info:info];
+                              info:noti.userInfo];
 }
 - (void)handleDeleteCardSucceeded:(NSNotification *)noti {
     NSDictionary *info = noti.userInfo;
@@ -223,10 +229,8 @@
     [self postASAPNotificationName:KHHUIDeleteCardSucceeded];
 }
 - (void)handleDeleteCardFailed:(NSNotification *)noti {
-    NSDictionary *info = noti.userInfo;
-    ALog(@"[II] info = %@", info);
-    // 发送消息
-    [self postASAPNotificationName:KHHUIDeleteCardFailed info:info];
+    [self postASAPNotificationName:KHHUIDeleteCardFailed
+                              info:noti.userInfo];
 }
 - (void)handleDeleteReceivedCardsSucceeded:(NSNotification *)noti {
     NSDictionary *info = noti.userInfo;
@@ -243,10 +247,8 @@
     [self postASAPNotificationName:KHHUIDeleteCardSucceeded];
 }
 - (void)handleDeleteReceivedCardsFailed:(NSNotification *)noti {
-    NSDictionary *info = noti.userInfo;
-    ALog(@"[II] info = %@", info);
-    // 发送消息
-    [self postASAPNotificationName:KHHUIDeleteCardFailed info:info];
+    [self postASAPNotificationName:KHHUIDeleteCardFailed
+                              info:noti.userInfo];
 }
 - (void)handleReceivedCardsAfterDateLastCardExpectedCountSucceeded:(NSNotification *)noti {
     DLog(@"[II] info = %@", noti);
@@ -309,11 +311,8 @@
 
 }
 - (void)handleLatestReceivedCardFailed:(NSNotification *)noti {
-    NSDictionary *info = noti.userInfo;
-    ALog(@"[II] info = %@", info);
-    // 发送消息
     [self postASAPNotificationName:KHHUIPullLatestReceivedCardFailed
-                              info:info];
+                              info:noti.userInfo];
 }
 - (void)handleNetworkMarkReadReceivedCardSucceeded:(NSNotification *)noti {
     NSDictionary *info = noti.userInfo;
@@ -326,11 +325,8 @@
     [self postASAPNotificationName:KHHUIMarkCardIsReadSucceeded];
 }
 - (void)handleNetworkMarkReadReceivedCardFailed:(NSNotification *)noti {
-    NSDictionary *info = noti.userInfo;
-    ALog(@"[II] info = %@", info);
-    // 发送消息
     [self postASAPNotificationName:KHHUIMarkCardIsReadFailed
-                              info:info];
+                              info:noti.userInfo];
 }
 
 #pragma mark - Handlers_Group
@@ -345,9 +341,8 @@
     [self postASAPNotificationName:KHHUICreateGroupSucceeded];
 }
 - (void)handleNetworkCreateGroupFailed:(NSNotification *)noti {
-    NSDictionary *info = noti.userInfo;
-    ALog(@"[II] info = %@", info);
-    [self postASAPNotificationName:KHHUICreateGroupFailed info:info];
+    [self postASAPNotificationName:KHHUICreateGroupFailed
+                              info:noti.userInfo];
 }
 - (void)handleNetworkUpdateGroupSucceeded:(NSNotification *)noti {
     NSDictionary *oldInfo = noti.userInfo;
@@ -360,9 +355,8 @@
     [self postASAPNotificationName:KHHUIUpdateGroupSucceeded];
 }
 - (void)handleNetworkUpdateGroupFailed:(NSNotification *)noti {
-    NSDictionary *info = noti.userInfo;
-    ALog(@"[II] info = %@", info);
-    [self postASAPNotificationName:KHHUIUpdateGroupFailed info:info];
+    [self postASAPNotificationName:KHHUIUpdateGroupFailed
+                              info:noti.userInfo];
 }
 - (void)handleNetworkDeleteGroupSucceeded:(NSNotification *)noti {
     NSDictionary *oldInfo = noti.userInfo;
@@ -375,9 +369,8 @@
     [self postASAPNotificationName:KHHUIDeleteGroupSucceeded];
 }
 - (void)handleNetworkDeleteGroupFailed:(NSNotification *)noti {
-    NSDictionary *info = noti.userInfo;
-    ALog(@"[II] info = %@", info);
-    [self postASAPNotificationName:KHHUIDeleteGroupFailed info:info];
+    [self postASAPNotificationName:KHHUIDeleteGroupFailed
+                              info:noti.userInfo];
 }
 - (void)handleNetworkChildGroupsOfGroupIDSucceeded:(NSNotification *)noti {
     NSDictionary *oldInfo = noti.userInfo;
@@ -425,9 +418,8 @@
     [self postASAPNotificationName:KHHUIMoveCardsSucceeded];
 }
 - (void)handleNetworkMoveCardsFailed:(NSNotification *)noti {
-    NSDictionary *info = noti.userInfo;
-    ALog(@"[II] info = %@", info);
-    [self postASAPNotificationName:KHHUIMoveCardsFailed info:info];
+    [self postASAPNotificationName:KHHUIMoveCardsFailed
+                              info:noti.userInfo];
 }
 
 #pragma mark - Handlers_Template
@@ -466,6 +458,54 @@
     // 根据 queue 采取不同措施
     NSDictionary *extra= info[kInfoKeyExtra];
     [self startNextSync:extra[kExtraKeySyncQueue]];
+}
+- (void)handleVisitSchedulesAfterDateFailed:(NSNotification *)noti {
+    NSDictionary *info = noti.userInfo;
+    NSDictionary *extra= info[kInfoKeyExtra];
+    NSMutableArray *queue = extra[kExtraKeySyncQueue];
+    // 根据 queue 采取不同措施
+    if ([queue[0] integerValue] == KHHSyncActionVisitSchedulesAfterCreationSucceeded) {
+        [self postASAPNotificationName:KHHUICreateVisitScheduleFailed
+                                  info:info];
+    } else {
+        [self startNextSync:queue];
+    }
+}
+- (void)handleCreateVisitScheduleSucceeded:(NSNotification *)noti {
+    NSDictionary *oldInfo = noti.userInfo;
+    DLog(@"[II] info = %@", oldInfo);
+    // 由于当前掌握的数据不完整，接下来去增量同步拜访计划
+    NSMutableArray *queue = [NSMutableArray array];
+    [queue addObject:@(KHHSyncActionVisitSchedules)];
+    [queue addObject:@(KHHSyncActionVisitSchedulesAfterCreationSucceeded)];
+    [self startNextSync:queue];
+}
+- (void)handleCreateVisitScheduleFailed:(NSNotification *)noti {
+    // 发送消息
+    [self postASAPNotificationName:KHHUICreateVisitScheduleFailed
+                              info:noti.userInfo];
+}
+- (void)handleUpdateVisitScheduleSucceeded:(NSNotification *)noti {
+    DLog(@"[II] 未实现！！！");
+    [self saveContext];
+    // 发成功消息
+    [self postASAPNotificationName:KHHUIUpdateVisitScheduleSucceeded];
+}
+- (void)handleUpdateVisitScheduleFailed:(NSNotification *)noti {
+    // 发送消息
+    [self postASAPNotificationName:KHHUIUpdateVisitScheduleFailed
+                              info:noti.userInfo];
+}
+- (void)handleDeleteVisitScheduleSucceeded:(NSNotification *)noti {
+    DLog(@"[II] 未实现！！！");
+    [self saveContext];
+    // 发成功消息
+    [self postASAPNotificationName:KHHUIDeleteVisitScheduleSucceeded];
+}
+- (void)handleDeleteVisitScheduleFailed:(NSNotification *)noti {
+    // 发送消息
+    [self postASAPNotificationName:KHHUIDeleteVisitScheduleFailed
+                              info:noti.userInfo];
 }
 
 #pragma mark - Handlers_Evaluation
@@ -515,5 +555,8 @@
     [self postASAPNotificationName:KHHUISaveEvaluationFailed
                               info:info];
 }
+
+
 @end
+
 

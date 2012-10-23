@@ -81,6 +81,11 @@ typedef void (^KHHConstructionBlock)(id <AFMultipartFormData> formData);
  其他返回action＋Failed
  */
 NSString *NameWithActionAndCode(NSString *action, KHHNetworkStatusCode code);
+/*!
+ 根据 Action 发 notification，提醒参数错误。
+ 返回action＋Failed。
+ */
+void WarnParametersNotMeetRequirement(NSString *action);
 
 @end
 

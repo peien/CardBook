@@ -7,6 +7,7 @@
 //
 
 #import "ISchedule.h"
+#import "KHHKeys.h"
 #import "Card.h"
 #import "InterCard.h"
 #import "IImage.h"
@@ -17,6 +18,7 @@
 
 @end
 @implementation ISchedule (transformation)
+
 - (id)updateWithJSON:(NSDictionary *)json {
     self.id = [NSNumber numberFromObject:json[JSONDataKeyID] zeroIfUnresolvable:NO]; //id,
     self.version         = [NSNumber numberFromObject:json[JSONDataKeyVersion] zeroIfUnresolvable:YES]; //version,
