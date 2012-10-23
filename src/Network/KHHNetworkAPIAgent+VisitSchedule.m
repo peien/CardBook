@@ -29,7 +29,7 @@
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithCapacity:10];
     parameters[@"cardId"]           = myCard.id.stringValue;
     parameters[@"visitContext"]     = oSchedule.content;
-    if (oSchedule.customer)
+    if (oSchedule.customer.length)
         parameters[@"customName"]   = oSchedule.customer;
     if (oSchedule.plannedDate)
         parameters[@"planTimeTemp"] = KHHDateStringFromDate(oSchedule.plannedDate);
@@ -37,15 +37,16 @@
         parameters[@"isRemind"]     = oSchedule.isRemind.stringValue;
     if (oSchedule.minutesToRemind)
         parameters[@"remindDate"]   = oSchedule.minutesToRemind.stringValue;
-    if (oSchedule.addressProvince)
+    if (oSchedule.addressProvince.length)
         parameters[@"province"]     = oSchedule.addressProvince;
-    if (oSchedule.addressCity)
+    if (oSchedule.addressCity.length)
         parameters[@"city"]         = oSchedule.addressCity;
-    if (oSchedule.addressOther)
+    if (oSchedule.addressOther.length)
         parameters[@"address"]      = oSchedule.addressOther;
-    if (oSchedule.companion)
+    if (oSchedule.companion.length)
         parameters[@"withPerson"]   = oSchedule.companion;
-    parameters[@"isFinished"]       = @"n";
+    if (oSchedule.isFinished)
+        parameters[@"isFinished"]   = (oSchedule.isFinished.integerValue)? @"y": @"n";
     
     NSMutableString *cardIDs = [NSMutableString string];
     NSMutableString *cardTypes = [NSMutableString string];
@@ -99,22 +100,48 @@
 - (void)updateVisitSchedule:(OSchedule *)oSchedule {
     NSString *action = kActionNetworkUpdateVisitSchedule;
     NSString *query = @"kinghhVisitCustomPlanService.update";
+    // 检查参数
+    if (nil == oSchedule.id) {
+        // 缺少必要的参数
+        WarnParametersNotMeetRequirement(action);
+        return;
+    }
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithCapacity:10];
-//    parameters[@""] = ;
-//    parameters[@""] = ;
-//    parameters[@""] = ;
-//    parameters[@""] = ;
-//    parameters[@""] = ;
-//    parameters[@""] = ;
-//    parameters[@""] = ;
-//    parameters[@""] = ;
-//    parameters[@""] = ;
-//    parameters[@""] = ;
-//    parameters[@""] = ;
-//    parameters[@""] = ;
-//    parameters[@""] = ;
+    parameters[@"id"]               = oSchedule.id.stringValue;
+    if (oSchedule.content.length)
+        parameters[@"visitContext"] = oSchedule.content;
+    if (oSchedule.customer.length)
+        parameters[@"customName"]   = oSchedule.customer;
+    if (oSchedule.plannedDate)
+        parameters[@"planTimeTemp"] = KHHDateStringFromDate(oSchedule.plannedDate);
+    if (oSchedule.isRemind)
+        parameters[@"isRemind"]     = oSchedule.isRemind.stringValue;
+    if (oSchedule.minutesToRemind)
+        parameters[@"remindDate"]   = oSchedule.minutesToRemind.stringValue;
+    if (oSchedule.addressProvince.length)
+        parameters[@"province"]     = oSchedule.addressProvince;
+    if (oSchedule.addressCity.length)
+        parameters[@"city"]         = oSchedule.addressCity;
+    if (oSchedule.addressOther.length)
+        parameters[@"address"]      = oSchedule.addressOther;
+    if (oSchedule.companion.length)
+        parameters[@"withPerson"]   = oSchedule.companion;
+    if (oSchedule.isFinished)
+        parameters[@"isFinished"]   = (oSchedule.isFinished.integerValue)? @"y": @"n";
+    
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
-        
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:responseObject];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
+        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        // 把返回的数据转成本地数据
+        // 返回的ID
+        oSchedule.id = [NSNumber numberFromObject:responseDict[JSONDataKeyID]
+                               zeroIfUnresolvable:NO];
+        dict[kInfoKeyObject]    = oSchedule;
+        dict[kInfoKeyErrorCode] = @(code);
+        NSString *name = NameWithActionAndCode(action, code);
+        DLog(@"[II] 发送 Notification Name = %@", name);
+        [self postASAPNotificationName:name info:dict];
     };
     [self postAction:action
                query:query
@@ -129,9 +156,22 @@
 - (void)deleteVisitSchedule:(ISchedule *)schedule {
     NSString *action = kActionNetworkDeleteVisitSchedule;
     NSString *query = @"kinghhVisitCustomPlanService.delete";
+    // 检查参数
+    if (nil == schedule.id) {
+        // 缺少必要的参数
+        WarnParametersNotMeetRequirement(action);
+        return;
+    }
     NSMutableDictionary *parameters;
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
-        
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:responseObject];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
+        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        // 把返回的数据转成本地数据
+        dict[kInfoKeyObject]    = schedule;
+        dict[kInfoKeyErrorCode] = @(code);
+        NSString *name = NameWithActionAndCode(action, code);
+        [self postASAPNotificationName:name info:dict];
     };
     [self postAction:action
                query:query

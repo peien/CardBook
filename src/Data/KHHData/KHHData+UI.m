@@ -8,6 +8,7 @@
 
 #import "KHHData+UI.h"
 #import "KHHClasses.h"
+#import "KHHLog.h"
 #import "KHHTypes.h"
 #import "KHHDefaults.h"
 #import "NSManagedObject+KHH.h"
@@ -170,8 +171,14 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
 }
 // 拜访 (先把所有的拜访记录的客户ID,再从联系人与自建联系人中查询id在拜访列表中的数据):
 - (NSArray *)cardsOfVisited {
-#warning TODO
-    return [NSArray array];
+    NSArray *oldArray = [self cardsOfAll];
+    NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:oldArray.count];
+    for (Card *card in oldArray) {
+        if (card.schedules.count) {
+            [newArray addObject:card];
+        }
+    }
+    return newArray;
 }
 // 重点 (客户评估在3星以上的，先从5星查5星有数据就返回此星下的客户，没数据就查4星，以此类推。)
 - (NSArray *)cardsOfVIP {
@@ -252,10 +259,10 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
                          withMyCard:myCard];
 }
 - (void)updateSchedule:(OSchedule *)oSchedule {
-    DLog(@"[II] 未实现！！！");
+    [self.agent updateVisitSchedule:oSchedule];
 }
 - (void)deleteSchedule:(Schedule *)schedule {
-    DLog(@"[II] 未实现！！！");
+    [self.agent deleteVisitSchedule:schedule];
 }
 
 @end
