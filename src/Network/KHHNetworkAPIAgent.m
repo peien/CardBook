@@ -7,6 +7,7 @@
 //
 
 #import "KHHNetworkAPIAgent.h"
+#import "KHHTypes.h"
 #import "NSData+Base64.h"
 #import "NSString+Base64.h"
 #import "NSString+MD5.h"

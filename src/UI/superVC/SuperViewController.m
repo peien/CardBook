@@ -23,11 +23,11 @@
     }
 }
 
-- (void) drawRect:(CGRect)rect
-{
-    [[self barBackground] drawInRect:rect];
-    
-}
+//- (void) drawRect:(CGRect)rect
+//{
+//    [[self barBackground] drawInRect:rect];
+//    
+//}
 
 @end
 

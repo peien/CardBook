@@ -36,7 +36,8 @@ static NSString * const KHHDefaultsKeyCompanyList = @"khh_companyList";
 static NSString * const KHHDefaultsKeyUserList = @"khh_userList";
 
 // App - MainUI
-static NSString * const KHHDefaultsKeyMainUISelectedTabIndex = @"khh_MainUI_selectedTabIndex";
+static NSString * const KHHDefaultsKeySelectedMainTabIndex = @"khh_MainUI_selectedTabIndex";
+static NSString * const KHHDefaultsKeyDefaultMainUIIndex = @"khh_MainUI_defaultIndex";
 
 @interface KHHDefaults ()
 @property (nonatomic, weak) NSUserDefaults *defaults;
@@ -141,9 +142,7 @@ static NSString * const KHHDefaultsKeyMainUISelectedTabIndex = @"khh_MainUI_sele
 - (void)saveLoginOrRegisterResult:(NSDictionary *)dict
 // 保存user,userID,authorizationID,password,companyID,companyLogo,autoReceive
 {
-    //    NSString *user = [dict objectForKey:kInfoKeyUser];
     NSString *user = self.currentUser;
-    //    NSString *password = [dict objectForKey:kInfoKeyPassword];
     NSString *password = self.currentPassword;
     NSNumber *authorizationID = [dict objectForKey:kInfoKeyAuthorizationID];
     NSNumber *userID = [self UserIDFromAuthorizationID:authorizationID];
@@ -323,26 +322,27 @@ static NSString * const KHHDefaultsKeyMainUISelectedTabIndex = @"khh_MainUI_sele
            forKey:KHHDefaultsKeyRememberPassword];
 }
 #pragma mark - App - MainUI
-- (NSInteger)selectedTab {
-    return [[self numberForKey:KHHDefaultsKeyMainUISelectedTabIndex] integerValue];
+- (NSInteger)selectedMainTabIndex {
+    return [[self numberForKey:KHHDefaultsKeySelectedMainTabIndex] integerValue];
 }
-- (void)setSelectedTab:(NSInteger)index {
-    [self setNumber:[NSNumber numberWithInteger:index] forKey:KHHDefaultsKeyMainUISelectedTabIndex];
+- (void)setSelectedMainTabIndex:(NSInteger)index {
+    [self setNumber:[NSNumber numberWithInteger:index]
+             forKey:KHHDefaultsKeySelectedMainTabIndex];
 }
+- (NSInteger)defaultMainUIIndex
+{
+    return [[self numberForKey:KHHDefaultsKeyDefaultMainUIIndex] integerValue];
+}
+- (void)setDefaultMainUIIndex:(NSInteger)index{
+    [self setNumber:[NSNumber numberWithInteger:index]
+             forKey:KHHDefaultsKeyDefaultMainUIIndex];
+}
+
 #pragma mark - Utils
 - (NSMutableArray *)userList {
     NSArray *array = [self arrayForKey:KHHDefaultsKeyUserList];
     return [NSMutableArray arrayWithArray:array];
 }
-//- (NSMutableDictionary *)dictionaryFromList:(NSArray *)list {
-//    NSMutableDictionary *result = nil;
-//    if ([list count]) {
-//        result = [NSMutableDictionary dictionaryWithDictionary:[list objectAtIndex:0]];
-//    } else {
-//        result = [NSMutableDictionary dictionary];
-//    }
-//    return result;
-//}
 - (NSMutableArray *)companyListFromUserDictionary:(NSDictionary *)dict {
     NSArray *array = [dict objectForKey:KHHDefaultsKeyCompanyList];
     return [NSMutableArray arrayWithArray:array];
@@ -355,7 +355,7 @@ static NSString * const KHHDefaultsKeyMainUISelectedTabIndex = @"khh_MainUI_sele
     NSNumber * result = [f numberFromString:numStr];
     return result;
 }
-// 把具有ID属性的dict从array中取出（从array删除）
+// 把具有ID属性的dict从array中取出（从array删除）,无则新建
 - (NSMutableDictionary *)dictionaryWithID:(NSNumber *)ID
                                  offArray:(NSMutableArray *)array {
     NSInteger idx = -1;// -1表示不存在。
@@ -378,13 +378,4 @@ static NSString * const KHHDefaultsKeyMainUISelectedTabIndex = @"khh_MainUI_sele
     }
     return result;
 }
-#pragma mark - setDefaultMainUI
-- (void)setDefaultMainUI:(NSNumber *)index{
-    [self setNumber:index forKey:@"defaultMainUI"];
-}
-- (NSNumber *)defaultMainUI
-{
-    return [self numberForKey:@"defaultMainUI"];
-}
-
 @end

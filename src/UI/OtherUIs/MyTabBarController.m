@@ -92,7 +92,7 @@
     }
     // 默认选择
     KHHDefaults *defau = [KHHDefaults sharedDefaults];
-    self.index = [[defau defaultMainUI]intValue];
+    self.index = defau.defaultMainUIIndex;
     UIButton *btn = (UIButton *)[self.tabBarView viewWithTag:self.index];
     [self performSelector:@selector(buttonClick:) withObject:btn afterDelay:0.1];
     [self creatNumView];

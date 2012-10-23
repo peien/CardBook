@@ -13,10 +13,6 @@
 #import "KHHStatusCodes.h"
 #import "KHHHTTPClient.h"
 
-typedef void (^KHHSuccessBlock)(AFHTTPRequestOperation *operation, id responseObject);
-typedef void (^KHHFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
-typedef void (^KHHConstructionBlock)(id <AFMultipartFormData> formData);
-
 /**
  该类及其扩展封装了所有的服务器接口。
  对返回结果进行处理以后，用notification通知调用者。

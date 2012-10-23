@@ -8,6 +8,13 @@
 #ifndef KHHTypes_h
 #define KHHTypes_h
 
+@class AFHTTPRequestOperation;
+@protocol AFMultipartFormData;
+
+typedef void (^KHHSuccessBlock)(AFHTTPRequestOperation *operation, id responseObject);
+typedef void (^KHHFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
+typedef void (^KHHConstructionBlock)(id <AFMultipartFormData> formData);
+
 // KHHCardModelType 名片模型，对应于数据库里的类
 typedef enum {
     KHHCardModelTypeMyCard       = 1,
