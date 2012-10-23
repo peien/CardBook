@@ -203,7 +203,19 @@
     DLog(@"[II] extra = %@", extra);
     // 从数据库中删除它
     NSNumber *cardID = extra[kExtraKeyCardID];
-    Card *card = [Card objectByID:cardID createIfNone:NO];
+    KHHCardModelType modelType = [extra[kExtraKeyCardModelType] integerValue];
+    Card *card;
+    switch (modelType) {
+        case KHHCardModelTypeMyCard:
+            card = [MyCard objectByID:cardID createIfNone:NO];
+            break;
+        case KHHCardModelTypePrivateCard:
+            card = [PrivateCard objectByID:cardID createIfNone:NO];
+            break;
+        default:
+            break;
+    }
+    
     [self.context deleteObject:card];
     // 保存数据库
     [self saveContext];
