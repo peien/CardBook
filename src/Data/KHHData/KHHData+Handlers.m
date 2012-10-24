@@ -524,13 +524,15 @@
     
 }
 - (void)handleUploadImageForVisitScheduleFailed:(NSNotification *)noti {
-    
+    [self postASAPNotificationName:KHHUIUploadImageForVisitScheduleFailed
+                              info:noti.userInfo];
 }
 - (void)handleDeleteImageFromVisitScheduleSucceeded:(NSNotification *)noti {
     
 }
 - (void)handleDeleteImageFromVisitScheduleFailed:(NSNotification *)noti {
-    
+    [self postASAPNotificationName:KHHUIDeleteImageFromVisitScheduleFailed
+                              info:noti.userInfo];
 }
 
 

@@ -83,7 +83,10 @@ static NSString * const KHHUIUpdateVisitScheduleSucceeded = @"UIUpdateVisitSched
 static NSString * const KHHUIUpdateVisitScheduleFailed    = @"UIUpdateVisitScheduleFailed";
 static NSString * const KHHUIDeleteVisitScheduleSucceeded = @"UIDeleteVisitScheduleSucceeded";
 static NSString * const KHHUIDeleteVisitScheduleFailed    = @"UIDeleteVisitScheduleFailed";
-
+static NSString * const KHHUIUploadImageForVisitScheduleSucceeded  = @"UIUploadImageForVisitScheduleSucceeded";
+static NSString * const KHHUIUploadImageForVisitScheduleFailed   = @"UIUploadImageForVisitScheduleFailed";
+static NSString * const KHHUIDeleteImageFromVisitScheduleSucceeded = @"UIDeleteImageFromVisitScheduleSucceeded";
+static NSString * const KHHUIDeleteImageFromVisitScheduleFailed  = @"UIDeleteImageFromVisitScheduleFailed";
 
 #pragma mark - Misc
 //MARK: - 位置
