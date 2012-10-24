@@ -7,10 +7,11 @@
 //
 
 #import "KHHAppDelegate.h"
+#import "KHHDataAPI.h"
 #import "KHHDefaults.h"
 #import "KHHHTTPClient.h"
 #import "KHHNetworkAPI.h"
-#import "KHHDataAPI.h"
+#import "KHHNotifications.h"
 #import "MyTabBarController.h"
 #import "ATestViewController.h"
 

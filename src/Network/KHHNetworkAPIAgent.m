@@ -8,12 +8,10 @@
 
 #import "KHHNetworkAPIAgent.h"
 #import "NSData+Base64.h"
-#import "NSObject+SM.h"
 #import "NSString+Base64.h"
 #import "NSString+MD5.h"
 #import "NSString+Networking.h"
-#import "KHHLog.h"
-#import "KHHMacros.h"
+
 
 @implementation KHHNetworkAPIAgent
 /**

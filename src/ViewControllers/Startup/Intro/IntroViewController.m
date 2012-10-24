@@ -6,6 +6,7 @@
 
 #import "IntroViewController.h"
 #import "KHHDefaults.h"
+#import "NSObject+SM.h"
 
 @interface IntroViewController ()
 @property (nonatomic, strong) KHHDefaults *defaults;

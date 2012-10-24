@@ -1,16 +1,4 @@
-#import "Card.h"
-#import "MyCard.h"
-#import "PrivateCard.h"
-#import "ReceivedCard.h"
-#import "KHHLog.h"
-#import "NSManagedObject+KHH.h"
-#import "InterCard.h"
-#import "CardTemplate.h"
-#import "CardTemplateItem.h"
-#import "Address.h"
-#import "BankAccount.h"
-#import "Company.h"
-#import "Image.h"
+#import "KHHClasses.h"
 
 @implementation Card
 // 根据ID和type查询。

@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "KHHNotifications.h"
 /*!
  */
 NSString *KHHDateStringFromDate(NSDate *aDate);

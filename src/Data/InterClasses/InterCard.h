@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "KHHTypes.h"
 #import "SMObject.h"
 
 @interface InterCard : SMObject

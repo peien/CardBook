@@ -56,17 +56,18 @@ typedef enum {
     KHHTemplateDomainTypePrivate  = 2,
 } KHHTemplateDomainType;
 
-// KHHSyncActionType
+// KHHQueuedOperationSyncType
 typedef enum {
-    KHHSyncActionPartly = 0,
-    KHHSyncActionReceivedCards,
-    KHHSyncActionTemplates,
-    KHHSyncActionGroups,
-    KHHSyncActionCardGroupMaps,
-    KHHSyncActionCustomerEvaluations,
-    KHHSyncActionVisitSchedules,
-    KHHSyncActionVisitSchedulesAfterCreationSucceeded,
-} KHHSyncActionType;
+    KHHQueuedOperationSyncPartly = 0,
+    KHHQueuedOperationSyncReceivedCards,
+    KHHQueuedOperationSyncTemplates,
+    KHHQueuedOperationSyncGroups,
+    KHHQueuedOperationSyncCardGroupMaps,
+    KHHQueuedOperationSyncCustomerEvaluations,
+    KHHQueuedOperationSyncVisitSchedules,
+    KHHQueuedOperationSyncVisitSchedulesAfterCreation,
+    KHHQueuedOperationSyncVisitSchedulesAfterUpdate,
+} KHHQueuedOperationSyncType;
 
 
 #endif

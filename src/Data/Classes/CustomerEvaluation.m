@@ -1,5 +1,4 @@
-#import "CustomerEvaluation.h"
-#import "KHHDataAPI.h"
+#import "KHHClasses.h"
 
 @implementation CustomerEvaluation
 @end

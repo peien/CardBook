@@ -10,11 +10,12 @@
 #import "StartupViewController.h"
 #import "RegViewController.h"
 #import "ResetPasswordViewController.h"
-#import "KHHDefaults.h"
 #import "SMCheckBox.h"
 #import "NSString+Validation.h"
 #import "UIViewController+SM.h"
-#import "KHHNetworkAPIAgent+Account.h"
+#import "KHHDefaults.h"
+#import "KHHNetworkAPI.h"
+#import "KHHNotifications.h"
 
 
 #define textLogin NSLocalizedString(@"登录", @"")

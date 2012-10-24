@@ -1,4 +1,4 @@
-#import "ContactCard.h"
+#import "KHHClasses.h"
 
 @implementation ContactCard
 

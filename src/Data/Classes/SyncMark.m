@@ -1,6 +1,4 @@
-#import "SyncMark.h"
-#import "NSManagedObject+KHH.h"
-#import "KHHDataAPI.h"
+#import "KHHClasses.h"
 
 @implementation SyncMark
 @end

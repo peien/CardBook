@@ -7,6 +7,8 @@
 #ifndef KHHNotifications_h
 #define KHHNotifications_h
 
+#import "NSObject+SM.h"
+
 #pragma mark - UI Notifications
 // Startup
 static NSString * const KHHUIShowStartup = @"UIshowStartup";

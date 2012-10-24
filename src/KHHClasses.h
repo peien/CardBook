@@ -36,4 +36,10 @@
 #import "ISchedule.h"
 #import "OSchedule.h"
 
+#pragma mark - Utils
+#import "NSManagedObject+KHH.h"
+#import "NSNumber+SM.h"
+#import "NSObject+SM.h"
+#import "NSString+SM.h"
+
 #endif

@@ -1,7 +1,4 @@
-#import "Group.h"
-#import "Card.h"
-#import "NSNumber+SM.h"
-#import "NSManagedObject+KHH.h"
+#import "KHHClasses.h"
 
 @implementation Group
 @end

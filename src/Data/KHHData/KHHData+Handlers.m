@@ -7,10 +7,8 @@
 //
 
 #import "KHHDataAPI.h"
-#import "KHHLog.h"
 #import "KHHNotifications.h"
 #import "NSNumber+SM.h"
-#import "NSObject+SM.h"
 #import "NSManagedObject+KHH.h"
 
 @implementation KHHData (Handlers)
@@ -118,7 +116,7 @@
     ALog(@"[II] info = %@", info);
     // 根据 queue 采取不同措施
     NSDictionary *extra= info[kInfoKeyExtra];
-    [self startNextSync:extra[kExtraKeySyncQueue]];
+    [self startNextQueuedOperation:extra[kExtraKeyQueue]];
 }
 - (void)handleAllDataAfterDateSucceeded:(NSNotification *)noti {
     DLog(@"[II] noti userInfo keys = %@", [noti.userInfo allKeys]);
@@ -150,7 +148,7 @@
     // 处理结束
     // 根据 queue 采取不同措施
     NSDictionary *extra= info[kInfoKeyExtra];
-    [self startNextSync:extra[kExtraKeySyncQueue]];
+    [self startNextQueuedOperation:extra[kExtraKeyQueue]];
 }
 #pragma mark - Handlers_Card
 - (void)handleCreateCardSucceeded:(NSNotification *)noti {
@@ -284,7 +282,7 @@
                                      extra:extra];
     } else { // count <= 1
         // 根据 queue 采取不同措施
-        [self startNextSync:extra[kExtraKeySyncQueue]];
+        [self startNextQueuedOperation:extra[kExtraKeyQueue]];
     }
     
 }
@@ -383,7 +381,7 @@
     [self saveContext];
     // 根据 queue 采取不同措施
     NSDictionary *extra= oldInfo[kInfoKeyExtra];
-    [self startNextSync:extra[kExtraKeySyncQueue]];
+    [self startNextQueuedOperation:extra[kExtraKeyQueue]];
 }
 - (void)handleNetworkCardIDsInAllGroupSucceeded:(NSNotification *)noti {
     NSDictionary *oldInfo = noti.userInfo;
@@ -397,7 +395,7 @@
     // 发成功消息
     // 根据 queue 采取不同措施
     NSDictionary *extra= oldInfo[kInfoKeyExtra];
-    [self startNextSync:extra[kExtraKeySyncQueue]];
+    [self startNextQueuedOperation:extra[kExtraKeyQueue]];
 }
 - (void)handleNetworkMoveCardsSucceeded:(NSNotification *)noti {
     NSDictionary *oldInfo = noti.userInfo;
@@ -440,7 +438,7 @@
     
     // 根据 queue 采取不同措施
     NSDictionary *extra= info[kInfoKeyExtra];
-    [self startNextSync:extra[kExtraKeySyncQueue]];
+    [self startNextQueuedOperation:extra[kExtraKeyQueue]];
 }
 
 #pragma mark - Handlers_Schedule
@@ -457,53 +455,61 @@
     [self saveContext];
     // 根据 queue 采取不同措施
     NSDictionary *extra= info[kInfoKeyExtra];
-    [self startNextSync:extra[kExtraKeySyncQueue]];
+    [self startNextQueuedOperation:extra[kExtraKeyQueue]];
 }
 - (void)handleVisitSchedulesAfterDateFailed:(NSNotification *)noti {
     NSDictionary *info = noti.userInfo;
     NSDictionary *extra= info[kInfoKeyExtra];
-    NSMutableArray *queue = extra[kExtraKeySyncQueue];
+    NSMutableArray *queue = extra[kExtraKeyQueue];
     // 根据 queue 采取不同措施
-    if ([queue[0] integerValue] == KHHSyncActionVisitSchedulesAfterCreationSucceeded) {
-        [self postASAPNotificationName:KHHUICreateVisitScheduleFailed
-                                  info:info];
-    } else {
-        [self startNextSync:queue];
+    switch ([queue[0] integerValue]) {
+        case KHHQueuedOperationSyncVisitSchedulesAfterCreation: {
+            [self postASAPNotificationName:KHHUICreateVisitScheduleFailed
+                                      info:info];
+            break;
+        }
+        case KHHQueuedOperationSyncVisitSchedulesAfterUpdate: {
+            [self postASAPNotificationName:KHHUIUpdateVisitScheduleFailed
+                                      info:info];
+            break;
+        }
+        default: {
+            [self startNextQueuedOperation:queue];
+            break;
+        }
     }
 }
 - (void)handleCreateVisitScheduleSucceeded:(NSNotification *)noti {
-    NSDictionary *oldInfo = noti.userInfo;
-    DLog(@"[II] info = %@", oldInfo);
     // 由于当前掌握的数据不完整，接下来去增量同步拜访计划
     NSMutableArray *queue = [NSMutableArray array];
-    [queue addObject:@(KHHSyncActionVisitSchedules)];
-    [queue addObject:@(KHHSyncActionVisitSchedulesAfterCreationSucceeded)];
-    [self startNextSync:queue];
+    [queue addObject:@(KHHQueuedOperationSyncVisitSchedules)];
+    [queue addObject:@(KHHQueuedOperationSyncVisitSchedulesAfterCreation)];
+    [self startNextQueuedOperation:queue];
 }
 - (void)handleCreateVisitScheduleFailed:(NSNotification *)noti {
-    // 发送消息
     [self postASAPNotificationName:KHHUICreateVisitScheduleFailed
                               info:noti.userInfo];
 }
 - (void)handleUpdateVisitScheduleSucceeded:(NSNotification *)noti {
-    DLog(@"[II] 未实现！！！");
-    [self saveContext];
-    // 发成功消息
-    [self postASAPNotificationName:KHHUIUpdateVisitScheduleSucceeded];
+    // 由于当前掌握的数据不完整，接下来去增量同步拜访计划
+    NSMutableArray *queue = [NSMutableArray array];
+    [queue addObject:@(KHHQueuedOperationSyncVisitSchedules)];
+    [queue addObject:@(KHHQueuedOperationSyncVisitSchedulesAfterUpdate)];
+    [self startNextQueuedOperation:queue];
 }
 - (void)handleUpdateVisitScheduleFailed:(NSNotification *)noti {
-    // 发送消息
     [self postASAPNotificationName:KHHUIUpdateVisitScheduleFailed
                               info:noti.userInfo];
 }
 - (void)handleDeleteVisitScheduleSucceeded:(NSNotification *)noti {
-    DLog(@"[II] 未实现！！！");
+    Schedule *schdl = noti.userInfo[kInfoKeyObject];
+    // 从数据库中删除
+    [self.context deleteObject:schdl];
     [self saveContext];
-    // 发成功消息
+    // 发送成功消息
     [self postASAPNotificationName:KHHUIDeleteVisitScheduleSucceeded];
 }
 - (void)handleDeleteVisitScheduleFailed:(NSNotification *)noti {
-    // 发送消息
     [self postASAPNotificationName:KHHUIDeleteVisitScheduleFailed
                               info:noti.userInfo];
 }
@@ -534,7 +540,7 @@
     [self saveContext];
     // 根据 queue 采取不同措施
     NSDictionary *extra= info[kInfoKeyExtra];
-    [self startNextSync:extra[kExtraKeySyncQueue]];
+    [self startNextQueuedOperation:extra[kExtraKeyQueue]];
 }
 - (void)handleNetworkCreateOrUpdateEvaluationSucceeded:(NSNotification *)noti {
     NSDictionary *info = noti.userInfo;
@@ -549,11 +555,8 @@
     [self postASAPNotificationName:KHHUISaveEvaluationSucceeded];
 }
 - (void)handleNetworkCreateOrUpdateEvaluationFailed:(NSNotification *)noti {
-    NSDictionary *info = noti.userInfo;
-    ALog(@"[II] info = %@", info);
-    // 发送消息
     [self postASAPNotificationName:KHHUISaveEvaluationFailed
-                              info:info];
+                              info:noti.userInfo];
 }
 
 

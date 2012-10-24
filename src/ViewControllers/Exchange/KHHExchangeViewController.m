@@ -12,7 +12,6 @@
 #import "XLPageControl.h"
 #import "UIImageView+WebCache.h"
 #import "KHHFrameCardView.h"
-#import "KHHDataAPI.h"
 #import "MBProgressHUD.h"
 #import "DetailInfoViewController.h"
 #import "MBProgressHUD.h"
@@ -20,7 +19,9 @@
 
 #import <CoreLocation/CoreLocation.h>
 #import <AudioToolbox/AudioToolbox.h>
-#import "KHHNetworkAPIAgent+Exchange.h"
+#import "KHHDataAPI.h"
+#import "KHHNetworkAPI.h"
+#import "KHHNotifications.h"
 
 @interface KHHExchangeViewController ()<UIScrollViewDelegate,CLLocationManagerDelegate>
 @property (strong, nonatomic) XLPageControl *xlPage;

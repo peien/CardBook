@@ -8,10 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
-#import "KHHClasses.h"
 #import "KHHActions.h"
+#import "KHHClasses.h"
 #import "KHHKeys.h"
+#import "KHHMacros.h"
+#import "KHHNotifications.h"
 #import "KHHStatusCodes.h"
+#import "KHHTypes.h"
 #import "KHHHTTPClient.h"
 
 typedef void (^KHHSuccessBlock)(AFHTTPRequestOperation *operation, id responseObject);

@@ -7,6 +7,7 @@
 //
 
 #import "NSObject+SM.h"
+#import "KHHLog.h"
 /*!
  */
 NSString *KHHDateStringFromDate(NSDate *aDate) {

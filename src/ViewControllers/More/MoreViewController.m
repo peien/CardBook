@@ -15,6 +15,7 @@
 #import "FeedBackViewController.h"
 #import "AboutController.h"
 #import "KHHDefaults.h"
+#import "KHHNotifications.h"
 
 
 @interface MoreViewController ()<UIActionSheetDelegate,UIAlertViewDelegate>

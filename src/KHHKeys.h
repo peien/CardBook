@@ -204,7 +204,7 @@ static NSString * const kExtraKeyCardList = @"cardList";// Card Array, NSArray
 static NSString * const kExtraKeyCardModelType = @"cardModelType";// CardModelType , NSNumber
 static NSString * const kExtraKeyChainedInvocation = @"chainedInvocation";//NSNumber(BOOL), 是否为链式调用
 static NSString * const kExtraKeyInterCard = @"interCard";// InterCard
-static NSString * const kExtraKeySyncQueue = @"syncQueue";// NSMutableArray
+static NSString * const kExtraKeyQueue = @"syncQueue";// NSMutableArray
 
 #pragma mark - kVisualCardItem* : 
 static NSString * const kVisualCardItemKeyAddress = @"address";

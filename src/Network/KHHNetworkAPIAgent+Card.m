@@ -7,6 +7,7 @@
 //
 
 #import "KHHNetworkAPIAgent+Card.h"
+#import "KHHNotifications.h"
 #import "InterCard.h"
 #import "NSNumber+SM.h"
 

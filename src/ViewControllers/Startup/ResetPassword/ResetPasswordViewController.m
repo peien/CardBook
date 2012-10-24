@@ -9,7 +9,8 @@
 #import "ResetPasswordViewController.h"
 #import "NSString+Validation.h"
 #import "StartupViewController.h"
-#import "KHHNetworkAPIAgent+Account.h"
+#import "KHHNetworkAPI.h"
+#import "KHHNotifications.h"
 
 #define textResetPassword NSLocalizedString(@"重置密码", @"")
 #define textInvalidPhone NSLocalizedString(@"无效手机号", @"")
