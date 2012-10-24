@@ -49,7 +49,7 @@
     // Do any additional setup after loading the view from its nib.
     //_theTable.backgroundColor = [UIColor clearColor];
     [self.view setBackgroundColor:[UIColor colorWithRed:241 green:238 blue:232 alpha:1.0]];
-    int index = [[self.defaultSet defaultMainUI] intValue];
+    int index = self.defaultSet.defaultMainUIIndex;
     if (index == 100) {
         _defaultPage.text = NSLocalizedString(@"(名片夹界面)", nil);
     }else if (index == 101){
@@ -373,13 +373,13 @@
     }else{
         _defaultPage.text = change;
         if (buttonIndex == 1) {
-            [self.defaultSet setDefaultMainUI:[NSNumber numberWithInt:100]];
+            self.defaultSet.defaultMainUIIndex = 100;
         }else if (buttonIndex == 2){
-            [self.defaultSet setDefaultMainUI:[NSNumber numberWithInt:101]];
+            self.defaultSet.defaultMainUIIndex = 101;
         }else if (buttonIndex == 3){
-            [self.defaultSet setDefaultMainUI:[NSNumber numberWithInt:102]];
+            self.defaultSet.defaultMainUIIndex = 102;
         }else if (buttonIndex == 4){
-            [self.defaultSet setDefaultMainUI:[NSNumber numberWithInt:103]];
+            self.defaultSet.defaultMainUIIndex = 103;
         }
     }
 }
