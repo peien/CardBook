@@ -3,7 +3,7 @@
 @implementation MyCard
 @end
 
-@implementation MyCard (Transformation)
+@implementation MyCard (KHHTransformation)
 + (id)processIObject:(InterCard *)iCard {
     MyCard *card = nil;
     if (iCard.id) {

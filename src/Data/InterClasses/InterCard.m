@@ -6,14 +6,14 @@
 //  Copyright (c) 2012年 Kinghanhong. All rights reserved.
 //
 
-#import "InterCard.h"
+#import "KHHClasses.h"
 #import "NSNumber+SM.h"
 #import "NSString+SM.h"
 
 @implementation InterCard
 @end
 
-@implementation InterCard (transformation)
+@implementation InterCard (KHHTransformation)
 + (InterCard *)interCardWithJSON:(NSDictionary *)json {
     InterCard *iCard = [[InterCard alloc] init];
     
@@ -67,6 +67,15 @@
     iCard.bankAccountBranch = [NSString stringFromObject:json[JSONDataKeyOpenBank]];
     iCard.bankAccountName = KHHPlaceholderForEmptyString;
     iCard.bankAccountNumber = [NSString stringFromObject:json[JSONDataKeyBankNO]];
+    
+    // 第 2～n frames
+    NSArray *linkList = json[JSONDataKeyCardLinkList];
+    NSMutableArray *newList = [NSMutableArray arrayWithCapacity:linkList.count];
+    for (id link in linkList) {
+        IImage *ii = [[[IImage alloc] init] updateWithJSON:link];
+        [newList addObject:ii];
+    }
+    iCard.frames = newList;
     
     // 处理完毕，返回。
     return iCard;

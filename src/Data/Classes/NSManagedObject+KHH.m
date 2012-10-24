@@ -14,13 +14,6 @@
     KHHData *data = [KHHData sharedData];
     return data.context;
 }
-+ (NSSortDescriptor *)nameSortDescriptor {
-    NSSortDescriptor *result = nil;
-    result = [NSSortDescriptor sortDescriptorWithKey:kAttributeKeyName
-                                           ascending:YES
-                                            selector:@selector(caseInsensitiveCompare:)];
-    return result;
-}
 
 // 在context里创建一个新的object;
 + (id)newObject {
@@ -100,7 +93,17 @@
 
 @end
 
-@implementation NSManagedObject (Transformation)
+@implementation NSManagedObject (KHHSort)
++ (NSSortDescriptor *)nameSortDescriptor {
+    NSSortDescriptor *result;
+    result = [NSSortDescriptor sortDescriptorWithKey:kAttributeKeyName
+                                           ascending:YES
+                                            selector:@selector(caseInsensitiveCompare:)];
+    return result;
+}
+@end
+
+@implementation NSManagedObject (KHHTransformation)
 + (void)processIObjectList:(NSArray *)list {
     for (id obj in list) {
         [self processIObject:obj];

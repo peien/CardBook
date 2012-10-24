@@ -3,7 +3,7 @@
 @implementation CardTemplate
 @end
 
-@implementation CardTemplate (Transformation)
+@implementation CardTemplate (KHHTransformation)
 + (id)processJSON:(NSDictionary *)json {
     NSNumber *ID = [NSNumber numberFromObject:json[JSONDataKeyID]
                            zeroIfUnresolvable:YES];
@@ -20,13 +20,14 @@
                           zeroIfUnresolvable:NO];
         // version
         self.version = [NSNumber numberFromObject:json[JSONDataKeyVersion]
-                                     defaultValue:1 defaultIfUnresolvable:YES];
+                               zeroIfUnresolvable:NO];
         // userId => ownerID
         self.ownerID = [NSNumber numberFromObject:json[JSONDataKeyUserId]
-                               zeroIfUnresolvable:YES];
+                               zeroIfUnresolvable:NO];
         
         // templateType => domainType
-        NSString *dtString = [[NSString stringFromObject:json[JSONDataKeyTemplateType]] lowercaseString];
+        NSString *dtString = [[NSString stringFromObject:json[JSONDataKeyTemplateType]]
+                              lowercaseString];
         if ([dtString isEqualToString:@"public"]) {
             self.domainType = [NSNumber numberWithInteger:KHHTemplateDomainTypePublic];
         } else {
@@ -41,14 +42,18 @@
         
         // imageUrl => bgImage->url {
         self.bgImage = [Image objectByKey:@"url"
-                                        value:json[JSONDataKeyImageUrl]
-                                 createIfNone:YES];
+                                    value:json[JSONDataKeyImageUrl]
+                             createIfNone:YES];
         // }
         
         // item列表 {
         [self.itemsSet removeAllObjects];
         [CardTemplateItem processJSONList:json[JSONDataKeyDetails]];
         // }
+        
+        if (self.items.count) {
+            self.isFullValue = YES;
+        }
     }
     
     DLog(@"[II] tmpl = %@", self);

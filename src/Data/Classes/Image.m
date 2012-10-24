@@ -3,20 +3,27 @@
 @implementation Image
 @end
 
-@implementation Image (Transformation)
-+ (id)processIObject:(IImage *)iObj {
+@implementation Image (KHHTransformation)
++ (id)processIObject:(IImage *)ii {
     Image *img = nil;
-    if (iObj.id) {
-        // 按ID从数据库里查询，无则新建。
-        Image *newImg = [Image objectByID:iObj.id createIfNone:YES];
+    if (ii.url.length) {
+        Image *newImg;
+        if (ii.id.integerValue) {
+            // 按ID从数据库里查询，无则新建。
+            newImg = [Image objectByID:ii.id createIfNone:YES];
+        } else {
+            // id为0，按url查，无则新建。
+            newImg = [Image objectByKey:@"url" value:ii.url createIfNone:YES];
+        }
+        
         // 若已标记为删除则删除
-        if (iObj.isDeleted.integerValue) {
+        if (ii.isDeleted.integerValue) {
             [[self currentContext] deleteObject:newImg];
         } else {
             img = newImg;
         }
         // 更新数据
-        [img updateWithIObject:iObj];
+        [img updateWithIObject:ii];
     }
     DLog(@"[II] img = %@", img);
     return img;

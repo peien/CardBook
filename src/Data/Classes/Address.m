@@ -3,7 +3,7 @@
 @implementation Address
 @end
 
-@implementation Address (Transformation)
+@implementation Address (KHHTransformation)
 
 - (id)updateWithIObject:(IAddress *)iObj {
     if (iObj) {

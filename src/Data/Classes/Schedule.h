@@ -5,7 +5,7 @@
 @interface Schedule : _Schedule {}
 @end
 
-@interface Schedule (Transformation) <KHHTransformation>
+@interface Schedule (KHHTransformation) <KHHTransformation>
 + (id)processIObject:(ISchedule *)iObj;
 - (id)updateWithIObject:(ISchedule *)iObj;
 @end

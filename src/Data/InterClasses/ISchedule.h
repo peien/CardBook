@@ -33,6 +33,6 @@
 // userId
 // cardId,为使用???
 @end
-@interface ISchedule (transformation)
+@interface ISchedule (KHHTransformation)
 - (id)updateWithJSON:(NSDictionary *)json;
 @end

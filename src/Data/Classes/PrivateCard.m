@@ -3,7 +3,7 @@
 @implementation PrivateCard
 @end
 
-@implementation PrivateCard (Transformation)
+@implementation PrivateCard (KHHTransformation)
 + (id)processIObject:(InterCard *)iCard {
     PrivateCard *card = nil;
     if (iCard.id) {

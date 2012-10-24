@@ -3,7 +3,7 @@
 @implementation CardTemplateItem
 @end
 
-@implementation CardTemplateItem (Transformation)
+@implementation CardTemplateItem (KHHTransformation)
 + (id)processJSON:(NSDictionary *)json {
     NSNumber *ID = [NSNumber numberFromObject:json[JSONDataKeyID]
                            zeroIfUnresolvable:YES];

@@ -3,7 +3,7 @@
 @implementation Group
 @end
 
-@implementation Group (Transformation)
+@implementation Group (KHHTransformation)
 + (id)processIObject:(IGroup *)igroup{
     Group *grp = nil;
     if (igroup.id) { // ID无法解析就不操作

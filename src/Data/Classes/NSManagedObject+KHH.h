@@ -14,8 +14,6 @@
 // 当前应用的NSManagedObjectContext
 + (NSManagedObjectContext *)currentContext;
 
-// 默认的对象名字排序规则
-+ (NSSortDescriptor *)nameSortDescriptor;
 // 在context里创建一个新的object;
 + (id)newObject;
 
@@ -34,8 +32,11 @@
 + (NSArray *)objectArrayByPredicate:(NSPredicate *)predicate
                     sortDescriptors:(NSArray *)sortDescriptors;
 @end
-
-@interface NSManagedObject (Transformation) <KHHTransformation>
+@interface NSManagedObject (KHHSort)
+// 默认的对象名字排序规则
++ (NSSortDescriptor *)nameSortDescriptor;
+@end
+@interface NSManagedObject (KHHTransformation) <KHHTransformation>
 + (void)processIObjectList:(NSArray *)list;
 + (void)processJSONList:(NSArray *)list;
 @end

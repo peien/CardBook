@@ -65,9 +65,12 @@
 @property (nonatomic, strong) NSString *bankAccountBranch;
 @property (nonatomic, strong) NSString *bankAccountName;
 @property (nonatomic, strong) NSString *bankAccountNumber;
+
+// 第 2～n frame
+@property (nonatomic, strong) NSArray  *frames;// IImage数组
 @end
 
-@interface InterCard (transformation)
+@interface InterCard (KHHTransformation)
 + (InterCard *)interCardWithMyCardJSON:(NSDictionary *)json;
 + (InterCard *)interCardWithPrivateCardJSON:(NSDictionary *)json;
 + (InterCard *)interCardWithReceivedCardJSON:(NSDictionary *)json;

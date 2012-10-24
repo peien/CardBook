@@ -4,6 +4,6 @@
 @interface CustomerEvaluation : _CustomerEvaluation {}
 @end
 
-@interface CustomerEvaluation (Transformation)
+@interface CustomerEvaluation (KHHTransformation)
 - (id)updateWithIObject:(ICustomerEvaluation *)icv;
 @end

@@ -9,6 +9,7 @@
 #import "KHHData.h"
 #import "KHHClasses.h"
 
+#pragma mark - 名片
 @interface KHHData (UI_Card)
 // 交换名片后取最新一张名片
 - (void)pullLatestReceivedCard;
@@ -32,10 +33,11 @@
 - (void)markIsRead:(ReceivedCard *)iCard;
 @end
 
+#pragma mark - 分组
 @interface KHHData (UI_Group)
 // 所有 顶级用户自定义分组（即父分组 id 为 0）
 - (NSArray *)allTopLevelGroups;// 结果为Group组成的数组
-#pragma mark - 内部 固定 分组数据
+#pragma mark - 内部 固定 分组
 // 内部固定分组
 // 所有（联系人与自建联系人的总和，过滤掉同事）
 - (NSArray *)cardsOfAll;
@@ -49,7 +51,7 @@
 - (NSArray *)cardsOfVIP;
 // 未分组（不在其它分组的，过滤掉同事）
 - (NSArray *)cardsOfUngrouped;
-#pragma mark - 增删改分组
+#pragma mark - 分组 增删改
 // 分组增删改
 - (void)createGroup:(IGroup *)iGroup withMyCard:(MyCard *)myCard;
 - (void)updateGroup:(IGroup *)iGroup;
@@ -57,17 +59,23 @@
 - (void)moveCards:(NSArray *)cards fromGroup:(Group *)fromGroup toGroup:(Group *)toGroup;//cards是Card类型组成的数组
 @end
 
+#pragma mark - 客户评估
 @interface KHHData (UI_CustomerEvaluation)
 - (void)saveEvaluation:(ICustomerEvaluation *)icv //
          aboutCustomer:(Card *)aCard              // 客户的名片
             withMyCard:(MyCard *)myCard;          // 我自己当前的名片
 @end
 
+#pragma mark - 拜访记录
 @interface KHHData (UI_Schedule)
 - (void)createSchedule:(OSchedule *)oSchedule withMyCard:(MyCard *)myCard;
 - (void)updateSchedule:(OSchedule *)oSchedule;
 - (void)deleteSchedule:(Schedule *)schedule;
 #pragma mark - 我拜访别人的纪录
-- (NSArray *)allVisitSchedules;
+- (NSArray *)allSchedules;
 @end
 
+#pragma mark - 模板
+@interface KHHData (UI_Template)
+- (NSArray *)allPublicTemplates;// 公共模板
+@end

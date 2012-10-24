@@ -5,6 +5,6 @@
 @interface Address : _Address {}
 @end
 
-@interface Address (Transformation) <KHHTransformation>
+@interface Address (KHHTransformation) <KHHTransformation>
 - (id)updateWithIObject:(IAddress *)iObj;
 @end

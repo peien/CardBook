@@ -3,7 +3,7 @@
 @implementation CustomerEvaluation
 @end
 
-@implementation CustomerEvaluation (Transformation)
+@implementation CustomerEvaluation (KHHTransformation)
 
 - (id)updateWithIObject:(ICustomerEvaluation *)icv {
     self.id               = icv.id;
