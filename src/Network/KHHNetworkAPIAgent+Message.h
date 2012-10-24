@@ -7,9 +7,9 @@
 //
 
 #import "KHHNetworkAPIAgent.h"
-#import "Message.h"
+#import "KHHMessage.h"
 
-@interface KHHNetworkAPIAgent (Message)
+@interface KHHNetworkAPIAgent (KHHMessage)
 /**
  收消息 customFsendService.list
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=184

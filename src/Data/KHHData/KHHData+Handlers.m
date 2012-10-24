@@ -99,6 +99,15 @@
                          selector:@"handleDeleteVisitScheduleSucceeded:"];
     [self observeNotificationName:KHHNetworkDeleteVisitScheduleFailed
                          selector:@"handleDeleteVisitScheduleFailed:"];
+    [self observeNotificationName:KHHNetworkUploadImageForVisitScheduleSucceeded
+                         selector:@"handleUploadImageForVisitScheduleSucceeded:"];
+    [self observeNotificationName:KHHNetworkUploadImageForVisitScheduleFailed
+                         selector:@"handleUploadImageForVisitScheduleFailed:"];
+    [self observeNotificationName:KHHNetworkDeleteImageFromVisitScheduleSucceeded
+                         selector:@"handleDeleteImageFromVisitScheduleSucceeded:"];
+    [self observeNotificationName:KHHNetworkDeleteImageFromVisitScheduleFailed
+                         selector:@"handleDeleteImageFromVisitScheduleFailed:"];
+    
     // 客户评估
     [self observeNotificationName:KHHNetworkCustomerEvaluationListAfterDateSucceeded
                          selector:@"handleCustomerEvaluationListAfterDateSucceeded:"];
@@ -511,6 +520,19 @@
     [self postASAPNotificationName:KHHUIDeleteVisitScheduleFailed
                               info:noti.userInfo];
 }
+- (void)handleUploadImageForVisitScheduleSucceeded:(NSNotification *)noti {
+    
+}
+- (void)handleUploadImageForVisitScheduleFailed:(NSNotification *)noti {
+    
+}
+- (void)handleDeleteImageFromVisitScheduleSucceeded:(NSNotification *)noti {
+    
+}
+- (void)handleDeleteImageFromVisitScheduleFailed:(NSNotification *)noti {
+    
+}
+
 
 #pragma mark - Handlers_Evaluation
 - (void)handleCustomerEvaluationListAfterDateSucceeded:(NSNotification *)noti {

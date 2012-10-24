@@ -201,6 +201,10 @@ static NSString * const KHHNetworkUpdateVisitScheduleSucceeded = @"NetworkUpdate
 static NSString * const KHHNetworkUpdateVisitScheduleFailed    = @"NetworkUpdateVisitScheduleFailed";
 static NSString * const KHHNetworkDeleteVisitScheduleSucceeded = @"NetworkDeleteVisitScheduleSucceeded";
 static NSString * const KHHNetworkDeleteVisitScheduleFailed    = @"NetworkDeleteVisitScheduleFailed";
+static NSString * const KHHNetworkUploadImageForVisitScheduleSucceeded = @"NetworkUploadImageForVisitScheduleSucceeded";
+static NSString * const KHHNetworkUploadImageForVisitScheduleFailed    = @"NetworkUploadImageForVisitScheduleFailed";
+static NSString * const KHHNetworkDeleteImageFromVisitScheduleSucceeded = @"NetworkDeleteImageFromVisitScheduleSucceeded";
+static NSString * const KHHNetworkDeleteImageFromVisitScheduleFailed    = @"NetworkDeleteImageFromVisitScheduleFailed";
 
 //MARK: - 客户评估
 static NSString * const KHHNetworkCustomerEvaluationListAfterDateSucceeded = @"customerEvaluationListAfterDateSucceeded";

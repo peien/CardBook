@@ -232,31 +232,41 @@
  上传拜访图片 kinghhVisitCustomPlanService.uploadImg
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=161
  */
-//- (BOOL)uploadImage:(NSString *)imgPath
-//   forVisitSchedule:(Schedule *)visitSchedule {
-//    if (!ScheduleHasRequiredAttributes(visitSchedule, KHHScheduleAttributeID)) {
-//        return NO;
-//    }
-//    NSString *standardizedPath = [imgPath stringByStandardizingPath];
-//    UIImage *img = [UIImage imageWithContentsOfFile:standardizedPath];
-//    if (nil == img) {
-//        return NO;
-//    }
-//    NSMutableDictionary *parameters = ParametersFromSchedule(visitSchedule, KHHScheduleAttributeID);
-//    [parameters setObject:img
-//                   forKey:@"imgs"];
-//    [self postAction:@"uploadImageForVisitSchedule"
-//               query:@"kinghhVisitCustomPlanService.uploadImg"
-//          parameters:parameters
-//             success:nil];
-//    return YES;
-//}
+- (void)uploadImage:(UIImage *)img 
+   forVisitSchedule:(Schedule *)schdl {
+    NSString *action = kActionNetworkUploadImageForVisitSchedule;
+    if (nil == img || 0 == schdl.id.integerValue) {
+        WarnParametersNotMeetRequirement(action);
+    }
+    KHHConstructionBlock construction = ^(id <AFMultipartFormData> formData) {
+        NSData *imageData = [img resizedImageDataForKHHUpload];
+        [formData appendPartWithFileData:imageData
+                                    name:@"imgs"
+                                fileName:@"imgs"
+                                mimeType:@"image/jpeg"];
+    };
+    NSDictionary *parameters = @{ @"id" : schdl.id.stringValue };
+    [self postAction:action
+               query:@"kinghhVisitCustomPlanService.uploadImg"
+          parameters:parameters
+    constructingBody:construction
+             success:nil];
+}
 /**
  删除拜访图片 kinghhVisitCustomPlanService.delImg
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=160
  */
-//- (BOOL)deleteImage:(NSString *)imgID
-//  fromVisitSchedule:(Schedule *)visitSchedule {
-//
-//}
+- (void)deleteImage:(NSNumber *)imageID
+  fromVisitSchedule:(Schedule *)schdl {
+    NSString *action = kActionNetworkDeleteImageFromVisitSchedule;
+    if (nil == imageID || 0 == schdl.id.integerValue) {
+        WarnParametersNotMeetRequirement(action);
+    }
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithCapacity:2];
+    parameters[@"id"]          = schdl.id.stringValue;
+    parameters[@"appendixIds"] = imageID.stringValue;
+    [self postAction:action
+               query:@"kinghhVisitCustomPlanService.delImg"
+          parameters:parameters];
+}
 @end

@@ -106,11 +106,11 @@
         <relationship name="cardsWithFrame" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Card" inverseName="frames" inverseEntity="Card" syncable="YES"/>
         <relationship name="cardsWithLogo" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Card" inverseName="logo" inverseEntity="Card" syncable="YES"/>
         <relationship name="companies" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Company" inverseName="logo" inverseEntity="Company" syncable="YES"/>
-        <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Message" inverseName="image" inverseEntity="Message" syncable="YES"/>
+        <relationship name="messages" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="KHHMessage" inverseName="image" inverseEntity="KHHMessage" syncable="YES"/>
         <relationship name="schedules" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Schedule" inverseName="images" inverseEntity="Schedule" syncable="YES"/>
         <relationship name="templates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CardTemplate" inverseName="bgImage" inverseEntity="CardTemplate" syncable="YES"/>
     </entity>
-    <entity name="Message" representedClassName="Message" syncable="YES">
+    <entity name="KHHMessage" representedClassName="KHHMessage" syncable="YES">
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" syncable="YES"/>
         <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
@@ -149,15 +149,15 @@
         <element name="CardTemplate" positionX="0" positionY="0" width="128" height="195"/>
         <element name="CardTemplateItem" positionX="0" positionY="0" width="128" height="210"/>
         <element name="Company" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="ContactCard" positionX="160" positionY="192" width="128" height="45"/>
         <element name="CustomerEvaluation" positionX="160" positionY="192" width="128" height="165"/>
         <element name="Group" positionX="0" positionY="0" width="128" height="120"/>
         <element name="Image" positionX="0" positionY="0" width="128" height="165"/>
-        <element name="Message" positionX="0" positionY="0" width="128" height="135"/>
+        <element name="KHHMessage" positionX="0" positionY="0" width="128" height="135"/>
         <element name="MyCard" positionX="0" positionY="0" width="128" height="45"/>
         <element name="PrivateCard" positionX="160" positionY="192" width="128" height="45"/>
         <element name="ReceivedCard" positionX="0" positionY="0" width="128" height="75"/>
         <element name="Schedule" positionX="0" positionY="0" width="128" height="225"/>
         <element name="SyncMark" positionX="160" positionY="192" width="128" height="75"/>
-        <element name="ContactCard" positionX="160" positionY="192" width="128" height="45"/>
     </elements>
 </model>
