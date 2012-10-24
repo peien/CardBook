@@ -7,13 +7,20 @@
 
 - (id)updateWithIObject:(IAddress *)iObj {
     if (iObj) {
-        self.city     = iObj.city;
-        self.country  = iObj.country;
-        self.district = iObj.district;
-        self.other    = iObj.other;
-        self.province = iObj.province;
-        self.street   = iObj.street;
-        self.zip      = iObj.zip;
+        if (iObj.city.length)
+            self.city     = iObj.city;
+        if (iObj.country.length)
+            self.country  = iObj.country;
+        if (iObj.district.length)
+            self.district = iObj.district;
+        if (iObj.other.length)
+            self.other    = iObj.other;
+        if (iObj.province.length)
+            self.province = iObj.province;
+        if (iObj.street.length)
+            self.street   = iObj.street;
+        if (iObj.zip.length)
+            self.zip      = iObj.zip;
     }
     return self;
 }

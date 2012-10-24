@@ -103,12 +103,12 @@
 @implementation NSManagedObject (Transformation)
 + (void)processIObjectList:(NSArray *)list {
     for (id obj in list) {
-        [self objectWithIObject:obj];
+        [self processIObject:obj];
     }
 }
 + (void)processJSONList:(NSArray *)list {
     for (id obj in list) {
-        [self objectWithJSON:obj];
+        [self processJSON:obj];
     }
 }
 @end

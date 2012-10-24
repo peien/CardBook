@@ -264,5 +264,21 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
 - (void)deleteSchedule:(Schedule *)schedule {
     [self.agent deleteVisitSchedule:schedule];
 }
-
+#pragma mark - 我拜访别人的纪录
+- (NSArray *)allVisitSchedules {
+//    NSNumber *myComID = [KHHDefaults sharedDefaults].currentCompanyID;
+    NSPredicate *predicate = nil;
+//    if (myComID.integerValue) {
+//        // 自己属于某公司
+//        // 用公司ID过滤掉同事
+//        predicate = [NSPredicate predicateWithFormat:@"company.id <> %@", myComID];
+//    }
+    NSArray *fetched;
+    fetched = [Schedule objectArrayByPredicate:predicate
+                               sortDescriptors:nil];
+    // 过滤掉意外情况
+//    NSMutableArray *result = FilterUnexpectedCardsFromArray(fetched);
+    NSArray *result = fetched;
+    return result;
+}
 @end

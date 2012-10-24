@@ -17,6 +17,6 @@
 @end
 
 @interface Card (Transformation) <KHHTransformation>
-+ (id)objectWithIObject:(InterCard *)iObj;
++ (id)processIObject:(InterCard *)iObj;
 - (id)updateWithIObject:(InterCard *)iObj;
 @end

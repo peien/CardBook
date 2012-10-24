@@ -12,8 +12,8 @@
 @optional
 + (void)processIObjectList:(NSArray *)list;
 + (void)processJSONList:(NSArray *)list;
-+ (id)objectWithJSON:(NSDictionary *)jsonDict;
++ (id)processJSON:(NSDictionary *)jsonDict;
 - (id)updateWithJSON:(NSDictionary *)jsonDict;
-+ (id)objectWithIObject:(id)iObj;
++ (id)processIObject:(id)iObj;
 - (id)updateWithIObject:(id)iObj;
 @end

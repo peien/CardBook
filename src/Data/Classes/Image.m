@@ -4,7 +4,7 @@
 @end
 
 @implementation Image (Transformation)
-+ (id)objectWithIObject:(IImage *)iObj {
++ (id)processIObject:(IImage *)iObj {
     Image *img = nil;
     if (iObj.id) {
         // 按ID从数据库里查询，无则新建。

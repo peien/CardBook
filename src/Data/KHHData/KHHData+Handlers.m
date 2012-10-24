@@ -159,10 +159,10 @@
     // 填入数据库
     switch (iCard.modelType) {
         case KHHCardModelTypeMyCard:
-            [MyCard objectWithIObject:iCard];
+            [MyCard processIObject:iCard];
             break;
         case KHHCardModelTypePrivateCard:
-            [PrivateCard objectWithIObject:iCard];
+            [PrivateCard processIObject:iCard];
             break;
         default:
             break;
@@ -184,10 +184,10 @@
     // 填入数据库
     switch (iCard.modelType) {
         case KHHCardModelTypeMyCard:
-            [MyCard objectWithIObject:iCard];
+            [MyCard processIObject:iCard];
             break;
         case KHHCardModelTypePrivateCard:
-            [PrivateCard objectWithIObject:iCard];
+            [PrivateCard processIObject:iCard];
             break;
         default:
             break;
@@ -254,7 +254,6 @@
     //1.receivedCardList {
     NSArray *receivedCardList = info[kInfoKeyReceivedCardList];
     if (receivedCardList.count) {
-//        [self processReceivedCardList:receivedCardList];
         [ReceivedCard processIObjectList:receivedCardList];
     }
     // }
@@ -291,8 +290,7 @@
     DLog(@"[II] info = %@", userInfo);
     InterCard *iCard = userInfo[kInfoKeyInterCard];
     // 填入数据库
-//    ReceivedCard *rCard = (ReceivedCard *)[self processCard:iCard cardType:cardType];
-    ReceivedCard *rCard = [ReceivedCard objectWithIObject:iCard];
+    ReceivedCard *rCard = [ReceivedCard processIObject:iCard];
     [self saveContext];
     // 发送消息
     if (rCard) {
@@ -333,7 +331,7 @@
     DLog(@"[II] info = %@", oldInfo);
     IGroup *igrp = oldInfo[kInfoKeyObject];
     // 插入数据库
-    [Group objectWithIObject:igrp];
+    [Group processIObject:igrp];
     [self saveContext];
     // 发成功消息
     [self postASAPNotificationName:KHHUICreateGroupSucceeded];
@@ -347,7 +345,7 @@
     DLog(@"[II] info = %@", oldInfo);
     IGroup *igrp = oldInfo[kInfoKeyObject];
     // 插入数据库
-    [Group objectWithIObject:igrp];
+    [Group processIObject:igrp];
     [self saveContext];
     // 发成功消息
     [self postASAPNotificationName:KHHUIUpdateGroupSucceeded];
@@ -376,7 +374,7 @@
     NSArray *iGroupList = oldInfo[kInfoKeyGroupList];
     // 插入数据库
     for (id igrp in iGroupList) {
-        [Group objectWithIObject:igrp];
+        [Group processIObject:igrp];
     }
     [self saveContext];
     // 根据 queue 采取不同措施

@@ -4,7 +4,7 @@
 @end
 
 @implementation Group (Transformation)
-+ (id)objectWithIObject:(IGroup *)igroup{
++ (id)processIObject:(IGroup *)igroup{
     Group *grp = nil;
     if (igroup.id) { // ID无法解析就不操作
         // 按ID从数据库里查询, 无则新建。

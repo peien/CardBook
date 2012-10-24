@@ -4,7 +4,7 @@
 @end
 
 @implementation Schedule (Transformation)
-+ (id)objectWithIObject:(ISchedule *)iObj {
++ (id)processIObject:(ISchedule *)iObj {
     Schedule *schdl = nil;
     if (iObj.id) {
         // 按ID从数据库里查询，无则新建。
@@ -43,7 +43,7 @@
         //imageList, IImage数组
         [self.imagesSet removeAllObjects];
         for (IImage *ii in iObj.imageList) {
-            Image *img = [Image objectWithIObject:ii];
+            Image *img = [Image processIObject:ii];
             if (img) {
                 [self.imagesSet addObject:img];
             }

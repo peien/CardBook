@@ -5,6 +5,6 @@
 @end
 
 @interface CardTemplateItem (Transformation) <KHHTransformation>
-+ (id)objectWithJSON:(NSDictionary *)jsonDict;
++ (id)processJSON:(NSDictionary *)jsonDict;
 - (id)updateWithJSON:(NSDictionary *)jsonDict;
 @end

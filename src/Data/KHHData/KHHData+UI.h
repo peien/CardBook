@@ -67,5 +67,7 @@
 - (void)createSchedule:(OSchedule *)oSchedule withMyCard:(MyCard *)myCard;
 - (void)updateSchedule:(OSchedule *)oSchedule;
 - (void)deleteSchedule:(Schedule *)schedule;
+#pragma mark - 我拜访别人的纪录
+- (NSArray *)allVisitSchedules;
 @end
 

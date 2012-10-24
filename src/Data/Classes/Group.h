@@ -8,6 +8,6 @@
 // Custom logic goes here.
 @end
 @interface Group (Transformation) <KHHTransformation>
-+ (id)objectWithIObject:(IGroup *)igroup;
++ (id)processIObject:(IGroup *)igroup;
 + (void)processICardGroupMap:(ICardGroupMap *)icgm;
 @end
