@@ -47,6 +47,6 @@
  删除拜访图片 kinghhVisitCustomPlanService.delImg
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=160
  */
-- (void)deleteImage:(NSNumber *)imageID
+- (void)deleteImage:(Image *)anImage
   fromVisitSchedule:(Schedule *)visitSchedule;
 @end

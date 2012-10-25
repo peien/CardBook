@@ -256,10 +256,10 @@
  删除拜访图片 kinghhVisitCustomPlanService.delImg
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=160
  */
-- (void)deleteImage:(NSNumber *)imageID
+- (void)deleteImage:(Image *)anImage
   fromVisitSchedule:(Schedule *)schdl {
     NSString *action = kActionNetworkDeleteImageFromVisitSchedule;
-    if (nil == imageID || 0 == schdl.id.integerValue) {
+    if (0 == anImage.id.integerValue || 0 == schdl.id.integerValue) {
         WarnParametersNotMeetRequirement(action);
     }
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -267,10 +267,18 @@
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
         KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
         DLog(@"[II] responseDict = %@", responseDict);
+        
+        // errorCode 和 imageID
+        dict[kInfoKeyErrorCode] = @(code);
+        dict[kInfoKeyObject]    = anImage;
+        
+        // 把处理完的数据发出去。
+        [self postASAPNotificationName:NameWithActionAndCode(action, code)
+                                  info:dict];
     };
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithCapacity:2];
     parameters[@"id"]          = schdl.id.stringValue;
-    parameters[@"appendixIds"] = imageID.stringValue;
+    parameters[@"appendixIds"] = anImage.id.stringValue;
     [self postAction:action
                query:@"kinghhVisitCustomPlanService.delImg"
           parameters:parameters

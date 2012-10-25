@@ -263,6 +263,14 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
 - (void)deleteSchedule:(Schedule *)schedule {
     [self.agent deleteVisitSchedule:schedule];
 }
+- (void)uploadImage:(UIImage *)image forSchedule:(Schedule *)schedule {
+    [self.agent uploadImage:image
+           forVisitSchedule:schedule];
+}
+- (void)deleteImage:(Image *)image  fromSchedule:(Schedule *)schedule {
+    [self.agent deleteImage:image
+          fromVisitSchedule:schedule];
+}
 #pragma mark - 我拜访别人的纪录
 - (NSArray *)allSchedules {
     NSPredicate *predicate = nil;
