@@ -74,7 +74,7 @@
 }
 @end
 
-@implementation Card (Transformation)
+@implementation Card (KHHTransformation)
 + (id)processIObject:(InterCard *)iCard {
     Card *card = nil;
     if (iCard.id) {
@@ -174,8 +174,12 @@
         }
         // }
         
-#warning TODO
-        // 第2～n祯
+        // 第2～n祯 {
+        for (IImage *frame in iCard.frames) {
+            Image *newFrame = [Image processIObject:frame];
+            if (newFrame) [self.framesSet addObject:newFrame];
+        }
+        // }
     }
     return self;
 }

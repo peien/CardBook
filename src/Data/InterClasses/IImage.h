@@ -15,6 +15,6 @@
 @property (nonatomic, strong) NSString *url; // fileUrl
 @end
 
-@interface IImage (Transformation)
+@interface IImage (KHHTransformation)
 - (id)updateWithJSON:(NSDictionary *)json;
 @end

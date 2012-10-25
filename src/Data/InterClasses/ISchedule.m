@@ -17,7 +17,7 @@
 @implementation ISchedule
 
 @end
-@implementation ISchedule (transformation)
+@implementation ISchedule (KHHTransformation)
 
 - (id)updateWithJSON:(NSDictionary *)json {
     self.id = [NSNumber numberFromObject:json[JSONDataKeyID] zeroIfUnresolvable:NO]; //id,

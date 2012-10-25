@@ -265,14 +265,27 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
     [self.agent deleteVisitSchedule:schedule];
 }
 #pragma mark - 我拜访别人的纪录
-- (NSArray *)allVisitSchedules {
-//    NSNumber *myComID = [KHHDefaults sharedDefaults].currentCompanyID;
+- (NSArray *)allSchedules {
     NSPredicate *predicate = nil;
-//    if (myComID.integerValue) {
-//        // 自己属于某公司
-//        // 用公司ID过滤掉同事
-//        predicate = [NSPredicate predicateWithFormat:@"company.id <> %@", myComID];
-//    }
+//    predicate = [NSPredicate predicateWithFormat:@"company.id <> %@", myComID];
+
+    NSSortDescriptor *sortDes = [NSSortDescriptor sortDescriptorWithKey:@"plannedDate"
+                                                              ascending:NO];
+    NSArray *fetched;
+    fetched = [Schedule objectArrayByPredicate:predicate
+                               sortDescriptors:@[sortDes]];
+    // 过滤掉意外情况
+//    NSMutableArray *result = FilterUnexpectedCardsFromArray(fetched);
+    NSArray *result = fetched;
+    return result;
+}
+@end
+
+@implementation KHHData (UI_Template)
+
+- (NSArray *)allPublicTemplates {
+    NSNumber *domainType = @(KHHTemplateDomainTypePublic);
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"domainType == %@", domainType];
     NSArray *fetched;
     fetched = [Schedule objectArrayByPredicate:predicate
                                sortDescriptors:nil];
@@ -281,4 +294,6 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
     NSArray *result = fetched;
     return result;
 }
+
 @end
+

@@ -5,7 +5,7 @@
 @interface ReceivedCard : _ReceivedCard {}
 @end
 
-@interface ReceivedCard (Transformation) <KHHTransformation>
+@interface ReceivedCard (KHHTransformation) <KHHTransformation>
 + (id)processIObject:(InterCard *)iObj;
 - (id)updateWithIObject:(InterCard *)iObj;
 @end

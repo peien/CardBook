@@ -1,23 +1,23 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
-// Make changes to Message.h instead.
+// Make changes to KHHMessage.h instead.
 
 #import <CoreData/CoreData.h>
 
 
-extern const struct MessageAttributes {
+extern const struct KHHMessageAttributes {
 	__unsafe_unretained NSString *content;
 	__unsafe_unretained NSString *id;
 	__unsafe_unretained NSString *subject;
 	__unsafe_unretained NSString *time;
 	__unsafe_unretained NSString *version;
-} MessageAttributes;
+} KHHMessageAttributes;
 
-extern const struct MessageRelationships {
+extern const struct KHHMessageRelationships {
 	__unsafe_unretained NSString *image;
-} MessageRelationships;
+} KHHMessageRelationships;
 
-extern const struct MessageFetchedProperties {
-} MessageFetchedProperties;
+extern const struct KHHMessageFetchedProperties {
+} KHHMessageFetchedProperties;
 
 @class Image;
 
@@ -27,14 +27,14 @@ extern const struct MessageFetchedProperties {
 
 
 
-@interface MessageID : NSManagedObjectID {}
+@interface KHHMessageID : NSManagedObjectID {}
 @end
 
-@interface _Message : NSManagedObject {}
+@interface _KHHMessage : NSManagedObject {}
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_;
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
-- (MessageID*)objectID;
+- (KHHMessageID*)objectID;
 
 
 
@@ -98,11 +98,11 @@ extern const struct MessageFetchedProperties {
 
 @end
 
-@interface _Message (CoreDataGeneratedAccessors)
+@interface _KHHMessage (CoreDataGeneratedAccessors)
 
 @end
 
-@interface _Message (CoreDataGeneratedPrimitiveAccessors)
+@interface _KHHMessage (CoreDataGeneratedPrimitiveAccessors)
 
 
 - (NSString*)primitiveContent;

@@ -3,7 +3,7 @@
 @implementation Schedule
 @end
 
-@implementation Schedule (Transformation)
+@implementation Schedule (KHHTransformation)
 + (id)processIObject:(ISchedule *)iObj {
     Schedule *schdl = nil;
     if (iObj.id) {

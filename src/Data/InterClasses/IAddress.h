@@ -18,7 +18,7 @@
 @property (nonatomic, strong) NSString *zip;// 邮编
 @end
 
-@interface IAddress (Transformation)
+@interface IAddress (KHHTransformation)
 - (id)updateWithJSON:(NSDictionary *)json;
 @end
 

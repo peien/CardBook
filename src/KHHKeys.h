@@ -119,6 +119,7 @@ static NSString * const JSONDataKeyKnowAddress = @"knowAddress";
 static NSString * const JSONDataKeyKnowTime = @"knowTime";
 static NSString * const JSONDataKeyLastCardbookId = @"lastCardbookId";
 static NSString * const JSONDataKeyLinkList = @"linkList";
+static NSString * const JSONDataKeyLinkURL = @"linkUrl";
 static NSString * const JSONDataKeyLogoImage = @"logoImage";
 static NSString * const JSONDataKeyMemo = @"memo";
 static NSString * const JSONDataKeyMicroBlog = @"microBlog";

@@ -16,7 +16,7 @@
 + (NSString *)EntityNameForCardModelType:(KHHCardModelType)cardType;//出错返回nil。
 @end
 
-@interface Card (Transformation) <KHHTransformation>
+@interface Card (KHHTransformation) <KHHTransformation>
 + (id)processIObject:(InterCard *)iObj;
 - (id)updateWithIObject:(InterCard *)iObj;
 @end

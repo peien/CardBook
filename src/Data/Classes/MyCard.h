@@ -5,7 +5,7 @@
 @interface MyCard : _MyCard {}
 @end
 
-@interface MyCard (Transformation) <KHHTransformation>
+@interface MyCard (KHHTransformation) <KHHTransformation>
 + (id)processIObject:(InterCard *)iObj;
 - (id)updateWithIObject:(InterCard *)iObj;
 @end

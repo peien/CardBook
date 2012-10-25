@@ -99,6 +99,15 @@
                          selector:@"handleDeleteVisitScheduleSucceeded:"];
     [self observeNotificationName:KHHNetworkDeleteVisitScheduleFailed
                          selector:@"handleDeleteVisitScheduleFailed:"];
+    [self observeNotificationName:KHHNetworkUploadImageForVisitScheduleSucceeded
+                         selector:@"handleUploadImageForVisitScheduleSucceeded:"];
+    [self observeNotificationName:KHHNetworkUploadImageForVisitScheduleFailed
+                         selector:@"handleUploadImageForVisitScheduleFailed:"];
+    [self observeNotificationName:KHHNetworkDeleteImageFromVisitScheduleSucceeded
+                         selector:@"handleDeleteImageFromVisitScheduleSucceeded:"];
+    [self observeNotificationName:KHHNetworkDeleteImageFromVisitScheduleFailed
+                         selector:@"handleDeleteImageFromVisitScheduleFailed:"];
+    
     // 客户评估
     [self observeNotificationName:KHHNetworkCustomerEvaluationListAfterDateSucceeded
                          selector:@"handleCustomerEvaluationListAfterDateSucceeded:"];
@@ -511,6 +520,25 @@
     [self postASAPNotificationName:KHHUIDeleteVisitScheduleFailed
                               info:noti.userInfo];
 }
+- (void)handleUploadImageForVisitScheduleSucceeded:(NSNotification *)noti {
+    // 由于当前掌握的数据不完整，接下来去增量同步拜访计划
+    NSMutableArray *queue = [NSMutableArray array];
+    [queue addObject:@(KHHQueuedOperationSyncVisitSchedules)];
+    [queue addObject:@(KHHQueuedOperationSyncVisitSchedulesAfterUpdate)];
+    [self startNextQueuedOperation:queue];
+}
+- (void)handleUploadImageForVisitScheduleFailed:(NSNotification *)noti {
+    [self postASAPNotificationName:KHHUIUploadImageForVisitScheduleFailed
+                              info:noti.userInfo];
+}
+- (void)handleDeleteImageFromVisitScheduleSucceeded:(NSNotification *)noti {
+    
+}
+- (void)handleDeleteImageFromVisitScheduleFailed:(NSNotification *)noti {
+    [self postASAPNotificationName:KHHUIDeleteImageFromVisitScheduleFailed
+                              info:noti.userInfo];
+}
+
 
 #pragma mark - Handlers_Evaluation
 - (void)handleCustomerEvaluationListAfterDateSucceeded:(NSNotification *)noti {

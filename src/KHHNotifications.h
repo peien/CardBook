@@ -83,7 +83,10 @@ static NSString * const KHHUIUpdateVisitScheduleSucceeded = @"UIUpdateVisitSched
 static NSString * const KHHUIUpdateVisitScheduleFailed    = @"UIUpdateVisitScheduleFailed";
 static NSString * const KHHUIDeleteVisitScheduleSucceeded = @"UIDeleteVisitScheduleSucceeded";
 static NSString * const KHHUIDeleteVisitScheduleFailed    = @"UIDeleteVisitScheduleFailed";
-
+static NSString * const KHHUIUploadImageForVisitScheduleSucceeded  = @"UIUploadImageForVisitScheduleSucceeded";
+static NSString * const KHHUIUploadImageForVisitScheduleFailed   = @"UIUploadImageForVisitScheduleFailed";
+static NSString * const KHHUIDeleteImageFromVisitScheduleSucceeded = @"UIDeleteImageFromVisitScheduleSucceeded";
+static NSString * const KHHUIDeleteImageFromVisitScheduleFailed  = @"UIDeleteImageFromVisitScheduleFailed";
 
 #pragma mark - Misc
 //MARK: - 位置
@@ -201,6 +204,10 @@ static NSString * const KHHNetworkUpdateVisitScheduleSucceeded = @"NetworkUpdate
 static NSString * const KHHNetworkUpdateVisitScheduleFailed    = @"NetworkUpdateVisitScheduleFailed";
 static NSString * const KHHNetworkDeleteVisitScheduleSucceeded = @"NetworkDeleteVisitScheduleSucceeded";
 static NSString * const KHHNetworkDeleteVisitScheduleFailed    = @"NetworkDeleteVisitScheduleFailed";
+static NSString * const KHHNetworkUploadImageForVisitScheduleSucceeded = @"NetworkUploadImageForVisitScheduleSucceeded";
+static NSString * const KHHNetworkUploadImageForVisitScheduleFailed    = @"NetworkUploadImageForVisitScheduleFailed";
+static NSString * const KHHNetworkDeleteImageFromVisitScheduleSucceeded = @"NetworkDeleteImageFromVisitScheduleSucceeded";
+static NSString * const KHHNetworkDeleteImageFromVisitScheduleFailed    = @"NetworkDeleteImageFromVisitScheduleFailed";
 
 //MARK: - 客户评估
 static NSString * const KHHNetworkCustomerEvaluationListAfterDateSucceeded = @"customerEvaluationListAfterDateSucceeded";

@@ -1,9 +1,9 @@
 // DO NOT EDIT. This file is machine-generated and constantly overwritten.
-// Make changes to Message.m instead.
+// Make changes to KHHMessage.m instead.
 
-#import "_Message.h"
+#import "_KHHMessage.h"
 
-const struct MessageAttributes MessageAttributes = {
+const struct KHHMessageAttributes KHHMessageAttributes = {
 	.content = @"content",
 	.id = @"id",
 	.subject = @"subject",
@@ -11,34 +11,34 @@ const struct MessageAttributes MessageAttributes = {
 	.version = @"version",
 };
 
-const struct MessageRelationships MessageRelationships = {
+const struct KHHMessageRelationships KHHMessageRelationships = {
 	.image = @"image",
 };
 
-const struct MessageFetchedProperties MessageFetchedProperties = {
+const struct KHHMessageFetchedProperties KHHMessageFetchedProperties = {
 };
 
-@implementation MessageID
+@implementation KHHMessageID
 @end
 
-@implementation _Message
+@implementation _KHHMessage
 
 + (id)insertInManagedObjectContext:(NSManagedObjectContext*)moc_ {
 	NSParameterAssert(moc_);
-	return [NSEntityDescription insertNewObjectForEntityForName:@"Message" inManagedObjectContext:moc_];
+	return [NSEntityDescription insertNewObjectForEntityForName:@"KHHMessage" inManagedObjectContext:moc_];
 }
 
 + (NSString*)entityName {
-	return @"Message";
+	return @"KHHMessage";
 }
 
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_ {
 	NSParameterAssert(moc_);
-	return [NSEntityDescription entityForName:@"Message" inManagedObjectContext:moc_];
+	return [NSEntityDescription entityForName:@"KHHMessage" inManagedObjectContext:moc_];
 }
 
-- (MessageID*)objectID {
-	return (MessageID*)[super objectID];
+- (KHHMessageID*)objectID {
+	return (KHHMessageID*)[super objectID];
 }
 
 + (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {

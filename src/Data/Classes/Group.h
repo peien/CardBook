@@ -7,7 +7,7 @@
 @interface Group : _Group {}
 // Custom logic goes here.
 @end
-@interface Group (Transformation) <KHHTransformation>
+@interface Group (KHHTransformation) <KHHTransformation>
 + (id)processIObject:(IGroup *)igroup;
 + (void)processICardGroupMap:(ICardGroupMap *)icgm;
 @end

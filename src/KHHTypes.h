@@ -74,6 +74,7 @@ typedef enum {
     KHHQueuedOperationSyncVisitSchedules,
     KHHQueuedOperationSyncVisitSchedulesAfterCreation,
     KHHQueuedOperationSyncVisitSchedulesAfterUpdate,
+    KHHQueuedOperationSyncVisitSchedulesAfterUploadImage,
 } KHHQueuedOperationSyncType;
 
 

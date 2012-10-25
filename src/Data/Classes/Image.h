@@ -5,7 +5,7 @@
 @interface Image : _Image {}
 @end
 
-@interface Image (Transformation) <KHHTransformation>
+@interface Image (KHHTransformation) <KHHTransformation>
 + (id)processIObject:(IImage *)iObj;
 - (id)updateWithIObject:(IImage *)iObj;
 @end

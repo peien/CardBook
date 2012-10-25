@@ -24,7 +24,7 @@ extern const struct ImageFetchedProperties {
 @class Card;
 @class Card;
 @class Company;
-@class Message;
+@class KHHMessage;
 @class Schedule;
 @class CardTemplate;
 
@@ -128,8 +128,8 @@ extern const struct ImageFetchedProperties {
 
 - (void)addMessages:(NSSet*)value_;
 - (void)removeMessages:(NSSet*)value_;
-- (void)addMessagesObject:(Message*)value_;
-- (void)removeMessagesObject:(Message*)value_;
+- (void)addMessagesObject:(KHHMessage*)value_;
+- (void)removeMessagesObject:(KHHMessage*)value_;
 
 - (void)addSchedules:(NSSet*)value_;
 - (void)removeSchedules:(NSSet*)value_;

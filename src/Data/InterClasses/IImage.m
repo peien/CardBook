@@ -13,12 +13,18 @@
 
 @end
 
-@implementation IImage (Transformation)
+@implementation IImage (KHHTransformation)
 
 - (id)updateWithJSON:(NSDictionary *)json {
-    self.id        = [NSNumber numberFromObject:json[JSONDataKeyID] zeroIfUnresolvable:NO]; //id
-    self.isDeleted = [NSNumber numberFromObject:json[JSONDataKeyIsDelete] zeroIfUnresolvable:YES]; //isDelete
-    self.url       = json[JSONDataKeyFileURL]; // fileUrl
+    self.id        = [NSNumber numberFromObject:json[JSONDataKeyID]
+                             zeroIfUnresolvable:YES]; //id
+    self.isDeleted = [NSNumber numberFromObject:json[JSONDataKeyIsDelete]
+                             zeroIfUnresolvable:YES]; //isDelete
+    NSString *url = json[JSONDataKeyLinkURL];
+    if (0 == url.length) {
+        url = json[JSONDataKeyFileURL];
+    }
+    self.url       = url; // fileUrl
     return self;
 }
 

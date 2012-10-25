@@ -12,7 +12,7 @@
 @implementation IAddress
 @end
 
-@implementation IAddress (Transformation)
+@implementation IAddress (KHHTransformation)
 
 - (id)updateWithJSON:(NSDictionary *)json {
     self.country  = [NSString stringFromObject:json[JSONDataKeyCountry]];// 国

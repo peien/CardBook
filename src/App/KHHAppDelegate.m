@@ -14,6 +14,7 @@
 #import "KHHNotifications.h"
 #import "MyTabBarController.h"
 #import "ATestViewController.h"
+#import "AppStartController.h"
 
 @implementation KHHAppDelegate
 
@@ -70,7 +71,12 @@
     self.window.rootViewController = nil;
     self.mainUI = nil;
     // 显示启动界面
+#if KHH_TEST_VIEWCONTROLLER == 1
+    self.window.rootViewController = [[AppStartController alloc] initWithNibName:nil bundle:nil];
+#else
     self.window.rootViewController = [[StartupViewController alloc] initWithNibName:nil bundle:nil];
+#endif
+    
 }
 - (void)handleShowMainUI:(NSNotification *)noti {
 #if KHH_TEST_VIEWCONTROLLER == 1
