@@ -71,12 +71,11 @@
     self.window.rootViewController = nil;
     self.mainUI = nil;
     // 显示启动界面
-#if KHH_TEST_VIEWCONTROLLER == 1
-    self.window.rootViewController = [[AppStartController alloc] initWithNibName:nil bundle:nil];
-#else
-    self.window.rootViewController = [[StartupViewController alloc] initWithNibName:nil bundle:nil];
-#endif
-    
+    AppStartController *startVC = [[AppStartController alloc] initWithNibName:nil bundle:nil];
+    startVC.agent    = [[KHHNetworkAPIAgent alloc] init];
+    startVC.data     = [KHHData sharedData];
+    startVC.defaults = [KHHDefaults sharedDefaults];
+    self.window.rootViewController = startVC;
 }
 - (void)handleShowMainUI:(NSNotification *)noti {
 #if KHH_TEST_VIEWCONTROLLER == 1

@@ -36,12 +36,13 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "AppStartController.h"
 
-@interface KHHDefaults : NSObject
+@interface KHHDefaults : NSObject 
 + (KHHDefaults *)sharedDefaults;
 @end
 
-@interface KHHDefaults (KHH)
+@interface KHHDefaults (KHH) <AppStartUserDefaults>
 // 登录或注册成功后，
 // 保存user,password,authorizationID,userID,companyID,departmentID,permission
 - (void)saveLoginOrRegisterResult:(NSDictionary *)dict;
@@ -57,10 +58,10 @@
 @property (nonatomic, strong) NSNumber *currentCompanyID;// 当前用户公司ID，登录成功后应设新值。
 @property (nonatomic, strong) NSNumber *currentDepartmentID;// 当前用户部门ID，登录成功后应设新值。
 @property (nonatomic, strong) NSString *currentPermission;// 当前用户权限，登录成功后应设新值。
-@property (nonatomic) BOOL firstLaunch;// 是否为初次启动
-@property (nonatomic) BOOL autoLogin;// 自动登录
+@property (nonatomic, getter = isFirstLaunch) BOOL firstLaunch;// 是否为初次启动
+@property (nonatomic, getter = isAutoLogin)   BOOL autoLogin;// 自动登录
 @property (nonatomic) BOOL autoReceive;// 自动接受名片
-@property (nonatomic) BOOL loggedIn;// 已登录：登录成功和注册成功设为YES，登录失败和已登出为NO
+@property (nonatomic, getter = isLoggedIn)    BOOL loggedIn;// 已登录：登录成功和注册成功设为YES，登录失败和已登出为NO
 @property (nonatomic) BOOL rememberPassword;// 记住密码
 @property (nonatomic) BOOL showCompanyLogo;// 是否显示公司logo
 

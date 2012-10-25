@@ -24,7 +24,10 @@
     }
     return self;
 }
-
+- (void)dealloc
+{
+    DLog(@"[II] dealloc %@", self);
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -38,7 +41,7 @@
 }
 
 - (IBAction)theAction:(id)sender {
-    AppStartController *parent = self.parentViewController;
-    [parent showLaunchImage];
+    AppStartController *parent = (AppStartController *)self.parentViewController;
+//    [parent showLaunchImage];
 }
 @end

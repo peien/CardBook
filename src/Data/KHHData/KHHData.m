@@ -119,9 +119,8 @@
     }
     return self.persistentStoreCoordinator;
 }
-@end
-#pragma mark - Sync
-@implementation KHHData (Syncs)
+
+#pragma mark - Syncs
 - (void)startNextQueuedOperation:(NSMutableArray *)queue {
     DLog(@"[II] 待同步的queue = %@", queue);
     if (0 == queue.count) {

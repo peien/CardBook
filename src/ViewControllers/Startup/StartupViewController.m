@@ -120,52 +120,52 @@
 }//shouldAutorotateToInterfaceOrientation:
 
 #pragma mark - Handle notifications
-- (void)handleShowIntro:(NSNotification *)notification
-{
-    //Show Intro
-    [self showIntro:UIViewAnimationOptionTransitionCrossDissolve];
-}
-- (void)handleSkipIntro:(NSNotification *)notification
-{
-    //跳过Intro以后先尝试自动登录
-    DLog(@"[II] 跳过Intro以后先尝试自动登录...");
-//    [self handleStartLogin:notification];
-    [self postASAPNotificationName:KHHUIStartAutoLogin];
-}
-- (void)handleStartAutoLogin:(NSNotification *)notification {
-    //自动登录
-    //转到LoginAction界面
-    [self showLoginAction:UIViewAnimationOptionTransitionCrossDissolve];
-    //准备发送消息
-    NSString *name = KHHUILoginAuto;
-    DLog(@"[II] 发送消息: %@", name);
-    [self postASAPNotificationName:name];
-}
-- (void)handleStartLogin:(NSNotification *)notification
-{
-    NSString *notificationName = nil;
-    NSDictionary *infoDict = nil;
-    if (notification.userInfo) {
-        //手动登录
-//        [KHHDefaults setBool:NO forKey:kKHHDefaultsKeyHaveSignedIn];
-        self.defaults.loggedIn = NO;
-        //转到LoginAction界面
-        [self showLoginAction:UIViewAnimationOptionTransitionFlipFromRight];
-        //准备发送消息
-        notificationName = KHHUILoginManually;
-        infoDict = notification.userInfo;
-    } else {
-        //自动登录
-        //转到LoginAction界面
-        [self showLoginAction:UIViewAnimationOptionTransitionCrossDissolve];
-        //准备发送消息
-        notificationName = KHHUILoginAuto;
-    }
-    NSLog(@"\n%@: handleStartLogin: 发送消息: %@", self, notificationName);
-    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
-                                                        object:self
-                                                      userInfo:infoDict];
-}
+//- (void)handleShowIntro:(NSNotification *)notification
+//{
+//    //Show Intro
+//    [self showIntro:UIViewAnimationOptionTransitionCrossDissolve];
+//}
+//- (void)handleSkipIntro:(NSNotification *)notification
+//{
+//    //跳过Intro以后先尝试自动登录
+//    DLog(@"[II] 跳过Intro以后先尝试自动登录...");
+////    [self handleStartLogin:notification];
+//    [self postASAPNotificationName:KHHUIStartAutoLogin];
+//}
+//- (void)handleStartAutoLogin:(NSNotification *)notification {
+//    //自动登录
+//    //转到LoginAction界面
+//    [self showLoginAction:UIViewAnimationOptionTransitionCrossDissolve];
+//    //准备发送消息
+//    NSString *name = KHHUILoginAuto;
+//    DLog(@"[II] 发送消息: %@", name);
+//    [self postASAPNotificationName:name];
+//}
+//- (void)handleStartLogin:(NSNotification *)notification
+//{
+//    NSString *notificationName = nil;
+//    NSDictionary *infoDict = nil;
+//    if (notification.userInfo) {
+//        //手动登录
+////        [KHHDefaults setBool:NO forKey:kKHHDefaultsKeyHaveSignedIn];
+//        self.defaults.loggedIn = NO;
+//        //转到LoginAction界面
+//        [self showLoginAction:UIViewAnimationOptionTransitionFlipFromRight];
+//        //准备发送消息
+//        notificationName = KHHUILoginManually;
+//        infoDict = notification.userInfo;
+//    } else {
+//        //自动登录
+//        //转到LoginAction界面
+//        [self showLoginAction:UIViewAnimationOptionTransitionCrossDissolve];
+//        //准备发送消息
+//        notificationName = KHHUILoginAuto;
+//    }
+//    NSLog(@"\n%@: handleStartLogin: 发送消息: %@", self, notificationName);
+//    [[NSNotificationCenter defaultCenter] postNotificationName:notificationName
+//                                                        object:self
+//                                                      userInfo:infoDict];
+//}
 - (void)handleLoginFailed:(NSNotification *)notification
 {
     self.defaults.loggedIn = NO; // 设置标记避免自动重复登录

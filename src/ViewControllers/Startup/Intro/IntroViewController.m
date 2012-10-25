@@ -17,6 +17,7 @@
 - (void)dealloc
 {
     self.defaults = nil;
+    DLog(@"[II] dealloc %@", self);
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil

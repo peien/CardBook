@@ -16,6 +16,7 @@
 #import "KHHStatusCodes.h"
 #import "KHHTypes.h"
 #import "KHHHTTPClient.h"
+#import "AppStartController.h"
 
 /**
  该类及其扩展封装了所有的服务器接口。
@@ -25,8 +26,7 @@
 /**
  登录成功后，一定要调用这个设置authentication。
  */
-- (BOOL)authenticateWithFakeID:(NSString *)fakeID
-                      password:(NSString *)password;
+- (BOOL)authenticateWithUser:(NSString *)fakeID password:(NSString *)password;
 /**
  生成所谓的系统级别参数
  */

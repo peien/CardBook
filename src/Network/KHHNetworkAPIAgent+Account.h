@@ -8,7 +8,8 @@
 
 #import "KHHNetworkAPIAgent.h"
 
-@interface KHHNetworkAPIAgent (Account)
+
+@interface KHHNetworkAPIAgent (Account) <AppStartNetworkAgent>
 /**
  用户登录: "accountService.login"
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=173

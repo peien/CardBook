@@ -16,6 +16,7 @@
 #import "UIViewController+SM.h"
 
 #define textStartAutoLogin NSLocalizedString(@"正在自动登录...", nil)
+#define textLoggingIn NSLocalizedString(@"正在登录...", nil)
 #define textStartLogin NSLocalizedString(@"正在登录...", nil)
 #define textWillAutoLogin NSLocalizedString(@"将自动登录...", nil)
 #define textLoginSucceeded NSLocalizedString(@"登录成功", nil)
@@ -54,12 +55,14 @@
         _agent = [[KHHNetworkAPIAgent alloc] init];
         //需要捕获的消息
         //Login
-        [self observeNotificationName:KHHUILoginManually
-                         selector:@"handleLoginManually:"];
-        [self observeNotificationName:KHHUILoginAuto
-                         selector:@"handleLoginAuto:"];
-        [self observeNotificationName:KHHNetworkLoginSucceeded
-                         selector:@"handleLoginSucceeded:"];
+        [self observeNotificationName:KHHUILoggingIn
+                             selector:@"handleLoggingIn:"];
+//        [self observeNotificationName:KHHUILoginManually
+//                         selector:@"handleLoginManually:"];
+//        [self observeNotificationName:KHHUILoginAuto
+//                         selector:@"handleLoginAuto:"];
+//        [self observeNotificationName:KHHNetworkLoginSucceeded
+//                         selector:@"handleLoginSucceeded:"];
         //Sign up
         [self observeNotificationName:KHHUISignUpAction
                          selector:@"handleSignUpAction:"];
@@ -71,12 +74,9 @@
         [self observeNotificationName:KHHNetworkResetPasswordSucceeded
                          selector:@"handleResetPasswordSucceeded:"];
         //Sync
-        [self observeNotificationName:KHHUIStartSyncAll
-                         selector:@"handleStartSyncAfterLogin:"];
-        [self observeNotificationName:KHHUISyncAllSucceeded
-                         selector:@"handleSyncAfterLoginSucceeded:"];
-        [self observeNotificationName:KHHUISyncAllFailed
-                         selector:@"handleSyncAfterLoginFailed:"];
+//        [self observeNotificationName:KHHUIStartSyncAll
+//                         selector:@"handleStartSyncAfterLogin:"];
+        
     }
     return self;
 }
@@ -111,12 +111,15 @@
 }
 
 #pragma mark - Notification Handlers
+- (void)handleLoggingIn:(NSNotification *)noti {
+    // 显示正在登录
+    self.actionLabel.text = textLoggingIn;
+    [self showCompanyLogo];
+}
 - (void)handleLoginManually:(NSNotification *)notification
 {
     //开始登录
-//    NSString *user = [notification.userInfo objectForKey:kAccountAgentUserInfoKeyUser];
     NSString *user = self.defaults.currentUser;
-//    NSString *password = [notification.userInfo objectForKey:kAccountAgentUserInfoKeyPassword];
     NSString *password = self.defaults.currentPassword;
     DLog(@"[II] 调用登录接口！");
     [self.agent login:user
@@ -152,19 +155,7 @@
                           info:infoDict];
     }
 }
-- (void)handleLoginSucceeded:(NSNotification *)notification
-{
-    // 登陆成功
-    self.actionLabel.text = textLoginSucceeded;
-    // 保存用户数据: id,mobile,password,isAutoReceive
-    [self.defaults saveLoginOrRegisterResult:notification.userInfo];
-    self.defaults.loggedIn = YES;
-    // http鉴权
-    [self.agent authenticateWithFakeID:self.defaults.currentAuthorizationID.stringValue
-                              password:self.defaults.currentPassword];
-    // 发送同步消息
-    [self postASAPNotificationName:KHHUIStartSyncAll];
-}
+
 - (void)handleSignUpAction:(NSNotification *)notification
 {
     NSString *user = [notification.userInfo objectForKey:kInfoKeyUser];
@@ -213,15 +204,15 @@
     [self.data removeContext];
     [self.data startSyncAllData];
 }
-- (void)handleSyncAfterLoginSucceeded:(NSNotification *)noti {
-    // 进主界面。
-    [self postNowNotificationName:KHHUIShowMainUI];
-}
-- (void)handleSyncAfterLoginFailed:(NSNotification *)noti {
-    [self alertWithTitle:alertTitleSyncFailed message:textNotAllDataAvailable];
-    // 进主界面。
-    [self postNowNotificationName:KHHUIShowMainUI];
-}
+//- (void)handleSyncAfterLoginSucceeded:(NSNotification *)noti {
+//    // 进主界面。
+//    [self postNowNotificationName:KHHUIShowMainUI];
+//}
+//- (void)handleSyncAfterLoginFailed:(NSNotification *)noti {
+//    [self alertWithTitle:alertTitleSyncFailed message:textNotAllDataAvailable];
+//    // 进主界面。
+//    [self postNowNotificationName:KHHUIShowMainUI];
+//}
 
 #pragma mark - UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex

@@ -263,9 +263,10 @@
         // 把user和password保存到UserDefaults，并通过Notification发出去
         self.defaults.currentUser = user;
         self.defaults.currentPassword = password;
-        NSDictionary *dict = @{ kInfoKeyUser : user, kInfoKeyPassword : password };
+//        NSDictionary *dict = @{ kInfoKeyUser : user, kInfoKeyPassword : password };
         NSString *notiName = KHHUIStartLogin;
-        [self postASAPNotificationName:notiName info:dict];
+//        [self postASAPNotificationName:notiName info:dict];
+        [self postASAPNotificationName:notiName];
         DLog(@"发送消息 %@", notiName);
     }
 } //login:

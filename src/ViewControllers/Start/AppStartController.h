@@ -7,12 +7,39 @@
 //
 
 #import <UIKit/UIKit.h>
-#define APP_START_TRANSITION_DURATION 0.3f
+
+@protocol AppStartData <NSObject>
+@required
+-(void)removeContext;
+-(void)startSyncAllData;
+@end
+@protocol AppStartNetworkAgent <NSObject>
+@required
+- (void)login:(NSString *)user password:(NSString *)password;
+- (void)authenticateWithUser:(NSString *)user password:(NSString *)password;
+@end
+@protocol AppStartUserDefaults <NSObject>
+@required
+- (BOOL)isFirstLaunch;
+- (BOOL)isAutoLogin;
+- (BOOL)isLoggedIn;
+- (void)setLoggedIn:(BOOL)value;
+- (NSString *)currentUser;
+- (NSString *)currentPassword;
+- (NSNumber *)currentAuthorizationID;
+- (void)saveLoginOrRegisterResult:(NSDictionary *)info;
+@end
 
 @interface AppStartController : UIViewController
+@property (nonatomic, strong) id<AppStartNetworkAgent> agent;
+@property (nonatomic, strong) id<AppStartData>         data;
+@property (nonatomic, strong) id<AppStartUserDefaults> defaults;
+
+#pragma mark - Init
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
 @end
-@interface AppStartController (ShowViews)
-- (void)showLaunchImage;
-- (void)showTestView;
-@end
+
+
+
+
+

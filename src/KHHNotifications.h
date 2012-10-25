@@ -23,6 +23,10 @@ static NSString * const KHHAppLogout     = @"AppLogout";
 //MARK: - 帐户操作
 // Login
 // 注意设置userInfo: 包含的keys @"user" @"password"
+static NSString * const KHHUILoggingIn       = @"KHHUILoggingIn";
+static NSString * const KHHUISyncing         = @"KHHUISyncing";
+//static NSString * const KHHUILoginSucceeded  = @"KHHUILoginSucceeded";
+//static NSString * const KHHUILoginFailed     = @"KHHUILoginFailed";
 static NSString * const KHHUIStartLogin      = @"UIStartLogin";
 static NSString * const KHHUIStartAutoLogin  = @"UIStartAutoLogin";
 static NSString * const KHHUILoginAuto       = @"UILoginAuto";
