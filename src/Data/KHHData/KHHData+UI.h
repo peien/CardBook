@@ -71,6 +71,8 @@
 - (void)createSchedule:(OSchedule *)oSchedule withMyCard:(MyCard *)myCard;
 - (void)updateSchedule:(OSchedule *)oSchedule;
 - (void)deleteSchedule:(Schedule *)schedule;
+- (void)uploadImage:(UIImage *)image forSchedule:(Schedule *)schedule;
+- (void)deleteImage:(Image *)image  fromSchedule:(Schedule *)schedule;
 #pragma mark - 我拜访别人的纪录
 - (NSArray *)allSchedules;
 @end

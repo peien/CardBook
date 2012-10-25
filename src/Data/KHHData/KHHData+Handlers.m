@@ -509,8 +509,8 @@
                               info:noti.userInfo];
 }
 - (void)handleDeleteVisitScheduleSucceeded:(NSNotification *)noti {
-    Schedule *schdl = noti.userInfo[kInfoKeyObject];
     // 从数据库中删除
+    Schedule *schdl = noti.userInfo[kInfoKeyObject];
     [self.context deleteObject:schdl];
     [self saveContext];
     // 发送成功消息
@@ -532,7 +532,12 @@
                               info:noti.userInfo];
 }
 - (void)handleDeleteImageFromVisitScheduleSucceeded:(NSNotification *)noti {
-    
+    // 把图片从数据库中删除
+    Image *image = noti.userInfo[kInfoKeyObject];
+    [self.context deleteObject:image];
+    [self saveContext];
+    // 发消息
+    [self postASAPNotificationName:KHHUIDeleteImageFromVisitScheduleSucceeded];
 }
 - (void)handleDeleteImageFromVisitScheduleFailed:(NSNotification *)noti {
     [self postASAPNotificationName:KHHUIDeleteImageFromVisitScheduleFailed
