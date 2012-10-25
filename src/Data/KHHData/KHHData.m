@@ -169,6 +169,11 @@
             [self postASAPNotificationName:KHHUIUpdateVisitScheduleSucceeded];
             break;
         }
+        case KHHQueuedOperationSyncVisitSchedulesAfterUploadImage: {
+            // 更新拜访计划成功
+            [self postASAPNotificationName:KHHUIUploadImageForVisitScheduleSucceeded];
+            break;
+        }
     }
 }
 // 开始批量同步所有信息

@@ -262,11 +262,18 @@
     if (nil == imageID || 0 == schdl.id.integerValue) {
         WarnParametersNotMeetRequirement(action);
     }
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:responseObject];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
+        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        DLog(@"[II] responseDict = %@", responseDict);
+    };
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithCapacity:2];
     parameters[@"id"]          = schdl.id.stringValue;
     parameters[@"appendixIds"] = imageID.stringValue;
     [self postAction:action
                query:@"kinghhVisitCustomPlanService.delImg"
-          parameters:parameters];
+          parameters:parameters
+             success:success];
 }
 @end
