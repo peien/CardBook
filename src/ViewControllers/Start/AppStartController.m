@@ -8,15 +8,19 @@
 
 #import "AppStartController.h"
 #import "UIViewController+SM.h"
+#import "KHHKeys.h"
 #import "KHHNotifications.h"
 #import "IntroViewController.h"
 #import "LaunchImageViewController.h"
+#import "AppLoginController.h"
 #import "LoginActionViewController.h"
 #import "LoginViewController.h"
 #import "BTestViewController.h"
 
-#define titleSyncFailed NSLocalizedString(@"同步数据出错", nil)
-#define textNotAllDataAvailable NSLocalizedString(@"部分数据可能暂时无法使用。", nil)
+#define titleCreateAccountSucceeded NSLocalizedString(@"用户注册成功", nil)
+#define titleSyncFailed             NSLocalizedString(@"同步数据出错", nil)
+#define textNotAllDataAvailable     NSLocalizedString(@"部分数据可能暂时无法使用。", nil)
+#define textWillAutoLogin           NSLocalizedString(@"将自动登录...", nil)
 
 static const NSTimeInterval AppStart_TransitionDuration = 0.3f;
 static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOptionTransitionCrossDissolve;
@@ -28,16 +32,11 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 @end
 #pragma mark - 动作
 @interface AppStartController (Actions)
+- (void)createAccount;// 注册
 - (void)login;
 - (void)loginAuto;
+- (void)resetPassword:(NSNotification *)noti;
 - (void)sync;
-@end
-#pragma mark - Handlers
-@interface AppStartController (Handlers)
-- (void)handleNetworkLoginFailed:(NSNotification *)noti;
-- (void)handleNetworkLoginSucceeded:(NSNotification *)noti;
-- (void)handleSyncSucceeded:(NSNotification *)noti;
-- (void)handleSyncFailed:(NSNotification *)noti;
 @end
 #pragma mark - 界面
 @interface AppStartController (ShowViews)
@@ -53,18 +52,20 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        [self observeNotificationName:KHHUISkipIntro
-                             selector:@"showLoginView"];
-        [self observeNotificationName:KHHUIStartLogin
+        [self observeNotificationName:nAppStartLogMeIn
                              selector:@"login"];
-        [self observeNotificationName:KHHNetworkLoginSucceeded
-                             selector:@"handleNetworkLoginSucceeded:"];
-        [self observeNotificationName:KHHNetworkLoginFailed
-                             selector:@"handleNetworkLoginFailed:"];
-        [self observeNotificationName:KHHUISyncAllSucceeded
+        [self observeNotificationName:nAppStartResetMyPassword
+                             selector:@"resetPassword:"];
+        [self observeNotificationName:nAppStartSkipIntro
+                             selector:@"showLoginView"];
+        [self observeNotificationName:nDataSyncAllSucceeded
                              selector:@"handleSyncSucceeded:"];
-        [self observeNotificationName:KHHUISyncAllFailed
+        [self observeNotificationName:nDataSyncAllFailed
                              selector:@"handleSyncFailed:"];
+        [self observeNotificationName:nNetworkLoginSucceeded
+                             selector:@"handleNetworkLoginSucceeded:"];
+        [self observeNotificationName:nNetworkLoginFailed
+                             selector:@"handleNetworkLoginFailed:"];
     }
     return self;
 }
@@ -109,43 +110,82 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 
 #pragma mark - 动作
 @implementation AppStartController (Actions)
-- (void)login {
-    DLog(@"[II] 开始登录！");
+- (void)createAccount {
+    DLog(@"[II] 开始注册！");
+    [self.defaults setLoggedIn:NO];
+    
     // 切换到 ActionView
     [self showActionView];
+    
+    //发送正在注册消息
+    [self postASAPNotificationName:nAppStartCreatingAccount];
+    
+    // 调接口
+    NSString *user = self.defaults.currentUser;
+    NSString *password = self.defaults.currentPassword;
+    [self.agent createAccount:user
+                     password:password];
+}
+- (void)login {
+    DLog(@"[II] 开始登录！");
+    [self.defaults setLoggedIn:NO];
+    
+    // 切换到 ActionView
+    [self showActionView];
+    
+    // 发“正在登录”消息
+    [self postASAPNotificationName:nAppStartLoggingIn];
     
     // 调接口
     NSString *user = self.defaults.currentUser;
     NSString *password = self.defaults.currentPassword;
     [self.agent login:user
              password:password];
-    
-    // 发“正在登录”消息
-    [self postASAPNotificationName:KHHUILoggingIn];
 }
 - (void)loginAuto {
     DLog(@"[II] 开始自动登录！");
     
     // 无网络直接进
     if (NO) {
-        [self postASAPNotificationName:KHHUIShowMainUI];
+#warning TODO
+        [self postASAPNotificationName:nAppStartShowMainView];
     }
     // 有网络则登录
     else {
         [self login];
     }
 }
+- (void)resetPassword:(NSNotification *)noti {
+    DLog(@"[II] 开始重置密码！");
+    // 切换到 ActionView
+    [self showActionView];
+    
+    // 发送正在重置消息
+    [self postASAPNotificationName:nAppStartResettingPassword];
+    
+    // 调接口
+    DLog(@"[II] 调用重置密码接口！");
+    NSString *user = noti.userInfo[kInfoKeyUser];
+    [self.agent resetPassword:user];
+}
 - (void)sync {
     DLog(@"[II] 开始同步！");
-    [self postASAPNotificationName:KHHUISyncing];
+    [self postASAPNotificationName:nAppStartSyncing];
     // 开始同步数据
     [self.data removeContext];
     [self.data startSyncAllData];
 }
-@end
 
 #pragma mark - Handlers
-@implementation AppStartController (Handlers)
+- (void)handleNetworkCreateAccountSucceeded:(NSNotification *)noti {
+    // 注册成功
+    DLog(@"[II] 注册成功，保存用户数据。");
+    // 保存用户数据: id,mobile,password
+    [self.defaults saveLoginOrRegisterResult:noti.userInfo];
+    // 自动登录
+    [self alertWithTitle:titleCreateAccountSucceeded
+                 message:textWillAutoLogin];
+}
 - (void)handleNetworkLoginSucceeded:(NSNotification *)noti {
     // 登陆成功
     // 保存用户数据: id,mobile,password,isAutoReceive
@@ -162,15 +202,22 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     [self.defaults setLoggedIn:NO];
 #warning TODO
 }
+- (void)handleNetworkResetPasswordSucceeded:(NSNotification *)noti
+{
+    DLog(@"[II] 重置密码成功！");
+    [self.defaults setLoggedIn:NO];
+#warning TODO
+}
+
 - (void)handleSyncSucceeded:(NSNotification *)noti {
     // 进主界面。
-    [self postNowNotificationName:KHHUIShowMainUI];
+    [self postNowNotificationName:nAppStartShowMainView];
 }
 - (void)handleSyncFailed:(NSNotification *)noti {
     [self alertWithTitle:titleSyncFailed
                  message:textNotAllDataAvailable];
     // 进主界面。
-    [self postNowNotificationName:KHHUIShowMainUI];
+    [self postNowNotificationName:nAppStartShowMainView];
 }
 @end
 
@@ -184,6 +231,10 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
                              options:AppStart_AnimationOptions];
 }
 - (void)showActionView {
+//    if ([self.childViewControllers.lastObject
+//         isKindOfClass:[LoginActionViewController class]]) {
+//        return;
+//    }
     UIViewController *toVC = [[LoginActionViewController alloc]
                               initWithNibName:nil
                               bundle:nil];
@@ -205,9 +256,11 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
                              options:AppStart_AnimationOptions];
 }
 - (void)showLoginView {
-    UIViewController *toVC = [[LoginViewController alloc]
-                              initWithNibName:@"LoginViewController2"
-                              bundle:nil];
+    
+    UIViewController *toVC = [[UINavigationController alloc]
+                              initWithRootViewController:[[AppLoginController alloc]
+                                                          initWithNibName:nil
+                                                          bundle:nil]];
     [self transitionToViewController:toVC
                              options:AppStart_AnimationOptions];
 }
@@ -220,6 +273,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     DLog(@"[II] 切换前：\n \
          child controllers = %@\n \
          subviews = %@", self.childViewControllers, self.view.subviews);
+    
     if (self.childViewControllers.count) {
         UIViewController *fromVC = self.childViewControllers.lastObject;
         [self addChildViewController:toViewController];
@@ -240,5 +294,13 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     DLog(@"[II] 切换后：\n \
          child controllers = %@\n \
          subviews = %@", self.childViewControllers, self.view.subviews);
+}
+#pragma mark - UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if ([alertView.title isEqualToString:titleCreateAccountSucceeded]) {
+        //注册成功, 自动登录
+        [self login];
+    }
 }
 @end

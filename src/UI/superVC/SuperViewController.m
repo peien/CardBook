@@ -8,33 +8,6 @@
 
 #import "SuperViewController.h"
 
-@implementation UINavigationBar (custom)
-
-- (UIImage *)barBackground
-{
-    return [[UIImage imageNamed:@"title_bg.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-
-}
-//ios 5 会调用这个方法，但是drawRect不能调用
-- (void)didMoveToSuperview
-{
-    if ([self respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]) {
-        [self setBackgroundImage:[self barBackground] forBarMetrics:UIBarMetricsDefault];
-    }
-}
-
-//- (void) drawRect:(CGRect)rect
-//{
-//    [[self barBackground] drawInRect:rect];
-//    
-//}
-
-@end
-
-@interface SuperViewController ()
-
-@end
-
 @implementation SuperViewController
 @synthesize leftBtn;
 @synthesize rightBtn;

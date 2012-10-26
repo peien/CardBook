@@ -32,7 +32,7 @@
  重置密码: "userPasswordService.resetPwd"
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=175
  */
-- (BOOL)resetPasswordWithMobileNumber:(NSString *)mobile;
+- (BOOL)resetPassword:(NSString *)mobile;
 /**
  设置是否自动接收名片 userPasswordService.autoReceive
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=186

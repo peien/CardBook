@@ -190,9 +190,9 @@
 }
 - (void)syncAllDataEnded:(BOOL)succeed {
     if (succeed) {
-        [self postNowNotificationName:KHHUISyncAllSucceeded];
+        [self postNowNotificationName:nDataSyncAllSucceeded];
     } else {
-        [self postNowNotificationName:KHHUISyncAllFailed];
+        [self postNowNotificationName:nDataSyncAllFailed];
     }
 }
 //

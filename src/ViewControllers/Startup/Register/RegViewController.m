@@ -46,7 +46,7 @@
         [(UIScrollView*)(self.view) setContentSize:CGSizeMake(320,530)];
         ((UIScrollView*)self.view).bounces = NO;
         [(UIScrollView*)self.view setShowsVerticalScrollIndicator:NO];
-        self.rightBtn.hidden = YES;
+//        self.rightBtn.hidden = YES;
     }
     return self;
 }
@@ -79,26 +79,10 @@
     
     self.theWarnTextView.text = textWarnRealPhoneNumber;
 }
-- (void)viewDidUnload
-{
-    self.showPasswordBox = nil;
-    self.agreeBox = nil;
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
-}
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     [self showKeyboard];
-}
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark - UITableView delegate methods
@@ -279,9 +263,8 @@
     self.defaults.currentPassword = password;
     
     // 发送开始注册的消息
-    NSString *notiName = KHHUIStartSignUp;
-    NSDictionary *dict = @{ kInfoKeyUser : user, kInfoKeyPassword : password };
-    [self postASAPNotificationName:notiName info:dict];
+    [self postASAPNotificationName:nAppStartCreateThisAccount];
+    
 } //registerThis
 
 - (IBAction)showAgreement:(id)sender {

@@ -65,9 +65,9 @@ typedef enum {
 }
 - (void)testLoginSuccess {
     self.test = TestCaseLoginSuccess;
-    [self observeNotificationName:KHHNetworkLoginSucceeded
+    [self observeNotificationName:nNetworkLoginSucceeded
                             selector:@"loginSucceeded:"];
-    [self observeNotificationName:KHHNetworkLoginFailed
+    [self observeNotificationName:nNetworkLoginFailed
                             selector:@"loginFailed:"];
     [self.agent clearAuthorizationHeader];
     [self.agent login:@"888888799826"
@@ -76,9 +76,9 @@ typedef enum {
 }
 - (void)testLoginFailure {
     self.test = TestCaseLoginFailure;
-    [self observeNotificationName:KHHNetworkLoginSucceeded
+    [self observeNotificationName:nNetworkLoginSucceeded
                             selector:@"loginSucceeded:"];
-    [self observeNotificationName:KHHNetworkLoginFailed
+    [self observeNotificationName:nNetworkLoginFailed
                             selector:@"loginFailed:"];
     [self.agent login:@"13188799821"
              password:@"654321"];

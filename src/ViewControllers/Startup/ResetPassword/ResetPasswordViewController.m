@@ -25,9 +25,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
         self.navigationItem.title = textResetPassword;
-        self.rightBtn.hidden = YES;
+//        self.rightBtn.hidden = YES;
     }
     return self;
 }
@@ -43,13 +42,6 @@
     [self.theOKButton setTitle:textOK forState:UIControlStateNormal];
     
 }
-- (void)viewDidUnload
-{
-    [self setTheTextField:nil];
-    [self setTheOKButton:nil];
-    [self setTheView:nil];
-    [super viewDidUnload];
-}
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.navigationController.navigationBarHidden = NO;
@@ -59,10 +51,6 @@
     [super viewDidAppear:animated];
     [self showTheKeyboard];
 }
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
 
 #pragma mark - Actions
 - (IBAction)actionButtonPressed:(id)sender {
@@ -70,11 +58,9 @@
     if (user.isValidMobilePhoneNumber) {
         // ok
         [self hideTheKeyboard];
-        NSString *notiName = KHHUIStartResetPassword;
         NSDictionary *dict = @{ kInfoKeyUser : user };
-        DLog(@"[II] 重设密码: 发送 %@", notiName);
-        [self postASAPNotificationName:notiName
-                          info:dict];
+        [self postASAPNotificationName:nAppStartResetMyPassword
+                                  info:dict];
     } else {
         // invalid phone
         [[[UIAlertView alloc]

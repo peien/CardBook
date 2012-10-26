@@ -21,11 +21,14 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    // 设置window默认背景
     self.window.backgroundColor = [UIColor blackColor];
+    // 设置界面元素的公共属性
+    [self customizeCommonUI];
     
     // 注册响应的消息
     [self observeNotificationName:KHHUIShowStartup selector:@"handleShowStartup:"]; // 显示主界面消息
-    [self observeNotificationName:KHHUIShowMainUI  selector:@"handleShowMainUI:"]; // 显示主界面消息
+    [self observeNotificationName:nAppStartShowMainView  selector:@"handleShowMainUI:"]; // 显示主界面消息
     [self observeNotificationName:KHHAppLogout     selector:@"handleLogout:"];// 登出
     
     // 显示Startup界面
@@ -66,6 +69,34 @@
 }
 
 #pragma mark -
+- (void)customizeCommonUI {
+    // navigationbar
+    UIEdgeInsets nvBgInsets = { 0, 0, 0, 0 };
+    UIImage *nvBg = [[UIImage imageNamed:@"title_bg.png"]
+                     resizableImageWithCapInsets:nvBgInsets];
+    [[UINavigationBar appearance] setBackgroundImage:nvBg
+                                       forBarMetrics:UIBarMetricsDefault];
+    // barItem
+    UIEdgeInsets barButtonBgInsets = { 12, 16, 12, 16 };
+    UIImage *barButtonBg = [[UIImage imageNamed:@"titlebtn_normal.png"]
+                            resizableImageWithCapInsets:barButtonBgInsets];
+    id<UIAppearance> barButtonItem = [UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil];
+    [barButtonItem
+     setBackButtonBackgroundImage:barButtonBg
+     forState:UIControlStateNormal
+     barMetrics:UIBarMetricsDefault];
+    UIOffset titleOffset = {0, 3};
+    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil]
+     setBackButtonTitlePositionAdjustment:titleOffset
+     forBarMetrics:UIBarMetricsDefault];
+    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil]
+     setBackButtonBackgroundVerticalPositionAdjustment:-2
+     forBarMetrics:UIBarMetricsDefault];
+    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil]
+     setBackgroundImage:barButtonBg
+     forState:UIControlStateNormal
+     barMetrics:UIBarMetricsDefault];
+}
 - (void)handleShowStartup:(NSNotification *)noti {
     // 销毁主界面
     self.window.rootViewController = nil;

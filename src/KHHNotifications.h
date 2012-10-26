@@ -11,39 +11,35 @@
 
 #pragma mark - UI Notifications
 // Startup
-static NSString * const KHHUIShowStartup = @"UIshowStartup";
+static NSString * const KHHUIShowStartup      = @"UIshowStartup";
 // MainUI
-static NSString * const KHHUIShowMainUI  = @"UIshowMainUI";
+static NSString * const nAppStartShowMainView = @"nAppStartShowMainView";
 // Intro
-static NSString * const KHHUIShowIntro   = @"UIShowIntro";
-static NSString * const KHHUISkipIntro   = @"UISkipIntro";
+static NSString * const nAppStartSkipIntro    = @"nAppStartSkipIntro";
 // Logout
-static NSString * const KHHAppLogout     = @"AppLogout";
+static NSString * const KHHAppLogout          = @"AppLogout";
 
 //MARK: - 帐户操作
 // Login
 // 注意设置userInfo: 包含的keys @"user" @"password"
-static NSString * const KHHUILoggingIn       = @"KHHUILoggingIn";
-static NSString * const KHHUISyncing         = @"KHHUISyncing";
-//static NSString * const KHHUILoginSucceeded  = @"KHHUILoginSucceeded";
-//static NSString * const KHHUILoginFailed     = @"KHHUILoginFailed";
-static NSString * const KHHUIStartLogin      = @"UIStartLogin";
-static NSString * const KHHUIStartAutoLogin  = @"UIStartAutoLogin";
-static NSString * const KHHUILoginAuto       = @"UILoginAuto";
-static NSString * const KHHUILoginManually   = @"UILoginManually";
-static NSString * const KHHUIAutoLoginFailed = @"UIAutoLoginFailed";
+static NSString * const nAppStartLogMeIn     = @"nAppStartLogMeIn";
+static NSString * const nAppStartLoggingIn   = @"nAppStartLoggingIn";
+
 // 注册
 // 注意设置userInfo: 包含的keys @"user" @"password"
-static NSString * const KHHUISignUpAction        = @"UISignUpAction";
-static NSString * const KHHUIStartSignUp         = @"UIStartSignUp";
-static NSString * const KHHUIStartResetPassword  = @"UIStartResetPassword";
-static NSString * const KHHUIResetPasswordAction = @"UIResetPasswordAction";
+static NSString * const nAppStartCreateThisAccount = @"nAppStartCreateThisAccount";
+static NSString * const nAppStartCreatingAccount   = @"nAppStartCreatingAccount";
+
+// 重设密码
+static NSString * const nAppStartResetMyPassword   = @"nAppStartResetMyPassword";
+static NSString * const nAppStartResettingPassword = @"nAppStartResettingPassword";
 
 //MARK: - 同步
 // Sync
+static NSString * const nAppStartSyncing     = @"nAppStartSyncing";
 static NSString * const KHHUIStartSyncAll     = @"UIStartSyncAll";
-static NSString * const KHHUISyncAllSucceeded = @"UISyncAllSucceeded";
-static NSString * const KHHUISyncAllFailed    = @"UISyncAllFailed";
+static NSString * const nDataSyncAllSucceeded = @"nDataSyncAllSucceeded";
+static NSString * const nDataSyncAllFailed    = @"nDataSyncAllFailed";
 
 //MARK: - 名片
 // createCard
@@ -110,8 +106,8 @@ static NSString * const KHHLocationUpdateFailed    = @"KHHLocationUpdateFailed";
 #pragma mark - Network Notifications
 //MARK: - 帐户操作
 // 登录
-static NSString * const KHHNetworkLoginSucceeded = @"loginSucceeded";
-static NSString * const KHHNetworkLoginFailed    = @"loginFailed";
+static NSString * const nNetworkLoginSucceeded = @"loginSucceeded";
+static NSString * const nNetworkLoginFailed    = @"loginFailed";
 static NSString * const KHHNetworkLoginMenually  = @"loginMenually";
 // 注册
 static NSString * const KHHNetworkCreateAccountSucceeded = @"createAccountSucceeded";
