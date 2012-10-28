@@ -28,7 +28,7 @@
     
     // 注册响应的消息
     [self observeNotificationName:KHHUIShowStartup selector:@"handleShowStartup:"]; // 显示主界面消息
-    [self observeNotificationName:nAppStartShowMainView  selector:@"handleShowMainUI:"]; // 显示主界面消息
+    [self observeNotificationName:nAppShowMainView  selector:@"handleShowMainUI:"]; // 显示主界面消息
     [self observeNotificationName:KHHAppLogout     selector:@"handleLogout:"];// 登出
     
     // 显示Startup界面
@@ -70,32 +70,38 @@
 
 #pragma mark -
 - (void)customizeCommonUI {
-    // navigationbar
-    UIEdgeInsets nvBgInsets = { 0, 0, 0, 0 };
-    UIImage *nvBg = [[UIImage imageNamed:@"title_bg.png"]
-                     resizableImageWithCapInsets:nvBgInsets];
-    [[UINavigationBar appearance] setBackgroundImage:nvBg
-                                       forBarMetrics:UIBarMetricsDefault];
-    // barItem
+    //MARK: - UINavigationBar
+    UINavigationBar *navBar = [UINavigationBar appearance];
+    UIEdgeInsets navBgInsets = { 0, 0, 0, 0 };
+    UIImage *navBarBg = [[UIImage imageNamed:@"title_bg.png"]
+                     resizableImageWithCapInsets:navBgInsets];
+    [navBar setBackgroundImage:navBarBg
+                 forBarMetrics:UIBarMetricsDefault];
+    
+    //MARK: - UIBarButtonItem
+    UIBarButtonItem *barButtonItem = [UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil];
     UIEdgeInsets barButtonBgInsets = { 12, 16, 12, 16 };
     UIImage *barButtonBg = [[UIImage imageNamed:@"titlebtn_normal.png"]
                             resizableImageWithCapInsets:barButtonBgInsets];
-    id<UIAppearance> barButtonItem = [UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil];
-    [barButtonItem
-     setBackButtonBackgroundImage:barButtonBg
-     forState:UIControlStateNormal
-     barMetrics:UIBarMetricsDefault];
-    UIOffset titleOffset = {0, 3};
-    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil]
-     setBackButtonTitlePositionAdjustment:titleOffset
-     forBarMetrics:UIBarMetricsDefault];
-    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil]
-     setBackButtonBackgroundVerticalPositionAdjustment:-2
-     forBarMetrics:UIBarMetricsDefault];
-    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil]
-     setBackgroundImage:barButtonBg
-     forState:UIControlStateNormal
-     barMetrics:UIBarMetricsDefault];
+    // 换背景
+    [barButtonItem setBackButtonBackgroundImage:barButtonBg
+                                       forState:UIControlStateNormal
+                                     barMetrics:UIBarMetricsDefault];
+    [barButtonItem setBackgroundImage:barButtonBg
+                             forState:UIControlStateNormal
+                           barMetrics:UIBarMetricsDefault];
+    // 调位置
+    CGFloat adjustment = -3.f;
+    [barButtonItem setBackButtonBackgroundVerticalPositionAdjustment:adjustment
+                                                       forBarMetrics:UIBarMetricsDefault];
+    [barButtonItem setBackgroundVerticalPositionAdjustment:adjustment
+                                             forBarMetrics:UIBarMetricsDefault];
+    // Title的位置调整
+//    UIOffset titleOffset = {0, 0};
+//    [barButtonItem setBackButtonTitlePositionAdjustment:titleOffset
+//                                          forBarMetrics:UIBarMetricsDefault];
+    
+    
 }
 - (void)handleShowStartup:(NSNotification *)noti {
     // 销毁主界面

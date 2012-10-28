@@ -53,13 +53,13 @@
         _agent = [[KHHNetworkAPIAgent alloc] init];
         //需要捕获的消息
         //Login
-        [self observeNotificationName:nAppStartLoggingIn
+        [self observeNotificationName:nAppLoggingIn
                              selector:@"handleLoggingIn:"];
         //Sign up
-        [self observeNotificationName:nAppStartCreatingAccount
+        [self observeNotificationName:nAppCreatingAccount
                              selector:@"handleCreatingAccount:"];
         //Reset password
-        [self observeNotificationName:nAppStartResettingPassword
+        [self observeNotificationName:nAppResettingPassword
                              selector:@"handleResettingPassword:"];
     }
     return self;

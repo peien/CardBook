@@ -444,7 +444,7 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(InterCard *iCard) {
     NSDictionary *parameters = @{
             @"lastUpdTime" : (lastDate.length > 0? lastDate: @""),
             @"lastCardbookId" : lastCardID? lastCardID: @"",
-            @"number" : ([count integerValue]? count: @"50"),
+            @"number" : ([count integerValue]? count: @"100"),
             @"isGZip" : @"no"
     };
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {

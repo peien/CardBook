@@ -51,16 +51,16 @@
         //注册需要捕获的消息
         //Intro
 //        [self observeNotificationName:KHHUIShowIntro selector:@"handleShowIntro:"];
-        [self observeNotificationName:nAppStartSkipIntro selector:@"handleSkipIntro:"];
+        [self observeNotificationName:nAppSkipIntro selector:@"handleSkipIntro:"];
 
         //Login
-        [self observeNotificationName:nAppStartLogMeIn selector:@"handleStartLogin:"];
+        [self observeNotificationName:nAppLogMeIn selector:@"handleStartLogin:"];
 //        [self observeNotificationName:KHHUIStartAutoLogin selector:@"handleStartAutoLogin:"];
         [self observeNotificationName:nNetworkLoginFailed selector:@"handleLoginFailed:"];
         [self observeNotificationName:KHHNetworkLoginMenually selector:@"handleLoginMenually:"];
         
         //注册
-        [self observeNotificationName:nAppStartCreateThisAccount selector:@"handleStartSignUp:"];
+        [self observeNotificationName:nAppCreateThisAccount selector:@"handleStartSignUp:"];
         [self observeNotificationName:KHHNetworkCreateAccountFailed selector:@"handleSignUpFailed:"];
         
         //Reset password
@@ -253,49 +253,6 @@
     //显示警告信息
     [self alertWithTitle:textResetPasswordFailed message:message];
 }
-
-#pragma mark - Actions
-//- (void)showLaunchImage:(UIViewAnimationOptions)options
-//{
-//    [self transitionToViewController:self.launchVC 
-//                             options:options];
-//}
-//- (void)showIntro:(UIViewAnimationOptions)options
-//{
-//    [self transitionToViewController:self.introVC 
-//                             options:options];
-//}
-//- (void)showLoginView:(UIViewAnimationOptions)options
-//{
-//    [self transitionToViewController:self.navVC 
-//                             options:options];
-////    self.navVC.navigationBarHidden = YES;
-//}
-//- (void)showLoginAction:(UIViewAnimationOptions)options
-//{
-//    [self transitionToViewController:self.actionVC 
-//                             options:options];
-//}
-
-//#pragma mark - Utilities
-//- (void)transitionToViewController:(UIViewController *)toVC
-//                           options:(UIViewAnimationOptions)options
-//{
-//    NSArray *subviews = self.view.subviews;
-//    DLog(@"[II] 切换界面之前 subviews＝%@", self.view.subviews);
-//    if (subviews.count) {
-//        UIView *fromView = [subviews objectAtIndex:0];
-//        [UIView transitionFromView:fromView
-//                            toView:toVC.view 
-//                          duration:0.5
-//                           options:options 
-//                        completion:^(BOOL finished){
-//                        }];
-//    } else {
-//        [self.view addSubview:toVC.view];
-//    }
-//    DLog(@"[II] 切换界面之后 subviews＝%@", self.view.subviews);
-//}
 
 #pragma mark - UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex

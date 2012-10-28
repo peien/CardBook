@@ -11,32 +11,34 @@
 
 #pragma mark - UI Notifications
 // Startup
-static NSString * const KHHUIShowStartup      = @"UIshowStartup";
+static NSString * const KHHUIShowStartup = @"UIshowStartup";
 // MainUI
-static NSString * const nAppStartShowMainView = @"nAppStartShowMainView";
+static NSString * const nAppShowMainView = @"nAppShowMainView";
 // Intro
-static NSString * const nAppStartSkipIntro    = @"nAppStartSkipIntro";
+static NSString * const nAppSkipIntro    = @"nAppSkipIntro";
 // Logout
-static NSString * const KHHAppLogout          = @"AppLogout";
+static NSString * const KHHAppLogout     = @"AppLogout";
+static NSString * const nAppShowPreviousView = @"nAppShowPreviousView";
 
 //MARK: - 帐户操作
 // Login
 // 注意设置userInfo: 包含的keys @"user" @"password"
-static NSString * const nAppStartLogMeIn     = @"nAppStartLogMeIn";
-static NSString * const nAppStartLoggingIn   = @"nAppStartLoggingIn";
+static NSString * const nAppLogMeIn     = @"nAppLogMeIn";
+static NSString * const nAppLoggingIn   = @"nAppLoggingIn";
 
 // 注册
 // 注意设置userInfo: 包含的keys @"user" @"password"
-static NSString * const nAppStartCreateThisAccount = @"nAppStartCreateThisAccount";
-static NSString * const nAppStartCreatingAccount   = @"nAppStartCreatingAccount";
+static NSString * const nAppShowCreateAccount = @"nAppShowCreateAccount";
+static NSString * const nAppCreateThisAccount = @"nAppCreateThisAccount";
+static NSString * const nAppCreatingAccount   = @"nAppCreatingAccount";
 
 // 重设密码
-static NSString * const nAppStartResetMyPassword   = @"nAppStartResetMyPassword";
-static NSString * const nAppStartResettingPassword = @"nAppStartResettingPassword";
+static NSString * const nAppResetMyPassword   = @"nAppResetMyPassword";
+static NSString * const nAppResettingPassword = @"nAppResettingPassword";
 
 //MARK: - 同步
 // Sync
-static NSString * const nAppStartSyncing     = @"nAppStartSyncing";
+static NSString * const nAppSyncing     = @"nAppSyncing";
 static NSString * const KHHUIStartSyncAll     = @"UIStartSyncAll";
 static NSString * const nDataSyncAllSucceeded = @"nDataSyncAllSucceeded";
 static NSString * const nDataSyncAllFailed    = @"nDataSyncAllFailed";

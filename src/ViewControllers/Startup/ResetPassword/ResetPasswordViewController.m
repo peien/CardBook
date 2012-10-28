@@ -26,7 +26,6 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.navigationItem.title = textResetPassword;
-//        self.rightBtn.hidden = YES;
     }
     return self;
 }
@@ -59,7 +58,7 @@
         // ok
         [self hideTheKeyboard];
         NSDictionary *dict = @{ kInfoKeyUser : user };
-        [self postASAPNotificationName:nAppStartResetMyPassword
+        [self postASAPNotificationName:nAppResetMyPassword
                                   info:dict];
     } else {
         // invalid phone

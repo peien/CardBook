@@ -22,6 +22,8 @@
 
 /* Begin PBXBuildFile section */
 		0C23C26C1610BE42006FCD8A /* UIColor+HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C23C26B1610BE42006FCD8A /* UIColor+HexColor.m */; };
+		0CEFF882163AFE7500E878C6 /* AppRegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEFF880163AFE7500E878C6 /* AppRegisterController.m */; };
+		0CEFF883163AFE7500E878C6 /* AppRegisterController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CEFF881163AFE7500E878C6 /* AppRegisterController.xib */; };
 		62134B45160D7BDE00A8EC9F /* KHHAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 62134B44160D7BDE00A8EC9F /* KHHAddressCell.m */; };
 		6244214A1615B38C00D2A9B9 /* template2FrameBg@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 624421491615B38C00D2A9B9 /* template2FrameBg@2x.jpg */; };
 		6244214E1615B70800D2A9B9 /* left_btn_bg_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6244214C1615B70800D2A9B9 /* left_btn_bg_selected@2x.png */; };
@@ -552,6 +554,9 @@
 /* Begin PBXFileReference section */
 		0C23C26A1610BE42006FCD8A /* UIColor+HexColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+HexColor.h"; sourceTree = "<group>"; };
 		0C23C26B1610BE42006FCD8A /* UIColor+HexColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+HexColor.m"; sourceTree = "<group>"; };
+		0CEFF87F163AFE7500E878C6 /* AppRegisterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppRegisterController.h; sourceTree = "<group>"; };
+		0CEFF880163AFE7500E878C6 /* AppRegisterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppRegisterController.m; sourceTree = "<group>"; };
+		0CEFF881163AFE7500E878C6 /* AppRegisterController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AppRegisterController.xib; sourceTree = "<group>"; };
 		62134B43160D7BDE00A8EC9F /* KHHAddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHAddressCell.h; sourceTree = "<group>"; };
 		62134B44160D7BDE00A8EC9F /* KHHAddressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHAddressCell.m; sourceTree = "<group>"; };
 		624421491615B38C00D2A9B9 /* template2FrameBg@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "template2FrameBg@2x.jpg"; sourceTree = "<group>"; };
@@ -1310,6 +1315,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0CEFF87D163AFE0D00E878C6 /* Reg */ = {
+			isa = PBXGroup;
+			children = (
+				0CEFF87F163AFE7500E878C6 /* AppRegisterController.h */,
+				0CEFF880163AFE7500E878C6 /* AppRegisterController.m */,
+				0CEFF881163AFE7500E878C6 /* AppRegisterController.xib */,
+			);
+			path = Reg;
+			sourceTree = "<group>";
+		};
 		62AB297F160C06E90004A3E3 /* BaiduMap */ = {
 			isa = PBXGroup;
 			children = (
@@ -1404,6 +1419,7 @@
 			isa = PBXGroup;
 			children = (
 				98D29B6E163A58F400DE82E3 /* Login */,
+				0CEFF87D163AFE0D00E878C6 /* Reg */,
 				984500681637C5A1002C579E /* AppStartController.h */,
 				984500691637C5A1002C579E /* AppStartController.m */,
 				9845006A1637C5A1002C579E /* AppStartController.xib */,
@@ -2911,6 +2927,7 @@
 				9845006C1637C5A1002C579E /* AppStartController.xib in Resources */,
 				984500771637F3E4002C579E /* BTestViewController.xib in Resources */,
 				98D29B74163A594900DE82E3 /* AppLoginController.xib in Resources */,
+				0CEFF883163AFE7500E878C6 /* AppRegisterController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3256,6 +3273,7 @@
 				984500721637C7AB002C579E /* _KHHMessage.m in Sources */,
 				984500761637F3E4002C579E /* BTestViewController.m in Sources */,
 				98D29B73163A594900DE82E3 /* AppLoginController.m in Sources */,
+				0CEFF882163AFE7500E878C6 /* AppRegisterController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

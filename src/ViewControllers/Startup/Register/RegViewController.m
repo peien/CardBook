@@ -46,7 +46,6 @@
         [(UIScrollView*)(self.view) setContentSize:CGSizeMake(320,530)];
         ((UIScrollView*)self.view).bounces = NO;
         [(UIScrollView*)self.view setShowsVerticalScrollIndicator:NO];
-//        self.rightBtn.hidden = YES;
     }
     return self;
 }
@@ -263,7 +262,7 @@
     self.defaults.currentPassword = password;
     
     // 发送开始注册的消息
-    [self postASAPNotificationName:nAppStartCreateThisAccount];
+    [self postASAPNotificationName:nAppCreateThisAccount];
     
 } //registerThis
 

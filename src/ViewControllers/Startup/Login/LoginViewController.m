@@ -255,7 +255,7 @@
         // 把user和password保存到UserDefaults，并通过Notification发出去
         self.defaults.currentUser = user;
         self.defaults.currentPassword = password;
-        [self postASAPNotificationName:nAppStartLogMeIn];
+        [self postASAPNotificationName:nAppLogMeIn];
     }
 } //login:
 - (void)gotoRegView:(id)sender

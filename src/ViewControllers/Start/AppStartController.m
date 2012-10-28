@@ -13,6 +13,7 @@
 #import "IntroViewController.h"
 #import "LaunchImageViewController.h"
 #import "AppLoginController.h"
+#import "AppRegisterController.h"
 #import "LoginActionViewController.h"
 #import "LoginViewController.h"
 #import "BTestViewController.h"
@@ -22,14 +23,17 @@
 #define textNotAllDataAvailable     NSLocalizedString(@"部分数据可能暂时无法使用。", nil)
 #define textWillAutoLogin           NSLocalizedString(@"将自动登录...", nil)
 
-static const NSTimeInterval AppStart_TransitionDuration = 0.3f;
+static const NSTimeInterval AppStart_TransitionDuration = 0.5f;
 static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOptionTransitionCrossDissolve;
 
-#pragma mark - Utils
-@interface AppStartController (Utils)
-- (void)transitionToViewController:(UIViewController *)toViewController
-                           options:(UIViewAnimationOptions)options;
+#pragma mark -
+@interface AppStartController ()
+@property (nonatomic, strong) UIViewController *actionController;
+@property (nonatomic, strong) UIViewController *createAccountController;
+@property (nonatomic, strong) UIViewController *loginController;
+@property (nonatomic, strong) UIViewController *previousController;
 @end
+
 #pragma mark - 动作
 @interface AppStartController (Actions)
 - (void)createAccount;// 注册
@@ -38,13 +42,14 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 - (void)resetPassword:(NSNotification *)noti;
 - (void)sync;
 @end
-#pragma mark - 界面
+#pragma mark - 界面切换
 @interface AppStartController (ShowViews)
 - (void)showActionView;
+- (void)showCreateAccountView;
 - (void)showIntroView;
 - (void)showLaunchImage;
 - (void)showLoginView;
-- (void)showTestView;
+- (void)showPreviousView;
 @end
 
 @implementation AppStartController
@@ -52,12 +57,28 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        [self observeNotificationName:nAppStartLogMeIn
+        self.actionController = [[LoginActionViewController alloc]
+                                 initWithNibName:nil
+                                 bundle:nil];
+        self.createAccountController = [[UINavigationController alloc]
+                                        initWithRootViewController:[[AppRegisterController alloc]
+                                                                    initWithNibName:nil
+                                                                    bundle:nil]];
+        self.loginController = [[UINavigationController alloc]
+                                initWithRootViewController:[[AppLoginController alloc]
+                                                            initWithNibName:nil
+                                                            bundle:nil]];
+        
+        [self observeNotificationName:nAppLogMeIn
                              selector:@"login"];
-        [self observeNotificationName:nAppStartResetMyPassword
+        [self observeNotificationName:nAppResetMyPassword
                              selector:@"resetPassword:"];
-        [self observeNotificationName:nAppStartSkipIntro
+        [self observeNotificationName:nAppSkipIntro
                              selector:@"showLoginView"];
+        [self observeNotificationName:nAppShowPreviousView
+                             selector:@"showPreviousView"];
+        [self observeNotificationName:nAppShowCreateAccount
+                             selector:@"showCreateAccountView"];
         [self observeNotificationName:nDataSyncAllSucceeded
                              selector:@"handleSyncSucceeded:"];
         [self observeNotificationName:nDataSyncAllFailed
@@ -106,6 +127,15 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+#pragma mark - UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if ([alertView.title isEqualToString:titleCreateAccountSucceeded]) {
+        //注册成功, 登录
+        [self login];
+    }
+}
 @end
 
 #pragma mark - 动作
@@ -118,7 +148,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     [self showActionView];
     
     //发送正在注册消息
-    [self postASAPNotificationName:nAppStartCreatingAccount];
+    [self postASAPNotificationName:nAppCreatingAccount];
     
     // 调接口
     NSString *user = self.defaults.currentUser;
@@ -134,7 +164,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     [self showActionView];
     
     // 发“正在登录”消息
-    [self postASAPNotificationName:nAppStartLoggingIn];
+    [self postASAPNotificationName:nAppLoggingIn];
     
     // 调接口
     NSString *user = self.defaults.currentUser;
@@ -146,9 +176,9 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     DLog(@"[II] 开始自动登录！");
     
     // 无网络直接进
-    if (NO) {
+    if (YES) {
 #warning TODO
-        [self postASAPNotificationName:nAppStartShowMainView];
+        [self postASAPNotificationName:nAppShowMainView];
     }
     // 有网络则登录
     else {
@@ -161,7 +191,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     [self showActionView];
     
     // 发送正在重置消息
-    [self postASAPNotificationName:nAppStartResettingPassword];
+    [self postASAPNotificationName:nAppResettingPassword];
     
     // 调接口
     DLog(@"[II] 调用重置密码接口！");
@@ -170,7 +200,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 }
 - (void)sync {
     DLog(@"[II] 开始同步！");
-    [self postASAPNotificationName:nAppStartSyncing];
+    [self postASAPNotificationName:nAppSyncing];
     // 开始同步数据
     [self.data removeContext];
     [self.data startSyncAllData];
@@ -211,63 +241,18 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 
 - (void)handleSyncSucceeded:(NSNotification *)noti {
     // 进主界面。
-    [self postNowNotificationName:nAppStartShowMainView];
+    [self postNowNotificationName:nAppShowMainView];
 }
 - (void)handleSyncFailed:(NSNotification *)noti {
     [self alertWithTitle:titleSyncFailed
                  message:textNotAllDataAvailable];
     // 进主界面。
-    [self postNowNotificationName:nAppStartShowMainView];
+    [self postNowNotificationName:nAppShowMainView];
 }
 @end
 
-#pragma mark - 界面
+#pragma mark - 界面切换
 @implementation AppStartController (ShowViews)
-- (void)showTestView {
-    UIViewController *toVC = [[BTestViewController alloc]
-                              initWithNibName:nil
-                              bundle:nil];
-    [self transitionToViewController:toVC
-                             options:AppStart_AnimationOptions];
-}
-- (void)showActionView {
-//    if ([self.childViewControllers.lastObject
-//         isKindOfClass:[LoginActionViewController class]]) {
-//        return;
-//    }
-    UIViewController *toVC = [[LoginActionViewController alloc]
-                              initWithNibName:nil
-                              bundle:nil];
-    [self transitionToViewController:toVC
-                             options:AppStart_AnimationOptions];
-}
-- (void)showIntroView {
-    UIViewController *toVC = [[IntroViewController alloc]
-                              initWithNibName:nil
-                              bundle:nil];
-    [self transitionToViewController:toVC
-                             options:AppStart_AnimationOptions];
-}
-- (void)showLaunchImage {
-    UIViewController *toVC = [[LaunchImageViewController alloc]
-                              initWithNibName:nil
-                              bundle:nil];
-    [self transitionToViewController:toVC
-                             options:AppStart_AnimationOptions];
-}
-- (void)showLoginView {
-    
-    UIViewController *toVC = [[UINavigationController alloc]
-                              initWithRootViewController:[[AppLoginController alloc]
-                                                          initWithNibName:nil
-                                                          bundle:nil]];
-    [self transitionToViewController:toVC
-                             options:AppStart_AnimationOptions];
-}
-
-@end
-
-@implementation AppStartController (Utils)
 - (void)transitionToViewController:(UIViewController *)toViewController
                            options:(UIViewAnimationOptions)options {
     DLog(@"[II] 切换前：\n \
@@ -286,6 +271,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
                                 }];
         [fromVC.view removeFromSuperview];
         [fromVC removeFromParentViewController];
+        self.previousController = fromVC;
     } else {
         [self addChildViewController:toViewController];
         [self.view addSubview:toViewController.view];
@@ -294,13 +280,53 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     DLog(@"[II] 切换后：\n \
          child controllers = %@\n \
          subviews = %@", self.childViewControllers, self.view.subviews);
+    
 }
-#pragma mark - UIAlertViewDelegate
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    if ([alertView.title isEqualToString:titleCreateAccountSucceeded]) {
-        //注册成功, 自动登录
-        [self login];
+
+- (void)showActionView {
+    UIViewController *currentController = self.childViewControllers.lastObject;
+    if (currentController == self.actionController) {
+        return;
     }
+    UIViewAnimationOptions options = UIViewAnimationOptionTransitionFlipFromRight;
+    [self transitionToViewController:self.actionController
+                             options:options];
+}
+- (void)showCreateAccountView {
+    UIViewAnimationOptions options = UIViewAnimationOptionTransitionFlipFromLeft;
+    [self transitionToViewController:self.createAccountController
+                             options:options];
+}
+- (void)showIntroView {
+    UIViewController *toVC = [[IntroViewController alloc]
+                              initWithNibName:nil
+                              bundle:nil];
+    [self transitionToViewController:toVC
+                             options:AppStart_AnimationOptions];
+}
+- (void)showLaunchImage {
+    UIViewController *toVC = [[LaunchImageViewController alloc]
+                              initWithNibName:nil
+                              bundle:nil];
+    [self transitionToViewController:toVC
+                             options:AppStart_AnimationOptions];
+}
+- (void)showLoginView {
+    UIViewAnimationOptions options = UIViewAnimationOptionTransitionCurlUp;
+    [self transitionToViewController:self.loginController
+                             options:options];
+}
+- (void)showPreviousView {
+    UIViewController *currentController = self.childViewControllers.lastObject;
+    UIViewAnimationOptions options = AppStart_AnimationOptions;
+    if (currentController == self.createAccountController) {
+        options = UIViewAnimationOptionTransitionFlipFromRight;
+    } else if (currentController == self.actionController) {
+        options = UIViewAnimationOptionTransitionFlipFromLeft;
+    }
+    
+    [self transitionToViewController:self.previousController
+                             options:options];
 }
 @end
+

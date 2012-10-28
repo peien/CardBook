@@ -10,6 +10,7 @@
 #import "SMCheckbox.h"
 #import "KHHDefaults.h"
 #import "KHHNotifications.h"
+#import "NSString+Validation.h"
 #import "UIViewController+SM.h"
 #import "RegViewController.h"
 #import "ResetPasswordViewController.h"
@@ -20,7 +21,6 @@
 @property (weak, nonatomic) IBOutlet SMCheckbox  *showPasswordBox;
 
 @property (nonatomic, strong) KHHDefaults *defaults;
-
 - (IBAction)resetPassword:(id)sender;
 - (IBAction)createAccount:(id)sender;
 - (IBAction)login:(id)sender;
@@ -41,7 +41,6 @@
     return self;
 }
 - (void)dealloc {
-//    self.showPasswordBox = nil;
     self.defaults = nil;
 }
 - (void)viewDidLoad
@@ -63,8 +62,9 @@
                          animated:YES];
 }
 - (IBAction)createAccount:(id)sender {
-    [self pushViewControllerClass:[RegViewController class]
-                         animated:YES];
+//    [self pushViewControllerClass:[RegViewController class]
+//                         animated:YES];
+    [self postASAPNotificationName:nAppShowCreateAccount];
 }
 - (IBAction)login:(id)sender {
     [self.userField     resignFirstResponder];
@@ -91,7 +91,7 @@
         // 把user和password保存到UserDefaults，并通过Notification发出去
         self.defaults.currentUser = user;
         self.defaults.currentPassword = password;
-        [self postASAPNotificationName:nAppStartLogMeIn];
+        [self postASAPNotificationName:nAppLogMeIn];
     }
 }
 
@@ -109,6 +109,48 @@
             textField.enabled = NO;
             textField.secureTextEntry = YES;
             textField.enabled = YES;
+        }
+    }
+}
+
+#pragma mark - UITextField delegates
+- (void)textFieldDidBeginEditing:(UITextField *)textField {
+    textField.backgroundColor = [UIColor clearColor];
+}
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    // 检查用户名和密码
+    if (textField == self.userField) {
+        NSString *text = textField.text;
+        if (text.length && (![text isValidMobilePhoneNumber])) {
+            textField.backgroundColor = [UIColor redColor];
+        }
+        return;
+    }
+    if (textField == self.passwordField) {
+        //
+        return;
+    }
+}
+// called when 'return' key pressed. return NO to ignore.
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == self.passwordField) {
+        [textField resignFirstResponder];
+    }
+    return YES;
+}
+// 限制密码长度为12// return NO to not change text
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSUInteger newLength = textField.text.length + string.length - range.length;
+    if (textField == self.passwordField)
+        return (newLength > 12) ? NO : YES;
+    return YES;
+}
+
+#pragma mark - Misc
+- (void)hideKeyboard {
+    for (UIView *view in self.view.subviews) {
+        if ([view isKindOfClass:[UITextField class]]) {
+            [view resignFirstResponder];
         }
     }
 }
