@@ -39,7 +39,7 @@
 					<object class="IBUITableView" id="939661625">
 						<reference key="NSNextResponder" ref="421214021"/>
 						<int key="NSvFlags">274</int>
-						<string key="NSFrame">{{0, 15}, {320, 415}}</string>
+						<string key="NSFrame">{{0, 20}, {320, 440}}</string>
 						<reference key="NSSuperview" ref="421214021"/>
 						<reference key="NSNextKeyView" ref="957266905"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -64,7 +64,7 @@
 							<object class="IBUIButton" id="34395689">
 								<reference key="NSNextResponder" ref="957266905"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{15, -1}, {55, 55}}</string>
+								<string key="NSFrame">{{15, -1}, {50, 50}}</string>
 								<reference key="NSSuperview" ref="957266905"/>
 								<reference key="NSNextKeyView" ref="500956156"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -99,7 +99,7 @@
 							<object class="IBUIButton" id="500956156">
 								<reference key="NSNextResponder" ref="957266905"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{253, -1}, {55, 55}}</string>
+								<string key="NSFrame">{{253, -3}, {50, 50}}</string>
 								<reference key="NSSuperview" ref="957266905"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
@@ -127,10 +127,7 @@
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
 							<int key="NSColorSpace">3</int>
-							<bytes key="NSWhite">MQA</bytes>
-							<object class="NSColorSpace" key="NSCustomColorSpace" id="762459688">
-								<int key="NSID">2</int>
-							</object>
+							<bytes key="NSWhite">MCAwAA</bytes>
 						</object>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					</object>
@@ -142,7 +139,9 @@
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
 					<bytes key="NSWhite">MQA</bytes>
-					<reference key="NSCustomColorSpace" ref="762459688"/>
+					<object class="NSColorSpace" key="NSCustomColorSpace">
+						<int key="NSID">2</int>
+					</object>
 				</object>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
@@ -223,8 +222,8 @@
 						<int key="objectID">6</int>
 						<reference key="object" ref="421214021"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="939661625"/>
 							<reference ref="957266905"/>
+							<reference ref="939661625"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>

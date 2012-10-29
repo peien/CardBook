@@ -246,7 +246,6 @@
 
     CGFloat containerHeight = ([self numberOfWeeksInMonthContainingDate:self.monthShowing] * (self.cellWidth + CELL_BORDER_WIDTH) + DAYS_HEADER_HEIGHT);
 
-
     CGRect newFrame = self.frame;
     newFrame.size.height = containerHeight + CALENDAR_MARGIN + TOP_HEIGHT;
     self.frame = newFrame;
@@ -281,7 +280,7 @@
             [dateButton setTitleColor:self.selectedDateTextColor forState:UIControlStateNormal];
         } else if ([self dateIsToday:dateButton.date]) {
             [dateButton setTitleColor:self.currentDateTextColor forState:UIControlStateNormal];
-            dateButton.backgroundColor = self.currentDateBackgroundColor;
+            [dateButton setBackgroundImage:[UIImage imageNamed:@"flagcircle.png"] forState:UIControlStateNormal];
         } else if ([date compare:self.minimumDate] == NSOrderedAscending ||
                 [date compare:self.maximumDate] == NSOrderedDescending) {
             [dateButton setTitleColor:self.disabledDateTextColor forState:UIControlStateNormal];
@@ -290,9 +289,7 @@
             [dateButton setTitleColor:self.dateTextColor forState:UIControlStateNormal];
             dateButton.backgroundColor = [self dateBackgroundColor];
         }
-
         dateButton.frame = [self calculateDayCellFrame:date];
-
         [self.calendarContainer addSubview:dateButton];
 
         date = [self nextDay:date];
@@ -331,9 +328,9 @@
 
 
     [self setSelectedDateTextColor:UIColorFromRGB(0xF2F2F2)];
-    [self setSelectedDateBackgroundColor:UIColorFromRGB(0x88B6DB)];
+    [self setSelectedDateBackgroundColor:UIColorFromRGB(0x767676)];
 
-    [self setCurrentDateTextColor:UIColorFromRGB(0xF2F2F2)];
+    [self setCurrentDateTextColor:UIColorFromRGB(0x182970)];
     [self setCurrentDateBackgroundColor:[UIColor lightGrayColor]];
 
     self.disabledDateTextColor = [UIColor lightGrayColor];
@@ -371,6 +368,7 @@
 - (void)dateButtonPressed:(id)sender {
     DateButton *dateButton = sender;
     NSDate *date = dateButton.date;
+    //[dateButton setBackgroundImage:[UIImage imageNamed:@"visitedtoday.png"] forState:UIControlStateNormal];
     if (self.minimumDate && [date compare:self.minimumDate] == NSOrderedAscending) {
         return;
     } else if (self.maximumDate && [date compare:self.maximumDate] == NSOrderedDescending) {

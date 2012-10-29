@@ -25,5 +25,7 @@
 @property (strong, nonatomic) Card                *card;
 @property (strong, nonatomic) KHHCardMode         *cardM;
 @property (assign, nonatomic) bool                isCompanyColleagues;
+@property (nonatomic, assign) bool                isNeedReloadTable;
+@property (assign, nonatomic) bool                isReloadVisiteTable;
 
 @end

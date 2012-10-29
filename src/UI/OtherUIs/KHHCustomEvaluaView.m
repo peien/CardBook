@@ -122,7 +122,7 @@
 
 - (void)reloadTable{
     
-    _importFlag = @"update";
+    _importFlag = self.card.evaluation.remarks;
     _relationEx = [self.card.evaluation.degree floatValue];
     _customValue = [self.card.evaluation.value floatValue];
     [_theTableOne reloadData];

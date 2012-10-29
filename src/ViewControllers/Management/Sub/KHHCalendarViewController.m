@@ -10,12 +10,17 @@
 #import "CKCalendarView.h"
 #import "KHHVisitCalendarCell.h"
 #import "KHHVisitRecoardVC.h"
-@interface KHHCalendarViewController ()<CKCalendarDelegate,UITableViewDataSource,UITableViewDelegate,KHHVisitCalendarCellDelegate>
+#import "KHHShowHideTabBar.h"
+#import "KHHAppDelegate.h"
 
+@interface KHHCalendarViewController ()<CKCalendarDelegate,UITableViewDataSource,UITableViewDelegate,KHHVisitCalendarCellDelegate>
+@property (strong, nonatomic) NSDate *dateSelect;
 @end
 
 @implementation KHHCalendarViewController
 @synthesize theTable = _theTable;
+@synthesize addBtn;
+@synthesize dateSelect;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -39,21 +44,42 @@
     [self.view addSubview:calendar];
     
 }
+- (void)viewWillAppear:(BOOL)animated{
+    [KHHShowHideTabBar hideTabbar];
 
+}
+- (void)viewWillDisappear:(BOOL)animated{
+
+}
 - (void)viewDidUnload
 {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    _theTable = nil;
+    self.addBtn = nil;
+    self.dateSelect = nil;
 }
 - (void)calendar:(CKCalendarView *)calendar didSelectDate:(NSDate *)date
 {
-    DLog(@"date click ====== %@!",date);
-//    KHHVisitRecoardVC *visitRVC = [[KHHVisitRecoardVC alloc] initWithNibName:nil bundle:nil];
-//    visitRVC.style = KVisitRecoardVCStyleNewBuild;
-//    visitRVC.isNeedWarn = YES;
-//    [self.navigationController pushViewController:visitRVC animated:YES];
+    NSDate *selectedNewDate = [date dateByAddingTimeInterval:24*60*60];//用与判断添加按钮是否隐藏
+    self.dateSelect = date;//用于拜访界面的日期显示
+    DLog(@"date click ====== selectedNewDate is %@!",selectedNewDate);
     
+    NSDate *now = [NSDate date];
+    DLog(@"NOW IS %@",now);
+    double timerIntervNow = [now timeIntervalSince1970];
+    double timerIntervSelected = [selectedNewDate timeIntervalSince1970];
+    
+    if (timerIntervSelected - timerIntervNow > 0) {
+        DLog(@"将来");
+        self.addBtn.hidden = NO;
+    }else if (timerIntervSelected - timerIntervNow < 0){
+        DLog(@"过去");
+        self.addBtn.hidden = YES;
+    }else if (timerIntervSelected - timerIntervNow == 0){
+        DLog(@"")
+    }
 }
 - (void)calendarChangeFrame:(CKCalendarView *)calendar
 {
@@ -61,7 +87,7 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 2;
+    return 0;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -83,7 +109,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     KHHVisitRecoardVC *visitVC = [[KHHVisitRecoardVC alloc] initWithNibName:nil bundle:nil];
-    //有没有图片
     visitVC.style = KVisitRecoardVCStyleShowInfo;
     visitVC.isHaveImage = YES;
     [self.navigationController pushViewController:visitVC animated:YES];
@@ -95,16 +120,18 @@
     DLog(@"plusBtnClick");
     KHHVisitRecoardVC *visitRVC = [[KHHVisitRecoardVC alloc] initWithNibName:nil bundle:nil];
     visitRVC.style = KVisitRecoardVCStyleNewBuild;
+    visitRVC.isFromCalVC = YES;
+    visitRVC.selectedDateFromCal = self.dateSelect;
     visitRVC.isNeedWarn = YES;
     [self.navigationController pushViewController:visitRVC animated:YES];
 
 }
-- (void)KHHVisitCalendarCellBtnClick:(NSInteger)tag
+- (void)KHHVisitCalendarCellBtnClick:(UIButton *)btn
 {
-    if (tag == 222) {
+    if (btn.tag == 222) {
         //铃铛；
         
-    }else if (tag == 223){
+    }else if (btn.tag == 223){
         //完成；
         KHHVisitRecoardVC *finishVC = [[KHHVisitRecoardVC alloc] initWithNibName:nil bundle:nil];
         finishVC.isNeedWarn = NO;
@@ -113,6 +140,10 @@
         [self.navigationController pushViewController:finishVC animated:YES];
     
     }
+}
+//显示地图
+- (void)showLocaButtonClick:(id)sender{
+
 }
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {

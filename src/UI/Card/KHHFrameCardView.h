@@ -17,6 +17,9 @@
 @property (nonatomic, strong) KHHVisualCardViewController *cardTempVC;
 @property (nonatomic, strong) Card                        *card;
 @property (nonatomic, strong) UIImageView                 *shadowCard;
+@property (nonatomic, strong) UIViewController            *viewCtrl;
+@property (assign, nonatomic) bool                        isOnePage;
+@property (assign, nonatomic) int                         pages;
 
 - (id)initWithFrame:(CGRect)frame isVer:(BOOL)ver;
 - (void)showView;

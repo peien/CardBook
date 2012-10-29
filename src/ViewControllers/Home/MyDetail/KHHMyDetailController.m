@@ -11,10 +11,12 @@
 #import "KHHCardView.h"
 #import "KHHShowHideTabBar.h"
 #import "Edit_eCardViewController.h"
-
+#import "KHHData+UI.h"
 
 @interface KHHMyDetailController ()
-@property (assign, nonatomic) bool isNeedReloadTable;
+@property (assign, nonatomic) bool    isNeedReloadTable;
+@property (strong, nonatomic) KHHData *dataCtrl;
+
 
 @end
 
@@ -26,6 +28,7 @@
 @synthesize lastBtn = _lastBtn;
 @synthesize card;
 @synthesize isNeedReloadTable;
+@synthesize dataCtrl;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -35,6 +38,7 @@
         //self.hidesBottomBarWhenPushed = YES;
         self.navigationItem.title = @"我的详情";
         self.navigationItem.rightBarButtonItem = nil;
+        self.dataCtrl = [KHHData sharedData];
     }
     return self;
 }
@@ -67,10 +71,14 @@
     
     //拜访日历界面
     _visitView = [[[NSBundle mainBundle] loadNibNamed:@"KHHVisitCalendarView" owner:self options:nil] objectAtIndex:0];
+    _visitView.card = self.card;
+    _visitView.isAllVisitedSch = YES;
+    [_visitView initViewData];
+    
     CGRect rect = _visitView.footView.frame;
     CGRect rectTable = _visitView.theTable.frame;
-    rect.origin.y = 340;
-    rectTable.size.height = 325;
+    rect.origin.y = 355;
+    rectTable.size.height = 400;
     _visitView.footView.frame = rect;
     _visitView.theTable.frame = rectTable;
     _visitView.viewCtrl = self;
@@ -91,11 +99,11 @@
     UIButton *defBtn = (UIButton *)[self.view viewWithTag:667];
     [self performSelector:@selector(headBtnClick:) withObject:defBtn afterDelay:0.1];
     //判断公司名片还是个人名片，个人名片有编辑按钮
-    if ([self.card isKindOfClass:[MyCard class]]) {
+    if (self.card.roleTypeValue == 1) {
         UIButton *bottomBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         bottomBtn.tag = 323;
         [bottomBtn addTarget:self action:@selector(bottomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        bottomBtn.frame = CGRectMake(260, 360, 60, 60);
+        bottomBtn.frame = CGRectMake(260, 360, 50, 50);
         [bottomBtn setBackgroundImage:[UIImage imageNamed:@"edit_Btn_Red.png"] forState:UIControlStateNormal];
         [self.view insertSubview:bottomBtn atIndex:100];
     }
@@ -110,6 +118,8 @@
         [_cardView initView];
     }
     
+    [_visitView reloadTheTable];
+    
 }
 - (void)viewDidUnload
 {
@@ -121,6 +131,7 @@
     _cardView = nil;
     _containView = nil;
     self.card = nil;
+    self.dataCtrl = nil;
 }
 - (void)headBtnClick:(id)sender
 {

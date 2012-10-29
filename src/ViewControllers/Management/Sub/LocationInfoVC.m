@@ -117,7 +117,6 @@
                                                 [UIImage imageNamed:@"ic_shuaxin5.png"],
                                                 [UIImage imageNamed:@"ic_shuaxin6.png"],
                        nil];
-
 }
 
 - (void)viewDidUnload
@@ -192,7 +191,7 @@
         if (cell == nil) {
             cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(80, 0, 220, 44)];
+            UITextField *textField = [[UITextField alloc] initWithFrame:CGRectMake(55, 0, 220, 44)];
             UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 0, 70, 44)];
             label.font = [UIFont systemFontOfSize:12];
             label.backgroundColor = [UIColor clearColor];
@@ -208,10 +207,12 @@
                 label.text = @"日期:";
                 textField.tag = TEXTFIELD_DATE_TAG;
                 textField.text = self.date;
+                textField.enabled = NO;
             }else if (indexPath.row == 1){
                 label.text = @"时间:";
                 textField.tag = TEXTFIELD_TIME_TAG;
                 textField.text = self.time;
+                textField.enabled = NO;
             }else if (indexPath.row == 2){
                 label.text = @"备注:";
                 textField.placeholder = @"请输入其它备注";
@@ -224,7 +225,7 @@
                 textField.text = self.address;
                 self.updateImageView = [[UIImageView alloc] initWithImage:[self.imageArray objectAtIndex:0]];
                 self.updateImageView.userInteractionEnabled = YES;
-                self.updateImageView.frame = CGRectMake(265, 8, 35, 35);
+                self.updateImageView.frame = CGRectMake(275, 8, 35, 35);
                 UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(updateLocation:)];
                 tap.numberOfTapsRequired = 1;
                 tap.numberOfTouchesRequired = 1;
@@ -242,6 +243,7 @@
             cell = [[[NSBundle mainBundle] loadNibNamed:@"KHHAddImageCell" owner:self options:nil] objectAtIndex:0];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
+
         for (int i = 0; i<[_imgArray count]; i++) {
             _imgview = [[UIImageView alloc] init];
             _imgview.userInteractionEnabled = YES;
@@ -255,18 +257,21 @@
             tapFull.numberOfTouchesRequired = 1;
             [_imgview addGestureRecognizer:tapFull];
             _imgview.tag = i + 100;
-            _imgview.frame = CGRectMake(20+i*(5 + 60), 0, 60, 60);
+            _imgview.frame = CGRectMake(15+i*(5 + 60), 0, 60, 60);
             _imgview.image = [_imgArray objectAtIndex:i];
             [cell addSubview:_imgview];
             
+            CGRect moveAddRect = cell.moveView.frame;
+            moveAddRect.origin.x = (i+1)*(15+60);
+            cell.moveView.frame = moveAddRect;
         }
+
         if (_imgArray.count == 4) {
-            cell.addBtn.hidden = YES;
-            cell.lab.hidden = YES;
+
+            cell.moveView.hidden = YES;
         }
         if (_imgArray.count < 4) {
-            cell.addBtn.hidden = NO;
-            cell.lab.hidden = NO;
+            cell.moveView.hidden = NO;
         }
         [cell.addBtn addTarget:self action:@selector(addImageBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         return cell;
@@ -337,13 +342,21 @@
     self.placeMark = [info.userInfo objectForKey:@"placemark"];
     UITextField *addressTf = (UITextField *)[self.view viewWithTag:TEXTFIELD_LOCATION_TAG];
     //NSString *addressString = CFBridgingRelease((__bridge CFTypeRef)(ABCreateStringWithAddressDictionary(self.placeMark.addressDictionary, NO)));
-    NSString *addressString = ABCreateStringWithAddressDictionary(self.placeMark.addressDictionary, NO);
-    if (addressString.length > 0) {
-        addressTf.text = addressString;
+    NSString *province = [NSString stringWithFormat:@"%@",
+                          [NSString stringFromObject:self.placeMark.administrativeArea]];
+    NSString *city = [NSString stringWithFormat:@"%@",
+                      [NSString stringFromObject:self.placeMark.locality]];
+    NSString *other = [NSString stringWithFormat:@"%@",
+                       [NSString stringFromObject:self.placeMark.thoroughfare]];
+    NSString *other1 = [NSString stringWithFormat:@"%@",[NSString stringFromObject:self.placeMark.subThoroughfare]];
+    NSString *detailAddress = [NSString stringWithFormat:@"%@%@%@%@",province,city,other,other1];
+    
+    if (detailAddress.length > 0) {
+        addressTf.text = detailAddress;
     }
     
     if (self.isFirstLocation) {
-        self.address = ABCreateStringWithAddressDictionary(self.placeMark.addressDictionary, NO);
+        self.address = detailAddress;
         [_theTable reloadData];
     }
     
@@ -463,34 +476,12 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
-    [self tableviewAnimationDown];
     return YES;
 }
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    [self tableviewAnimationUp];
+    
 }
-- (void)tableviewAnimationUp
-{
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.3];
-    CGRect rect = _theTable.frame;
-    rect.origin.y = -60;
-    _theTable.frame = rect;
-    [UIView commitAnimations];
-
-}
-- (void)tableviewAnimationDown
-{
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.3];
-    CGRect rect = _theTable.frame;
-    rect.origin.y = 0;
-    _theTable.frame = rect;
-    [UIView commitAnimations];
-
-}
-
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == 0) {

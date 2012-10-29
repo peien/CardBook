@@ -17,6 +17,14 @@
 #import "Card.h"
 #import "KHHLocationController.h"
 #import "MBProgressHUD.h"
+#import "KHHClasses.h"
+#import "KHHData.h"
+#import "OSchedule.h"
+#import "KHHData+UI.h"
+#import "MBProgressHUD.h"
+#import "KHHAppDelegate.h"
+#import "NSString+SM.h"
+#import "UIImageView+WebCache.h"
 
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
@@ -41,6 +49,13 @@
 @property (strong, nonatomic) NSNumber        *locationLongitude;
 @property (strong, nonatomic) NSString        *address;
 @property (strong, nonatomic) CLPlacemark     *placeMark;
+@property (strong, nonatomic) OSchedule       *oSched;
+@property (strong, nonatomic) KHHData         *dataCtrl;
+@property (strong, nonatomic) MBProgressHUD   *hud;
+@property (assign, nonatomic) int             warnMinus;
+@property (assign, nonatomic) bool            isDateSelected;
+@property (strong, nonatomic) NSDate          *selectDate;
+@property (strong, nonatomic) NSMutableString *defaultVisitedName;
 @end
 
 @implementation KHHVisitRecoardVC
@@ -76,6 +91,18 @@
 @synthesize locationLongitude;
 @synthesize address;
 @synthesize placeMark;
+@synthesize visitInfoCard;
+@synthesize schedu;
+@synthesize oSched;
+@synthesize dataCtrl;
+@synthesize hud;
+@synthesize warnMinus;
+@synthesize isDateSelected;
+@synthesize selectDate;
+@synthesize defaultVisitedName;
+@synthesize selectedDateFromCal;
+@synthesize isFromCalVC;
+
 
 #pragma mark -
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -83,8 +110,9 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.title = @"编辑详情";
         [self.rightBtn setTitle:@"保存" forState:UIControlStateNormal];
+        self.oSched = [[OSchedule alloc] init];
+        self.dataCtrl = [KHHData sharedData];
     }
     return self;
 }
@@ -93,7 +121,6 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.isFirstLocation = YES;
     self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTime) userInfo:nil repeats:YES];
     NSDate *now = [NSDate date];
     NSDateFormatter *dateForm = [[NSDateFormatter alloc] init];
@@ -106,13 +133,13 @@
     [_datePicker setDate:now animated:YES];
     [_datePicker addTarget:self action:@selector(datePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
     _tempPickArr = [[NSArray alloc] init];
+    self.objectNameArr = [[NSMutableArray alloc] init];
     _warnTitleArr = [[NSArray alloc] initWithObjects:@"不提醒", @"30分钟",@"1小时",@"2小时",@"3小时",@"12小时",@"24小时",@"2天",@"3天",@"一周",nil];
     _timeArr = [[NSArray alloc] initWithObjects:@"",@"30",@"1",@"2",@"3",@"12",@"24",@"2",@"3",@"7",nil];
     _noteArray = [[NSArray alloc] initWithObjects:@"初次见面",@"商务洽谈",@"一起吃饭",@"一起喝茶",@"回访客户",@"签订合同", nil];
     _fieldName = [[NSArray alloc] initWithObjects:@"对象",@"日期",@"时间",@"备注",@"位置",@"提醒",@"参与者",@"", nil];
     _imgArray = [[NSMutableArray alloc] init];
-    _fieldValue = [[NSMutableArray alloc] initWithObjects:@"",_dateStr,_timeStr,@"",@"",@"",@"", nil];
-    
+    _fieldValue = [[NSMutableArray alloc] initWithObjects:@"",@"",@"",@"",@"",@"",@"", nil];
     self.imageArray = [NSArray arrayWithObjects:[UIImage imageNamed:@"ic_shuaxin1.png"],
                        [UIImage imageNamed:@"ic_shuaxin2.png"],
                        [UIImage imageNamed:@"ic_shuaxin3.png"],
@@ -121,17 +148,19 @@
                        [UIImage imageNamed:@"ic_shuaxin6.png"],
                        nil];
     
-    //默认有的图片
-    if (_isHaveImage) {
-        //[_imgArray addObject:[UIImage imageNamed:@"logopic.png"]];
-        
-    }
-
+    
+    
     //如果不是新建，就获取数据让其显示
     if (_style == KVisitRecoardVCStyleShowInfo) {
         [self initViewData];
-    }
+        self.title = NSLocalizedString(@"编辑详情", nil);
+    }else if (_style == KVisitRecoardVCStyleNewBuild){
+        self.title = NSLocalizedString(@"新建拜访日志", nil);
+        self.isFirstLocation = YES;
+        //[self getLocalAddress];
+        //self.defaultVisitedName = [NSMutableString stringWithString:self.visitInfoCard.name];
 
+    }
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -172,12 +201,22 @@
     self.locationLatitude = nil;
     self.address = nil;
     self.placeMark = nil;
+    self.visitInfoCard = nil;
+    self.schedu = nil;
+    self.oSched = nil;
+    self.dataCtrl = nil;
+    self.hud = nil;
+    self.selectDate = nil;
+    self.defaultVisitedName = nil;
+    self.selectedDateFromCal = nil;
 }
 #pragma mark -
 //选择多个拜访对象
 - (void)getVisitObjects{
     if (self.objectNameArr.count > 0) {
+        DLog(@"self.objectNameArr ====== %@",self.objectNameArr);
         NSMutableString *nameObj = [[NSMutableString alloc] init];
+
         for (int i = 0; i < self.objectNameArr.count; i++) {
             Card *card = [self.objectNameArr objectAtIndex:i];
             if (card.name.length > 0) {
@@ -185,18 +224,21 @@
             }
         }
         UITextField *objectTf = (UITextField *)[self.view viewWithTag:TEXTFIELD_OBJECT_TAG];
+        //[self.defaultVisitedName appendString:nameObj];
         objectTf.text = nameObj;
+        
     }
 }
 //动态显示时间
 - (void)updateTime
 {
-    NSDate *dt = [NSDate date];
-    NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    [df setDateFormat:@"HH:mm:ss"];
-    UITextField *tf = (UITextField *)[self.view viewWithTag:TEXTFIELD_TIME_TAG];
-    tf.text = [df stringFromDate:dt];
-
+    if (_style == KVisitRecoardVCStyleNewBuild) {
+        NSDate *dt = [NSDate date];
+        NSDateFormatter *df = [[NSDateFormatter alloc] init];
+        [df setDateFormat:@"HH:mm:ss"];
+        UITextField *tf = (UITextField *)[self.view viewWithTag:TEXTFIELD_TIME_TAG];
+        tf.text = [df stringFromDate:dt];
+    }
 }
 // 闹钟设置
 - (void)setAlerm:(double)timeInterval
@@ -208,7 +250,7 @@
         notification.fireDate = [now dateByAddingTimeInterval:timeInterval];
         notification.timeZone=[NSTimeZone defaultTimeZone];
         notification.soundName = UILocalNotificationDefaultSoundName;
-        notification.alertBody=@"TIME！";
+        notification.alertBody=@"TIME";
         notification.alertBody = [NSString stringWithFormat:@"时间到了!"];
         NSDictionary* info = [NSDictionary dictionaryWithObject:@""forKey:@""];
         notification.userInfo = info;
@@ -219,51 +261,162 @@
 - (void)initViewData
 {
     //获取对象模型，填充fieldvalue
-    if (YES) {
-        [_fieldValue replaceObjectAtIndex:0 withObject:@"王文"];
+    if (self.schedu.targets != nil) {
+        NSMutableString *names = [[NSMutableString alloc] init];
+        NSArray *objects = [self.schedu.targets allObjects];
+        for (int i = 0; i < objects.count; i++) {
+            Card *cardObj = [objects objectAtIndex:i];
+            NSString *name = [NSString stringByFilterNilFromString:cardObj.name];
+            if (name.length > 0) {
+                [names appendString:[NSString stringWithFormat:@" %@",cardObj.name]];
+            }
+        }
+        [_fieldValue replaceObjectAtIndex:0 withObject:names];
     }
-    if (YES) {
-        [_fieldValue replaceObjectAtIndex:3 withObject:@"请客吃饭"];
+    if (self.schedu.plannedDate != nil) {
+        if (self.isFinishTask) {
+            [_fieldValue replaceObjectAtIndex:1 withObject:_dateStr];
+            [_fieldValue replaceObjectAtIndex:2 withObject:_timeStr];
+        }else{
+            NSDateFormatter *form = [[NSDateFormatter alloc] init];
+            [form setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+            NSString *date = [form stringFromDate:self.schedu.plannedDate];
+            NSArray *timeArr = [date componentsSeparatedByString:@" "];
+            [_fieldValue replaceObjectAtIndex:1 withObject:[timeArr objectAtIndex:0]];
+            [_fieldValue replaceObjectAtIndex:2 withObject:[timeArr objectAtIndex:1]];
+        }
     }
-    if (YES) {
-        [_fieldValue replaceObjectAtIndex:4 withObject:@"浙江省杭州市滨江区南环路"];
+    if (self.schedu.content.length > 0) {
+        [_fieldValue replaceObjectAtIndex:3 withObject:self.schedu.content];
     }
-    if (YES) {
-        [_fieldValue replaceObjectAtIndex:6 withObject:@"小刘"];
+    if (self.schedu.address.other.length > 0) {//地址
+        [_fieldValue replaceObjectAtIndex:4 withObject:self.schedu.address.other];
+    }
+    if (self.schedu.minutesToRemind) {
+        [_fieldValue replaceObjectAtIndex:5 withObject:[NSString stringWithFormat:@"%@分钟",self.schedu.minutesToRemind]];
+    }
+    if (self.schedu.companions.length > 0) {
+        [_fieldValue replaceObjectAtIndex:6 withObject:self.schedu.companions];
+    }
+    if (self.schedu.images.count > 0) {
+        //[self updateImageArray];
     }
 }
+
+#pragma mark -
 - (void)rightBarButtonClick:(id)sender
 {
+    //注册新建或修改拜访计划消息
+    [self observeNotificationName:KHHUICreateVisitScheduleSucceeded selector:@"handleCreateVisitScheduleSucceeded:"];
+    [self observeNotificationName:KHHUICreateVisitScheduleFailed selector:@"handleCreateVisitScheduleFailed:"];
+    [self observeNotificationName:KHHUIUpdateVisitScheduleSucceeded selector:@"handleUpdateVisitScheduleSucceeded:"];
+    [self observeNotificationName:KHHUIUpdateVisitScheduleFailed selector:@"handleUpdateVisitScheduleFailed:"];
     [self saveVisitRecordInfo];
 }
 // 保存
 - (void)saveVisitRecordInfo
 {
-    UITextField *objects = (UITextField *)[self.view viewWithTag:TEXTFIELD_OBJECT_TAG];
-    UITextField *date = (UITextField *)[self.view viewWithTag:TEXTFIELD_DATE_TAG];
-    UITextField *time = (UITextField *)[self.view viewWithTag:TEXTFIELD_TIME_TAG];
+//    UITextField *objects = (UITextField *)[self.view viewWithTag:TEXTFIELD_OBJECT_TAG];
+//    UITextField *date = (UITextField *)[self.view viewWithTag:TEXTFIELD_DATE_TAG];
+//    UITextField *time = (UITextField *)[self.view viewWithTag:TEXTFIELD_TIME_TAG];
     UITextField *note = (UITextField *)[self.view viewWithTag:NOTE_FIELD_TAG];
-    UIButton *noteBtn = (UIButton *)[self.view viewWithTag:2277];
-    NSString *warnStr = noteBtn.titleLabel.text;
-    UITextField *addressIn = (UITextField *)[self.view viewWithTag:TEXTFIELD_ADDRESS_TAG];
+    //UIButton *noteBtn = (UIButton *)[self.view viewWithTag:2277];
+    //UITextField *addressIn = (UITextField *)[self.view viewWithTag:TEXTFIELD_ADDRESS_TAG];
     UITextField *joiner = (UITextField *)[self.view viewWithTag:TEXTFIELD_JOINER_TAG];
-    DLog(@"objects>>>>>>>>>>%@",objects.text);
-    DLog(@"date>>>>>>>>>>%@",date.text);
-    DLog(@"time>>>>>>>>>>%@",time.text);
-    DLog(@"note>>>>>>>>>>%@",note.text);
-    DLog(@"warnStr>>>>>>>>>>%@",warnStr);
-    DLog(@"address>>>>>>>>>>%@",addressIn.text);
-    DLog(@"joiner>>>>>>>>>>%@",joiner.text);
+
     //调用数据库接口，或者是网络接口
+    self.oSched.id = self.schedu.id;
+    self.oSched.minutesToRemind = [NSNumber numberWithInt:warnMinus];
+    self.oSched.customer = nil;
+    self.oSched.companion = joiner.text;
+    self.oSched.content = note.text;
+    self.oSched.minutesToRemind = [NSNumber numberWithDouble:_timeInterval/60];
+
+    self.oSched.targetCardList = self.objectNameArr;
+    self.oSched.imageList = self.imgArray;
+    self.oSched.addressProvince = [NSString stringWithFormat:@"%@",
+                                   [NSString stringFromObject:self.placeMark.administrativeArea]];
+    self.oSched.addressCity = [NSString stringWithFormat:@"%@",
+                               [NSString stringFromObject:self.placeMark.locality]];
+    self.oSched.addressOther = [NSString stringWithFormat:@"%@",
+                                [NSString stringFromObject:self.placeMark.thoroughfare]];
+    if (self.isDateSelected) {
+        self.oSched.plannedDate = self.selectDate;
+        self.oSched.isFinished = [NSNumber numberWithBool:NO];
+    }else{
+        self.oSched.plannedDate = [NSDate date];
+        self.oSched.isFinished = [NSNumber numberWithBool:YES];
+    }
+    if (self.isFinishTask) {
+        self.oSched.isFinished = [NSNumber numberWithBool:YES];
+    }
+    if (self.isFromCalVC) {
+        self.oSched.plannedDate = [self dateFromString];
+    }
+    KHHAppDelegate *app = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
+    self.hud = [MBProgressHUD showHUDAddedTo:app.window animated:YES];
+    
+    if (_style == KVisitRecoardVCStyleNewBuild) {
+        MyCard *mycard = [[self.dataCtrl allMyCards] lastObject];
+        [self.dataCtrl createSchedule:self.oSched withMyCard:mycard];
+    }else if (_style == KVisitRecoardVCStyleShowInfo){
+        [self.dataCtrl updateSchedule:self.oSched];
+    }
+
+}
+- (void)handleCreateVisitScheduleSucceeded:(NSNotification *)info{
+    DLog(@"handleCreateVisitScheduleSucceeded! ====== %@",info);
+    [self.hud hide:YES];
+    [self stopObservingForCreateVisitedSch];
+    [self.navigationController popViewControllerAnimated:YES];
+
+}
+- (void)handleCreateVisitScheduleFailed:(NSNotification *)info{
+    DLog(@"KHHUICreateVisitScheduleFailed! ====== %@",info);
+    [self.hud hide:YES];
+    [self stopObservingForCreateVisitedSch];
+    [[[UIAlertView alloc] initWithTitle:nil
+                                message:@"创建失败"
+                               delegate:nil
+                      cancelButtonTitle:@"确定"
+                      otherButtonTitles:nil] show];
+}
+- (void)handleUpdateVisitScheduleSucceeded:(NSNotification *)info{
+    DLog(@"handleUpdateVisitScheduleSucceeded! ====== %@",info);
+    [self.hud hide:YES];
+    [self stopObservingForUpdateVisitedSch];
+    [self.navigationController popViewControllerAnimated:YES];
+
+}
+- (void)handleUpdateVisitScheduleFailed:(NSNotification *)info{
+    DLog(@"handleUpdateVisitScheduleFailed! ====== %@",info);
+    [self.hud hide:YES];
+    [self stopObservingForUpdateVisitedSch];
+    [[[UIAlertView alloc] initWithTitle:nil
+                                message:@"保存失败"
+                               delegate:nil
+                      cancelButtonTitle:@"确定"
+                      otherButtonTitles:nil] show];
+
+}
+- (void)stopObservingForCreateVisitedSch{
+    [self stopObservingNotificationName:KHHUICreateVisitScheduleSucceeded];
+    [self stopObservingNotificationName:KHHUICreateVisitScheduleFailed];
+}
+- (void)stopObservingForUpdateVisitedSch{
+    [self stopObservingNotificationName:KHHUIUpdateVisitScheduleSucceeded];
+    [self stopObservingNotificationName:KHHUIUpdateVisitScheduleFailed];
 }
 
 #pragma mark -
 - (void)datePickerValueChanged:(id)sender
 {
+    self.isDateSelected = YES;
     UIDatePicker *datePicker = (UIDatePicker *)sender;
     NSDate *date = datePicker.date;
+    self.selectDate = date;
     NSDateFormatter *dateForm = [[NSDateFormatter alloc] init];
-    [dateForm setDateFormat:@"yyyy-MM-dd HH:mm"];
+    [dateForm setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     NSString *showDAte = [dateForm stringFromDate:date];
     NSLog(@"%@",showDAte);
     NSArray *dateArr = [showDAte componentsSeparatedByString:@" "];
@@ -313,7 +466,7 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.textLabel.text = [_fieldName objectAtIndex:indexPath.row];
             cell.textLabel.font = [UIFont systemFontOfSize:12];
-            UITextField *tf = [[UITextField alloc] initWithFrame:CGRectMake(80, 0, 220, 37)];
+            UITextField *tf = [[UITextField alloc] initWithFrame:CGRectMake(65, 0, 220, 37)];
             [tf setBackgroundColor:[UIColor clearColor]];
             tf.leftViewMode = UITextFieldViewModeAlways;
             tf.tag = 9693;
@@ -334,18 +487,44 @@
             textField.tag = TEXTFIELD_OBJECT_TAG;
             if (_style == KVisitRecoardVCStyleNewBuild) {
                 textField.placeholder = @"请输入拜访对象";
+                //textField.text = self.defaultVisitedName;
+
             }else if (_style == KVisitRecoardVCStyleShowInfo){
                 textField.text = [_fieldValue objectAtIndex:indexPath.row];
+                objectBtn.hidden = YES;
+                textField.enabled = NO;
+            }
+            if (self.isFinishTask || [self.schedu.isFinished isEqualToNumber:[NSNumber numberWithBool:NO]]) {
+                objectBtn.hidden = NO;
+                textField.enabled = YES;
             }
             
         }else if (indexPath.row == 1){
             textField.enabled = NO;
             textField.tag = TEXTFIELD_DATE_TAG;
-            textField.text = _dateStr;
+            if (_style == KVisitRecoardVCStyleNewBuild) {
+                textField.text = _dateStr;
+                if (self.isFromCalVC && self.selectedDateFromCal != nil) {
+                    NSDateFormatter *dateForm = [[NSDateFormatter alloc] init];
+                    [dateForm setDateFormat:@"yyyy-MM-dd HH:mm"];
+                    NSString *showDAte = [dateForm stringFromDate:self.selectedDateFromCal];
+                    NSArray *dateArr = [showDAte componentsSeparatedByString:@" "];
+                    textField.text = [dateArr objectAtIndex:0];
+                }else{
+                   textField.text = _dateStr;
+                }
+            }else if (_style == KVisitRecoardVCStyleShowInfo){
+                textField.text = [_fieldValue objectAtIndex:1];
+            }
 
         }else if (indexPath.row == 2){
             textField.enabled = NO;
             textField.tag = TEXTFIELD_TIME_TAG;
+            if (_style == KVisitRecoardVCStyleNewBuild) {
+                textField.text = _timeStr;
+            }else if (_style == KVisitRecoardVCStyleShowInfo){
+                textField.text = [_fieldValue objectAtIndex:2];
+            }
         }else if (indexPath.row == 3){
             textField.placeholder = @"请输入备注信息（限制400字内）";
             textField.tag = NOTE_FIELD_TAG;
@@ -367,6 +546,7 @@
             textField.tag = TEXTFIELD_ADDRESS_TAG;
             if (_style == KVisitRecoardVCStyleNewBuild) {
                 detail.hidden = NO;
+                textField.text = self.address;
                 self.updateImageView = [[UIImageView alloc] initWithImage:[self.imageArray objectAtIndex:0]];
                 self.updateImageView.userInteractionEnabled = YES;
                 self.updateImageView.frame = CGRectMake(280, 5, 35, 35);
@@ -391,7 +571,11 @@
             [warnBtn setBackgroundImage:[[UIImage imageNamed:@"tongbu_normal.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 8, 0, 8)] forState:UIControlStateNormal];
             warnBtn.tag = 2277;
             warnBtn.frame = CGRectMake(80, 8, 180, 37);
-            [warnBtn setTitle:@"不提醒" forState:UIControlStateNormal];
+            if (_style == KVisitRecoardVCStyleShowInfo) {
+               [warnBtn setTitle:[_fieldValue objectAtIndex:5] forState:UIControlStateNormal];
+            }else{
+               [warnBtn setTitle:@"不提醒" forState:UIControlStateNormal];
+            }
             if (_isNeedWarn) {
                 [warnBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             }else{
@@ -419,7 +603,12 @@
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
         }
         [cell.addBtn addTarget:self action:@selector(addImageBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-        for (int i = 0; i<[_imgArray count]; i++) {
+        
+        if (_style == KVisitRecoardVCStyleShowInfo) {
+            NSArray *arr = [self.schedu.images allObjects];
+            self.imgArray = [NSMutableArray arrayWithArray:arr];
+        }
+        for (int i = 0; i<[self.imgArray count]; i++) {
             _imgview = [[UIImageView alloc] init];
             _imgview.userInteractionEnabled = YES;
             UILongPressGestureRecognizer *longpress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressFunctionOne:)];
@@ -433,17 +622,26 @@
             [_imgview addGestureRecognizer:tap];
             _imgview.tag = i + 100;
             _imgview.frame = CGRectMake(5+i*(10 + 60), 5, 60, 60);
-            _imgview.image = [_imgArray objectAtIndex:i];
+            
+            if (_style == KVisitRecoardVCStyleNewBuild) {
+                _imgview.image = [self.imgArray objectAtIndex:i];
+            }
+            if (_style == KVisitRecoardVCStyleShowInfo) {
+                Image *img = [self.imgArray objectAtIndex:i];
+                [_imgview setImageWithURL:[NSURL URLWithString:img.url] placeholderImage:[UIImage imageNamed:@"logopic.png"]];
+            }
             [cell addSubview:_imgview];
-
+            
+            CGRect moveAddRect = cell.moveView.frame;
+            moveAddRect.origin.x = (i+1)*(10+60);
+            cell.moveView.frame = moveAddRect;
         }
+
         if (_imgArray.count == 4) {
-            cell.addBtn.hidden = YES;
-            cell.lab.hidden = YES;
+            cell.moveView.hidden = YES;
         }
         if (_imgArray.count < 4) {
-            cell.addBtn.hidden = NO;
-            cell.lab.hidden = NO;
+            cell.moveView.hidden = NO;
         }
         return cell;
     }
@@ -455,28 +653,35 @@
     if (indexPath.row == 2 && _style == KVisitRecoardVCStyleNewBuild) {
         NSLog(@"显示时间");
         _isShowDate = NO;
-        [UIView beginAnimations:nil context:nil];
-        [UIView setAnimationDuration:0.3];
-        CGRect rect = _datePicker.frame;
-        rect.origin.y = 200;
-        _datePicker.frame = rect;
-        [UIView commitAnimations];
-        
+        [self timerPickerViewAnimation];
     }else if (indexPath.row == 1 && _style == KVisitRecoardVCStyleNewBuild){
         NSLog(@"显示日期xx");
         _isShowDate = YES;
-        [UIView beginAnimations:nil context:nil];
-        [UIView setAnimationDuration:0.3];
-        CGRect rect = _datePicker.frame;
-        rect.origin.y = 200;
-        _datePicker.frame = rect;
-        [UIView commitAnimations];
+        [self timerPickerViewAnimation];
     }else if (indexPath.row == 4 && _style == KVisitRecoardVCStyleNewBuild){
         //弹出地址插件；
         _isAddress = YES;
 //        TSLocateView *locateView = [[TSLocateView alloc] initWithTitle:@"定位城市" delegate:self];
 //        [locateView showInView:self.view];
     }
+}
+- (NSDate *)dateFromString{
+    UITextField *dateTf = (UITextField *)[self.view viewWithTag:TEXTFIELD_DATE_TAG];
+    UITextField *timeTf = (UITextField *)[self.view viewWithTag:TEXTFIELD_TIME_TAG];
+    NSDateFormatter *formater = [[NSDateFormatter alloc] init];
+    [formater setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *dateStr = [NSString stringWithFormat:@"%@ %@",dateTf.text,timeTf.text];
+    NSDate *result = [formater dateFromString:dateStr];
+    return result;
+}
+- (void)timerPickerViewAnimation{
+    
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration:0.3];
+    CGRect rect = _datePicker.frame;
+    rect.origin.y = 200;
+    _datePicker.frame = rect;
+    [UIView commitAnimations];
 }
 
 #pragma mark -
@@ -495,19 +700,34 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
+    if (textField.tag == NOTE_FIELD_TAG || textField.tag == TEXTFIELD_JOINER_TAG) {
+        [self theTableAnimationUp];
+    }
+    if (textField.tag == TEXTFIELD_OBJECT_TAG) {
+        if (textField.text = @"") {
+            self.defaultVisitedName = [NSMutableString stringWithString:@""];
+        }
+    }
+    return YES;
+}
+- (void)theTableAnimationUp{
+    
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration:0.3];
     CGRect rect = _theTable.frame;
-    rect.origin.y = -188;
+    rect.origin.y = -100;
     _theTable.frame = rect;
     [UIView commitAnimations];
-    return YES;
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     UITableViewCell *cell = (UITableViewCell *)[[textField superview] superview];
     DLog(@"cell.text======%@",cell.textLabel.text);
     if ([cell.textLabel.text isEqualToString:@"对象"]) {
+        if (textField.text == @"") {
+           
+
+        }
         [_fieldValue replaceObjectAtIndex:0 withObject:textField.text];
     }else if ([cell.textLabel.text isEqualToString:@"备注"]){
         [_fieldValue replaceObjectAtIndex:3 withObject:textField.text];
@@ -524,6 +744,7 @@
         [_fieldValue replaceObjectAtIndex:6 withObject:textField.text];
     
     }
+    
    
 }
 #pragma mark -
@@ -546,12 +767,12 @@
     UITextField *addressMap = (UITextField *)[self.view viewWithTag:TEXTFIELD_ADDRESS_TAG];
     MapController *mapVC = [[MapController alloc] initWithNibName:nil bundle:nil];
     mapVC.companyAddr = addressMap.text;
-    mapVC.companyName = @"浙江金汉弘";
+    //mapVC.companyName = @"浙江金汉弘";
     [self.navigationController pushViewController:mapVC animated:YES];
 
 }
 
-- (void)updateLocation:(UIButton *)sender
+- (void)updateLocation:(UITapGestureRecognizer *)sender
 {
     self.isFirstLocation = NO;
     [self locaIconAnimationIsEnd:NO];
@@ -569,8 +790,8 @@
 }
 //得到地址
 - (void)getLocalAddress{
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    hud.labelText = NSLocalizedString(@"正在获取地址...", nil);
+    MBProgressHUD *hud1 = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud1.labelText = NSLocalizedString(@"正在获取地址...", nil);
     [self observeNotificationName:KHHLocationUpdateSucceeded selector:@"handleLocationUpdateSucceeded:"];
     [self observeNotificationName:KHHLocationUpdateFailed selector:@"handleLocationUpdateFailed:"];
     KHHLocationController *locaVC = [KHHLocationController sharedController];
@@ -585,18 +806,27 @@
     self.locationLatitude = [info.userInfo objectForKey:@"locationLatitude"];
     self.locationLongitude = [info.userInfo objectForKey:@"locationLongitude"];
     self.placeMark = [info.userInfo objectForKey:@"placemark"];
+    NSString *province = [NSString stringWithFormat:@"%@",
+                          [NSString stringFromObject:self.placeMark.administrativeArea]];
+    
+    NSString *city = [NSString stringWithFormat:@"%@",
+                               [NSString stringFromObject:self.placeMark.locality]];
+    NSString *other = [NSString stringWithFormat:@"%@",
+                                [NSString stringFromObject:self.placeMark.thoroughfare]];
+     NSString *other1 = [NSString stringWithFormat:@"%@",
+                         [NSString stringFromObject:self.placeMark.subThoroughfare]];
+    
+    NSString *detailAddress = [NSString stringWithFormat:@"%@%@%@%@",province,city,other,other1];
     UITextField *addressTf = (UITextField *)[self.view viewWithTag:TEXTFIELD_ADDRESS_TAG];
-    //NSString *addressString = CFBridgingRelease((__bridge CFTypeRef)(ABCreateStringWithAddressDictionary(self.placeMark.addressDictionary, NO)));
-    NSString *addressString = ABCreateStringWithAddressDictionary(self.placeMark.addressDictionary, NO);
-    if (addressString.length > 0) {
-        addressTf.text = addressString;
+//    NSString *addressString = ABCreateStringWithAddressDictionary(self.placeMark.addressDictionary, NO);
+    if (detailAddress.length > 0) {
+        addressTf.text = detailAddress;
     }
     
     if (self.isFirstLocation) {
-        self.address = ABCreateStringWithAddressDictionary(self.placeMark.addressDictionary, NO);
+        self.address = detailAddress;
         [_theTable reloadData];
     }
-    
 }
 - (void)handleLocationUpdateFailed:(NSNotification *)info{
     DLog(@"handleLocationUpdateFailed! ====== info is %@",info.userInfo);
@@ -705,37 +935,101 @@
         if (buttonIndex == 2) {
             //设为头像
         }else if (buttonIndex == 1){
-            //删除暂时不能处理
-            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:7 inSection:0];
-            [_imgArray removeObjectAtIndex:_currentTag - 100];
-            [_theTable reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            DLog(@"注册删除图片消息");
+            if (_style == KVisitRecoardVCStyleShowInfo) {
+                [self observeNotificationName:KHHUIDeleteImageFromVisitScheduleSucceeded selector:@"handleDeleteImageFromVisitScheduleSucceeded:"];
+                [self observeNotificationName:KHHUIDeleteImageFromVisitScheduleFailed selector:@"handleDeleteImageFromVisitScheduleFailed:"];
+                [self netWorkWarnShow];
+                NSArray *images = [self.schedu.images allObjects];
+                Image *img = [images objectAtIndex:_currentTag - 100];
+                [self.dataCtrl deleteImage:img fromSchedule:self.schedu];
+            }
+            //[_imgArray removeObjectAtIndex:_currentTag - 100];
         }
     }
 }
+#pragma mark -
 - (void)handlePickedImage:(UIImage *)image
 {
+    //注册添加图片消息
+    if (_style == KVisitRecoardVCStyleShowInfo) {
+        DLog(@"调用添加拜访计划图片");
+        [self observeNotificationName:KHHUIUploadImageForVisitScheduleSucceeded selector:@"handleUploadImageForVisitScheduleSucceeded:"];
+        [self observeNotificationName:KHHUIUploadImageForVisitScheduleFailed selector:@"handleKHHUIUploadImageForVisitScheduleFailed:"];
+        [self netWorkWarnShow];
+        [self.dataCtrl uploadImage:image forSchedule:self.schedu];
+    }else if (_style == KVisitRecoardVCStyleNewBuild){
+        [_imgArray addObject:image];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:7 inSection:0];
+        [_theTable reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    
+    }
+}
+//添加图片成功
+- (void)handleUploadImageForVisitScheduleSucceeded:(NSNotification *)info{
+    [self stopObservingForUploadImage];
+    //上传成功以后，刷新单元格显示；
+    DLog(@"handleUploadImageForVisitScheduleSucceeded!");
+    [self netWorkWarnHide];
+    //[self updateImageArray];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:7 inSection:0];
-    [_imgArray addObject:image];
     [_theTable reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+}
+//添加图片失败
+- (void)handleKHHUIUploadImageForVisitScheduleFailed:(NSNotification *)info{
+    [self stopObservingForDelImage];
+    DLog(@"handleKHHUIUploadImageForVisitScheduleFailed!");
+    [self netWorkWarnHide];
+    [[[UIAlertView alloc] initWithTitle:nil
+                                message:@"添加图片失败"
+                               delegate:nil
+                      cancelButtonTitle:@"确定"
+                      otherButtonTitles: nil] show];
+}
+//删除图片成功
+- (void)handleDeleteImageFromVisitScheduleSucceeded:(NSNotification *)info{
+    [self stopObservingForDelImage];
+    [self netWorkWarnHide];
+    //[self updateImageArray];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:7 inSection:0];
+    [_theTable reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+}
+//删除图片失败
+- (void)handleDeleteImageFromVisitScheduleFailed:(NSNotification *)info{
+    [self stopObservingForDelImage];
+    [self netWorkWarnHide];
+    [self netWorkWarnHide];
+    [[[UIAlertView alloc] initWithTitle:nil
+                                message:@"删除图片失败"
+                               delegate:nil
+                      cancelButtonTitle:@"确定"
+                      otherButtonTitles: nil] show];
+}
+- (void)stopObservingForUploadImage{
+    [self stopObservingNotificationName:KHHUIUploadImageForVisitScheduleSucceeded];
+    [self stopObservingNotificationName:KHHUIUploadImageForVisitScheduleFailed];
+}
+- (void)stopObservingForDelImage{
+    [self stopObservingNotificationName:KHHUIDeleteImageFromVisitScheduleSucceeded];
+    [self stopObservingNotificationName:KHHUIDeleteImageFromVisitScheduleFailed];
 }
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo
 {
 
-    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
-        UIImage *oriImage = [editingInfo objectForKey:UIImagePickerControllerOriginalImage];
-        UIImageWriteToSavedPhotosAlbum(oriImage, nil, nil,nil);
-    }
+//    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+//        UIImage *oriImage = [editingInfo objectForKey:UIImagePickerControllerOriginalImage];
+//        UIImageWriteToSavedPhotosAlbum(oriImage, nil, nil,nil);
+//    }
     [self performSelector:@selector(handlePickedImage:) withObject:image afterDelay:0.1];
     [self dismissModalViewControllerAnimated:YES];
 
 }
-//- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-//{
-//    [picker dismissModalViewControllerAnimated:YES];
-//    UIImage *image = [info objectForKey:UIImagePickerControllerMediaType];
-//    [self performSelector:@selector(saveImage:) withObject:image afterDelay:0.5];
-//}
-
+- (void)netWorkWarnShow{
+    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+}
+- (void)netWorkWarnHide{
+    [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+}
 #pragma mark -
 #pragma mark UIPickViewDelegates
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
@@ -781,6 +1075,7 @@
             _timeInterval = 7*24*60*60;
         }
         [self setAlerm:_timeInterval];
+
 
     }else{
         UITextField *noteTf = (UITextField *)[self.view viewWithTag:NOTE_FIELD_TAG];

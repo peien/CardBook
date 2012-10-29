@@ -9,6 +9,7 @@
 #import "KHHFrameCardView.h"
 #import "UIImageView+WebCache.h"
 #import "KHHVisualCardViewController.h"
+#import "KHHCardTemplageVC.h"
 
 @implementation KHHFrameCardView
 @synthesize scrView = _scrView;
@@ -17,6 +18,9 @@
 @synthesize cardTempVC;
 @synthesize card;
 @synthesize shadowCard;
+@synthesize viewCtrl;
+@synthesize isOnePage;
+@synthesize pages;
 
 - (id)initWithFrame:(CGRect)frame isVer:(BOOL)ver
 {
@@ -41,6 +45,7 @@
     xlPage.hidesForSinglePage = YES;
     xlPage.numberOfPages = 2;
     [self addSubview:xlPage];
+    self.pages = 2;
     if (_isVer) {
         CGRect rect = CGRectMake(75, 10, 180, 245);
         [self creatCardTemplate:rect];
@@ -61,7 +66,11 @@
     UIScrollView *scroll = [[UIScrollView alloc] initWithFrame:frame];
     scroll.showsHorizontalScrollIndicator = NO;
     scroll.delegate = self;
-    for (int i = 0; i<2; i++) {
+    if (self.isOnePage) {
+        self.pages = 1;
+        xlPage.hidden = YES;
+    }
+    for (int i = 0; i< pages; i++) {
         CGRect rect = frame;
         rect.origin.x = i*frame.size.width;
         frame = rect;
@@ -72,12 +81,21 @@
 //            imgView.image = [UIImage imageNamed:@"card_tesco.png"];
             [scroll addSubview:self.cardTempVC.view];
             self.cardTempVC.card = self.card;
+            //暂时test选择模版
+            [self addTapGestureForTemplate:self.cardTempVC.view];
+            
         }else{
             //第二张从网络获取
             rect.origin.y = 0;
             imgView.frame = rect;
             imgView.backgroundColor = [UIColor darkGrayColor];
-            imgView.image = [UIImage imageNamed:@"template2FrameBg.jpg"];
+            NSArray *set = [self.card.frames allObjects];
+            if (set.count > 0) {
+                //[imgView setImageWithURL:[NSURL URLWithString:[set objectAtIndex:0]] placeholderImage:[UIImage imageNamed:@""]];
+            }else{
+                imgView.image = [UIImage imageNamed:@"template2FrameBg.jpg"];
+            }
+            
             [scroll addSubview:imgView];
         }
     }
@@ -106,6 +124,19 @@
     _scrView.contentOffset = CGPointMake(i * w, 0);
     [UIView commitAnimations];
     
+}
+- (void)addTapGestureForTemplate:(UIView *)templateView{
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gotoSelectTemplateVC:)];
+    tap.numberOfTapsRequired = 1;
+    tap.numberOfTouchesRequired = 1;
+    [templateView addGestureRecognizer:tap];
+ 
+}
+- (void)gotoSelectTemplateVC:(UITapGestureRecognizer *)sender{
+    DLog(@"gotoSelectTemplateVC");
+    KHHCardTemplageVC *temVC = [[KHHCardTemplageVC alloc] initWithNibName:nil bundle:nil];
+    [self.viewCtrl.navigationController pushViewController:temVC animated:YES];
+
 }
 //异步获取图片
 /*

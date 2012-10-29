@@ -8,6 +8,7 @@
 
 #import "KHHManagementViewController.h"
 #import "KHHMyDetailController.h"
+#import "KHHCalendarViewController.h"
 #import "LocationInfoVC.h"
 #import "EmployeesManageVC.h"
 #import "KHHRadarViewController.h"
@@ -84,8 +85,8 @@
 
 }
 - (IBAction)calendarBtnClick:(id)sender{
-    KHHVisitCalendarVC *visitCalVC = [[KHHVisitCalendarVC alloc] initWithNibName:nil bundle:nil];
-    [self.navigationController pushViewController:visitCalVC animated:YES];
+    KHHCalendarViewController *calVC = [[KHHCalendarViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:calVC animated:YES];
 
 }
 - (IBAction)manageEmployeesBtnClick:(id)sender{

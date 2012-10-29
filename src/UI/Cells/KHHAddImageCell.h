@@ -11,5 +11,6 @@
 @interface KHHAddImageCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UIButton    *addBtn;
 @property (strong, nonatomic) IBOutlet UILabel     *lab;
+@property (strong, nonatomic) IBOutlet UIView      *moveView;
 
 @end

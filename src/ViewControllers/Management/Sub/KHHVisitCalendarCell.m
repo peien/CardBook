@@ -37,7 +37,7 @@
 {
     UIButton *button = (UIButton *)sender;
     if ([_delegate respondsToSelector:@selector(KHHVisitCalendarCellBtnClick:)]) {
-        [_delegate KHHVisitCalendarCellBtnClick:button.tag];
+        [_delegate KHHVisitCalendarCellBtnClick:button];
     }
 
 }

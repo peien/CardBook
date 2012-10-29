@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @protocol KHHVisitCalendarCellDelegate<NSObject>
-- (void)KHHVisitCalendarCellBtnClick:(NSInteger)tag;
+- (void)KHHVisitCalendarCellBtnClick:(UIButton *)btn;
 - (void)showLocaButtonClick:(id)sender;
 @end
 @interface KHHVisitCalendarCell : UITableViewCell
@@ -23,6 +23,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *imgviewIco3;
 @property (strong, nonatomic) IBOutlet UIImageView *imgviewIco4;
 @property (strong, nonatomic) IBOutlet UIButton    *showLocBtn;
+@property (strong, nonatomic) IBOutlet UILabel     *dateLab;
 
 
 - (IBAction)KHHVisitCalendarCellBtnClick:(id)sender;

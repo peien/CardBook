@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SuperViewController.h"
+#import "KHHClasses.h"
 typedef enum
 {
     KVisitRecoardVCStyleNewBuild,
@@ -38,6 +39,10 @@ typedef enum
 @property (strong, nonatomic) NSMutableArray        *imgArray;
 @property (strong, nonatomic) NSArray               *timeArr;
 @property (strong, nonatomic) UIImageView           *tapImgview;
-@property (strong, nonatomic) NSArray               *objectNameArr;
+@property (strong, nonatomic) NSMutableArray        *objectNameArr;
+@property (strong, nonatomic) Card                  *visitInfoCard;
+@property (strong, nonatomic) Schedule              *schedu;
+@property (strong, nonatomic) NSDate                *selectedDateFromCal;
+@property (assign, nonatomic) bool                  isFromCalVC;
 
 @end

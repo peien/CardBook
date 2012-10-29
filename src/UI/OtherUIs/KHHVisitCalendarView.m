@@ -13,13 +13,23 @@
 #import "KHHVisitRecoardVC.h"
 #import "KHHFullFrameController.h"
 #import "MapController.h"
+#import "UIImageView+WebCache.h"
+#import "DetailInfoViewController.h"
+#import "KHHData+UI.h"
+#import "KHHData.h"
+#import "NSString+SM.h"
+
 
 @implementation KHHVisitCalendarView
 @synthesize theTable = _theTable;
 @synthesize footView = _footView;
 @synthesize imgArr = _imgArr;
-//@synthesize delegate = _delegate;
 @synthesize viewCtrl = _viewCtrl;
+@synthesize card;
+@synthesize dataArray;
+@synthesize isDetailVC;
+@synthesize isAllVisitedSch;
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -37,16 +47,28 @@
     // Drawing code
 }
 */
+- (void)initViewData{
+    if (self.isAllVisitedSch) {
+        KHHData *data = [KHHData sharedData];
+        self.dataArray  = [data allSchedules];
+    }else{
+        NSSet *set = self.card.schedules;
+        self.dataArray = [set allObjects];
+    }
+}
+#pragma mark -
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return [self.dataArray count];
+    
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (YES) {//没有图片
-        return 80;
-    }else{
+    Schedule *sched = [self.dataArray objectAtIndex:indexPath.row];
+    if ([sched.images allObjects].count > 0) {
         return 140;
+    }else{
+        return 80;
     }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -61,33 +83,64 @@
     }
     UIImage *imgBtn = [[UIImage imageNamed:@"tongbu_normal.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 8, 0, 8)];
     [cell.finishBtn setBackgroundImage:imgBtn forState:UIControlStateNormal];
+    Schedule *sched = [self.dataArray objectAtIndex:indexPath.row];
    
-    if (indexPath.row%2 == 0) {
-        cell.finishBtn.hidden = YES;
-    }
-    for (int i = 0; i < 1; i++) {
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapFullFrame:)];
-        tap.numberOfTapsRequired = 1;
-        tap.numberOfTouchesRequired = 1;
-        if (i == 0) {
-            [cell.imgviewIco1 addGestureRecognizer:tap];
-        }else if (i == 1){
-            [cell.imgviewIco2 addGestureRecognizer:tap];
-        }else if (i == 2){
-            [cell.imgviewIco3 addGestureRecognizer:tap];
-        }else if (i == 3){
-            [cell.imgviewIco4 addGestureRecognizer:tap];
+    //是否有图片
+    if ([sched.images allObjects].count > 0) {
+        for (int i = 0; i < [sched.images allObjects].count; i++) {
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapFullFrame:)];
+            tap.numberOfTapsRequired = 1;
+            tap.numberOfTouchesRequired = 1;
+            Image *img = [[sched.images allObjects] objectAtIndex:i];
+            if (i == 0) {
+                [cell.imgviewIco1 addGestureRecognizer:tap];
+                [cell.imgviewIco1 setImageWithURL:[NSURL URLWithString:img.url] placeholderImage:[UIImage imageNamed:@"logopic.png"]];
+            }else if (i == 1){
+                [cell.imgviewIco2 addGestureRecognizer:tap];
+                [cell.imgviewIco2 setImageWithURL:[NSURL URLWithString:img.url] placeholderImage:[UIImage imageNamed:@"logopic.png"]];
+            }else if (i == 2){
+                [cell.imgviewIco3 addGestureRecognizer:tap];
+                [cell.imgviewIco3 setImageWithURL:[NSURL URLWithString:img.url] placeholderImage:[UIImage imageNamed:@"logopic.png"]];
+            }else if (i == 3){
+                [cell.imgviewIco4 addGestureRecognizer:tap];
+                [cell.imgviewIco4 setImageWithURL:[NSURL URLWithString:img.url] placeholderImage:[UIImage imageNamed:@"logopic.png"]];
+            }
         }
     }
-    if (YES) {
-        cell.objValueLab.text = @"王文";
+    //拜访日期
+    if (sched.plannedDate != nil) {
+        NSDateFormatter *form = [[NSDateFormatter alloc] init];
+        [form setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        NSString *date = [form stringFromDate:sched.plannedDate];
+        cell.dateLab.text = date;
     }
-    if (YES) {
-        cell.locValueLab.text = @"浙江省杭州市滨江区南环路4280号";
+    //拜访对象
+    if (sched.targets!= nil ) {
+        NSMutableString *names = [[NSMutableString alloc] init];
+        NSArray *objects = [sched.targets allObjects];
+        for (int i = 0; i < objects.count; i++) {
+            Card *cardObj = [objects objectAtIndex:i];
+            NSString *name = [NSString stringByFilterNilFromString:cardObj.name];
+            if (name.length) {
+                [names appendString:[NSString stringWithFormat:@" %@",name]];
+            }
+        }
+        cell.objValueLab.text = names;
     }
-    if (YES) {
-        cell.noteValueLab.text = @"请客吃饭";
-    } 
+    //地址
+    if (sched.address.other.length > 0) {
+        cell.locValueLab.text = sched.address.other;
+    }
+    //备注
+    if (sched.content.length > 0) {
+        cell.noteValueLab.text = sched.content;
+    }
+    //是否完成
+    if ([sched.isFinished isEqualToNumber:[NSNumber numberWithBool:YES]]) {
+        cell.finishBtn.hidden = YES;
+    }else{
+        cell.finishBtn.hidden = NO;
+    }
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -95,19 +148,27 @@
     KHHVisitRecoardVC *visitVC = [[KHHVisitRecoardVC alloc] initWithNibName:nil bundle:nil];
     //有没有图片
     visitVC.style = KVisitRecoardVCStyleShowInfo;
+    visitVC.schedu = [self.dataArray objectAtIndex:indexPath.row];
     visitVC.isHaveImage = YES;
+    if (self.isDetailVC) {
+        DetailInfoViewController *detailVC = (DetailInfoViewController *)self.viewCtrl;
+        detailVC.isReloadVisiteTable = YES;
+    }
     [self.viewCtrl.navigationController pushViewController:visitVC animated:YES];
 }
-
-- (void)KHHVisitCalendarCellBtnClick:(NSInteger)tag
+#pragma mark -
+- (void)KHHVisitCalendarCellBtnClick:(UIButton *)btn
 {
-    if (tag == 222) {
+    if (btn.tag == 222) {
         //铃铛提示
-    }else if (tag == 223){
+    }else if (btn.tag == 223){
         //完成
+        KHHVisitCalendarCell *cell = (KHHVisitCalendarCell *)[[btn superview] superview];
+        NSIndexPath *index = [_theTable indexPathForCell:cell];
         KHHVisitRecoardVC *finishVC = [[KHHVisitRecoardVC alloc] initWithNibName:nil bundle:nil];
         finishVC.isNeedWarn = NO;
         finishVC.isFinishTask = YES;
+        finishVC.schedu = [self.dataArray objectAtIndex:index.row];
         finishVC.style = KVisitRecoardVCStyleShowInfo;
         [self.viewCtrl.navigationController pushViewController:finishVC animated:YES];
     }
@@ -116,7 +177,6 @@
     DLog(@"showMap");
     MapController *mapVC = [[MapController alloc] initWithNibName:nil bundle:nil];
     mapVC.companyAddr = @"浙江杭州";
-    //mapVC.companyName = @"xx";
     [self.viewCtrl.navigationController pushViewController:mapVC animated:YES];
     
 }
@@ -124,16 +184,20 @@
 {
     UIButton *btn = (UIButton *)sender;
     if (btn.tag == 333) {
+        
         KHHVisitRecoardVC *visitRVC = [[KHHVisitRecoardVC alloc] initWithNibName:nil bundle:nil];
         visitRVC.style = KVisitRecoardVCStyleNewBuild;
         visitRVC.isNeedWarn = YES;
+        visitRVC.visitInfoCard = self.card;
+        if (self.isDetailVC) {
+            DetailInfoViewController *detailVC = (DetailInfoViewController *)self.viewCtrl;
+            detailVC.isReloadVisiteTable = YES;
+        }
         [self.viewCtrl.navigationController pushViewController:visitRVC animated:YES];
         
     }else if (btn.tag == 444){
-        
         KHHCalendarViewController *calendarVC = [[KHHCalendarViewController alloc] initWithNibName:nil bundle:nil];
         [self.viewCtrl.navigationController pushViewController:calendarVC animated:YES];
-        
     }
 
 }
@@ -145,5 +209,8 @@
     [self.viewCtrl.navigationController pushViewController:fullVC animated:YES];
     
 }
-
+- (void)reloadTheTable{
+    [self initViewData];
+    [_theTable reloadData];
+}
 @end

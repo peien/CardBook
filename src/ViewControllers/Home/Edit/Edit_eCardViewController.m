@@ -19,6 +19,7 @@
 #import "KHHShowHideTabBar.h"
 #import "UIImageView+WebCache.h"
 #import "MBProgressHUD.h"
+#import "KHHVisualCardViewController.h"
 
 #import "KHHClasses.h"
 #import "KHHDataAPI.h"
@@ -143,9 +144,21 @@ NSString *const kECardListSeparator = @"|";
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor colorWithRed:241 green:238 blue:232 alpha:1.0];
     KHHFrameCardView *cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(0, 0, 320, 220) isVer:NO];
+    cardView.viewCtrl = self;
+    cardView.isOnePage = YES;
     cardView.card = self.glCard;
     [cardView showView];
     _theTable.tableHeaderView = cardView;
+//    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 220)];
+//    headerView.backgroundColor = [UIColor clearColor];
+//    KHHVisualCardViewController *cardTemplateVC = [[KHHVisualCardViewController alloc] initWithNibName:nil bundle:nil];
+//    cardTemplateVC.card = self.glCard;
+//    CGRect rect = cardTemplateVC.view.frame;
+//    rect.origin.x = 10;
+//    rect.origin.y = 10;
+//    cardTemplateVC.view.frame = rect;
+//    [headerView addSubview:cardTemplateVC.view];
+//    _theTable.tableHeaderView = headerView;
     if (self.type == KCardViewControllerTypeNewCreate) {
         self.title = @"新建名片";
     }else if (self.type == KCardViewControllerTypeShowInfo){

@@ -121,7 +121,6 @@
     //[self becomeFirstResponder];
     DLog(@"becomeFirstResponder ====== %i",[self becomeFirstResponder]);
     [self updateCardTempInfo];
-    
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -154,14 +153,14 @@
     UIButton *button = (UIButton *)sender;
     switch (button.tag) {
         case 111:
-            [self exchangeCard];
-            break;
-        case 112:
         {
             KHHSendToViewController *sendToVC = [[KHHSendToViewController alloc] initWithNibName:nil bundle:nil];
             sendToVC.theCard = self.card;
             [self.navigationController pushViewController:sendToVC animated:YES];
-        }
+        }            
+            break;
+        case 112:
+            [self exchangeCard];
             break;
         case 113:
             //同步所有，同步联系人，启动定位服务
@@ -276,11 +275,14 @@
 //交换失败
 - (void)handleExchangeCardFailed:(NSNotification *)info{
     DLog(@"ExchangeCardFailed! =======info is %@",info.userInfo);
+     [self.mbHUD hide:YES];
     if ([[info.userInfo objectForKey:@"errorCode"]intValue] == -21) {
         DLog(@"没有相对应的卡片要交换");
+        [self exchangeFailed:@"没有匹配的名片可交换"];
+    }else if ([[info.userInfo objectForKey:@"errorCode"]intValue] == -1009){
+        [self exchangeFailed:@"网络错误"];
     }
-    [self.mbHUD hide:YES];
-    [self exchangeFailed:@"没有匹配的名片可交换"];
+
 }
 //收到最新card成功
 - (void)handlePullLatestReceivedCardSucceeded:(NSNotification *)info{
@@ -343,6 +345,7 @@
     if (self.countDownNum <= 0) {
         //超时处理；
         DLog(@"exchange failed because time out!!");
+        self.mbHUD.hidden = YES;
         [self exchangeFailed:@"网络超时"];
     }else{
         self.mbHUD = [timerr.userInfo objectForKey:@"Hud"];

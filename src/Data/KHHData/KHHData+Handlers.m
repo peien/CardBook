@@ -524,7 +524,7 @@
     // 由于当前掌握的数据不完整，接下来去增量同步拜访计划
     NSMutableArray *queue = [NSMutableArray array];
     [queue addObject:@(KHHQueuedOperationSyncVisitSchedules)];
-    [queue addObject:@(KHHQueuedOperationSyncVisitSchedulesAfterUpdate)];
+    [queue addObject:@(KHHQueuedOperationSyncVisitSchedulesAfterUploadImage)];
     [self startNextQueuedOperation:queue];
 }
 - (void)handleUploadImageForVisitScheduleFailed:(NSNotification *)noti {

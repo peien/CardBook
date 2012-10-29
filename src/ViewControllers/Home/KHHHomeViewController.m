@@ -164,6 +164,7 @@ typedef enum {
     
     UIImage *bgimg = [[UIImage imageNamed:@"left_bg2.png"] stretchableImageWithLeftCapWidth:1 topCapHeight:1];
     UIImageView *bgimgView = [[UIImageView alloc] initWithImage:bgimg];
+    _btnTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     [_btnTable setBackgroundView:bgimgView];
       _imgview.image = bgimg;
     

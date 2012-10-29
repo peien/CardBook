@@ -11,5 +11,6 @@
 
 @interface KHHCalendarViewController : SuperViewController
 @property (strong, nonatomic) IBOutlet UITableView *theTable;
+@property (strong, nonatomic) IBOutlet UIButton    *addBtn;
 - (IBAction)plusBtnClick:(id)sender;
 @end

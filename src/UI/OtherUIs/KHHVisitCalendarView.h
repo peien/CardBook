@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "KHHVisitCalendarCell.h"
 #import "DetailInfoViewController.h"
+#import "KHHClasses.h"
 
 @interface KHHVisitCalendarView : UIView<UITableViewDataSource,UITableViewDelegate,KHHVisitCalendarCellDelegate>
 @property (strong, nonatomic) IBOutlet UITableView     *theTable;
@@ -16,6 +17,13 @@
 @property (strong, nonatomic) UIViewController         *viewCtrl;
 @property (strong, nonatomic) NSMutableArray           *imgArr;
 @property (strong, nonatomic) UIImageView              *imgview;
+@property (strong, nonatomic) Card                     *card;
+@property (strong, nonatomic) NSArray                  *dataArray;
+@property (assign, nonatomic) bool                     isDetailVC;
+@property (assign, nonatomic) bool                     isAllVisitedSch;
 
 - (IBAction)VisitCalendarBtnClick:(id)sender;
+- (void)initViewData;
+- (void)reloadTheTable;
+
 @end

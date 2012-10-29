@@ -40,8 +40,9 @@
 @property (nonatomic, strong) KHHCustomEvaluaView  *customView;
 @property (nonatomic, strong) UIActionSheet        *actSheet;
 @property (nonatomic, assign) int                  style;
-@property (nonatomic, assign) bool                 isNeedReloadTable;
 @property (nonatomic, strong) KHHData              *dataCtrl;
+@property (assign, nonatomic) bool                 isReloadCardTable;
+@property (assign, nonatomic) bool                 isReloadCustomValTable;
 @end
 
 @implementation DetailInfoViewController
@@ -64,6 +65,9 @@
 @synthesize isNeedReloadTable;
 @synthesize isCompanyColleagues;
 @synthesize dataCtrl;
+@synthesize isReloadCardTable;
+@synthesize isReloadVisiteTable;
+@synthesize isReloadCustomValTable;
 
 #pragma mark -
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -106,11 +110,18 @@
     
     [super viewWillAppear:animated];
     [KHHShowHideTabBar hideTabbar];
-    if (self.isNeedReloadTable) {
+//    if (self.isNeedReloadTable) {
+//
+//        //刷新客户评估表
+//
+//        //刷新拜访纪录
+//    }
+    if (self.isReloadCardTable) {
         [_cardView reloadTable];
         [_cardView initView];
         [self updateViewData:self.card];
-        //刷新客户评估表
+    }
+    if (self.isReloadCustomValTable){
         if ([self.card isKindOfClass:[ReceivedCard class]]) {
             self.card = [self.dataCtrl receivedCardByID:self.card.id];
         }else if ([self.card isKindOfClass:[PrivateCard class]]){
@@ -118,6 +129,16 @@
         }
         _customView.card = self.card;
         [_customView reloadTable];
+    
+    }
+    if (self.isReloadVisiteTable){
+        if ([self.card isKindOfClass:[ReceivedCard class]]) {
+            self.card = [self.dataCtrl receivedCardByID:self.card.id];
+        }else if ([self.card isKindOfClass:[PrivateCard class]]){
+            self.card = [self.dataCtrl privateCardByID:self.card.id];
+        }
+        _visitCalView.card = self.card;
+        [_visitCalView reloadTheTable];
     }
     
 }
@@ -200,18 +221,25 @@
     _cardView.detailVC = self;
     [_cardView initViewData];
     [self.containView addSubview:_cardView];
-    
+    //拜访日志
     _visitCalView = [[[NSBundle mainBundle] loadNibNamed:@"KHHVisitCalendarView" owner:self options:nil] objectAtIndex:0];
+    _visitCalView.card = self.card;
+    [_visitCalView initViewData];
+    
     CGRect rect = _visitCalView.footView.frame;
-    rect.origin.y = 290;
+    CGRect rectTable = _visitCalView.theTable.frame;
+    rect.origin.y = 280;
+    rectTable.size.height = 305;
     _visitCalView.footView.frame = rect;
+    _visitCalView.theTable.frame = rectTable;
     _visitCalView.viewCtrl = self;
+    _visitCalView.footView.backgroundColor = [UIColor clearColor];
     [self.containView addSubview:_visitCalView];
     
     //客户评估视图
     _customView = [[[NSBundle mainBundle] loadNibNamed:@"KHHCustomEvaluaView" owner:self options:nil] objectAtIndex:0];
     if (self.card.evaluation != nil) {
-        _customView.importFlag = @".....";
+        _customView.importFlag = self.card.evaluation.remarks;
         _customView.relationEx = [self.card.evaluation.degree floatValue];
         _customView.customValue = [self.card.evaluation.value floatValue];
     }
@@ -221,12 +249,13 @@
     UIButton *bottomBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     bottomBtn.tag = 323;
     [bottomBtn addTarget:self action:@selector(bottomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    bottomBtn.frame = CGRectMake(260, 360, 66, 66);
+    bottomBtn.frame = CGRectMake(260, 360, 50, 50);
     [bottomBtn setBackgroundImage:[UIImage imageNamed:@"edit_Btn_Red.png"] forState:UIControlStateNormal];
-    [self.view addSubview:bottomBtn];
-    if ([self.card isKindOfClass:[ReceivedCard class]]) {
+    [self.view insertSubview:bottomBtn atIndex:100];
+    if (self.card.roleTypeValue != 1 || [self.card isKindOfClass:[ReceivedCard class]]) {
         bottomBtn.hidden = YES;
     }
+
     //popView
 
 }
@@ -246,7 +275,7 @@
 - (void)bottomBtnClick:(id)sender
 {
     if (_isToeCardVC) {
-        self.isNeedReloadTable = YES;
+        self.isReloadCardTable = YES;
         Edit_eCardViewController *editeCardVC = [[Edit_eCardViewController alloc] initWithNibName:@"Edit_eCardViewController" bundle:nil];
         editeCardVC.type = KCardViewControllerTypeShowInfo;
         editeCardVC.glCard = self.card;
@@ -257,7 +286,8 @@
         KHHEditCustomValueVC *editCustomVC = [[KHHEditCustomValueVC alloc] initWithNibName:nil bundle:nil];
         editCustomVC.cusView = _customView;
         editCustomVC.card = self.card;
-        self.isNeedReloadTable = YES;
+        self.isReloadCustomValTable = YES;
+        editCustomVC.importFlag = self.card.evaluation.remarks;
         editCustomVC.relationEx = [self.card.evaluation.degree floatValue];
         editCustomVC.customValue = [self.card.evaluation.value floatValue];
         [self.navigationController pushViewController:editCustomVC animated:YES];
@@ -289,18 +319,21 @@
     
     if (btn.tag == 999) {
         [self.containView bringSubviewToFront:_cardView];
-        if ([self.card isKindOfClass:[ReceivedCard class]]) {
+        if (self.card.roleTypeValue != 1 || [self.card isKindOfClass:[ReceivedCard class]]) {
             bottomBtn.hidden = YES;
+        }else{
+            bottomBtn.hidden = NO;
         }
         _isToeCardVC  = YES;
         
     }else if (btn.tag == 1000){
-        CGRect rect = _visitCalView.theTable.frame;
-        CGRect rectfoot = _visitCalView.footView.frame;
-        rect.size.height = 200;
-        rectfoot.origin.y = 260;
-        _visitCalView.footView.frame = rectfoot;
-        _visitCalView.theTable.frame = rect;
+        _visitCalView.isDetailVC = YES;
+//        CGRect rect = _visitCalView.theTable.frame;
+//        CGRect rectfoot = _visitCalView.footView.frame;
+//        rect.size.height = 200;
+//        rectfoot.origin.y = 260;
+//        _visitCalView.footView.frame = rectfoot;
+//        _visitCalView.theTable.frame = rect;
         [self.containView bringSubviewToFront:_visitCalView];
         bottomBtn.hidden = YES;
     

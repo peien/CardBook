@@ -66,6 +66,13 @@
 
 }
 //ios 6 不能横屏了
+- (BOOL)shouldAutorotate{
+    return YES;
+}
+//- (NSUInteger)supportedInterfaceOrientations{
+//    return UIInterfaceOrientationMaskLandscape;
+//}
+//ios 6 一下
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
      return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft);
