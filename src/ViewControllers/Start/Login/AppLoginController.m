@@ -9,11 +9,20 @@
 #import "AppLoginController.h"
 #import "SMCheckbox.h"
 #import "KHHDefaults.h"
+#import "KHHLog.h"
 #import "KHHNotifications.h"
 #import "NSString+Validation.h"
+#import "UIImage+KHH.h"
 #import "UIViewController+SM.h"
 #import "RegViewController.h"
 #import "ResetPasswordViewController.h"
+
+#define Tag_ImageView_CellTop    20001
+#define Tag_ImageView_CellBottom 20002
+#define Tag_ImageView_UserIcon   20003
+#define Tag_ImageView_PassIcon   20004
+#define Tag_Button_Login         21001
+#define Tag_Button_Reg           21002
 
 @interface AppLoginController () <SMCheckboxDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *userField;
@@ -32,6 +41,8 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        // Title:
+        self.navigationItem.title = NSLocalizedString(@"登录", nil);
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc]
                                                  initWithTitle:@"返回"
                                                  style:UIBarButtonItemStylePlain
@@ -46,8 +57,25 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.title = NSLocalizedString(@"登录", nil);
+    UIView *root = self.view;
+    // Checkbox:
     self.showPasswordBox.delegate = self;
+    // Cell background:
+    UIImageView *userBg = (UIImageView *)[root viewWithTag:Tag_ImageView_CellTop];
+    UIImageView *passBg = (UIImageView *)[root viewWithTag:Tag_ImageView_CellBottom];
+    UIEdgeInsets cellBgInsets = {0, 13, 0, 13};
+    userBg.image = [UIImage imageNamed:@"Cell_top.png" capInsets:cellBgInsets];
+    passBg.image = [UIImage imageNamed:@"Cell_bottom.png" capInsets:cellBgInsets];
+    // Button:
+    UIButton *loginButton = (UIButton *)[root viewWithTag:Tag_Button_Login];
+    UIButton *regButton   = (UIButton *)[root viewWithTag:Tag_Button_Reg];
+    UIEdgeInsets buttonBgInsets = {0, 12, 0, 12};
+    [loginButton setBackgroundImage:[UIImage imageNamed:@"Button_red.png"
+                                              capInsets:buttonBgInsets]
+                           forState:UIControlStateNormal];
+    [regButton   setBackgroundImage:[UIImage imageNamed:@"Button_grey.png"
+                                              capInsets:buttonBgInsets]
+                           forState:UIControlStateNormal];
 }
 
 - (void)didReceiveMemoryWarning
@@ -67,8 +95,7 @@
     [self postASAPNotificationName:nAppShowCreateAccount];
 }
 - (IBAction)login:(id)sender {
-    [self.userField     resignFirstResponder];
-    [self.passwordField resignFirstResponder];
+    [self hideKeyboard];
     // get user & password
     NSString *user     = self.userField .text;
     NSString *password = self.passwordField.text;
@@ -117,20 +144,20 @@
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     textField.backgroundColor = [UIColor clearColor];
 }
-- (void)textFieldDidEndEditing:(UITextField *)textField {
-    // 检查用户名和密码
-    if (textField == self.userField) {
-        NSString *text = textField.text;
-        if (text.length && (![text isValidMobilePhoneNumber])) {
-            textField.backgroundColor = [UIColor redColor];
-        }
-        return;
-    }
-    if (textField == self.passwordField) {
-        //
-        return;
-    }
-}
+//- (void)textFieldDidEndEditing:(UITextField *)textField {
+//    // 检查用户名和密码
+//    if (textField == self.userField) {
+//        NSString *text = textField.text;
+//        if (text.length && (![text isValidMobilePhoneNumber])) {
+//            textField.backgroundColor = [UIColor redColor];
+//        }
+//        return;
+//    }
+//    if (textField == self.passwordField) {
+//        //
+//        return;
+//    }
+//}
 // called when 'return' key pressed. return NO to ignore.
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField == self.passwordField) {

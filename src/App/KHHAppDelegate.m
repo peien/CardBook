@@ -80,7 +80,7 @@
     
     //MARK: - UIBarButtonItem
     UIBarButtonItem *barButtonItem = [UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil];
-    UIEdgeInsets barButtonBgInsets = { 12, 16, 12, 16 };
+    UIEdgeInsets barButtonBgInsets = { 0, 16, 0, 16 };
     UIImage *barButtonBg = [[UIImage imageNamed:@"titlebtn_normal.png"]
                             resizableImageWithCapInsets:barButtonBgInsets];
     // 换背景
@@ -90,17 +90,18 @@
     [barButtonItem setBackgroundImage:barButtonBg
                              forState:UIControlStateNormal
                            barMetrics:UIBarMetricsDefault];
-    // 调位置
-    CGFloat adjustment = -3.f;
+    // 调背景位置
+    CGFloat adjustment = -2.f;
     [barButtonItem setBackButtonBackgroundVerticalPositionAdjustment:adjustment
                                                        forBarMetrics:UIBarMetricsDefault];
     [barButtonItem setBackgroundVerticalPositionAdjustment:adjustment
                                              forBarMetrics:UIBarMetricsDefault];
-    // Title的位置调整
-//    UIOffset titleOffset = {0, 0};
-//    [barButtonItem setBackButtonTitlePositionAdjustment:titleOffset
-//                                          forBarMetrics:UIBarMetricsDefault];
-    
+    // 调Title位置
+    UIOffset titleOffset = {0, 0};
+    [barButtonItem setBackButtonTitlePositionAdjustment:titleOffset
+                                          forBarMetrics:UIBarMetricsDefault];
+    [barButtonItem setTitlePositionAdjustment:titleOffset
+                                forBarMetrics:UIBarMetricsDefault];
     
 }
 - (void)handleShowStartup:(NSNotification *)noti {
