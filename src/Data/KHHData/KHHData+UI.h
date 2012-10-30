@@ -76,6 +76,7 @@
 #pragma mark - 我拜访别人的纪录
 - (NSArray *)allSchedules;
 - (NSArray *)schedulesOnDay:(NSString *)day;// 结果是从day开始一天内的所有schedule。
+- (NSArray *)schedulesOnDate:(NSDate *)aDate;// 结果是从day开始一天内的所有schedule。
 @end
 
 #pragma mark - 模板

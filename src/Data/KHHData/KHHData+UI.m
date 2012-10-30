@@ -286,6 +286,10 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
 - (NSArray *)schedulesOnDay:(NSString *)aDay {
     NSString *dayL = [aDay stringByAppendingString:@" 00:00:00"];
     NSDate *start = DateFromKHHDateString(dayL);
+    return [self schedulesOnDate:start];
+}
+- (NSArray *)schedulesOnDate:(NSDate *)aDate {
+    NSDate *start = aDate;
     NSTimeInterval oneDay = 60 * 60 * 24;
     NSDate *end = [start dateByAddingTimeInterval:oneDay];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"plannedDate >= %@ && plannedDate < %@", start, end];
