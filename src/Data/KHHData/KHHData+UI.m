@@ -279,12 +279,18 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
 
     NSSortDescriptor *sortDes = [NSSortDescriptor sortDescriptorWithKey:@"plannedDate"
                                                               ascending:NO];
-    NSArray *fetched;
-    fetched = [Schedule objectArrayByPredicate:predicate
-                               sortDescriptors:@[sortDes]];
-    // 过滤掉意外情况
-//    NSMutableArray *result = FilterUnexpectedCardsFromArray(fetched);
-    NSArray *result = fetched;
+    NSArray *result = [Schedule objectArrayByPredicate:predicate
+                                         sortDescriptors:@[sortDes]];
+    return result;
+}
+- (NSArray *)schedulesByDate:(NSDate *)date {
+    NSTimeInterval aDay = 60 * 60 * 24;
+    NSDate *endDate = [date dateByAddingTimeInterval:aDay];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"plannedDate >= %@ && plannedDate < %@", date, endDate];
+    NSSortDescriptor *sortDes = [NSSortDescriptor sortDescriptorWithKey:@"plannedDate"
+                                                              ascending:NO];
+    NSArray *result = [Schedule objectArrayByPredicate:predicate
+                                       sortDescriptors:@[sortDes]];
     return result;
 }
 @end
