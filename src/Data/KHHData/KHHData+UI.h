@@ -75,7 +75,7 @@
 - (void)deleteImage:(Image *)image  fromSchedule:(Schedule *)schedule;
 #pragma mark - 我拜访别人的纪录
 - (NSArray *)allSchedules;
-- (NSArray *)schedulesByDate:(NSDate *)date;// 结果是从date开始一天内的所有schedule。
+- (NSArray *)schedulesOnDay:(NSString *)day;// 结果是从day开始一天内的所有schedule。
 @end
 
 #pragma mark - 模板
