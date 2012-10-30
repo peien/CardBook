@@ -280,7 +280,7 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
     NSSortDescriptor *sortDes = [NSSortDescriptor sortDescriptorWithKey:@"plannedDate"
                                                               ascending:NO];
     NSArray *result = [Schedule objectArrayByPredicate:predicate
-                                         sortDescriptors:@[sortDes]];
+                                       sortDescriptors:@[sortDes]];
     return result;
 }
 - (NSArray *)schedulesOnDay:(NSString *)aDay {
@@ -298,6 +298,23 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
     NSArray *result = [Schedule objectArrayByPredicate:predicate
                                        sortDescriptors:@[sortDes]];
     return result;
+}
+- (NSNumber *)countOfUnfinishedSchedulesOnDay:(NSString *)aDay {
+    NSString *dayL = [aDay stringByAppendingString:@" 00:00:00"];
+    NSDate *start = DateFromKHHDateString(dayL);
+    return [self countOfUnfinishedSchedulesOnDate:start];
+}
+- (NSNumber *)countOfUnfinishedSchedulesOnDate:(NSDate *)aDate {
+    NSArray *list = [self schedulesOnDate:aDate];
+    if (0 == list.count) {
+        return nil;
+    }
+    NSMutableArray *result = [NSMutableArray arrayWithCapacity:list.count];
+    for (Schedule *schdl in list) {
+        if(schdl.isFinishedValue) continue;
+        [result addObject:schdl];
+    }
+    return @(result.count);
 }
 @end
 
