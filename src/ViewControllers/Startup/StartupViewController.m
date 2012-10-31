@@ -50,23 +50,23 @@
         
         //注册需要捕获的消息
         //Intro
-        [self observeNotificationName:KHHUIShowIntro selector:@"handleShowIntro:"];
-        [self observeNotificationName:KHHUISkipIntro selector:@"handleSkipIntro:"];
+//        [self observeNotificationName:KHHUIShowIntro selector:@"handleShowIntro:"];
+        [self observeNotificationName:nAppSkipIntro selector:@"handleSkipIntro:"];
 
         //Login
-        [self observeNotificationName:KHHUIStartLogin selector:@"handleStartLogin:"];
-        [self observeNotificationName:KHHUIStartAutoLogin selector:@"handleStartAutoLogin:"];
-        [self observeNotificationName:KHHNetworkLoginFailed selector:@"handleLoginFailed:"];
-        [self observeNotificationName:KHHNetworkLoginMenually selector:@"handleLoginMenually:"];
+        [self observeNotificationName:nAppLogMeIn selector:@"handleStartLogin:"];
+//        [self observeNotificationName:KHHUIStartAutoLogin selector:@"handleStartAutoLogin:"];
+        [self observeNotificationName:nNetworkLoginFailed selector:@"handleLoginFailed:"];
+//        [self observeNotificationName:KHHNetworkLoginMenually selector:@"handleLoginMenually:"];
         
         //注册
-        [self observeNotificationName:KHHUIStartSignUp selector:@"handleStartSignUp:"];
-        [self observeNotificationName:KHHNetworkCreateAccountFailed selector:@"handleSignUpFailed:"];
+        [self observeNotificationName:nAppCreateThisAccount selector:@"handleStartSignUp:"];
+//        [self observeNotificationName:KHHNetworkCreateAccountFailed selector:@"handleSignUpFailed:"];
         
         //Reset password
-        [self observeNotificationName:KHHUIStartResetPassword selector:@"handleStartResetPassword:"];
-        [self observeNotificationName:KHHNetworkResetPasswordSucceeded selector:@"handleResetPasswordSucceeded:"];
-        [self observeNotificationName:KHHNetworkResetPasswordFailed selector:@"handleResetPasswordFailed:"];
+//        [self observeNotificationName:KHHUIStartResetPassword selector:@"handleStartResetPassword:"];
+//        [self observeNotificationName:KHHNetworkResetPasswordSucceeded selector:@"handleResetPasswordSucceeded:"];
+//        [self observeNotificationName:KHHNetworkResetPasswordFailed selector:@"handleResetPasswordFailed:"];
     }
     return self;
 }//initWithNibName:bundle:
@@ -92,17 +92,17 @@
     [self.navVC setNavigationBarHidden:NO animated:YES];
     
     // 先显示LaunchImage
-    [self showLaunchImage:UIViewAnimationOptionTransitionNone];
+//    [self showLaunchImage:UIViewAnimationOptionTransitionNone];
     NSString *notification = nil;
 
     if (self.defaults.firstLaunch) {
         // 首次启动
         // 显示引导界面
-        notification = KHHUIShowIntro;
+//        notification = KHHUIShowIntro;
     } else {
         // 不是首次启动
         // 尝试自动登录
-        notification = KHHUIStartAutoLogin;
+//        notification = KHHUIStartAutoLogin;
     }
     
     DLog(@"[II] 发送消息: %@", notification);
@@ -184,7 +184,7 @@
     if (isAuto) {
         //自动登录失败
         //返回Login界面
-        [self showLoginView:UIViewAnimationOptionTransitionCrossDissolve];
+//        [self showLoginView:UIViewAnimationOptionTransitionCrossDissolve];
     } else {
         //手动登录失败
         //显示警告信息
@@ -194,24 +194,24 @@
     NSLog(@"\n%@: _navVC.view.subviews: %@", self, _navVC.view.subviews); 
 }
 
-- (void)handleLoginMenually:(NSNotification *)notification
-{
-    self.defaults.loggedIn = NO; // 设置标记避免自动重复登录
-    
-    //自动登录失败
-    //返回Login界面
-    [self showLoginView:UIViewAnimationOptionTransitionCrossDissolve];
-}
+//- (void)handleLoginMenually:(NSNotification *)notification
+//{
+//    self.defaults.loggedIn = NO; // 设置标记避免自动重复登录
+//    
+//    //自动登录失败
+//    //返回Login界面
+//    [self showLoginView:UIViewAnimationOptionTransitionCrossDissolve];
+//}
 
-- (void)handleStartSignUp:(NSNotification *)notification
-{
-    //转到LoginAction界面
-    [self showLoginAction:UIViewAnimationOptionTransitionFlipFromRight];
-    //发送注册动作消息
-    NSString *name = KHHUISignUpAction;
-    DLog(@"[II] 发送消息: %@", name);
-    [self postASAPNotificationName:name info:notification.userInfo];
-}
+//- (void)handleStartSignUp:(NSNotification *)notification
+//{
+//    //转到LoginAction界面
+////    [self showLoginAction:UIViewAnimationOptionTransitionFlipFromRight];
+//    //发送注册动作消息
+//    NSString *name = KHHUISignUpAction;
+//    DLog(@"[II] 发送消息: %@", name);
+//    [self postASAPNotificationName:name info:notification.userInfo];
+//}
 - (void)handleSignUpFailed:(NSNotification *)notification
 {
     NSDictionary *info = notification.userInfo;
@@ -225,15 +225,15 @@
     //显示警告信息
     [self alertWithTitle:textSignUpFailed message:message];
 }
-- (void)handleStartResetPassword:(NSNotification *)notification
-{
-    //转到LoginAction界面
-    [self showLoginAction:UIViewAnimationOptionTransitionFlipFromRight];
-    //发送重置密码消息
-    NSString *name = KHHUIResetPasswordAction;
-    DLog(@"[II] 发送消息: %@", name);
-    [self postASAPNotificationName:name info:notification.userInfo];
-}
+//- (void)handleStartResetPassword:(NSNotification *)notification
+//{
+//    //转到LoginAction界面
+////    [self showLoginAction:UIViewAnimationOptionTransitionFlipFromRight];
+//    //发送重置密码消息
+//    NSString *name = KHHUIResetPasswordAction;
+//    DLog(@"[II] 发送消息: %@", name);
+//    [self postASAPNotificationName:name info:notification.userInfo];
+//}
 - (void)handleResetPasswordSucceeded:(NSNotification *)notification
 {
     NSString *message = textResetPasswordSucceededMessage;
@@ -252,67 +252,5 @@
 //    }
     //显示警告信息
     [self alertWithTitle:textResetPasswordFailed message:message];
-}
-
-#pragma mark - Actions
-- (void)showLaunchImage:(UIViewAnimationOptions)options
-{
-    [self transitionToViewController:self.launchVC 
-                             options:options];
-}
-- (void)showIntro:(UIViewAnimationOptions)options
-{
-    [self transitionToViewController:self.introVC 
-                             options:options];
-}
-- (void)showLoginView:(UIViewAnimationOptions)options
-{
-    [self transitionToViewController:self.navVC 
-                             options:options];
-//    self.navVC.navigationBarHidden = YES;
-}
-- (void)showLoginAction:(UIViewAnimationOptions)options
-{
-    [self transitionToViewController:self.actionVC 
-                             options:options];
-}
-
-#pragma mark - Utilities
-- (void)transitionToViewController:(UIViewController *)toVC
-                           options:(UIViewAnimationOptions)options
-{
-    NSArray *subviews = self.view.subviews;
-    DLog(@"[II] 切换界面之前 subviews＝%@", self.view.subviews);
-    if (subviews.count) {
-        UIView *fromView = [subviews objectAtIndex:0];
-        [UIView transitionFromView:fromView
-                            toView:toVC.view 
-                          duration:0.5
-                           options:options 
-                        completion:^(BOOL finished){
-                        }];
-    } else {
-        [self.view addSubview:toVC.view];
-    }
-    DLog(@"[II] 切换界面之后 subviews＝%@", self.view.subviews);
-}
-
-#pragma mark - UIAlertViewDelegate
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    NSString *title = alertView.title;
-    if ([title isEqualToString:textLoginFailed]) {
-        //登录失败
-//        [self showLoginView:UIViewAnimationOptionTransitionFlipFromLeft];
-    } else if ([title isEqualToString:textSignUpFailed]) {
-        //登录失败
-//        [self showLoginView:UIViewAnimationOptionTransitionFlipFromLeft];
-    } else if ([title isEqualToString:textResetPasswordSucceeded]) {
-//        [self showLoginView:UIViewAnimationOptionTransitionFlipFromLeft];
-    } else if ([title isEqualToString:textResetPasswordFailed]) {
-//        [self showLoginView:UIViewAnimationOptionTransitionFlipFromLeft];
-    }
-    // 现在统一返回Login界面
-    [self showLoginView:UIViewAnimationOptionTransitionFlipFromLeft];
 }
 @end

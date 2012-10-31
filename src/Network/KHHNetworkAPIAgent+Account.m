@@ -160,7 +160,7 @@
  @return: mobile为nil或@""返回NO。
  http://192.168.1.151/zentaopms/www/index.php?m=doc&f=view&docID=175
  */
-- (BOOL)resetPasswordWithMobileNumber:(NSString *)mobile {
+- (BOOL)resetPassword:(NSString *)mobile {
     if (0 == mobile.length) {
         // mobile为nil或@""
         return NO;

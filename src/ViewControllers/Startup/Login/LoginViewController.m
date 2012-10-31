@@ -117,10 +117,6 @@
     [self performSelector:@selector(showTheKeyboard) withObject:nil afterDelay:0.2f];
     [super viewDidAppear:animated];
 }
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-}
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -132,10 +128,6 @@
     [super viewWillDisappear:animated];
     self.navigationController.navigationBarHidden = NO;
 
-}
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark - UITableView delegates
@@ -263,11 +255,7 @@
         // 把user和password保存到UserDefaults，并通过Notification发出去
         self.defaults.currentUser = user;
         self.defaults.currentPassword = password;
-//        NSDictionary *dict = @{ kInfoKeyUser : user, kInfoKeyPassword : password };
-        NSString *notiName = KHHUIStartLogin;
-//        [self postASAPNotificationName:notiName info:dict];
-        [self postASAPNotificationName:notiName];
-        DLog(@"发送消息 %@", notiName);
+        [self postASAPNotificationName:nAppLogMeIn];
     }
 } //login:
 - (void)gotoRegView:(id)sender

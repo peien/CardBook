@@ -10,5 +10,6 @@
 #import "UIImage+Resize.h"
 
 @interface UIImage (KHH)
++ (UIImage *)imageNamed:(NSString *)name capInsets:(UIEdgeInsets)insets;
 - (NSData *)resizedImageDataForKHHUpload;
 @end

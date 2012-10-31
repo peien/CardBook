@@ -11,11 +11,13 @@
 #import "StartupViewController.h"
 #import "KHHNetworkAPI.h"
 #import "KHHNotifications.h"
+#import "UIImage+KHH.h"
 
 #define textResetPassword NSLocalizedString(@"重置密码", @"")
 #define textInvalidPhone NSLocalizedString(@"无效手机号", @"")
 #define textRequestSent NSLocalizedString(@"重置请求已发送", @"")
-#define textOK NSLocalizedString(@"确定", @"")
+#define textOK   NSLocalizedString(@"确定", @"")
+#define textSend NSLocalizedString(@"发送", @"")
 
 
 @implementation ResetPasswordViewController
@@ -25,43 +27,30 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
         self.navigationItem.title = textResetPassword;
-        self.rightBtn.hidden = YES;
     }
     return self;
-}
-- (void)dealloc {
 }
 
 #pragma mark - UIViewController
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIImage *okButtonImage = [[UIImage imageNamed:@"OKButton.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:0];
-    [self.theOKButton setBackgroundImage:okButtonImage forState:UIControlStateNormal];
-    [self.theOKButton setTitle:textOK forState:UIControlStateNormal];
-    
-}
-- (void)viewDidUnload
-{
-    [self setTheTextField:nil];
-    [self setTheOKButton:nil];
-    [self setTheView:nil];
-    [super viewDidUnload];
+    // Button:
+    UIButton *button = self.theOKButton;
+    UIEdgeInsets buttonBgInsets = {0, 12, 0, 12};
+    [button setBackgroundImage:[UIImage imageNamed:@"Button_red.png"
+                                            capInsets:buttonBgInsets]
+                         forState:UIControlStateNormal];
+    [button setTitle:textSend forState:UIControlStateNormal];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
 }
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     [self showTheKeyboard];
-}
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
 #pragma mark - Actions
@@ -69,12 +58,9 @@
     NSString *user = self.theTextField.text;
     if (user.isValidMobilePhoneNumber) {
         // ok
-        [self hideTheKeyboard];
-        NSString *notiName = KHHUIStartResetPassword;
         NSDictionary *dict = @{ kInfoKeyUser : user };
-        DLog(@"[II] 重设密码: 发送 %@", notiName);
-        [self postASAPNotificationName:notiName
-                          info:dict];
+        [self postASAPNotificationName:nAppResetMyPassword
+                                  info:dict];
     } else {
         // invalid phone
         [[[UIAlertView alloc]
@@ -85,13 +71,8 @@
            otherButtonTitles:nil] show];
     }
 }
-
 - (void)showTheKeyboard
 {
     [self.theTextField becomeFirstResponder];
-}
-- (void)hideTheKeyboard
-{
-    [self.theTextField resignFirstResponder];
 }
 @end
