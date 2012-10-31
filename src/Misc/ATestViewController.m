@@ -25,6 +25,9 @@
         _agent = [[KHHNetworkAPIAgent alloc] init];
         _data = [KHHData sharedData];
         _card = [[self.data allMyCards] objectAtIndex:0];
+        NSNumber *aNumber = nil;
+        NSString *aString = [aNumber stringValue];
+        DLog(@"[II] aString = %@", aString);
     }
     return self;
 }

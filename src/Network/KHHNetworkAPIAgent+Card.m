@@ -51,7 +51,7 @@ BOOL CardHasRequiredAttributes(InterCard *iCard,
 
 /*
  card.templateId    模板ID
- logoImage(无card前缀) 用户头像
+ logoImage(无card前缀) 用户头像???
  detail.name        姓名
  detail.jobTitle    职称
  detail.email       邮箱
@@ -82,146 +82,80 @@ BOOL CardHasRequiredAttributes(InterCard *iCard,
 NSMutableDictionary * ParametersToCreateOrUpdateCard(InterCard *iCard) {
     NSMutableDictionary *result = [NSMutableDictionary dictionaryWithCapacity:10];
     // card.templateId
-    NSString *templateID = [iCard.templateID stringValue];
-    if (templateID) {
-        [result setObject:templateID forKey:@"card.templateId"];
-    }
-    // logoImage
-    NSString *logoFileURL = iCard.logoURL;
-    UIImage *img = [UIImage imageWithContentsOfFile:logoFileURL];
-    if (img) {
-        [result setObject:img forKey:@"logoImage"];
-    }
+    [result setObject:(iCard.templateID? iCard.templateID.stringValue: @"")
+               forKey:@"card.templateId"];
     // detail.name
-    NSString *name = iCard.name;
-    if (name) {
-        [result setObject:name forKey:@"detail.name"];
-    }
+    [result setObject:(iCard.name? iCard.name:  @"")
+               forKey:@"detail.name"];
     // detail.jobTitle
-    NSString *jobTitle = iCard.title;
-    if (jobTitle) {
-        [result setObject:jobTitle forKey:@"detail.jobTitle"];
-    }
+    [result setObject:(iCard.title? iCard.title: @"")
+               forKey:@"detail.jobTitle"];
     // detail.email
-    NSString *email = iCard.email;
-    if (email) {
-        [result setObject:email forKey:@"detail.email"];
-    }
+    [result setObject:(iCard.email? iCard.email: @"")
+               forKey:@"detail.email"];
     // detail.companyName
-    NSString *companyName = iCard.companyName;
-    if (companyName) {
-        [result setObject:companyName forKey:@"detail.companyName"];
-    }
+    [result setObject:(iCard.companyName? iCard.companyName: @"")
+               forKey:@"detail.companyName"];
     // detail.country
-    NSString *country = iCard.addressCountry;
-    if (country) {
-        [result setObject:country forKey:@"detail.country"];
-    }
+    [result setObject:(iCard.addressCountry? iCard.addressCountry: @"")
+               forKey:@"detail.country"];
     // detail.province
-    NSString *province = iCard.addressProvince;
-    if (province) {
-        [result setObject:province forKey:@"detail.province"];
-    }
+    [result setObject:(iCard.addressProvince? iCard.addressProvince: @"")
+               forKey:@"detail.province"];
     // detail.city
-    NSString *city = iCard.addressCity;
-    if (city) {
-        [result setObject:city forKey:@"detail.city"];
-    }
+    [result setObject:(iCard.addressCity? iCard.addressCity: @"")
+               forKey:@"detail.city"];
     // detail.address
-    NSString *addr = iCard.addressOther;
-    if (addr) {
-        [result setObject:addr forKey:@"detail.address"];
-    }
+    [result setObject:(iCard.addressOther? iCard.addressOther: @"")
+               forKey:@"detail.address"];
     // detail.zipcode 邮编
-    NSString *zip = iCard.addressZip;
-    if (zip) {
-        [result setObject:zip forKey:@"detail.zipcode"];
-    }
+    [result setObject:(iCard.addressZip? iCard.addressZip: @"")
+               forKey:@"detail.zipcode"];
     // detail.telephone 固定电话
-    NSString *tel = iCard.telephone;
-    if (tel) {
-        [result setObject:tel forKey:@"detail.telephone"];
-    }
+    [result setObject:(iCard.telephone? iCard.telephone: @"")
+               forKey:@"detail.telephone"];
     // detail.mobilephone 手机
-    NSString *mobile = iCard.mobilePhone;
-    if (mobile) {
-        [result setObject:mobile forKey:@"detail.mobilephone"];
-    }
+    [result setObject:(iCard.mobilePhone? iCard.mobilePhone: @"")
+               forKey:@"detail.mobilephone"];
     // detail.fax
-    NSString *fax = iCard.fax;
-    if (fax) {
-        [result setObject:fax forKey:@"detail.fax"];
-    }
+    [result setObject:(iCard.fax? iCard.fax: @"")
+               forKey:@"detail.fax"];
     // detail.qq
-    NSString *qq = iCard.qq;
-    if (qq) {
-        [result setObject:qq forKey:@"detail.qq"];
-    }
+    [result setObject:(iCard.qq? iCard.qq: @"")
+               forKey:@"detail.qq"];
     // detail.msn
-    NSString *msn = iCard.msn;
-    if (msn) {
-        [result setObject:msn forKey:@"detail.msn"];
-    }
+    [result setObject:(iCard.msn? iCard.msn: @"")
+               forKey:@"detail.msn"];
     // detail.web
-    NSString *web = iCard.web;
-    if (web) {
-        [result setObject:web forKey:@"detail.web"];
-    }
+    [result setObject:(iCard.web? iCard.web: @"")
+               forKey:@"detail.web"];
     // detail.moreInfo 其他
-    NSString *moreInfo = iCard.moreInfo;
-    if (moreInfo) {
-        [result setObject:moreInfo forKey:@"detail.moreInfo"];
-    }
+    [result setObject:(iCard.moreInfo? iCard.moreInfo: @"")
+               forKey:@"detail.moreInfo"];
     // detail.col1 公司邮箱
-    NSString *companyEmail = iCard.companyEmail;
-    if (companyEmail) {
-        [result setObject:companyEmail forKey:@"detail.col1"];
-    }
+    [result setObject:(iCard.companyEmail? iCard.companyEmail: @"")
+               forKey:@"detail.col1"];
     // detail.col2 部门
-    NSString *department = iCard.department;
-    if (department) {
-        [result setObject:department forKey:@"detail.col2"];
-    }
+    [result setObject:(iCard.department? iCard.department: @"")
+               forKey:@"detail.col2"];
     // detail.col3 备注（名片中可看到）
-    NSString *remarks = iCard.remarks;
-    if (remarks) {
-        [result setObject:remarks forKey:@"detail.col3"];
-    }
-    // detail.col4 厂址
-//    NSString *factoryAddr = iCard.factoryAddress;
-//    if (factoryAddr) {
-//        [result setObject:factoryAddr forKey:@"detail.col4"];
-//    }
-    // detail.col5 客服电话
-//    NSString *customServiceTel = iCard.customServiceTelephone;
-//    if (customServiceTel) {
-//        [result setObject:customServiceTel forKey:@"detail.col5"];
-//    }
+    [result setObject:(iCard.remarks? iCard.remarks: @"")
+               forKey:@"detail.col3"];
     // detail.microblog 微博
-    NSString *microblog = iCard.microblog;
-    if (microblog) {
-        [result setObject:microblog forKey:@"detail.microBlog"];
-    }
+    [result setObject:(iCard.microblog? iCard.microblog: @"")
+               forKey:@"detail.microBlog"];
     // detail.wangwang 旺旺
-    NSString *aliWangWang = iCard.aliWangWang;
-    if (aliWangWang) {
-        [result setObject:aliWangWang forKey:@"detail.wangwang"];
-    }
+    [result setObject:(iCard.aliWangWang? iCard.aliWangWang: @"")
+               forKey:@"detail.wangwang"];
     // detail.businessScope 业务范围
-    NSString *businessScope = iCard.businessScope;
-    if (businessScope) {
-        [result setObject:businessScope forKey:@"detail.businessScope"];
-    }
+    [result setObject:(iCard.businessScope? iCard.businessScope: @"")
+               forKey:@"detail.businessScope"];
     // detail.openBank 开户行
-    NSString *bankBranch = iCard.bankAccountBranch;
-    if (bankBranch) {
-        [result setObject:bankBranch forKey:@"detail.openBank"];
-    }
+    [result setObject:(iCard.bankAccountBranch? iCard.bankAccountBranch: @"")
+               forKey:@"detail.openBank"];
     // detail.bankNO 银行账号
-    NSString *bankNumber = iCard.bankAccountNumber;
-    if (bankNumber) {
-        [result setObject:bankNumber forKey:@"detail.bankNO"];
-    }
+    [result setObject:(iCard.bankAccountNumber? iCard.bankAccountNumber: @"")
+               forKey:@"detail.bankNO"];
     return result;
 }
 @implementation KHHNetworkAPIAgent (Card)
