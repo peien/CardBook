@@ -110,16 +110,16 @@ static NSString * const KHHLocationUpdateFailed    = @"KHHLocationUpdateFailed";
 // 登录
 static NSString * const nNetworkLoginSucceeded = @"loginSucceeded";
 static NSString * const nNetworkLoginFailed    = @"loginFailed";
-static NSString * const KHHNetworkLoginMenually  = @"loginMenually";
+//static NSString * const KHHNetworkLoginMenually  = @"loginMenually";
 // 注册
-static NSString * const KHHNetworkCreateAccountSucceeded = @"createAccountSucceeded";
-static NSString * const KHHNetworkCreateAccountFailed    = @"createAccountFailed";
+static NSString * const nCreateAccountSucceeded = @"createAccountSucceeded";
+static NSString * const nCreateAccountFailed    = @"createAccountFailed";
 // 改密码
 static NSString * const KHHNetworkChangePasswordSucceeded = @"changePasswordSucceeded";
 static NSString * const KHHNetworkChangePasswordFailed    = @"changePasswordFailed";
 // 重置密码
-static NSString * const KHHNetworkResetPasswordSucceeded = @"resetPasswordSucceeded";
-static NSString * const KHHNetworkResetPasswordFailed    = @"resetPasswordFailed";
+static NSString * const nResetPasswordSucceeded = @"resetPasswordSucceeded";
+static NSString * const nResetPasswordFailed    = @"resetPasswordFailed";
 // markAutoReceive
 static NSString * const KHHNetworkMarkAutoReceiveSucceeded = @"markAutoReceiveSucceeded";
 static NSString * const KHHNetworkMarkAutoReceiveFailed    = @"markAutoReceiveFailed";

@@ -9,6 +9,7 @@
 #import "AppStartController.h"
 #import "UIViewController+SM.h"
 #import "KHHKeys.h"
+#import "KHHLog.h"
 #import "KHHNotifications.h"
 #import "IntroViewController.h"
 #import "LaunchImageViewController.h"
@@ -19,6 +20,10 @@
 #import "BTestViewController.h"
 
 #define titleCreateAccountSucceeded NSLocalizedString(@"用户注册成功", nil)
+#define titleCreateAccountFailed    NSLocalizedString(@"用户注册失败", nil)
+#define titleLoginFailed            NSLocalizedString(@"登录失败", nil)
+#define titleResetPasswordSucceeded NSLocalizedString(@"重置密码成功", nil)
+#define titleResetPasswordFailed    NSLocalizedString(@"重置密码失败", nil)
 #define titleSyncFailed             NSLocalizedString(@"同步数据出错", nil)
 #define textNotAllDataAvailable     NSLocalizedString(@"部分数据可能暂时无法使用。", nil)
 #define textWillAutoLogin           NSLocalizedString(@"将自动登录...", nil)
@@ -68,25 +73,37 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
                                 initWithRootViewController:[[AppLoginController alloc]
                                                             initWithNibName:nil
                                                             bundle:nil]];
-        
-        [self observeNotificationName:nAppLogMeIn
-                             selector:@"login"];
-        [self observeNotificationName:nAppResetMyPassword
-                             selector:@"resetPassword:"];
         [self observeNotificationName:nAppSkipIntro
                              selector:@"showLoginView"];
         [self observeNotificationName:nAppShowPreviousView
                              selector:@"showPreviousView"];
-        [self observeNotificationName:nAppShowCreateAccount
-                             selector:@"showCreateAccountView"];
-        [self observeNotificationName:nDataSyncAllSucceeded
-                             selector:@"handleSyncSucceeded:"];
-        [self observeNotificationName:nDataSyncAllFailed
-                             selector:@"handleSyncFailed:"];
+        // 登录
+        [self observeNotificationName:nAppLogMeIn
+                             selector:@"login"];
         [self observeNotificationName:nNetworkLoginSucceeded
                              selector:@"handleNetworkLoginSucceeded:"];
         [self observeNotificationName:nNetworkLoginFailed
                              selector:@"handleNetworkLoginFailed:"];
+        // 注册
+        [self observeNotificationName:nAppShowCreateAccount
+                             selector:@"showCreateAccountView"];
+        [self observeNotificationName:nCreateAccountSucceeded
+                             selector:@"handleNetworkCreateAccountSucceeded:"];
+        [self observeNotificationName:nCreateAccountFailed
+                             selector:@"handleNetworkCreateAccountFailed:"];
+        
+        // 重置密码
+        [self observeNotificationName:nAppResetMyPassword
+                             selector:@"resetPassword:"];
+        [self observeNotificationName:nResetPasswordSucceeded
+                             selector:@"handleNetworkResetPasswordSucceeded:"];
+        [self observeNotificationName:nResetPasswordFailed
+                             selector:@"handleNetworkResetPasswordFailed:"];
+        // 同步
+        [self observeNotificationName:nDataSyncAllSucceeded
+                             selector:@"handleSyncSucceeded:"];
+        [self observeNotificationName:nDataSyncAllFailed
+                             selector:@"handleSyncFailed:"];
     }
     return self;
 }
@@ -131,9 +148,15 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 #pragma mark - UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    if ([alertView.title isEqualToString:titleCreateAccountSucceeded]) {
-        //注册成功, 登录
-        [self login];
+    NSString *title = alertView.title;
+    if ([title isEqualToString:titleCreateAccountSucceeded]) {
+        [self login];//注册成功, 直接登录。
+    } else
+    if ([title isEqualToString:titleCreateAccountFailed]
+        || [title isEqualToString:titleLoginFailed]
+        || [title isEqualToString:titleResetPasswordFailed]
+        || [title isEqualToString:titleResetPasswordSucceeded]) {
+        [self showPreviousView];
     }
 }
 @end
@@ -216,6 +239,12 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     [self alertWithTitle:titleCreateAccountSucceeded
                  message:textWillAutoLogin];
 }
+- (void)handleNetworkCreateAccountFailed:(NSNotification *)noti {
+    DLog(@"[II] 注册失败！");
+#warning TODO
+    [self alertWithTitle:titleCreateAccountFailed
+                 message:nil];
+}
 - (void)handleNetworkLoginSucceeded:(NSNotification *)noti {
     // 登陆成功
     // 保存用户数据: id,mobile,password,isAutoReceive
@@ -231,14 +260,20 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     DLog(@"[II] 登录失败！");
     [self.defaults setLoggedIn:NO];
 #warning TODO
+    [self alertWithTitle:titleLoginFailed
+                 message:nil];
 }
 - (void)handleNetworkResetPasswordSucceeded:(NSNotification *)noti
 {
     DLog(@"[II] 重置密码成功！");
-    [self.defaults setLoggedIn:NO];
-#warning TODO
+    [self alertWithTitle:titleResetPasswordSucceeded
+                 message:NSLocalizedString(@"新密码将通过短信发送给您，请查收！", nil)];
 }
-
+- (void)handleNetworkResetPasswordFailed:(NSNotification *)noti {
+    DLog(@"[II] 重置密码失败！");
+    [self alertWithTitle:titleResetPasswordFailed
+                 message:NSLocalizedString(@"请检查您的手机号，再次尝试！", nil)];
+}
 - (void)handleSyncSucceeded:(NSNotification *)noti {
     // 进主界面。
     [self postNowNotificationName:nAppShowMainView];

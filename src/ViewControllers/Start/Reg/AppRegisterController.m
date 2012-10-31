@@ -54,9 +54,9 @@ enum Tag_TextField {
         self.navigationItem.leftBarButtonItem = backItem;
         
         [self observeNotificationName:UIKeyboardDidShowNotification
-                             selector:@"keyboardDidShow:"];
-        [self observeNotificationName:UIKeyboardDidHideNotification
-                             selector:@"keyboardDidHide:"];
+                             selector:@"keyboardShow:"];
+        [self observeNotificationName:UIKeyboardWillHideNotification
+                             selector:@"keyboardHide:"];
     }
     return self;
 }
@@ -118,6 +118,25 @@ enum Tag_TextField {
     [self pushViewControllerClass:[AgreementViewController class]
                          animated:YES];
 }
+#pragma mark - SMCheckbox delegate methods
+- (void)checkbox:(SMCheckbox *)checkBox
+    valueChanged:(BOOL)newValue {
+    UIView *root = self.view;
+    SMCheckbox  *showPass  = (SMCheckbox *)[root viewWithTag:Tag_Checkbox_ShowPass];
+    UITextField *textField = (UITextField *)[root viewWithTag:Tag_TextField_Pass];
+    if (checkBox == showPass) {
+        //showOrHidePassword
+        if (newValue) {
+            textField.enabled = NO;
+            textField.secureTextEntry = NO;
+            textField.enabled = YES;
+        } else {
+            textField.enabled = NO;
+            textField.secureTextEntry = YES;
+            textField.enabled = YES;
+        }
+    }
+}
 #pragma mark - UITextField delegates
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     textField.backgroundColor = [UIColor clearColor];
@@ -149,7 +168,7 @@ enum Tag_TextField {
     return YES;
 }
 #pragma mark - keyboard notification handlers
-- (void)keyboardDidShow:(NSNotification *)noti {
+- (void)keyboardShow:(NSNotification *)noti {
     DLog(@"[II] noti = %@", noti);
     // 改变Scrollview的高度，以便滚动。
     UIScrollView *scroll = (UIScrollView *)[self.view viewWithTag:Tag_Scroll_Container];
@@ -158,9 +177,13 @@ enum Tag_TextField {
     newFrame.size.height = self.view.frame.size.height - kbHeight;
     scroll.frame = newFrame;
 }
-- (void)keyboardDidHide:(NSNotification *)noti {
+- (void)keyboardHide:(NSNotification *)noti {
     UIScrollView *scroll = (UIScrollView *)[self.view viewWithTag:Tag_Scroll_Container];
-    scroll.frame = self.view.frame;
+    if (scroll.frame.size.height < self.view.frame.size.height) {
+        [UIView animateWithDuration:0.25f animations:^{
+            scroll.frame = self.view.frame;
+        }];
+    }
 }
 
 @end

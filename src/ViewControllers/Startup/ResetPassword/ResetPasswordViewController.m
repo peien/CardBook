@@ -11,11 +11,13 @@
 #import "StartupViewController.h"
 #import "KHHNetworkAPI.h"
 #import "KHHNotifications.h"
+#import "UIImage+KHH.h"
 
 #define textResetPassword NSLocalizedString(@"重置密码", @"")
 #define textInvalidPhone NSLocalizedString(@"无效手机号", @"")
 #define textRequestSent NSLocalizedString(@"重置请求已发送", @"")
-#define textOK NSLocalizedString(@"确定", @"")
+#define textOK   NSLocalizedString(@"确定", @"")
+#define textSend NSLocalizedString(@"发送", @"")
 
 
 @implementation ResetPasswordViewController
@@ -29,21 +31,21 @@
     }
     return self;
 }
-- (void)dealloc {
-}
 
 #pragma mark - UIViewController
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    UIImage *okButtonImage = [[UIImage imageNamed:@"OKButton.png"] stretchableImageWithLeftCapWidth:10 topCapHeight:0];
-    [self.theOKButton setBackgroundImage:okButtonImage forState:UIControlStateNormal];
-    [self.theOKButton setTitle:textOK forState:UIControlStateNormal];
-    
+    // Button:
+    UIButton *button = self.theOKButton;
+    UIEdgeInsets buttonBgInsets = {0, 12, 0, 12};
+    [button setBackgroundImage:[UIImage imageNamed:@"Button_red.png"
+                                            capInsets:buttonBgInsets]
+                         forState:UIControlStateNormal];
+    [button setTitle:textSend forState:UIControlStateNormal];
 }
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.navigationController.navigationBarHidden = NO;
 }
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -56,7 +58,6 @@
     NSString *user = self.theTextField.text;
     if (user.isValidMobilePhoneNumber) {
         // ok
-        [self hideTheKeyboard];
         NSDictionary *dict = @{ kInfoKeyUser : user };
         [self postASAPNotificationName:nAppResetMyPassword
                                   info:dict];
@@ -70,13 +71,8 @@
            otherButtonTitles:nil] show];
     }
 }
-
 - (void)showTheKeyboard
 {
     [self.theTextField becomeFirstResponder];
-}
-- (void)hideTheKeyboard
-{
-    [self.theTextField resignFirstResponder];
 }
 @end

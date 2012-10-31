@@ -17,6 +17,7 @@
 
 //#define textStartAutoLogin NSLocalizedString(@"正在自动登录...", nil)
 #define textLoggingIn NSLocalizedString(@"正在登录...", nil)
+#define textResettingPassword NSLocalizedString(@"正在重置密码...", nil)
 //#define textStartLogin NSLocalizedString(@"正在登录...", nil)
 //#define textLoginSucceeded NSLocalizedString(@"登录成功", nil)
 //#define textStartPostLoginSync NSLocalizedString(@"正在同步数据...", nil)
@@ -72,26 +73,18 @@
     DLog(@"[II] viewDidLoad...");
     self.companyImageView.image = [UIImage imageNamed:KHHLogoFileName];
     self.bgImageView.image = [UIImage imageNamed:@"LoginImage_bg.png"];
-    
 }
 
 #pragma mark - Notification Handlers
 - (void)handleLoggingIn:(NSNotification *)noti {
     // 显示正在登录
     self.actionLabel.text = textLoggingIn;
-    [self showCompanyLogo];
 }
-
-
+- (void)handleResettingPassword:(NSNotification *)noti {
+    // 显示正在重置密码
+    self.actionLabel.text = textResettingPassword;
+}
 
 #pragma mark - Utilities
-- (void)showCompanyLogo
-{
-#warning 这里根据需要来重写
-//    NSURL *logoURL = self.defaults.companyLogo;
-//    if (imgURL) {
-//        [self.companyImageView setImageWithURL:imgURL
-//                              placeholderImage:[UIImage imageNamed:KHHLogoFileName]];
-//    } 
-}
+
 @end

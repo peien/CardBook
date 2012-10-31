@@ -57,16 +57,16 @@
         [self observeNotificationName:nAppLogMeIn selector:@"handleStartLogin:"];
 //        [self observeNotificationName:KHHUIStartAutoLogin selector:@"handleStartAutoLogin:"];
         [self observeNotificationName:nNetworkLoginFailed selector:@"handleLoginFailed:"];
-        [self observeNotificationName:KHHNetworkLoginMenually selector:@"handleLoginMenually:"];
+//        [self observeNotificationName:KHHNetworkLoginMenually selector:@"handleLoginMenually:"];
         
         //注册
         [self observeNotificationName:nAppCreateThisAccount selector:@"handleStartSignUp:"];
-        [self observeNotificationName:KHHNetworkCreateAccountFailed selector:@"handleSignUpFailed:"];
+//        [self observeNotificationName:KHHNetworkCreateAccountFailed selector:@"handleSignUpFailed:"];
         
         //Reset password
 //        [self observeNotificationName:KHHUIStartResetPassword selector:@"handleStartResetPassword:"];
-        [self observeNotificationName:KHHNetworkResetPasswordSucceeded selector:@"handleResetPasswordSucceeded:"];
-        [self observeNotificationName:KHHNetworkResetPasswordFailed selector:@"handleResetPasswordFailed:"];
+//        [self observeNotificationName:KHHNetworkResetPasswordSucceeded selector:@"handleResetPasswordSucceeded:"];
+//        [self observeNotificationName:KHHNetworkResetPasswordFailed selector:@"handleResetPasswordFailed:"];
     }
     return self;
 }//initWithNibName:bundle:
@@ -252,24 +252,5 @@
 //    }
     //显示警告信息
     [self alertWithTitle:textResetPasswordFailed message:message];
-}
-
-#pragma mark - UIAlertViewDelegate
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    NSString *title = alertView.title;
-    if ([title isEqualToString:textLoginFailed]) {
-        //登录失败
-//        [self showLoginView:UIViewAnimationOptionTransitionFlipFromLeft];
-    } else if ([title isEqualToString:textSignUpFailed]) {
-        //登录失败
-//        [self showLoginView:UIViewAnimationOptionTransitionFlipFromLeft];
-    } else if ([title isEqualToString:textResetPasswordSucceeded]) {
-//        [self showLoginView:UIViewAnimationOptionTransitionFlipFromLeft];
-    } else if ([title isEqualToString:textResetPasswordFailed]) {
-//        [self showLoginView:UIViewAnimationOptionTransitionFlipFromLeft];
-    }
-    // 现在统一返回Login界面
-//    [self showLoginView:UIViewAnimationOptionTransitionFlipFromLeft];
 }
 @end
