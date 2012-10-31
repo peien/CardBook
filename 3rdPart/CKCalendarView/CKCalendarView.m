@@ -19,6 +19,10 @@
 #import <CoreGraphics/CoreGraphics.h>
 #import <QuartzCore/QuartzCore.h>
 #import "CKCalendarView.h"
+#import "Schedule.h"
+#import "Card.h"
+#import "KHHData.h"
+#import "KHHData+UI.h"
 
 #define BUTTON_MARGIN 4
 #define CALENDAR_MARGIN 5
@@ -93,7 +97,8 @@
 @property (nonatomic) startDay calendarStartDay;
 @property (nonatomic, strong) NSDate *monthShowing;
 @property (nonatomic, strong) NSCalendar *calendar;
-@property(nonatomic, assign) CGFloat cellWidth;
+@property (nonatomic, assign) CGFloat cellWidth;
+@property (nonatomic, strong) NSArray *schedus;
 
 
 @end
@@ -112,6 +117,8 @@
 @synthesize monthShowing = _monthShowing;
 @synthesize calendar = _calendar;
 @synthesize dateFormatter = _dateFormatter;
+@synthesize card;
+@synthesize schedus;
 
 @synthesize selectedDate = _selectedDate;
 @synthesize delegate = _delegate;
@@ -123,6 +130,8 @@
 @synthesize currentDateBackgroundColor = _currentDateBackgroundColor;
 @synthesize disabledDateTextColor = _disabledDateTextColor;
 @synthesize disabledDateBackgroundColor = _disabledDateBackgroundColor;
+@synthesize finishedDateBackgroundColor = _finishedDateBackgroundColor;
+@synthesize unfinishedDateBackgroundColor = _unfinishedDateBackgroundColor;
 @synthesize cellWidth = _cellWidth;
 
 @synthesize calendarStartDay;
@@ -131,10 +140,12 @@
 
 
 - (id)init {
-    return [self initWithStartDay:startSunday];
+    //return [self initWithStartDay:startSunday];
+    return nil;
 }
 
-- (id)initWithStartDay:(startDay)firstDay {
+- (id)initWithStartDay:(startDay)firstDay card:(Card *)cardTem {
+    self.card = cardTem;
     return [self initWithStartDay:firstDay frame:CGRectMake(0, 0, 320, 320)];
 }
 
@@ -213,7 +224,6 @@
             [self.calendarContainer addSubview:dayOfWeekLabel];
         }
         self.dayOfWeekLabels = labels;
-
         // at most we'll need 42 buttons, so let's just bite the bullet and make them now...
         NSMutableArray *dateButtons = [NSMutableArray array];
         for (NSInteger i = 1; i <= 42; i++) {
@@ -240,7 +250,6 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-
     CGFloat containerWidth = self.bounds.size.width - (CALENDAR_MARGIN * 2);
     self.cellWidth = (containerWidth / 7.0) - CELL_BORDER_WIDTH;
 
@@ -273,7 +282,8 @@
     NSUInteger dateButtonPosition = 0;
     while ([self dateIsInMonthShowing:date]) {
         DateButton *dateButton = [self.dateButtons objectAtIndex:dateButtonPosition];
-
+        //DLog(@"dateButton Date is ====== %@",dateButton.date);
+        //DLog(@"dateButton title is ====== %@",dateButton.titleLabel.text);
         dateButton.date = date;
         if ([self date:dateButton.date isSameDayAsDate:self.selectedDate]) {
             dateButton.backgroundColor = self.selectedDateBackgroundColor;
@@ -291,10 +301,28 @@
         }
         dateButton.frame = [self calculateDayCellFrame:date];
         [self.calendarContainer addSubview:dateButton];
-
         date = [self nextDay:date];
         dateButtonPosition++;
+        
+        NSArray *arr = [[self stringFromDate:dateButton.date] componentsSeparatedByString:@" "];
+        NSString *dateS = [arr objectAtIndex:0];
+        NSNumber *num = [[KHHData sharedData] countOfUnfinishedSchedulesOnDay:dateS];
+        DLog(@"num is ====== %@",num);
+        if ([num intValue] == 0) {
+            [dateButton setBackgroundColor:self.finishedDateBackgroundColor];
+        }else if([num intValue] > 0){
+            [dateButton setBackgroundColor:self.unfinishedDateBackgroundColor];
+        }else{
+
+        }
+        //[self isFinishedOrUnFinishedDate:dateButton];
     }
+}
+- (NSString *)stringFromDate:(NSDate *)date{
+    NSDateFormatter *formt = [[NSDateFormatter alloc] init];
+    [formt setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSString *result = [formt stringFromDate:date];
+    return result;
 }
 
 - (void)setMonthShowing:(NSDate *)aMonthShowing {
@@ -303,12 +331,14 @@
     [self.dateFormatter setDateFormat:@"MMMM yyyy"];
     self.titleLabel.text = [self.dateFormatter stringFromDate:_monthShowing];
     [self setNeedsLayout];
+    //[self isFinishedOrUnFinishedDate];
 }
 
 - (void)setSelectedDate:(NSDate *)selectedDate {
     _selectedDate = selectedDate;
     [self setNeedsLayout];
     self.monthShowing = selectedDate;
+    //[self isFinishedOrUnFinishedDate];
 }
 
 - (void)setDefaultStyle {
@@ -335,6 +365,10 @@
 
     self.disabledDateTextColor = [UIColor lightGrayColor];
     self.disabledDateBackgroundColor = self.dateBackgroundColor;
+    //设置已完成，未完成的背景颜色
+    [self setFinishedDateBackgroundColor:UIColorFromRGB(0x477015)];
+    [self setUnfinishedDateBackgroundColor:UIColorFromRGB(0xEF7A27)];
+    
 }
 
 - (CGRect)calculateDayCellFrame:(NSDate *)date {

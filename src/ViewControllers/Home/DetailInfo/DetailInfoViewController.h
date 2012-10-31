@@ -27,5 +27,6 @@
 @property (assign, nonatomic) bool                isCompanyColleagues;
 @property (nonatomic, assign) bool                isNeedReloadTable;
 @property (assign, nonatomic) bool                isReloadVisiteTable;
+@property (assign, nonatomic) bool                isColleagues;
 
 @end

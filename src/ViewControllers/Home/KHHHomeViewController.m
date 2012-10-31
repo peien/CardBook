@@ -548,6 +548,7 @@ typedef enum {
                     //同事不可评估
                     if (self.currentIndexPath.row == 2) {
                         detailVC.isCompanyColleagues = YES;
+                        detailVC.isColleagues = YES;
                     }
                     Card *card = (Card *)[self.generalArray objectAtIndex:indexPath.row];
                     detailVC.card = card;

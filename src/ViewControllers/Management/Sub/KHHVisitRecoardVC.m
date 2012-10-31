@@ -290,7 +290,11 @@
         [_fieldValue replaceObjectAtIndex:3 withObject:self.schedu.content];
     }
     if (self.schedu.address.other.length > 0) {//地址
-        [_fieldValue replaceObjectAtIndex:4 withObject:self.schedu.address.other];
+        NSString *p = [NSString stringByFilterNilFromString:self.schedu.address.province];
+        NSString *c = [NSString stringByFilterNilFromString:self.schedu.address.city];
+        NSString *o = [NSString stringByFilterNilFromString:self.schedu.address.other];
+        NSString *allAddress = [NSString stringWithFormat:@"%@%@%@",p,c,o];
+        [_fieldValue replaceObjectAtIndex:4 withObject:allAddress];
     }
     if (self.schedu.minutesToRemind) {
         [_fieldValue replaceObjectAtIndex:5 withObject:[NSString stringWithFormat:@"%@分钟",self.schedu.minutesToRemind]];
@@ -700,14 +704,10 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    if (textField.tag == NOTE_FIELD_TAG || textField.tag == TEXTFIELD_JOINER_TAG) {
+    if (textField.tag == TEXTFIELD_JOINER_TAG) {
         [self theTableAnimationUp];
     }
-    if (textField.tag == TEXTFIELD_OBJECT_TAG) {
-        if (textField.text = @"") {
-            self.defaultVisitedName = [NSMutableString stringWithString:@""];
-        }
-    }
+
     return YES;
 }
 - (void)theTableAnimationUp{

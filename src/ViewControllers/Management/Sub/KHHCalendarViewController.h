@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "SuperViewController.h"
+#import "KHHClasses.h"
 
 @interface KHHCalendarViewController : SuperViewController
 @property (strong, nonatomic) IBOutlet UITableView *theTable;
 @property (strong, nonatomic) IBOutlet UIButton    *addBtn;
+@property (strong, nonatomic) Card                 *card;
 - (IBAction)plusBtnClick:(id)sender;
 @end

@@ -157,7 +157,7 @@
 	containerView.contentView = contentViewController.view;
 	containerView.autoresizingMask = ( UIViewAutoresizingFlexibleLeftMargin |
 									  UIViewAutoresizingFlexibleRightMargin);
-	
+
 	self.view = containerView;
 	[self updateBackgroundPassthroughViews];
 	
@@ -309,6 +309,11 @@
 	ret.downArrowImageName = @"popoverArrowDownSimple.png";
 	ret.leftArrowImageName = @"popoverArrowLeftSimple.png";
 	ret.rightArrowImageName = @"popoverArrowRightSimple.png";
+    
+//  ret.upArrowImageName = @"pop_up.png";
+//	ret.downArrowImageName = @"pop_down.png";
+//	ret.leftArrowImageName = @"pop_left.png";
+//  ret.rightArrowImageName = @"popoverArrowRightSimple.png";
 #endif
 	return ret;
 }

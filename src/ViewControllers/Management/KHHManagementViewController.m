@@ -86,6 +86,7 @@
 }
 - (IBAction)calendarBtnClick:(id)sender{
     KHHCalendarViewController *calVC = [[KHHCalendarViewController alloc] initWithNibName:nil bundle:nil];
+    calVC.card = self.myCard;
     [self.navigationController pushViewController:calVC animated:YES];
 
 }

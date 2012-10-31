@@ -14,7 +14,7 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
-
+#import "KHHClasses.h"
 @protocol CKCalendarDelegate;
 
 @interface CKCalendarView : UIView
@@ -28,9 +28,10 @@ typedef int startDay;
 @property (nonatomic, strong) NSDate *minimumDate;
 @property (nonatomic, strong) NSDate *maximumDate;
 @property (nonatomic, strong) NSDate *selectedDate;
+@property (nonatomic, strong) Card   *card;
 @property (nonatomic, weak) id<CKCalendarDelegate> delegate;
 
-- (id)initWithStartDay:(startDay)firstDay;
+- (id)initWithStartDay:(startDay)firstDay card:(Card *)card;
 - (id)initWithStartDay:(startDay)firstDay frame:(CGRect)frame;
 
 // Theming
@@ -60,7 +61,8 @@ typedef int startDay;
 
 - (void)setDateBorderColor:(UIColor *)color;
 - (UIColor *)dateBorderColor;
-
+- (void)layoutSubviews;
+- (void)isFinishedOrUnFinishedDate;
 @property (nonatomic, strong) UIColor *dateTextColor;
 @property (nonatomic, strong) UIColor *selectedDateTextColor;
 @property (nonatomic, strong) UIColor *selectedDateBackgroundColor;
@@ -68,6 +70,8 @@ typedef int startDay;
 @property (nonatomic, strong) UIColor *currentDateBackgroundColor;
 @property (nonatomic, strong) UIColor *disabledDateTextColor;
 @property (nonatomic, strong) UIColor *disabledDateBackgroundColor;
+@property (nonatomic, strong) UIColor *finishedDateBackgroundColor;
+@property (nonatomic, strong) UIColor *unfinishedDateBackgroundColor;
 
 @end
 

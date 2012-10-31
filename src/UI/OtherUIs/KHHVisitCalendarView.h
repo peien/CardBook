@@ -14,6 +14,7 @@
 @interface KHHVisitCalendarView : UIView<UITableViewDataSource,UITableViewDelegate,KHHVisitCalendarCellDelegate>
 @property (strong, nonatomic) IBOutlet UITableView     *theTable;
 @property (strong, nonatomic) IBOutlet UIView          *footView;
+@property (strong, nonatomic) IBOutlet UIButton        *calBtn;
 @property (strong, nonatomic) UIViewController         *viewCtrl;
 @property (strong, nonatomic) NSMutableArray           *imgArr;
 @property (strong, nonatomic) UIImageView              *imgview;
@@ -21,9 +22,13 @@
 @property (strong, nonatomic) NSArray                  *dataArray;
 @property (assign, nonatomic) bool                     isDetailVC;
 @property (assign, nonatomic) bool                     isAllVisitedSch;
+@property (assign, nonatomic) bool                     isFromHomeVC;
+@property (assign, nonatomic) bool                     isFromCalVC;
+@property (strong, nonatomic) NSDate                   *selectedDate;
 
 - (IBAction)VisitCalendarBtnClick:(id)sender;
 - (void)initViewData;
 - (void)reloadTheTable;
+- (void)showTodayScheuds;
 
 @end

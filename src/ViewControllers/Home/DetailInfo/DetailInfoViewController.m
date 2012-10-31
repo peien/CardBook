@@ -68,6 +68,7 @@
 @synthesize isReloadCardTable;
 @synthesize isReloadVisiteTable;
 @synthesize isReloadCustomValTable;
+@synthesize isColleagues;
 
 #pragma mark -
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -213,7 +214,15 @@
         headBtn.tag = i + 999;
         [headBtn addTarget:self action:@selector(headBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [headerView addSubview:headBtn];
+        if (self.isColleagues) {
+            [headBtn setBackgroundImage:[UIImage imageNamed:@"xiangqing_btn13_normal.png"] forState:UIControlStateNormal];
+            if (headBtn.tag == 1000 || headBtn.tag == 1001) {
+                headBtn.enabled = NO;
+                //[headBtn setTitle:nil forState:UIControlStateNormal];
+            }
+        }
     }
+
     //电子名片视图
     _cardView = [[[NSBundle mainBundle] loadNibNamed:@"KHHCardView" owner:self options:nil] objectAtIndex:0];
     _cardView.myCard = self.card;
@@ -224,12 +233,14 @@
     //拜访日志
     _visitCalView = [[[NSBundle mainBundle] loadNibNamed:@"KHHVisitCalendarView" owner:self options:nil] objectAtIndex:0];
     _visitCalView.card = self.card;
+    _visitCalView.isFromHomeVC = YES;
     [_visitCalView initViewData];
     
     CGRect rect = _visitCalView.footView.frame;
     CGRect rectTable = _visitCalView.theTable.frame;
     rect.origin.y = 280;
     rectTable.size.height = 305;
+    rectTable.origin.y = 8;
     _visitCalView.footView.frame = rect;
     _visitCalView.theTable.frame = rectTable;
     _visitCalView.viewCtrl = self;
@@ -297,6 +308,7 @@
 
 - (void)headBtnClick:(id)sender
 {
+
     UIButton *bottomBtn = (UIButton *)[self.view viewWithTag:323];
     UIButton *btn = (UIButton *)sender;
     

@@ -29,6 +29,10 @@
 @synthesize dataArray;
 @synthesize isDetailVC;
 @synthesize isAllVisitedSch;
+@synthesize isFromCalVC;
+@synthesize isFromHomeVC;
+@synthesize selectedDate;
+@synthesize calBtn;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -51,9 +55,12 @@
     if (self.isAllVisitedSch) {
         KHHData *data = [KHHData sharedData];
         self.dataArray  = [data allSchedules];
-    }else{
+    }else if(self.isFromHomeVC){
         NSSet *set = self.card.schedules;
         self.dataArray = [set allObjects];
+    }else if (self.isFromCalVC){
+        self.dataArray = [[KHHData sharedData] schedulesOnDate:self.selectedDate];
+    
     }
 }
 #pragma mark -
@@ -129,7 +136,10 @@
     }
     //地址
     if (sched.address.other.length > 0) {
-        cell.locValueLab.text = sched.address.other;
+        NSString *p = [NSString stringByFilterNilFromString:sched.address.province];
+        NSString *c = [NSString stringByFilterNilFromString:sched.address.city];
+        NSString *o = [NSString stringByFilterNilFromString:sched.address.other];
+        cell.locValueLab.text = [NSString stringWithFormat:@"%@%@%@",p,c,o];
     }
     //备注
     if (sched.content.length > 0) {
@@ -173,6 +183,7 @@
         [self.viewCtrl.navigationController pushViewController:finishVC animated:YES];
     }
 }
+#warning companyAddr FIX
 - (void)showLocaButtonClick:(id)sender{
     DLog(@"showMap");
     MapController *mapVC = [[MapController alloc] initWithNibName:nil bundle:nil];
@@ -197,6 +208,7 @@
         
     }else if (btn.tag == 444){
         KHHCalendarViewController *calendarVC = [[KHHCalendarViewController alloc] initWithNibName:nil bundle:nil];
+        calendarVC.card = self.card;
         [self.viewCtrl.navigationController pushViewController:calendarVC animated:YES];
     }
 
@@ -212,5 +224,11 @@
 - (void)reloadTheTable{
     [self initViewData];
     [_theTable reloadData];
+}
+- (void)showTodayScheuds{
+    NSDateFormatter *formt = [[NSDateFormatter alloc] init];
+    [formt setDateFormat:@"yyyy-MM-dd"];
+    NSString *dateS = [formt stringFromDate:[NSDate date]];
+    self.dataArray = [[KHHData sharedData] schedulesOnDay:dateS];
 }
 @end

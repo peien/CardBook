@@ -91,7 +91,7 @@
             imgView.backgroundColor = [UIColor darkGrayColor];
             NSArray *set = [self.card.frames allObjects];
             if (set.count > 0) {
-                //[imgView setImageWithURL:[NSURL URLWithString:[set objectAtIndex:0]] placeholderImage:[UIImage imageNamed:@""]];
+                [imgView setImageWithURL:[NSURL URLWithString:[set objectAtIndex:0]] placeholderImage:[UIImage imageNamed:@""]];
             }else{
                 imgView.image = [UIImage imageNamed:@"template2FrameBg.jpg"];
             }
@@ -101,7 +101,7 @@
     }
     
     scroll.pagingEnabled = YES;
-    scroll.contentSize = CGSizeMake(2*frame.size.width, frame.size.height);
+    scroll.contentSize = CGSizeMake(self.pages*frame.size.width, frame.size.height);
     scroll.backgroundColor = [UIColor clearColor];
     _scrView = scroll;
 }
