@@ -16,8 +16,6 @@
 #import "AppLoginController.h"
 #import "AppRegisterController.h"
 #import "LoginActionViewController.h"
-#import "LoginViewController.h"
-#import "BTestViewController.h"
 
 #define titleCreateAccountSucceeded NSLocalizedString(@"用户注册成功", nil)
 #define titleCreateAccountFailed    NSLocalizedString(@"用户注册失败", nil)
@@ -87,17 +85,17 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
         // 注册
         [self observeNotificationName:nAppShowCreateAccount
                              selector:@"showCreateAccountView"];
-        [self observeNotificationName:nCreateAccountSucceeded
+        [self observeNotificationName:nNetworkCreateAccountSucceeded
                              selector:@"handleNetworkCreateAccountSucceeded:"];
-        [self observeNotificationName:nCreateAccountFailed
+        [self observeNotificationName:nNetworkCreateAccountFailed
                              selector:@"handleNetworkCreateAccountFailed:"];
         
         // 重置密码
         [self observeNotificationName:nAppResetMyPassword
                              selector:@"resetPassword:"];
-        [self observeNotificationName:nResetPasswordSucceeded
+        [self observeNotificationName:nNetworkResetPasswordSucceeded
                              selector:@"handleNetworkResetPasswordSucceeded:"];
-        [self observeNotificationName:nResetPasswordFailed
+        [self observeNotificationName:nNetworkResetPasswordFailed
                              selector:@"handleNetworkResetPasswordFailed:"];
         // 同步
         [self observeNotificationName:nDataSyncAllSucceeded
@@ -199,8 +197,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     DLog(@"[II] 开始自动登录！");
     
     // 无网络直接进
-    if (YES) {
-#warning TODO
+    if (NO) {
         [self postASAPNotificationName:nAppShowMainView];
     }
     // 有网络则登录

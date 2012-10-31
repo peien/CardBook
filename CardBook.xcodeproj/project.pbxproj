@@ -106,8 +106,6 @@
 		9845006C1637C5A1002C579E /* AppStartController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9845006A1637C5A1002C579E /* AppStartController.xib */; };
 		9845006F1637C79D002C579E /* KHHMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 9845006E1637C79D002C579E /* KHHMessage.m */; };
 		984500721637C7AB002C579E /* _KHHMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 984500711637C7AB002C579E /* _KHHMessage.m */; };
-		984500761637F3E4002C579E /* BTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 984500741637F3E3002C579E /* BTestViewController.m */; };
-		984500771637F3E4002C579E /* BTestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 984500751637F3E3002C579E /* BTestViewController.xib */; };
 		984ABA02163662ED0047AFB2 /* OSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 984ABA01163662ED0047AFB2 /* OSchedule.m */; };
 		984B7FE116255AA400E8BDC0 /* ICheckIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 984B7FE016255AA400E8BDC0 /* ICheckIn.m */; };
 		984B7FE51625642800E8BDC0 /* SMObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 984B7FE41625642700E8BDC0 /* SMObject.m */; };
@@ -695,9 +693,6 @@
 		9845006E1637C79D002C579E /* KHHMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHMessage.m; sourceTree = "<group>"; };
 		984500701637C7AB002C579E /* _KHHMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = _KHHMessage.h; sourceTree = "<group>"; };
 		984500711637C7AB002C579E /* _KHHMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = _KHHMessage.m; sourceTree = "<group>"; };
-		984500731637F3E3002C579E /* BTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BTestViewController.h; sourceTree = "<group>"; };
-		984500741637F3E3002C579E /* BTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BTestViewController.m; sourceTree = "<group>"; };
-		984500751637F3E3002C579E /* BTestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BTestViewController.xib; sourceTree = "<group>"; };
 		984ABA00163662ED0047AFB2 /* OSchedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OSchedule.h; sourceTree = "<group>"; };
 		984ABA01163662ED0047AFB2 /* OSchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OSchedule.m; sourceTree = "<group>"; };
 		984B7FDF16255AA400E8BDC0 /* ICheckIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICheckIn.h; sourceTree = "<group>"; };
@@ -1433,9 +1428,6 @@
 				984500681637C5A1002C579E /* AppStartController.h */,
 				984500691637C5A1002C579E /* AppStartController.m */,
 				9845006A1637C5A1002C579E /* AppStartController.xib */,
-				984500731637F3E3002C579E /* BTestViewController.h */,
-				984500741637F3E3002C579E /* BTestViewController.m */,
-				984500751637F3E3002C579E /* BTestViewController.xib */,
 			);
 			path = Start;
 			sourceTree = "<group>";
@@ -2936,7 +2928,6 @@
 				62A83C6A162B9DAA0006B5A4 /* beizhu_btn@2x.png in Resources */,
 				62A83C6D162BAF2E0006B5A4 /* LoginImage_bg@2x.png in Resources */,
 				9845006C1637C5A1002C579E /* AppStartController.xib in Resources */,
-				984500771637F3E4002C579E /* BTestViewController.xib in Resources */,
 				98D29B74163A594900DE82E3 /* AppLoginController.xib in Resources */,
 				0CEFF883163AFE7500E878C6 /* AppRegisterController.xib in Resources */,
 				983D642D163E4ACC00EBA9E4 /* Cell_bottom@2x.png in Resources */,
@@ -3291,7 +3282,6 @@
 				9845006B1637C5A1002C579E /* AppStartController.m in Sources */,
 				9845006F1637C79D002C579E /* KHHMessage.m in Sources */,
 				984500721637C7AB002C579E /* _KHHMessage.m in Sources */,
-				984500761637F3E4002C579E /* BTestViewController.m in Sources */,
 				98D29B73163A594900DE82E3 /* AppLoginController.m in Sources */,
 				0CEFF882163AFE7500E878C6 /* AppRegisterController.m in Sources */,
 			);

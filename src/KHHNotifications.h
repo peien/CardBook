@@ -10,21 +10,19 @@
 #import "NSObject+SM.h"
 
 #pragma mark - UI Notifications
-// Startup
-static NSString * const KHHUIShowStartup = @"UIshowStartup";
-// MainUI
-static NSString * const nAppShowMainView = @"nAppShowMainView";
+static NSString * const KHHUIShowStartup     = @"UIshowStartup";
+static NSString * const nAppShowMainView     = @"nAppShowMainView";
+static NSString * const nAppShowPreviousView = @"nAppShowPreviousView";
 // Intro
 static NSString * const nAppSkipIntro    = @"nAppSkipIntro";
 // Logout
 static NSString * const KHHAppLogout     = @"AppLogout";
-static NSString * const nAppShowPreviousView = @"nAppShowPreviousView";
 
 //MARK: - 帐户操作
 // Login
 // 注意设置userInfo: 包含的keys @"user" @"password"
-static NSString * const nAppLogMeIn     = @"nAppLogMeIn";
-static NSString * const nAppLoggingIn   = @"nAppLoggingIn";
+static NSString * const nAppLogMeIn   = @"nAppLogMeIn";
+static NSString * const nAppLoggingIn = @"nAppLoggingIn";
 
 // 注册
 // 注意设置userInfo: 包含的keys @"user" @"password"
@@ -38,8 +36,7 @@ static NSString * const nAppResettingPassword = @"nAppResettingPassword";
 
 //MARK: - 同步
 // Sync
-static NSString * const nAppSyncing     = @"nAppSyncing";
-static NSString * const KHHUIStartSyncAll     = @"UIStartSyncAll";
+static NSString * const nAppSyncing           = @"nAppSyncing";
 static NSString * const nDataSyncAllSucceeded = @"nDataSyncAllSucceeded";
 static NSString * const nDataSyncAllFailed    = @"nDataSyncAllFailed";
 
@@ -110,16 +107,15 @@ static NSString * const KHHLocationUpdateFailed    = @"KHHLocationUpdateFailed";
 // 登录
 static NSString * const nNetworkLoginSucceeded = @"loginSucceeded";
 static NSString * const nNetworkLoginFailed    = @"loginFailed";
-//static NSString * const KHHNetworkLoginMenually  = @"loginMenually";
 // 注册
-static NSString * const nCreateAccountSucceeded = @"createAccountSucceeded";
-static NSString * const nCreateAccountFailed    = @"createAccountFailed";
+static NSString * const nNetworkCreateAccountSucceeded = @"createAccountSucceeded";
+static NSString * const nNetworkCreateAccountFailed    = @"createAccountFailed";
 // 改密码
 static NSString * const KHHNetworkChangePasswordSucceeded = @"changePasswordSucceeded";
 static NSString * const KHHNetworkChangePasswordFailed    = @"changePasswordFailed";
 // 重置密码
-static NSString * const nResetPasswordSucceeded = @"resetPasswordSucceeded";
-static NSString * const nResetPasswordFailed    = @"resetPasswordFailed";
+static NSString * const nNetworkResetPasswordSucceeded = @"resetPasswordSucceeded";
+static NSString * const nNetworkResetPasswordFailed    = @"resetPasswordFailed";
 // markAutoReceive
 static NSString * const KHHNetworkMarkAutoReceiveSucceeded = @"markAutoReceiveSucceeded";
 static NSString * const KHHNetworkMarkAutoReceiveFailed    = @"markAutoReceiveFailed";
