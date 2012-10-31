@@ -7,13 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SuperViewController.h"
 
 #define LoginBackgroundViewTag 999
 #define LoginAccountFieldTag   1000
 #define LoginPasswordFieldTag  1001
 
-@interface LoginViewController : SuperViewController
+@interface LoginViewController : UIViewController
 @property (nonatomic, weak)   IBOutlet UITableView *inputTable;
 @property (nonatomic, weak)   IBOutlet UIButton    *theLoginButton;
 @property (nonatomic, strong)          UIView      *latestView;

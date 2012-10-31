@@ -18,7 +18,7 @@
 /**
  登录成功后，一定要调用这个设置authentication。
  */
-- (BOOL)authenticateWithFakeID:(NSString *)fakeID
+- (BOOL)authenticateWithUser:(NSString *)fakeID
                       password:(NSString *)password {
     if (0 == [fakeID length] || 0 == [password length]) {
         return NO;

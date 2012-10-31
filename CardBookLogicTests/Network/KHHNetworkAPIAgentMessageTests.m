@@ -31,7 +31,7 @@ typedef enum {
 {
     [super setUp];
     self.agent = [[KHHNetworkAPIAgent alloc] init];
-    [self.agent authenticateWithFakeID:@"19535276315" // 888888799826
+    [self.agent authenticateWithUser:@"19535276315" // 888888799826
                               password:@"123456"];
     self.running = YES;
     NSURL *modelURL = [[NSBundle bundleForClass:[self class]] URLForResource:@"CardBook" withExtension:@"momd"];

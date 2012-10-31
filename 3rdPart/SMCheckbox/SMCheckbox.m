@@ -6,8 +6,8 @@
 //
 
 #import "SMCheckbox.h"
-NSString *const SMCheckboxImage_Checked = @"checked.png";
-NSString *const SMCheckboxImage_Unchecked = @"unchecked.png";
+NSString *const SMCheckboxImage_Checked   = @"Checkbox_checked.png";
+NSString *const SMCheckboxImage_Unchecked = @"Checkbox_unchecked.png";
 
 @implementation SMCheckbox
 @synthesize delegate = _delegate;
@@ -15,6 +15,7 @@ NSString *const SMCheckboxImage_Unchecked = @"unchecked.png";
 
 - (void)awakeFromNib {
     [super awakeFromNib];
+    DLog(@"[II] Checkbox = %@, button type = %d", self, self.buttonType);
     _checked = NO;
     [self addTarget:self
              action:@selector(buttonTapped:)
@@ -25,9 +26,12 @@ NSString *const SMCheckboxImage_Unchecked = @"unchecked.png";
     if (_checked != newValue) {
         // 值改变了
         _checked = newValue;
-        UIImage *image = newValue?
-                [UIImage imageNamed:SMCheckboxImage_Checked]:
-                [UIImage imageNamed:SMCheckboxImage_Unchecked];
+        UIEdgeInsets imgInsets = {0,0,0,0};
+        UIImage *checkedImg   = [[UIImage imageNamed:SMCheckboxImage_Checked]
+                                 resizableImageWithCapInsets:imgInsets];
+        UIImage *uncheckedImg = [[UIImage imageNamed:SMCheckboxImage_Unchecked]
+                                 resizableImageWithCapInsets:imgInsets];
+        UIImage *image = newValue? checkedImg: uncheckedImg;
         [self setImage:image forState:UIControlStateNormal];
         if (_delegate && [_delegate respondsToSelector:@selector(checkbox:valueChanged:)]) {
             [_delegate checkbox:self valueChanged:newValue];

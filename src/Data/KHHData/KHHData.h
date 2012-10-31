@@ -11,9 +11,9 @@
 #import "KHHApp.h"
 #import "KHHClasses.h"
 #import "KHHNetworkAPI.h"
+#import "AppStartController.h"
 
-
-@interface KHHData : NSObject
+@interface KHHData : NSObject <AppStartData>
 @property (readonly, strong, nonatomic) NSManagedObjectContext *context;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
@@ -24,9 +24,7 @@
 - (void)saveContext;   // 保存更改。
 - (void)cleanContext;  // 清除未保存的更改。
 - (void)removeContext; // 删除Context。登出或登入时使用。
-@end
-
-@interface KHHData (Syncs)
+#pragma mark - Syncs
 // 开始批量同步所有信息
 - (void)startSyncAllData;
 - (void)syncAllDataEnded:(BOOL)succeed;

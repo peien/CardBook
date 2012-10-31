@@ -19,6 +19,10 @@
     }
     return self;
 }
+- (void)dealloc
+{
+    DLog(@"[II] dealloc %@", self);
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];

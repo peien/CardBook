@@ -224,7 +224,7 @@ static NSString * const KHHDefaultsKeyDefaultMainUIIndex = @"khh_MainUI_defaultI
     self.currentPermission = @"";
 }
 #pragma mark - User settings
-- (BOOL)firstLaunch {
+- (BOOL)isFirstLaunch {
     return [self boolForKey:KHHDefaultsKeyFirstLaunch];
 }
 - (void)setFirstLaunch:(BOOL)value // 设置firstLaunch为NO。
@@ -288,7 +288,7 @@ static NSString * const KHHDefaultsKeyDefaultMainUIIndex = @"khh_MainUI_defaultI
 - (void)setLastUser:(NSString *)value {
     [self setString:value forKey:KHHDefaultsKeyLastUser];
 }
-- (BOOL)autoLogin {
+- (BOOL)isAutoLogin {
     return [self boolForKey:KHHDefaultsKeyAutoLogin];
 }
 - (void)setAutoLogin:(BOOL)value {
@@ -302,7 +302,7 @@ static NSString * const KHHDefaultsKeyDefaultMainUIIndex = @"khh_MainUI_defaultI
     [self setBool:value
            forKey:KHHDefaultsKeyAutoReceive];
 }
-- (BOOL)loggedIn // 已登录：登录成功为YES，登录失败和已登出为NO
+- (BOOL)isLoggedIn // 已登录：登录成功为YES，登录失败和已登出为NO
 {
     return [self boolForKey:KHHDefaultsKeyLoggedIn];
 }

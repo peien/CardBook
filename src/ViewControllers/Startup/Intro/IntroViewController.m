@@ -17,6 +17,7 @@
 - (void)dealloc
 {
     self.defaults = nil;
+    DLog(@"[II] dealloc %@", self);
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -74,7 +75,7 @@
 
 - (IBAction)startNow:(id)sender {
     self.defaults.firstLaunch = NO;
-    NSString *name = KHHUISkipIntro;
+    NSString *name = nAppSkipIntro;
     DLog(@"[II] 发送消息 %@", name);
     [self postASAPNotificationName:name];
 }

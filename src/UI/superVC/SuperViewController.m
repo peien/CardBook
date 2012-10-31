@@ -8,33 +8,6 @@
 
 #import "SuperViewController.h"
 
-@implementation UINavigationBar (custom)
-
-- (UIImage *)barBackground
-{
-    return [[UIImage imageNamed:@"title_bg.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-
-}
-//ios 5 会调用这个方法，但是drawRect不能调用
-- (void)didMoveToSuperview
-{
-    if ([self respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]) {
-        [self setBackgroundImage:[self barBackground] forBarMetrics:UIBarMetricsDefault];
-    }
-}
-
-//- (void) drawRect:(CGRect)rect
-//{
-//    [[self barBackground] drawInRect:rect];
-//    
-//}
-
-@end
-
-@interface SuperViewController ()
-
-@end
-
 @implementation SuperViewController
 @synthesize leftBtn;
 @synthesize rightBtn;
@@ -44,18 +17,18 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        rightBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        rightBtn = [UIButton buttonWithType:UIBarButtonItemStylePlain];
         [rightBtn setBackgroundImage:[[UIImage imageNamed:@"titlebtn_normal.png"] stretchableImageWithLeftCapWidth:8 topCapHeight:2] forState:UIControlStateNormal];
         rightBtn.titleLabel.font = [UIFont systemFontOfSize:12];
         [rightBtn addTarget:self action:@selector(rightBarButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        rightBtn.frame = CGRectMake(0, 0, 65, 40);
+        rightBtn.frame = CGRectMake(0, 0, 70, 30);
         UIBarButtonItem *rightBar = [[UIBarButtonItem alloc] initWithCustomView:rightBtn];
         self.navigationItem.rightBarButtonItem = rightBar;
         
         leftBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [leftBtn setBackgroundImage:[[UIImage imageNamed:@"titlebtn_normal.png"] stretchableImageWithLeftCapWidth:8 topCapHeight:2] forState:UIControlStateNormal];
         [leftBtn addTarget:self action:@selector(leftBarButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        leftBtn.frame = CGRectMake(0, 0, 65, 40);
+        leftBtn.frame = CGRectMake(0, 0, 70, 30);
         [leftBtn setTitle:@"返回" forState:UIControlStateNormal];
         leftBtn.titleLabel.font = [UIFont systemFontOfSize:12];
         UIBarButtonItem *leftBar = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];

@@ -37,7 +37,7 @@ typedef enum {
 {
     [super setUp];
     self.agent = [[KHHNetworkAPIAgent alloc] init];
-    [self.agent authenticateWithFakeID:@"19535276315" // 888888799826
+    [self.agent authenticateWithUser:@"19535276315" // 888888799826
                               password:@"123456"];
     self.running = YES;
 }
@@ -65,9 +65,9 @@ typedef enum {
 }
 - (void)testLoginSuccess {
     self.test = TestCaseLoginSuccess;
-    [self observeNotificationName:KHHNetworkLoginSucceeded
+    [self observeNotificationName:nNetworkLoginSucceeded
                             selector:@"loginSucceeded:"];
-    [self observeNotificationName:KHHNetworkLoginFailed
+    [self observeNotificationName:nNetworkLoginFailed
                             selector:@"loginFailed:"];
     [self.agent clearAuthorizationHeader];
     [self.agent login:@"888888799826"
@@ -76,9 +76,9 @@ typedef enum {
 }
 - (void)testLoginFailure {
     self.test = TestCaseLoginFailure;
-    [self observeNotificationName:KHHNetworkLoginSucceeded
+    [self observeNotificationName:nNetworkLoginSucceeded
                             selector:@"loginSucceeded:"];
-    [self observeNotificationName:KHHNetworkLoginFailed
+    [self observeNotificationName:nNetworkLoginFailed
                             selector:@"loginFailed:"];
     [self.agent login:@"13188799821"
              password:@"654321"];
