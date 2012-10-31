@@ -75,6 +75,13 @@
 - (void)deleteImage:(Image *)image  fromSchedule:(Schedule *)schedule;
 #pragma mark - 我拜访别人的纪录
 - (NSArray *)allSchedules;
+- (NSArray *)schedulesOnCard:(Card *)aCard day:(NSString *)aDay;// 结果是从day开始一天内的所有schedule。
+- (NSArray *)schedulesOnCard:(Card *)aCard date:(NSDate *)aDate;// 结果是从day开始一天内的所有schedule。
+
+// -1表示没有shcedule，0表示都完成了，大于0的数表示未完成的具体数量。
+- (NSInteger)countOfUnfinishedSchedulesOnCard:(Card *)aCard day:(NSString *)aDay;
+// -1表示没有shcedule，0表示都完成了，大于0的数表示未完成的具体数量。
+- (NSInteger)countOfUnfinishedSchedulesOnCard:(Card *)aCard date:(NSDate *)aDate;
 @end
 
 #pragma mark - 模板

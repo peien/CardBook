@@ -276,15 +276,47 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
     NSPredicate *predicate = nil;
 //    predicate = [NSPredicate predicateWithFormat:@"company.id <> %@", myComID];
 
-    NSSortDescriptor *sortDes = [NSSortDescriptor sortDescriptorWithKey:@"plannedDate"
+    NSSortDescriptor *sortDes = [NSSortDescriptor sortDescriptorWithKey:@"id"
                                                               ascending:NO];
-    NSArray *fetched;
-    fetched = [Schedule objectArrayByPredicate:predicate
-                               sortDescriptors:@[sortDes]];
-    // 过滤掉意外情况
-//    NSMutableArray *result = FilterUnexpectedCardsFromArray(fetched);
-    NSArray *result = fetched;
+    NSArray *result = [Schedule objectArrayByPredicate:predicate
+                                       sortDescriptors:@[sortDes]];
     return result;
+}
+- (NSArray *)schedulesOnCard:(Card *)aCard day:(NSString *)aDay {
+    NSDate *date = DateFromKHHDateString([aDay stringByAppendingString:@" 00:00:00"]);
+    return [self schedulesOnCard:aCard date:date];
+}
+- (NSArray *)schedulesOnCard:(Card *)aCard date:(NSDate *)aDate {
+    NSDate *start = aDate;
+    NSTimeInterval oneDay = 60 * 60 * 24;
+    NSDate *end = [start dateByAddingTimeInterval:oneDay];
+    NSPredicate *predicate;
+    if (aCard) {
+        predicate = [NSPredicate predicateWithFormat:@"plannedDate >= %@ && plannedDate < %@ && SOME targets.id == %@", start, end, aCard.id];
+    } else {
+        predicate = [NSPredicate predicateWithFormat:@"plannedDate >= %@ && plannedDate < %@", start, end];
+    }
+    NSSortDescriptor *sortDes = [NSSortDescriptor sortDescriptorWithKey:@"id"
+                                                              ascending:NO];
+    NSArray *result = [Schedule objectArrayByPredicate:predicate
+                                       sortDescriptors:@[sortDes]];
+    return result;
+}
+- (NSInteger)countOfUnfinishedSchedulesOnCard:(Card *)aCard day:(NSString *)aDay; {
+    NSDate *start = DateFromKHHDateString([aDay stringByAppendingString:@" 00:00:00"]);
+    return [self countOfUnfinishedSchedulesOnCard:aCard date:start];
+}
+- (NSInteger)countOfUnfinishedSchedulesOnCard:(Card *)aCard date:(NSDate *)aDate {
+    NSArray *list = [self schedulesOnCard:aCard date:aDate];
+    if (0 == list.count) {
+        return -1;
+    }
+    NSMutableArray *result = [NSMutableArray arrayWithCapacity:list.count];
+    for (Schedule *schdl in list) {
+        if(schdl.isFinishedValue) continue;
+        [result addObject:schdl];
+    }
+    return result.count;
 }
 @end
 
