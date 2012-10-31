@@ -94,84 +94,83 @@
 }
 - (id)updateWithIObject:(InterCard *)iCard {
     if (iCard) {
+        self.name = iCard.name;
         if (iCard.name.length) {
-            self.name      = iCard.name;
-            self.isFull    = @(YES);
+            self.isFull = @(YES);
         }
-        self.modelType     = @(KHHCardModelTypeCard);
+        self.modelType = @(KHHCardModelTypeCard);
         
-        if (iCard.userID)   self.userID    = iCard.userID;
-        if (iCard.version)  self.version   = iCard.version;
-        if (iCard.roleType) self.roleType  = iCard.roleType;
+        self.userID    = iCard.userID;
+        self.version   = iCard.version;
+        self.roleType  = iCard.roleType;
         
         // 工作相关
-        if (iCard.title.length)         self.title         = iCard.title;
-        if (iCard.businessScope.length) self.businessScope = iCard.businessScope;
+        self.title         = iCard.title;
+        self.businessScope = iCard.businessScope;
         
         // 联系方式
-        if (iCard.fax.length)         self.fax         = iCard.fax;
-        if (iCard.mobilePhone.length) self.mobilePhone = iCard.mobilePhone;
-        if (iCard.telephone.length)   self.telephone   = iCard.telephone;
-        if (iCard.aliWangWang.length) self.aliWangWang = iCard.aliWangWang;
-        if (iCard.email.length)       self.email       = iCard.email;
-        if (iCard.microblog.length)   self.microblog   = iCard.microblog;
-        if (iCard.msn.length)         self.msn         = iCard.msn;
-        if (iCard.qq.length)          self.qq          = iCard.qq;
-        if (iCard.web.length)         self.web         = iCard.web;
+        self.fax         = iCard.fax;
+        self.mobilePhone = iCard.mobilePhone;
+        self.telephone   = iCard.telephone;
+        self.aliWangWang = iCard.aliWangWang;
+        self.email       = iCard.email;
+        self.microblog   = iCard.microblog;
+        self.msn         = iCard.msn;
+        self.qq          = iCard.qq;
+        self.web         = iCard.web;
         
         // 杂项
-        if (iCard.moreInfo.length)    self.moreInfo    = iCard.moreInfo;
+        self.moreInfo    = iCard.moreInfo;
         
         // 模板 {
         // 根据ID查，不存在则新建
-        if (iCard.templateID)
+        if (iCard.templateID.integerValue) {
             self.template = [CardTemplate objectByID:iCard.templateID createIfNone:YES];
+        } else {
+            self.template = nil;
+        }
         // }
         
         // 公司 {
         NSNumber *companyID = iCard.companyID;
             // 保证公司对象存在
-            if (companyID) {
+            if (companyID.integerValue) {
                 self.company = [Company objectByID:companyID createIfNone:YES];
             } else {
                 // 公司无ID，通常是PrivateCard。
                 if (nil == self.company) self.company = [Company newObject];
             }
-        NSString *companyName = iCard.companyName;
-        if (companyName.length) self.company.name = companyName;
+        self.company.name = iCard.companyName;
         // }
         
         // logo {
-        if (iCard.logoURL.length)
-            self.logo = [Image objectByKey:@"url" value:iCard.logoURL createIfNone:YES];
+        self.logo = [Image objectByKey:@"url" value:iCard.logoURL createIfNone:YES];
         // }
         
         // 地址 {
         if (nil == self.address) self.address = [Address newObject];
-        if (iCard.addressCity.length)
-            self.address.city     = iCard.addressCity;
-        if (iCard.addressCountry.length)
-            self.address.country  = iCard.addressCountry;
-        if (iCard.addressDistrict.length)
-            self.address.district = iCard.addressDistrict;
-        if (iCard.addressOther.length)
-            self.address.other    = iCard.addressOther;
-        if (iCard.addressProvince.length)
-            self.address.province = iCard.addressProvince;
-        if (iCard.addressStreet.length)
-            self.address.street   = iCard.addressStreet;
-        if (iCard.addressZip.length)
-            self.address.zip      = iCard.addressZip;
+//        if (iCard.addressCity.length)
+        self.address.city     = iCard.addressCity;
+//        if (iCard.addressCountry.length)
+        self.address.country  = iCard.addressCountry;
+//        if (iCard.addressDistrict.length)
+        self.address.district = iCard.addressDistrict;
+//        if (iCard.addressOther.length)
+        self.address.other    = iCard.addressOther;
+//        if (iCard.addressProvince.length)
+        self.address.province = iCard.addressProvince;
+//        if (iCard.addressStreet.length)
+        self.address.street   = iCard.addressStreet;
+//        if (iCard.addressZip.length)
+        self.address.zip      = iCard.addressZip;
         // }
         
         // 银行帐户 {
-        if (iCard.bankAccountNumber.length) {
-            if (nil == self.bankAccount) self.bankAccount = [BankAccount newObject];
-            self.bankAccount.bank   = iCard.bankAccountBank;
-            self.bankAccount.branch = iCard.bankAccountBranch;
-            self.bankAccount.name   = iCard.bankAccountName;
-            self.bankAccount.number = iCard.bankAccountNumber;
-        }
+        if (nil == self.bankAccount) self.bankAccount = [BankAccount newObject];
+        self.bankAccount.bank   = iCard.bankAccountBank;
+        self.bankAccount.branch = iCard.bankAccountBranch;
+        self.bankAccount.name   = iCard.bankAccountName;
+        self.bankAccount.number = iCard.bankAccountNumber;
         // }
         
         // 第2～n祯 {
