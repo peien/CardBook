@@ -292,7 +292,7 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
     NSDate *end = [start dateByAddingTimeInterval:oneDay];
     NSPredicate *predicate;
     if (aCard) {
-        predicate = [NSPredicate predicateWithFormat:@"plannedDate >= %@ && plannedDate < %@ SOME targets.id == %@", start, end, aCard.id];
+        predicate = [NSPredicate predicateWithFormat:@"plannedDate >= %@ && plannedDate < %@ && SOME targets.id == %@", start, end, aCard.id];
     } else {
         predicate = [NSPredicate predicateWithFormat:@"plannedDate >= %@ && plannedDate < %@", start, end];
     }
