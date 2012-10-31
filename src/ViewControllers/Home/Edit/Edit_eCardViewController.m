@@ -24,6 +24,7 @@
 #import "KHHClasses.h"
 #import "KHHDataAPI.h"
 #import "KHHNotifications.h"
+#import "NSString+SM.h"
 
 #define CARD_IMGVIEW_TAG 990
 #define CARDMOD_VIEW_TAG 991
@@ -274,22 +275,8 @@ NSString *const kECardListSeparator = @"|";
         [_fieldValue replaceObjectAtIndex:7 withObject:_glCard.company.name];
     }
     
-    if (_glCard.address.province.length > 0 && _glCard.address.city.length > 0) {
-        self.pc = [NSString stringWithFormat:@"%@ %@",_glCard.address.province,_glCard.address.city];
-    }
-    if (_glCard.address.district.length > 0 && _glCard.address.street.length > 0) {
-         self.strStreet = [NSString stringWithFormat:@"%@%@",_glCard.address.district,_glCard.address.street];
-    }
     if (self.type == KCardViewControllerTypeNewCreate || _glCard.address.province == nil) {
         NSString *allAddress = @"点击选择省市";
-        [_fieldValue replaceObjectAtIndex:8 withObject:allAddress];
-    }
-    if (self.pc.length > 0) {
-        NSString *allAddress = self.pc;
-        [_fieldValue replaceObjectAtIndex:8 withObject:allAddress];
-    }
-    if (self.pc.length > 0 && self.strStreet.length > 0) {
-        NSString *allAddress = [NSString stringWithFormat:@"%@|%@",self.pc,self.strStreet];
         [_fieldValue replaceObjectAtIndex:8 withObject:allAddress];
     }
     
@@ -519,13 +506,20 @@ NSString *const kECardListSeparator = @"|";
                 [cell.bigAdress setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
             }
             cell.detailAdress.tag = indexPath.row + 7 + _fieldExternOne.count + kBaseTag;
-            NSString *all = [_fieldValue objectAtIndex:8];
-            NSArray *arr = [all componentsSeparatedByString:@"|"];
-            if (arr.count >= 1) {
-                [cell.bigAdress setTitle:[arr objectAtIndex:0] forState:UIControlStateNormal];
-                if (self.strStreet.length > 0) {
-                   cell.detailAdress.text = [arr objectAtIndex:1]; 
-                }
+//            NSString *all = [_fieldValue objectAtIndex:8];
+//            NSArray *arr = [all componentsSeparatedByString:@"|"];
+//            if (arr.count >= 1) {
+//                [cell.bigAdress setTitle:[arr objectAtIndex:0] forState:UIControlStateNormal];
+//                if (self.strStreet.length > 0) {
+//                   cell.detailAdress.text = [arr objectAtIndex:1]; 
+//                }
+//            }
+            if (self.glCard.address.other.length > 0 || self.glCard.address.province.length > 0) {
+                NSString *p = [NSString stringByFilterNilFromString:self.glCard.address.province];
+                NSString *c = [NSString stringByFilterNilFromString:self.glCard.address.city];
+                NSString *other = [NSString stringByFilterNilFromString:self.glCard.address.other];
+                [cell.bigAdress setTitle:[NSString stringWithFormat:@"%@%@",p,c] forState:UIControlStateNormal];
+                cell.detailAdress.text = other;
             }
             return cell;
         }
@@ -993,7 +987,7 @@ NSString *const kECardListSeparator = @"|";
     //self.interCard.addressCountry =
     //self.interCard.addressDistrict =
     if (addressArr.count >= 2) {
-        self.interCard.addressStreet = [addressArr objectAtIndex:1]; 
+        self.interCard.addressOther = [addressArr objectAtIndex:1];
     }
     
     // 对是否为空或格式进行判断，然后把手机，电话，传真，邮箱保存起来
@@ -1113,7 +1107,7 @@ NSString *const kECardListSeparator = @"|";
         [self.dataCtrl modifyPrivateCardWithInterCard:self.interCard];
     }else if (self.type == KCardViewControllerTypeNewCreate){
         //暂时这样写 templateID不确定
-        self.interCard.templateID = [NSNumber numberWithInt:28];
+        self.interCard.templateID = [NSNumber numberWithInt:18];
         [self.dataCtrl createPrivateCardWithInterCard:self.interCard];
     }
 }

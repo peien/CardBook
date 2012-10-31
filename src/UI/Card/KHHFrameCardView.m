@@ -10,6 +10,7 @@
 #import "UIImageView+WebCache.h"
 #import "KHHVisualCardViewController.h"
 #import "KHHCardTemplageVC.h"
+#import "KHHClasses.h"
 
 @implementation KHHFrameCardView
 @synthesize scrView = _scrView;
@@ -88,12 +89,12 @@
             //第二张从网络获取
             rect.origin.y = 0;
             imgView.frame = rect;
-            imgView.backgroundColor = [UIColor darkGrayColor];
             NSArray *set = [self.card.frames allObjects];
             if (set.count > 0) {
-                [imgView setImageWithURL:[NSURL URLWithString:[set objectAtIndex:0]] placeholderImage:[UIImage imageNamed:@""]];
+                Image *img = [set objectAtIndex:0];
+                [imgView setImageWithURL:[NSURL URLWithString:img.url] placeholderImage:[UIImage imageNamed:@"qidong_logo.png"]];
             }else{
-                imgView.image = [UIImage imageNamed:@"template2FrameBg.jpg"];
+                imgView.image = [UIImage imageNamed:@"qidong_logo.png"];
             }
             
             [scroll addSubview:imgView];

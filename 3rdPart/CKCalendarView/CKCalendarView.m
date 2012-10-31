@@ -306,15 +306,21 @@
         
         NSArray *arr = [[self stringFromDate:dateButton.date] componentsSeparatedByString:@" "];
         NSString *dateS = [arr objectAtIndex:0];
-        NSNumber *num = [[KHHData sharedData] countOfUnfinishedSchedulesOnDay:dateS];
-        DLog(@"num is ====== %@",num);
-        if ([num intValue] == 0) {
-            [dateButton setBackgroundColor:self.finishedDateBackgroundColor];
-        }else if([num intValue] > 0){
-            [dateButton setBackgroundColor:self.unfinishedDateBackgroundColor];
-        }else{
-
+        if ([self.card isKindOfClass:[MyCard class]]) {
+            self.card = nil;
         }
+        NSInteger num = [[KHHData sharedData] countOfUnfinishedSchedulesOnCard:self.card day:dateS];
+        switch (num) {
+            case -1:
+                break;
+            case 0:
+                [dateButton setBackgroundColor:self.finishedDateBackgroundColor];
+                break;
+            default:
+                [dateButton setBackgroundColor:self.unfinishedDateBackgroundColor];
+                break;
+        }
+
         //[self isFinishedOrUnFinishedDate:dateButton];
     }
 }

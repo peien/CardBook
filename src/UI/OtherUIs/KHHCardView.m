@@ -169,7 +169,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5.0f, 10.0f, 60.0f, 15.0f)];
-        label.textAlignment = UITextAlignmentCenter;
+        label.textAlignment = UITextAlignmentLeft;
         label.font = [UIFont systemFontOfSize:12];
         label.numberOfLines = 0;
         label.lineBreakMode = UILineBreakModeWordWrap;

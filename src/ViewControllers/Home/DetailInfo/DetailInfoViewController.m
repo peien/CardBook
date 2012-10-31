@@ -263,8 +263,10 @@
     bottomBtn.frame = CGRectMake(260, 360, 50, 50);
     [bottomBtn setBackgroundImage:[UIImage imageNamed:@"edit_Btn_Red.png"] forState:UIControlStateNormal];
     [self.view insertSubview:bottomBtn atIndex:100];
-    if (self.card.roleTypeValue != 1 || [self.card isKindOfClass:[ReceivedCard class]]) {
-        bottomBtn.hidden = YES;
+    if (self.card.modelTypeValue !=2) {
+        if (self.card.roleTypeValue != 1 || [self.card isKindOfClass:[ReceivedCard class]]) {
+            bottomBtn.hidden = YES;
+        }
     }
 
     //popView
@@ -331,10 +333,13 @@
     
     if (btn.tag == 999) {
         [self.containView bringSubviewToFront:_cardView];
-        if (self.card.roleTypeValue != 1 || [self.card isKindOfClass:[ReceivedCard class]]) {
-            bottomBtn.hidden = YES;
-        }else{
-            bottomBtn.hidden = NO;
+        bottomBtn.hidden = NO;
+        if (self.card.modelTypeValue != 2) {
+            if (self.card.roleTypeValue != 1 || [self.card isKindOfClass:[ReceivedCard class]]) {
+                bottomBtn.hidden = YES;
+            }else{
+                bottomBtn.hidden = NO;
+            }
         }
         _isToeCardVC  = YES;
         

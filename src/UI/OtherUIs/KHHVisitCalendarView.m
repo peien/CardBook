@@ -59,8 +59,10 @@
         NSSet *set = self.card.schedules;
         self.dataArray = [set allObjects];
     }else if (self.isFromCalVC){
-        self.dataArray = [[KHHData sharedData] schedulesOnDate:self.selectedDate];
-    
+        if ([self.card isKindOfClass:[MyCard class]]) {
+            self.card = nil;
+        }
+        self.dataArray = [[KHHData sharedData] schedulesOnCard:self.card date:self.selectedDate];
     }
 }
 #pragma mark -
@@ -229,6 +231,9 @@
     NSDateFormatter *formt = [[NSDateFormatter alloc] init];
     [formt setDateFormat:@"yyyy-MM-dd"];
     NSString *dateS = [formt stringFromDate:[NSDate date]];
-    self.dataArray = [[KHHData sharedData] schedulesOnDay:dateS];
+    if ([self.card isKindOfClass:[MyCard class]]) {
+        self.card = nil;
+    }
+    self.dataArray = [[KHHData sharedData] schedulesOnCard:self.card day:dateS];
 }
 @end

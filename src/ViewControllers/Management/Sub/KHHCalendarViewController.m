@@ -66,11 +66,12 @@
     [formt setDateFormat:@"yyyy-MM-dd"];
     NSString *dateS = [formt stringFromDate:[NSDate date]];
     visitView.selectedDate = [formt dateFromString:dateS];
+    visitView.card = self.card;
     [visitView showTodayScheuds];
     CGRect rect = visitView.frame;
     CGRect rectTable = visitView.theTable.frame;
-    rectTable.origin.y = -10;
-    rectTable.size.height = 127;
+    rectTable.origin.y = 0;
+    rectTable.size.height = 122;
     rect.origin.y = 300;
     rect.size.height = 200;
     visitView.frame = rect;
@@ -83,6 +84,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [KHHShowHideTabBar hideTabbar];
     if (self.isneedReloadeVisitTable) {
+        
         [self.visitView reloadTheTable];
     }
 }
@@ -127,6 +129,7 @@
         DLog(@"")
     }
     self.visitView.selectedDate = self.dateSelect;
+    self.visitView.card = self.card;
     [self.visitView reloadTheTable];
 }
 - (void)calendarChangeFrame:(CKCalendarView *)calendar
