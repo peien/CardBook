@@ -27,6 +27,13 @@
 #endif
 
 /*
+ *  KHH_Default_CardTemplate_ID 默认的模板ID
+ */
+#ifndef KHH_Default_CardTemplate_ID
+#define KHH_Default_CardTemplate_ID 41
+#endif
+
+/*
  *  KHH_MULTI_COMPANY 是否支持单用户属于多公司
  *  0 不支持，一个用户属于一个公司
  *  1 支持。

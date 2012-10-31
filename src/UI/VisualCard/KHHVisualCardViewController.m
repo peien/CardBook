@@ -117,9 +117,13 @@ static CGFloat const CARD_WIDTH_PADDING = 5.f;
     // 开始重建view
     Card *card = self.card;
     CardTemplate *tmpl = card.template;
-    if (nil == tmpl) {
-        // 模板为nil，直接返回。
-        return;
+    if (0 == tmpl.isFull.integerValue) {
+        // 模板为nil，使用默认模板。
+        tmpl = [CardTemplate objectByID:@(KHH_Default_CardTemplate_ID) createIfNone:NO];
+        if (nil == tmpl) {
+            ALog(@"[EE] ERROR!!默认模板不存在！(%d)", KHH_Default_CardTemplate_ID);
+            return;
+        }
     }
     // 新建背景
     if (tmpl.bgImage.url) {
