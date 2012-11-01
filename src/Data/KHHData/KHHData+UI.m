@@ -342,5 +342,15 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
 -(void)syncMessages {
     [self.agent allMessages];
 }
+- (NSArray *)allMessages {
+    NSSortDescriptor *sortDes = [NSSortDescriptor sortDescriptorWithKey:@"time"
+                                                              ascending:NO];
+    NSArray *result = [Schedule objectArrayByPredicate:nil
+                                       sortDescriptors:@[sortDes]];
+    return result;
+}
+- (void)deleteMessage:(KHHMessage *)msg {
+    
+}
 
 @end
