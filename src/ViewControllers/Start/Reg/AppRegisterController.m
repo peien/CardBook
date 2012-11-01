@@ -7,8 +7,11 @@
 //
 
 #import "AppRegisterController.h"
+#import "KHHDefaults.h"
+#import "KHHKeys.h"
 #import "KHHLog.h"
 #import "KHHNotifications.h"
+#import "NSString+Validation.h"
 #import "SMCheckbox.h"
 #import "UIImage+KHH.h"
 #import "UIViewController+SM.h"
@@ -35,7 +38,15 @@ enum Tag_TextField {
 #define Tag_Button_Reg        21002
 #define Tag_Scroll_Container  9999
 
+#define textOK                     NSLocalizedString(@"确定", @"OK")
+#define textAlertYouShouldAgree    NSLocalizedString(@"必须同意隐私声明才能使用本产品。", nil)
+#define textAlertPasswordInvalid   NSLocalizedString(@"密码必须包含4-12位数字、字母、下划线或减号！", nil)
+#define textAlertPhoneLooksInvalid NSLocalizedString(@"请输入有效的手机号码。", nil)
+#define textAlertShouldNotBeEmpty  NSLocalizedString(@"姓名手机号和密码不能为空！", nil)
+#define textWarnRealPhoneNumber    NSLocalizedString(@"注册必须用你的真实手机号码，以备密码丢失时重设密码。使用他人手机号码可能导致你的数据外泄或丢失。印象名片不会透露您的号码给第三方。",nil)
+
 @interface AppRegisterController ()<SMCheckboxDelegate>
+@property (nonatomic, strong) KHHDefaults *defaults;
 - (IBAction)createAccount:(id)sender;
 - (IBAction)showAgreement:(id)sender;
 @end
@@ -47,12 +58,12 @@ enum Tag_TextField {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.navigationItem.title = NSLocalizedString(@"注册", nil);
-        UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"返回", nil)
-                                                                     style:UIBarButtonItemStylePlain
-                                                                    target:self
-                                                                    action:@selector(goBack:)];
-        self.navigationItem.leftBarButtonItem = backItem;
-        
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
+                                                 initWithTitle:NSLocalizedString(@"返回", nil)
+                                                 style:UIBarButtonItemStylePlain
+                                                 target:self
+                                                 action:@selector(goBack:)];
+        self.defaults = [KHHDefaults sharedDefaults];
         [self observeNotificationName:UIKeyboardDidShowNotification
                              selector:@"keyboardShow:"];
         [self observeNotificationName:UIKeyboardWillHideNotification
@@ -111,8 +122,73 @@ enum Tag_TextField {
     [self postASAPNotificationName:nAppShowPreviousView];
 }
 - (IBAction)createAccount:(id)sender {
-#warning TODO
-    DLog(@"[II] 未完成！");
+    UITextField *nameField = (UITextField *)[self.view viewWithTag:Tag_TextField_Name];
+    UITextField *userField = (UITextField *)[self.view viewWithTag:Tag_TextField_Mobile];
+    UITextField *passField = (UITextField *)[self.view viewWithTag:Tag_TextField_Pass];
+    UITextField *comField  = (UITextField *)[self.view viewWithTag:Tag_TextField_Company];
+    UITextField *invField  = (UITextField *)[self.view viewWithTag:Tag_TextField_Invation];
+    NSString *name     = nameField.text;
+    NSString *user     = userField.text;
+    NSString *password = passField.text;
+    NSLog(@"姓名: %@, 手机号: %@, 密码: %@.", name, user, password);
+    
+    SMCheckbox *agreeBox = (SMCheckbox *)[self.view viewWithTag:Tag_Checkbox_Agree];
+    if (!(agreeBox.isChecked)) {
+        // NOT agree to the agreement.
+        [[[UIAlertView alloc]
+          initWithTitle:nil
+          message:textAlertYouShouldAgree
+          delegate:nil
+          cancelButtonTitle:textOK
+          otherButtonTitles:nil] show];
+        return;
+    }
+    
+    if (!(name.length && user.length && password.length)) {
+        //姓名帐号或密码为空
+        [[[UIAlertView alloc]
+          initWithTitle:nil
+          message:textAlertShouldNotBeEmpty
+          delegate:nil
+          cancelButtonTitle:textOK
+          otherButtonTitles:nil]show];
+        return;
+    }
+    
+    if (!(user.isRegistrablePhone)) {
+        //手机号不合法
+        [[[UIAlertView alloc]
+          initWithTitle:nil
+          message:textAlertPhoneLooksInvalid
+          delegate:nil
+          cancelButtonTitle:textOK
+          otherButtonTitles:nil] show];
+        return;
+    }
+    
+    if (!(password.isValidPassword)) {
+        //密码不合法
+        [[[UIAlertView alloc]
+          initWithTitle:nil
+          message:textAlertPasswordInvalid
+          delegate:nil
+          cancelButtonTitle:textOK
+          otherButtonTitles:nil] show];
+        return;
+    }
+
+    DLog(@"[II] 用户名密码等数据看起来ok，开始注册！");        
+    // 把user和password保存到UserDefaults，其他通过Notification发出去
+    self.defaults.currentUser     = user;
+    self.defaults.currentPassword = password;
+    NSMutableDictionary *info = [NSMutableDictionary dictionaryWithCapacity:3];
+    info[kAccountKeyName]     = name;
+    info[kAccountKeyUser]     = user;
+    info[kAccountKeyPassword] = password;
+    if(comField.text.length) info[kAccountKeyCompany] = comField.text;
+    if(invField.text.length) info[kAccountKeyInvitationCode] = invField.text;
+    [self postASAPNotificationName:nAppCreateThisAccount
+                              info:info];
 }
 - (IBAction)showAgreement:(id)sender {
     [self pushViewControllerClass:[AgreementViewController class]
@@ -165,6 +241,13 @@ enum Tag_TextField {
     } else {
         [textField resignFirstResponder];
     }
+    return YES;
+}
+// 限制密码长度为12// return NO to not change text
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSUInteger newLength = textField.text.length + string.length - range.length;
+    if (textField == [self.view viewWithTag:Tag_TextField_Pass])
+        return (newLength > 12) ? NO : YES;
     return YES;
 }
 #pragma mark - keyboard notification handlers

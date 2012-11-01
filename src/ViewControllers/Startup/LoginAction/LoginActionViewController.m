@@ -16,7 +16,8 @@
 #import "UIViewController+SM.h"
 
 //#define textStartAutoLogin NSLocalizedString(@"正在自动登录...", nil)
-#define textLoggingIn NSLocalizedString(@"正在登录...", nil)
+#define textCreatingAccount   NSLocalizedString(@"正在注册帐户...", nil)
+#define textLoggingIn         NSLocalizedString(@"正在登录...", nil)
 #define textResettingPassword NSLocalizedString(@"正在重置密码...", nil)
 //#define textStartLogin NSLocalizedString(@"正在登录...", nil)
 //#define textLoginSucceeded NSLocalizedString(@"登录成功", nil)
@@ -76,6 +77,10 @@
 }
 
 #pragma mark - Notification Handlers
+- (void)handleCreatingAccount:(NSNotification *)noti {
+    // 显示正在注册
+    self.actionLabel.text = textCreatingAccount;
+}
 - (void)handleLoggingIn:(NSNotification *)noti {
     // 显示正在登录
     self.actionLabel.text = textLoggingIn;

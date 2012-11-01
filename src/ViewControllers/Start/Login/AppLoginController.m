@@ -95,7 +95,6 @@
     [self postASAPNotificationName:nAppShowCreateAccount];
 }
 - (IBAction)login:(id)sender {
-    [self hideKeyboard];
     // get user & password
     NSString *user     = self.userField .text;
     NSString *password = self.passwordField.text;
@@ -174,11 +173,4 @@
 }
 
 #pragma mark - Misc
-- (void)hideKeyboard {
-    for (UIView *view in self.view.subviews) {
-        if ([view isKindOfClass:[UITextField class]]) {
-            [view resignFirstResponder];
-        }
-    }
-}
 @end

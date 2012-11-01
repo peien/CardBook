@@ -18,6 +18,7 @@ static const NSInteger KHHNetworkStatusCodeSucceeded = 0;
 static const NSInteger KHHNetworkStatusCodeFailed = -1;
 static const NSInteger KHHNetworkStatusCodeDataServerError = -2;
 static const NSInteger KHHNetworkStatusCodeAlreadyCreated = -3;
+static const NSInteger KHHNetworkStatusCodeCompanyAlreadyExist = -7; // 注册时公司名已存在。
 static const NSInteger KHHNetworkStatusCodeAlreadyEnqueued = -11;
 static const NSInteger KHHNetworkStatusCodeDuplication = -12; 
 static const NSInteger KHHNetworkStatusCodeOldPasswordWrong = -13; // 修改密码

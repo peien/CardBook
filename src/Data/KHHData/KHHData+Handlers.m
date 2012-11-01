@@ -117,6 +117,12 @@
                          selector:@"handleNetworkCreateOrUpdateEvaluationSucceeded:"];
     [self observeNotificationName:KHHNetworkCreateOrUpdateEvaluationFailed
                          selector:@"handleNetworkCreateOrUpdateEvaluationFailed:"];
+    
+    // 消息
+    [self observeNotificationName:nNetworkAllMessagesSucceeded
+                         selector:@"handleAllMessagesSucceeded:"];
+    [self observeNotificationName:nNetworkAllMessagesFailed
+                         selector:@"handleAllMessagesFailed:"];
 }
 
 #pragma mark - Handlers
@@ -427,6 +433,24 @@
                               info:noti.userInfo];
 }
 
+#pragma mark - Handlers_Message
+- (void)handleAllMessagesSucceeded:(NSNotification *)noti {
+    NSDictionary *info = noti.userInfo;
+    DLog(@"[II] info = %@", [info allKeys]);
+    
+    //1.MessageList {
+    NSArray *list = info[kInfoKeyObjectList];
+    [KHHMessage processIObjectList:list];
+    // }
+    // 2.保存
+    [self saveContext];
+    [self postASAPNotificationName:nUISyncMessagesSucceeded
+                              info:noti.userInfo];
+}
+- (void)handleAllMessagesFailed:(NSNotification *)noti {
+    [self postASAPNotificationName:nUISyncMessagesFailed
+                              info:noti.userInfo];
+}
 #pragma mark - Handlers_Template
 - (void)handleTemplatesAfterDateSucceeded:(NSNotification *)noti {
     NSDictionary *info = noti.userInfo;

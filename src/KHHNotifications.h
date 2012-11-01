@@ -87,6 +87,14 @@ static NSString * const KHHUIUploadImageForVisitScheduleFailed   = @"UIUploadIma
 static NSString * const KHHUIDeleteImageFromVisitScheduleSucceeded = @"UIDeleteImageFromVisitScheduleSucceeded";
 static NSString * const KHHUIDeleteImageFromVisitScheduleFailed  = @"UIDeleteImageFromVisitScheduleFailed";
 
+//MARK: - 消息
+// allMessages
+static NSString * const nUISyncMessagesSucceeded   = @"UISyncMessagesSucceeded";
+static NSString * const nUISyncMessagesFailed      = @"UISyncMessagesFailed";
+// deleteMessages
+static NSString * const nUIDeleteMessagesSucceeded = @"UIDeleteMessagesSucceeded";
+static NSString * const nUIDeleteMessagesFailed    = @"UIDeleteMessagesFailed";
+
 #pragma mark - Misc
 //MARK: - 位置
 /*!
@@ -223,11 +231,11 @@ static NSString * const KHHNetworkCheckInFailed    = @"checkInFailed";
 
 //MARK: - 消息
 // allMessages
-static NSString * const KHHNetworkAllMessagesSucceeded = @"allMessagesSucceeded";
-static NSString * const KHHNetworkAllMessagesFailed    = @"allMessagesFailed";
+static NSString * const nNetworkAllMessagesSucceeded = @"NetworkAllMessagesSucceeded";
+static NSString * const nNetworkAllMessagesFailed    = @"NetworkAllMessagesFailed";
 // deleteMessages
-static NSString * const KHHNetworkDeleteMessagesSucceeded = @"deleteMessagesSucceeded";
-static NSString * const KHHNetworkDeleteMessagesFailed    = @"deleteMessagesFailed";
+static NSString * const nNetworkDeleteMessagesSucceeded = @"NetworkDeleteMessagesSucceeded";
+static NSString * const nNetworkDeleteMessagesFailed    = @"NetworkDeleteMessagesFailed";
 // promotionMessagesWithType
 static NSString * const KHHNetworkPromotionMessagesWithTypeSucceeded = @"promotionMessagesWithTypeSucceeded";
 static NSString * const KHHNetworkPromotionMessagesWithTypeFailed    = @"promotionMessagesWithTypeFailed";

@@ -20,5 +20,8 @@ static NSString * const kActionNetworkUpdateVisitSchedule = @"NetworkUpdateVisit
 static NSString * const kActionNetworkDeleteVisitSchedule = @"NetworkDeleteVisitSchedule";
 static NSString * const kActionNetworkUploadImageForVisitSchedule = @"NetworkUploadImageForVisitSchedule";
 static NSString * const kActionNetworkDeleteImageFromVisitSchedule = @"NetworkDeleteImageFromVisitSchedule";
+#pragma mark - Message
+static NSString * const kActionNetworkAllMessages    = @"NetworkAllMessages";
+static NSString * const kActionNetworkDeleteMessages = @"NetworkDeleteMessages";
 
 #endif

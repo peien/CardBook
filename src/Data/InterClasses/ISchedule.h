@@ -25,7 +25,7 @@
 @property (nonatomic, strong) NSNumber *isRemind;//isRemind,
 @property (nonatomic, strong) NSNumber *minutesToRemind;//remindDate,
 //customCardIds //customTypes
-@property (nonatomic, strong) NSMutableArray  *targetCardList;//InterCard数组 
+@property (nonatomic, strong) NSMutableArray *targetCardList;//InterCard数组 
 @property (nonatomic, strong) NSMutableArray *imageList; //appendixs, IImage数组
 // 地址信息
 @property (nonatomic, strong) IAddress *address;

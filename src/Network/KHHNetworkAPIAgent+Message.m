@@ -1,13 +1,17 @@
-////
-////  KHHNetworkAPIAgent+Message.m
-////  CardBook
-////
-////  Created by 孙铭 on 8/29/12.
-////  Copyright (c) 2012 KingHanHong. All rights reserved.
-////
 //
-//#import "KHHNetworkAPIAgent+Message.h"
+//  KHHNetworkAPIAgent+Message.m
+//  CardBook
 //
+//  Created by 孙铭 on 8/29/12.
+//  Copyright (c) 2012 KingHanHong. All rights reserved.
+//
+
+#import "KHHNetworkAPI.h"
+#import "KHHActions.h"
+#import "KHHLog.h"
+#import "KHHNotifications.h"
+#import "InMessage.h"
+
 //#pragma mark - Message参数整理函数
 //typedef enum {
 //    KHHMessageAttributeNone = 0UL,
@@ -22,47 +26,63 @@
 //    }
 //    return YES;
 //}
-//@implementation KHHNetworkAPIAgent (KHHMessage)
-///**
-// 收消息 customFsendService.list
-// http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=184
-// */
-//- (void)allMessages {
-//    [self postAction:@"allMessages"
-//               query:@"customFsendService.list"
-//          parameters:nil
-//             success:nil];
-//}
-///**
-// 删除消息 customFsendService.delete
-// http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=187
-// */
-//- (BOOL)deleteMessages:(NSArray *)messages {
-//    if (0 == messages.count) {
-//        return NO;
-//    }
-//    NSMutableArray *messageIDs = [NSMutableArray arrayWithCapacity:[messages count]];
-//    for (id message in messages) {
+@implementation KHHNetworkAPIAgent (KHHMessage)
+/**
+ 收消息 customFsendService.list
+ http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=184
+ */
+- (void)allMessages {
+    NSString *action = kActionNetworkAllMessages;
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:responseObject];
+        DLog(@"[II] responseDict = %@", responseDict);
+        NSArray *fsendList = responseDict[@"fsendList"];
+        NSMutableArray *messageList = [NSMutableArray arrayWithCapacity:fsendList.count];
+        for (id obj in fsendList) {
+            InMessage *im = [[[InMessage alloc] init] updateWithJSON:obj];
+            [messageList addObject:im];
+        }
+        
+        KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        NSDictionary *dict = @{
+        kInfoKeyErrorCode  : @(code),
+        kInfoKeyObjectList : messageList,
+        };
+        [self postASAPNotificationName:NameWithActionAndCode(action, code)
+                                  info:dict];
+    };
+    [self postAction:action
+               query:@"customFsendService.list"
+          parameters:nil
+             success:success];
+}
+/**
+ 删除消息 customFsendService.delete
+ http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=187
+ */
+- (void)deleteMessages:(NSArray *)messages {
+    NSString *action = kActionNetworkDeleteMessages;
+    if (0 == messages.count) {
+    }
+    NSMutableArray *messageIDs = [NSMutableArray arrayWithCapacity:[messages count]];
+    for (id message in messages) {
 //        if (![message isKindOfClass:[Message class]]) {
 //            // 不是message
-//            return NO;
 //        }
 //        if (!MessageHasRequiredAttributes(message,
 //                                          KHHMessageAttributeID)) {
 //            // message无id
-//            return NO;
 //        }
-//        [messageIDs addObject:[[message valueForKey:kAttributeKeyID] stringValue]];
-//    }
-//    NSDictionary *parameters = @{
-//    @"ids" : [messageIDs componentsJoinedByString:@","]
-//    };
-//    [self postAction:@"deleteMessages"
-//               query:@"customFsendService.delete"
-//          parameters:parameters
-//             success:nil];
-//    return YES;
-//}
+        [messageIDs addObject:[[message valueForKey:kAttributeKeyID] stringValue]];
+    }
+    NSDictionary *parameters = @{
+    @"ids" : [messageIDs componentsJoinedByString:@","]
+    };
+    [self postAction:action
+               query:@"customFsendService.delete"
+          parameters:parameters
+             success:nil];
+}
 ///**
 // 通知印象名片用户活动 tellActiveService.getTellActive
 // http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=188
@@ -74,4 +94,4 @@
 //          parameters:parameters
 //             success:nil];
 //}
-//@end
+@end

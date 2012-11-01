@@ -39,7 +39,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 
 #pragma mark - 动作
 @interface AppStartController (Actions)
-- (void)createAccount;// 注册
+- (void)createAccount:(NSNotification *)noti;// 注册
 - (void)login;
 - (void)loginAuto;
 - (void)resetPassword:(NSNotification *)noti;
@@ -85,6 +85,8 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
         // 注册
         [self observeNotificationName:nAppShowCreateAccount
                              selector:@"showCreateAccountView"];
+        [self observeNotificationName:nAppCreateThisAccount
+                             selector:@"createAccount:"];
         [self observeNotificationName:nNetworkCreateAccountSucceeded
                              selector:@"handleNetworkCreateAccountSucceeded:"];
         [self observeNotificationName:nNetworkCreateAccountFailed
@@ -151,18 +153,20 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
         [self login];//注册成功, 直接登录。
     } else
     if ([title isEqualToString:titleCreateAccountFailed]
-        || [title isEqualToString:titleLoginFailed]
         || [title isEqualToString:titleResetPasswordFailed]
         || [title isEqualToString:titleResetPasswordSucceeded]) {
         [self showPreviousView];
+    } else
+    if ([title isEqualToString:titleLoginFailed]) {
+        [self showLoginView];
     }
 }
 @end
 
 #pragma mark - 动作
 @implementation AppStartController (Actions)
-- (void)createAccount {
-    DLog(@"[II] 开始注册！");
+- (void)createAccount:(NSNotification *)noti {
+    DLog(@"[II] 开始注册！info = %@", noti.userInfo);
     [self.defaults setLoggedIn:NO];
     
     // 切换到 ActionView
@@ -172,10 +176,8 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     [self postASAPNotificationName:nAppCreatingAccount];
     
     // 调接口
-    NSString *user = self.defaults.currentUser;
-    NSString *password = self.defaults.currentPassword;
-    [self.agent createAccount:user
-                     password:password];
+    NSDictionary *dict = noti.userInfo;
+    [self.agent createAccount:dict];
 }
 - (void)login {
     DLog(@"[II] 开始登录！");
@@ -268,6 +270,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 }
 - (void)handleNetworkResetPasswordFailed:(NSNotification *)noti {
     DLog(@"[II] 重置密码失败！");
+#warning TODO
     [self alertWithTitle:titleResetPasswordFailed
                  message:NSLocalizedString(@"请检查您的手机号，再次尝试！", nil)];
 }

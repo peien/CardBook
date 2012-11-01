@@ -19,10 +19,10 @@
  删除消息 customFsendService.delete
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=187
  */
-- (BOOL)deleteMessages:(NSArray *)messages;
+- (void)deleteMessages:(NSArray *)messages;
 /**
  通知印象名片用户活动 tellActiveService.getTellActive
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=188
  */
-- (void)promotionMessagesWithType:(NSString *)type;
+//- (void)promotionMessagesWithType:(NSString *)type;
 @end

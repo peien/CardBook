@@ -24,6 +24,7 @@
 #import "ReceivedCard.h"
 #import "Schedule.h"
 #import "SyncMark.h"
+#import "KHHMessage.h"
 
 #pragma mark - Internal/Intermediate Classes
 #import "InterCard.h"

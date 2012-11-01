@@ -542,6 +542,7 @@
 		98B290FE163E557900D062D9 /* Button_red@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B290FC163E557900D062D9 /* Button_red@2x.png */; };
 		98B29107163E5DB500D062D9 /* Icon_pass@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B29105163E5DB500D062D9 /* Icon_pass@2x.png */; };
 		98B29108163E5DB500D062D9 /* Icon_user@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B29106163E5DB500D062D9 /* Icon_user@2x.png */; };
+		98BEF3BD16424ED4003EDF33 /* InMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 98BEF3BC16424ED4003EDF33 /* InMessage.m */; };
 		98CFC96E1607201E001B9B17 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 98CFC96D1607201E001B9B17 /* UIImage+Resize.m */; };
 		98D2438D1627B75C00AC1C38 /* UIImage+KHH.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D2438C1627B75C00AC1C38 /* UIImage+KHH.m */; };
 		98D29B73163A594900DE82E3 /* AppLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D29B71163A594900DE82E3 /* AppLoginController.m */; };
@@ -1256,6 +1257,8 @@
 		98B290FC163E557900D062D9 /* Button_red@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Button_red@2x.png"; sourceTree = "<group>"; };
 		98B29105163E5DB500D062D9 /* Icon_pass@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon_pass@2x.png"; sourceTree = "<group>"; };
 		98B29106163E5DB500D062D9 /* Icon_user@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon_user@2x.png"; sourceTree = "<group>"; };
+		98BEF3BB16424ED4003EDF33 /* InMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InMessage.h; sourceTree = "<group>"; };
+		98BEF3BC16424ED4003EDF33 /* InMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InMessage.m; sourceTree = "<group>"; };
 		98CFC96C1607201E001B9B17 /* UIImage+Resize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Resize.h"; sourceTree = "<group>"; };
 		98CFC96D1607201E001B9B17 /* UIImage+Resize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Resize.m"; sourceTree = "<group>"; };
 		98D2438B1627B75C00AC1C38 /* UIImage+KHH.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+KHH.h"; sourceTree = "<group>"; };
@@ -1472,6 +1475,8 @@
 				98542236162C0B3C00A9E50A /* ICardGroupMap.m */,
 				98F296F91623F9DC00F9D7B2 /* IImage.h */,
 				98F296FA1623F9DC00F9D7B2 /* IImage.m */,
+				98BEF3BB16424ED4003EDF33 /* InMessage.h */,
+				98BEF3BC16424ED4003EDF33 /* InMessage.m */,
 				98E6F4001623CEB700AE81D3 /* ISchedule.h */,
 				98E6F4011623CEB700AE81D3 /* ISchedule.m */,
 				984ABA00163662ED0047AFB2 /* OSchedule.h */,
@@ -3330,6 +3335,7 @@
 				62AC98DE163A4A50009EF269 /* KHHCardTemplageVC.m in Sources */,
 				98D29B73163A594900DE82E3 /* AppLoginController.m in Sources */,
 				0CEFF882163AFE7500E878C6 /* AppRegisterController.m in Sources */,
+				98BEF3BD16424ED4003EDF33 /* InMessage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

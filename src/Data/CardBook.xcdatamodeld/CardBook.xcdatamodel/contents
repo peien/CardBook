@@ -111,11 +111,11 @@
         <relationship name="templates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CardTemplate" inverseName="bgImage" inverseEntity="CardTemplate" syncable="YES"/>
     </entity>
     <entity name="KHHMessage" representedClassName="KHHMessage" syncable="YES">
+        <attribute name="company" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" syncable="YES"/>
         <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="time" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="version" optional="YES" attributeType="Integer 32" syncable="YES"/>
         <relationship name="image" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Image" inverseName="messages" inverseEntity="Image" syncable="YES"/>
     </entity>
     <entity name="MyCard" representedClassName="MyCard" parentEntity="Card" syncable="YES"/>

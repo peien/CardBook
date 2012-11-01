@@ -17,11 +17,10 @@
 - (BOOL)login:(NSString *)user
      password:(NSString *)password;
 /**
- 用户注册: "accountService.registerAccount"
+ 用户注册: "accountService.registerAccountNew"
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=172
  */
-- (BOOL)createAccount:(NSString *)account
-             password:(NSString *)password;
+- (void)createAccount:(NSDictionary *)account;
 /**
  修改密码: "userPasswordService.updatePwd"
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=176
