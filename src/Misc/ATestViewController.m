@@ -121,6 +121,7 @@
 - (void)testMessages {
     [self showLabelWithText:@"试验Message"];
     [self.data syncMessages];
+    DLog(@"%@", [self.data allMessages]);
 }
 - (void)handleLocationUpdateSucceeded:(NSNotification *)noti {
     static int num = 0;

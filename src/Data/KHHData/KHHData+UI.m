@@ -329,8 +329,6 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
     NSArray *fetched;
     fetched = [Schedule objectArrayByPredicate:predicate
                                sortDescriptors:nil];
-    // 过滤掉意外情况
-//    NSMutableArray *result = FilterUnexpectedCardsFromArray(fetched);
     NSArray *result = fetched;
     return result;
 }
@@ -345,8 +343,8 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
 - (NSArray *)allMessages {
     NSSortDescriptor *sortDes = [NSSortDescriptor sortDescriptorWithKey:@"time"
                                                               ascending:NO];
-    NSArray *result = [Schedule objectArrayByPredicate:nil
-                                       sortDescriptors:@[sortDes]];
+    NSArray *result = [KHHMessage objectArrayByPredicate:nil
+                                         sortDescriptors:@[sortDes]];
     return result;
 }
 - (void)deleteMessage:(KHHMessage *)msg {
