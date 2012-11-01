@@ -123,6 +123,10 @@
                          selector:@"handleAllMessagesSucceeded:"];
     [self observeNotificationName:nNetworkAllMessagesFailed
                          selector:@"handleAllMessagesFailed:"];
+    [self observeNotificationName:nNetworkDeleteMessagesSucceeded
+                         selector:@"handleDeleteMessagesSucceeded:"];
+    [self observeNotificationName:nNetworkDeleteMessagesFailed
+                         selector:@"handleDeleteMessagesFailed:"];
 }
 
 #pragma mark - Handlers
@@ -445,10 +449,26 @@
     // 2.保存
     [self saveContext];
     [self postASAPNotificationName:nUISyncMessagesSucceeded
-                              info:noti.userInfo];
+                              info:info];
 }
 - (void)handleAllMessagesFailed:(NSNotification *)noti {
     [self postASAPNotificationName:nUISyncMessagesFailed
+                              info:noti.userInfo];
+}
+- (void)handleDeleteMessagesSucceeded:(NSNotification *)noti {
+    NSDictionary *info = noti.userInfo;
+    DLog(@"[II] info = %@", info);
+    NSArray *list = info[kInfoKeyObjectList];
+    // 从数据库中删除
+    for (KHHMessage *msg in list) {
+        [self.context deleteObject:msg];
+    }
+    [self saveContext];
+    [self postASAPNotificationName:nUIDeleteMessagesSucceeded
+                              info:info];
+}
+- (void)handleDeleteMessagesFailed:(NSNotification *)noti {
+    [self postASAPNotificationName:nUIDeleteMessagesFailed
                               info:noti.userInfo];
 }
 #pragma mark - Handlers_Template

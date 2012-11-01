@@ -97,9 +97,7 @@
     NSString *user     = accountDict[kAccountKeyUser];
     NSString *password = accountDict[kAccountKeyPassword];
     if (0 == user.length || 0 == password.length) {
-        NSString *name = NameWithActionAndCode(action, KHHErrorCodeParametersNotMeetRequirement);
-        [self postASAPNotificationName:name
-                                  info:accountDict];
+        WarnParametersNotMeetRequirement(action);
     }
     NSString *encPass = [Encryptor encryptBase64String:password
                                              keyString:KHHHttpEncryptorKey];

@@ -63,25 +63,31 @@
 - (void)deleteMessages:(NSArray *)messages {
     NSString *action = kActionNetworkDeleteMessages;
     if (0 == messages.count) {
+        WarnParametersNotMeetRequirement(action);
     }
     NSMutableArray *messageIDs = [NSMutableArray arrayWithCapacity:[messages count]];
     for (id message in messages) {
-//        if (![message isKindOfClass:[Message class]]) {
-//            // 不是message
-//        }
-//        if (!MessageHasRequiredAttributes(message,
-//                                          KHHMessageAttributeID)) {
-//            // message无id
-//        }
-        [messageIDs addObject:[[message valueForKey:kAttributeKeyID] stringValue]];
+        [messageIDs addObject:[[message valueForKey:kAttributeKeyID]
+                               stringValue]];
     }
     NSDictionary *parameters = @{
     @"ids" : [messageIDs componentsJoinedByString:@","]
     };
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:responseObject];
+        DLog(@"[II] responseDict = %@", responseDict);
+        KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        NSDictionary *dict = @{
+        kInfoKeyErrorCode  : @(code),
+        kInfoKeyObjectList : messages,
+        };
+        [self postASAPNotificationName:NameWithActionAndCode(action, code)
+                                  info:dict];
+    };
     [self postAction:action
                query:@"customFsendService.delete"
           parameters:parameters
-             success:nil];
+             success:success];
 }
 ///**
 // 通知印象名片用户活动 tellActiveService.getTellActive

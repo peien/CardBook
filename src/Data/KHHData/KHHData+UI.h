@@ -92,5 +92,5 @@
 @interface KHHData (UI_Message)
 - (void)syncMessages;// 从服务器同步消息
 - (NSArray *)allMessages;// 从数据库查询消息
-- (void)deleteMessage:(KHHMessage *)msg;
+- (void)deleteMessages:(NSArray *)msgList;
 @end

@@ -347,8 +347,8 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
                                          sortDescriptors:@[sortDes]];
     return result;
 }
-- (void)deleteMessage:(KHHMessage *)msg {
-    
+- (void)deleteMessages:(NSArray *)msgList {
+    [self.agent deleteMessages:msgList];
 }
 
 @end
