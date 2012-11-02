@@ -13,6 +13,7 @@
 #import "KHHMessageViewController.h"
 #import "MoreViewController.h"
 #import "MyTabBarController.h"
+#import "KHHDataAPI.h"
 #import "KHHDefaults.h"
 #import "KHHAppDelegate.h"
 
@@ -67,6 +68,7 @@
         [self showMainUI];
         KHHAppDelegate *app = (KHHAppDelegate *)[[UIApplication sharedApplication] delegate];
         app.aTabBarController = self.aTabBarController;
+        [[KHHData sharedData]syncMessages];
     }
     return self;
 }
