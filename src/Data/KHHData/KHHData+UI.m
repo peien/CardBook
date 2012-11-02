@@ -347,8 +347,18 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
                                          sortDescriptors:@[sortDes]];
     return result;
 }
+- (NSUInteger)countOfUnreadMessages {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isRead == %@", @(NO)];
+    NSArray *fetched = [KHHMessage objectArrayByPredicate:predicate
+                                          sortDescriptors:nil];
+    return fetched.count;
+}
 - (void)deleteMessages:(NSArray *)msgList {
-    [self.agent deleteMessages:msgList];
+//    [self.agent deleteMessages:msgList];
+    for (KHHMessage *msg in msgList) {
+        [self.context deleteObject:msg];
+    }
+    [self saveContext];
 }
 
 @end
