@@ -8,6 +8,7 @@ extern const struct KHHMessageAttributes {
 	__unsafe_unretained NSString *company;
 	__unsafe_unretained NSString *content;
 	__unsafe_unretained NSString *id;
+	__unsafe_unretained NSString *isRead;
 	__unsafe_unretained NSString *subject;
 	__unsafe_unretained NSString *time;
 } KHHMessageAttributes;
@@ -20,6 +21,7 @@ extern const struct KHHMessageFetchedProperties {
 } KHHMessageFetchedProperties;
 
 @class Image;
+
 
 
 
@@ -63,6 +65,18 @@ extern const struct KHHMessageFetchedProperties {
 - (void)setIdValue:(int64_t)value_;
 
 //- (BOOL)validateId:(id*)value_ error:(NSError**)error_;
+
+
+
+
+@property (nonatomic, strong) NSNumber* isRead;
+
+
+@property BOOL isReadValue;
+- (BOOL)isReadValue;
+- (void)setIsReadValue:(BOOL)value_;
+
+//- (BOOL)validateIsRead:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -118,6 +132,15 @@ extern const struct KHHMessageFetchedProperties {
 
 - (int64_t)primitiveIdValue;
 - (void)setPrimitiveIdValue:(int64_t)value_;
+
+
+
+
+- (NSNumber*)primitiveIsRead;
+- (void)setPrimitiveIsRead:(NSNumber*)value;
+
+- (BOOL)primitiveIsReadValue;
+- (void)setPrimitiveIsReadValue:(BOOL)value_;
 
 
 

@@ -7,6 +7,7 @@ const struct KHHMessageAttributes KHHMessageAttributes = {
 	.company = @"company",
 	.content = @"content",
 	.id = @"id",
+	.isRead = @"isRead",
 	.subject = @"subject",
 	.time = @"time",
 };
@@ -46,6 +47,10 @@ const struct KHHMessageFetchedProperties KHHMessageFetchedProperties = {
 	
 	if ([key isEqualToString:@"idValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"id"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+	}
+	if ([key isEqualToString:@"isReadValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"isRead"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 
@@ -89,6 +94,32 @@ const struct KHHMessageFetchedProperties KHHMessageFetchedProperties = {
 
 - (void)setPrimitiveIdValue:(int64_t)value_ {
 	[self setPrimitiveId:[NSNumber numberWithLongLong:value_]];
+}
+
+
+
+
+
+@dynamic isRead;
+
+
+
+- (BOOL)isReadValue {
+	NSNumber *result = [self isRead];
+	return [result boolValue];
+}
+
+- (void)setIsReadValue:(BOOL)value_ {
+	[self setIsRead:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveIsReadValue {
+	NSNumber *result = [self primitiveIsRead];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveIsReadValue:(BOOL)value_ {
+	[self setPrimitiveIsRead:[NSNumber numberWithBool:value_]];
 }
 
 

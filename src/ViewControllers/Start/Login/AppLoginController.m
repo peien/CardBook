@@ -76,6 +76,8 @@
     [regButton   setBackgroundImage:[UIImage imageNamed:@"Button_grey.png"
                                               capInsets:buttonBgInsets]
                            forState:UIControlStateNormal];
+    // textField
+    self.userField.text = self.defaults.lastUser;
 }
 
 - (void)didReceiveMemoryWarning
@@ -96,7 +98,7 @@
 }
 - (IBAction)login:(id)sender {
     // get user & password
-    NSString *user     = self.userField .text;
+    NSString *user     = self.userField.text;
     NSString *password = self.passwordField.text;
     DLog(@"[II] user=%@, password=%@", user, password);
     

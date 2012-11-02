@@ -42,7 +42,6 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 @interface AppStartController (Actions)
 - (void)createAccount:(NSNotification *)noti;// 注册
 - (void)login;
-- (void)loginAuto;
 - (void)resetPassword:(NSNotification *)noti;
 - (void)sync;
 @end
@@ -133,7 +132,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
         && self.defaults.currentUser.length
         && self.defaults.currentPassword.length) {
         // 自动登录
-        [self loginAuto];
+        [self login];
     } else {
         // 手动登录
         [self showLoginView];
@@ -182,7 +181,6 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 }
 - (void)login {
     DLog(@"[II] 开始登录！");
-    [self.defaults setLoggedIn:NO];
     
     // 切换到 ActionView
     [self showActionView];
@@ -195,18 +193,6 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     NSString *password = self.defaults.currentPassword;
     [self.agent login:user
              password:password];
-}
-- (void)loginAuto {
-    DLog(@"[II] 开始自动登录！");
-    
-    // 无网络直接进
-    if (NO) {
-        [self postASAPNotificationName:nAppShowMainView];
-    }
-    // 有网络则登录
-    else {
-        [self login];
-    }
 }
 - (void)resetPassword:(NSNotification *)noti {
     DLog(@"[II] 开始重置密码！");
@@ -259,11 +245,17 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 }
 - (void)handleNetworkLoginFailed:(NSNotification *)noti {
     DLog(@"[II] 登录失败！");
-    [self.defaults setLoggedIn:NO];
     KHHErrorCode code = [noti.userInfo[kInfoKeyErrorCode] integerValue];
     NSString *message = noti.userInfo[kInfoKeyErrorMessage];
-    [self alertWithTitle:titleLoginFailed
-                 message:MessageWithActionAndCode(code, message)];
+    if (KHHErrorCodeConnectionOffline == code
+        && [self.defaults isLoggedIn]) {
+        // 无网络且之前登录过则直接进
+        [self postASAPNotificationName:nAppShowMainView];
+    }else {
+        [self.defaults setLoggedIn:NO];
+        [self alertWithTitle:titleLoginFailed
+                     message:MessageWithActionAndCode(code, message)];
+    }
 }
 - (void)handleNetworkResetPasswordSucceeded:(NSNotification *)noti
 {
