@@ -319,7 +319,7 @@
                                   info:info];
     } else {
         // 虽然服务器返回成功，但本地数据库操作失败
-        NSDictionary *info = @{ kInfoKeyErrorCode : @(KHHStatusCodeLocalDataOperationFailed) };
+        NSDictionary *info = @{ kInfoKeyErrorCode : @(KHHErrorCodeLocalDataOperationFailed) };
         [self postASAPNotificationName:KHHUIPullLatestReceivedCardFailed
                                   info:info];
     }
@@ -600,7 +600,7 @@
         CustomerEvaluation *ce = (CustomerEvaluation *)[CustomerEvaluation
                                                         objectByID:icv.id
                                                         createIfNone:YES];
-        if (icv.isDeleted.integerValue) {
+        if (icv.isDeleted.boolValue) {
             // 已删除，则删除。
             [self.context deleteObject:ce];
         } else {

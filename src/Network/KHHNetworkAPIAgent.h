@@ -76,10 +76,14 @@
 - (NSMutableDictionary *)JSONDictionaryWithResponse:(id)responseObject;
 /*!
  根据 Action 和 Status Code 生成 Notification Name。
- KHHNetworkStatusCodeSucceeded 返回 action＋Succeeded
+ KHHErrorCodeSucceeded 返回 action＋Succeeded
  其他返回action＋Failed
  */
-NSString *NameWithActionAndCode(NSString *action, KHHNetworkStatusCode code);
+NSString *NameWithActionAndCode(NSString *action, KHHErrorCode code);
+/*!
+ 根据 Action 和 Status Code 生成 提示消息。
+ */
+NSString *MessageWithActionAndCode(KHHErrorCode code, NSString *errorMessage);
 /*!
  根据 Action 发 notification，提醒参数错误。
  返回action＋Failed。

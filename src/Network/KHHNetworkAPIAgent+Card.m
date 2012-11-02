@@ -183,7 +183,7 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(InterCard *iCard) {
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
         NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
-        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
         // 把返回的数据转成本地数据
         // 返回的CardID
         iCard.id = [NSNumber numberFromObject:responseDict[JSONDataKeyID] zeroIfUnresolvable:NO];
@@ -229,7 +229,7 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(InterCard *iCard) {
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
         NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
-        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
         dict[kInfoKeyExtra] = @{
         kExtraKeyInterCard : iCard,
         kExtraKeyCardModelType : [NSNumber numberWithInteger:cardType],
@@ -274,7 +274,7 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(InterCard *iCard) {
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
         NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
-        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
         dict[kInfoKeyExtra] = @{
         kExtraKeyCardID : cardID,
         kExtraKeyCardModelType : [NSNumber numberWithInteger:cardType],
@@ -330,7 +330,7 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(InterCard *iCard) {
         NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
         DLog(@"[II] responseDict = %@", responseDict);
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
-        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
         dict[kInfoKeyErrorCode] = @(code);
         
         // cardBookVO -> InterCard
@@ -386,8 +386,8 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(InterCard *iCard) {
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:8];
         
         // 把返回的数据转成本地数据
-        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
-        if (KHHNetworkStatusCodeSucceeded == code) {
+        KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        if (KHHErrorCodeSucceeded == code) {
             // count
             dict[kInfoKeyCount] = responseDict[JSONDataKeyCount];
             
@@ -427,10 +427,10 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(InterCard *iCard) {
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=208
  */
 - (void)markReadReceivedCard:(ReceivedCard *)aCard {
-    if (aCard.isRead.integerValue) { // 已经读过的就不用继续执行了
+    if (aCard.isReadValue) { // 已经读过的就不用继续执行了
         [self postASAPNotificationName:KHHNetworkMarkReadReceivedCardSucceeded
                                   info:@{
-                    kInfoKeyErrorCode : @(KHHNetworkStatusCodeSucceeded),
+                    kInfoKeyErrorCode : @(KHHErrorCodeSucceeded),
                        kInfoKeyObject : aCard,
          }];
         return;
@@ -446,7 +446,7 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(InterCard *iCard) {
     };
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
         NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
-        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
         NSDictionary *dict = @{
         kInfoKeyErrorCode : @(code),
         kInfoKeyObject : aCard, };

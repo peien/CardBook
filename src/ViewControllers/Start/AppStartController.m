@@ -10,6 +10,7 @@
 #import "UIViewController+SM.h"
 #import "KHHKeys.h"
 #import "KHHLog.h"
+#import "KHHNetworkAPI.h"
 #import "KHHNotifications.h"
 #import "IntroViewController.h"
 #import "LaunchImageViewController.h"
@@ -240,9 +241,10 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 }
 - (void)handleNetworkCreateAccountFailed:(NSNotification *)noti {
     DLog(@"[II] 注册失败！");
-#warning TODO
+    KHHErrorCode code = [noti.userInfo[kInfoKeyErrorCode] integerValue];
+    NSString *message = noti.userInfo[kInfoKeyErrorMessage];
     [self alertWithTitle:titleCreateAccountFailed
-                 message:nil];
+                 message:MessageWithActionAndCode(code, message)];
 }
 - (void)handleNetworkLoginSucceeded:(NSNotification *)noti {
     // 登陆成功
@@ -258,9 +260,10 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 - (void)handleNetworkLoginFailed:(NSNotification *)noti {
     DLog(@"[II] 登录失败！");
     [self.defaults setLoggedIn:NO];
-#warning TODO
+    KHHErrorCode code = [noti.userInfo[kInfoKeyErrorCode] integerValue];
+    NSString *message = noti.userInfo[kInfoKeyErrorMessage];
     [self alertWithTitle:titleLoginFailed
-                 message:nil];
+                 message:MessageWithActionAndCode(code, message)];
 }
 - (void)handleNetworkResetPasswordSucceeded:(NSNotification *)noti
 {
@@ -270,9 +273,10 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 }
 - (void)handleNetworkResetPasswordFailed:(NSNotification *)noti {
     DLog(@"[II] 重置密码失败！");
-#warning TODO
+    KHHErrorCode code = [noti.userInfo[kInfoKeyErrorCode] integerValue];
+    NSString *message = noti.userInfo[kInfoKeyErrorMessage];
     [self alertWithTitle:titleResetPasswordFailed
-                 message:NSLocalizedString(@"请检查您的手机号，再次尝试！", nil)];
+                 message:MessageWithActionAndCode(code, message)];
 }
 - (void)handleSyncSucceeded:(NSNotification *)noti {
     // 进主界面。
@@ -347,7 +351,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
                              options:AppStart_AnimationOptions];
 }
 - (void)showLoginView {
-    UIViewAnimationOptions options = UIViewAnimationOptionTransitionCurlUp;
+    UIViewAnimationOptions options = UIViewAnimationOptionTransitionCrossDissolve;
     [self transitionToViewController:self.loginController
                              options:options];
 }

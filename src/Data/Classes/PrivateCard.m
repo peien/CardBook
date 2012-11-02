@@ -10,7 +10,7 @@
         // 按ID从数据库里查询，无则新建。
         PrivateCard *newCard = [PrivateCard objectByID:iCard.id createIfNone:YES];
         // 若已标记为删除则删除
-        if (iCard.isDeleted.integerValue) {
+        if (iCard.isDeleted) {
             [[self currentContext] deleteObject:newCard];
         } else {
             card = newCard;

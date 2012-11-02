@@ -19,7 +19,7 @@
     self.id        = [NSNumber numberFromObject:json[JSONDataKeyID]
                              zeroIfUnresolvable:YES];
     self.isDeleted = [NSNumber numberFromObject:json[JSONDataKeyIsDelete]
-                             zeroIfUnresolvable:YES].integerValue;
+                             zeroIfUnresolvable:YES].boolValue;
     self.time      = [NSString stringByFilterNilFromString:json[@"gmtSendTime"]];
     self.company   = [NSString stringByFilterNilFromString:json[@"companyName"]];
     self.subject   = [NSString stringByFilterNilFromString:json[@"col1"]];

@@ -22,9 +22,9 @@
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
         NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:responseDict.count];
-        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
         // 把返回的数据转成本地数据
-        if (KHHNetworkStatusCodeSucceeded == code) {
+        if (KHHErrorCodeSucceeded == code) {
             // MyCard List
             NSArray *oldMyCardList = responseDict[JSONDataKeyMyCard];
             NSMutableArray *myCardList = [NSMutableArray arrayWithCapacity:oldMyCardList.count];

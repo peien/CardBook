@@ -94,7 +94,7 @@ const NSTimeInterval KHH_LOCATION_REFRESH_INTERVAL = 30 * 60; // 30 min.
                               info:info];
 }
 - (void)updateFailedWithError:(NSError *)err {
-    NSDictionary *info = @{ kInfoKeyError : err };
+    NSDictionary *info = @{ kInfoKeyErrorObject : err };
     [self postASAPNotificationName:KHHLocationUpdateFailed
                               info:info];
 }

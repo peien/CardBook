@@ -10,7 +10,7 @@
         // 按ID从数据库里查询，无则新建。
         Schedule *newSchdl = [Schedule objectByID:iObj.id createIfNone:YES];
         // 若已标记为删除则删除
-        if (iObj.isDeleted.integerValue) {
+        if (iObj.isDeleted.boolValue) {
             [[self currentContext] deleteObject:newSchdl];
         } else {
             schdl = newSchdl;

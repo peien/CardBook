@@ -27,8 +27,8 @@
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
         
         // 把返回的数据转成本地数据
-        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
-        if (KHHNetworkStatusCodeSucceeded == code) {
+        KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        if (KHHErrorCodeSucceeded == code) {
             // count
             dict[kInfoKeyCount] = responseDict[JSONDataKeyCount];
             
@@ -124,8 +124,8 @@
         DLog(@"[II] response = %@", responseDict);
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
         // 把返回的数据转成本地数据
-        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
-        if (KHHNetworkStatusCodeSucceeded == code) {
+        KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        if (KHHErrorCodeSucceeded == code) {
             NSNumber *ID = [NSNumber numberFromObject:responseDict[JSONDataKeyID]
                                    zeroIfUnresolvable:NO];
             if (nil == aCard.evaluation) {

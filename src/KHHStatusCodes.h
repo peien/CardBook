@@ -9,31 +9,30 @@
 #ifndef KHHStatusCodes_h
 #define KHHStatusCodes_h
 
-typedef NSInteger KHHNetworkStatusCode;
-typedef NSInteger KHHStatusCode;
 typedef NSInteger KHHErrorCode;
 
-// KHHNetworkStatusCode
-static const NSInteger KHHNetworkStatusCodeSucceeded = 0;
-static const NSInteger KHHNetworkStatusCodeFailed = -1;
-static const NSInteger KHHNetworkStatusCodeDataServerError = -2;
-static const NSInteger KHHNetworkStatusCodeAlreadyCreated = -3;
-static const NSInteger KHHNetworkStatusCodeCompanyAlreadyExist = -7; // 注册时公司名已存在。
-static const NSInteger KHHNetworkStatusCodeAlreadyEnqueued = -11;
-static const NSInteger KHHNetworkStatusCodeDuplication = -12; 
-static const NSInteger KHHNetworkStatusCodeOldPasswordWrong = -13; // 修改密码
-static const NSInteger KHHNetworkStatusCodeLatitudeOrLongitudeWrong = -14;
-static const NSInteger KHHNetworkStatusCodeNoneCounterpartCard = -21;
-static const NSInteger KHHNetworkStatusCodeSomethingWrong = -999;
-static const NSInteger KHHNetworkStatusCodeUnresolvableData = 10000; // 不可解析
-static const NSInteger KHHNetworkStatusCodeConnectionFailed;
-static const NSInteger KHHNetworkStatusCodeConnectionTimeOut;
-static const NSInteger KHHNetworkStatusCodeUnknownError = 3000; // 要你命3000
-
-// KHHStatusCode
-static const NSInteger KHHStatusCodeLocalDataOperationFailed = 44001;//本地数据库操作失败
-
 // KHHErrorCode
+static const NSInteger KHHErrorCodeSucceeded = 0;
+static const NSInteger KHHErrorCodeFailed = -1;
+static const NSInteger KHHErrorCodeDataServerError = -2;
+static const NSInteger KHHErrorCodeAlreadyCreated = -3;
+static const NSInteger KHHErrorCodeAccountExpired = -4;
+static const NSInteger KHHErrorCodeExceedRetryLimit = -6;
+static const NSInteger KHHErrorCodeCompanyAlreadyExist = -7; // 注册时公司名已存在。
+static const NSInteger KHHErrorCodeAlreadyEnqueued = -11;
+static const NSInteger KHHErrorCodeDuplication = -12; 
+static const NSInteger KHHErrorCodeOldPasswordWrong = -13; // 修改密码
+static const NSInteger KHHErrorCodeLatitudeOrLongitudeWrong = -14;
+static const NSInteger KHHErrorCodeNoneCounterpartCard = -21;
+static const NSInteger KHHErrorCodeSomethingWrong = -999;
+static const NSInteger KHHErrorCodeUnresolvableData = 10000; // 不可解析
+static const NSInteger KHHErrorCodeConnectionOffline = -1009; //
+static const NSInteger KHHErrorCode404 = -1011; //
+static const NSInteger KHHErrorCodeConnectionTimeOut;
+static const NSInteger KHHErrorCodeUnknownError = 3000; // 要你命3000
+
+static const NSInteger KHHErrorCodeLocalDataOperationFailed = 44001;//本地数据库操作失败
+
 static const NSInteger KHHErrorCodeBusy = 880001;//忙！因此不能完成操作，稍后再试！
 static const NSInteger KHHErrorCodeParametersNotMeetRequirement = 880002; // 参数不符合要求
 

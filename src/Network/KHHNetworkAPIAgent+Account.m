@@ -39,8 +39,8 @@
         NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:8];
         // 把 responseDict 的数据转成本地可用的数据
-        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
-        if (KHHNetworkStatusCodeSucceeded == code) {
+        KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        if (KHHErrorCodeSucceeded == code) {
             // 登录成功
             id obj = nil;
             // AuthorizationID number
@@ -117,8 +117,8 @@
         NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:8];
         // 把 responseDict 的数据转成本地可用的数据
-        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
-        if (KHHNetworkStatusCodeSucceeded == code) {
+        KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        if (KHHErrorCodeSucceeded == code) {
             // 注册成功
             // AuthorizationID
             NSNumber *authorizationID = [NSNumber numberFromObject:responseDict[JSONDataKeyID]

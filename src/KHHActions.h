@@ -9,6 +9,7 @@
 #ifndef KHHActions_h
 #define KHHActions_h
 
+static NSString * const kActionNetworkSendCardToPhone = @"NetworkSendCardToPhone";
 #pragma mark - Group
 static NSString * const kActionNetworkChildGroupsOfGroupID = @"NetworkChildGroupsOfGroupID";
 static NSString * const kActionNetworkCardIDsInAllGroup    = @"NetworkCardIDsInAllGroup";

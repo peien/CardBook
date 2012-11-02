@@ -150,7 +150,7 @@ static NSString * const KHHDefaultsKeyDefaultMainUIIndex = @"khh_MainUI_defaultI
     NSString *password = self.currentPassword;
     NSNumber *authorizationID = [dict objectForKey:kInfoKeyAuthorizationID];
     NSNumber *userID = [self UserIDFromAuthorizationID:authorizationID];
-    BOOL autoReceive = [[dict objectForKey:kInfoKeyAutoReceive] integerValue];
+    BOOL autoReceive = [[dict objectForKey:kInfoKeyAutoReceive] boolValue];
     NSNumber *companyID = [dict objectForKey:kInfoKeyCompanyID];
     if (nil == companyID) {
         companyID = @0;
