@@ -11,48 +11,88 @@
 #import "KHHShowHideTabBar.h"
 #import "KHHDetailMessageVC.h"
 #import "KHHEditMSGViewController.h"
+#import "KHHClasses.h"
+#import "KHHData+UI.h"
+#import "KHHMessage.h"
+#import "MBProgressHUD.h"
 @interface KHHMessageViewController ()<UITableViewDataSource,UITableViewDelegate>
-
+@property (strong, nonatomic) NSArray *messageArr;
+@property (strong, nonatomic) KHHData *dataCtrl;
+@property (assign, nonatomic) bool    isNeedReloadTable;
 @end
 
 @implementation KHHMessageViewController
 @synthesize theTable = _theTable;
+@synthesize messageArr;
+@synthesize dataCtrl;
+@synthesize isNeedReloadTable;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.title = @"消息";
-        [self.leftBtn setTitle:@"编辑" forState:UIControlStateNormal];
-        [self.rightBtn setTitle:@"刷新" forState:UIControlStateNormal];
+        self.title = NSLocalizedString(@"消息", nil);
+        //[self.leftBtn setTitle: NSLocalizedString(@"编辑", nil) forState:UIControlStateNormal];
+        [self.rightBtn setTitle: NSLocalizedString(@"刷新", nil) forState:UIControlStateNormal];
+        self.dataCtrl = [KHHData sharedData];
     }
     return self;
 }
 //刷新
 - (void)rightBarButtonClick:(id)sender
 {
-
+    [self synMessage];
 }
-//编辑
-- (void)leftBarButtonClick:(id)sender
-{
-    KHHEditMSGViewController *editVC = [[KHHEditMSGViewController alloc] initWithNibName:nil bundle:nil];
-    [self.navigationController pushViewController:editVC animated:YES];
+//刷新新到的消
+- (void)synMessage{
     
+    //注册同步消息
+    [self observeNotificationName:nUISyncMessagesSucceeded selector:@"handleSyncMessagesSucceeded:"];
+    [self observeNotificationName:nUISyncMessagesFailed selector:@"handlenUISyncMessagesFailed:"];
+    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    [self.dataCtrl syncMessages];
+}
+#pragma mark -
+- (void)handleSyncMessagesSucceeded:(NSNotification *)noti{
+    
+    DLog(@"handleSyncMessagesSucceeded! noti is ======%@",noti.userInfo);
+    [self stopObservingForMessage];
+    self.messageArr = [self.dataCtrl allMessages];
+    [_theTable reloadData];
+}
+- (void)handlenUISyncMessagesFailed:(NSNotification *)noti{
+    DLog(@"handlenUISyncMessagesFailed! noti is ======%@",noti.userInfo);
+    [self stopObservingForMessage];
+    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"错误提示", nil)
+                               message:@"同步消息失败"
+                              delegate:nil
+                     cancelButtonTitle:NSLocalizedString(@"确定", nil)
+                     otherButtonTitles:nil] show];
 
 }
+- (void)stopObservingForMessage{
+    [self stopObservingNotificationName:nUISyncMessagesSucceeded];
+    [self stopObservingNotificationName:nUISyncMessagesFailed];
+    [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     _theTable.backgroundColor = [UIColor clearColor];
     [self.view setBackgroundColor:[UIColor colorWithRed:241 green:238 blue:232 alpha:1.0]];
+    self.messageArr = [self.dataCtrl allMessages];
+    
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [KHHShowHideTabBar showTabbar];
-    
+    if (self.isNeedReloadTable) {
+        self.messageArr = [self.dataCtrl allMessages];
+        [_theTable reloadData];
+    }
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -65,12 +105,15 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
     _theTable = nil;
+    self.messageArr = nil;
+    self.dataCtrl = nil;
 }
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 5;
+    return [self.messageArr count];
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 52;
+    return 55;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *cellID = @"CELLID";
@@ -81,19 +124,37 @@
         cell.selectionStyle = UITableViewCellSeparatorStyleNone;
         cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     }
+    KHHMessage *message = [self.messageArr objectAtIndex:indexPath.row];
+    cell.subTitleLab.text = message.subject;
+    cell.contentLab.text = message.content;
+    cell.timeLab.text = message.time;
+    if ([message.isRead isEqualToNumber:[NSNumber numberWithBool:YES]]) {
+        cell.messageImage.hidden = YES;
+    }
     return cell;
 
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self tableView:tableView accessoryButtonTappedForRowWithIndexPath:indexPath];
-
+    self.isNeedReloadTable = YES;
+    KHHMessage *message = [self.messageArr objectAtIndex:indexPath.row];
+    message.isRead = [NSNumber numberWithBool:YES];
 }
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
     KHHDetailMessageVC *messageVC = [[KHHDetailMessageVC alloc] initWithNibName:@"KHHDetailMessageVC" bundle:nil];
+    messageVC.message = [messageArr objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:messageVC animated:YES];
 
+}
+#pragma mark -
+- (IBAction)editMessageBtnClick:(id)sender{
+    
+    KHHEditMSGViewController *editVC = [[KHHEditMSGViewController alloc] initWithNibName:nil bundle:nil];
+    editVC.messageArr = self.messageArr;
+    self.isNeedReloadTable = YES;
+    [self.navigationController pushViewController:editVC animated:YES];
 }
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {

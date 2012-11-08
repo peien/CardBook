@@ -8,6 +8,7 @@
 
 #import "KHHCalendarViewController.h"
 #import "CKCalendarView.h"
+#import "KHHAllVisitedSchedusVC.h"
 #import "KHHVisitCalendarCell.h"
 #import "KHHVisitCalendarView.h"
 #import "KHHVisitRecoardVC.h"
@@ -22,7 +23,6 @@
 @property (strong, nonatomic) CKCalendarView       *calView;
 @property (strong, nonatomic) NSArray              *schedus;
 @property (strong, nonatomic) KHHVisitCalendarView *visitView;
-@property (assign, nonatomic) bool                 isneedReloadeVisitTable;
 @end
 
 @implementation KHHCalendarViewController
@@ -41,11 +41,15 @@
     if (self) {
         // Custom initialization
         self.title = NSLocalizedString(@"沟通拜访纪录", nil);
-        self.navigationItem.rightBarButtonItem = nil;
+        [self.rightBtn setTitle:NSLocalizedString(@"显示所有", nil) forState:UIControlStateNormal];
     }
     return self;
 }
-
+- (void)rightBarButtonClick:(id)sender{
+    KHHAllVisitedSchedusVC *schedusVC = [[KHHAllVisitedSchedusVC alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:schedusVC animated:YES];
+    
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -84,9 +88,15 @@
 - (void)viewWillAppear:(BOOL)animated{
     [KHHShowHideTabBar hideTabbar];
     if (self.isneedReloadeVisitTable) {
-        
+        if ([self.card isKindOfClass:[ReceivedCard class]]) {
+            self.card = [[KHHData sharedData]receivedCardByID:self.card.id];
+        }else if ([self.card isKindOfClass:[PrivateCard class]]){
+            self.card = [[KHHData sharedData] privateCardByID:self.card.id];
+        }
+         self.visitView.card = self.card;
         [self.visitView reloadTheTable];
     }
+        //[self.visitView reloadTheTable];
 }
 - (void)viewDidAppear:(BOOL)animated{
     [self.calView layoutSubviews];
@@ -138,8 +148,10 @@
 }
 - (IBAction)plusBtnClick:(id)sender{
     KHHVisitRecoardVC *visitVC = [[KHHVisitRecoardVC alloc] initWithNibName:nil bundle:nil];
+    visitVC.visitInfoCard = self.card;
     visitVC.selectedDateFromCal = self.dateSelect;
     visitVC.isFromCalVC = YES;
+    visitVC.isNeedWarn = YES;
     self.isneedReloadeVisitTable = YES;
     [self.navigationController pushViewController:visitVC animated:YES];
 

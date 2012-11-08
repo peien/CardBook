@@ -305,7 +305,7 @@ void WarnParametersNotMeetRequirement(NSString *action) {
     NSString *errMessage = NSLocalizedString(@"参数不满足要求！", nil);
     NSNotificationCenter *dc = [NSNotificationCenter defaultCenter];
     [dc postASAPNotificationName:NameWithActionAndCode(action, errCode)
-                            info:@{ kInfoKeyErrorMessage : errMessage }];
+                            info:@{ kInfoKeyErrorMessage : errMessage, kInfoKeyErrorCode : @(errCode) }];
 }
 
 /*!

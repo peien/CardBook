@@ -8,7 +8,6 @@
 
 #import "EmployeesManageVC.h"
 #import "EmployManageViewCell.h"
-#import "EmployDetailInfoVC.h"
 #import "KHHShowHideTabBar.h"
 
 @interface EmployeesManageVC ()
@@ -69,8 +68,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    EmployDetailInfoVC *employInfo = [[EmployDetailInfoVC alloc] initWithNibName:@"EmployDetailInfoVC" bundle:nil];
-    [self.navigationController pushViewController:employInfo animated:YES];
+  
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

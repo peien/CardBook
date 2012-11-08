@@ -11,4 +11,6 @@
 @interface KHHMessageViewController : SuperViewController;
 @property (strong, nonatomic) IBOutlet UITableView *theTable;
 
+- (IBAction)editMessageBtnClick:(id)sender;
+
 @end

@@ -15,6 +15,7 @@
 @property (strong, nonatomic) IBOutlet UITableView     *theTable;
 @property (strong, nonatomic) IBOutlet UIView          *footView;
 @property (strong, nonatomic) IBOutlet UIButton        *calBtn;
+@property (strong, nonatomic) IBOutlet UIButton        *addBtn;
 @property (strong, nonatomic) UIViewController         *viewCtrl;
 @property (strong, nonatomic) NSMutableArray           *imgArr;
 @property (strong, nonatomic) UIImageView              *imgview;
@@ -25,6 +26,7 @@
 @property (assign, nonatomic) bool                     isFromHomeVC;
 @property (assign, nonatomic) bool                     isFromCalVC;
 @property (strong, nonatomic) NSDate                   *selectedDate;
+@property (strong, nonatomic) NSString                 *mapAddress;
 
 - (IBAction)VisitCalendarBtnClick:(id)sender;
 - (void)initViewData;

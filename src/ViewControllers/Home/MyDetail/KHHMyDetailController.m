@@ -78,7 +78,7 @@
     CGRect rect = _visitView.footView.frame;
     CGRect rectTable = _visitView.theTable.frame;
     rect.origin.y = 355;
-    rectTable.size.height = 400;
+    rectTable.size.height = 385 ;
     _visitView.footView.frame = rect;
     _visitView.theTable.frame = rectTable;
     _visitView.viewCtrl = self;

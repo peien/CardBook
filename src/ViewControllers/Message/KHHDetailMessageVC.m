@@ -8,13 +8,14 @@
 
 #import "KHHDetailMessageVC.h"
 #import "KHHShowHideTabBar.h"
-@interface KHHDetailMessageVC ()<UITableViewDataSource,UITableViewDelegate>
+@interface KHHDetailMessageVC ()
 
 @end
 
 @implementation KHHDetailMessageVC
-@synthesize theTable = _theTable;
-
+@synthesize message;
+@synthesize timeLabel;
+@synthesize contentLabel;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -33,6 +34,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self.view setBackgroundColor:[UIColor colorWithRed:241 green:238 blue:232 alpha:1.0]];
+    self.timeLabel.text = self.message.time;
+    self.contentLabel.text = self.message.content;
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -45,28 +49,10 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
+    self.message = nil;
+    self.timeLabel = nil;
+    self.contentLabel = nil;
 }
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    return 2;
-}
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *cellID = @"cellID";
-    UITableViewCell *cell = nil;
-    cell = [tableView dequeueReusableCellWithIdentifier:cellID];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
-    }
-    cell.textLabel.text = [NSString stringWithFormat:@"indexPath%d",indexPath.row];
-    return cell;
-
-}
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return UITableViewCellEditingStyleDelete;
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);

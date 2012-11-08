@@ -11,4 +11,5 @@
 
 @interface KHHEditMSGViewController : SuperViewController<UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *theTable;
+@property (strong, nonatomic) NSArray              *messageArr;
 @end

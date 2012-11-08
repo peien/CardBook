@@ -42,7 +42,7 @@
 							<object class="IBUIButton" id="685910459">
 								<reference key="NSNextResponder" ref="1039169649"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{-9, 1}, {84, 40}}</string>
+								<string key="NSFrame">{{-9, 0}, {84, 40}}</string>
 								<reference key="NSSuperview" ref="1039169649"/>
 								<reference key="NSWindow"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -75,7 +75,7 @@
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="685910459"/>
 						<string key="NSReuseIdentifierKey">_NS:11</string>
-						<object class="NSColor" key="IBUIBackgroundColor">
+						<object class="NSColor" key="IBUIBackgroundColor" id="988553856">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MCAwAA</bytes>
 						</object>
@@ -91,9 +91,10 @@
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="1039169649"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
+				<reference key="IBUIBackgroundColor" ref="988553856"/>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 				<reference key="IBUIContentView" ref="1039169649"/>
-				<real value="42" key="IBUIRowHeight"/>
+				<real value="40" key="IBUIRowHeight"/>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">

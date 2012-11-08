@@ -13,6 +13,7 @@ typedef enum {
 #import <UIKit/UIKit.h>
 #import "SuperViewController.h"
 #import "Card.h"
+#import "KHHClasses.h"
 @interface Edit_eCardViewController : SuperViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *theTable;
 @property (strong, nonatomic)  NSArray              *fieldName;
@@ -31,5 +32,7 @@ typedef enum {
 @property (strong, nonatomic)  UILabel              *editLab;
 @property (strong, nonatomic)  Card                 *glCard;
 @property (assign, nonatomic)  KCardViewControllerType type;
+@property (strong, nonatomic)  CardTemplate         *cardTemp;
+@property (assign, nonatomic)  bool                 isChangeFirstFrame;
 
 @end

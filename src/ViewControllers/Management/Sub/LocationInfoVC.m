@@ -8,7 +8,6 @@
 
 #import "LocationInfoVC.h"
 #import <CoreLocation/CoreLocation.h>
-#import "FootPrintViewController.h"
 #import "KHHShowHideTabBar.h"
 #import "KHHAddImageCell.h"
 #import "KHHFullFrameController.h"

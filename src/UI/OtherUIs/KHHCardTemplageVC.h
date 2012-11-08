@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "SuperViewController.h"
+#import "Edit_eCardViewController.h"
+#import "KHHClasses.h"
 @interface KHHCardTemplageVC : SuperViewController
+@property (strong, nonatomic) Edit_eCardViewController *editCardVC;
+@property (strong, nonatomic) Card                     *card;
 
 @end

@@ -25,6 +25,10 @@
 		0CEFF882163AFE7500E878C6 /* AppRegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEFF880163AFE7500E878C6 /* AppRegisterController.m */; };
 		0CEFF883163AFE7500E878C6 /* AppRegisterController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CEFF881163AFE7500E878C6 /* AppRegisterController.xib */; };
 		62134B45160D7BDE00A8EC9F /* KHHAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 62134B44160D7BDE00A8EC9F /* KHHAddressCell.m */; };
+		621371CF16439EBF0041FE22 /* popoverBgSimple.png in Resources */ = {isa = PBXBuildFile; fileRef = 621371CE16439EBE0041FE22 /* popoverBgSimple.png */; };
+		621371D91643A1050041FE22 /* popoverArrowDownSimple.png in Resources */ = {isa = PBXBuildFile; fileRef = 621371D61643A1050041FE22 /* popoverArrowDownSimple.png */; };
+		621371DA1643A1050041FE22 /* popoverArrowLeftSimple.png in Resources */ = {isa = PBXBuildFile; fileRef = 621371D71643A1050041FE22 /* popoverArrowLeftSimple.png */; };
+		621371DB1643A1050041FE22 /* popoverArrowUpSimple.png in Resources */ = {isa = PBXBuildFile; fileRef = 621371D81643A1050041FE22 /* popoverArrowUpSimple.png */; };
 		6238BA8316394AD80064B8A9 /* flagcircle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6238BA7F16394AD80064B8A9 /* flagcircle@2x.png */; };
 		6238BA8416394AD80064B8A9 /* visitedfinished@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6238BA8016394AD80064B8A9 /* visitedfinished@2x.png */; };
 		6238BA8516394AD80064B8A9 /* visitedtoday@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6238BA8116394AD80064B8A9 /* visitedtoday@2x.png */; };
@@ -49,6 +53,8 @@
 		626626D71616D74B004A8D85 /* login_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 626626D61616D74B004A8D85 /* login_logo@2x.png */; };
 		626626D91616D8B4004A8D85 /* login_btn_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 626626D81616D8B4004A8D85 /* login_btn_selected@2x.png */; };
 		62812688161299BF0054B753 /* KHHCardMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 62812687161299BF0054B753 /* KHHCardMode.m */; };
+		628DC6461647B430008D1F3D /* KHHAllVisitedSchedusVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 628DC6441647B430008D1F3D /* KHHAllVisitedSchedusVC.m */; };
+		628DC6471647B430008D1F3D /* KHHAllVisitedSchedusVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 628DC6451647B430008D1F3D /* KHHAllVisitedSchedusVC.xib */; };
 		629D358F1626AC6C0064C8F4 /* crm_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 629D358E1626AC6C0064C8F4 /* crm_bg@2x.png */; };
 		629D35A61626D7D40064C8F4 /* crm_leida_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 629D35A01626D7D40064C8F4 /* crm_leida_selected@2x.png */; };
 		629D35A71626D7D40064C8F4 /* crm_loudou_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 629D35A11626D7D40064C8F4 /* crm_loudou_selected@2x.png */; };
@@ -56,10 +62,6 @@
 		629D35A91626D7D40064C8F4 /* crm_person_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 629D35A31626D7D40064C8F4 /* crm_person_selected@2x.png */; };
 		629D35AA1626D7D40064C8F4 /* crm_rili_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 629D35A41626D7D40064C8F4 /* crm_rili_selected@2x.png */; };
 		629D35AB1626D7D40064C8F4 /* crm_weizhi_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 629D35A51626D7D40064C8F4 /* crm_weizhi_selected@2x.png */; };
-		62A61451163FAE850011048B /* pop_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A6144D163FAE840011048B /* pop_bg@2x.png */; };
-		62A61452163FAE850011048B /* pop_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A6144E163FAE850011048B /* pop_down@2x.png */; };
-		62A61453163FAE850011048B /* pop_left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A6144F163FAE850011048B /* pop_left@2x.png */; };
-		62A61454163FAE850011048B /* pop_up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A61450163FAE850011048B /* pop_up@2x.png */; };
 		62A61456163FB1460011048B /* chajianpop_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A61455163FB1460011048B /* chajianpop_bg@2x.png */; };
 		62A6B6BB16153F000018F3DB /* KHHSinaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A6B6B916153F000018F3DB /* KHHSinaViewController.m */; };
 		62A6B6BC16153F000018F3DB /* KHHSinaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62A6B6BA16153F000018F3DB /* KHHSinaViewController.xib */; };
@@ -73,6 +75,7 @@
 		62A77FE0161691D70015A969 /* contact_select@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A77FDF161691D70015A969 /* contact_select@2x.png */; };
 		62A77FE3161696720015A969 /* myDetail_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A77FE1161696720015A969 /* myDetail_normal@2x.png */; };
 		62A77FE4161696720015A969 /* myDetail_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A77FE2161696720015A969 /* myDetail_selected@2x.png */; };
+		62A7B2E41643C54D00291462 /* UIBarButtonItem+WEPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850361602DA3F00A4A673 /* UIBarButtonItem+WEPopover.m */; };
 		62A83C6A162B9DAA0006B5A4 /* beizhu_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A83C69162B9DAA0006B5A4 /* beizhu_btn@2x.png */; };
 		62A83C6D162BAF2E0006B5A4 /* LoginImage_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A83C6C162BAF2E0006B5A4 /* LoginImage_bg@2x.png */; };
 		62A9C99B16099AC100BF7D41 /* KHHAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A9C99A16099AC100BF7D41 /* KHHAddressBook.m */; };
@@ -292,16 +295,10 @@
 		98A84EBC1602D66200A4A673 /* KHHManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E501602D66200A4A673 /* KHHManagementViewController.m */; };
 		98A84EBD1602D66200A4A673 /* KHHManagementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E511602D66200A4A673 /* KHHManagementViewController.xib */; };
 		98A84EBE1602D66200A4A673 /* KHHStaffEntrance.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E521602D66200A4A673 /* KHHStaffEntrance.xib */; };
-		98A84EBF1602D66200A4A673 /* EmployDetailInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E551602D66200A4A673 /* EmployDetailInfoVC.m */; };
-		98A84EC01602D66200A4A673 /* EmployDetailInfoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E561602D66200A4A673 /* EmployDetailInfoVC.xib */; };
 		98A84EC11602D66200A4A673 /* EmployeesManageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E581602D66200A4A673 /* EmployeesManageVC.m */; };
 		98A84EC21602D66200A4A673 /* EmployeesManageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E591602D66200A4A673 /* EmployeesManageVC.xib */; };
 		98A84EC31602D66200A4A673 /* EmployManageViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E5B1602D66200A4A673 /* EmployManageViewCell.m */; };
 		98A84EC41602D66200A4A673 /* EmployManageViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E5C1602D66200A4A673 /* EmployManageViewCell.xib */; };
-		98A84EC51602D66200A4A673 /* FootPrintViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E5E1602D66200A4A673 /* FootPrintViewCell.m */; };
-		98A84EC61602D66200A4A673 /* FootPrintViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E5F1602D66200A4A673 /* FootPrintViewCell.xib */; };
-		98A84EC71602D66200A4A673 /* FootPrintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E611602D66200A4A673 /* FootPrintViewController.m */; };
-		98A84EC81602D66200A4A673 /* FootPrintViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E621602D66200A4A673 /* FootPrintViewController.xib */; };
 		98A84EC91602D66200A4A673 /* KHHCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E641602D66200A4A673 /* KHHCalendarViewController.m */; };
 		98A84ECA1602D66200A4A673 /* KHHCalendarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E651602D66200A4A673 /* KHHCalendarViewController.xib */; };
 		98A84ECB1602D66200A4A673 /* KHHDelVisitCalendarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E671602D66200A4A673 /* KHHDelVisitCalendarCell.m */; };
@@ -478,12 +475,7 @@
 		98A8509F1602DA3F00A4A673 /* TSLocateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8502B1602DA3F00A4A673 /* TSLocateView.m */; };
 		98A850A01602DA3F00A4A673 /* TSLocateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A8502C1602DA3F00A4A673 /* TSLocateView.xib */; };
 		98A850A11602DA3F00A4A673 /* TSLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8502E1602DA3F00A4A673 /* TSLocation.m */; };
-		98A850A21602DA3F00A4A673 /* popoverArrowDownSimple.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A850301602DA3F00A4A673 /* popoverArrowDownSimple.png */; };
-		98A850A31602DA3F00A4A673 /* popoverArrowLeftSimple.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A850311602DA3F00A4A673 /* popoverArrowLeftSimple.png */; };
 		98A850A41602DA3F00A4A673 /* popoverArrowRightSimple.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A850321602DA3F00A4A673 /* popoverArrowRightSimple.png */; };
-		98A850A51602DA3F00A4A673 /* popoverArrowUpSimple.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A850331602DA3F00A4A673 /* popoverArrowUpSimple.png */; };
-		98A850A61602DA3F00A4A673 /* popoverBgSimple.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A850341602DA3F00A4A673 /* popoverBgSimple.png */; };
-		98A850A71602DA3F00A4A673 /* UIBarButtonItem+WEPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850361602DA3F00A4A673 /* UIBarButtonItem+WEPopover.m */; };
 		98A850A81602DA3F00A4A673 /* WEPopoverContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850381602DA3F00A4A673 /* WEPopoverContainerView.m */; };
 		98A850A91602DA3F00A4A673 /* WEPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8503A1602DA3F00A4A673 /* WEPopoverController.m */; };
 		98A850AA1602DA3F00A4A673 /* WETouchableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8503D1602DA3F00A4A673 /* WETouchableView.m */; };
@@ -574,6 +566,10 @@
 		0CEFF881163AFE7500E878C6 /* AppRegisterController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AppRegisterController.xib; sourceTree = "<group>"; };
 		62134B43160D7BDE00A8EC9F /* KHHAddressCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHAddressCell.h; sourceTree = "<group>"; };
 		62134B44160D7BDE00A8EC9F /* KHHAddressCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHAddressCell.m; sourceTree = "<group>"; };
+		621371CE16439EBE0041FE22 /* popoverBgSimple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = popoverBgSimple.png; sourceTree = "<group>"; };
+		621371D61643A1050041FE22 /* popoverArrowDownSimple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = popoverArrowDownSimple.png; sourceTree = "<group>"; };
+		621371D71643A1050041FE22 /* popoverArrowLeftSimple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = popoverArrowLeftSimple.png; sourceTree = "<group>"; };
+		621371D81643A1050041FE22 /* popoverArrowUpSimple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = popoverArrowUpSimple.png; sourceTree = "<group>"; };
 		6238BA7F16394AD80064B8A9 /* flagcircle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flagcircle@2x.png"; sourceTree = "<group>"; };
 		6238BA8016394AD80064B8A9 /* visitedfinished@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "visitedfinished@2x.png"; sourceTree = "<group>"; };
 		6238BA8116394AD80064B8A9 /* visitedtoday@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "visitedtoday@2x.png"; sourceTree = "<group>"; };
@@ -600,6 +596,9 @@
 		626626D81616D8B4004A8D85 /* login_btn_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "login_btn_selected@2x.png"; sourceTree = "<group>"; };
 		62812686161299BF0054B753 /* KHHCardMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHCardMode.h; sourceTree = "<group>"; };
 		62812687161299BF0054B753 /* KHHCardMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHCardMode.m; sourceTree = "<group>"; };
+		628DC6431647B430008D1F3D /* KHHAllVisitedSchedusVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHAllVisitedSchedusVC.h; sourceTree = "<group>"; };
+		628DC6441647B430008D1F3D /* KHHAllVisitedSchedusVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHAllVisitedSchedusVC.m; sourceTree = "<group>"; };
+		628DC6451647B430008D1F3D /* KHHAllVisitedSchedusVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHAllVisitedSchedusVC.xib; sourceTree = "<group>"; };
 		629D358E1626AC6C0064C8F4 /* crm_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crm_bg@2x.png"; sourceTree = "<group>"; };
 		629D35A01626D7D40064C8F4 /* crm_leida_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crm_leida_selected@2x.png"; sourceTree = "<group>"; };
 		629D35A11626D7D40064C8F4 /* crm_loudou_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crm_loudou_selected@2x.png"; sourceTree = "<group>"; };
@@ -607,10 +606,6 @@
 		629D35A31626D7D40064C8F4 /* crm_person_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crm_person_selected@2x.png"; sourceTree = "<group>"; };
 		629D35A41626D7D40064C8F4 /* crm_rili_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crm_rili_selected@2x.png"; sourceTree = "<group>"; };
 		629D35A51626D7D40064C8F4 /* crm_weizhi_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crm_weizhi_selected@2x.png"; sourceTree = "<group>"; };
-		62A6144D163FAE840011048B /* pop_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pop_bg@2x.png"; sourceTree = "<group>"; };
-		62A6144E163FAE850011048B /* pop_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pop_down@2x.png"; sourceTree = "<group>"; };
-		62A6144F163FAE850011048B /* pop_left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pop_left@2x.png"; sourceTree = "<group>"; };
-		62A61450163FAE850011048B /* pop_up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pop_up@2x.png"; sourceTree = "<group>"; };
 		62A61455163FB1460011048B /* chajianpop_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chajianpop_bg@2x.png"; sourceTree = "<group>"; };
 		62A6B6B816153F000018F3DB /* KHHSinaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHSinaViewController.h; sourceTree = "<group>"; };
 		62A6B6B916153F000018F3DB /* KHHSinaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHSinaViewController.m; sourceTree = "<group>"; };
@@ -890,21 +885,12 @@
 		98A84E501602D66200A4A673 /* KHHManagementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHManagementViewController.m; sourceTree = "<group>"; };
 		98A84E511602D66200A4A673 /* KHHManagementViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHManagementViewController.xib; sourceTree = "<group>"; };
 		98A84E521602D66200A4A673 /* KHHStaffEntrance.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHStaffEntrance.xib; sourceTree = "<group>"; };
-		98A84E541602D66200A4A673 /* EmployDetailInfoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmployDetailInfoVC.h; sourceTree = "<group>"; };
-		98A84E551602D66200A4A673 /* EmployDetailInfoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmployDetailInfoVC.m; sourceTree = "<group>"; };
-		98A84E561602D66200A4A673 /* EmployDetailInfoVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmployDetailInfoVC.xib; sourceTree = "<group>"; };
 		98A84E571602D66200A4A673 /* EmployeesManageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmployeesManageVC.h; sourceTree = "<group>"; };
 		98A84E581602D66200A4A673 /* EmployeesManageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmployeesManageVC.m; sourceTree = "<group>"; };
 		98A84E591602D66200A4A673 /* EmployeesManageVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmployeesManageVC.xib; sourceTree = "<group>"; };
 		98A84E5A1602D66200A4A673 /* EmployManageViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmployManageViewCell.h; sourceTree = "<group>"; };
 		98A84E5B1602D66200A4A673 /* EmployManageViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmployManageViewCell.m; sourceTree = "<group>"; };
 		98A84E5C1602D66200A4A673 /* EmployManageViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmployManageViewCell.xib; sourceTree = "<group>"; };
-		98A84E5D1602D66200A4A673 /* FootPrintViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FootPrintViewCell.h; sourceTree = "<group>"; };
-		98A84E5E1602D66200A4A673 /* FootPrintViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FootPrintViewCell.m; sourceTree = "<group>"; };
-		98A84E5F1602D66200A4A673 /* FootPrintViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FootPrintViewCell.xib; sourceTree = "<group>"; };
-		98A84E601602D66200A4A673 /* FootPrintViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FootPrintViewController.h; sourceTree = "<group>"; };
-		98A84E611602D66200A4A673 /* FootPrintViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FootPrintViewController.m; sourceTree = "<group>"; };
-		98A84E621602D66200A4A673 /* FootPrintViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FootPrintViewController.xib; sourceTree = "<group>"; };
 		98A84E631602D66200A4A673 /* KHHCalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHCalendarViewController.h; sourceTree = "<group>"; };
 		98A84E641602D66200A4A673 /* KHHCalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHCalendarViewController.m; sourceTree = "<group>"; };
 		98A84E651602D66200A4A673 /* KHHCalendarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHCalendarViewController.xib; sourceTree = "<group>"; };
@@ -1146,11 +1132,7 @@
 		98A8502C1602DA3F00A4A673 /* TSLocateView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TSLocateView.xib; sourceTree = "<group>"; };
 		98A8502D1602DA3F00A4A673 /* TSLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSLocation.h; sourceTree = "<group>"; };
 		98A8502E1602DA3F00A4A673 /* TSLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSLocation.m; sourceTree = "<group>"; };
-		98A850301602DA3F00A4A673 /* popoverArrowDownSimple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = popoverArrowDownSimple.png; sourceTree = "<group>"; };
-		98A850311602DA3F00A4A673 /* popoverArrowLeftSimple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = popoverArrowLeftSimple.png; sourceTree = "<group>"; };
 		98A850321602DA3F00A4A673 /* popoverArrowRightSimple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = popoverArrowRightSimple.png; sourceTree = "<group>"; };
-		98A850331602DA3F00A4A673 /* popoverArrowUpSimple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = popoverArrowUpSimple.png; sourceTree = "<group>"; };
-		98A850341602DA3F00A4A673 /* popoverBgSimple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = popoverBgSimple.png; sourceTree = "<group>"; };
 		98A850351602DA3F00A4A673 /* UIBarButtonItem+WEPopover.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+WEPopover.h"; sourceTree = "<group>"; };
 		98A850361602DA3F00A4A673 /* UIBarButtonItem+WEPopover.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+WEPopover.m"; sourceTree = "<group>"; };
 		98A850371602DA3F00A4A673 /* WEPopoverContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEPopoverContainerView.h; sourceTree = "<group>"; };
@@ -1994,21 +1976,12 @@
 		98A84E531602D66200A4A673 /* Sub */ = {
 			isa = PBXGroup;
 			children = (
-				98A84E541602D66200A4A673 /* EmployDetailInfoVC.h */,
-				98A84E551602D66200A4A673 /* EmployDetailInfoVC.m */,
-				98A84E561602D66200A4A673 /* EmployDetailInfoVC.xib */,
 				98A84E571602D66200A4A673 /* EmployeesManageVC.h */,
 				98A84E581602D66200A4A673 /* EmployeesManageVC.m */,
 				98A84E591602D66200A4A673 /* EmployeesManageVC.xib */,
 				98A84E5A1602D66200A4A673 /* EmployManageViewCell.h */,
 				98A84E5B1602D66200A4A673 /* EmployManageViewCell.m */,
 				98A84E5C1602D66200A4A673 /* EmployManageViewCell.xib */,
-				98A84E5D1602D66200A4A673 /* FootPrintViewCell.h */,
-				98A84E5E1602D66200A4A673 /* FootPrintViewCell.m */,
-				98A84E5F1602D66200A4A673 /* FootPrintViewCell.xib */,
-				98A84E601602D66200A4A673 /* FootPrintViewController.h */,
-				98A84E611602D66200A4A673 /* FootPrintViewController.m */,
-				98A84E621602D66200A4A673 /* FootPrintViewController.xib */,
 				98A84E631602D66200A4A673 /* KHHCalendarViewController.h */,
 				98A84E641602D66200A4A673 /* KHHCalendarViewController.m */,
 				98A84E651602D66200A4A673 /* KHHCalendarViewController.xib */,
@@ -2039,6 +2012,9 @@
 				98A84E7E1602D66200A4A673 /* LocationInfoVC.h */,
 				98A84E7F1602D66200A4A673 /* LocationInfoVC.m */,
 				98A84E801602D66200A4A673 /* LocationInfoVC.xib */,
+				628DC6431647B430008D1F3D /* KHHAllVisitedSchedusVC.h */,
+				628DC6441647B430008D1F3D /* KHHAllVisitedSchedusVC.m */,
+				628DC6451647B430008D1F3D /* KHHAllVisitedSchedusVC.xib */,
 			);
 			path = Sub;
 			sourceTree = "<group>";
@@ -2299,6 +2275,13 @@
 				62A83C69162B9DAA0006B5A4 /* beizhu_btn@2x.png */,
 				98A84F8D1602D7B300A4A673 /* bottom_bg@2x.png */,
 				98A84F8C1602D7B300A4A673 /* bottom_bg_ 2@2x.png */,
+				62A61455163FB1460011048B /* chajianpop_bg@2x.png */,
+				6238BA7F16394AD80064B8A9 /* flagcircle@2x.png */,
+				6238BA8016394AD80064B8A9 /* visitedfinished@2x.png */,
+				6238BA8116394AD80064B8A9 /* visitedtoday@2x.png */,
+				6238BA8216394AD80064B8A9 /* visitedunfinished@2x.png */,
+				98B29105163E5DB500D062D9 /* Icon_pass@2x.png */,
+				98B29106163E5DB500D062D9 /* Icon_user@2x.png */,
 				98B290FB163E557900D062D9 /* Button_grey@2x.png */,
 				98B290FC163E557900D062D9 /* Button_red@2x.png */,
 				98A84F8E1602D7B300A4A673 /* calendarBtnimg@2x.png */,
@@ -2540,11 +2523,11 @@
 		98A8502F1602DA3F00A4A673 /* Popover */ = {
 			isa = PBXGroup;
 			children = (
-				98A850301602DA3F00A4A673 /* popoverArrowDownSimple.png */,
-				98A850311602DA3F00A4A673 /* popoverArrowLeftSimple.png */,
+				621371D61643A1050041FE22 /* popoverArrowDownSimple.png */,
+				621371D71643A1050041FE22 /* popoverArrowLeftSimple.png */,
+				621371D81643A1050041FE22 /* popoverArrowUpSimple.png */,
+				621371CE16439EBE0041FE22 /* popoverBgSimple.png */,
 				98A850321602DA3F00A4A673 /* popoverArrowRightSimple.png */,
-				98A850331602DA3F00A4A673 /* popoverArrowUpSimple.png */,
-				98A850341602DA3F00A4A673 /* popoverBgSimple.png */,
 				98A850351602DA3F00A4A673 /* UIBarButtonItem+WEPopover.h */,
 				98A850361602DA3F00A4A673 /* UIBarButtonItem+WEPopover.m */,
 				98A850371602DA3F00A4A673 /* WEPopoverContainerView.h */,
@@ -2795,11 +2778,8 @@
 				98A84EBB1602D66200A4A673 /* KHHBossEntrance.xib in Resources */,
 				98A84EBD1602D66200A4A673 /* KHHManagementViewController.xib in Resources */,
 				98A84EBE1602D66200A4A673 /* KHHStaffEntrance.xib in Resources */,
-				98A84EC01602D66200A4A673 /* EmployDetailInfoVC.xib in Resources */,
 				98A84EC21602D66200A4A673 /* EmployeesManageVC.xib in Resources */,
 				98A84EC41602D66200A4A673 /* EmployManageViewCell.xib in Resources */,
-				98A84EC61602D66200A4A673 /* FootPrintViewCell.xib in Resources */,
-				98A84EC81602D66200A4A673 /* FootPrintViewController.xib in Resources */,
 				98A84ECA1602D66200A4A673 /* KHHCalendarViewController.xib in Resources */,
 				98A84ECC1602D66200A4A673 /* KHHDelVisitCalendarCell.xib in Resources */,
 				98A84ECE1602D66200A4A673 /* KHHDelVisitCalendarVC.xib in Resources */,
@@ -2912,11 +2892,7 @@
 				98A8509D1602DA3F00A4A673 /* btn_021@2x.png in Resources */,
 				98A8509E1602DA3F00A4A673 /* ProvincesAndCities.plist in Resources */,
 				98A850A01602DA3F00A4A673 /* TSLocateView.xib in Resources */,
-				98A850A21602DA3F00A4A673 /* popoverArrowDownSimple.png in Resources */,
-				98A850A31602DA3F00A4A673 /* popoverArrowLeftSimple.png in Resources */,
 				98A850A41602DA3F00A4A673 /* popoverArrowRightSimple.png in Resources */,
-				98A850A51602DA3F00A4A673 /* popoverArrowUpSimple.png in Resources */,
-				98A850A61602DA3F00A4A673 /* popoverBgSimple.png in Resources */,
 				98A850C01602DA3F00A4A673 /* SMCheckbox.xib in Resources */,
 				98A850ED1602EB5A00A4A673 /* CHANGELOG.md in Resources */,
 				98A850EF1602EB5A00A4A673 /* README.md in Resources */,
@@ -2973,10 +2949,6 @@
 				6238BA8516394AD80064B8A9 /* visitedtoday@2x.png in Resources */,
 				6238BA8616394AD80064B8A9 /* visitedunfinished@2x.png in Resources */,
 				62AC98DF163A4A50009EF269 /* KHHCardTemplageVC.xib in Resources */,
-				62A61451163FAE850011048B /* pop_bg@2x.png in Resources */,
-				62A61452163FAE850011048B /* pop_down@2x.png in Resources */,
-				62A61453163FAE850011048B /* pop_left@2x.png in Resources */,
-				62A61454163FAE850011048B /* pop_up@2x.png in Resources */,
 				62A61456163FB1460011048B /* chajianpop_bg@2x.png in Resources */,
 				98D29B74163A594900DE82E3 /* AppLoginController.xib in Resources */,
 				0CEFF883163AFE7500E878C6 /* AppRegisterController.xib in Resources */,
@@ -2989,6 +2961,11 @@
 				98B290FE163E557900D062D9 /* Button_red@2x.png in Resources */,
 				98B29107163E5DB500D062D9 /* Icon_pass@2x.png in Resources */,
 				98B29108163E5DB500D062D9 /* Icon_user@2x.png in Resources */,
+				621371CF16439EBF0041FE22 /* popoverBgSimple.png in Resources */,
+				621371D91643A1050041FE22 /* popoverArrowDownSimple.png in Resources */,
+				621371DA1643A1050041FE22 /* popoverArrowLeftSimple.png in Resources */,
+				621371DB1643A1050041FE22 /* popoverArrowUpSimple.png in Resources */,
+				628DC6471647B430008D1F3D /* KHHAllVisitedSchedusVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3174,11 +3151,8 @@
 				98A84EB71602D66200A4A673 /* KHHMyDetailController.m in Sources */,
 				98A84EB91602D66200A4A673 /* PickViewController.m in Sources */,
 				98A84EBC1602D66200A4A673 /* KHHManagementViewController.m in Sources */,
-				98A84EBF1602D66200A4A673 /* EmployDetailInfoVC.m in Sources */,
 				98A84EC11602D66200A4A673 /* EmployeesManageVC.m in Sources */,
 				98A84EC31602D66200A4A673 /* EmployManageViewCell.m in Sources */,
-				98A84EC51602D66200A4A673 /* FootPrintViewCell.m in Sources */,
-				98A84EC71602D66200A4A673 /* FootPrintViewController.m in Sources */,
 				98A84EC91602D66200A4A673 /* KHHCalendarViewController.m in Sources */,
 				98A84ECB1602D66200A4A673 /* KHHDelVisitCalendarCell.m in Sources */,
 				98A84ECD1602D66200A4A673 /* KHHDelVisitCalendarVC.m in Sources */,
@@ -3243,7 +3217,6 @@
 				98A850921602DA3F00A4A673 /* JSTokenField.m in Sources */,
 				98A8509F1602DA3F00A4A673 /* TSLocateView.m in Sources */,
 				98A850A11602DA3F00A4A673 /* TSLocation.m in Sources */,
-				98A850A71602DA3F00A4A673 /* UIBarButtonItem+WEPopover.m in Sources */,
 				98A850A81602DA3F00A4A673 /* WEPopoverContainerView.m in Sources */,
 				98A850A91602DA3F00A4A673 /* WEPopoverController.m in Sources */,
 				98A850AA1602DA3F00A4A673 /* WETouchableView.m in Sources */,
@@ -3336,6 +3309,8 @@
 				98D29B73163A594900DE82E3 /* AppLoginController.m in Sources */,
 				0CEFF882163AFE7500E878C6 /* AppRegisterController.m in Sources */,
 				98BEF3BD16424ED4003EDF33 /* InMessage.m in Sources */,
+				62A7B2E41643C54D00291462 /* UIBarButtonItem+WEPopover.m in Sources */,
+				628DC6461647B430008D1F3D /* KHHAllVisitedSchedusVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

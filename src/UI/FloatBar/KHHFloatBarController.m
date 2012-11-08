@@ -15,7 +15,7 @@
 #import <MessageUI/MessageUI.h>
 
 @interface KHHFloatBarController ()<UIImagePickerControllerDelegate, UIActionSheetDelegate,
-                                    UINavigationControllerDelegate,MFMessageComposeViewControllerDelegate>
+                                    UINavigationControllerDelegate,MFMessageComposeViewControllerDelegate,MFMailComposeViewControllerDelegate>
 @property UIActionSheet *actSheet;
 
 @end
@@ -164,18 +164,76 @@
     
 }
 
-//拍照
+//发邮件
 - (void)takePhotos
 {
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        UIImagePickerController *imagePickCtrl = [[UIImagePickerController alloc] init];
-        imagePickCtrl.sourceType = UIImagePickerControllerSourceTypeCamera;
-        imagePickCtrl.delegate = self;
-        imagePickCtrl.allowsEditing = NO;
-        [self.viewController presentModalViewController:imagePickCtrl animated:YES];
+//    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+//        UIImagePickerController *imagePickCtrl = [[UIImagePickerController alloc] init];
+//        imagePickCtrl.sourceType = UIImagePickerControllerSourceTypeCamera;
+//        imagePickCtrl.delegate = self;
+//        imagePickCtrl.allowsEditing = NO;
+//        [self.viewController presentModalViewController:imagePickCtrl animated:YES];
+//    }
+    if (self.card.email.length > 0) {
+        [self sendMail];
+    }else{
+        [self alertWithTitle:nil msg:@"没有电子邮件地址"];
     }
     [self.popover dismissPopoverAnimated:YES];
 
+}
+- (void)sendMail{
+    Class mfVC = (NSClassFromString(@"MFMailComposeViewController"));
+    if (mfVC != nil) {
+        if ([mfVC canSendMail]) {
+            MFMailComposeViewController *mailPicker = [[MFMailComposeViewController alloc] init];
+            mailPicker.mailComposeDelegate = self;
+            [mailPicker setSubject:@"eMail主题"];
+            NSArray *emails = [self.card.email componentsSeparatedByString:@"|"];
+            [mailPicker setToRecipients:emails];
+            [mailPicker setMessageBody:@"123" isHTML:YES];
+            [self.viewController presentModalViewController:mailPicker animated:YES];
+            
+        }else{
+            
+        }
+        
+    }else{
+        DLog(@"设备不支持发邮件");
+    }
+}
+- (void)mailComposeController:(MFMailComposeViewController *)controller
+          didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error{
+    NSString *msg;
+    switch (result) {
+        case MFMailComposeResultCancelled:
+            //取消
+            break;
+        case MFMailComposeResultSaved:
+            msg = @"邮件保存成功";
+            [self alertWithTitle:nil msg:msg];
+            break;
+        case MFMailComposeResultSent:
+            msg = @"邮件发送成功";
+            [self alertWithTitle:nil msg:msg];
+            break;
+        case MFMailComposeResultFailed:
+            msg = @"邮件发送失败";
+            [self alertWithTitle:nil msg:msg];
+        default:
+            break;
+    }
+    [self.viewController dismissModalViewControllerAnimated:YES];
+
+}
+- (void) alertWithTitle: (NSString *)_title_ msg: (NSString *)msg
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:_title_
+                                                    message:msg
+                                                   delegate:nil
+                                          cancelButtonTitle:@"确定"
+                                          otherButtonTitles:nil];
+    [alert show];
 }
 //定位
 - (void)goToMapVC
@@ -206,6 +264,7 @@
     KHHVisitRecoardVC *newVisVC = [[KHHVisitRecoardVC alloc] initWithNibName:nil bundle:nil];
     newVisVC.style = KVisitRecoardVCStyleNewBuild;
     newVisVC.isNeedWarn = YES;
+    newVisVC.visitInfoCard = self.card;
     [self.viewController.navigationController pushViewController:newVisVC animated:YES];
     [self.popover dismissPopoverAnimated:YES];
 

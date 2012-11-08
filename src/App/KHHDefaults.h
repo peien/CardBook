@@ -64,6 +64,7 @@
 @property (nonatomic, getter = isLoggedIn)    BOOL loggedIn;// 已登录：登录成功和注册成功设为YES，登录失败和已登出为NO
 @property (nonatomic) BOOL rememberPassword;// 记住密码
 @property (nonatomic) BOOL showCompanyLogo;// 是否显示公司logo
+@property (nonatomic) BOOL isAddMobPhoneGroup;// 是否添加手机分组
 
 #pragma mark - App - MainUI
 @property (nonatomic) NSInteger selectedMainTabIndex;

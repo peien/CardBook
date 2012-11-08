@@ -20,6 +20,7 @@
 #import "UIImageView+WebCache.h"
 #import "MBProgressHUD.h"
 #import "KHHVisualCardViewController.h"
+#import "KHHCardTemplageVC.h"
 
 #import "KHHClasses.h"
 #import "KHHDataAPI.h"
@@ -80,6 +81,8 @@ NSString *const kECardListSeparator = @"|";
 @synthesize interCard;
 @synthesize dataCtrl;
 @synthesize progressHud;
+@synthesize cardTemp;
+@synthesize isChangeFirstFrame;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -134,7 +137,7 @@ NSString *const kECardListSeparator = @"|";
     [self stopObservingNotificationName:KHHUIModifyCardFailed];
     [self stopObservingNotificationName:KHHUICreateCardSucceeded];
     [self stopObservingNotificationName:KHHUICreateCardFailed];
-    [self.progressHud removeFromSuperview];
+    self.progressHud.hidden = YES ;
 
 }
 #pragma mark -
@@ -144,22 +147,6 @@ NSString *const kECardListSeparator = @"|";
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     self.view.backgroundColor = [UIColor colorWithRed:241 green:238 blue:232 alpha:1.0];
-    KHHFrameCardView *cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(0, 0, 320, 220) isVer:NO];
-    cardView.viewCtrl = self;
-    cardView.isOnePage = YES;
-    cardView.card = self.glCard;
-    [cardView showView];
-    _theTable.tableHeaderView = cardView;
-//    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 220)];
-//    headerView.backgroundColor = [UIColor clearColor];
-//    KHHVisualCardViewController *cardTemplateVC = [[KHHVisualCardViewController alloc] initWithNibName:nil bundle:nil];
-//    cardTemplateVC.card = self.glCard;
-//    CGRect rect = cardTemplateVC.view.frame;
-//    rect.origin.x = 10;
-//    rect.origin.y = 10;
-//    cardTemplateVC.view.frame = rect;
-//    [headerView addSubview:cardTemplateVC.view];
-//    _theTable.tableHeaderView = headerView;
     if (self.type == KCardViewControllerTypeNewCreate) {
         self.title = @"新建名片";
     }else if (self.type == KCardViewControllerTypeShowInfo){
@@ -171,7 +158,29 @@ NSString *const kECardListSeparator = @"|";
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [KHHShowHideTabBar hideTabbar];
+    
+    if (self.isChangeFirstFrame) {
+        UIView *viewf = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 220)];
+        UIImageView *imgview = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 300, 180)];
+        imgview.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tapp = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gotoTemplagesVC:)];
+        tapp.numberOfTapsRequired = 1;
+        tapp.numberOfTouchesRequired = 1;
+        [imgview addGestureRecognizer:tapp];
+        [imgview setImageWithURL:[NSURL URLWithString:self.cardTemp.bgImage.url] placeholderImage:nil];
+        [viewf addSubview:imgview];
+        _theTable.tableHeaderView = viewf;
+        
+    }else{
+        
+        [KHHShowHideTabBar hideTabbar];
+        KHHFrameCardView *cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(0, 0, 320, 220) isVer:NO];
+        cardView.viewCtrl = self;
+        cardView.isOnePage = YES;
+        cardView.card = self.glCard;
+        [cardView showView];
+        _theTable.tableHeaderView = cardView;
+    }
     
 }
 - (void)viewWillDisappear:(BOOL)animated{
@@ -187,7 +196,11 @@ NSString *const kECardListSeparator = @"|";
         pageCtrl.currentPage = page;
     }
 }
-
+- (void)gotoTemplagesVC:(UITapGestureRecognizer *)sender{
+    KHHCardTemplageVC *temVC = [[KHHCardTemplageVC alloc] initWithNibName:nil bundle:nil];
+    temVC.editCardVC = self;
+    [self.navigationController pushViewController:temVC animated:YES];
+}
 //构造表需要的数据
 - (void)initVCData
 {
@@ -279,6 +292,14 @@ NSString *const kECardListSeparator = @"|";
         NSString *allAddress = @"点击选择省市";
         [_fieldValue replaceObjectAtIndex:8 withObject:allAddress];
     }
+    if (_glCard.address.province.length > 0 || _glCard.address.province.length > 0 || _glCard.address.other.length > 0) {
+        NSString *p = [NSString stringByFilterNilFromString:_glCard.address.province];
+        NSString *c = [NSString stringByFilterNilFromString:_glCard.address.city];
+        NSString *o = [NSString stringByFilterNilFromString:_glCard.address.other];
+        NSString *s1 = [NSString stringWithFormat:@"%@ %@",p,c];
+        NSString *all = [NSString stringWithFormat:@"%@|%@",s1,o];
+        [_fieldValue replaceObjectAtIndex:8 withObject:all];
+    }
     
     if (_glCard.address.zip.length > 0) {
         [_fieldValue replaceObjectAtIndex:9 withObject:_glCard.address.zip];
@@ -356,6 +377,7 @@ NSString *const kECardListSeparator = @"|";
     self.interCard = nil;
     self.dataCtrl = nil;
     self.progressHud = nil;
+    self.cardTemp = nil;
 }
 #pragma mark -
 #pragma mark UITableView Delegates
@@ -506,14 +528,7 @@ NSString *const kECardListSeparator = @"|";
                 [cell.bigAdress setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
             }
             cell.detailAdress.tag = indexPath.row + 7 + _fieldExternOne.count + kBaseTag;
-//            NSString *all = [_fieldValue objectAtIndex:8];
-//            NSArray *arr = [all componentsSeparatedByString:@"|"];
-//            if (arr.count >= 1) {
-//                [cell.bigAdress setTitle:[arr objectAtIndex:0] forState:UIControlStateNormal];
-//                if (self.strStreet.length > 0) {
-//                   cell.detailAdress.text = [arr objectAtIndex:1]; 
-//                }
-//            }
+            
             if (self.glCard.address.other.length > 0 || self.glCard.address.province.length > 0) {
                 NSString *p = [NSString stringByFilterNilFromString:self.glCard.address.province];
                 NSString *c = [NSString stringByFilterNilFromString:self.glCard.address.city];
@@ -1107,7 +1122,7 @@ NSString *const kECardListSeparator = @"|";
         [self.dataCtrl modifyPrivateCardWithInterCard:self.interCard];
     }else if (self.type == KCardViewControllerTypeNewCreate){
         //暂时这样写 templateID不确定
-        self.interCard.templateID = [NSNumber numberWithInt:18];
+        self.interCard.templateID = self.cardTemp.id;
         [self.dataCtrl createPrivateCardWithInterCard:self.interCard];
     }
 }

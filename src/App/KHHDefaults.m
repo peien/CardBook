@@ -42,6 +42,7 @@ static NSString * const KHHDefaultsKeyUserList = @"khh_userList";
 // App - MainUI
 static NSString * const KHHDefaultsKeySelectedMainTabIndex = @"khh_MainUI_selectedTabIndex";
 static NSString * const KHHDefaultsKeyDefaultMainUIIndex = @"khh_MainUI_defaultIndex";
+static NSString * const KHHDefaultsKeyMobilePhoneGroup = @"isAddMobPhoneGroup";
 
 @interface KHHDefaults ()
 @property (nonatomic, weak) NSUserDefaults *defaults;
@@ -317,6 +318,12 @@ static NSString * const KHHDefaultsKeyDefaultMainUIIndex = @"khh_MainUI_defaultI
 - (void)setShowCompanyLogo:(BOOL)value {
     [self setBool:value
            forKey:KHHDefaultsKeyShowCompanyLogo];
+}
+- (void)setIsAddMobPhoneGroup:(BOOL)value{
+    [self setBool:value forKey:KHHDefaultsKeyMobilePhoneGroup];
+}
+- (BOOL)isAddMobPhoneGroup{
+    return [self boolForKey:KHHDefaultsKeyMobilePhoneGroup];
 }
 - (BOOL)rememberPassword {
     return [self boolForKey:KHHDefaultsKeyRememberPassword];

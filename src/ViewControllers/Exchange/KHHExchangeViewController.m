@@ -9,6 +9,7 @@
 #import "KHHExchangeViewController.h"
 #import "KHHSendToViewController.h"
 #import "KHHShowHideTabBar.h"
+#import "Edit_eCardViewController.h"
 #import "XLPageControl.h"
 #import "UIImageView+WebCache.h"
 #import "KHHFrameCardView.h"
@@ -16,6 +17,7 @@
 #import "DetailInfoViewController.h"
 #import "MBProgressHUD.h"
 #import "KHHAppDelegate.h"
+#import "KHHMyDetailController.h"
 
 #import <CoreLocation/CoreLocation.h>
 #import <AudioToolbox/AudioToolbox.h>
@@ -37,6 +39,7 @@
 @property (strong, nonatomic) Card               *latestCard;
 @property (strong, nonatomic) KHHFrameCardView   *cardView;
 @property (strong, nonatomic) KHHAppDelegate     *app;
+@property (assign, nonatomic) bool               isHandleReceive;
 @end
 
 @implementation KHHExchangeViewController
@@ -55,6 +58,7 @@
 @synthesize latestCard;
 @synthesize cardView;
 @synthesize app;
+@synthesize isHandleReceive;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -63,9 +67,7 @@
         // Custom initialization
         self.title = NSLocalizedString(@"交换名片", nil);
         //[self.leftBtn setTitle:NSLocalizedString(@"切换名片", nil) forState:UIControlStateNormal];
-        //[self.rightBtn setTitle:@"发送纪录" forState:UIControlStateNormal];
-        self.leftBtn.hidden = YES;
-        self.rightBtn.hidden = YES;
+        [self.rightBtn setTitle:@"编辑" forState:UIControlStateNormal];
         self.httpAgent = [[KHHNetworkAPIAgent alloc] init];
         self.dataCtrl = [KHHData sharedData];
         self.card = [[self.dataCtrl allMyCards] lastObject];
@@ -73,15 +75,12 @@
     }
     return self;
 }
-//切换名片
-- (void)leftBarButtonClick:(id)sender
-{
-
-}
-//发送纪录
-- (void)rightBarButtonClick:(id)sender
-{
-
+- (void)rightBarButtonClick:(id)sender{
+    
+    Edit_eCardViewController *editeCardVC = [[Edit_eCardViewController alloc] initWithNibName:@"Edit_eCardViewController" bundle:nil];
+    editeCardVC.type = KCardViewControllerTypeShowInfo;
+    editeCardVC.glCard = self.card;
+    [self.navigationController pushViewController:editeCardVC animated:YES];
 }
 - (void)viewDidLoad
 {
@@ -99,7 +98,6 @@
     self.cardView.card = self.card;
     [self.cardView showView];
     [self.view addSubview:self.cardView];
-    //NSArray *titleArray = [[NSArray alloc] initWithObjects:@"交换名片",@"发送至手机",@"收名片", nil];
     for (int i = 0; i<3; i++) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -108,7 +106,6 @@
         [btn setBackgroundImage:[UIImage imageNamed:imgStr] forState:UIControlStateNormal];
         btn.tag = i + 111;
         [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
-        //[btn setTitle:[titleArray objectAtIndex:i] forState:UIControlStateNormal];
         btn.frame = CGRectMake(25+i*(80 + 15), 245, 79, 75);
         [self.view insertSubview:btn atIndex:10];
     }
@@ -118,7 +115,6 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [KHHShowHideTabBar showTabbar];
-    //[self becomeFirstResponder];
     DLog(@"becomeFirstResponder ====== %i",[self becomeFirstResponder]);
     [self updateCardTempInfo];
 }
@@ -164,6 +160,13 @@
             break;
         case 113:
             //同步所有，同步联系人，启动定位服务
+            //[self synBtnClick];
+            //收到最后一张新的卡片
+            [self observeNotificationName:KHHUIPullLatestReceivedCardSucceeded selector:@"handlePullLatestReceivedCardSucceeded:"];
+            [self observeNotificationName:KHHUIPullLatestReceivedCardFailed selector:@"handlePullLatestReceivedCardFailed:"];
+            [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+            self.isHandleReceive = YES;
+            [self.dataCtrl pullLatestReceivedCard];
             break;
         default:
             break;
@@ -290,11 +293,12 @@
     [self stopObservingNotificationName:KHHUIPullLatestReceivedCardSucceeded];
     [self stopObservingNotificationName:KHHUIPullLatestReceivedCardFailed];
     self.latestCard = [info.userInfo objectForKey:@"receivedCard"];
-//    [self.timer invalidate];
-//    self.timer = nil;
-//    [self.mbHUD hide:YES];
     [self warnNetWork:@"交换结束"];
     [self performSelector:@selector(showNewCardInfo) withObject:nil afterDelay:2];
+    
+    if (self.isHandleReceive) {
+     [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];   
+    }
 }
 - (void)showNewCardInfo{
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"收到新到名片"
@@ -309,6 +313,16 @@
     DLog(@"handlePullLatestReceivedCardFailed! =======info is %@",info.userInfo);
     [self stopObservingNotificationName:KHHUIPullLatestReceivedCardSucceeded];
     [self stopObservingNotificationName:KHHUIPullLatestReceivedCardFailed];
+    if (self.isHandleReceive) {
+        [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"没有新到名片"
+                                                        message:self.latestCard.name
+                                                       delegate:self
+                                              cancelButtonTitle:@"确定"
+                                              otherButtonTitles:nil, nil];
+        [alert show];
+    }
+    
      
 }
 //定位委托方法
@@ -360,7 +374,11 @@
     [self.timer invalidate];
     self.timer = nil;
     [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"交换失败" message:message delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"交换失败"
+                                                    message:message
+                                                   delegate:nil
+                                          cancelButtonTitle:@"确定"
+                                          otherButtonTitles:nil, nil];
     [alert show];
 }
 //收到新的名片，跳转到详细界面
@@ -370,6 +388,30 @@
         detail.card = self.latestCard;
         [self.navigationController pushViewController:detail animated:YES];
     }
+}
+- (void)synBtnClick
+{
+    NSLog(@"start syn");
+    [self observeNotificationName:nDataSyncAllSucceeded selector:@"handleDataSyncAllSucceeded:"];
+    [self observeNotificationName:nDataSyncAllFailed selector:@"handleDataSyncAllFailed:"];
+    app = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
+    [MBProgressHUD showHUDAddedTo:app.window animated:YES];
+    [[KHHData sharedData] startSyncAllData];
+}
+- (void)handleDataSyncAllSucceeded:(NSNotification *)noti{
+    [self stopObservingStartSynAllData];
+    DLog(@"handleDataSyncAllSucceeded! ====== noti is %@",noti.userInfo);
+}
+- (void)handleDataSyncAllFailed:(NSNotification *)noti{
+    [self stopObservingStartSynAllData];
+    DLog(@"handleDataSyncAllFailed! ====== noti is %@",noti.userInfo);
+}
+- (void)stopObservingStartSynAllData{
+    
+    [self stopObservingNotificationName:nDataSyncAllSucceeded];
+    [self stopObservingNotificationName:nDataSyncAllFailed];
+    app = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
+    [MBProgressHUD hideHUDForView:app.window animated:YES];
 }
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {

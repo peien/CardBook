@@ -239,7 +239,7 @@
     CGRect rect = _visitCalView.footView.frame;
     CGRect rectTable = _visitCalView.theTable.frame;
     rect.origin.y = 280;
-    rectTable.size.height = 305;
+    rectTable.size.height = 325;
     rectTable.origin.y = 8;
     _visitCalView.footView.frame = rect;
     _visitCalView.theTable.frame = rectTable;
