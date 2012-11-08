@@ -19,14 +19,14 @@
     NSString *action = kActionNetworkCreateVisitSchedule;
     NSString *query = @"kinghhVisitCustomPlanService.create";
     // 检查参数
-    if (nil == myCard.id || 0 == oSchedule.content.length) {
+    if (nil == myCard.id) {
         // 缺少必要的参数
         WarnParametersNotMeetRequirement(action);
         return;
     }
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithCapacity:10];
     parameters[@"cardId"]           = myCard.id.stringValue;
-    parameters[@"visitContext"]     = oSchedule.content;
+    
     if (oSchedule.customer.length)
         parameters[@"customName"]   = oSchedule.customer;
     if (oSchedule.plannedDate)
@@ -43,6 +43,9 @@
         parameters[@"address"]      = oSchedule.addressOther;
     if (oSchedule.companion.length)
         parameters[@"withPerson"]   = oSchedule.companion;
+    if (oSchedule.content.length) {
+        parameters[@"visitContext"]     = oSchedule.content;
+    }
     if (oSchedule.isFinished)
         parameters[@"isFinished"]   = (oSchedule.isFinished.boolValue)? @"y": @"n";
     

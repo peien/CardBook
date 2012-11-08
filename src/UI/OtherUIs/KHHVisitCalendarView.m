@@ -9,6 +9,7 @@
 #import "KHHVisitCalendarView.h"
 #import "KHHVisitCalendarCell.h"
 #import "KHHCalendarViewController.h"
+#import "KHHAllVisitedSchedusVC.h"
 #import "KHHFinishVisitVC.h"
 #import "KHHVisitRecoardVC.h"
 #import "KHHFullFrameController.h"
@@ -33,6 +34,7 @@
 @synthesize isFromHomeVC;
 @synthesize selectedDate;
 @synthesize calBtn;
+@synthesize mapAddress;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -142,6 +144,7 @@
         NSString *c = [NSString stringByFilterNilFromString:sched.address.city];
         NSString *o = [NSString stringByFilterNilFromString:sched.address.other];
         cell.locValueLab.text = [NSString stringWithFormat:@"%@%@%@",p,c,o];
+        self.mapAddress = cell.locValueLab.text;
     }
     //备注
     if (sched.content.length > 0) {
@@ -166,6 +169,15 @@
         DetailInfoViewController *detailVC = (DetailInfoViewController *)self.viewCtrl;
         detailVC.isReloadVisiteTable = YES;
     }
+    if ([self.viewCtrl isKindOfClass:[KHHCalendarViewController class]]) {
+        KHHCalendarViewController *calVC = (KHHCalendarViewController *)self.viewCtrl;
+        calVC.isneedReloadeVisitTable = YES;
+    }
+    if ([self.viewCtrl isKindOfClass:[KHHAllVisitedSchedusVC class]]) {
+        KHHAllVisitedSchedusVC *calVC = (KHHAllVisitedSchedusVC *)self.viewCtrl;
+        calVC.isNeedReloadData = YES;
+    }
+    
     [self.viewCtrl.navigationController pushViewController:visitVC animated:YES];
 }
 #pragma mark -
@@ -185,27 +197,28 @@
         [self.viewCtrl.navigationController pushViewController:finishVC animated:YES];
     }
 }
-#warning companyAddr FIX
 - (void)showLocaButtonClick:(id)sender{
     DLog(@"showMap");
     MapController *mapVC = [[MapController alloc] initWithNibName:nil bundle:nil];
-    mapVC.companyAddr = @"浙江杭州";
+    mapVC.companyAddr = self.mapAddress;
     [self.viewCtrl.navigationController pushViewController:mapVC animated:YES];
     
 }
 - (IBAction)VisitCalendarBtnClick:(id)sender
 {
     UIButton *btn = (UIButton *)sender;
+    
+    if (self.isDetailVC) {
+        DetailInfoViewController *detailVC = (DetailInfoViewController *)self.viewCtrl;
+        detailVC.isReloadVisiteTable = YES;
+    }
+    
     if (btn.tag == 333) {
         
         KHHVisitRecoardVC *visitRVC = [[KHHVisitRecoardVC alloc] initWithNibName:nil bundle:nil];
         visitRVC.style = KVisitRecoardVCStyleNewBuild;
         visitRVC.isNeedWarn = YES;
         visitRVC.visitInfoCard = self.card;
-        if (self.isDetailVC) {
-            DetailInfoViewController *detailVC = (DetailInfoViewController *)self.viewCtrl;
-            detailVC.isReloadVisiteTable = YES;
-        }
         [self.viewCtrl.navigationController pushViewController:visitRVC animated:YES];
         
     }else if (btn.tag == 444){

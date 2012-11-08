@@ -122,10 +122,6 @@
 #else
     // 显示主界面
     self.mainUI = [[KHHMainUIController alloc] init];
-    //暂时写在这里，处理新到联系人或消息提示
-//    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:9999],@"Num", nil];
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"KNotificationNewMsgNum" object:dic];
-//    [[NSNotificationCenter defaultCenter] postNotificationName:@"KNotificationNewContactNum" object:dic];
 #endif
 }
 - (void)handleLogout:(NSNotification *)noti {

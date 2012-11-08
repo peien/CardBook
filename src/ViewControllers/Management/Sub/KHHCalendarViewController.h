@@ -14,5 +14,6 @@
 @property (strong, nonatomic) IBOutlet UITableView *theTable;
 @property (strong, nonatomic) IBOutlet UIButton    *addBtn;
 @property (strong, nonatomic) Card                 *card;
+@property (assign, nonatomic) bool                 isneedReloadeVisitTable;
 - (IBAction)plusBtnClick:(id)sender;
 @end

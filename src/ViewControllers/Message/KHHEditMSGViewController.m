@@ -8,11 +8,17 @@
 
 #import "KHHEditMSGViewController.h"
 #import "KHHNetworkAPIAgent+Message.h"
+#import "KHHMessageCell.h"
+#import "KHHMessage.h"
+#import "MBProgressHUD.h"
+#import "KHHData+UI.h"
+#import "KHHShowHideTabBar.h"
 
 @interface KHHEditMSGViewController ()
 @property (assign, nonatomic) bool edit;
 @property (strong, nonatomic) NSMutableArray *selectItemArray;
 @property (strong, nonatomic) NSMutableArray *delMessageArr;
+@property (strong, nonatomic) KHHData        *dataCtrl;
 @end
 
 @implementation KHHEditMSGViewController
@@ -20,6 +26,8 @@
 @synthesize theTable = _theTable;
 @synthesize selectItemArray = _selectItemArray;
 @synthesize delMessageArr = _delMessageArr;
+@synthesize messageArr;
+@synthesize dataCtrl;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -27,48 +35,91 @@
     if (self) {
         // Custom initialization
         //self.navigationItem.leftBarButtonItem = nil;
-        self.leftBtn.hidden = YES;
         [self.rightBtn setTitle:@"删除" forState:UIControlStateNormal];
+        self.dataCtrl = [KHHData sharedData];
         
     }
     return self;
 }
 - (void)rightBarButtonClick:(id)sender
 {
-//    _edit = !_edit;
-//    [_theTable setEditing: _edit animated:YES];
-//    [self.rightBtn setTitle:_edit?@"保存":@"编辑" forState:UIControlStateNormal];
+    //注册删除消息,改为本地删除，取消注册消息
+//    [self observeNotificationName:nUIDeleteMessagesSucceeded selector:@"handleDeleteMessagesSucceeded:"];
+//    [self observeNotificationName:nUIDeleteMessagesFailed selector:@"handleDeleteMessagesFailed:"];
+//    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     [self delMessageFromArray];
 }
+#pragma mark -
+- (void)handleDeleteMessagesSucceeded:(NSNotification *)noti{
+    DLog(@"handleDeleteMessagesSucceeded! noti is ====== %@",noti.userInfo);
+    //[self stopObservingForDelMessage];
+}
+- (void)handleDeleteMessagesFailed:(NSNotification *)noti{
+    DLog(@"handleDeleteMessagesFailed! noti is ====== %@",noti.userInfo);
+    //[self stopObservingForDelMessage];
+
+}
+//- (void)stopObservingForDelMessage{
+//    [self stopObservingNotificationName:nUIDeleteMessagesSucceeded];
+//    [self stopObservingNotificationName:nUIDeleteMessagesFailed];
+//    [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+//
+//}
+#pragma mark -
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     _selectItemArray = [[NSMutableArray alloc] initWithCapacity:0];
     _delMessageArr = [[NSMutableArray alloc] initWithCapacity:0];
-    for (int i = 0; i<7; i++) {
+    for (int i = 0; i<self.messageArr.count; i++) {
         [_selectItemArray addObject:[NSNumber numberWithBool:NO]];
     }
 }
-
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [KHHShowHideTabBar hideTabbar];
+    
+}
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+    _theTable = nil;
+    _selectItemArray = nil;
+    _delMessageArr = nil;
+    self.messageArr = nil;
+    self.dataCtrl = nil;
+}
+#pragma mark -
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 7;
+    return self.messageArr.count;
+}
+- (float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 55;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellID = @"cellID";
-    UITableViewCell *cell = nil;
+    KHHMessageCell *cell = nil;
     cell = [tableView dequeueReusableCellWithIdentifier:cellID];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+        cell = [[[NSBundle mainBundle] loadNibNamed:@"KHHMessageCell" owner:self options:nil] objectAtIndex:0];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
-    cell.textLabel.text = [NSString stringWithFormat:@"indexPath%d",indexPath.row];
     if ([[_selectItemArray objectAtIndex:indexPath.row] isEqualToNumber:[NSNumber numberWithBool:YES]]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     }else{
         cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+    KHHMessage *message = [self.messageArr objectAtIndex:indexPath.row];
+    cell.subTitleLab.text = message.subject;
+    cell.timeLab.text = message.time;
+    cell.contentLab.text = message.content;
+    if ([message.isRead isEqualToNumber:[NSNumber numberWithBool:YES]]) {
+        cell.messageImage.hidden = YES;
     }
     return cell;
     
@@ -101,15 +152,13 @@
 // 删除消息
 - (void)delMessageFromArray
 {
-    for (int i = 0; i<7; i++) {
+    for (int i = 0; i<self.messageArr.count; i++) {
         if ([[_selectItemArray objectAtIndex:i] isEqualToNumber:[NSNumber numberWithBool:YES]]) {
             //从消息数组里找出对应要删除 消息
-            //[_delMessageArr addObject:<#(id)#>];
+            [_delMessageArr addObject:[self.messageArr objectAtIndex:i]];
         }
     }
-    
-    KHHNetworkAPIAgent *messageAgent = [[KHHNetworkAPIAgent alloc] init];
-    [messageAgent deleteMessages:_delMessageArr];
+    [self.dataCtrl deleteMessages:_delMessageArr];
     [self.navigationController popViewControllerAnimated:YES];
 
 }
@@ -117,16 +166,6 @@
 {
     [super setEditing:editing animated:YES];
     //_theTable.editing = !_theTable.editing;
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-    _theTable = nil;
-    _selectItemArray = nil;
-    _delMessageArr = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

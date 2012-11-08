@@ -24,7 +24,7 @@
 
 @implementation MoreViewController
 @synthesize theTable = _theTable;
-@synthesize autoLog = _autoLog;
+@synthesize groupMobilePhoneSwi = _groupMobilePhoneSwi;
 @synthesize autoReturn = _autoReturn;
 @synthesize updateStyle = _updateStyle;
 @synthesize defaultPage = _defaultPage;
@@ -36,9 +36,9 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.navigationItem.leftBarButtonItem = nil;
         self.title = NSLocalizedString(@"更多", nil);
         self.defaultSet = [KHHDefaults sharedDefaults];
+        self.rightBtn.hidden = YES;
     }
     return self;
 }
@@ -79,7 +79,7 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
     _theTable = nil;
-    _autoLog = nil;
+    _groupMobilePhoneSwi = nil;
     _autoReturn = nil;
     _updateStyle = nil;
     _defaultPage = nil;
@@ -95,10 +95,8 @@
 {
     if (indexPath.section == 1 && indexPath.row == 1) {
         return 60;
-    }else if (indexPath.section == 3 && indexPath.row == 0){
-        return 60;
-    }else
-        return 44;
+    }
+    return 44;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -113,7 +111,7 @@
             return 4;
             break;
         case 3:
-            return 2;
+            return 1;
             break;
         default:
             return 0;
@@ -156,10 +154,15 @@
                     cell = [tableView dequeueReusableCellWithIdentifier:cellid];
                     if (cell == nil) {
                         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
-                        cell.accessoryView = _autoLog;
+                        if ([[KHHDefaults sharedDefaults] isAddMobPhoneGroup]) {
+                            _groupMobilePhoneSwi.on = YES;
+                        }else{
+                            _groupMobilePhoneSwi.on = NO;
+                        }
+                        cell.accessoryView = _groupMobilePhoneSwi;
                         cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     }
-                    cell.textLabel.text = NSLocalizedString(@"自动登陆", nil);
+                    cell.textLabel.text = NSLocalizedString(@"添加手机通讯录分组", nil);
                 }
                     break;
                 default:
@@ -256,20 +259,8 @@
     
     case 3:
     switch (indexPath.row) {
+            
         case 0:{
-            cellid = @"default";
-            cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-            if (cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
-                cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            }
-            cell.textLabel.text = NSLocalizedString(@"默认页面设置", nil);
-            _defaultPage.frame = CGRectMake(18, 36, 260, 20);
-            [cell addSubview:_defaultPage];
-        }
-            break;
-        case 1:{
             cellid = @"auto";
             cell = [tableView dequeueReusableCellWithIdentifier:cellid];
             if (cell == nil) {
@@ -382,6 +373,16 @@
             self.defaultSet.defaultMainUIIndex = 103;
         }
     }
+}
+//是否添加手机分组
+- (IBAction)addMobileGroupSwitchValueChange:(UISwitch *)sender{
+    KHHDefaults *defaut = [KHHDefaults sharedDefaults];
+    if (sender.on) {
+        defaut.isAddMobPhoneGroup = YES;
+    }else{
+        defaut.isAddMobPhoneGroup = NO;
+    }
+
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {

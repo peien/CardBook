@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "SuperViewController.h"
+#import "KHHMessage.h"
 
 @interface KHHDetailMessageVC : SuperViewController
-@property (strong, nonatomic) IBOutlet UITableView *theTable;
+@property (strong, nonatomic) KHHMessage           *message;
+@property (strong, nonatomic) IBOutlet UILabel     *timeLabel;
+@property (strong, nonatomic) IBOutlet UITextView  *contentLabel;
 @end

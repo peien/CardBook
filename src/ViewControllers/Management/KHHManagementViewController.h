@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SuperViewController.h"
 
-@interface KHHManagementViewController : UIViewController
+@interface KHHManagementViewController : SuperViewController
 @property (nonatomic, strong) UIView *entranceView;
 @property (assign, nonatomic) bool   isBoss;
 - (IBAction)radarBtnClick:(id)sender;
@@ -17,4 +18,5 @@
 - (IBAction)manageEmployeesBtnClick:(id)sender;
 - (IBAction)locationBtnClick:(id)sender;
 - (IBAction)personBtnClick:(id)sender;
+- (IBAction)moreBtnClick:(id)sender;
 @end

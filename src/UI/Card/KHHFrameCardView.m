@@ -38,8 +38,8 @@
     self.cardTempVC = [[KHHVisualCardViewController alloc] initWithNibName:nil bundle:nil];
     xlPage = [[XLPageControl alloc] initWithFrame:CGRectMake(130, 190, 60, 15)];
     [xlPage setBackgroundColor:[UIColor clearColor]];
-    xlPage.activeImg = [UIImage imageNamed:@"p1.png"];
-    xlPage.unActiveImg = [UIImage imageNamed:@"p2.png"];
+    xlPage.activeImg = [UIImage imageNamed:@"p2.png"];
+    xlPage.unActiveImg = [UIImage imageNamed:@"p1.png"];
     xlPage.tag = 118;
     [xlPage addTarget:self action:@selector(pageCtrlClick:) forControlEvents:UIControlEventValueChanged];
     [xlPage setCurrentPage:0];
@@ -136,6 +136,14 @@
 - (void)gotoSelectTemplateVC:(UITapGestureRecognizer *)sender{
     DLog(@"gotoSelectTemplateVC");
     KHHCardTemplageVC *temVC = [[KHHCardTemplageVC alloc] initWithNibName:nil bundle:nil];
+    temVC.card = self.card;
+    if ([self.viewCtrl isKindOfClass:[Edit_eCardViewController class]]) {
+        Edit_eCardViewController *editVC = (Edit_eCardViewController *)self.viewCtrl;
+        temVC.editCardVC = editVC;
+        if (editVC.type == KCardViewControllerTypeNewCreate) {
+             editVC.isChangeFirstFrame = YES;
+        }
+    }
     [self.viewCtrl.navigationController pushViewController:temVC animated:YES];
 
 }

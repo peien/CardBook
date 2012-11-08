@@ -85,8 +85,10 @@
  */
 - (NSArray *)allReceivedCards {
     NSArray *array;
+//    array = [ReceivedCard objectArrayByPredicate:nil
+//                                 sortDescriptors:@[[Card nameSortDescriptor]]];
     array = [ReceivedCard objectArrayByPredicate:nil
-                                 sortDescriptors:@[[Card nameSortDescriptor]]];
+                                 sortDescriptors:@[[Card newCardSortDescriptor],[Card nameSortDescriptor]]];
     return array;
 }
 - (ReceivedCard *)receivedCardByID:(NSNumber *)cardID {
@@ -327,8 +329,8 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
     NSNumber *domainType = @(KHHTemplateDomainTypePublic);
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"domainType == %@", domainType];
     NSArray *fetched;
-    fetched = [Schedule objectArrayByPredicate:predicate
-                               sortDescriptors:nil];
+    fetched = [CardTemplate objectArrayByPredicate:predicate
+                                   sortDescriptors:nil];
     NSArray *result = fetched;
     return result;
 }

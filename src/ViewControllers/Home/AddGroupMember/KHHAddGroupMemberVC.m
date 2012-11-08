@@ -193,11 +193,11 @@
             
         }
         if ([[_selectedItemArray objectAtIndex:indexPath.row] isEqualToNumber:[NSNumber numberWithBool:YES]]) {
-            UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checked.png"]];
+            UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Checkbox_checked.png"]];
             imgView.frame = CGRectMake(280, 10, 30, 30);
             [cell addSubview:imgView];
         }else{
-            UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"unchecked.png"]];
+            UIImageView *imgView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"Checkbox_unchecked.png"]];
             imgView.frame = CGRectMake(280, 10, 30, 30);
             [cell addSubview:imgView];
         }

@@ -8,6 +8,7 @@
 
 #import "KHHHomeViewController.h"
 #import "KHHMyDetailController.h"
+#import "KHHDefaults.h"
 
 #import "KHHClientCellLNPCC.h"
 #import "KHHButtonCell.h"
@@ -41,7 +42,8 @@
 #import <AddressBookUI/AddressBookUI.h>
 
 #define POPDismiss [self.popover dismissPopoverAnimated:YES];
-#define BaseBtnTitleArray   _btnTitleArr = [[NSMutableArray alloc] initWithObjects:@"所有",@"new",@"同事",@"拜访",@"重点",@"未分组",@"手机", nil];
+#define BaseBtnTitleArrayMobiGrop   _btnTitleArr = [[NSMutableArray alloc] initWithObjects:@"所有",@"同事",@"未分组",@"手机", nil];
+#define BaseBtnTitleArray   _btnTitleArr = [[NSMutableArray alloc] initWithObjects:@"所有",@"同事",@"未分组", nil];
 
 typedef enum {
     KHHTableIndexGroup = 100,
@@ -74,6 +76,10 @@ typedef enum {
 @property (strong, nonatomic)  UITextField            *groupTf;
 @property (strong, nonatomic)  MBProgressHUD          *hud;
 @property (strong, nonatomic)  NSArray                *groupTitleArr;
+@property (assign, nonatomic)  bool                   isNewContactsClick;
+@property (assign, nonatomic)  int                    baseNum;
+@property (strong, nonatomic)  UIImageView            *messageImageView;
+@property (strong, nonatomic)  UILabel                *numLab2;
 
 @end
 
@@ -126,6 +132,10 @@ typedef enum {
 @synthesize hud;
 @synthesize groupTitleArr;
 @synthesize visitVC;
+@synthesize isNewContactsClick;
+@synthesize baseNum;
+@synthesize messageImageView;
+@synthesize numLab2;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -133,12 +143,12 @@ typedef enum {
     if (self) {
         // Custom initialization
         //self.navigationItem.leftBarButtonItem = nil;
-        self.leftBtn.hidden = YES;
+        //self.leftBtn.hidden = YES;
         //*****************
         self.interGroup = [[IGroup alloc] init];
         self.dataControl = [KHHData sharedData];
-        [self.rightBtn setTitle:NSLocalizedString(@"我的名片", nil) forState:UIControlStateNormal];
-        
+        //[self.rightBtn setTitle:NSLocalizedString(@"我的名片", nil) forState:UIControlStateNormal];
+        self.rightBtn.hidden = YES;
     }
     return self;
 }
@@ -221,7 +231,6 @@ typedef enum {
         [_btnForCancel setBackgroundImage:[[UIImage imageNamed:@"tongbu_normal.png"] stretchableImageWithLeftCapWidth:8 topCapHeight:2] forState:UIControlStateNormal];
     }
     
-    
 }
 // 多选标记
 - (NSMutableArray *)mutilyFlagForSelected{
@@ -239,7 +248,6 @@ typedef enum {
     //通讯录
     _resultArray = [[NSArray alloc] init];
     NSMutableArray *stringArr = [[NSMutableArray alloc] init];
-    
     if (self.isAddressBookData) {
         for (int i = 0; i< self.generalArray.count; i++) {
             NSDictionary *dic = [self.generalArray objectAtIndex:i];
@@ -268,6 +276,10 @@ typedef enum {
             [self reloadTable];
         }
     }
+}
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+    [self showNewContactsNum];
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -315,6 +327,8 @@ typedef enum {
     self.hud = nil;
     self.groupTitleArr = nil;
     self.visitVC = nil;
+    self.messageImageView = nil;
+    self.numLab2 = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -327,8 +341,11 @@ typedef enum {
 {
     //调用数据库接口，获取各个分组的array
     //所有
-    self.allArray = [self.dataControl cardsOfAll];
-    self.generalArray = allArray;
+    self.allArray = [self.dataControl allReceivedCards];
+    NSMutableArray *arr = [[NSMutableArray alloc] initWithArray:self.allArray];
+    NSArray *priArr = [self.dataControl allPrivateCards];
+    [arr addObjectsFromArray:priArr];
+    self.generalArray = arr;
     //我的卡片
     self.myCardArray = [self.dataControl allMyCards];
     //获取分组
@@ -336,7 +353,15 @@ typedef enum {
 }
 //获取分组
 - (NSArray *)getAllGroups{
-    BaseBtnTitleArray;
+    KHHDefaults *defau = [KHHDefaults sharedDefaults];
+    BOOL isHaveMobilePhoneGroup = [defau isAddMobPhoneGroup];
+    if (isHaveMobilePhoneGroup) {
+        BaseBtnTitleArrayMobiGrop;
+        self.baseNum = 4;
+    }else{
+        BaseBtnTitleArray;
+        self.baseNum = 3;
+    }
     self.oWnGroupArray = [self.dataControl allTopLevelGroups];
     for (int i = 0; i < self.oWnGroupArray.count; i++) {
         Group *group = [self.oWnGroupArray objectAtIndex:i];
@@ -348,18 +373,47 @@ typedef enum {
 }
 - (void)reloadTable
 {
-    if (self.currentTag == 105) {
+    if (self.currentTag == 102) {
         self.generalArray = [self.dataControl cardsOfUngrouped];
     }else if (self.currentTag == 100){
-        self.generalArray = [self.dataControl cardsOfAll];
+        self.allArray = [self.dataControl allReceivedCards];
+        NSMutableArray *arr = [[NSMutableArray alloc] initWithArray:self.allArray];
+        NSArray *priArr = [self.dataControl allPrivateCards];
+        [arr addObjectsFromArray:priArr];
+        self.generalArray = arr;
     }else if (self.currentTag == 101){
-        self.generalArray = [self.dataControl cardsOfNew];
-    }else if (self.currentIndexPath.row > 6){
+       
+    }else if (self.currentIndexPath.row > [[KHHDefaults sharedDefaults] isAddMobPhoneGroup]?3:2){
         if (!self.isDelGroup) {
             [self updateOwnGroupArray];
         }
     }
     [_bigTable reloadData];
+}
+//显示联系人个数
+- (void)showNewContactsNum{
+    
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    KHHButtonCell *cell = (KHHButtonCell *)[_btnTable cellForRowAtIndexPath:indexPath];
+    if (self.messageImageView == nil) {
+        self.messageImageView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"message_bg.png"]stretchableImageWithLeftCapWidth:0 topCapHeight:0]];
+        self.messageImageView.frame = CGRectMake(50, 0, 35, 35);
+        //self.messageImageView.backgroundColor = [UIColor grayColor];
+        numLab2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 3, 35, 35)];
+        numLab2.backgroundColor = [UIColor clearColor];
+        numLab2.font = [UIFont systemFontOfSize:10];
+        numLab2.textColor = [UIColor whiteColor];
+        numLab2.textAlignment = UITextAlignmentCenter;
+        [self.messageImageView addSubview:numLab2];
+        [cell.button addSubview:self.messageImageView];
+    }
+    int num = [self.dataControl cardsOfNew].count;
+    if (num > 0) {
+        self.messageImageView.hidden = NO;
+        numLab2.text = [NSString stringWithFormat:@"%d",num];
+    }else if (num == 0){
+        self.messageImageView.hidden = YES;
+    }
 }
 #pragma mark - UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -370,7 +424,6 @@ typedef enum {
         NSInteger tableTag = tableView.tag;
         return (tableTag == KHHTableIndexGroup?self.groupTitleArr.count:(tableTag == KHHTableIndexClient)?[self.generalArray count]:0);
     }
-    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -381,7 +434,7 @@ typedef enum {
         case KHHTableIndexClient:
             return 58;
         default:
-            return 44;
+            return 0;
             break;
     }
 }
@@ -410,17 +463,22 @@ typedef enum {
                                                           owner:self
                                                         options:nil] objectAtIndex:0];
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    cell.backgroundColor = [UIColor clearColor];
                 }
                 cell.button.tag = indexPath.row + 100;
                 [cell.button setTitle:NSLocalizedString([self.groupTitleArr objectAtIndex:indexPath.row], nil) forState:UIControlStateNormal];
                 [cell.button addTarget:self action:@selector(cellBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-                UIEdgeInsets insets = {0, 0, 0, 25};
+                UIEdgeInsets insets = {0, 0, 45, 25};
                 if (indexPath.row != _lastIndexPath.row) {
                     [cell.button setBackgroundImage:[[UIImage imageNamed:@"left_btn_bg.png"] resizableImageWithCapInsets:insets] forState:UIControlStateNormal];
                     [cell.button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                 }else{
-                    [cell.button setBackgroundImage:[[UIImage imageNamed:@"left_btn_bg_selected.png"] resizableImageWithCapInsets:insets] forState:UIControlStateNormal];
+                    [cell.button setBackgroundImage:[[UIImage imageNamed:@"left_btn_bg.png"] resizableImageWithCapInsets:insets] forState:UIControlStateNormal];
                     [cell.button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+                }
+                int num = [[self.dataControl cardsOfNew] count];
+                if (indexPath.row == 0 && num > 0) {
+                    [cell.button addSubview:self.messageImageView];
                 }
                 
                 return cell;
@@ -513,7 +571,7 @@ typedef enum {
             break;
         }
         case KHHTableIndexClient: {
-            if (_isNormalSearchBar && self.currentIndexPath.row != 6) { //暂时限制手机
+            if (_isNormalSearchBar && self.currentIndexPath.row != 3) { //暂时限制手机
                 //选中某一个对象并返回
                 //[self.navigationController popViewControllerAnimated:YES];
                 NSNumber *state = [self.selectedItemArr objectAtIndex:indexPath.row];
@@ -546,14 +604,17 @@ typedef enum {
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     DetailInfoViewController *detailVC = [[DetailInfoViewController alloc] initWithNibName:nil bundle:nil];
                     //同事不可评估
-                    if (self.currentIndexPath.row == 2) {
+                    if (self.currentIndexPath.row == 1) {
                         detailVC.isCompanyColleagues = YES;
                         detailVC.isColleagues = YES;
                     }
                     Card *card = (Card *)[self.generalArray objectAtIndex:indexPath.row];
                     detailVC.card = card;
                     if ([card isKindOfClass:[ReceivedCard class]]){
-                        [self.dataControl markIsRead:(ReceivedCard *)card];
+                        ReceivedCard *receCard = (ReceivedCard *)card;
+                        if (!receCard.isReadValue) {
+                           [self.dataControl markIsRead:receCard];
+                        }
                     }
                     [self.navigationController pushViewController:detailVC animated:YES];
                 }
@@ -587,6 +648,7 @@ typedef enum {
 }
 //添加拜访对象下面按钮点击
 - (void)cancelBtnClick:(id)sender{
+    
     NSMutableArray *visitNameArr = [[NSMutableArray alloc] initWithCapacity:0];
     for (int i = 0; i < self.selectedItemArr.count; i++) {
         if ([[self.selectedItemArr objectAtIndex:i] isEqualToNumber:[NSNumber numberWithBool:YES]]) {
@@ -651,7 +713,7 @@ typedef enum {
     if (_lastIndexPath.row != indexPath.row) {
         KHHButtonCell *lastCell = (KHHButtonCell *)[_btnTable cellForRowAtIndexPath:_lastIndexPath];
         UIButton *lastBtn = lastCell.button;
-        [lastBtn setBackgroundImage:[[UIImage imageNamed:@"left_btn_bg.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 25)] forState:UIControlStateNormal];
+        [lastBtn setBackgroundImage:[[UIImage imageNamed:@"left_btn_bg.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 40, 25)] forState:UIControlStateNormal];
         [lastBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         _isShowData = YES;
         self.currentTag = btn.tag;
@@ -662,7 +724,7 @@ typedef enum {
     _lastIndexPath = indexPath;
     _currentBtn = btn;
     
-    if (indexPath.row <= 6) {
+    if (indexPath.row <= self.baseNum - 1) {
         self.isOwnGroup = NO;
     }else{
         self.isOwnGroup = YES;
@@ -670,38 +732,30 @@ typedef enum {
     if (_isShowData) {
         //刷新表
         switch (btn.tag) {
-            case 100:
-                //DLog(@"100 btn 数据源刷新");
-                self.allArray = [self.dataControl cardsOfAll];
-                self.generalArray = self.allArray;
+            case 100:{
+                self.allArray = [self.dataControl allReceivedCards];
+                NSMutableArray *arr = [[NSMutableArray alloc] initWithArray:self.allArray];
+                NSArray *priArr = [self.dataControl allPrivateCards];
+                [arr addObjectsFromArray:priArr];
+                self.generalArray = arr;
+            }
                 break;
             case 101:
                 DLog(@"101 btn 数据源刷新");
-                self.generalArray = [self.dataControl cardsOfNew];
+                self.generalArray = [self.dataControl cardsOfColleague];
                 break;
             case 102:
                 DLog(@"102 btn 数据源刷新");
-                self.generalArray = [self.dataControl cardsOfColleague];
-                break;
-            case 103:
-                DLog(@"103 btn 数据源刷新");
-                self.generalArray = [self.dataControl cardsOfVisited];
-                break;
-            case 104:
-                DLog(@"104 btn 数据源刷新");
-                self.generalArray = [self.dataControl cardsOfVIP];
-                break;
-            case 105:
-                DLog(@"105 btn 数据源刷新");
                 self.privateArr = [self.dataControl cardsOfUngrouped];
                 self.generalArray = self.privateArr;
                 break;
-            case 106:{
-                self.isAddressBookData = YES;
-                self.floatBarVC.isContactCellClick = YES;
-                NSArray *addressArr = [KHHAddressBook getAddressBookData];
-                self.generalArray = addressArr;
-                
+            case 103:{
+                if ([[KHHDefaults sharedDefaults] isAddMobPhoneGroup]) {
+                    self.isAddressBookData = YES;
+                    self.floatBarVC.isContactCellClick = YES;
+                    NSArray *addressArr = [KHHAddressBook getAddressBookData];
+                    self.generalArray = addressArr;
+                }
             }
                 break;
             default:
@@ -719,14 +773,14 @@ typedef enum {
             
         }
         
-        UIEdgeInsets insets = {0,0,0,25};
-        [btn setBackgroundImage:[[UIImage imageNamed:@"left_btn_bg_selected.png"] resizableImageWithCapInsets:insets] forState:UIControlStateNormal];
+//        UIEdgeInsets insets = {0,0,0,25};
+//        [btn setBackgroundImage:[[UIImage imageNamed:@"left_btn_bg_selected.png"] resizableImageWithCapInsets:insets] forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
         [_bigTable reloadData];
     }else{
         
         _type = KUIActionSheetStyleEditGroupMember;
-        if (indexPath.row >= 7) {
+        if (indexPath.row > self.baseNum - 1) {
             UIActionSheet *actSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                                   delegate:self
                                                          cancelButtonTitle:NSLocalizedString(@"取消",nil)
@@ -744,7 +798,7 @@ typedef enum {
 - (void)updateOwnGroupArray{
     
     self.oWnGroupArray = [self.dataControl allTopLevelGroups];
-    Group *group = [self.oWnGroupArray objectAtIndex:self.currentIndexPath.row - 7];
+    Group *group = [self.oWnGroupArray objectAtIndex:self.currentIndexPath.row - self.baseNum];
     NSSet *set = group.cards;
     NSArray *cards = [set allObjects];
     if (cards.count == 0) {
@@ -758,15 +812,33 @@ typedef enum {
 - (void)synBtnClick:(id)sender
 {
     NSLog(@"start syn");
-    //进度条，调用同步联系人接口，同步完后，刷新界面
-
+    [self observeNotificationName:nDataSyncAllSucceeded selector:@"handleDataSyncAllSucceeded:"];
+    [self observeNotificationName:nDataSyncAllFailed selector:@"handleDataSyncAllFailed:"];
+    KHHAppDelegate *app = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
+    [MBProgressHUD showHUDAddedTo:app.window animated:YES];
+    [self.dataControl startSyncAllData];
+}
+- (void)handleDataSyncAllSucceeded:(NSNotification *)noti{
+    [self stopObservingStartSynAllData];
+    DLog(@"handleDataSyncAllSucceeded! ====== noti is %@",noti.userInfo);
+}
+- (void)handleDataSyncAllFailed:(NSNotification *)noti{
+    [self stopObservingStartSynAllData];
+    DLog(@"handleDataSyncAllFailed! ====== noti is %@",noti.userInfo);
+}
+- (void)stopObservingStartSynAllData{
+    
+    [self stopObservingNotificationName:nDataSyncAllSucceeded];
+    [self stopObservingNotificationName:nDataSyncAllFailed];
+    KHHAppDelegate *app = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
+    [MBProgressHUD hideHUDForView:app.window animated:YES];
 }
 #pragma mark - UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (_type == KUIActionSheetStyleEditGroupMember) {
         self.oWnGroupArray = [self.dataControl allTopLevelGroups];
-        Group *group = [self.oWnGroupArray objectAtIndex:self.currentTag - 100 - 7];
+        Group *group = [self.oWnGroupArray objectAtIndex:self.currentTag - 100 - self.baseNum];
         KHHAddGroupMemberVC *addMemVC = [[KHHAddGroupMemberVC alloc] initWithNibName:@"KHHAddGroupMemberVC" bundle:nil];
         addMemVC.group = group;
         addMemVC.homeVC = self;
@@ -812,18 +884,18 @@ typedef enum {
         }
         [self.navigationController pushViewController:addMemVC animated:YES];
     }else if (_type == KUIActionSheetStyleUpload){//暂时直接跳转到编辑界面了，这个地方不会执行。
-        if (buttonIndex == 0) {
+        if (buttonIndex == 2) {
             //拍摄名片;
             [self takePhotos];
-        }else if (buttonIndex == 1){
-            //选择名片;
-        }else if (buttonIndex == 2){
-            //手动制作;
-            self.isNeedReloadTable = YES;
-            Edit_eCardViewController *creatCardVC = [[Edit_eCardViewController alloc] initWithNibName:nil bundle:nil];
-            creatCardVC.type = KCardViewControllerTypeNewCreate;
-            [self.navigationController pushViewController:creatCardVC animated:YES];
         }else if (buttonIndex == 3){
+            //选择名片;
+        }else if (buttonIndex == 0){
+            //手动制作;
+//            self.isNeedReloadTable = YES;
+//            Edit_eCardViewController *creatCardVC = [[Edit_eCardViewController alloc] initWithNibName:nil bundle:nil];
+//            creatCardVC.type = KCardViewControllerTypeNewCreate;
+//            [self.navigationController pushViewController:creatCardVC animated:YES];
+        }else if (buttonIndex == 1){
            //备份手机通讯录;
 
         }
@@ -851,11 +923,10 @@ typedef enum {
 //                                            destructiveButtonTitle:nil
 //                                                 otherButtonTitles:nil, nil];
 //    _type = KUIActionSheetStyleUpload;
-//    [actSheet addButtonWithTitle:NSLocalizedString(@"拍摄名片", nil)];
-//    [actSheet addButtonWithTitle:NSLocalizedString(@"选择名片", nil)];
 //    [actSheet addButtonWithTitle:NSLocalizedString(@"手动制作", nil)];
-//    [actSheet addButtonWithTitle:NSLocalizedString(@"备份手机通讯录", nil)];
-//    [actSheet showInView:self.view];
+    //[actSheet addButtonWithTitle:NSLocalizedString(@"导入手机通讯录", nil)];
+    //[actSheet showInView:self.view];
+    
     self.isNeedReloadTable = YES;
     Edit_eCardViewController *creatCardVC = [[Edit_eCardViewController alloc] initWithNibName:nil bundle:nil];
     creatCardVC.type = KCardViewControllerTypeNewCreate;
@@ -902,7 +973,6 @@ typedef enum {
 - (void) searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller {
     CGRect oldFrame = self.searchBar.frame;
     self.searchBar.frame = CGRectMake(70, oldFrame.origin.y, 250, oldFrame.size.height);
-
 }
 -(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
@@ -927,7 +997,6 @@ typedef enum {
     _isDelGroup = NO;
     [_alert show];
 }
-
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 0 && !_isDelGroup) {
         for (UIView *view in alertView.subviews) {
@@ -951,7 +1020,7 @@ typedef enum {
                     }
                     [self showHudForNetWorkWarn];
                     self.groupTf = tf;
-                    Group *group = [self.oWnGroupArray objectAtIndex:self.currentIndexPath.row - 7];
+                    Group *group = [self.oWnGroupArray objectAtIndex:self.currentIndexPath.row - self.baseNum];
                     self.interGroup.id = group.id;
                     self.interGroup.name = tf.text;
                     [self.dataControl updateGroup:self.interGroup];
@@ -960,12 +1029,12 @@ typedef enum {
         }
     }else if(buttonIndex == 0 && _isDelGroup){
         //自己添加的删除完以后，就不可删除
-        if (_btnTitleArr.count < 8) {
+        if (_btnTitleArr.count < self.baseNum + 1) {
             return;
         }
         [self showHudForNetWorkWarn];
         self.oWnGroupArray = [self.dataControl allTopLevelGroups];
-        Group *group = [self.oWnGroupArray objectAtIndex:currentIndexPath.row - 7];
+        Group *group = [self.oWnGroupArray objectAtIndex:currentIndexPath.row - self.baseNum];
         [self.dataControl deleteGroup:group];
         //[_btnTitleArr removeObjectAtIndex:_currentBtn.tag - 100];
         //[_btnTable reloadData];

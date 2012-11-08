@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface KHHMessageCell : UITableViewCell
-
+@property (strong, nonatomic) IBOutlet UILabel *subTitleLab;
+@property (strong, nonatomic) IBOutlet UILabel *timeLab;
+@property (strong, nonatomic) IBOutlet UILabel *contentLab;
+@property (strong, nonatomic) IBOutlet UIImageView *messageImage;
 @end

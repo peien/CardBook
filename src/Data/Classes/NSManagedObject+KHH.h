@@ -35,6 +35,7 @@
 @interface NSManagedObject (KHHSort)
 // 默认的对象名字排序规则
 + (NSSortDescriptor *)nameSortDescriptor;
++ (NSSortDescriptor *)newCardSortDescriptor;
 @end
 @interface NSManagedObject (KHHTransformation) <KHHTransformation>
 + (void)processIObjectList:(NSArray *)list;

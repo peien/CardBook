@@ -101,6 +101,11 @@
                                             selector:@selector(caseInsensitiveCompare:)];
     return result;
 }
++ (NSSortDescriptor *)newCardSortDescriptor{
+    NSSortDescriptor *result;
+    result = [NSSortDescriptor sortDescriptorWithKey:@"isRead" ascending:YES selector:@selector(compare:)];
+    return result;
+}
 @end
 
 @implementation NSManagedObject (KHHTransformation)

@@ -7,13 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SuperViewController.h"
 
-
-@interface MoreViewController:UIViewController<UITableViewDelegate,UITableViewDataSource>
+@interface MoreViewController:SuperViewController<UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic) IBOutlet UITableView *theTable;
-@property (strong, nonatomic) IBOutlet UISwitch *autoLog;
+@property (strong, nonatomic) IBOutlet UISwitch *groupMobilePhoneSwi;
 @property (strong, nonatomic) IBOutlet UISwitch *autoReturn;
 @property (strong, nonatomic) IBOutlet UILabel *updateStyle;
 @property (strong, nonatomic) IBOutlet UILabel *defaultPage;
 @property (strong, nonatomic) NSString         *titleStr;
+
+- (IBAction)addMobileGroupSwitchValueChange:(id)sender;
 @end
