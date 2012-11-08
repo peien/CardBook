@@ -117,6 +117,16 @@
                          selector:@"handleNetworkCreateOrUpdateEvaluationSucceeded:"];
     [self observeNotificationName:KHHNetworkCreateOrUpdateEvaluationFailed
                          selector:@"handleNetworkCreateOrUpdateEvaluationFailed:"];
+    
+    // 消息
+    [self observeNotificationName:nNetworkAllMessagesSucceeded
+                         selector:@"handleAllMessagesSucceeded:"];
+    [self observeNotificationName:nNetworkAllMessagesFailed
+                         selector:@"handleAllMessagesFailed:"];
+    [self observeNotificationName:nNetworkDeleteMessagesSucceeded
+                         selector:@"handleDeleteMessagesSucceeded:"];
+    [self observeNotificationName:nNetworkDeleteMessagesFailed
+                         selector:@"handleDeleteMessagesFailed:"];
 }
 
 #pragma mark - Handlers
@@ -309,7 +319,7 @@
                                   info:info];
     } else {
         // 虽然服务器返回成功，但本地数据库操作失败
-        NSDictionary *info = @{ kInfoKeyErrorCode : @(KHHStatusCodeLocalDataOperationFailed) };
+        NSDictionary *info = @{ kInfoKeyErrorCode : @(KHHErrorCodeLocalDataOperationFailed) };
         [self postASAPNotificationName:KHHUIPullLatestReceivedCardFailed
                                   info:info];
     }
@@ -427,6 +437,40 @@
                               info:noti.userInfo];
 }
 
+#pragma mark - Handlers_Message
+- (void)handleAllMessagesSucceeded:(NSNotification *)noti {
+    NSDictionary *info = noti.userInfo;
+    DLog(@"[II] info = %@", [info allKeys]);
+    
+    //1.MessageList {
+    NSArray *list = info[kInfoKeyObjectList];
+    [KHHMessage processIObjectList:list];
+    // }
+    // 2.保存
+    [self saveContext];
+    [self postASAPNotificationName:nUISyncMessagesSucceeded
+                              info:info];
+}
+- (void)handleAllMessagesFailed:(NSNotification *)noti {
+    [self postASAPNotificationName:nUISyncMessagesFailed
+                              info:noti.userInfo];
+}
+- (void)handleDeleteMessagesSucceeded:(NSNotification *)noti {
+    NSDictionary *info = noti.userInfo;
+    DLog(@"[II] info = %@", info);
+    NSArray *list = info[kInfoKeyObjectList];
+    // 从数据库中删除
+    for (KHHMessage *msg in list) {
+        [self.context deleteObject:msg];
+    }
+    [self saveContext];
+    [self postASAPNotificationName:nUIDeleteMessagesSucceeded
+                              info:info];
+}
+- (void)handleDeleteMessagesFailed:(NSNotification *)noti {
+    [self postASAPNotificationName:nUIDeleteMessagesFailed
+                              info:noti.userInfo];
+}
 #pragma mark - Handlers_Template
 - (void)handleTemplatesAfterDateSucceeded:(NSNotification *)noti {
     NSDictionary *info = noti.userInfo;
@@ -556,7 +600,7 @@
         CustomerEvaluation *ce = (CustomerEvaluation *)[CustomerEvaluation
                                                         objectByID:icv.id
                                                         createIfNone:YES];
-        if (icv.isDeleted.integerValue) {
+        if (icv.isDeleted.boolValue) {
             // 已删除，则删除。
             [self.context deleteObject:ce];
         } else {

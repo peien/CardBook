@@ -10,6 +10,7 @@
 #import "UIViewController+SM.h"
 #import "KHHKeys.h"
 #import "KHHLog.h"
+#import "KHHNetworkAPI.h"
 #import "KHHNotifications.h"
 #import "IntroViewController.h"
 #import "LaunchImageViewController.h"
@@ -39,9 +40,8 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 
 #pragma mark - 动作
 @interface AppStartController (Actions)
-- (void)createAccount;// 注册
+- (void)createAccount:(NSNotification *)noti;// 注册
 - (void)login;
-- (void)loginAuto;
 - (void)resetPassword:(NSNotification *)noti;
 - (void)sync;
 @end
@@ -85,6 +85,8 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
         // 注册
         [self observeNotificationName:nAppShowCreateAccount
                              selector:@"showCreateAccountView"];
+        [self observeNotificationName:nAppCreateThisAccount
+                             selector:@"createAccount:"];
         [self observeNotificationName:nNetworkCreateAccountSucceeded
                              selector:@"handleNetworkCreateAccountSucceeded:"];
         [self observeNotificationName:nNetworkCreateAccountFailed
@@ -130,7 +132,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
         && self.defaults.currentUser.length
         && self.defaults.currentPassword.length) {
         // 自动登录
-        [self loginAuto];
+        [self login];
     } else {
         // 手动登录
         [self showLoginView];
@@ -151,18 +153,20 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
         [self login];//注册成功, 直接登录。
     } else
     if ([title isEqualToString:titleCreateAccountFailed]
-        || [title isEqualToString:titleLoginFailed]
         || [title isEqualToString:titleResetPasswordFailed]
         || [title isEqualToString:titleResetPasswordSucceeded]) {
         [self showPreviousView];
+    } else
+    if ([title isEqualToString:titleLoginFailed]) {
+        [self showLoginView];
     }
 }
 @end
 
 #pragma mark - 动作
 @implementation AppStartController (Actions)
-- (void)createAccount {
-    DLog(@"[II] 开始注册！");
+- (void)createAccount:(NSNotification *)noti {
+    DLog(@"[II] 开始注册！info = %@", noti.userInfo);
     [self.defaults setLoggedIn:NO];
     
     // 切换到 ActionView
@@ -172,14 +176,11 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     [self postASAPNotificationName:nAppCreatingAccount];
     
     // 调接口
-    NSString *user = self.defaults.currentUser;
-    NSString *password = self.defaults.currentPassword;
-    [self.agent createAccount:user
-                     password:password];
+    NSDictionary *dict = noti.userInfo;
+    [self.agent createAccount:dict];
 }
 - (void)login {
     DLog(@"[II] 开始登录！");
-    [self.defaults setLoggedIn:NO];
     
     // 切换到 ActionView
     [self showActionView];
@@ -192,18 +193,6 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     NSString *password = self.defaults.currentPassword;
     [self.agent login:user
              password:password];
-}
-- (void)loginAuto {
-    DLog(@"[II] 开始自动登录！");
-    
-    // 无网络直接进
-    if (NO) {
-        [self postASAPNotificationName:nAppShowMainView];
-    }
-    // 有网络则登录
-    else {
-        [self login];
-    }
 }
 - (void)resetPassword:(NSNotification *)noti {
     DLog(@"[II] 开始重置密码！");
@@ -238,9 +227,10 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 }
 - (void)handleNetworkCreateAccountFailed:(NSNotification *)noti {
     DLog(@"[II] 注册失败！");
-#warning TODO
+    KHHErrorCode code = [noti.userInfo[kInfoKeyErrorCode] integerValue];
+    NSString *message = noti.userInfo[kInfoKeyErrorMessage];
     [self alertWithTitle:titleCreateAccountFailed
-                 message:nil];
+                 message:MessageWithActionAndCode(code, message)];
 }
 - (void)handleNetworkLoginSucceeded:(NSNotification *)noti {
     // 登陆成功
@@ -255,10 +245,17 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 }
 - (void)handleNetworkLoginFailed:(NSNotification *)noti {
     DLog(@"[II] 登录失败！");
-    [self.defaults setLoggedIn:NO];
-#warning TODO
-    [self alertWithTitle:titleLoginFailed
-                 message:nil];
+    KHHErrorCode code = [noti.userInfo[kInfoKeyErrorCode] integerValue];
+    NSString *message = noti.userInfo[kInfoKeyErrorMessage];
+    if (KHHErrorCodeConnectionOffline == code
+        && [self.defaults isLoggedIn]) {
+        // 无网络且之前登录过则直接进
+        [self postASAPNotificationName:nAppShowMainView];
+    }else {
+        [self.defaults setLoggedIn:NO];
+        [self alertWithTitle:titleLoginFailed
+                     message:MessageWithActionAndCode(code, message)];
+    }
 }
 - (void)handleNetworkResetPasswordSucceeded:(NSNotification *)noti
 {
@@ -268,8 +265,10 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 }
 - (void)handleNetworkResetPasswordFailed:(NSNotification *)noti {
     DLog(@"[II] 重置密码失败！");
+    KHHErrorCode code = [noti.userInfo[kInfoKeyErrorCode] integerValue];
+    NSString *message = noti.userInfo[kInfoKeyErrorMessage];
     [self alertWithTitle:titleResetPasswordFailed
-                 message:NSLocalizedString(@"请检查您的手机号，再次尝试！", nil)];
+                 message:MessageWithActionAndCode(code, message)];
 }
 - (void)handleSyncSucceeded:(NSNotification *)noti {
     // 进主界面。
@@ -344,7 +343,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
                              options:AppStart_AnimationOptions];
 }
 - (void)showLoginView {
-    UIViewAnimationOptions options = UIViewAnimationOptionTransitionCurlUp;
+    UIViewAnimationOptions options = UIViewAnimationOptionTransitionCrossDissolve;
     [self transitionToViewController:self.loginController
                              options:options];
 }

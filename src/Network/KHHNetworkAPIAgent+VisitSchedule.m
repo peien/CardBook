@@ -44,7 +44,7 @@
     if (oSchedule.companion.length)
         parameters[@"withPerson"]   = oSchedule.companion;
     if (oSchedule.isFinished)
-        parameters[@"isFinished"]   = (oSchedule.isFinished.integerValue)? @"y": @"n";
+        parameters[@"isFinished"]   = (oSchedule.isFinished.boolValue)? @"y": @"n";
     
     NSMutableString *cardIDs = [NSMutableString string];
     NSMutableString *cardTypes = [NSMutableString string];
@@ -72,7 +72,7 @@
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *responseDict = [self JSONDictionaryWithResponse:responseObject];
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
-        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
         // 把返回的数据转成本地数据
         // 返回的ID
         oSchedule.id = [NSNumber numberFromObject:responseDict[JSONDataKeyID]
@@ -125,12 +125,12 @@
     if (oSchedule.companion.length)
         parameters[@"withPerson"]   = oSchedule.companion;
     if (oSchedule.isFinished)
-        parameters[@"isFinished"]   = (oSchedule.isFinished.integerValue)? @"y": @"n";
+        parameters[@"isFinished"]   = (oSchedule.isFinished.boolValue)? @"y": @"n";
     
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *responseDict = [self JSONDictionaryWithResponse:responseObject];
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
-        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
         // 把返回的数据转成本地数据
         // 返回的ID
         oSchedule.id = [NSNumber numberFromObject:responseDict[JSONDataKeyID]
@@ -164,7 +164,7 @@
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *responseDict = [self JSONDictionaryWithResponse:responseObject];
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
-        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
         // 把返回的数据转成本地数据
         dict[kInfoKeyObject]    = schedule;
         dict[kInfoKeyErrorCode] = @(code);
@@ -191,8 +191,8 @@
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
         
         // 把返回的数据转成本地数据
-        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
-        if (KHHNetworkStatusCodeSucceeded == code) {
+        KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        if (KHHErrorCodeSucceeded == code) {
             // count
             dict[kInfoKeyCount] = responseDict[JSONDataKeyCount];
             
@@ -265,7 +265,7 @@
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *responseDict = [self JSONDictionaryWithResponse:responseObject];
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
-        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
         DLog(@"[II] responseDict = %@", responseDict);
         
         // errorCode 和 imageID

@@ -111,11 +111,12 @@
         <relationship name="templates" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="CardTemplate" inverseName="bgImage" inverseEntity="CardTemplate" syncable="YES"/>
     </entity>
     <entity name="KHHMessage" representedClassName="KHHMessage" syncable="YES">
+        <attribute name="company" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" syncable="YES"/>
+        <attribute name="isRead" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="subject" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="time" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="version" optional="YES" attributeType="Integer 32" syncable="YES"/>
         <relationship name="image" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Image" inverseName="messages" inverseEntity="Image" syncable="YES"/>
     </entity>
     <entity name="MyCard" representedClassName="MyCard" parentEntity="Card" syncable="YES"/>
@@ -153,7 +154,7 @@
         <element name="CustomerEvaluation" positionX="160" positionY="192" width="128" height="165"/>
         <element name="Group" positionX="0" positionY="0" width="128" height="120"/>
         <element name="Image" positionX="0" positionY="0" width="128" height="165"/>
-        <element name="KHHMessage" positionX="0" positionY="0" width="128" height="135"/>
+        <element name="KHHMessage" positionX="0" positionY="0" width="128" height="150"/>
         <element name="MyCard" positionX="0" positionY="0" width="128" height="45"/>
         <element name="PrivateCard" positionX="160" positionY="192" width="128" height="45"/>
         <element name="ReceivedCard" positionX="0" positionY="0" width="128" height="75"/>

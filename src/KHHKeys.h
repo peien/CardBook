@@ -15,6 +15,13 @@ static NSString * const KHHErrorDomain = @"KHHErrorDomain";
 // 暂时空着的占位符号
 static NSString * const KHHPlaceholderForEmptyString = @"";
 
+#pragma mark - kAccountKey* : 帐户相关的key
+static NSString * const kAccountKeyUser           = @"user";
+static NSString * const kAccountKeyPassword       = @"password";
+static NSString * const kAccountKeyName           = @"name";
+static NSString * const kAccountKeyCompany        = @"company";
+static NSString * const kAccountKeyInvitationCode = @"invitationCode ";
+
 #pragma mark - kAttributeKey* : Object attributes keys
 /*!
  kAttributeKey* : Object attributes keys
@@ -167,8 +174,8 @@ static NSString * const kInfoKeyCount = @"count";//NSNumber
 static NSString * const kInfoKeyCustomerCard = @"customerCard";
 static NSString * const kInfoKeyExtra = @"extra";//NSDictionary
 static NSString * const kInfoKeyDepartmentID = @"departmentID";//NSNumber
-static NSString * const kInfoKeyError = @"error";
 static NSString * const kInfoKeyErrorCode = @"errorCode";//NSNumber
+static NSString * const kInfoKeyErrorObject = @"error";//NSNumber
 static NSString * const kInfoKeyErrorMessage = @"errorMessage";//NSString
 static NSString * const kInfoKeyFromGroup = @"fromGroup";
 static NSString * const kInfoKeyGroupList = @"groupList";//NSArray
@@ -180,6 +187,7 @@ static NSString * const kInfoKeyLastID = @"lastID";//NSNumber
 static NSString * const kInfoKeyLocationAddress = @"locationAddress";//NSString
 static NSString * const kInfoKeyLocationLatitude = @"locationLatitude";
 static NSString * const kInfoKeyLocationLongitude = @"locationLongitude";
+static NSString * const kInfoKeyMessageList = @"messageList";
 static NSString * const kInfoKeyMyCard = @"myCard";
 static NSString * const kInfoKeyMyCardList = @"myCardList";//NSArray
 static NSString * const kInfoKeyObject = @"object";//id?

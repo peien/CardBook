@@ -44,6 +44,7 @@
  */
 - (void)sendCard:(Card *)card
         toPhones:(NSArray *)numbers {
+    NSString *action = kActionNetworkSendCardToPhone;
     ALog(@"[II] 发送名片 id = %@, version = %@", card.id, card.version);
     ALog(@"[II] 发送到手机号 phone numbers = %@", numbers);
 
@@ -55,7 +56,8 @@
             @"cardId" : (ID? ID: @""),
             @"version" : (version? version: @"")
     };
-    [self postAction:@"sendCardToPhones"
+    
+    [self postAction:action
                query:@"sendCardService.sendCard"
           parameters:parameters
              success:nil];

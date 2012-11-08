@@ -76,6 +76,8 @@
     [regButton   setBackgroundImage:[UIImage imageNamed:@"Button_grey.png"
                                               capInsets:buttonBgInsets]
                            forState:UIControlStateNormal];
+    // textField
+    self.userField.text = self.defaults.lastUser;
 }
 
 - (void)didReceiveMemoryWarning
@@ -95,9 +97,8 @@
     [self postASAPNotificationName:nAppShowCreateAccount];
 }
 - (IBAction)login:(id)sender {
-    [self hideKeyboard];
     // get user & password
-    NSString *user     = self.userField .text;
+    NSString *user     = self.userField.text;
     NSString *password = self.passwordField.text;
     DLog(@"[II] user=%@, password=%@", user, password);
     
@@ -174,11 +175,4 @@
 }
 
 #pragma mark - Misc
-- (void)hideKeyboard {
-    for (UIView *view in self.view.subviews) {
-        if ([view isKindOfClass:[UITextField class]]) {
-            [view resignFirstResponder];
-        }
-    }
-}
 @end

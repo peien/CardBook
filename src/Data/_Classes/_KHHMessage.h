@@ -5,11 +5,12 @@
 
 
 extern const struct KHHMessageAttributes {
+	__unsafe_unretained NSString *company;
 	__unsafe_unretained NSString *content;
 	__unsafe_unretained NSString *id;
+	__unsafe_unretained NSString *isRead;
 	__unsafe_unretained NSString *subject;
 	__unsafe_unretained NSString *time;
-	__unsafe_unretained NSString *version;
 } KHHMessageAttributes;
 
 extern const struct KHHMessageRelationships {
@@ -27,6 +28,7 @@ extern const struct KHHMessageFetchedProperties {
 
 
 
+
 @interface KHHMessageID : NSManagedObjectID {}
 @end
 
@@ -35,6 +37,14 @@ extern const struct KHHMessageFetchedProperties {
 + (NSString*)entityName;
 + (NSEntityDescription*)entityInManagedObjectContext:(NSManagedObjectContext*)moc_;
 - (KHHMessageID*)objectID;
+
+
+
+
+@property (nonatomic, strong) NSString* company;
+
+
+//- (BOOL)validateCompany:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -59,6 +69,18 @@ extern const struct KHHMessageFetchedProperties {
 
 
 
+@property (nonatomic, strong) NSNumber* isRead;
+
+
+@property BOOL isReadValue;
+- (BOOL)isReadValue;
+- (void)setIsReadValue:(BOOL)value_;
+
+//- (BOOL)validateIsRead:(id*)value_ error:(NSError**)error_;
+
+
+
+
 @property (nonatomic, strong) NSString* subject;
 
 
@@ -71,18 +93,6 @@ extern const struct KHHMessageFetchedProperties {
 
 
 //- (BOOL)validateTime:(id*)value_ error:(NSError**)error_;
-
-
-
-
-@property (nonatomic, strong) NSNumber* version;
-
-
-@property int32_t versionValue;
-- (int32_t)versionValue;
-- (void)setVersionValue:(int32_t)value_;
-
-//- (BOOL)validateVersion:(id*)value_ error:(NSError**)error_;
 
 
 
@@ -105,6 +115,12 @@ extern const struct KHHMessageFetchedProperties {
 @interface _KHHMessage (CoreDataGeneratedPrimitiveAccessors)
 
 
+- (NSString*)primitiveCompany;
+- (void)setPrimitiveCompany:(NSString*)value;
+
+
+
+
 - (NSString*)primitiveContent;
 - (void)setPrimitiveContent:(NSString*)value;
 
@@ -120,6 +136,15 @@ extern const struct KHHMessageFetchedProperties {
 
 
 
+- (NSNumber*)primitiveIsRead;
+- (void)setPrimitiveIsRead:(NSNumber*)value;
+
+- (BOOL)primitiveIsReadValue;
+- (void)setPrimitiveIsReadValue:(BOOL)value_;
+
+
+
+
 - (NSString*)primitiveSubject;
 - (void)setPrimitiveSubject:(NSString*)value;
 
@@ -128,15 +153,6 @@ extern const struct KHHMessageFetchedProperties {
 
 - (NSString*)primitiveTime;
 - (void)setPrimitiveTime:(NSString*)value;
-
-
-
-
-- (NSNumber*)primitiveVersion;
-- (void)setPrimitiveVersion:(NSNumber*)value;
-
-- (int32_t)primitiveVersionValue;
-- (void)setPrimitiveVersionValue:(int32_t)value_;
 
 
 

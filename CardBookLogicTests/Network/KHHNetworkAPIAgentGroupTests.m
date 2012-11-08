@@ -329,7 +329,7 @@ typedef enum {
 - (void)actionSucceeded:(NSNotification *)noti {
     [self stopObservingAllNotifications];
     NSInteger code = [[noti.userInfo valueForKey:kInfoKeyErrorCode] integerValue];
-    STAssertEquals(code, KHHNetworkStatusCodeSucceeded, nil);
+    STAssertEquals(code, KHHErrorCodeSucceeded, nil);
     if (TestCaseCardIDsWithinGroupSuccess == self.test) {
         NSInteger count = [[noti.userInfo valueForKey:@"count"] integerValue];
         STAssertTrue(count > 0, nil);

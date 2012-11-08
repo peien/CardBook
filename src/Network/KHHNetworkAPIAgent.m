@@ -8,6 +8,7 @@
 
 #import "KHHNetworkAPIAgent.h"
 #import "KHHTypes.h"
+#import "KHHStatusCodes.h"
 #import "NSData+Base64.h"
 #import "NSString+Base64.h"
 #import "NSString+MD5.h"
@@ -179,12 +180,12 @@
                                                            error:nil];
     NSMutableDictionary *result = dict[JSONDataKeyJSONData];
     NSNumber *state = result[JSONDataKeyState];
-    NSInteger code = KHHNetworkStatusCodeUnresolvableData;
+    NSInteger code = KHHErrorCodeUnresolvableData;
     if (result) {
         if (state) {
             code = state.integerValue;
         } else {
-            code = KHHNetworkStatusCodeUnknownError;
+            code = KHHErrorCodeUnknownError;
         }
     } else {
         // 确保返回的 result 不是nil
@@ -197,14 +198,103 @@
 }
 /*!
  根据 Action 和 Status Code 生成 Notification Name。
- KHHNetworkStatusCodeSucceeded 返回 action＋Succeeded
+ KHHErrorCodeSucceeded 返回 action＋Succeeded
  其他返回action＋Failed
  */
-NSString *NameWithActionAndCode(NSString *action, KHHNetworkStatusCode code) {
-    NSString *suffix = (KHHNetworkStatusCodeSucceeded == code)?@"Succeeded":@"Failed";
+NSString *NameWithActionAndCode(NSString *action, KHHErrorCode code) {
+    NSString *suffix = (KHHErrorCodeSucceeded == code)?@"Succeeded":@"Failed";
+    if ([action isEqualToString:kActionNetworkSendCardToPhone]
+        && 1 == code) {
+        suffix = @"Succeeded";
+    }
     NSString *name = [NSString stringWithFormat:@"%@%@", action, suffix];
     ALog(@"[II] Notification name = %@", name);
     return name;
+}
+/*!
+ 根据 Action 和 Status Code 生成 提示消息。
+ */
+NSString *MessageWithActionAndCode(KHHErrorCode code, NSString *errorMessage) {
+    NSString *message = @"";
+    switch (code) {
+        case KHHErrorCodeSucceeded: {
+            message = NSLocalizedString(@"成功。", nil);
+            break;
+        }
+        case KHHErrorCodeFailed: {
+            message = NSLocalizedString(@"请检查您输入的数据。", nil);
+            break;
+        }
+        case KHHErrorCodeDataServerError: {
+            message = NSLocalizedString(@"服务器出错，请稍后再试。", nil);
+            break;
+        }
+        case KHHErrorCodeAlreadyCreated: {
+            message = NSLocalizedString(@"该手机号已被注册，请检查。若确实输入正确，请联络客服。", nil);
+            break;
+        }
+        case KHHErrorCodeAccountExpired: {
+            message = NSLocalizedString(@"该帐户已过期，请重新激活。", nil);
+            break;
+        }
+        case KHHErrorCodeExceedRetryLimit: {
+            message = NSLocalizedString(@"操作过于频繁，请一小时后再试。", nil);
+            break;
+        }
+        case KHHErrorCodeCompanyAlreadyExist: {
+            message = NSLocalizedString(@"该公司名已被注册，请检查公司名是否正确。若确实输入正确，请联络客服。", nil);
+            break;
+        }
+        case KHHErrorCodeDuplication: {
+            message = NSLocalizedString(@"请勿重复注册。", nil);
+            break;
+        }
+        case KHHErrorCodeOldPasswordWrong: {
+            message = NSLocalizedString(@"旧密码错误，请重新输入。", nil);
+            break;
+        }
+        case KHHErrorCodeLatitudeOrLongitudeWrong: {
+            message = NSLocalizedString(@"经纬度数据有误，请重试。", nil);
+            break;
+        }
+        case KHHErrorCodeNoneCounterpartCard: {
+            message = NSLocalizedString(@"未发现正在与您交换的名片。", nil);
+            break;
+        }
+        case KHHErrorCodeSomethingWrong: {
+            message = NSLocalizedString(@"身份验证出错。请登出，再登入。", nil);
+            break;
+        }
+        case KHHErrorCodeUnresolvableData: {
+            message = NSLocalizedString(@"网络传回的数据无法识别，请检查您的网络设置，然后重试。", nil);
+            break;
+        }
+        case KHHErrorCodeConnectionOffline: {
+            message = NSLocalizedString(@"网络断了，请检查网络设置。", nil);
+            break;
+        }
+        case KHHErrorCode404: {
+            message = NSLocalizedString(@"服务器出错，请稍后再试。", nil);
+            break;
+        }
+        case KHHErrorCodeLocalDataOperationFailed: {
+            message = NSLocalizedString(@"本地数据库出错。若多次出现此错误，请删除本应用然后重新安装。", nil);
+            break;
+        }
+        case KHHErrorCodeBusy: {
+            message = NSLocalizedString(@"前一个操作尚未完成，请稍后再试。", nil);
+            break;
+        }
+        case KHHErrorCodeParametersNotMeetRequirement: {
+            message = NSLocalizedString(@"输入的数据不符合要求。", nil);
+            break;
+        }
+        default: {
+            message = errorMessage.length? errorMessage: @"发生未知错误，请稍后再试。";
+            break;
+        }
+    }
+    return message;
 }
 /*!
  根据 Action 发 notification，提醒参数错误。
@@ -228,7 +318,7 @@ void WarnParametersNotMeetRequirement(NSString *action) {
     ALog(@"[II] 进入默认模式:");
     // 把返回的 NSData 转成 NSDictionary
     NSMutableDictionary *dict = [self JSONDictionaryWithResponse:responseData];
-    KHHNetworkStatusCode code = [dict[kInfoKeyErrorCode] integerValue];
+    KHHErrorCode code = [dict[kInfoKeyErrorCode] integerValue];
     // 把extra也一并返回
     if (extra) {
         dict[kInfoKeyExtra] = extra;
@@ -249,7 +339,7 @@ void WarnParametersNotMeetRequirement(NSString *action) {
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:3];
     dict[kInfoKeyAction] = action;
     dict[kInfoKeyErrorCode] = @(error.code);
-    dict[kInfoKeyError] = error.localizedDescription;
+    dict[kInfoKeyErrorMessage] = error.localizedDescription;
     // 把extra也一并返回
     if (extra) {
         dict[kInfoKeyExtra] = extra;

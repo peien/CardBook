@@ -329,11 +329,36 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
     NSArray *fetched;
     fetched = [Schedule objectArrayByPredicate:predicate
                                sortDescriptors:nil];
-    // 过滤掉意外情况
-//    NSMutableArray *result = FilterUnexpectedCardsFromArray(fetched);
     NSArray *result = fetched;
     return result;
 }
 
 @end
 
+@implementation KHHData (UI_Message)
+
+-(void)syncMessages {
+    [self.agent allMessages];
+}
+- (NSArray *)allMessages {
+    NSSortDescriptor *sortDes = [NSSortDescriptor sortDescriptorWithKey:@"time"
+                                                              ascending:NO];
+    NSArray *result = [KHHMessage objectArrayByPredicate:nil
+                                         sortDescriptors:@[sortDes]];
+    return result;
+}
+- (NSUInteger)countOfUnreadMessages {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isRead == %@", @(NO)];
+    NSArray *fetched = [KHHMessage objectArrayByPredicate:predicate
+                                          sortDescriptors:nil];
+    return fetched.count;
+}
+- (void)deleteMessages:(NSArray *)msgList {
+//    [self.agent deleteMessages:msgList];
+    for (KHHMessage *msg in msgList) {
+        [self.context deleteObject:msg];
+    }
+    [self saveContext];
+}
+
+@end

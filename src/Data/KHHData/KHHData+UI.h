@@ -88,3 +88,10 @@
 @interface KHHData (UI_Template)
 - (NSArray *)allPublicTemplates;// 公共模板
 @end
+
+@interface KHHData (UI_Message)
+- (void)syncMessages;// 从服务器同步消息
+- (NSArray *)allMessages;// 从数据库查询消息
+- (NSUInteger)countOfUnreadMessages;// 未读消息的个数。
+- (void)deleteMessages:(NSArray *)msgList;
+@end

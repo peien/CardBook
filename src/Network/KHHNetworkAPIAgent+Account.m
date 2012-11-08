@@ -39,8 +39,8 @@
         NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:8];
         // 把 responseDict 的数据转成本地可用的数据
-        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
-        if (KHHNetworkStatusCodeSucceeded == code) {
+        KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        if (KHHErrorCodeSucceeded == code) {
             // 登录成功
             id obj = nil;
             // AuthorizationID number
@@ -83,37 +83,47 @@
 
 /**
  用户注册: 对应"accountService.registerAccount"
- @return: account或password为nil/@""返回NO。
+ accountNo 	 String 	 是 	 账号（手机号）
+ userPassword 	 String 	 是 	 密码
+ userName 	 String 	 否 	 用户名
+ companyName 	 String 	 否 公司名 传此参数表示注册的用户为公司董事长）
+ inviteCode 	 String 	 否 	 公司邀请码
  http://192.168.1.151/zentaopms/www/index.php?m=doc&f=view&docID=172
  */
-- (BOOL)createAccount:(NSString *)account
-             password:(NSString *)password {
-    if (0 == account.length || 0 == password.length) {
-        return NO;
-    }
-    NSString *action = @"createAccount";
+- (void)createAccount:(NSDictionary *)accountDict {
+    NSString *action   = @"createAccount";
     NSString *pathRoot = @"registerOrLogin";
-    NSString *query = @"accountService.registerAccount";
+    NSString *query    = @"accountService.registerAccountNew";
+    NSString *user     = accountDict[kAccountKeyUser];
+    NSString *password = accountDict[kAccountKeyPassword];
+    if (0 == user.length || 0 == password.length) {
+        WarnParametersNotMeetRequirement(action);
+    }
     NSString *encPass = [Encryptor encryptBase64String:password
                                              keyString:KHHHttpEncryptorKey];
-    NSDictionary *parameters = @{
-    @"accountNo" : account,
-    @"userPassword" : encPass
-    };
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:@{
+                                       @"accountNo" : user,
+                                       @"userPassword" : encPass
+                                       }];
+    NSString *userName = accountDict[kAccountKeyName];
+    if (userName.length) parameters[@"userName"] = userName;
+    NSString *company = accountDict[kAccountKeyCompany];
+    if (company.length) parameters[@"companyName"] = company;
+    NSString *invitation = accountDict[kAccountKeyInvitationCode];
+    if (invitation.length) parameters[@"inviteCode"] = invitation;
     
     // 处理返回数据的block
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
         NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:8];
         // 把 responseDict 的数据转成本地可用的数据
-        KHHNetworkStatusCode code = [responseDict[kInfoKeyErrorCode] integerValue];
-        if (KHHNetworkStatusCodeSucceeded == code) {
+        KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        if (KHHErrorCodeSucceeded == code) {
             // 注册成功
             // AuthorizationID
-            NSNumber *oldAuthID = responseDict[JSONDataKeyID]; // string
-            NSNumber *authorizationID = [NSNumber numberFromObject:oldAuthID zeroIfUnresolvable:YES];
+            NSNumber *authorizationID = [NSNumber numberFromObject:responseDict[JSONDataKeyID]
+                                                zeroIfUnresolvable:YES];
             dict[kInfoKeyAuthorizationID] = authorizationID;
-#warning TODO
         }
         dict[kInfoKeyErrorCode] = @(code);
         
@@ -127,7 +137,6 @@
              success:success
              failure:nil
                extra:nil];
-    return YES;
 }
 /**
  修改密码: 对应"userPasswordService.updatePwd"

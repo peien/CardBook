@@ -18,7 +18,7 @@
     InterCard *iCard = [[InterCard alloc] init];
     
     iCard.id = [NSNumber numberFromObject:json[JSONDataKeyCardId] zeroIfUnresolvable:NO];// 解不出为nil
-    iCard.isDeleted = [NSNumber numberFromObject:json[JSONDataKeyIsDelete] zeroIfUnresolvable:YES];
+    iCard.isDeleted = [NSNumber numberFromObject:json[JSONDataKeyIsDelete] zeroIfUnresolvable:YES].boolValue;
     iCard.modelType = KHHCardModelTypeCard;
     iCard.roleType = [NSNumber numberFromObject:json[JSONDataKeyCardTypeId] defaultValue:1 defaultIfUnresolvable:YES];// 默认1
     iCard.userID = [NSNumber numberFromObject:json[JSONDataKeyUserId] zeroIfUnresolvable:NO];// 解不出为nil
@@ -103,7 +103,7 @@
     // 再填ReceivedCard相关的数据
     // isRead(col3),(col1?),memo
     iCard.modelType = KHHCardModelTypeReceivedCard;
-    iCard.isDeleted = [NSNumber numberFromObject:json[JSONDataKeyIsDelete] zeroIfUnresolvable:YES];
+    iCard.isDeleted = iCard.isDeleted || [NSNumber numberFromObject:json[JSONDataKeyIsDelete] zeroIfUnresolvable:YES].boolValue;
     iCard.isRead = [NSNumber numberFromObject:json[JSONDataKeyCol3] zeroIfUnresolvable:YES];
     iCard.memo = [NSString stringFromObject:json[JSONDataKeyMemo]];
     // 处理完毕，返回。

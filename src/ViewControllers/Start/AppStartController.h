@@ -16,7 +16,7 @@
 @protocol AppStartNetworkAgent <NSObject>
 @required
 - (void)login:(NSString *)user password:(NSString *)password;
-- (void)createAccount:(NSString *)user password:(NSString *)password;
+- (void)createAccount:(NSDictionary *)accountDict;
 - (void)resetPassword:(NSString *)user;
 - (void)authenticateWithUser:(NSString *)user password:(NSString *)password;
 @end

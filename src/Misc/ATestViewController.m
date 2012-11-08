@@ -40,7 +40,7 @@
     
     [button setTitle:@"Action!" forState:UIControlStateNormal];
     [button addTarget:self
-               action:@selector(testCustomerEvaluation) // TEST
+               action:@selector(testMessages) // TEST
      forControlEvents:UIControlEventTouchUpInside];
 }
 #pragma mark - 试验用户评估
@@ -116,6 +116,12 @@
     [self observeNotificationName:KHHLocationUpdateSucceeded
                          selector:@"handleLocationUpdateSucceeded:"];
     [[KHHLocationController sharedController] updateLocation];
+}
+#pragma mark - 试验Messages
+- (void)testMessages {
+    [self showLabelWithText:@"试验Message"];
+    [self.data syncMessages];
+    DLog(@"%@", [self.data allMessages]);
 }
 - (void)handleLocationUpdateSucceeded:(NSNotification *)noti {
     static int num = 0;

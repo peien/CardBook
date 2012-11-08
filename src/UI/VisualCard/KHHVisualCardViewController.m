@@ -117,7 +117,7 @@ static CGFloat const CARD_WIDTH_PADDING = 5.f;
     // 开始重建view
     Card *card = self.card;
     CardTemplate *tmpl = card.template;
-    if (0 == tmpl.isFull.integerValue) {
+    if (0 == tmpl.isFull.boolValue) {
         // 模板为nil，使用默认模板。
         tmpl = [CardTemplate objectByID:@(KHH_Default_CardTemplate_ID) createIfNone:NO];
         if (nil == tmpl) {

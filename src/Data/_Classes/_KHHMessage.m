@@ -4,11 +4,12 @@
 #import "_KHHMessage.h"
 
 const struct KHHMessageAttributes KHHMessageAttributes = {
+	.company = @"company",
 	.content = @"content",
 	.id = @"id",
+	.isRead = @"isRead",
 	.subject = @"subject",
 	.time = @"time",
-	.version = @"version",
 };
 
 const struct KHHMessageRelationships KHHMessageRelationships = {
@@ -48,13 +49,20 @@ const struct KHHMessageFetchedProperties KHHMessageFetchedProperties = {
 		NSSet *affectingKey = [NSSet setWithObject:@"id"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
-	if ([key isEqualToString:@"versionValue"]) {
-		NSSet *affectingKey = [NSSet setWithObject:@"version"];
+	if ([key isEqualToString:@"isReadValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"isRead"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
 	}
 
 	return keyPaths;
 }
+
+
+
+
+@dynamic company;
+
+
 
 
 
@@ -92,6 +100,32 @@ const struct KHHMessageFetchedProperties KHHMessageFetchedProperties = {
 
 
 
+@dynamic isRead;
+
+
+
+- (BOOL)isReadValue {
+	NSNumber *result = [self isRead];
+	return [result boolValue];
+}
+
+- (void)setIsReadValue:(BOOL)value_ {
+	[self setIsRead:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveIsReadValue {
+	NSNumber *result = [self primitiveIsRead];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveIsReadValue:(BOOL)value_ {
+	[self setPrimitiveIsRead:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
+
 @dynamic subject;
 
 
@@ -101,32 +135,6 @@ const struct KHHMessageFetchedProperties KHHMessageFetchedProperties = {
 
 @dynamic time;
 
-
-
-
-
-
-@dynamic version;
-
-
-
-- (int32_t)versionValue {
-	NSNumber *result = [self version];
-	return [result intValue];
-}
-
-- (void)setVersionValue:(int32_t)value_ {
-	[self setVersion:[NSNumber numberWithInt:value_]];
-}
-
-- (int32_t)primitiveVersionValue {
-	NSNumber *result = [self primitiveVersion];
-	return [result intValue];
-}
-
-- (void)setPrimitiveVersionValue:(int32_t)value_ {
-	[self setPrimitiveVersion:[NSNumber numberWithInt:value_]];
-}
 
 
 

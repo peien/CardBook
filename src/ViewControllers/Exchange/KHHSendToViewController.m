@@ -81,8 +81,8 @@
 //发送
 - (void)rightBarButtonClick:(id)sender
 {
-    [self observeNotificationName:KHHNetworkSendCardToPhoneSucceeded selector:@"handleSendCardToPhoneSucceeded:"];
-    [self observeNotificationName:KHHNetworkSendCardToPhoneFailed selector:@"handleSendCardToPhoneFailed:"];
+    [self observeNotificationName:nNetworkSendCardToPhoneSucceeded selector:@"handleSendCardToPhoneSucceeded:"];
+    [self observeNotificationName:nNetworkSendCardToPhoneFailed selector:@"handleSendCardToPhoneFailed:"];
     [self sendToReceivers];
 }
 - (void)sendToReceivers{
@@ -123,8 +123,8 @@
 }
 #pragma mark -
 - (void)handleSendCardToPhoneSucceeded:(NSNotification *)info{
-    [self stopObservingNotificationName:KHHNetworkSendCardToPhoneSucceeded];
-    [self stopObservingNotificationName:KHHNetworkSendCardToPhoneFailed];
+    [self stopObservingNotificationName:nNetworkSendCardToPhoneSucceeded];
+    [self stopObservingNotificationName:nNetworkSendCardToPhoneFailed];
     DLog(@"handleSendCardToPhoneSucceeded! ====== info is %@",info.userInfo);
     [[[UIAlertView alloc] initWithTitle:nil
                                 message:textCardSent
@@ -134,8 +134,8 @@
 
 }
 - (void)handleSendCardToPhoneFailed:(NSNotification *)info{
-    [self stopObservingNotificationName:KHHNetworkSendCardToPhoneSucceeded];
-    [self stopObservingNotificationName:KHHNetworkSendCardToPhoneFailed];
+    [self stopObservingNotificationName:nNetworkSendCardToPhoneSucceeded];
+    [self stopObservingNotificationName:nNetworkSendCardToPhoneFailed];
     DLog(@"handleSendCardToPhoneFailed! ====== info is %@",info.userInfo);
     if ([[info.userInfo objectForKey:@"errorCode"] intValue] == 1) {
         [[[UIAlertView alloc] initWithTitle:nil

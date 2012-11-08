@@ -89,7 +89,7 @@ typedef enum {
     DLog(@"[II] self = %@", self);
     STAssertEquals(self.test, TestCaseLoginSuccess, nil);
     NSInteger code = [[noti.userInfo valueForKey:kInfoKeyErrorCode] integerValue];
-    STAssertEquals(code, KHHNetworkStatusCodeSucceeded, nil);
+    STAssertEquals(code, KHHErrorCodeSucceeded, nil);
     [self stopObservingAllNotifications];
     self.running = NO;
 }
@@ -97,7 +97,7 @@ typedef enum {
     DLog(@"[II] self = %@", self);
     STAssertEquals(self.test, TestCaseLoginFailure, nil);
     NSInteger code = [[noti.userInfo valueForKey:kInfoKeyErrorCode] integerValue];
-    STAssertEquals(code, KHHNetworkStatusCodeFailed, nil);
+    STAssertEquals(code, KHHErrorCodeFailed, nil);
     [self stopObservingAllNotifications];
     self.running = NO;
 }
@@ -148,7 +148,7 @@ typedef enum {
     DLog(@"[II] self = %@", self);
     STAssertEquals(self.test, TestCaseCreateAccountSuccess, nil);
     NSInteger code = [[noti.userInfo valueForKey:kInfoKeyErrorCode] integerValue];
-    STAssertEquals(code, KHHNetworkStatusCodeSucceeded, nil);
+    STAssertEquals(code, KHHErrorCodeSucceeded, nil);
     [self stopObservingAllNotifications];
     self.running = NO;
 }
@@ -157,10 +157,10 @@ typedef enum {
     NSInteger code = [[noti.userInfo valueForKey:kInfoKeyErrorCode] integerValue];
     switch (self.test) {
         case TestCaseCreateAccountFailure:
-            STAssertEquals(code, KHHNetworkStatusCodeFailed, nil);
+            STAssertEquals(code, KHHErrorCodeFailed, nil);
             break;
         case TestCaseCreateAccountFailureAlreadyCreated:
-            STAssertEquals(code, KHHNetworkStatusCodeAlreadyCreated, nil);
+            STAssertEquals(code, KHHErrorCodeAlreadyCreated, nil);
             break;
         default:
             STFail([NSString stringWithFormat:@"testType = %d",self.test]);
@@ -212,7 +212,7 @@ typedef enum {
     DLog(@"[II] self = %@", self);
     STAssertEquals(self.test, TestCaseChangePasswordSuccess, nil);
     NSInteger code = [[noti.userInfo valueForKey:kInfoKeyErrorCode] integerValue];
-    STAssertEquals(code, KHHNetworkStatusCodeSucceeded, nil);
+    STAssertEquals(code, KHHErrorCodeSucceeded, nil);
     [self stopObservingAllNotifications];
     self.running = NO;
 }
@@ -221,10 +221,10 @@ typedef enum {
     NSInteger code = [[noti.userInfo valueForKey:kInfoKeyErrorCode] integerValue];
     switch (self.test) {
         case TestCaseChangePasswordFailure:
-            STAssertEquals(code, KHHNetworkStatusCodeFailed, nil);
+            STAssertEquals(code, KHHErrorCodeFailed, nil);
             break;
         case TestCaseChangePasswordFailureNotMatch:
-            STAssertEquals(code, KHHNetworkStatusCodeOldPasswordWrong, nil);
+            STAssertEquals(code, KHHErrorCodeOldPasswordWrong, nil);
             break;
         default:
             STFail([NSString stringWithFormat:@"testType = %d",self.test]);
@@ -262,7 +262,7 @@ typedef enum {
     DLog(@"[II] self = %@", self);
     STAssertEquals(self.test, TestCaseResetPasswordSuccess, nil);
     NSInteger code = [[noti.userInfo valueForKey:kInfoKeyErrorCode] integerValue];
-    STAssertEquals(code, KHHNetworkStatusCodeSucceeded, nil);
+    STAssertEquals(code, KHHErrorCodeSucceeded, nil);
     [self stopObservingAllNotifications];
     self.running = NO;
 }
@@ -270,7 +270,7 @@ typedef enum {
     DLog(@"[II] self = %@", self);
     STAssertEquals(self.test, TestCaseResetPasswordFailure, nil);
     NSInteger code = [[noti.userInfo valueForKey:kInfoKeyErrorCode] integerValue];
-    STAssertEquals(code, KHHNetworkStatusCodeFailed, nil);
+    STAssertEquals(code, KHHErrorCodeFailed, nil);
     [self stopObservingAllNotifications];
     self.running = NO;
 }
