@@ -168,9 +168,9 @@ typedef enum {
     [_btnTable setBackgroundView:bgimgView];
       _imgview.image = bgimg;
     
-    UIBarButtonItem *searchBarItem = [[UIBarButtonItem alloc] initWithCustomView:self.searchBar];
-    UIBarButtonItem *addButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:nil];
-    [self.toolBar setItems:[NSArray arrayWithObjects:searchBarItem, addButtonItem, nil] animated:YES];
+//    UIBarButtonItem *searchBarItem = [[UIBarButtonItem alloc] initWithCustomView:self.searchBar];
+//    UIBarButtonItem *addButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:nil];
+//    [self.toolBar setItems:[NSArray arrayWithObjects:searchBarItem, addButtonItem, nil] animated:YES];
     
     //默认选中哪个按钮
     //cell是nil;
@@ -183,17 +183,21 @@ typedef enum {
     NSIndexPath *index = [NSIndexPath indexPathForRow:-1 inSection:0];
     _lastIndexPath = index;
     
+    //点击联系人出现quickAction的插件view
     self.floatBarVC = [[KHHFloatBarController alloc] initWithNibName:nil bundle:nil];
     self.floatBarVC.viewController = self;
     self.popover = [[WEPopoverController alloc] initWithContentViewController:floatBarVC];
     self.floatBarVC.popover = self.popover;
     
+    //自定义searchBar(加同步按钮及摄像头iamgeButton)
     KHHMySearchBar *mySearchBar = [[KHHMySearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44) simple:_isNormalSearchBar];
     [mySearchBar.synBtn addTarget:self action:@selector(synBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [mySearchBar.takePhoto addTarget:self action:@selector(takePhotoClick:) forControlEvents:UIControlEventTouchUpInside];
     
     mySearchBar.delegate = self;
     [self.view addSubview:mySearchBar];
+    
+    //点击界面上的searchBar时出来新的界面供搜索并显示新数据源(实现searchBar的委托方法)
     UISearchDisplayController *disCtrl = [[UISearchDisplayController alloc] initWithSearchBar:mySearchBar contentsController:self];
     disCtrl.delegate = self;
     disCtrl.searchResultsDataSource = self;
@@ -585,6 +589,7 @@ typedef enum {
     KHHButtonCell *cell = (KHHButtonCell *)[_btnTable cellForRowAtIndexPath:indexPath];
     [self performSelector:@selector(cellBtnClick:) withObject:cell.button afterDelay:0.1];
 }
+
 //添加拜访对象下面按钮点击
 - (void)cancelBtnClick:(id)sender{
     NSMutableArray *visitNameArr = [[NSMutableArray alloc] initWithCapacity:0];
@@ -596,20 +601,18 @@ typedef enum {
     self.visitVC.objectNameArr = visitNameArr;
     [self.navigationController popViewControllerAnimated:YES];
 }
+
 //点击图片弹出横框
 - (void)logoBtnClick:(id)sender
 {
     UIButton *btn = (UIButton *)sender;
     KHHClientCellLNPCC *cell = (KHHClientCellLNPCC *)[[btn superview] superview];
+    if (!cell) {
+        return;
+    }
     NSIndexPath *indexPath = [_bigTable indexPathForCell:cell];
-    self.floatBarVC.card = [self.generalArray objectAtIndex:indexPath.row];
-    CGRect cellRect = btn.frame;
-    cellRect.origin.x = 98;
-    CGRect rect = [cell convertRect:cellRect toView:self.view];
-    rect.size.height = 45;
-    //DLog(@"[II] logo = %@, frame = %@, converted frame = %@", cell.logoView, NSStringFromCGRect(cell.logoView.frame), NSStringFromCGRect(rect));
-    UIPopoverArrowDirection arrowDirection = rect.origin.y < self.view.bounds.size.height/2?UIPopoverArrowDirectionUp:UIPopoverArrowDirectionDown;
-    [self.popover presentPopoverFromRect:rect inView:self.view permittedArrowDirections:arrowDirection animated:YES];
+    Card *card = [self.generalArray objectAtIndex:indexPath.row];
+    [self showQuickAction:cell currentCard:card];
 }
 //长按单元格弹出横框
 - (void)longPressFunc:(id)sender
@@ -623,18 +626,22 @@ typedef enum {
             DLog(@"p.x:%f=======p.y:%f",p.x,p.y);
             NSIndexPath *indexPath = [_bigTable indexPathForRowAtPoint:p];
             DLog(@"indexPath:%@",indexPath);
-            self.floatBarVC.card = [self.generalArray objectAtIndex:indexPath.row];
-            KHHClientCellLNPCC *cell = (KHHClientCellLNPCC *)[_bigTable cellForRowAtIndexPath:indexPath];
-            CGRect cellRect = cell.logoBtn.frame;
-            cellRect.origin.x = 98;
-            CGRect rect = [cell convertRect:cellRect toView:self.view];
-            rect.size.height = 45;
-            //DLog(@"[II] logo = %@, frame = %@, converted frame = %@", cell.logoView, NSStringFromCGRect(cell.logoView.frame), NSStringFromCGRect(rect));
-            UIPopoverArrowDirection arrowDirection = rect.origin.y < self.view.bounds.size.height/2?UIPopoverArrowDirectionUp:UIPopoverArrowDirectionDown;
-            [self.popover presentPopoverFromRect:rect inView:self.view permittedArrowDirections:arrowDirection animated:YES];
+            Card *card = [self.generalArray objectAtIndex:indexPath.row];
+            [self showQuickAction:(KHHClientCellLNPCC *)[_bigTable cellForRowAtIndexPath:indexPath] currentCard:card];
         }
     }
 }
+
+//显示插件
+-(void) showQuickAction:(KHHClientCellLNPCC *) cell currentCard:(Card *) card {
+    self.floatBarVC.card = card;
+    CGRect cellRect = cell.logoBtn.frame;
+    cellRect.origin.x = 98;
+    CGRect rect = [cell convertRect:cellRect toView:self.view];
+    rect.size.height = 45;
+    //DLog(@"[II] logo = %@, frame = %@, converted frame = %@", cell.logoView, NSStringFromCGRect(cell.logoView.frame), NSStringFromCGRect(rect));
+    UIPopoverArrowDirection arrowDirection = rect.origin.y < self.view.bounds.size.height/2?UIPopoverArrowDirectionUp:UIPopoverArrowDirectionDown;
+    [self.popover presentPopoverFromRect:rect inView:self.view permittedArrowDirections:arrowDirection animated:YES];}
 #pragma mark-
 #pragma mark groupBtn Click
 - (void)cellBtnClick:(id)sender
@@ -723,6 +730,9 @@ typedef enum {
         [btn setBackgroundImage:[[UIImage imageNamed:@"left_btn_bg_selected.png"] resizableImageWithCapInsets:insets] forState:UIControlStateNormal];
         [btn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
         [_bigTable reloadData];
+        
+        //导航条文字更改(直接设置self.navigationController.title值是有了，界面就是显示不出来)
+        self.title = btn.titleLabel.text;
     }else{
         
         _type = KUIActionSheetStyleEditGroupMember;
@@ -900,8 +910,8 @@ typedef enum {
 }
 
 - (void) searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller {
-    CGRect oldFrame = self.searchBar.frame;
-    self.searchBar.frame = CGRectMake(70, oldFrame.origin.y, 250, oldFrame.size.height);
+//    CGRect oldFrame = self.searchBar.frame;
+//    self.searchBar.frame = CGRectMake(70, oldFrame.origin.y, 250, oldFrame.size.height);
 
 }
 -(BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
