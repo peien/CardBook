@@ -110,6 +110,7 @@
 @synthesize warnBtn;
 @synthesize isPickerShow;
 @synthesize isNotePickShow;
+@synthesize searchCard;
 
 #pragma mark -
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -168,8 +169,9 @@
         self.title = NSLocalizedString(@"新建拜访日志", nil);
         self.isFirstLocation = YES;
         [self getLocalAddress];
-        self.defaultVisitedName = [NSMutableString stringWithFormat:@"%@",self.visitInfoCard.name];
-
+        if (self.visitInfoCard) {
+            self.defaultVisitedName = [NSMutableString stringWithFormat:@"%@(%@),",self.visitInfoCard.name,self.visitInfoCard.company.name];
+        }
     }
 }
 - (void)viewWillAppear:(BOOL)animated
@@ -220,6 +222,7 @@
     self.defaultVisitedName = nil;
     self.selectedDateFromCal = nil;
     self.objectDic = nil;
+    self.searchCard = nil;
 }
 #pragma mark -
 //选择多个拜访对象
@@ -231,13 +234,17 @@
         for (int i = 0; i < self.objectNameArr.count; i++) {
             Card *card = [self.objectNameArr objectAtIndex:i];
             if (card.name.length > 0) {
-                [nameObj appendString:[NSString stringWithFormat:@"%@%@",@" ",card.name]];
+                [nameObj appendString:[NSString stringWithFormat:@"%@(%@),",card.name,card.company.name]];
                 [self.objectDic setObject:card forKey:card.name];
             }
         }
         UITextField *objectTf = (UITextField *)[self.view viewWithTag:TEXTFIELD_OBJECT_TAG];
+        if (self.searchCard) {
+            [self.defaultVisitedName appendString:[NSString stringWithFormat:@"%@(%@),",searchCard.name,self.searchCard.company.name]];
+            [self.objectDic setObject:self.searchCard forKey:self.searchCard.name];
+        }
         if (self.defaultVisitedName.length > 0) {
-            [nameObj insertString:visitInfoCard.name atIndex:0];
+            [nameObj insertString:self.defaultVisitedName atIndex:0];
         }
         objectTf.text = nameObj;
         self.defaultVisitedName = nameObj;
@@ -292,8 +299,9 @@
         for (int i = 0; i < objects.count; i++) {
             Card *cardObj = [objects objectAtIndex:i];
             NSString *name = [NSString stringByFilterNilFromString:cardObj.name];
+            NSString *companyName = [NSString stringByFilterNilFromString:cardObj.company.name];
             if (name.length > 0) {
-                [names appendString:[NSString stringWithFormat:@"%@ ",cardObj.name]];
+                [names appendString:[NSString stringWithFormat:@"%@(%@),",name,companyName]];
             }
         }
         [_fieldValue replaceObjectAtIndex:0 withObject:names];
@@ -322,7 +330,32 @@
         [_fieldValue replaceObjectAtIndex:4 withObject:allAddress];
     }
     if (self.schedu.minutesToRemind) {
-        [_fieldValue replaceObjectAtIndex:5 withObject:[NSString stringWithFormat:@"%@分钟",self.schedu.minutesToRemind]];
+        NSString *warnTitle;
+        DLog(@"self.schedu.minutesToRemind: %d",self.schedu.minutesToRemindValue);
+        int32_t minutes = self.schedu.minutesToRemindValue;
+        if (minutes == 0) {
+            warnTitle = @"不提醒";
+        }else if (minutes == 30){
+            warnTitle = @"30分钟";
+        }else if (minutes/60 == 1){
+            warnTitle = @"1小时";
+        }else if (minutes/60 == 2){
+            warnTitle = @"2小时";
+        }else if (minutes/60 == 3){
+            warnTitle = @"3小时";
+        }else if (minutes/60 == 12){
+            warnTitle = @"12小时";
+        }else if (minutes/60 == 24){
+            warnTitle = @"24小时";
+        }else if (minutes/24*60 == 2){
+            warnTitle = @"2天";
+        }else if (minutes/24*60 == 3){
+            warnTitle = @"3天";
+        }else if (minutes/7*24*60){
+           warnTitle = @"一周";
+        }
+        [_fieldValue replaceObjectAtIndex:5 withObject:warnTitle];
+        
     }
     if (self.schedu.companions.length > 0) {
         [_fieldValue replaceObjectAtIndex:6 withObject:self.schedu.companions];
@@ -359,7 +392,9 @@
     self.oSched.customer = nil;
     self.oSched.companion = joiner.text;
     self.oSched.content = note.text;
+    
     self.oSched.minutesToRemind = [NSNumber numberWithDouble:_timeInterval/60];
+    
     NSArray *nameArr = [self.objectDic allValues];
     self.oSched.targetCardList = [[NSMutableArray alloc] initWithArray:nameArr];
     
@@ -603,25 +638,26 @@
         }else if (indexPath.row == 4){
             textField.enabled = NO;
             textField.tag = TEXTFIELD_ADDRESS_TAG;
-            if (_style == KVisitRecoardVCStyleNewBuild) {
-                detail.hidden = NO;
-                textField.text = self.address;
-            }else{
+            detail.hidden = NO;
+            if (_style == KVisitRecoardVCStyleNewBuild || [self.schedu.isFinished isEqualToNumber:[NSNumber numberWithBool:NO]]) {
                 textField.text = [_fieldValue objectAtIndex:indexPath.row];
-//                UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
-//                [btn setBackgroundImage:[UIImage imageNamed:@"dingwei_green.png"] forState:UIControlStateNormal];
-//                [btn addTarget:self action:@selector(showMap:) forControlEvents:UIControlEventTouchUpInside];
-//                btn.frame = CGRectMake(280, 5, 35, 35);
-//                [cell.contentView addSubview:btn];
+                textField.text = self.address;
+                self.updateImageView = [[UIImageView alloc] initWithImage:[self.imageArray objectAtIndex:0]];
+                self.updateImageView.userInteractionEnabled = YES;
+                self.updateImageView.frame = CGRectMake(280, 5, 35, 35);
+                UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(updateLocation:)];
+                tap.numberOfTapsRequired = 1;
+                tap.numberOfTouchesRequired = 1;
+                [self.updateImageView addGestureRecognizer:tap];
+                [cell addSubview:self.updateImageView];
+            }else if(_style == KVisitRecoardVCStyleShowInfo && [self.schedu.isFinished isEqualToNumber:[NSNumber numberWithBool:YES]]){
+                textField.text = [_fieldValue objectAtIndex:indexPath.row];
+                UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+                [btn setBackgroundImage:[UIImage imageNamed:@"dingwei_green.png"] forState:UIControlStateNormal];
+                [btn addTarget:self action:@selector(showMap:) forControlEvents:UIControlEventTouchUpInside];
+                btn.frame = CGRectMake(280, 5, 35, 35);
+                [cell.contentView addSubview:btn];
             }
-            self.updateImageView = [[UIImageView alloc] initWithImage:[self.imageArray objectAtIndex:0]];
-            self.updateImageView.userInteractionEnabled = YES;
-            self.updateImageView.frame = CGRectMake(280, 5, 35, 35);
-            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(updateLocation:)];
-            tap.numberOfTapsRequired = 1;
-            tap.numberOfTouchesRequired = 1;
-            [self.updateImageView addGestureRecognizer:tap];
-            [cell addSubview:self.updateImageView];
             
         }else if (indexPath.row == 5){
             [textField removeFromSuperview];
@@ -671,11 +707,13 @@
         for (int i = 0; i<[self.imgArray count]; i++) {
             _imgview = [[UIImageView alloc] init];
             _imgview.userInteractionEnabled = YES;
-            UILongPressGestureRecognizer *longpress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressFunctionOne:)];
-            longpress.allowableMovement = NO;
-            longpress.numberOfTouchesRequired = 1;
-            longpress.minimumPressDuration = 0.5;
-            [_imgview addGestureRecognizer:longpress];
+            if (![self.schedu.isFinished isEqualToNumber:[NSNumber numberWithBool:YES]]) {
+                UILongPressGestureRecognizer *longpress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressFunctionOne:)];
+                longpress.allowableMovement = NO;
+                longpress.numberOfTouchesRequired = 1;
+                longpress.minimumPressDuration = 0.5;
+                [_imgview addGestureRecognizer:longpress];
+            }
             UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapFull:)];
             tap.numberOfTapsRequired = 1;
             tap.numberOfTouchesRequired = 1;
@@ -710,24 +748,27 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.isPickerShow) {
-        [self animationForDatePickerDown];
-    }else{
-        [self timerPickerViewAnimation];
+    //还要改
+    if ((indexPath.row == 1 || indexPath.row == 2) && (_style == KVisitRecoardVCStyleNewBuild||[self.schedu.isFinished isEqualToNumber:[NSNumber numberWithBool:NO]])) {
+        if (self.isPickerShow) {
+            [self animationForDatePickerDown];
+        }else{
+            [self timerPickerViewAnimation];
+        }
+        
     }
-    if (indexPath.row == 2 && _style == KVisitRecoardVCStyleNewBuild) {
+    
+    if ((indexPath.row == 2 && _style == KVisitRecoardVCStyleNewBuild)||[self.schedu.isFinished isEqualToNumber:[NSNumber numberWithBool:NO]]) {
         NSLog(@"显示时间");
         _isShowDate = NO;
         //[self timerPickerViewAnimation];
-    }else if (indexPath.row == 1 && _style == KVisitRecoardVCStyleNewBuild){
+    }else if ((indexPath.row == 1 && _style == KVisitRecoardVCStyleNewBuild)||[self.schedu.isFinished isEqualToNumber:[NSNumber numberWithBool:NO]]){
         NSLog(@"显示日期xx");
         _isShowDate = YES;
         //[self timerPickerViewAnimation];
     }else if (indexPath.row == 4 && _style == KVisitRecoardVCStyleNewBuild){
         //弹出地址插件；
         _isAddress = YES;
-//        TSLocateView *locateView = [[TSLocateView alloc] initWithTitle:@"定位城市" delegate:self];
-//        [locateView showInView:self.view];
     }
     self.isPickerShow = !self.isPickerShow;
 }
@@ -779,7 +820,9 @@
     if ([cell.textLabel.text isEqualToString:@"对象"]) {
         if (textField.text.length == 0) {
             self.defaultVisitedName = nil;
-            [self.objectDic removeObjectForKey:self.visitInfoCard.name];
+            if (self.visitInfoCard) {
+                [self.objectDic removeObjectForKey:self.visitInfoCard.name];
+            }
         }
         [_fieldValue replaceObjectAtIndex:0 withObject:textField.text];
     }else if ([cell.textLabel.text isEqualToString:@"备注"]){
@@ -792,13 +835,10 @@
         NSString *s = [NSString stringWithFormat:@"%@|",tf.text];
         NSString *addressStr = [NSString stringWithFormat:@"%@%@",s,textField.text];
         DLog(@"address>>>>>>>>%@",addressStr);
-    
     }else if ([cell.textLabel.text isEqualToString:@"参与者"]){
         [_fieldValue replaceObjectAtIndex:6 withObject:textField.text];
     
     }
-    
-   
 }
 #pragma mark -
 - (void)warnBtnClick:(id)sender

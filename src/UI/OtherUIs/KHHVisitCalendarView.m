@@ -54,17 +54,19 @@
 }
 */
 - (void)initViewData{
+    NSSortDescriptor *descFini = [NSSortDescriptor sortDescriptorWithKey:@"isFinished" ascending:YES];
+    NSSortDescriptor *descDate = [NSSortDescriptor sortDescriptorWithKey:@"plannedDate" ascending:NO];
     if (self.isAllVisitedSch) {
         KHHData *data = [KHHData sharedData];
         self.dataArray  = [data allSchedules];
     }else if(self.isFromHomeVC){
         NSSet *set = self.card.schedules;
-        self.dataArray = [set allObjects];
+        self.dataArray = [[set allObjects] sortedArrayUsingDescriptors:@[descFini,descDate]];
     }else if (self.isFromCalVC){
         if ([self.card isKindOfClass:[MyCard class]]) {
             self.card = nil;
         }
-        self.dataArray = [[KHHData sharedData] schedulesOnCard:self.card date:self.selectedDate];
+        self.dataArray = [[[KHHData sharedData] schedulesOnCard:self.card date:self.selectedDate] sortedArrayUsingDescriptors:@[descFini,descDate]];
     }
 }
 #pragma mark -
@@ -156,6 +158,9 @@
     }else{
         cell.finishBtn.hidden = NO;
     }
+    if (sched.minutesToRemindValue > 0) {
+        cell.Btn.hidden = NO;
+    }
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -163,7 +168,11 @@
     KHHVisitRecoardVC *visitVC = [[KHHVisitRecoardVC alloc] initWithNibName:nil bundle:nil];
     //有没有图片
     visitVC.style = KVisitRecoardVCStyleShowInfo;
-    visitVC.schedu = [self.dataArray objectAtIndex:indexPath.row];
+    Schedule *schedu = [self.dataArray objectAtIndex:indexPath.row];
+    visitVC.schedu = schedu;
+    if (!schedu.isFinishedValue) {
+        visitVC.isNeedWarn = YES;
+    }
     visitVC.isHaveImage = YES;
     if (self.isDetailVC) {
         DetailInfoViewController *detailVC = (DetailInfoViewController *)self.viewCtrl;

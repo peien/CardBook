@@ -44,5 +44,6 @@ typedef enum
 @property (strong, nonatomic) Schedule              *schedu;
 @property (strong, nonatomic) NSDate                *selectedDateFromCal;
 @property (assign, nonatomic) bool                  isFromCalVC;
+@property (strong, nonatomic) Card                  *searchCard;
 
 @end

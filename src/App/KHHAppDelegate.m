@@ -140,7 +140,11 @@
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
     DLog(@"didReceiveLocalNotification");
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"时间到" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"拜访时间提醒"
+                                                    message:@"设置拜访的时间到了"
+                                                   delegate:nil
+                                          cancelButtonTitle:@"确定"
+                                          otherButtonTitles:nil, nil];
     [alert show];
 
 }

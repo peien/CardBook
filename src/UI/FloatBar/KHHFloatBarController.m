@@ -49,7 +49,6 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     if (self.isContactCellClick) {
-        self.btn1.hidden = YES;
         self.btn2.hidden = YES;
         self.btn3.hidden = YES;
         CGRect rect = self.btn0.frame;

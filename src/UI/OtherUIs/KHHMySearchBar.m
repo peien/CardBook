@@ -31,8 +31,8 @@
             
             UIButton *OneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
             OneBtn.tag = 1111;
-            [OneBtn setBackgroundImage:[UIImage imageNamed:@"shexiangtou.png"]forState:UIControlStateNormal];
-            OneBtn.frame = CGRectMake(5, 0, 44, 44);
+            [OneBtn setBackgroundImage:[UIImage imageNamed:@"tianjia_Btn_Red.png"]forState:UIControlStateNormal];
+            OneBtn.frame = CGRectMake(3, -5, 50, 50);
             [self addSubview:OneBtn];
             _takePhoto = OneBtn;
         

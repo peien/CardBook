@@ -47,7 +47,7 @@
         parameters[@"visitContext"]     = oSchedule.content;
     }
     if (oSchedule.isFinished)
-        parameters[@"isFinished"]   = (oSchedule.isFinished.boolValue)? @"y": @"n";
+        parameters[@"isFinished"]  = (oSchedule.isFinished.boolValue)? @"y": @"n";
     
     NSMutableString *cardIDs = [NSMutableString string];
     NSMutableString *cardTypes = [NSMutableString string];

@@ -73,7 +73,8 @@
     [super viewDidLoad];
     DLog(@"[II] viewDidLoad...");
     self.companyImageView.image = [UIImage imageNamed:KHHLogoFileName];
-    self.bgImageView.image = [UIImage imageNamed:@"LoginImage_bg.png"];
+    self.bgImageView.image = [UIImage imageNamed:@"LoginImage_normal.jpg"];
+    self.companyImageView.image = [UIImage imageNamed:@"startnew_logo.png"];
 }
 
 #pragma mark - Notification Handlers
