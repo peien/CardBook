@@ -7,10 +7,11 @@
 //
 
 #import "KHHData+UI.h"
-#import "KHHClasses.h"
+//#import "KHHClasses.h"
 #import "KHHTypes.h"
 #import "KHHDefaults.h"
 #import "NSManagedObject+KHH.h"
+//#import "ContactCard.h"
 
 @implementation KHHData (UI_Card)
 // 交换名片后取最新一张名片
@@ -24,7 +25,7 @@
 - (NSArray *)allMyCards {
     NSArray *array;
     array = [MyCard objectArrayByPredicate:nil
-                           sortDescriptors:@[[Card nameSortDescriptor]]];
+                           sortDescriptors:@[[Card nameSortDescriptor],[Card companyCardSortDescriptor]]];
     return array;
 }
 - (MyCard *)myCardByID:(NSNumber *)cardID {
@@ -361,6 +362,34 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
         [self.context deleteObject:msg];
     }
     [self saveContext];
+}
+
+@end
+
+@implementation KHHData(UI_Reply)
+// 回赠名片，是收到名片就调真正回赠接口，是自建联系人就掉发送到手机接口
+- (void)replyCard:(Card *) receiverCard myDefaultReplyCard:(Card *) myReplyCard {
+    if (!receiverCard || !myReplyCard) {
+        return;
+    }
+    
+    DLog(@"reply card, the receiver mobilePhone = %@", receiverCard.mobilePhone);
+    //判断是不是收到的联系人
+    if ([receiverCard isKindOfClass: [ReceivedCard class]]) {
+        [self.agent sendCard:myReplyCard toUser:[[NSString alloc] initWithFormat:@"%@",receiverCard.userID]];
+    }else if ([receiverCard isKindOfClass: [PrivateCard class]]) {
+        //取用户的手机号
+        NSArray *mobiles = [receiverCard.mobilePhone componentsSeparatedByString:@"|"];
+        if (!mobiles || mobiles.count <= 0) {
+            //发送失败的广播
+            return;
+        }
+        NSMutableArray *newMobiles = [[NSMutableArray alloc] initWithCapacity:0];
+        [newMobiles addObject:[mobiles objectAtIndex:0]];
+        
+        DLog(@"reply card, the receiver mobilePhone at index 0 = %@", mobiles);
+        [self.agent sendCard:myReplyCard toPhones:newMobiles];
+    }
 }
 
 @end

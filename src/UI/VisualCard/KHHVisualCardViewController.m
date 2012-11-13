@@ -13,20 +13,32 @@
 #import "NSString+SM.h"
 #import "UIColor+HexColor.h"
 #import "UIImageView+WebCache.h"
+#import "Card.h"
 static CGFloat const CARD_WIDTH = 300.f;
 static CGFloat const CARD_RATIO = CARD_WIDTH / 450.f;
 static CGFloat const CARD_WIDTH_PADDING = 5.f;
 
 @implementation KHHVisualCardViewController
+@synthesize cardWidth= _cardWidth;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        
+        _cardWidth = CARD_WIDTH;
     }
     return self;
 }
+
+//设置卡片宽度
+-(void) setCardWidth:(CGFloat)cardWidth {
+    _cardWidth = cardWidth;
+    CGRect oldBounds = self.view.frame;
+    oldBounds.size = CGSizeMake(_cardWidth , _cardWidth * CARD_RATIO);
+    self.view.frame = oldBounds;
+}
+
 - (void)dealloc
 {
     self.card = nil;
@@ -114,6 +126,9 @@ static CGFloat const CARD_WIDTH_PADDING = 5.f;
     for (UIView *aView in allSubviews) {
         [aView removeFromSuperview];
     }
+    //当前名片大小与标准大小的比例 * 卡片Card_Ratio
+    CGFloat cardRealRatio = self.cardWidth / CARD_WIDTH * CARD_RATIO;
+    
     // 开始重建view
     Card *card = self.card;
     CardTemplate *tmpl = card.template;
@@ -159,13 +174,13 @@ static CGFloat const CARD_WIDTH_PADDING = 5.f;
                                        [NSString stringByFilterNilFromString:valueText]
                                        ];
                 NSString *fontName = [anItem.fontWeight isEqualToString:@"bold"]?@"Helvetica-Bold":@"Helvetica";
-                CGFloat fontSize = anItem.fontSizeValue * CARD_RATIO;
+                CGFloat fontSize = anItem.fontSizeValue * cardRealRatio;
                 UIFont *font = [UIFont fontWithName:fontName size:fontSize];
                 CGSize textSize = [labelText sizeWithFont:font];
-                CGFloat originX = anItem.originXValue * CARD_RATIO;
-                CGFloat originY = anItem.originYValue * CARD_RATIO;
-                CGFloat width = (textSize.width > (CARD_WIDTH - originX - CARD_WIDTH_PADDING))
-                ?(CARD_WIDTH - originX - CARD_WIDTH_PADDING)
+                CGFloat originX = anItem.originXValue * cardRealRatio;
+                CGFloat originY = anItem.originYValue * cardRealRatio;
+                CGFloat width = (textSize.width > (self.cardWidth - originX - CARD_WIDTH_PADDING))
+                ?(self.cardWidth - originX - CARD_WIDTH_PADDING)
                 :textSize.width;
 //                CGFloat width = textSize.width;
                 CGFloat height = textSize.height;
@@ -180,10 +195,10 @@ static CGFloat const CARD_WIDTH_PADDING = 5.f;
         }
         // 单独处理logo和公司logo
         else if ([anItem.name hasSuffix:@"logo"]) {
-            CGFloat originX = anItem.originXValue * CARD_RATIO;
-            CGFloat originY = anItem.originYValue * CARD_RATIO;
-            CGFloat width = anItem.rectWidthValue * CARD_RATIO;
-            CGFloat height = anItem.rectHeightValue * CARD_RATIO;
+            CGFloat originX = anItem.originXValue * cardRealRatio;
+            CGFloat originY = anItem.originYValue * cardRealRatio;
+            CGFloat width = anItem.rectWidthValue * cardRealRatio;
+            CGFloat height = anItem.rectHeightValue * cardRealRatio;
             NSString *valueText = [card valueForKeyPath:itemValuePair[anItem.name]];
             if (valueText.length) {
                 UIImageView *logoView = [[UIImageView alloc] initWithFrame:CGRectMake(originX, originY, width, height)];

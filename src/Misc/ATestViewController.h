@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "KHHNetworkAPI.h"
-#import "KHHData.h"
 #import "KHHVisualCardViewController.h"
 
+@class KHHData;
 @interface ATestViewController : UIViewController
 @property (nonatomic, strong) KHHNetworkAPIAgent *agent;
 @property (nonatomic, strong) KHHData *data;

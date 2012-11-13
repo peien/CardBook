@@ -23,8 +23,8 @@
 #import "KHHVisitRecoardVC.h"
 #import "UIImageView+WebCache.h"
 #import "KHHDataAPI.h"
-
 #import "Company.h"
+#import "KHHMyAlertViewWithSubView.h"
 
 #define POPDismiss [self.popover dismissPopoverAnimated:YES];
 #define LABEL_NAME_TAG    98980
@@ -47,7 +47,6 @@
 
 @implementation DetailInfoViewController
 
-@synthesize right_bottomBtn = _right_bottomBtn;
 @synthesize eCardVC = _eCardVC;
 @synthesize isToeCardVC = _isToeCardVC;
 @synthesize popover = _popover;
@@ -69,6 +68,7 @@
 @synthesize isReloadVisiteTable;
 @synthesize isReloadCustomValTable;
 @synthesize isColleagues;
+@synthesize myDefaultReplyCard = _myDefaultReplyCard;
 
 #pragma mark -
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -80,7 +80,8 @@
         [self.rightBtn setTitle:NSLocalizedString(@"回赠", nil) forState:UIControlStateNormal];
         self.tabBarController.tabBar.hidden = YES;
         self.dataCtrl = [KHHData sharedData];
-
+        //回赠名片跟回赠按钮一起初始化
+        _myDefaultReplyCard = [[self.dataCtrl allMyCards] objectAtIndex:0];
     }
     return self;
 }
@@ -88,13 +89,20 @@
 //回赠todo
 - (void)rightBarButtonClick:(id)sender
 {
+    //初始化预览名片
+    KHHFrameCardView* cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(45, 35, 180 , 120) isVer:NO];
+    if (!cardView) {
+        return;
+    }
+    cardView.card = _myDefaultReplyCard;
+    [cardView showPreView];
     
-}
-
-//右下角按钮 todo
-- (IBAction)right_bottomBtnClick:(id)sender
-{
-
+    UIView *preView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 180, 120+ 30 + 35)];
+    [preView addSubview: cardView];
+    
+    //显示预览框
+    KHHMyAlertViewWithSubView *alert = [[KHHMyAlertViewWithSubView alloc] initWithTitle:@"回赠名片" subView:preView delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"回赠"];
+    [alert show];
 }
 
 - (void)viewDidLoad
@@ -370,7 +378,6 @@
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-    _right_bottomBtn = nil;
     _cardView = nil;
     _visitCalView = nil;
     _containView = nil;
@@ -399,4 +406,87 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+//回赠名片选择按钮点击
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    switch (buttonIndex) {
+        case 0:
+            DLog(@"reply card cancle");
+            break;
+        case 1:
+        {
+            DLog(@"begin reply card");
+            //注册UI回赠成功失败广播
+            [self observeNotificationName:KHHUIReplyCardSucceeded selector:@"handleReplyCardSucessded:"];
+            [self observeNotificationName:KHHUIReplyCardFailed selector:@"handleReplyCardFailed:"];
+            MBProgressHUD *progess = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+            progess.labelText = NSLocalizedString(@"正在回赠名片，请稍后", nil);
+            [self.dataCtrl replyCard:self.card myDefaultReplyCard:self.myDefaultReplyCard];
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+-(void) handleReplyCardSucessded:(NSNotification *)noti
+{
+    
+    [self stopReplyCardObservingNotifications];
+    //根据返回结果提示用户
+    DLog(@"reply card sucessded . userInfo = %@", noti.userInfo);
+    NSMutableString *message = [[NSMutableString alloc] initWithCapacity:0];
+    [message appendString:@"回赠名片"];
+    if (self.card.name && self.card.name.length > 0) {
+        [message appendString:@"给["];
+        [message appendString:self.card.name];
+        [message appendString:@"]"];
+    }
+        
+    
+    //成功与已存在都显示成功
+    int errorCode = [[noti.userInfo objectForKey:@"errorCode"] intValue];
+    switch (errorCode) {
+        case 0:
+        case 1:
+            [message appendString:@"成功"];
+            break;
+        default:
+            [message appendString:@"失败，请稍后再试"];
+            break;
+    }
+    
+    [self showReplyResult: message];
+}
+
+-(void) handleReplyCardFailed:(NSNotification *)noti
+{
+    [self stopReplyCardObservingNotifications];
+    //根据返回结果提示用户
+    DLog(@"reply card failed . userInfo = %@", noti.userInfo);
+    NSMutableString *message = [[NSMutableString alloc] initWithCapacity:0];
+    [message appendString:@"回赠名片"];
+    if (self.card.name && self.card.name.length > 0) {
+        [message appendString:@"给["];
+        [message appendString:self.card.name];
+        [message appendString:@"]"];
+    }
+    [message appendString:@"失败，请稍后再试"];
+    [self showReplyResult: message];
+}
+
+//停止广播接收器
+-(void) stopReplyCardObservingNotifications
+{
+    //关闭对话框
+    [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
+    [self stopObservingNotificationName:KHHUIReplyCardSucceeded];
+    [self stopObservingNotificationName:KHHUIReplyCardFailed];
+}
+
+//显示回赠结果
+-(void) showReplyResult:(NSString*) result
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"回赠名片" message:result delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
+    [alert show];
+}
 @end

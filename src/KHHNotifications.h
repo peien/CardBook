@@ -95,6 +95,10 @@ static NSString * const nUISyncMessagesFailed      = @"UISyncMessagesFailed";
 static NSString * const nUIDeleteMessagesSucceeded = @"UIDeleteMessagesSucceeded";
 static NSString * const nUIDeleteMessagesFailed    = @"UIDeleteMessagesFailed";
 
+//MARK: -回赠名片
+static NSString * const KHHUIReplyCardSucceeded     = @"UIReplyCardSucceeded";
+static NSString * const KHHUIReplyCardFailed        = @"UIReplyCardFailed";
+
 #pragma mark - Misc
 //MARK: - 位置
 /*!
@@ -195,7 +199,7 @@ static NSString * const KHHNetworkChildGroupsOfGroupIDFailed    = @"NetworkChild
 //交换
 static NSString * const KHHNetworkExchangeCardSucceeded = @"exchangeCardSucceeded";
 static NSString * const KHHNetworkExchangeCardFailed    = @"exchangeCardFailed";
-//发送
+//发送（回赠名片）
 static NSString * const nNetworkSendCardToPhoneSucceeded = @"NetworkSendCardToPhoneSucceeded";
 static NSString * const nNetworkSendCardToPhoneFailed    = @"NetworkSendCardToPhoneFailed";
 static NSString * const KHHNetworkSendCardToUserSucceeded = @"sendCardToUserSucceeded";
@@ -239,5 +243,6 @@ static NSString * const nNetworkDeleteMessagesFailed    = @"NetworkDeleteMessage
 // promotionMessagesWithType
 static NSString * const KHHNetworkPromotionMessagesWithTypeSucceeded = @"promotionMessagesWithTypeSucceeded";
 static NSString * const KHHNetworkPromotionMessagesWithTypeFailed    = @"promotionMessagesWithTypeFailed";
+
 
 #endif

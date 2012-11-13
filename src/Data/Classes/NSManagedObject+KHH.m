@@ -103,7 +103,13 @@
 }
 + (NSSortDescriptor *)newCardSortDescriptor{
     NSSortDescriptor *result;
-    result = [NSSortDescriptor sortDescriptorWithKey:@"isRead" ascending:YES selector:@selector(compare:)];
+    result = [NSSortDescriptor sortDescriptorWithKey:kAttributeKeyIsRead ascending:YES selector:@selector(compare:)];
+    return result;
+}
+
++ (NSSortDescriptor *)companyCardSortDescriptor{
+    NSSortDescriptor *result;
+    result = [NSSortDescriptor sortDescriptorWithKey:kAttributeKeyPathCompanyID ascending:NO selector:@selector(compare:)];
     return result;
 }
 @end

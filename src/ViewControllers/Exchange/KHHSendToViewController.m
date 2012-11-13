@@ -1,4 +1,4 @@
-//
+                                                                                                                                                                                                              //
 //  KHHSendToViewController.m
 //  CardBook
 //
@@ -42,7 +42,7 @@
 }
 @end
 
-@interface KHHSendToViewController ()<ABPeoplePickerNavigationControllerDelegate,JSTokenFieldDelegate>
+@interface KHHSendToViewController ()<UIAlertViewDelegate,ABPeoplePickerNavigationControllerDelegate,JSTokenFieldDelegate>
 @property (strong, nonatomic) NSMutableArray *theReceivers;
 @property (strong, nonatomic) KHHNetworkAPIAgent *agent;
 @end
@@ -81,8 +81,8 @@
 //发送
 - (void)rightBarButtonClick:(id)sender
 {
-    [self observeNotificationName:nNetworkSendCardToPhoneSucceeded selector:@"handleSendCardToPhoneSucceeded:"];
-    [self observeNotificationName:nNetworkSendCardToPhoneFailed selector:@"handleSendCardToPhoneFailed:"];
+    [self observeNotificationName:KHHUIReplyCardSucceeded selector:@"handleSendCardToPhoneSucceeded:"];
+    [self observeNotificationName:KHHUIReplyCardFailed selector:@"handleSendCardToPhoneFailed:"];
     [self sendToReceivers];
 }
 - (void)sendToReceivers{
@@ -102,17 +102,15 @@
         if (self.theCard) {
             //
             if (self.theReceivers.count) {
-                //
-                NSMutableString *mobileString = [[NSMutableString alloc] init];
+                //把token里的手机号取出添加到目标数组中
+                NSMutableArray *mobileArray = [[NSMutableArray alloc] initWithCapacity:0];
                 for (CardReceiver *cr in self.theReceivers) {
-                    [mobileString appendFormat:@"%@;",cr.mobile];
+                    [mobileArray addObject:cr.mobile];
                 }
-                NSRange rangeToDel = {mobileString.length - 1, 1};
-                [mobileString deleteCharactersInRange:rangeToDel];
 #ifdef DEBUG
-                NSLog(@"接受者mobileString：%@", mobileString);
+                NSLog(@"接受者mobileArray：%@", mobileArray);
 #endif
-                [self.agent sendCard:self.theCard toPhones:self.theReceivers];
+                [self.agent sendCard:self.theCard toPhones:mobileArray];
                 
             }
         } else {
@@ -123,27 +121,36 @@
 }
 #pragma mark -
 - (void)handleSendCardToPhoneSucceeded:(NSNotification *)info{
-    [self stopObservingNotificationName:nNetworkSendCardToPhoneSucceeded];
-    [self stopObservingNotificationName:nNetworkSendCardToPhoneFailed];
+    [self stopObservingNotificationName:KHHUIReplyCardSucceeded];
+    [self stopObservingNotificationName:KHHUIReplyCardFailed];
     DLog(@"handleSendCardToPhoneSucceeded! ====== info is %@",info.userInfo);
+    NSString *message;
+    if ([[info.userInfo objectForKey:@"errorCode"] intValue] == 1) {
+        message = @"对方已有你的名片，无需发送";
+    }else if([[info.userInfo objectForKey:@"errorCode"] intValue] == 0) {
+        message = textCardSent;
+    }else {
+        message = @"发送失败，请稍后再试";
+    }
+#ifdef DEBUG
+    NSLog(@"发送结果message：%@", message);
+#endif
     [[[UIAlertView alloc] initWithTitle:nil
-                                message:textCardSent
-                               delegate:nil
+                                message:message
+                               delegate:self
                       cancelButtonTitle:textOK
                       otherButtonTitles:nil] show];
 
 }
 - (void)handleSendCardToPhoneFailed:(NSNotification *)info{
-    [self stopObservingNotificationName:nNetworkSendCardToPhoneSucceeded];
-    [self stopObservingNotificationName:nNetworkSendCardToPhoneFailed];
+    [self stopObservingNotificationName:KHHUIReplyCardSucceeded];
+    [self stopObservingNotificationName:KHHUIReplyCardFailed];
     DLog(@"handleSendCardToPhoneFailed! ====== info is %@",info.userInfo);
-    if ([[info.userInfo objectForKey:@"errorCode"] intValue] == 1) {
-        [[[UIAlertView alloc] initWithTitle:nil
-                                    message:@"对方已有你的名片，无需发送"
+    [[[UIAlertView alloc] initWithTitle:nil
+                                    message:@"发送失败，请稍后再试"
                                    delegate:nil
                           cancelButtonTitle:textOK
                           otherButtonTitles:nil] show];
-    }
 }
 #pragma mark -
 - (void)viewDidLoad
@@ -391,6 +398,13 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+//发送成功，返回上个界面
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (buttonIndex == 0) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 @end

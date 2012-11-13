@@ -7,7 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Card.h"
+@class Card;
 @interface KHHVisualCardViewController : UIViewController
 @property (nonatomic, strong) Card *card;
+@property(assign, nonatomic) CGFloat cardWidth;
+-(void) setCardWidth:(CGFloat) cardWidth;
 @end

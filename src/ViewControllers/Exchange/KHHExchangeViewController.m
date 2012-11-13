@@ -70,7 +70,7 @@
         [self.rightBtn setTitle:@"编辑" forState:UIControlStateNormal];
         self.httpAgent = [[KHHNetworkAPIAgent alloc] init];
         self.dataCtrl = [KHHData sharedData];
-        self.card = [[self.dataCtrl allMyCards] lastObject];
+        self.card = [[self.dataCtrl allMyCards] objectAtIndex:0];
         self.app  = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
     }
     return self;
@@ -159,15 +159,18 @@
             [self exchangeCard];
             break;
         case 113:
+        {
             //同步所有，同步联系人，启动定位服务
             //[self synBtnClick];
             //收到最后一张新的卡片
             [self observeNotificationName:KHHUIPullLatestReceivedCardSucceeded selector:@"handlePullLatestReceivedCardSucceeded:"];
             [self observeNotificationName:KHHUIPullLatestReceivedCardFailed selector:@"handlePullLatestReceivedCardFailed:"];
-            [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+            MBProgressHUD *progess = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+            progess.labelText = NSLocalizedString(@"正在收名片，请稍后", nil);
             self.isHandleReceive = YES;
             [self.dataCtrl pullLatestReceivedCard];
             break;
+        }
         default:
             break;
     }
@@ -175,7 +178,7 @@
 }
 // 刷新卡片信息
 - (void)updateCardTempInfo{
-    self.card = [[self.dataCtrl allMyCards] lastObject];
+    self.card = [[self.dataCtrl allMyCards] objectAtIndex:0];
     self.cardView.card = self.card;
     [self.cardView.scrView removeFromSuperview];
     [self.cardView.xlPage removeFromSuperview];
@@ -272,7 +275,9 @@
     [self observeNotificationName:KHHUIPullLatestReceivedCardFailed selector:@"handlePullLatestReceivedCardFailed:"];
     [self.timer invalidate];
     self.timer = nil;
-    [self.mbHUD hide:YES];
+//    [self.mbHUD hide:YES];
+    //交换成功后在收取名片中间的空隙添加文字提示
+    self.mbHUD.labelText = @"名片交换成功，正在为您收取名片";
     [self.dataCtrl pullLatestReceivedCard];
 }
 //交换失败
@@ -301,11 +306,15 @@
     }
 }
 - (void)showNewCardInfo{
+    //通过交换获取的名片时，提示名片前把提示用户正在收名片的对话框隐藏
+    if (self.mbHUD && !self.mbHUD.isHidden) {
+        [self.mbHUD hide:YES];
+    }
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"收到新到名片"
                                                     message:self.latestCard.name
                                                    delegate:self
-                                          cancelButtonTitle:@"确定"
-                                          otherButtonTitles:nil, nil];
+                                          cancelButtonTitle:@"查看详情"
+                                          otherButtonTitles:@"取消", nil];
     [alert show];
 }
 //收到最新card失败
@@ -315,15 +324,21 @@
     [self stopObservingNotificationName:KHHUIPullLatestReceivedCardFailed];
     if (self.isHandleReceive) {
         [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"没有新到名片"
-                                                        message:self.latestCard.name
-                                                       delegate:self
-                                              cancelButtonTitle:@"确定"
-                                              otherButtonTitles:nil, nil];
-        [alert show];
     }
     
-     
+    //通过交换获取的名片时，提示错误前把提示用户正在收名片的对话框隐藏
+    if (self.mbHUD && !self.mbHUD.isHidden) {
+        [self.mbHUD hide:YES];
+    }
+    
+    //提示没有收到新名片
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"没有新到名片"
+                                                    message:self.latestCard.name
+                                                   delegate:self
+                                          cancelButtonTitle:@"确定"
+                                          otherButtonTitles:nil, nil];
+    [alert show];
+    
 }
 //定位委托方法
 - (void)locationManager:(CLLocationManager *)manager

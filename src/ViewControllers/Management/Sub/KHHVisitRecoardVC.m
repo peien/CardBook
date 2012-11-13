@@ -398,7 +398,7 @@
     self.hud = [MBProgressHUD showHUDAddedTo:app.window animated:YES];
     
     if (_style == KVisitRecoardVCStyleNewBuild) {
-        MyCard *mycard = [[self.dataCtrl allMyCards] lastObject];
+        MyCard *mycard = [[self.dataCtrl allMyCards] objectAtIndex:0];
         [self.dataCtrl createSchedule:self.oSched withMyCard:mycard];
     }else if (_style == KVisitRecoardVCStyleShowInfo){
         [self.dataCtrl updateSchedule:self.oSched];

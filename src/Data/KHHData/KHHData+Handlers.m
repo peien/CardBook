@@ -127,6 +127,12 @@
                          selector:@"handleDeleteMessagesSucceeded:"];
     [self observeNotificationName:nNetworkDeleteMessagesFailed
                          selector:@"handleDeleteMessagesFailed:"];
+    
+    //发送名片
+    [self observeNotificationName:nNetworkSendCardToPhoneSucceeded selector:@"handleNetworkSendCardSucceeded:"];
+    [self observeNotificationName:nNetworkSendCardToPhoneFailed selector:@"handleNetworkSendCardFailed:"];
+    [self observeNotificationName:KHHNetworkSendCardToUserSucceeded selector:@"handleNetworkSendCardSucceeded:"];
+    [self observeNotificationName:KHHNetworkSendCardToUserFailed selector:@"handleNetworkSendCardFailed:"];
 }
 
 #pragma mark - Handlers
@@ -634,6 +640,16 @@
                               info:noti.userInfo];
 }
 
+//发送名片 byUserID 与byMobile在这里只作了转发作用，所以合并成一个
+- (void)handleNetworkSendCardSucceeded:(NSNotification *)noti {
+    // 发送成功消息
+    [self postASAPNotificationName:KHHUIReplyCardSucceeded info:noti.userInfo];
+}
+
+- (void)handleNetworkSendCardFailed:(NSNotification *)noti {
+    [self postASAPNotificationName:KHHUIReplyCardFailed
+                              info:noti.userInfo];
+}
 
 @end
 

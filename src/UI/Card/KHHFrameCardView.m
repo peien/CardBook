@@ -41,10 +41,10 @@
     xlPage.activeImg = [UIImage imageNamed:@"p2.png"];
     xlPage.unActiveImg = [UIImage imageNamed:@"p1.png"];
     xlPage.tag = 118;
-    [xlPage addTarget:self action:@selector(pageCtrlClick:) forControlEvents:UIControlEventValueChanged];
-    [xlPage setCurrentPage:0];
     xlPage.hidesForSinglePage = YES;
     xlPage.numberOfPages = 2;
+    [xlPage addTarget:self action:@selector(pageCtrlClick:) forControlEvents:UIControlEventValueChanged];
+    [xlPage setCurrentPage:0];
     [self addSubview:xlPage];
     self.pages = 2;
     if (_isVer) {
@@ -61,6 +61,40 @@
     self.shadowCard.frame = CGRectMake(0, 195, 320, 20);
     [self addSubview:self.shadowCard];
 }
+
+//显示用户设置的大小的名片，不是默认的300 * 180的名片大小
+- (void)showPreView
+{
+    CGRect myFrame = self.frame;
+    self.cardTempVC = [[KHHVisualCardViewController alloc] initWithNibName:nil bundle:nil];
+    [self.cardTempVC setCardWidth:myFrame.size.width];
+    xlPage = [[XLPageControl alloc] initWithFrame:CGRectMake(50  , myFrame.size.height + 20, 100, 15)];
+    [xlPage setBackgroundColor:[UIColor clearColor]];
+    xlPage.activeImg = [UIImage imageNamed:@"p2.png"];
+    xlPage.unActiveImg = [UIImage imageNamed:@"p1.png"];
+    xlPage.tag = 118;
+    xlPage.hidesForSinglePage = YES;
+    xlPage.numberOfPages = 2;
+    [xlPage addTarget:self action:@selector(pageCtrlClick:) forControlEvents:UIControlEventValueChanged];
+    [xlPage setCurrentPage:0];
+    [self addSubview:xlPage];
+    self.pages = 2;
+    if (_isVer) {
+        CGRect rect = CGRectMake(75, 10, myFrame.size.width, myFrame.size.height);
+        [self creatCardTemplate:rect];
+//        xlPage.frame = CGRectMake(110, 260, 100, 15);
+    }else{
+        CGRect rect = CGRectMake(10, 15, myFrame.size.width, myFrame.size.height);
+        [self creatCardTemplate:rect];
+//        xlPage.frame = CGRectMake(100, 205, 100, 15);
+    }
+    [self addSubview:_scrView];
+    self.shadowCard = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cardTouying.png"]];
+    self.shadowCard.frame = CGRectMake(0, myFrame.size.height + 15, myFrame.size.width, 20);
+    [self addSubview:self.shadowCard];
+}
+
+
 - (void)creatCardTemplate:(CGRect)frame
 {
 

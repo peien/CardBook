@@ -69,7 +69,7 @@
     
     DLog(@"self.icustomerEva ====== %@",self.icustomerEva);
     self.hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    MyCard *myCard = [[self.dataCtrl allMyCards] lastObject];
+    MyCard *myCard = [[self.dataCtrl allMyCards] objectAtIndex:0];
     [self.dataCtrl saveEvaluation:self.icustomerEva aboutCustomer:self.card withMyCard:myCard];
     
 }

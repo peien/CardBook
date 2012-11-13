@@ -23,4 +23,5 @@
 
 - (id)initWithFrame:(CGRect)frame isVer:(BOOL)ver;
 - (void)showView;
+-(void) showPreView;
 @end

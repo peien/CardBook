@@ -14,8 +14,7 @@
 #import "KHHCardMode.h"
 @class eCardViewController;
 
-@interface DetailInfoViewController : SuperViewController
-@property (strong, nonatomic) IBOutlet UIButton   *right_bottomBtn;
+@interface DetailInfoViewController : SuperViewController <UIAlertViewDelegate>
 @property (strong, nonatomic) eCardViewController *eCardVC;
 @property (assign, nonatomic) bool                isToeCardVC;
 @property (strong, nonatomic) IBOutlet UIView     *containView;
@@ -28,5 +27,6 @@
 @property (nonatomic, assign) bool                isNeedReloadTable;
 @property (assign, nonatomic) bool                isReloadVisiteTable;
 @property (assign, nonatomic) bool                isColleagues;
+@property (strong, nonatomic) Card              *myDefaultReplyCard;
 
 @end

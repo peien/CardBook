@@ -35,7 +35,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     //[self.view removeFromSuperview];
-    Card *card = [[[KHHData sharedData] allMyCards] lastObject];
+    Card *card = [[[KHHData sharedData] allMyCards] objectAtIndex:0];
     _visitView = [[[NSBundle mainBundle] loadNibNamed:@"KHHVisitCalendarView" owner:self options:nil] objectAtIndex:0];
     _visitView.card = card;
     _visitView.isAllVisitedSch = YES;

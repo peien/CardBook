@@ -29,6 +29,7 @@
 		621371D91643A1050041FE22 /* popoverArrowDownSimple.png in Resources */ = {isa = PBXBuildFile; fileRef = 621371D61643A1050041FE22 /* popoverArrowDownSimple.png */; };
 		621371DA1643A1050041FE22 /* popoverArrowLeftSimple.png in Resources */ = {isa = PBXBuildFile; fileRef = 621371D71643A1050041FE22 /* popoverArrowLeftSimple.png */; };
 		621371DB1643A1050041FE22 /* popoverArrowUpSimple.png in Resources */ = {isa = PBXBuildFile; fileRef = 621371D81643A1050041FE22 /* popoverArrowUpSimple.png */; };
+		621618AF164CAB8200A66DB5 /* KHHMyAlertViewWithSubView.m in Sources */ = {isa = PBXBuildFile; fileRef = 621618AE164CAB8100A66DB5 /* KHHMyAlertViewWithSubView.m */; };
 		6238BA8316394AD80064B8A9 /* flagcircle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6238BA7F16394AD80064B8A9 /* flagcircle@2x.png */; };
 		6238BA8416394AD80064B8A9 /* visitedfinished@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6238BA8016394AD80064B8A9 /* visitedfinished@2x.png */; };
 		6238BA8516394AD80064B8A9 /* visitedtoday@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6238BA8116394AD80064B8A9 /* visitedtoday@2x.png */; };
@@ -570,6 +571,8 @@
 		621371D61643A1050041FE22 /* popoverArrowDownSimple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = popoverArrowDownSimple.png; sourceTree = "<group>"; };
 		621371D71643A1050041FE22 /* popoverArrowLeftSimple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = popoverArrowLeftSimple.png; sourceTree = "<group>"; };
 		621371D81643A1050041FE22 /* popoverArrowUpSimple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = popoverArrowUpSimple.png; sourceTree = "<group>"; };
+		621618AD164CAB8100A66DB5 /* KHHMyAlertViewWithSubView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHMyAlertViewWithSubView.h; sourceTree = "<group>"; };
+		621618AE164CAB8100A66DB5 /* KHHMyAlertViewWithSubView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHMyAlertViewWithSubView.m; sourceTree = "<group>"; };
 		6238BA7F16394AD80064B8A9 /* flagcircle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "flagcircle@2x.png"; sourceTree = "<group>"; };
 		6238BA8016394AD80064B8A9 /* visitedfinished@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "visitedfinished@2x.png"; sourceTree = "<group>"; };
 		6238BA8116394AD80064B8A9 /* visitedtoday@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "visitedtoday@2x.png"; sourceTree = "<group>"; };
@@ -1633,17 +1636,17 @@
 		98A84D9A1602D20000A4A673 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				98A84DA61602D2DA00A4A673 /* KHHMacros.h */,
+				98A84D9C1602D21F00A4A673 /* App */,
+				98A84D9D1602D22600A4A673 /* Data */,
+				98542230162BA46500A9E50A /* KHHActions.h */,
 				984C48F81627F0DC007A152B /* KHHClasses.h */,
 				984C48FA1627F15E007A152B /* KHHDataAPI.h */,
-				982AACC21609C903002B9BAD /* KHHTypes.h */,
 				98A84DA51602D2DA00A4A673 /* KHHKeys.h */,
-				98542230162BA46500A9E50A /* KHHActions.h */,
+				98A84DA61602D2DA00A4A673 /* KHHMacros.h */,
 				98A84DA71602D2DA00A4A673 /* KHHNotifications.h */,
 				98A84DA81602D2DA00A4A673 /* KHHStatusCodes.h */,
 				981BA0FF162FE6410036A4B8 /* KHHTransformation.h */,
-				98A84D9C1602D21F00A4A673 /* App */,
-				98A84D9D1602D22600A4A673 /* Data */,
+				982AACC21609C903002B9BAD /* KHHTypes.h */,
 				98A84D9E1602D23100A4A673 /* Misc */,
 				98A84D9F1602D23A00A4A673 /* Network */,
 				98A84DA01602D24600A4A673 /* UI */,
@@ -2226,12 +2229,22 @@
 				98A84F481602D6C500A4A673 /* KHHAddImageView.h */,
 				98A84F491602D6C500A4A673 /* KHHAddImageView.m */,
 				98A84F4A1602D6C500A4A673 /* KHHAddImageView.xib */,
+				62A9C99916099AC100BF7D41 /* KHHAddressBook.h */,
+				62A9C99A16099AC100BF7D41 /* KHHAddressBook.m */,
+				62AC98DB163A4A50009EF269 /* KHHCardTemplageVC.h */,
+				62AC98DC163A4A50009EF269 /* KHHCardTemplageVC.m */,
+				62AC98DD163A4A50009EF269 /* KHHCardTemplageVC.xib */,
 				98A84F4B1602D6C500A4A673 /* KHHCardView.h */,
 				98A84F4C1602D6C500A4A673 /* KHHCardView.m */,
 				98A84F4D1602D6C500A4A673 /* KHHCardView.xib */,
 				98A84F501602D6C500A4A673 /* KHHCustomEvaluaView.h */,
 				98A84F511602D6C500A4A673 /* KHHCustomEvaluaView.m */,
 				98A84F521602D6C500A4A673 /* KHHCustomEvaluaView.xib */,
+				62A6C4DB160AAECE00ADA43E /* KHHFullFrameController.h */,
+				62A6C4DC160AAECE00ADA43E /* KHHFullFrameController.m */,
+				62A6C4DD160AAECE00ADA43E /* KHHFullFrameController.xib */,
+				621618AD164CAB8100A66DB5 /* KHHMyAlertViewWithSubView.h */,
+				621618AE164CAB8100A66DB5 /* KHHMyAlertViewWithSubView.m */,
 				98A84F551602D6C500A4A673 /* KHHMySearchBar.h */,
 				98A84F561602D6C500A4A673 /* KHHMySearchBar.m */,
 				98A84F571602D6C500A4A673 /* KHHShowHideTabBar.h */,
@@ -2243,14 +2256,6 @@
 				98A84F5D1602D6C500A4A673 /* myAlertView.m */,
 				98A84F5E1602D6C500A4A673 /* MyTabBarController.h */,
 				98A84F5F1602D6C500A4A673 /* MyTabBarController.m */,
-				62A9C99916099AC100BF7D41 /* KHHAddressBook.h */,
-				62A9C99A16099AC100BF7D41 /* KHHAddressBook.m */,
-				62A6C4DB160AAECE00ADA43E /* KHHFullFrameController.h */,
-				62A6C4DC160AAECE00ADA43E /* KHHFullFrameController.m */,
-				62A6C4DD160AAECE00ADA43E /* KHHFullFrameController.xib */,
-				62AC98DB163A4A50009EF269 /* KHHCardTemplageVC.h */,
-				62AC98DC163A4A50009EF269 /* KHHCardTemplageVC.m */,
-				62AC98DD163A4A50009EF269 /* KHHCardTemplageVC.xib */,
 			);
 			path = OtherUIs;
 			sourceTree = "<group>";
@@ -2351,10 +2356,6 @@
 				98A84FA31602D7B300A4A673 /* p2.png */,
 				98A84FA41602D7B300A4A673 /* phoneIco@2x.png */,
 				98A84FA51602D7B300A4A673 /* point@2x.png */,
-				62A6144D163FAE840011048B /* pop_bg@2x.png */,
-				62A6144E163FAE850011048B /* pop_down@2x.png */,
-				62A6144F163FAE850011048B /* pop_left@2x.png */,
-				62A61450163FAE850011048B /* pop_up@2x.png */,
 				98A84FA61602D7B300A4A673 /* popView_bg@2x.png */,
 				62A9DF53162262F300310E92 /* qidong_logo@2x.png */,
 				62A77FD6161687B20015A969 /* rili_Btn_Red@2x.png */,
@@ -3311,6 +3312,7 @@
 				98BEF3BD16424ED4003EDF33 /* InMessage.m in Sources */,
 				62A7B2E41643C54D00291462 /* UIBarButtonItem+WEPopover.m in Sources */,
 				628DC6461647B430008D1F3D /* KHHAllVisitedSchedusVC.m in Sources */,
+				621618AF164CAB8200A66DB5 /* KHHMyAlertViewWithSubView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

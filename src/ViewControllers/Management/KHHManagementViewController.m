@@ -48,7 +48,7 @@
         self.title = NSLocalizedString(@"名片宝", nil);
         _isBoss = YES;
         self.dataCtrl = [KHHData sharedData];
-        self.myCard = [[self.dataCtrl allMyCards] lastObject];
+        self.myCard = [[self.dataCtrl allMyCards] objectAtIndex:0];
         if (_isBoss) {
            _entranceView = [[[NSBundle mainBundle] loadNibNamed:@"KHHBossEntrance" owner:self options:nil] objectAtIndex:0]; 
         }else
