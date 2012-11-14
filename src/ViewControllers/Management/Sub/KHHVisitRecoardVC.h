@@ -12,21 +12,20 @@
 typedef enum
 {
     KVisitRecoardVCStyleNewBuild,
-    KVisitRecoardVCStyleShowInfo,
-    KVisitRecoardVCStyleFinishTask
+    KVisitRecoardVCStyleShowInfo
 
 }KVisitRecoardVCStyle;
 @interface KHHVisitRecoardVC : SuperViewController<UITableViewDataSource,UITableViewDelegate>
-@property (strong, nonatomic) IBOutlet UITableView  *theTable;
+@property (weak, nonatomic) IBOutlet UITableView  *theTable;
 @property (strong, nonatomic) NSArray               *noteArray;
-@property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
+@property (strong, nonatomic) UIDatePicker          *datePicker;
 @property (strong, nonatomic) NSString              *dateStr;
 @property (strong, nonatomic) NSString              *timeStr;
 @property (assign, nonatomic) bool                  isShowDate;
-@property (strong, nonatomic) IBOutlet UIPickerView *pick;
+@property (strong, nonatomic)  UIPickerView         *pick;
 @property (strong, nonatomic) NSArray               *warnTitleArr;
 @property (assign, nonatomic) KVisitRecoardVCStyle  style;
-@property (assign, nonatomic) bool                  isFinishTask;
+@property (assign, nonatomic) bool                  isFinishTask; //是否需要签到，时间不可以编辑
 @property (assign, nonatomic) bool                  isNeedWarn;
 @property (strong, nonatomic) NSArray               *tempPickArr;
 @property (assign, nonatomic) bool                  isWarnBtnClick;
@@ -45,5 +44,7 @@ typedef enum
 @property (strong, nonatomic) NSDate                *selectedDateFromCal;
 @property (assign, nonatomic) bool                  isFromCalVC;
 @property (strong, nonatomic) Card                  *searchCard;
+@property (assign, nonatomic) double                timeInterval;
 
+- (void)datePickerValueChanged:(UIDatePicker *)sender;
 @end

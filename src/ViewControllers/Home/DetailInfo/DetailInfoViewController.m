@@ -12,7 +12,6 @@
 #import "KHHFloatBarController.h"
 #import "WEPopoverController.h"
 #import "KHHCalendarViewController.h"
-#import "KHHFinishVisitVC.h"
 
 #import "KHHCardView.h"
 #import "KHHVisitCalendarView.h"

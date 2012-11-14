@@ -92,9 +92,9 @@
             NSArray *set = [self.card.frames allObjects];
             if (set.count > 0) {
                 Image *img = [set objectAtIndex:0];
-                [imgView setImageWithURL:[NSURL URLWithString:img.url] placeholderImage:[UIImage imageNamed:@"qidong_logo.png"]];
+                [imgView setImageWithURL:[NSURL URLWithString:img.url] placeholderImage:[UIImage imageNamed:@"two_Frame.jpg"]];
             }else{
-                imgView.image = [UIImage imageNamed:@"qidong_logo.png"];
+                imgView.image = [UIImage imageNamed:@"two_Frame.jpg"];
             }
             
             [scroll addSubview:imgView];

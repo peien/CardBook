@@ -10,12 +10,12 @@
 #import "KHHVisitCalendarCell.h"
 #import "KHHCalendarViewController.h"
 #import "KHHAllVisitedSchedusVC.h"
-#import "KHHFinishVisitVC.h"
 #import "KHHVisitRecoardVC.h"
 #import "KHHFullFrameController.h"
 #import "MapController.h"
 #import "UIImageView+WebCache.h"
 #import "DetailInfoViewController.h"
+#import "KHHTempVisitedVC.h"
 #import "KHHData+UI.h"
 #import "KHHData.h"
 #import "NSString+SM.h"
@@ -169,7 +169,9 @@
     //有没有图片
     visitVC.style = KVisitRecoardVCStyleShowInfo;
     Schedule *schedu = [self.dataArray objectAtIndex:indexPath.row];
+    
     visitVC.schedu = schedu;
+    
     if (!schedu.isFinishedValue) {
         visitVC.isNeedWarn = YES;
     }
@@ -199,7 +201,7 @@
         KHHVisitCalendarCell *cell = (KHHVisitCalendarCell *)[[btn superview] superview];
         NSIndexPath *index = [_theTable indexPathForCell:cell];
         KHHVisitRecoardVC *finishVC = [[KHHVisitRecoardVC alloc] initWithNibName:nil bundle:nil];
-        finishVC.isNeedWarn = NO;
+        finishVC.isNeedWarn = YES;
         finishVC.isFinishTask = YES;
         finishVC.schedu = [self.dataArray objectAtIndex:index.row];
         finishVC.style = KVisitRecoardVCStyleShowInfo;
@@ -216,12 +218,10 @@
 - (IBAction)VisitCalendarBtnClick:(id)sender
 {
     UIButton *btn = (UIButton *)sender;
-    
     if (self.isDetailVC) {
         DetailInfoViewController *detailVC = (DetailInfoViewController *)self.viewCtrl;
         detailVC.isReloadVisiteTable = YES;
     }
-    
     if (btn.tag == 333) {
         
         KHHVisitRecoardVC *visitRVC = [[KHHVisitRecoardVC alloc] initWithNibName:nil bundle:nil];
@@ -235,7 +235,6 @@
         calendarVC.card = self.card;
         [self.viewCtrl.navigationController pushViewController:calendarVC animated:YES];
     }
-
 }
 - (void)tapFullFrame:(UITapGestureRecognizer *)sender
 {

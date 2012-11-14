@@ -87,7 +87,14 @@
     NSArray *array;
 //    array = [ReceivedCard objectArrayByPredicate:nil
 //                                 sortDescriptors:@[[Card nameSortDescriptor]]];
-    array = [ReceivedCard objectArrayByPredicate:nil
+    NSNumber *myComID = [KHHDefaults sharedDefaults].currentCompanyID;
+    NSPredicate *predicate = nil;
+    if (myComID.integerValue) {
+        // 自己属于某公司
+        // 用公司ID过滤掉同事
+        predicate = [NSPredicate predicateWithFormat:@"company.id <> %@", myComID];
+    }
+    array = [ReceivedCard objectArrayByPredicate:predicate
                                  sortDescriptors:@[[Card newCardSortDescriptor],[Card nameSortDescriptor]]];
     return array;
 }
@@ -191,6 +198,30 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
     // 过滤掉意外情况
     result = FilterUnexpectedCardsFromArray(fetched);
     return result;
+}
+// 通过几颗星筛选评估价值
+- (NSArray *)cardsofStarts:(float)starts{
+    NSMutableArray *result;
+    NSArray *fetched;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"evaluation.value == %f",starts]];
+    fetched = [ContactCard objectArrayByPredicate:predicate sortDescriptors:@[[Card nameSortDescriptor]]];
+    result = FilterUnexpectedCardsFromArray(fetched);
+    return result;
+}
+// 通过几颗星筛选关系
+- (NSArray *)cardsOfstartsForRelation:(float)starts{
+    NSMutableArray *result;
+    NSArray *fetched;
+    NSPredicate *predicate;
+    if (starts == -1) {
+         predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"evaluation.degree >= 1"]];
+    }else{
+         predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"evaluation.degree == %f",starts]];
+    }
+    fetched = [ContactCard objectArrayByPredicate:predicate sortDescriptors:@[[Card nameSortDescriptor]]];
+    result = FilterUnexpectedCardsFromArray(fetched);
+    return result;
+
 }
 // 未分组（不在其它分组的，过滤掉同事）
 - (NSArray *)cardsOfUngrouped {

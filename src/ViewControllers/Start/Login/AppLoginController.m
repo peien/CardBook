@@ -49,6 +49,7 @@
                                                  target:self action:nil];
         [self.rightBtn setTitle:NSLocalizedString(@"直接体验", nil) forState:UIControlStateNormal];
         self.defaults = [KHHDefaults sharedDefaults];
+        self.leftBtn.hidden = YES;
     }
     return self;
 }
@@ -130,7 +131,7 @@
 - (void)directLogin{
     
     self.defaults.currentUser = @"13905718888";
-    self.defaults.currentPassword = @"141213";
+    self.defaults.currentPassword = @"888888";
     [self postASAPNotificationName:nAppLogMeIn];
 }
 #pragma mark - SMCheckbox delegate methods

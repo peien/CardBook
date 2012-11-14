@@ -9,9 +9,11 @@
 #import "KHHFloatBarController.h"
 #import "MapController.h"
 #import "KHHVisitRecoardVC.h"
+#import "KHHTempVisitedVC.h"
 #import "KHHBMapViewController.h"
 #import "Address.h"
 #import "Company.h"
+#import "NSString+Validation.h"
 #import <MessageUI/MessageUI.h>
 
 @interface KHHFloatBarController ()<UIImagePickerControllerDelegate, UIActionSheetDelegate,
@@ -120,12 +122,13 @@
         }
         
     }else{
-        if (self.card.mobilePhone.length > 0) {
+        if (self.card.mobilePhone.length > 0 || self.card.telephone.length > 0) {
             NSArray *mobielArr = [self.card.mobilePhone componentsSeparatedByString:@"|"];
             for (int i = 0; i < mobielArr.count; i++) {
                 [act addButtonWithTitle:[mobielArr objectAtIndex:i]];
-                [act showInView:_viewController.view];
+               
             }
+             [act showInView:_viewController.view];
         }
     
     
@@ -143,18 +146,21 @@
         if (phones.count > 0) {
             for (int i = 0; i < phones.count; i++) {
                 [actS addButtonWithTitle:[phones objectAtIndex:i]];
-                [actS showInView:_viewController.view];
+                
             }
+            [actS showInView:_viewController.view];
         }
         
     }else{
         if (self.card.mobilePhone.length > 0) {
             NSArray *mobielArray = [self.card.mobilePhone componentsSeparatedByString:@"|"];
             for (int i = 0; i < mobielArray.count; i++) {
-                [actS addButtonWithTitle:[mobielArray objectAtIndex:i]];
-                [actS showInView:_viewController.view];
-                
+                if ([[mobielArray objectAtIndex:i] isValidMobilePhoneNumber]) {
+                    [actS addButtonWithTitle:[mobielArray objectAtIndex:i]];
+                    
+                }
             }
+            [actS showInView:_viewController.view];
         }
     
     }
@@ -239,8 +245,8 @@
 {
     [self.popover dismissPopoverAnimated:YES];
     MapController *mapVC = [[MapController alloc] initWithNibName:nil bundle:nil];
-    if (self.card.address.province.length > 0 && self.card.address.city.length > 0 && self.card.company.name.length > 0) {
-        NSString *address = [NSString stringWithFormat:@"%@%@",self.card.address.province,self.card.address.city];
+    if (self.card.address.province.length > 0 || (self.card.address.other.length > 0 || self.card.company.name.length > 0)) {
+        NSString *address = [NSString stringWithFormat:@"%@%@",self.card.address.province,self.card.address.other];
         mapVC.companyAddr = address;
         mapVC.companyName = self.card.company.name;
         [self.viewController.navigationController pushViewController:mapVC animated:YES];

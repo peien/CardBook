@@ -18,10 +18,10 @@
 
 #define textOK NSLocalizedString(@"确定", @"OK")
 #define textRegister NSLocalizedString(@"注册",nil)
-#define textWarnRealPhoneNumber NSLocalizedString(@"注册必须用你的真实手机号码，以备密码丢失时重设密码。使用他人手机号码可能导致你的数据外泄或丢失。印象名片不会透露您的号码给第三方。",nil)
+#define textWarnRealPhoneNumber NSLocalizedString(@"注册必须用你的真实手机号码，以备密码丢失时重设密码。使用他人手机号码可能导致你的数据外泄或丢失。蜂巢不会透露您的号码给第三方。",nil)
 #define textAlertYouShouldAgree NSLocalizedString(@"必须同意隐私声明才能使用本产品。", nil) 
 #define textAlertAccountAndPasswordShouldNotBeEmpty NSLocalizedString(@"手机号和密码不能为空！", nil)
-#define textAlertPhoneNumberLooksInvalid NSLocalizedString(@"请输入有效的手机号码。", nil) 
+#define textAlertPhoneNumberLooksInvalid NSLocalizedString(@"请输入有效的手机号码。", nil)
 #define textAlertPasswordInvalid NSLocalizedString(@"密码必须包含4-12位数字、字母、下划线或减号！", nil)
 
 @interface RegViewController () <SMCheckboxDelegate>

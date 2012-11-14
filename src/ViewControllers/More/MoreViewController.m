@@ -111,7 +111,7 @@
             return 4;
             break;
         case 3:
-            return 1;
+            return 0;
             break;
         default:
             return 0;
@@ -247,7 +247,7 @@
                 cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
                 cell.selectionStyle = UITableViewCellSelectionStyleNone;
             }
-            cell.textLabel.text = NSLocalizedString(@"关于印象名片", nil);
+            cell.textLabel.text = NSLocalizedString(@"关于蜂巢", nil);
         }
             break;
             

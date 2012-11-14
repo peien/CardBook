@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>蜂巢</string>
+	<string>蜂巢访销</string>
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleIcons</key>
@@ -14,8 +14,8 @@
 		<dict>
 			<key>CFBundleIconFiles</key>
 			<array>
-				<string>logo57@2x.png</string>
-				<string>logo114@2x.png</string>
+				<string>logo57.png</string>
+				<string>logo114.png</string>
 			</array>
 		</dict>
 	</dict>

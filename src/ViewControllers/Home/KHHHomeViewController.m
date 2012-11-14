@@ -553,6 +553,10 @@ typedef enum {
                 }else{
                     cell.newicon.hidden = YES;
                 }
+                //同事不可能新的
+                if (self.currentIndexPath.row == 1) {
+                    cell.newicon.hidden = YES;
+                }
                 
                 [cell.logoBtn setImageWithURL:[NSURL URLWithString:card.logo.url]
                              placeholderImage:imgNor

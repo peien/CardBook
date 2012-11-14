@@ -43,7 +43,7 @@ enum Tag_TextField {
 #define textAlertPasswordInvalid   NSLocalizedString(@"密码必须包含4-12位数字、字母、下划线或减号！", nil)
 #define textAlertPhoneLooksInvalid NSLocalizedString(@"请输入有效的手机号码。", nil)
 #define textAlertShouldNotBeEmpty  NSLocalizedString(@"姓名手机号和密码不能为空！", nil)
-#define textWarnRealPhoneNumber    NSLocalizedString(@"注册必须用你的真实手机号码，以备密码丢失时重设密码。使用他人手机号码可能导致你的数据外泄或丢失。印象名片不会透露您的号码给第三方。",nil)
+#define textWarnRealPhoneNumber    NSLocalizedString(@"注册必须用你的真实手机号码，以备密码丢失时重设密码。使用他人手机号码可能导致你的数据外泄或丢失。蜂巢不会透露您的号码给第三方。",nil)
 
 @interface AppRegisterController ()<SMCheckboxDelegate>
 @property (nonatomic, strong) KHHDefaults *defaults;

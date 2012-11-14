@@ -136,16 +136,4 @@
     // 切换到登陆界面
     [self postASAPNotificationName:KHHUIShowStartup];
 }
-//设置时间触发
-- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
-{
-    DLog(@"didReceiveLocalNotification");
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"拜访时间提醒"
-                                                    message:@"设置拜访的时间到了"
-                                                   delegate:nil
-                                          cancelButtonTitle:@"确定"
-                                          otherButtonTitles:nil, nil];
-    [alert show];
-
-}
 @end
