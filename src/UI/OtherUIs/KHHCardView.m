@@ -55,7 +55,7 @@
 {
     self.dataCtrl = [KHHData sharedData];
     self.backgroundColor = [UIColor colorWithRed:241 green:238 blue:232 alpha:1.0];
-    self.cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(0, 0, 320, 225) isVer:NO];
+    self.cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(0, 0, 320, 225) delegate:self.detailVC isVer:NO callbackAction:nil];
     self.cardView.card = self.myCard;
     [self.cardView showView];
     _theTable.tableHeaderView = self.cardView;

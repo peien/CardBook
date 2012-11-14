@@ -34,6 +34,7 @@
 #define KBIGADDRESS_TAG 6699
 
 NSString *const kECardListSeparator = @"|";
+NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
 
 @interface Edit_eCardViewController ()<PickViewControllerDelegate,UIActionSheetDelegate>
 @property (strong, nonatomic) XLPageControl *xlPage;
@@ -82,7 +83,6 @@ NSString *const kECardListSeparator = @"|";
 @synthesize dataCtrl;
 @synthesize progressHud;
 @synthesize cardTemp;
-@synthesize isChangeFirstFrame;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -159,7 +159,11 @@ NSString *const kECardListSeparator = @"|";
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    if (self.isChangeFirstFrame) {
+    //card为空时换模板时用图片代替
+    if (!self.glCard) {
+        if (!self.cardTemp) {
+            self.cardTemp = [CardTemplate objectByID:@(KHH_Default_CardTemplate_ID) createIfNone:NO];
+        }        
         UIView *viewf = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 220)];
         UIImageView *imgview = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 300, 180)];
         imgview.userInteractionEnabled = YES;
@@ -174,17 +178,20 @@ NSString *const kECardListSeparator = @"|";
     }else{
         
         [KHHShowHideTabBar hideTabbar];
-        KHHFrameCardView *cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(0, 0, 320, 220) isVer:NO];
-        cardView.viewCtrl = self;
+        KHHFrameCardView *cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(0, 0, 320, 220) delegate:self isVer:NO callbackAction:kECardSelectTemplateActionName];
         cardView.isOnePage = YES;
         cardView.card = self.glCard;
         [cardView showView];
         _theTable.tableHeaderView = cardView;
     }
     
+    //注册切换模板的广播接受器
+    [self observeNotificationName:kECardSelectTemplateActionName selector:@"gotoTemplagesVC:"];
 }
 - (void)viewWillDisappear:(BOOL)animated{
-    
+    [super viewWillDisappear:animated];
+    //停止广播
+    [self stopObservingNotificationName:kECardSelectTemplateActionName];
 }
 #pragma mark - ScrollerDelegateMothed
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
@@ -201,6 +208,7 @@ NSString *const kECardListSeparator = @"|";
     temVC.editCardVC = self;
     [self.navigationController pushViewController:temVC animated:YES];
 }
+
 //构造表需要的数据
 - (void)initVCData
 {
@@ -352,6 +360,7 @@ NSString *const kECardListSeparator = @"|";
     _threeNums = 1 + _fieldExternThree.count;
 
 }
+
 - (void)viewDidUnload
 {
     [super viewDidUnload];

@@ -11,6 +11,8 @@
 #import "KHHVisualCardViewController.h"
 #import "KHHCardTemplageVC.h"
 #import "KHHClasses.h"
+#import "KHHPreViewViewController.h"
+#import "Card.h"
 
 @implementation KHHFrameCardView
 @synthesize scrView = _scrView;
@@ -19,16 +21,17 @@
 @synthesize cardTempVC;
 @synthesize card;
 @synthesize shadowCard;
-@synthesize viewCtrl;
 @synthesize isOnePage;
 @synthesize pages;
 
-- (id)initWithFrame:(CGRect)frame isVer:(BOOL)ver
+- (id)initWithFrame:(CGRect)frame delegate:(id) delegate isVer:(BOOL)ver callbackAction:(NSString *) actionName
 {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
         _isVer = ver;
+        _myActionName = actionName;
+        _myDelegate = delegate;
         //[self showView];
     }
     return self;
@@ -68,7 +71,7 @@
     CGRect myFrame = self.frame;
     self.cardTempVC = [[KHHVisualCardViewController alloc] initWithNibName:nil bundle:nil];
     [self.cardTempVC setCardWidth:myFrame.size.width];
-    xlPage = [[XLPageControl alloc] initWithFrame:CGRectMake(50  , myFrame.size.height + 20, 100, 15)];
+    xlPage = [[XLPageControl alloc] initWithFrame:CGRectMake(myFrame.size.width / 2 - 50  , myFrame.size.height + 10, 100, 15)];
     [xlPage setBackgroundColor:[UIColor clearColor]];
     xlPage.activeImg = [UIImage imageNamed:@"p2.png"];
     xlPage.unActiveImg = [UIImage imageNamed:@"p1.png"];
@@ -82,23 +85,24 @@
     if (_isVer) {
         CGRect rect = CGRectMake(75, 10, myFrame.size.width, myFrame.size.height);
         [self creatCardTemplate:rect];
-//        xlPage.frame = CGRectMake(110, 260, 100, 15);
     }else{
-        CGRect rect = CGRectMake(10, 15, myFrame.size.width, myFrame.size.height);
+        CGRect rect = CGRectMake(0, 0, myFrame.size.width, myFrame.size.height );
+//        CGRect rect = CGRectMake(0, 0, 180, 120);
+//        CGRect rect = CGRectMake(10, 15, myFrame.size.width, myFrame.size.height);
         [self creatCardTemplate:rect];
-//        xlPage.frame = CGRectMake(100, 205, 100, 15);
     }
     [self addSubview:_scrView];
     self.shadowCard = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cardTouying.png"]];
-    self.shadowCard.frame = CGRectMake(0, myFrame.size.height + 15, myFrame.size.width, 20);
+//    self.shadowCard.frame = CGRectMake(0, myFrame.size.height + 15, myFrame.size.width, 20);
+    self.shadowCard.frame = CGRectMake(0, myFrame.size.height, myFrame.size.width, 20);
     [self addSubview:self.shadowCard];
 }
 
 
 - (void)creatCardTemplate:(CGRect)frame
 {
-
     UIScrollView *scroll = [[UIScrollView alloc] initWithFrame:frame];
+    
     scroll.showsHorizontalScrollIndicator = NO;
     scroll.delegate = self;
     if (self.isOnePage) {
@@ -107,7 +111,7 @@
     }
     for (int i = 0; i< pages; i++) {
         CGRect rect = frame;
-        rect.origin.x = i*frame.size.width;
+        rect.origin.x = i * frame.size.width ;
         frame = rect;
         UIImageView *imgView = [[UIImageView alloc] initWithFrame:frame];
         if (i == 0) {
@@ -116,7 +120,7 @@
 //            imgView.image = [UIImage imageNamed:@"card_tesco.png"];
             [scroll addSubview:self.cardTempVC.view];
             self.cardTempVC.card = self.card;
-            //暂时test选择模版
+            //添加点击事件(编辑界面是去选择模板，其它界面是全屏预览)
             [self addTapGestureForTemplate:self.cardTempVC.view];
             
         }else{
@@ -132,6 +136,8 @@
             }
             
             [scroll addSubview:imgView];
+            //添加点击事件(编辑界面是去选择模板，其它界面是全屏预览)
+            [self addTapGestureForTemplate:imgView];
         }
     }
     
@@ -161,25 +167,27 @@
     
 }
 - (void)addTapGestureForTemplate:(UIView *)templateView{
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gotoSelectTemplateVC:)];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(singleTapCallBack:)];
     tap.numberOfTapsRequired = 1;
     tap.numberOfTouchesRequired = 1;
     [templateView addGestureRecognizer:tap];
  
 }
-- (void)gotoSelectTemplateVC:(UITapGestureRecognizer *)sender{
-    DLog(@"gotoSelectTemplateVC");
-    KHHCardTemplageVC *temVC = [[KHHCardTemplageVC alloc] initWithNibName:nil bundle:nil];
-    temVC.card = self.card;
-    if ([self.viewCtrl isKindOfClass:[Edit_eCardViewController class]]) {
-        Edit_eCardViewController *editVC = (Edit_eCardViewController *)self.viewCtrl;
-        temVC.editCardVC = editVC;
-        if (editVC.type == KCardViewControllerTypeNewCreate) {
-             editVC.isChangeFirstFrame = YES;
-        }
+- (void)singleTapCallBack:(UITapGestureRecognizer *)sender{
+    DLog(@"singleTapCallBack");
+    //发送callback广播
+    if (_myActionName) {
+        [self postASAPNotificationName:_myActionName];
+        return;
     }
-    [self.viewCtrl.navigationController pushViewController:temVC animated:YES];
-
+    
+    if (!self.myDelegate) {
+        return;
+    }
+    //默认的事件是全屏预览
+    KHHPreViewViewController *preViewVC = [[KHHPreViewViewController alloc] initWithNibName:nil bundle:nil];
+    preViewVC.preViewCard = self.card;
+    [self.myDelegate.navigationController pushViewController:preViewVC animated:YES];
 }
 //异步获取图片
 /*

@@ -33,6 +33,5 @@ typedef enum {
 @property (strong, nonatomic)  Card                 *glCard;
 @property (assign, nonatomic)  KCardViewControllerType type;
 @property (strong, nonatomic)  CardTemplate         *cardTemp;
-@property (assign, nonatomic)  bool                 isChangeFirstFrame;
 
 @end

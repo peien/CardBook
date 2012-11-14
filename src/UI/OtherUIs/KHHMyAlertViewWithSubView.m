@@ -45,13 +45,13 @@
     for (UIView *view in self.subviews) {
         if ([view isKindOfClass:[UIButton class]]) {
             CGRect btnBounds = view.frame;
-            btnBounds.origin.y = _mySubView.frame.origin.y + _mySubView.frame.size.height + 7;
+            btnBounds.origin.y = _mySubView.frame.origin.y + _mySubView.frame.size.height + 5;
             view.frame = btnBounds;
         }
     }
     
     CGRect bounds = self.frame;
-    bounds.size.height =  + _mySubView.frame.size.height + 100;
+    bounds.size.height =  + _mySubView.frame.size.height + 110;
     self.frame = bounds;
 }
 

@@ -90,10 +90,10 @@
     [self.view setBackgroundColor:[UIColor colorWithRed:241.0f green:238.0f blue:231.0f alpha:1.0f]];
     //竖屏
     if (NO) {
-        self.cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(0, 0, 320, 260) isVer:YES];
+        self.cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(0, 0, 320, 260) delegate:self isVer:YES callbackAction:nil];
         [self.view addSubview:cardView];
     }else{
-        self.cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(0, 0, 320, 220) isVer:NO];
+        self.cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(0, 0, 320, 220) delegate:self isVer:NO callbackAction:nil];
     }
     self.cardView.card = self.card;
     [self.cardView showView];

@@ -27,8 +27,10 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.leftBtn.hidden = YES;
+        self.leftBtn.hidden = NO;
         self.rightBtn.hidden = YES;
+        [self.leftBtn setTitle:NSLocalizedString(@"取消", nil) forState:UIControlStateNormal];
+        self.title = @"选择模板";
     }
     return self;
 }

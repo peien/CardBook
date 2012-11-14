@@ -90,14 +90,14 @@
 - (void)rightBarButtonClick:(id)sender
 {
     //初始化预览名片
-    KHHFrameCardView* cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(45, 35, 180 , 120) isVer:NO];
+    KHHFrameCardView* cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(45, 35, 180 , 108) delegate:self isVer:NO callbackAction:nil];
     if (!cardView) {
         return;
     }
     cardView.card = _myDefaultReplyCard;
     [cardView showPreView];
     
-    UIView *preView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 180, 120+ 30 + 35)];
+    UIView *preView = [[UIView alloc] initWithFrame:CGRectMake(10, 15, 180, 108 + 30 + 35)];
     [preView addSubview: cardView];
     
     //显示预览框
@@ -234,8 +234,8 @@
     //电子名片视图
     _cardView = [[[NSBundle mainBundle] loadNibNamed:@"KHHCardView" owner:self options:nil] objectAtIndex:0];
     _cardView.myCard = self.card;
+    _cardView.detailVC = self;  
     [_cardView initView];
-    _cardView.detailVC = self;
     [_cardView initViewData];
     [self.containView addSubview:_cardView];
     //拜访日志

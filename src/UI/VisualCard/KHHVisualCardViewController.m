@@ -14,7 +14,7 @@
 #import "UIColor+HexColor.h"
 #import "UIImageView+WebCache.h"
 #import "Card.h"
-static CGFloat const CARD_WIDTH = 300.f;
+static CGFloat const CARD_WIDTH = 270.f;
 static CGFloat const CARD_RATIO = CARD_WIDTH / 450.f;
 static CGFloat const CARD_WIDTH_PADDING = 5.f;
 
@@ -36,6 +36,7 @@ static CGFloat const CARD_WIDTH_PADDING = 5.f;
     _cardWidth = cardWidth;
     CGRect oldBounds = self.view.frame;
     oldBounds.size = CGSizeMake(_cardWidth , _cardWidth * CARD_RATIO);
+    oldBounds.origin = CGPointMake(0, 0);
     self.view.frame = oldBounds;
 }
 
@@ -143,7 +144,9 @@ static CGFloat const CARD_WIDTH_PADDING = 5.f;
     // 新建背景
     if (tmpl.bgImage.url) {
         UIImageView *imgView = [[UIImageView alloc] initWithFrame:self.view.bounds];
-        imgView.contentMode = UIViewContentModeScaleAspectFill;
+//        imgView.contentMode = UIViewContentModeScaleAspectFill;
+//        imgView.contentMode = UIViewContentModeScaleAspectFit;
+        imgView.contentMode = UIViewContentModeScaleToFill;
         [imgView setImageWithURL:[NSURL URLWithString:tmpl.bgImage.url]];
         [self.view addSubview:imgView];
     }
@@ -184,7 +187,34 @@ static CGFloat const CARD_WIDTH_PADDING = 5.f;
                 :textSize.width;
 //                CGFloat width = textSize.width;
                 CGFloat height = textSize.height;
-                UILabel *aLabel = [[UILabel alloc] initWithFrame:CGRectMake(originX, originY, width, height)];
+                UILabel *aLabel;
+                
+                //文字左右对齐是根据x-pos 坐标来区分的
+                int xpos = anItem.originXValue;
+                switch (xpos) {
+                    case -1:
+                    {
+                        //模板字右对齐,宽度设置与父亲一样宽，减的数字是想rightMargin几个数字,看起来美观点
+                        aLabel = [[UILabel alloc] initWithFrame:CGRectMake(originX, originY, self.view.bounds.size.width - 6, height)];
+                        [aLabel setTextAlignment:NSTextAlignmentRight];
+                    }
+                        break;
+                    case -2:
+                    {
+                        //模板字居中对齐,宽度设置与父亲一样宽，减的数字是想rightMargin几个数字,看起来美观点
+                        aLabel = [[UILabel alloc] initWithFrame:CGRectMake(originX, originY, self.view.bounds.size.width - 6, height)];
+                        [aLabel setTextAlignment:NSTextAlignmentCenter];
+                    }
+                        break;
+                    default:
+                        //默认左对齐
+                        aLabel = [[UILabel alloc] initWithFrame:CGRectMake(originX, originY, width, height)];
+                        break;
+                }
+                //设置单行
+                [aLabel setNumberOfLines:1];
+                //设置文字末尾截断
+                [aLabel setLineBreakMode:NSLineBreakByTruncatingTail];
                 aLabel.font = font;
                 aLabel.text = labelText;
                 aLabel.textColor = [UIColor colorWithHexString:anItem.fontColor];

@@ -99,6 +99,9 @@ static NSString * const nUIDeleteMessagesFailed    = @"UIDeleteMessagesFailed";
 static NSString * const KHHUIReplyCardSucceeded     = @"UIReplyCardSucceeded";
 static NSString * const KHHUIReplyCardFailed        = @"UIReplyCardFailed";
 
+//MARK: -名片点击到全屏预览的callback actionName
+static NSString * const KHHUICanclePreViewActionName = @"UICancleFullScreenPreView";
+
 #pragma mark - Misc
 //MARK: - 位置
 /*!

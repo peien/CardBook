@@ -93,6 +93,8 @@
 		62AC98DE163A4A50009EF269 /* KHHCardTemplageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 62AC98DC163A4A50009EF269 /* KHHCardTemplageVC.m */; };
 		62AC98DF163A4A50009EF269 /* KHHCardTemplageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62AC98DD163A4A50009EF269 /* KHHCardTemplageVC.xib */; };
 		62ACD2F71623BF2800D88F57 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 62ACD2F61623BF2800D88F57 /* MBProgressHUD.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		62CCC9ED165231F5004BA1A4 /* KHHPreViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62CCC9EB165231F5004BA1A4 /* KHHPreViewViewController.m */; };
+		62CCC9EE165231F5004BA1A4 /* KHHPreViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62CCC9EC165231F5004BA1A4 /* KHHPreViewViewController.xib */; };
 		62D3F40E1603188500E011E2 /* KHHEditMSGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62D3F40C1603188500E011E2 /* KHHEditMSGViewController.m */; };
 		62D3F40F1603188500E011E2 /* KHHEditMSGViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62D3F40D1603188500E011E2 /* KHHEditMSGViewController.xib */; };
 		9803EBA7160DA88D00402B53 /* NSObject+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 9803EBA6160DA88D00402B53 /* NSObject+SM.m */; };
@@ -675,6 +677,9 @@
 		62AC98DD163A4A50009EF269 /* KHHCardTemplageVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHCardTemplageVC.xib; sourceTree = "<group>"; };
 		62ACD2F51623BF2800D88F57 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		62ACD2F61623BF2800D88F57 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		62CCC9EA165231F5004BA1A4 /* KHHPreViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHPreViewViewController.h; sourceTree = "<group>"; };
+		62CCC9EB165231F5004BA1A4 /* KHHPreViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHPreViewViewController.m; sourceTree = "<group>"; };
+		62CCC9EC165231F5004BA1A4 /* KHHPreViewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHPreViewViewController.xib; sourceTree = "<group>"; };
 		62D3F40B1603188500E011E2 /* KHHEditMSGViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHEditMSGViewController.h; sourceTree = "<group>"; };
 		62D3F40C1603188500E011E2 /* KHHEditMSGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHEditMSGViewController.m; sourceTree = "<group>"; };
 		62D3F40D1603188500E011E2 /* KHHEditMSGViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHEditMSGViewController.xib; sourceTree = "<group>"; };
@@ -1431,6 +1436,16 @@
 			path = MBProgressHUD;
 			sourceTree = "<group>";
 		};
+		62CCC9E8165231A6004BA1A4 /* PreView */ = {
+			isa = PBXGroup;
+			children = (
+				62CCC9EA165231F5004BA1A4 /* KHHPreViewViewController.h */,
+				62CCC9EB165231F5004BA1A4 /* KHHPreViewViewController.m */,
+				62CCC9EC165231F5004BA1A4 /* KHHPreViewViewController.xib */,
+			);
+			name = PreView;
+			sourceTree = "<group>";
+		};
 		980D87511637C3B20052DF9D /* Start */ = {
 			isa = PBXGroup;
 			children = (
@@ -1772,6 +1787,7 @@
 		98A84DA11602D24D00A4A673 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				62CCC9E8165231A6004BA1A4 /* PreView */,
 				98A8510F1602F69200A4A673 /* KHHMainUIController.h */,
 				98A851101602F69200A4A673 /* KHHMainUIController.m */,
 				980D87511637C3B20052DF9D /* Start */,
@@ -2967,6 +2983,7 @@
 				621371DA1643A1050041FE22 /* popoverArrowLeftSimple.png in Resources */,
 				621371DB1643A1050041FE22 /* popoverArrowUpSimple.png in Resources */,
 				628DC6471647B430008D1F3D /* KHHAllVisitedSchedusVC.xib in Resources */,
+				62CCC9EE165231F5004BA1A4 /* KHHPreViewViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3313,6 +3330,7 @@
 				62A7B2E41643C54D00291462 /* UIBarButtonItem+WEPopover.m in Sources */,
 				628DC6461647B430008D1F3D /* KHHAllVisitedSchedusVC.m in Sources */,
 				621618AF164CAB8200A66DB5 /* KHHMyAlertViewWithSubView.m in Sources */,
+				62CCC9ED165231F5004BA1A4 /* KHHPreViewViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
