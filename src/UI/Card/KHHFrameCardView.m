@@ -87,7 +87,6 @@
         [self creatCardTemplate:rect];
     }else{
         CGRect rect = CGRectMake(0, 0, myFrame.size.width, myFrame.size.height );
-//        CGRect rect = CGRectMake(0, 0, 180, 120);
 //        CGRect rect = CGRectMake(10, 15, myFrame.size.width, myFrame.size.height);
         [self creatCardTemplate:rect];
     }
@@ -110,10 +109,6 @@
         xlPage.hidden = YES;
     }
     for (int i = 0; i< pages; i++) {
-        CGRect rect = frame;
-        rect.origin.x = i * frame.size.width ;
-        frame = rect;
-        UIImageView *imgView = [[UIImageView alloc] initWithFrame:frame];
         if (i == 0) {
             
 //            imgView.backgroundColor = [UIColor clearColor];
@@ -124,7 +119,11 @@
             [self addTapGestureForTemplate:self.cardTempVC.view];
             
         }else{
+            CGRect rect = frame;
+            rect.origin.x = i * frame.size.width ;
+            frame = rect;
             //第二张从网络获取
+            UIImageView *imgView = [[UIImageView alloc] initWithFrame:frame];
             rect.origin.y = 0;
             imgView.frame = rect;
             NSArray *set = [self.card.frames allObjects];
@@ -137,6 +136,8 @@
             
             [scroll addSubview:imgView];
             //添加点击事件(编辑界面是去选择模板，其它界面是全屏预览)
+            //打开imageView的交互，要不然不响应点击事件
+            imgView.userInteractionEnabled = YES;
             [self addTapGestureForTemplate:imgView];
         }
     }

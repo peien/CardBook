@@ -24,6 +24,7 @@
 #import "KHHDataAPI.h"
 #import "KHHNetworkAPI.h"
 #import "KHHNotifications.h"
+#import "KHHDefaults.h"
 
 @interface KHHExchangeViewController ()<UIScrollViewDelegate,CLLocationManagerDelegate>
 @property (strong, nonatomic) XLPageControl *xlPage;
@@ -40,6 +41,7 @@
 @property (strong, nonatomic) KHHFrameCardView   *cardView;
 @property (strong, nonatomic) KHHAppDelegate     *app;
 @property (assign, nonatomic) bool               isHandleReceive;
+@property (strong, nonatomic) KHHDefaults  *   myDefault;
 @end
 
 @implementation KHHExchangeViewController
@@ -59,6 +61,7 @@
 @synthesize cardView;
 @synthesize app;
 @synthesize isHandleReceive;
+@synthesize myDefault;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -67,11 +70,11 @@
         // Custom initialization
         self.title = NSLocalizedString(@"交换名片", nil);
         //[self.leftBtn setTitle:NSLocalizedString(@"切换名片", nil) forState:UIControlStateNormal];
-        [self.rightBtn setTitle:@"编辑" forState:UIControlStateNormal];
         self.httpAgent = [[KHHNetworkAPIAgent alloc] init];
         self.dataCtrl = [KHHData sharedData];
         self.card = [[self.dataCtrl allMyCards] objectAtIndex:0];
         self.app  = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
+        self.myDefault = [KHHDefaults sharedDefaults];
     }
     return self;
 }
@@ -116,6 +119,13 @@
     [super viewWillAppear:animated];
     [KHHShowHideTabBar showTabbar];
     DLog(@"becomeFirstResponder ====== %i",[self becomeFirstResponder]);
+    //判断是否要显示编辑按钮
+    if ([self inShowEditButton]) {
+        [self.rightBtn setTitle:@"编辑" forState:UIControlStateNormal];
+    }else {
+        self.rightBtn.hidden = YES;
+    }
+    
     [self updateCardTempInfo];
 }
 - (void)viewWillDisappear:(BOOL)animated{
@@ -142,6 +152,34 @@
     self.latestCard = nil;
     self.cardView = nil;
     self.app = nil;
+}
+
+#pragma mark 根据用户权限判断是否要显示编辑按钮
+/**
+ * 判断是否显示编辑按钮
+ * 个人名片及公司董事长能编辑名片
+ * 其它的用户不能编辑名片
+ * 默认返回NO
+ */
+-(BOOL) inShowEditButton
+{
+    if (!self.myDefault) {
+        return NO;
+    }
+    
+    NSString *permission = self.myDefault.currentPermission;
+    NSNumber *companyID = self.myDefault.currentCompanyID;
+    if (![self.card isKindOfClass:[MyCard class]]) {
+        return NO;
+    }
+    
+    //有公司id，但权限不为老板
+    if (companyID.longValue > 0 && ![permission isEqualToString:kPERMISSION_BOSS]) {
+        return NO;
+    }
+    
+    //剩下的就只有私人或公司老板的，返回YES
+    return YES;
 }
 
 - (void)btnClick:(id)sender

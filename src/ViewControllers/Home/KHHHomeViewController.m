@@ -81,6 +81,7 @@ typedef enum {
 @property (assign, nonatomic)  int                    baseNum;
 @property (strong, nonatomic)  UIImageView            *messageImageView;
 @property (strong, nonatomic)  UILabel                *numLab2;
+@property (strong, nonatomic)  KHHDefaults            *myDefaults;
 
 @end
 
@@ -137,6 +138,7 @@ typedef enum {
 @synthesize baseNum;
 @synthesize messageImageView;
 @synthesize numLab2;
+@synthesize myDefaults;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -148,6 +150,7 @@ typedef enum {
         //*****************
         self.interGroup = [[IGroup alloc] init];
         self.dataControl = [KHHData sharedData];
+        self.myDefaults = [KHHDefaults sharedDefaults];
         //[self.rightBtn setTitle:NSLocalizedString(@"我的名片", nil) forState:UIControlStateNormal];
         self.rightBtn.hidden = YES;
     }
@@ -358,8 +361,7 @@ typedef enum {
 }
 //获取分组
 - (NSArray *)getAllGroups{
-    KHHDefaults *defau = [KHHDefaults sharedDefaults];
-    BOOL isHaveMobilePhoneGroup = [defau isAddMobPhoneGroup];
+    BOOL isHaveMobilePhoneGroup = [self.myDefaults isAddMobPhoneGroup];
     if (isHaveMobilePhoneGroup) {
         BaseBtnTitleArrayMobiGrop;
         self.baseNum = 4;
@@ -391,7 +393,7 @@ typedef enum {
         self.generalArray = arr;
     }else if (self.currentTag == 101){
        
-    }else if (self.currentIndexPath.row > [[KHHDefaults sharedDefaults] isAddMobPhoneGroup]?3:2){
+    }else if (self.currentIndexPath.row > [self.myDefaults isAddMobPhoneGroup]?3:2){
         if (!self.isDelGroup) {
             [self updateOwnGroupArray];
         }
@@ -611,16 +613,10 @@ typedef enum {
                 if (self.isAddressBookData) {
                     DLog(@"contact item click!");
                     KHHClientCellLNPC *cell = (KHHClientCellLNPC *)[_bigTable cellForRowAtIndexPath:indexPath];
-                    self.floatBarVC.contactDic = [self.generalArray objectAtIndex:indexPath.row];
-                    self.floatBarVC.isContactCellClick = YES;
                     CGRect cellRect = cell.logoView.frame;
                     cellRect.origin.x = 98;
                     CGRect rect = [cell convertRect:cellRect toView:self.view];
-                    rect.size.height = 45;
-                    
-                    //DLog(@"[II] logo = %@, frame = %@, converted frame = %@", cell.logoView, NSStringFromCGRect(cell.logoView.frame), NSStringFromCGRect(rect));
-                    UIPopoverArrowDirection arrowDirection = rect.origin.y < self.view.bounds.size.height/2?UIPopoverArrowDirectionUp:UIPopoverArrowDirectionDown;
-                    [self.popover presentPopoverFromRect:rect inView:self.view permittedArrowDirections:arrowDirection animated:YES];
+                    [self showQuickAction:rect currentCard:nil contactDic:[self.generalArray objectAtIndex:indexPath.row]];
                     return;
                 }else{
                     self.isNeedReloadTable = YES;
@@ -700,7 +696,10 @@ typedef enum {
     }
     NSIndexPath *indexPath = [_bigTable indexPathForCell:cell];
     Card *card = [self.generalArray objectAtIndex:indexPath.row];
-    [self showQuickAction:cell currentCard:card];
+    CGRect cellRect = cell.logoBtn.frame;
+    cellRect.origin.x = 98;
+    CGRect rect = [cell convertRect:cellRect toView:self.view];
+    [self showQuickAction:rect currentCard:card contactDic:nil];
 }
 //长按单元格弹出横框
 - (void)longPressFunc:(id)sender
@@ -714,22 +713,36 @@ typedef enum {
             DLog(@"p.x:%f=======p.y:%f",p.x,p.y);
             NSIndexPath *indexPath = [_bigTable indexPathForRowAtPoint:p];
             DLog(@"indexPath:%@",indexPath);
+            KHHClientCellLNPCC *cell = (KHHClientCellLNPCC *)[_bigTable cellForRowAtIndexPath:indexPath];
             Card *card = [self.generalArray objectAtIndex:indexPath.row];
-            [self showQuickAction:(KHHClientCellLNPCC *)[_bigTable cellForRowAtIndexPath:indexPath] currentCard:card];
+            CGRect cellRect = cell.logoBtn.frame;
+            cellRect.origin.x = 98;
+            CGRect rect = [cell convertRect:cellRect toView:self.view];
+            [self showQuickAction:rect currentCard:card contactDic:nil];
         }
     }
 }
 
 //显示插件
--(void) showQuickAction:(KHHClientCellLNPCC *) cell currentCard:(Card *) card {
-    self.floatBarVC.card = card;
-    CGRect cellRect = cell.logoBtn.frame;
-    cellRect.origin.x = 98;
-    CGRect rect = [cell convertRect:cellRect toView:self.view];
+//是联系人就传card，是手机的就传dictionary
+-(void) showQuickAction:(CGRect) rect currentCard:(Card *) card contactDic:(NSDictionary *) dict{
+    if (card) {
+        self.floatBarVC.card = card;
+        self.floatBarVC.contactDic = nil;
+        NSNumber *companyID = [self.myDefaults currentCompanyID];
+        if(card.company.id.longValue == companyID.longValue) {
+            self.floatBarVC.isJustNormalComunication = YES;
+        }
+    }else {
+        self.floatBarVC.card = nil;
+        self.floatBarVC.contactDic = dict;
+        self.floatBarVC.isContactCellClick = YES;
+    }
     rect.size.height = 45;
     //DLog(@"[II] logo = %@, frame = %@, converted frame = %@", cell.logoView, NSStringFromCGRect(cell.logoView.frame), NSStringFromCGRect(rect));
     UIPopoverArrowDirection arrowDirection = rect.origin.y < self.view.bounds.size.height/2?UIPopoverArrowDirectionUp:UIPopoverArrowDirectionDown;
-    [self.popover presentPopoverFromRect:rect inView:self.view permittedArrowDirections:arrowDirection animated:YES];}
+    [self.popover presentPopoverFromRect:rect inView:self.view permittedArrowDirections:arrowDirection animated:YES];    
+}
 #pragma mark-
 #pragma mark groupBtn Click
 - (void)cellBtnClick:(id)sender
@@ -786,7 +799,7 @@ typedef enum {
                 self.generalArray = self.privateArr;
                 break;
             case 103:{
-                if ([[KHHDefaults sharedDefaults] isAddMobPhoneGroup]) {
+                if ([self.myDefaults isAddMobPhoneGroup]) {
                     self.isAddressBookData = YES;
                     self.floatBarVC.isContactCellClick = YES;
                     NSArray *addressArr = [KHHAddressBook getAddressBookData];

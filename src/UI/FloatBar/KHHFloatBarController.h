@@ -19,7 +19,10 @@
 @property (strong, nonatomic) WEPopoverController *popover;
 @property (assign, nonatomic) int                 type;
 @property (strong, nonatomic) Card                *card;
+//用来区分选择card还是contactDic作为数据源
 @property (assign, nonatomic) bool                isContactCellClick;
+//只显示普通联系信息
+@property (assign, nonatomic) bool                isJustNormalComunication;
 @property (strong, nonatomic) NSDictionary        *contactDic;
 @property (strong, nonatomic) IBOutlet UIButton   *btn0;
 @property (strong, nonatomic) IBOutlet UIButton   *btn1;

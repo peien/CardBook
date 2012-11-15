@@ -31,6 +31,7 @@
 @synthesize card;
 @synthesize isContactCellClick;
 @synthesize contactDic;
+@synthesize isJustNormalComunication;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -50,7 +51,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    if (self.isContactCellClick) {
+    if (self.isContactCellClick || self.isJustNormalComunication) {
         self.btn2.hidden = YES;
         self.btn3.hidden = YES;
         CGRect rect = self.btn0.frame;

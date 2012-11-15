@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SuperViewController.h"
 @interface KHHExchangeViewController : SuperViewController<UIAlertViewDelegate>
-@property (strong, nonatomic) UIScrollView *scrView;
-@property (assign, nonatomic) bool         isVer;
+@property (strong, nonatomic) UIScrollView *    scrView;
+@property (assign, nonatomic) bool              isVer;
 
 @end
