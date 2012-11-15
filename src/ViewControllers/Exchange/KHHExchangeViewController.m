@@ -400,6 +400,10 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (buttonIndex == 0) {
         DetailInfoViewController *detail = [[DetailInfoViewController alloc] initWithNibName:nil bundle:nil];
+        if ([self.latestCard isKindOfClass:[ReceivedCard class]]) {
+            ReceivedCard *lastCard = (ReceivedCard *)self.latestCard;
+            lastCard.isReadValue = YES;
+        }
         detail.card = self.latestCard;
         [self.navigationController pushViewController:detail animated:YES];
     }

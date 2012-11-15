@@ -8,6 +8,7 @@
 
 #import "KHHCalendarViewController.h"
 #import "CKCalendarView.h"
+#import "KHHTempVisitedVC.h"
 #import "KHHAllVisitedSchedusVC.h"
 #import "KHHVisitCalendarCell.h"
 #import "KHHVisitCalendarView.h"
@@ -147,6 +148,7 @@
 
 }
 - (IBAction)plusBtnClick:(id)sender{
+    
     KHHVisitRecoardVC *visitVC = [[KHHVisitRecoardVC alloc] initWithNibName:nil bundle:nil];
     visitVC.visitInfoCard = self.card;
     visitVC.selectedDateFromCal = self.dateSelect;
@@ -154,7 +156,14 @@
     visitVC.isNeedWarn = YES;
     self.isneedReloadeVisitTable = YES;
     [self.navigationController pushViewController:visitVC animated:YES];
-
+//    KHHTempVisitedVC *visitVC = [[KHHTempVisitedVC alloc] initWithNibName:nil bundle:nil];
+//    visitVC.visitInfoCard = self.card;
+//    visitVC.selectedDateFromCal = self.dateSelect;
+//    visitVC.isFromCalVC = YES;
+//    visitVC.isNeedWarn = YES;
+//    visitVC.style = KVisitRecoardVCStyleNewBuild1;
+//    self.isneedReloadeVisitTable = YES;
+//    [self.navigationController pushViewController:visitVC animated:YES];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

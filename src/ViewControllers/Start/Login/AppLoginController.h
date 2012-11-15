@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SuperViewController.h"
 
-@interface AppLoginController : UIViewController
+@interface AppLoginController : SuperViewController
 
 @end

@@ -17,4 +17,5 @@
 @property (nonatomic, weak) IBOutlet UILabel *companyLabel;
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView *activi;
 @property (nonatomic, strong) SMCheckbox *checkbox;
+@property (nonatomic, strong) IBOutlet UIImageView *newicon;
 @end

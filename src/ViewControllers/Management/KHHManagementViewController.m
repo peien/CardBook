@@ -13,12 +13,10 @@
 #import "KHHHomeViewController.h"
 #import "KHHExchangeViewController.h"
 #import "LocationInfoVC.h"
-#import "EmployeesManageVC.h"
 #import "MBProgressHUD.h"
 #import "KHHAppDelegate.h"
 #import "KHHRadarViewController.h"
 #import "KHHFunnelViewController.h"
-#import "KHHVisitCalendarVC.h"
 #import "KHHMessageViewController.h"
 #import "KHHShowHideTabBar.h"
 #import "KHHData+UI.h"
@@ -45,7 +43,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.title = NSLocalizedString(@"名片宝", nil);
+        self.title = NSLocalizedString(@"蜂巢访销", nil);
         _isBoss = YES;
         self.dataCtrl = [KHHData sharedData];
         self.myCard = [[self.dataCtrl allMyCards] objectAtIndex:0];
@@ -123,11 +121,6 @@
     // Do any additional setup after loading the view from its nib.
     _entranceView.center = self.view.center;
     [self.view addSubview:_entranceView];
-    //////////////////////////////////////////////////////////////// test!
-//    NSArray *receiveNewCardArr = [self.dataCtrl allReceivedCards];
-//    for (ReceivedCard *card in receiveNewCardArr) {
-//        DLog(@"receiveNewCardArr.isRead is ====== %@",card.isRead);
-//    }
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -154,15 +147,14 @@
 
 - (IBAction)radarBtnClick:(id)sender{
     
-    [self showAlert];
-//    KHHRadarViewController *radarVC = [[KHHRadarViewController alloc] initWithNibName:nil bundle:nil];
-//    [self.navigationController pushViewController:radarVC animated:YES];
+    KHHRadarViewController *radarVC = [[KHHRadarViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:radarVC animated:YES];
 
 }
 - (IBAction)funnelBtnClick:(id)sender{
-    [self showAlert];
-//    KHHFunnelViewController *funnelVC = [[KHHFunnelViewController alloc] initWithNibName:nil bundle:nil];
-//    [self.navigationController pushViewController:funnelVC animated:YES];
+    
+    KHHFunnelViewController *funnelVC = [[KHHFunnelViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:funnelVC animated:YES];
 
 }
 - (IBAction)calendarBtnClick:(id)sender{

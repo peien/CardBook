@@ -44,6 +44,7 @@
 #define POPDismiss [self.popover dismissPopoverAnimated:YES];
 #define BaseBtnTitleArrayMobiGrop   _btnTitleArr = [[NSMutableArray alloc] initWithObjects:@"所有",@"同事",@"未分组",@"手机", nil];
 #define BaseBtnTitleArray   _btnTitleArr = [[NSMutableArray alloc] initWithObjects:@"所有",@"同事",@"未分组", nil];
+#define BaseBtnTitleArrayVisited   _btnTitleArr = [[NSMutableArray alloc] initWithObjects:@"所有",@"未分组", nil];
 
 typedef enum {
     KHHTableIndexGroup = 100,
@@ -366,6 +367,9 @@ typedef enum {
         BaseBtnTitleArray;
         self.baseNum = 3;
     }
+    if (self.isNormalSearchBar) {
+        BaseBtnTitleArrayVisited;
+    }
     self.oWnGroupArray = [self.dataControl allTopLevelGroups];
     for (int i = 0; i < self.oWnGroupArray.count; i++) {
         Group *group = [self.oWnGroupArray objectAtIndex:i];
@@ -438,7 +442,7 @@ typedef enum {
         case KHHTableIndexClient:
             return 58;
         default:
-            return 0;
+            return 44;
             break;
     }
 }
@@ -538,8 +542,24 @@ typedef enum {
                     //return nil;
                 }
                 Card *card = [self.generalArray objectAtIndex:indexPath.row];
+                UIImage *imgNor = [UIImage imageNamed:@"logopic.png"];
+                if ([card isKindOfClass:[ReceivedCard class]]) {
+                    ReceivedCard *reCard = (ReceivedCard *)card;
+                    if (reCard.isReadValue) {
+                        cell.newicon.hidden = YES;
+                    }else{
+                        cell.newicon.hidden =  NO;
+                    }
+                }else{
+                    cell.newicon.hidden = YES;
+                }
+                //同事不可能新的
+                if (self.currentIndexPath.row == 1) {
+                    cell.newicon.hidden = YES;
+                }
+                
                 [cell.logoBtn setImageWithURL:[NSURL URLWithString:card.logo.url]
-                             placeholderImage:[UIImage imageNamed:@"logopic.png"]
+                             placeholderImage:imgNor
                                       success:^(UIImage *image, BOOL cached){
                                           if(CGSizeEqualToSize(image.size, CGSizeZero)){
                                               [cell.logoBtn setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
@@ -634,10 +654,16 @@ typedef enum {
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         for (Card *card in self.generalArray) {
             if ([cell.textLabel.text isEqualToString:card.name]) {
-                DetailInfoViewController *detailVC = [[DetailInfoViewController alloc] initWithNibName:nil bundle:nil];
-                detailVC.card = card;
                 self.searCtrl.active = NO;
-                [self.navigationController pushViewController:detailVC animated:YES];
+                if (!_isNormalSearchBar) {
+                    DetailInfoViewController *detailVC = [[DetailInfoViewController alloc] initWithNibName:nil bundle:nil];
+                    detailVC.card = card;
+                    [self.navigationController pushViewController:detailVC animated:YES];
+                    
+                }else{
+                    self.visitVC.searchCard = card;
+                    [self.navigationController popViewControllerAnimated:YES];
+                }
             }
         }
     }
@@ -750,6 +776,9 @@ typedef enum {
             case 101:
                 DLog(@"101 btn 数据源刷新");
                 self.generalArray = [self.dataControl cardsOfColleague];
+                if (self.isNormalSearchBar) {
+                self.generalArray = [self.dataControl cardsOfUngrouped];
+                }
                 break;
             case 102:
                 DLog(@"102 btn 数据源刷新");
@@ -768,9 +797,6 @@ typedef enum {
             default:
                 break;
         }
-        if (self.isNormalSearchBar) {
-             self.selectedItemArr = [self mutilyFlagForSelected];
-        }
         //DLog(@"刷新表");
         //当是自定义分组时，把btn的tag用groupid进行设置，再根据tag进行读取各个分组的成员//(每个分组有cards属性)
         if (self.isOwnGroup) {
@@ -778,6 +804,9 @@ typedef enum {
             self.currentTag = btn.tag;
             [self updateOwnGroupArray];
             
+        }
+        if (self.isNormalSearchBar) {
+            self.selectedItemArr = [self mutilyFlagForSelected];
         }
         
 //        UIEdgeInsets insets = {0,0,0,25};

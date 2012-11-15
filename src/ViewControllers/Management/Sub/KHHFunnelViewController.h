@@ -7,7 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SuperViewController.h"
 
-@interface KHHFunnelViewController : UIViewController
-
+@interface KHHFunnelViewController : SuperViewController
+@property (strong, nonatomic) IBOutlet UILabel *lab1;
+@property (strong, nonatomic) IBOutlet UILabel *lab2;
+@property (strong, nonatomic) IBOutlet UILabel *lab3;
+@property (strong, nonatomic) IBOutlet UILabel *lab4;
+@property (strong, nonatomic) IBOutlet UILabel *lab5;
+- (IBAction)btnClick:(id)sender;
 @end

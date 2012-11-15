@@ -97,7 +97,7 @@
     if (MFMessageComposeViewController.canSendText) {
         MFMessageComposeViewController *smsVC = [[MFMessageComposeViewController alloc] init];
         smsVC.messageComposeDelegate = self;
-        smsVC.body = [NSString stringWithFormat:@"我正在手机上用“印象名片“，可收录个人专属的会员卡和银行卡。推荐大家用一下，下载地址:%@",nil];
+        smsVC.body = [NSString stringWithFormat:@"我正在手机上用“蜂巢“，可收录个人专属的会员卡和银行卡。推荐大家用一下，下载地址:%@",nil];
         [self presentModalViewController:smsVC animated:YES];
     } else {
         [[[UIAlertView alloc] 

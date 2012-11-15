@@ -136,12 +136,4 @@
     // 切换到登陆界面
     [self postASAPNotificationName:KHHUIShowStartup];
 }
-//设置时间触发
-- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
-{
-    DLog(@"didReceiveLocalNotification");
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"时间到" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-    [alert show];
-
-}
 @end

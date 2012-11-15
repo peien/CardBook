@@ -47,12 +47,17 @@
                                                  initWithTitle:@"返回"
                                                  style:UIBarButtonItemStylePlain
                                                  target:self action:nil];
+        [self.rightBtn setTitle:NSLocalizedString(@"直接体验", nil) forState:UIControlStateNormal];
         self.defaults = [KHHDefaults sharedDefaults];
+        self.leftBtn.hidden = YES;
     }
     return self;
 }
 - (void)dealloc {
     self.defaults = nil;
+}
+- (void)rightBarButtonClick:(id)sender{
+    [self directLogin];
 }
 - (void)viewDidLoad
 {
@@ -122,7 +127,13 @@
         [self postASAPNotificationName:nAppLogMeIn];
     }
 }
-
+//直接体验
+- (void)directLogin{
+    
+    self.defaults.currentUser = @"13905718888";
+    self.defaults.currentPassword = @"888888";
+    [self postASAPNotificationName:nAppLogMeIn];
+}
 #pragma mark - SMCheckbox delegate methods
 - (void)checkbox:(SMCheckbox *)checkBox
     valueChanged:(BOOL)newValue {

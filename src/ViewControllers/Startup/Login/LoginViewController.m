@@ -47,7 +47,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.navigationItem.title = NSLocalizedString(@"印象名片", @"");
+        self.navigationItem.title = NSLocalizedString(@"蜂巢", @"");
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] 
                                               initWithTitle:NSLocalizedString(@"注册帐号", @"Sign up") 
                                               style:UIBarButtonItemStylePlain 
