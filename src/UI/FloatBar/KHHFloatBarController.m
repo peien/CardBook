@@ -9,7 +9,6 @@
 #import "KHHFloatBarController.h"
 #import "MapController.h"
 #import "KHHVisitRecoardVC.h"
-#import "KHHTempVisitedVC.h"
 #import "KHHBMapViewController.h"
 #import "Address.h"
 #import "Company.h"

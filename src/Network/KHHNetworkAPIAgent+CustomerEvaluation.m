@@ -103,6 +103,9 @@
     if (icv.value) {
         parameters[@"customerAppraise.customCost"] = icv.value.stringValue;
     }
+    if (icv.remarks) {
+        parameters[@"customerAppraise.col1"] = icv.remarks; //备注？
+    }
     if (icv.firstMeetDate) {
         parameters[@"knowTimeTemp" ] = icv.firstMeetDate;
     }

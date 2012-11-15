@@ -12,6 +12,7 @@
     self.degree           = icv.degree;
     self.firstMeetAddress = icv.firstMeetAddress;
     self.firstMeetDate    = icv.firstMeetDate;
+    self.remarks          = icv.remarks;
     Card *aCard;
     switch (icv.customerCardModelType) {
         case KHHCardModelTypePrivateCard:

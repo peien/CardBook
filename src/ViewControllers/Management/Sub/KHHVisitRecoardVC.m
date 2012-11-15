@@ -205,8 +205,6 @@
     _fieldValue = nil;
     _editLabel = nil;
     _fieldName = nil;
-    _imgview = nil;
-    _imgArray = nil;
     self.objectNameArr = nil;
     self.updateImageView = nil;
     self.imageArray = nil;
@@ -217,7 +215,6 @@
     self.visitInfoCard = nil;
     self.schedu = nil;
     self.oSched = nil;
-    self.dataCtrl = nil;
     self.hud = nil;
     self.selectDate = nil;
     self.defaultVisitedName = nil;
@@ -740,6 +737,10 @@
         }else{
             //[self timerPickerViewAnimation];
         }
+        KHHVisitedPickVC *pickVC = [[KHHVisitedPickVC alloc] initWithNibName:nil bundle:nil];
+        pickVC.isShowTimeValue = YES;
+        pickVC.visitVC = self;
+        [self.navigationController pushViewController:pickVC animated:YES];
         
     }
     if (indexPath.row == 2) {
@@ -752,10 +753,6 @@
         
     }
 
-    KHHVisitedPickVC *pickVC = [[KHHVisitedPickVC alloc] initWithNibName:nil bundle:nil];
-    pickVC.isShowTimeValue = YES;
-    pickVC.visitVC = self;
-    [self.navigationController pushViewController:pickVC animated:YES];
 }
 - (NSDate *)dateFromString{
     UITextField *dateTf = (UITextField *)[self.view viewWithTag:TEXTFIELD_DATE_TAG];
@@ -781,7 +778,6 @@
     if (textField.tag == TEXTFIELD_JOINER_TAG) {
         [self theTableAnimationUp];
     }
-
     return YES;
 }
 - (void)theTableAnimationUp{
@@ -824,6 +820,7 @@
 #pragma mark -
 - (void)warnBtnClick:(id)sender
 {
+    [self regsiFirstRespons];
     KHHVisitedPickVC *pickVC = [[KHHVisitedPickVC alloc] initWithNibName:nil bundle:nil];
     UIButton *btn = (UIButton *)[self.view viewWithTag:2277];
     pickVC.isShowWarnValue = YES;
@@ -839,7 +836,6 @@
     MapController *mapVC = [[MapController alloc] initWithNibName:nil bundle:nil];
     mapVC.companyAddr = addressMap.text;
     [self.navigationController pushViewController:mapVC animated:YES];
-
 }
 
 - (void)updateLocation:(UITapGestureRecognizer *)sender
@@ -857,6 +853,11 @@
     }else{
         [self.updateImageView startAnimating];
     }
+}
+- (void)regsiFirstRespons{
+    [(UITextField *)[self.view viewWithTag:NOTE_FIELD_TAG] resignFirstResponder];
+    [(UITextField *)[self.view viewWithTag:TEXTFIELD_JOINER_TAG] resignFirstResponder];
+    [self theTableAnimationDown];
 }
 //得到地址
 - (void)getLocalAddress{
@@ -923,7 +924,6 @@
     [actSheet addButtonWithTitle:@"本地相册"];
     [actSheet addButtonWithTitle:@"拍照"];
     [actSheet showInView:self.view];
-
 }
 - (void)longPressFunctionOne:(UILongPressGestureRecognizer*)sender
 {
@@ -943,10 +943,10 @@
     KHHFullFrameController *fullVC = [[KHHFullFrameController alloc] initWithNibName:nil bundle:nil];
     fullVC.image = self.tapImgview.image;
     [self.navigationController pushViewController:fullVC animated:YES];
-    
 }
 - (void)noteBtnClick:(id)sender
 {
+    [self regsiFirstRespons];
     KHHVisitedPickVC *pickVC = [[KHHVisitedPickVC alloc] initWithNibName:nil bundle:nil];
     UITextField *noteTf = (UITextField *)[self.view viewWithTag:NOTE_FIELD_TAG];
     pickVC.isShowNoteValue = YES;
@@ -994,7 +994,7 @@
             UIImagePickerController *imagePickCtrl = [[UIImagePickerController alloc] init];
             imagePickCtrl.sourceType = UIImagePickerControllerSourceTypeCamera;
             imagePickCtrl.delegate = self;
-            imagePickCtrl.allowsEditing = YES;
+            imagePickCtrl.allowsEditing = NO;
             [self presentModalViewController:imagePickCtrl animated:YES];
         }
     }
@@ -1033,7 +1033,6 @@
         [_imgArray addObject:image];
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:7 inSection:0];
         [_theTable reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
-    
     }
 }
 //添加图片成功
@@ -1106,7 +1105,6 @@
     }
     EKEventStore *eventStore = [[EKEventStore alloc] init];
     EKEvent *event = [EKEvent eventWithEventStore:eventStore];
-
     if([self checkIsDeviceVersionHigherThanRequiredVersion:@"6.0"]) {
     	[eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
         	if (granted){

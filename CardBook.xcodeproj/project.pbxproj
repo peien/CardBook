@@ -99,8 +99,6 @@
 		62A6256616524F9F00FD2805 /* home_bg@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62A6256516524F9F00FD2805 /* home_bg@2x.jpg */; };
 		62A62C791653468C00F6F2C6 /* startnew_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A62C781653468C00F6F2C6 /* startnew_logo@2x.png */; };
 		62A62C7B165346EF00F6F2C6 /* two_Frame@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62A62C7A165346EF00F6F2C6 /* two_Frame@2x.jpg */; };
-		62A62C83165363BC00F6F2C6 /* KHHTempVisitedVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A62C81165363BC00F6F2C6 /* KHHTempVisitedVC.m */; };
-		62A62C84165363BC00F6F2C6 /* KHHTempVisitedVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62A62C82165363BC00F6F2C6 /* KHHTempVisitedVC.xib */; };
 		62A6B6BB16153F000018F3DB /* KHHSinaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A6B6B916153F000018F3DB /* KHHSinaViewController.m */; };
 		62A6B6BC16153F000018F3DB /* KHHSinaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62A6B6BA16153F000018F3DB /* KHHSinaViewController.xib */; };
 		62A6C4DE160AAECE00ADA43E /* KHHFullFrameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A6C4DC160AAECE00ADA43E /* KHHFullFrameController.m */; };
@@ -676,9 +674,6 @@
 		62A6256516524F9F00FD2805 /* home_bg@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "home_bg@2x.jpg"; sourceTree = "<group>"; };
 		62A62C781653468C00F6F2C6 /* startnew_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "startnew_logo@2x.png"; sourceTree = "<group>"; };
 		62A62C7A165346EF00F6F2C6 /* two_Frame@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "two_Frame@2x.jpg"; sourceTree = "<group>"; };
-		62A62C80165363BC00F6F2C6 /* KHHTempVisitedVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHTempVisitedVC.h; sourceTree = "<group>"; };
-		62A62C81165363BC00F6F2C6 /* KHHTempVisitedVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHTempVisitedVC.m; sourceTree = "<group>"; };
-		62A62C82165363BC00F6F2C6 /* KHHTempVisitedVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHTempVisitedVC.xib; sourceTree = "<group>"; };
 		62A6B6B816153F000018F3DB /* KHHSinaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHSinaViewController.h; sourceTree = "<group>"; };
 		62A6B6B916153F000018F3DB /* KHHSinaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHSinaViewController.m; sourceTree = "<group>"; };
 		62A6B6BA16153F000018F3DB /* KHHSinaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHSinaViewController.xib; sourceTree = "<group>"; };
@@ -2083,9 +2078,6 @@
 				62A6255F1651DDCE00FD2805 /* KHHValueViewController.h */,
 				62A625601651DDCF00FD2805 /* KHHValueViewController.m */,
 				62A625611651DDCF00FD2805 /* KHHValueViewController.xib */,
-				62A62C80165363BC00F6F2C6 /* KHHTempVisitedVC.h */,
-				62A62C81165363BC00F6F2C6 /* KHHTempVisitedVC.m */,
-				62A62C82165363BC00F6F2C6 /* KHHTempVisitedVC.xib */,
 				62813BDD16538F0800180DB7 /* KHHVisitedPickVC.h */,
 				62813BDE16538F0800180DB7 /* KHHVisitedPickVC.m */,
 				62813BDF16538F0800180DB7 /* KHHVisitedPickVC.xib */,
@@ -3088,7 +3080,6 @@
 				62A6256616524F9F00FD2805 /* home_bg@2x.jpg in Resources */,
 				62A62C791653468C00F6F2C6 /* startnew_logo@2x.png in Resources */,
 				62A62C7B165346EF00F6F2C6 /* two_Frame@2x.jpg in Resources */,
-				62A62C84165363BC00F6F2C6 /* KHHTempVisitedVC.xib in Resources */,
 				62813BE116538F0800180DB7 /* KHHVisitedPickVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3433,7 +3424,6 @@
 				62CCC9ED165231F5004BA1A4 /* KHHPreViewViewController.m in Sources */,
 				620712FD1650E600000188E8 /* PCPieChart.m in Sources */,
 				62A625621651DDCF00FD2805 /* KHHValueViewController.m in Sources */,
-				62A62C83165363BC00F6F2C6 /* KHHTempVisitedVC.m in Sources */,
 				62813BE016538F0800180DB7 /* KHHVisitedPickVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

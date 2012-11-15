@@ -36,6 +36,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    [self.view setBackgroundColor:[UIColor colorWithRed:241 green:238 blue:232 alpha:1.0]];
     if (self.isShowTimeValue) {
         self.pick.hidden = YES;
     }else if (self.isShowNoteValue || self.isShowWarnValue){
@@ -81,7 +82,6 @@
         }else if (row == 9){
             self.visitVC.timeInterval = 7*24*60*60;
         }
-        
     }
     [self.navigationController popViewControllerAnimated:YES];
 }

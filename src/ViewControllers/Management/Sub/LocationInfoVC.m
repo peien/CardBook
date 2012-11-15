@@ -282,7 +282,11 @@
 - (void)addImageBtnClick:(id)sender
 {
     _index = 1;
-    UIActionSheet *actView = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+    UIActionSheet *actView = [[UIActionSheet alloc] initWithTitle:nil
+                                                         delegate:self
+                                                cancelButtonTitle:@"取消"
+                                           destructiveButtonTitle:nil
+                                                otherButtonTitles:nil, nil];
     [actView addButtonWithTitle:@"本地相册"];
     [actView addButtonWithTitle:@"拍照"];
     [actView showInView:self.view];
@@ -436,7 +440,7 @@
                 UIImagePickerController *imagePickCtrl = [[UIImagePickerController alloc] init];
                 imagePickCtrl.sourceType = UIImagePickerControllerSourceTypeCamera;
                 imagePickCtrl.delegate = self;
-                imagePickCtrl.allowsEditing = YES;
+                imagePickCtrl.allowsEditing = NO;
                 [self presentModalViewController:imagePickCtrl animated:YES];
             }
         }
@@ -463,10 +467,10 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo
 {
     
-    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
-        UIImage *oriImage = [editingInfo objectForKey:UIImagePickerControllerOriginalImage];
-        UIImageWriteToSavedPhotosAlbum(oriImage, nil, nil,nil);
-    }
+//    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+//        UIImage *oriImage = [editingInfo objectForKey:UIImagePickerControllerOriginalImage];
+//        UIImageWriteToSavedPhotosAlbum(oriImage, nil, nil,nil);
+//    } 保存到本地相册
     [self performSelector:@selector(handlePickedImage:) withObject:image afterDelay:0.1];
     [self dismissModalViewControllerAnimated:YES];
     

@@ -8,7 +8,6 @@
 
 #import "KHHCalendarViewController.h"
 #import "CKCalendarView.h"
-#import "KHHTempVisitedVC.h"
 #import "KHHAllVisitedSchedusVC.h"
 #import "KHHVisitCalendarCell.h"
 #import "KHHVisitCalendarView.h"

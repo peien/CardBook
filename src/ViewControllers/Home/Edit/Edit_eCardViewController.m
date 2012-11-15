@@ -49,6 +49,8 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
 @property (strong, nonatomic) InterCard     *interCard;
 @property (strong, nonatomic) KHHData       *dataCtrl;
 @property (strong, nonatomic) MBProgressHUD *progressHud;
+@property (strong, nonatomic) NSString      *province;
+@property (strong, nonatomic) NSString      *city;
 
 @end
 
@@ -83,6 +85,8 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
 @synthesize dataCtrl;
 @synthesize progressHud;
 @synthesize cardTemp;
+@synthesize province;
+@synthesize city;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -671,6 +675,8 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
         TSLocateView *locateView = (TSLocateView *)actionSheet;
         TSLocation *location = locateView.locate;
         NSLog(@"country:%@ city:%@ lat:%f lon:%f", location.state,location.city, location.latitude, location.longitude);
+        self.province = location.state;
+        self.city = location.city;
         UIButton *btn = (UIButton *)[self.view viewWithTag:KBIGADDRESS_TAG];
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         NSString *addStr = [NSString stringWithFormat:@"%@ %@",location.state,location.city];
@@ -910,7 +916,12 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
     //地址格式特殊，单独写出来重新负值
     if ([self.beginEditLabel.text isEqualToString:@"地址"]) {
         KHHAddressCell *cell = (KHHAddressCell*)[[textField superview] superview];
-        NSString *s1 = cell.bigAdress.titleLabel.text;
+        NSString *s1;
+        if (self.province.length == 0) {
+            s1 = [NSString stringWithFormat:@"%@ %@",self.glCard.address.province,self.glCard.address.city];
+        }else{
+            s1 = [NSString stringWithFormat:@"%@ %@",self.province,self.city];
+        }
         NSString *s2 = cell.detailAdress.text;
         [_fieldValue replaceObjectAtIndex:8 withObject:[NSString stringWithFormat:@"%@|%@",s1,s2]];
         //这个地方用户自己输入的详细地址，区，以及街道无法保存。
