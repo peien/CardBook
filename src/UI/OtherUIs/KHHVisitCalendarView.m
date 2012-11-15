@@ -15,7 +15,6 @@
 #import "MapController.h"
 #import "UIImageView+WebCache.h"
 #import "DetailInfoViewController.h"
-#import "KHHTempVisitedVC.h"
 #import "KHHData+UI.h"
 #import "KHHData.h"
 #import "NSString+SM.h"
@@ -208,9 +207,11 @@
         [self.viewCtrl.navigationController pushViewController:finishVC animated:YES];
     }
 }
+//地图
 - (void)showLocaButtonClick:(id)sender{
     DLog(@"showMap");
     MapController *mapVC = [[MapController alloc] initWithNibName:nil bundle:nil];
+    mapVC.companyName = @"";
     mapVC.companyAddr = self.mapAddress;
     [self.viewCtrl.navigationController pushViewController:mapVC animated:YES];
     

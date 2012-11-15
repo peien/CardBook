@@ -597,7 +597,7 @@ typedef enum {
             break;
         }
         case KHHTableIndexClient: {
-            if (_isNormalSearchBar && self.currentIndexPath.row != 3) { //暂时限制手机
+            if (_isNormalSearchBar) { //暂时限制手机
                 //选中某一个对象并返回
                 //[self.navigationController popViewControllerAnimated:YES];
                 NSNumber *state = [self.selectedItemArr objectAtIndex:indexPath.row];

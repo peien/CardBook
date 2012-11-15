@@ -89,7 +89,7 @@
 - (void)rightBarButtonClick:(id)sender
 {
     //初始化预览名片
-    KHHFrameCardView* cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(45, 35, 180 , 108) delegate:self isVer:NO callbackAction:nil];
+    KHHFrameCardView* cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(45, 35, 180 , 108) delegate:nil isVer:NO callbackAction:nil];
     if (!cardView) {
         return;
     }

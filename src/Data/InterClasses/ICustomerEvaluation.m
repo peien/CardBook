@@ -27,6 +27,7 @@
     
     icv.value  = [NSNumber numberFromObject:json[JSONDataKeyCustomCost] zeroIfUnresolvable:YES];//customCost = "";
     icv.degree = [NSNumber numberFromObject:json[JSONDataKeyRelateDepth] zeroIfUnresolvable:YES];//relateDepth = 3;
+    icv.remarks = [NSString stringFromObject:json[JSONDataKeyCol1]]; // 备注
     
     icv.firstMeetAddress = [NSString stringFromObject:json[JSONDataKeyKnowAddress]];//knowAddress = "\U4e0a\U6d77";
     icv.firstMeetDate    = [NSString stringFromObject:json[JSONDataKeyKnowTime]];//knowTime = "2011-12-13 18:59:59";
