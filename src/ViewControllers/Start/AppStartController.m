@@ -17,6 +17,7 @@
 #import "AppLoginController.h"
 #import "AppRegisterController.h"
 #import "LoginActionViewController.h"
+#import "KHHDefaults.h"
 
 #define titleCreateAccountSucceeded NSLocalizedString(@"用户注册成功", nil)
 #define titleCreateAccountFailed    NSLocalizedString(@"用户注册失败", nil)
@@ -234,6 +235,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 }
 - (void)handleNetworkLoginSucceeded:(NSNotification *)noti {
     // 登陆成功
+    BOOL isFirstLogin = [self isFirstLogin];
     // 保存用户数据: id,mobile,password,isAutoReceive
     [self.defaults saveLoginOrRegisterResult:noti.userInfo];
     [self.defaults setLoggedIn:YES];
@@ -241,8 +243,37 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     [self.agent authenticateWithUser:self.defaults.currentAuthorizationID.stringValue
                             password:self.defaults.currentPassword];
     // 开始同步
-    [self sync];
+    if (isFirstLogin) {
+        //同步
+        [self sync];
+    }else {
+        //直接进入
+        [self handleSyncSucceeded:nil];
+    }
 }
+
+//判断是否第一次在手机上登录
+-(BOOL) isFirstLogin
+{
+    NSArray* historyList = [self.defaults historyUserList];
+    if (!historyList) {
+        return YES;
+    }
+    
+    for (NSDictionary* dict in historyList) {
+        if (!dict) {
+            continue;
+        }
+        
+        NSString* user = dict[KHHDefaultsKeyUser];
+        if ([user isEqualToString:[self.defaults currentUser]]) {
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
 - (void)handleNetworkLoginFailed:(NSNotification *)noti {
     DLog(@"[II] 登录失败！");
     KHHErrorCode code = [noti.userInfo[kInfoKeyErrorCode] integerValue];

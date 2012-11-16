@@ -30,6 +30,7 @@
 - (NSString *)currentPassword;
 - (NSNumber *)currentAuthorizationID;
 - (void)saveLoginOrRegisterResult:(NSDictionary *)info;
+- (NSArray *) historyUserList;
 @end
 
 @interface AppStartController : UIViewController

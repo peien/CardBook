@@ -11,33 +11,6 @@
 #import "KHHTypes.h"
 #import "KHHNotifications.h"
 
-static NSString * const SettingsFileName = @"KHHAppSettings";
-static NSString * const SettingsFileType = @"plist";
-
-static NSString * const KHHDefaultsKeyID = @"khh_ID";
-static NSString * const KHHDefaultsKeyAutoLogin = @"khh_autoLogin";
-static NSString * const KHHDefaultsKeyAutoReceive = @"khh_autoReceive";
-
-static NSString * const KHHDefaultsKeyCurrentUser = @"khh_currentUser";
-static NSString * const KHHDefaultsKeyCurrentPassword = @"khh_currentPassword";
-static NSString * const KHHDefaultsKeyCurrentAuthorizationID = @"khh_currentAuthorizationID";
-static NSString * const KHHDefaultsKeyCurrentUserID = @"khh_currentUserID";
-static NSString * const KHHDefaultsKeyCurrentCompanyID = @"khh_currentCompanyID";
-static NSString * const KHHDefaultsKeyCurrentDepartmentID = @"khh_currentdeDartmentID";
-static NSString * const KHHDefaultsKeyCurrentPermission = @"khh_currentPermission";
-
-static NSString * const KHHDefaultsKeyDepartmentID = @"khh_departmentID";
-static NSString * const KHHDefaultsKeyFirstLaunch = @"khh_firstLaunch";
-static NSString * const KHHDefaultsKeyLastUser = @"khh_lastUser";
-static NSString * const KHHDefaultsKeyLoggedIn = @"khh_loggedIn";
-static NSString * const KHHDefaultsKeyPassword = @"khh_password";
-static NSString * const KHHDefaultsKeypermission = @"khh_permission";
-static NSString * const KHHDefaultsKeyShowCompanyLogo = @"khh_showCompanyLogo";
-static NSString * const KHHDefaultsKeyRememberPassword = @"khh_rememberPassword";
-static NSString * const KHHDefaultsKeyUser = @"khh_user";
-
-static NSString * const KHHDefaultsKeyCompanyList = @"khh_companyList";
-static NSString * const KHHDefaultsKeyUserList = @"khh_userList";
 
 // App - MainUI
 static NSString * const KHHDefaultsKeySelectedMainTabIndex = @"khh_MainUI_selectedTabIndex";
@@ -223,6 +196,11 @@ static NSString * const KHHDefaultsKeyMobilePhoneGroup = @"isAddMobPhoneGroup";
     self.currentCompanyID = [NSNumber numberWithInteger:0];
     self.currentDepartmentID = [NSNumber numberWithInteger:0];
     self.currentPermission = @"";
+}
+
+//获取登录过的userList
+- (NSArray *) historyUserList {
+    return [self arrayForKey:KHHDefaultsKeyUserList];
 }
 #pragma mark - User settings
 - (BOOL)isFirstLaunch {

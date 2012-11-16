@@ -21,6 +21,8 @@
 #import "KHHShowHideTabBar.h"
 #import "KHHData+UI.h"
 #import "Card.h"
+//定时同步消息时间(秒)
+static int const KHH_SYNC_MESSAGE_TIME = 30 * 60;
 
 @interface KHHManagementViewController ()
 @property (strong, nonatomic) KHHData        *dataCtrl;
@@ -28,6 +30,7 @@
 @property (strong, nonatomic) KHHAppDelegate *app;
 @property (strong, nonatomic) UIImageView    *messageImageView;
 @property (strong, nonatomic) UILabel        *numLab2;
+@property (strong, nonatomic) NSTimer        *syncMessageTimer;
 @end
 
 @implementation KHHManagementViewController
@@ -37,6 +40,7 @@
 @synthesize app;
 @synthesize messageImageView;
 @synthesize numLab2;
+@synthesize syncMessageTimer;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -62,6 +66,8 @@
 //同步
 - (void)rightBarButtonClick:(id)sender{
     [self synBtnClick];
+    //要输入的数字。0代表取消，不显示
+//    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:10];
 }
 //消息
 - (void)leftBarButtonClick:(id)sender{
@@ -120,7 +126,11 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     _entranceView.center = self.view.center;
+    
     [self.view addSubview:_entranceView];
+    
+    //启动定时同步消息timer
+    [self syncMessage];
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
@@ -135,6 +145,8 @@
 }
 - (void)viewDidUnload
 {
+    [self stopObservingNotificationName:nUISyncMessagesSucceeded];
+    [self stopObservingNotificationName:nUISyncMessagesFailed];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -143,6 +155,7 @@
     self.app = nil;
     self.messageImageView = nil;
     self.numLab2 = nil;
+    [self.syncMessageTimer invalidate];
 }
 
 - (IBAction)radarBtnClick:(id)sender{
@@ -195,6 +208,39 @@
 {
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"功能暂时未开放" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alert show];
+}
+
+//后台同步消息
+//每隔半小时去同步一次消息
+//有新联系人时要提示用户alert，有新消息时要push出来
+-(void) syncMessage
+{
+    //注册广播接收器
+    //注册同步消息
+    [self observeNotificationName:nUISyncMessagesSucceeded selector:@"handleSyncMessagesSucceeded:"];
+    [self observeNotificationName:nUISyncMessagesFailed selector:@"handlenUISyncMessagesFailed:"];
+    if (!self.syncMessageTimer) {
+        self.syncMessageTimer = [NSTimer scheduledTimerWithTimeInterval:KHH_SYNC_MESSAGE_TIME target:self selector:@selector(handleSyncMessage) userInfo:nil repeats:YES];
+    }
+    
+}
+
+//解析数据
+- (void)handleSyncMessagesSucceeded:(NSNotification *)noti{
+    
+    DLog(@"timer sync handleSyncMessagesSucceeded ! noti is ======%@",noti.userInfo);
+}
+
+//同步失败
+- (void)handlenUISyncMessagesFailed:(NSNotification *)noti{
+    DLog(@"timer sync handlenUISyncMessagesFailed! noti is ======%@",noti.userInfo);
+    
+}
+
+
+-(void) handleSyncMessage
+{
+    [[KHHData sharedData]syncMessages];
 }
 
 @end
