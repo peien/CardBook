@@ -145,8 +145,9 @@ static int const KHH_SYNC_MESSAGE_TIME = 30 * 60;
 }
 - (void)viewDidUnload
 {
-    [self stopObservingNotificationName:nUISyncMessagesSucceeded];
-    [self stopObservingNotificationName:nUISyncMessagesFailed];
+    //关闭timer同步接收广播
+//    [self stopObservingNotificationName:nUISyncMessagesSucceeded];
+//    [self stopObservingNotificationName:nUISyncMessagesFailed];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
@@ -217,11 +218,11 @@ static int const KHH_SYNC_MESSAGE_TIME = 30 * 60;
 {
     //注册广播接收器
     //注册同步消息
-    [self observeNotificationName:nUISyncMessagesSucceeded selector:@"handleSyncMessagesSucceeded:"];
-    [self observeNotificationName:nUISyncMessagesFailed selector:@"handlenUISyncMessagesFailed:"];
-    if (!self.syncMessageTimer) {
-        self.syncMessageTimer = [NSTimer scheduledTimerWithTimeInterval:KHH_SYNC_MESSAGE_TIME target:self selector:@selector(handleSyncMessage) userInfo:nil repeats:YES];
-    }
+//    [self observeNotificationName:nUISyncMessagesSucceeded selector:@"handleSyncMessagesSucceeded:"];
+//    [self observeNotificationName:nUISyncMessagesFailed selector:@"handlenUISyncMessagesFailed:"];
+//    if (!self.syncMessageTimer) {
+//        self.syncMessageTimer = [NSTimer scheduledTimerWithTimeInterval:KHH_SYNC_MESSAGE_TIME target:self selector:@selector(handleSyncMessage) userInfo:nil repeats:YES];
+//    }
     
 }
 
