@@ -89,7 +89,6 @@ static void AFSwizzleClassMethodWithClassAndSelectorUsingBlock(Class klass, SEL 
     IMP implementation = imp_implementationWithBlock((AF_CAST_TO_BLOCK)block);
     class_replaceMethod(objc_getMetaClass([NSStringFromClass(klass) UTF8String]), selector, implementation, method_getTypeEncoding(originalMethod));
 }
-
 #pragma mark -
 
 @interface AFHTTPRequestOperation ()

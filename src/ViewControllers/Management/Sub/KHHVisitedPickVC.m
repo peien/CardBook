@@ -62,7 +62,7 @@
     if (self.isShowWarnValue) {
         int row = [self.pick selectedRowInComponent:0];
         if (row == 0) {
-            self.visitVC.timeInterval = MAXFLOAT;
+            self.visitVC.timeInterval = 0;
         }else if (row == 1){
             self.visitVC.timeInterval = 30*60;
         }else if (row == 2){

@@ -525,7 +525,7 @@
 							<object class="IBUIButton" id="94571059">
 								<reference key="NSNextResponder" ref="874725028"/>
 								<int key="NSvFlags">292</int>
-								<string key="NSFrame">{{180, 277}, {120, 36}}</string>
+								<string key="NSFrame">{{180, 277}, {127, 36}}</string>
 								<reference key="NSSuperview" ref="874725028"/>
 								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="393271139"/>
@@ -534,7 +534,7 @@
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIContentHorizontalAlignment">2</int>
 								<int key="IBUIContentVerticalAlignment">0</int>
-								<string key="IBUINormalTitle">名片宝隐私声明</string>
+								<string key="IBUINormalTitle">蜂巢访销的隐私声明</string>
 								<reference key="IBUIHighlightedTitleColor" ref="107276209"/>
 								<object class="NSColor" key="IBUINormalTitleColor">
 									<int key="NSColorSpace">1</int>

@@ -136,7 +136,7 @@
         DLog(@"过去");
         self.addBtn.hidden = YES;
     }else if (timerIntervSelected - timerIntervNow == 0){
-        DLog(@"")
+        DLog(@"");
     }
     self.visitView.selectedDate = self.dateSelect;
     self.visitView.card = self.card;

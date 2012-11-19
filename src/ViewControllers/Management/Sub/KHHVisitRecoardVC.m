@@ -60,6 +60,7 @@
 @property (strong, nonatomic) UIButton        *warnBtn;
 @property (assign, nonatomic) bool            isPickerShow;
 @property (assign, nonatomic) bool            isNotePickShow;
+@property (strong, nonatomic) NSString        *showInfoStr;
 @end
 
 @implementation KHHVisitRecoardVC
@@ -111,6 +112,7 @@
 @synthesize isPickerShow;
 @synthesize isNotePickShow;
 @synthesize searchCard;
+@synthesize showInfoStr;
 
 #pragma mark -
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -129,7 +131,6 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    //self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTime) userInfo:nil repeats:YES];
     
     NSDate *now = [NSDate date];
     NSDateFormatter *dateForm = [[NSDateFormatter alloc] init];
@@ -139,8 +140,6 @@
     NSArray *dateArr = [showDAte componentsSeparatedByString:@" "];
     _dateStr = [dateArr objectAtIndex:0];
     _timeStr = [dateArr objectAtIndex:1];
-    //[_datePicker setDate:now animated:YES];
-    //[_datePicker addTarget:self action:@selector(datePickerValueChanged:) forControlEvents:UIControlEventValueChanged];
     _tempPickArr = [[NSArray alloc] init];
     self.objectNameArr = [[NSMutableArray alloc] init];
     _warnTitleArr = [[NSArray alloc] initWithObjects:@"不提醒", @"30分钟",@"1小时",@"2小时",@"3小时",@"12小时",@"24小时",@"2天",@"3天",@"一周",nil];
@@ -161,6 +160,7 @@
     //如果不是新建，就获取数据让其显示
     if (_style == KVisitRecoardVCStyleShowInfo) {
         [self initViewData];
+        self.defaultVisitedName = [NSMutableString stringWithCapacity:0];
         self.title = NSLocalizedString(@"编辑详情", nil);
     }else if (_style == KVisitRecoardVCStyleNewBuild){
         self.title = NSLocalizedString(@"新建拜访日志", nil);
@@ -178,10 +178,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    //[KHHShowHideTabBar hideTabbar];
-    //[_theTable reloadData];
-    
-    
+
 }
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
@@ -222,6 +219,7 @@
     self.objectDic = nil;
     self.searchCard = nil;
     self.warnBtn = nil;
+    self.showInfoStr = nil;
 }
 #pragma mark -
 //选择多个拜访对象
@@ -229,7 +227,6 @@
     if (self.objectNameArr.count > 0 || self.visitInfoCard.name.length > 0) {
         DLog(@"self.objectNameArr ====== %@",self.objectNameArr);
         NSMutableString *nameObj = [[NSMutableString alloc] init];
-
         for (int i = 0; i < self.objectNameArr.count; i++) {
             Card *card = [self.objectNameArr objectAtIndex:i];
             if (card.name.length > 0) {
@@ -238,9 +235,12 @@
             }
         }
         UITextField *objectTf = (UITextField *)[self.view viewWithTag:TEXTFIELD_OBJECT_TAG];
-        if (self.searchCard) {
+        if (self.searchCard) { // 默认显示搜索一个联系人的信息
             [self.defaultVisitedName appendString:[NSString stringWithFormat:@"%@(%@),",searchCard.name,self.searchCard.company.name]];
             [self.objectDic setObject:self.searchCard forKey:self.searchCard.name];
+        }
+        if (_style == KVisitRecoardVCStyleShowInfo && self.showInfoStr.length > 0) { // 查看一个拜访记录并且添加拜访对象时，会调用。
+            [self.defaultVisitedName appendString:[NSString stringWithFormat:@"%@",self.showInfoStr]];
         }
         if (self.defaultVisitedName.length > 0) {
             [nameObj insertString:self.defaultVisitedName atIndex:0];
@@ -250,19 +250,7 @@
         [self.objectNameArr removeAllObjects];
     }
 }
-//动态显示时间
-//- (void)updateTime
-//{
-//    if (_style == KVisitRecoardVCStyleNewBuild) {
-//        NSDate *dt = [NSDate date];
-//        NSDateFormatter *df = [[NSDateFormatter alloc] init];
-//        [df setDateFormat:@"HH:mm:ss"];
-//        UITextField *tf = (UITextField *)[self.view viewWithTag:TEXTFIELD_TIME_TAG];
-//        tf.text = [df stringFromDate:dt];
-//    }
-//}
 
-//从网络或数据库获得数据
 - (void)initViewData
 {
     //获取对象模型，填充fieldvalue
@@ -276,7 +264,9 @@
             if (name.length > 0) {
                 [names appendString:[NSString stringWithFormat:@"%@(%@),",name,companyName]];
             }
+            [self.objectDic setObject:cardObj forKey:cardObj.name];
         }
+        self.showInfoStr = names;
         [_fieldValue replaceObjectAtIndex:0 withObject:names];
     }
     if (self.schedu.plannedDate != nil) {
@@ -358,7 +348,7 @@
     [self observeNotificationName:KHHUIUpdateVisitScheduleFailed selector:@"handleUpdateVisitScheduleFailed:"];
     [self saveVisitRecordInfo];
 }
-// 保存
+// 保存或新建拜访计划
 - (void)saveVisitRecordInfo
 {
     UITextField *note = (UITextField *)[self.view viewWithTag:NOTE_FIELD_TAG];
@@ -402,10 +392,10 @@
             //self.oSched.plannedDate = [self dateFromString];
         }
     }
-    if (self.isFinishTask) {
+    if (self.isFinishTask) { //如果点签到，就拜访完成
         self.oSched.isFinished = [NSNumber numberWithBool:YES];
     }
-    if (self.isFromCalVC) {
+    if (self.isFromCalVC) { //从日历界面选择的默认日期
         self.oSched.plannedDate = [self dateFromString];
     }
     KHHAppDelegate *app = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
@@ -428,8 +418,8 @@
     }else if (selectMs - nowS > -5*60.000){
         self.oSched.isFinished = [NSNumber numberWithBool:YES];
     }
-
 }
+#pragma mark - 
 - (void)handleCreateVisitScheduleSucceeded:(NSNotification *)info{
     DLog(@"handleCreateVisitScheduleSucceeded! ====== %@",info);
     [self.hud hide:YES];
@@ -490,7 +480,6 @@
                                    delegate:nil
                           cancelButtonTitle:@"确定"
                           otherButtonTitles: nil] show];
-        //[self animationForDatePickerDown];
         return;
     }
     self.selectDate = date;
@@ -509,8 +498,6 @@
         UITextField *tf = (UITextField *)[self.view viewWithTag:TEXTFIELD_TIME_TAG];
         tf.text = _timeStr;
     }
-    //[self animationForDatePickerDown];
-
 }
 #pragma mark - TABLEVIEW_DELEGATE
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -726,34 +713,29 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //还要改
+   
     if (self.isFinishTask || [self.schedu.isFinished isEqualToNumber:[NSNumber numberWithBool:YES]]) {
         return;
     }
-
+    //修改日期和时间
     if ((indexPath.row == 1 || indexPath.row == 2) && (_style == KVisitRecoardVCStyleNewBuild||[self.schedu.isFinished isEqualToNumber:[NSNumber numberWithBool:NO]])) {
-        if (self.isPickerShow) {
-            //[self animationForDatePickerDown];
-        }else{
-            //[self timerPickerViewAnimation];
-        }
+        
         KHHVisitedPickVC *pickVC = [[KHHVisitedPickVC alloc] initWithNibName:nil bundle:nil];
         pickVC.isShowTimeValue = YES;
         pickVC.visitVC = self;
         [self.navigationController pushViewController:pickVC animated:YES];
-        
     }
     if (indexPath.row == 2) {
-        NSLog(@"显示时间");
+        NSLog(@"选择时间");
         _isShowDate = NO;
         
     }else if (indexPath.row == 1){
-        NSLog(@"显示日期xx");
+        NSLog(@"选择日期");
         _isShowDate = YES;
-        
     }
 
 }
+// 保存时，获取用户修改的日期。
 - (NSDate *)dateFromString{
     UITextField *dateTf = (UITextField *)[self.view viewWithTag:TEXTFIELD_DATE_TAG];
     UITextField *timeTf = (UITextField *)[self.view viewWithTag:TEXTFIELD_TIME_TAG];
@@ -806,7 +788,7 @@
         if (textField.text.length == 0) {
             self.defaultVisitedName = nil;
             if (self.visitInfoCard) {
-                [self.objectDic removeObjectForKey:self.visitInfoCard.name];
+                [self.objectDic removeObjectForKey:self.visitInfoCard.name]; //移出默认的拜访对象。
             }
         }
         [_fieldValue replaceObjectAtIndex:0 withObject:textField.text];
@@ -830,6 +812,7 @@
     [self.navigationController pushViewController:pickVC animated:YES];
 
 }
+//定位
 - (void)showMap:(id)sender
 {
     UITextField *addressMap = (UITextField *)[self.view viewWithTag:TEXTFIELD_ADDRESS_TAG];
@@ -918,18 +901,27 @@
 - (void)addImageBtnClick:(UIButton *)sender
 {
     _isHaveImage = YES;
-    _isAddress = NO;
+    _isAddress = NO;//原来弹出地址插件的，现在没用
     _index = 0;
-    UIActionSheet *actSheet = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+    UIActionSheet *actSheet = [[UIActionSheet alloc] initWithTitle:@""
+                                                          delegate:self
+                                                 cancelButtonTitle:@"取消"
+                                            destructiveButtonTitle:nil
+                                                 otherButtonTitles:nil, nil];
     [actSheet addButtonWithTitle:@"本地相册"];
     [actSheet addButtonWithTitle:@"拍照"];
     [actSheet showInView:self.view];
 }
+//在添加的图片上，添加一个长按 GestureRecognizer
 - (void)longPressFunctionOne:(UILongPressGestureRecognizer*)sender
 {
     _index = 1;
     if (sender.state == UIGestureRecognizerStateBegan) {
-        UIActionSheet *actSheet = [[UIActionSheet alloc] initWithTitle:@"" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:nil, nil];
+        UIActionSheet *actSheet = [[UIActionSheet alloc] initWithTitle:@""
+                                                              delegate:self
+                                                     cancelButtonTitle:@"取消"
+                                                destructiveButtonTitle:nil
+                                                     otherButtonTitles:nil, nil];
         //[actSheet addButtonWithTitle:@"设为头像"];
         [actSheet addButtonWithTitle:@"删除图片"];
         [actSheet showInView:self.view];
@@ -944,6 +936,7 @@
     fullVC.image = self.tapImgview.image;
     [self.navigationController pushViewController:fullVC animated:YES];
 }
+//点击备注
 - (void)noteBtnClick:(id)sender
 {
     [self regsiFirstRespons];
@@ -971,7 +964,7 @@
         return;
     }else if (buttonIndex == 1 && _index == 0){
         //地址
-        if (_isAddress) {
+        if (_isAddress) { //弹出地址插件(现在直接定位显示位置)
             TSLocateView *locateView = (TSLocateView *)actionSheet;
             TSLocation *location = locateView.locate;
             NSLog(@"country:%@ city:%@ lat:%f lon:%f", location.state,location.city, location.latitude, location.longitude);
@@ -1023,7 +1016,7 @@
 - (void)handlePickedImage:(UIImage *)image
 {
     //注册添加图片消息
-    if (_style == KVisitRecoardVCStyleShowInfo) {
+    if (_style == KVisitRecoardVCStyleShowInfo) { //当新建的时候，添加图片放在一个本地数组。当修改拜访计划的时候，添加一张或删除一张都立即调用了网络接口。
         DLog(@"调用添加拜访计划图片");
         [self observeNotificationName:KHHUIUploadImageForVisitScheduleSucceeded selector:@"handleUploadImageForVisitScheduleSucceeded:"];
         [self observeNotificationName:KHHUIUploadImageForVisitScheduleFailed selector:@"handleKHHUIUploadImageForVisitScheduleFailed:"];
@@ -1076,6 +1069,7 @@
                       otherButtonTitles: nil] show];
 }
 - (void)stopObservingForUploadImage{
+    
     [self stopObservingNotificationName:KHHUIUploadImageForVisitScheduleSucceeded];
     [self stopObservingNotificationName:KHHUIUploadImageForVisitScheduleFailed];
 }
@@ -1085,10 +1079,8 @@
 }
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo
 {
-
     [self performSelector:@selector(handlePickedImage:) withObject:image afterDelay:0.1];
     [self dismissModalViewControllerAnimated:YES];
-
 }
 - (void)netWorkWarnShow{
     [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
@@ -1116,7 +1108,7 @@
                         event.title = @"拜访计划提醒";
                         event.startDate = startDate;
                         event.endDate = endDate;
-                        if (_timeInterval != MAXFLOAT) {
+                        if (_timeInterval != 0) {
                             EKAlarm *alerm = [EKAlarm alarmWithAbsoluteDate:startDate];
                             [event addAlarm:alerm];
                         }
@@ -1131,7 +1123,7 @@
             }else{
                 //----- codes here when user NOT allow your app to access the calendar.
                 [[[UIAlertView alloc] initWithTitle:nil
-                                            message:@"由于系统版本小于6.0,不能访问日历且添加拜访事件！"
+                                            message:@"由于系统版本小于6.0,不能访问日历且添加拜访事件!"
                                            delegate:nil
                                   cancelButtonTitle:@"确定"
                                   otherButtonTitles:nil] show];

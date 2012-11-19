@@ -224,6 +224,7 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
     return result;
 
 }
+
 // 未分组（不在其它分组的，过滤掉同事）
 - (NSArray *)cardsOfUngrouped {
     NSNumber *myComID = [KHHDefaults sharedDefaults].currentCompanyID;

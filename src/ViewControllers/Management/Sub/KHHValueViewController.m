@@ -48,10 +48,8 @@
     // Do any additional setup after loading the view from its nib.
 
     KHHMySearchBar *mySearchBar = [[KHHMySearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44) simple:YES];
-    
     mySearchBar.delegate = self;
     [self.view addSubview:mySearchBar];
-    
     //点击界面上的searchBar时出来新的界面供搜索并显示新数据源(实现searchBar的委托方法)
     UISearchDisplayController *disCtrl = [[UISearchDisplayController alloc] initWithSearchBar:mySearchBar contentsController:self];
     disCtrl.delegate = self;

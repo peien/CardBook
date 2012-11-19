@@ -277,7 +277,6 @@ int num = 0;
 - (void)checkbox:(SMCheckbox *)checkbox valueChanged:(BOOL)newValue
 {
     
-
 }
 - (void) searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller{
     [self searcResult];
@@ -295,9 +294,6 @@ int num = 0;
     DLog(@"handleMoveCardsSucceeded! info is ====== %@",info);
     [self.hud hide:YES];
     [self.navigationController popViewControllerAnimated:YES];
-   
-    
-
 }
 - (void)handleMoveCardsFailed:(NSNotification *)info{
     [self stopObservingForMoveCards];
@@ -308,15 +304,11 @@ int num = 0;
         self.hud.labelText = NSLocalizedString(@"删除组员失败", nil);
     }
     [self.hud hide:YES];
-    
-
 }
 - (void)stopObservingForMoveCards{
     [self stopObservingNotificationName:KHHUIMoveCardsSucceeded];
     [self stopObservingNotificationName:KHHUIMoveCardsFailed];
-
 }
-
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
