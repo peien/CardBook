@@ -9,6 +9,7 @@
 #import "KHHManagementViewController.h"
 #import "KHHMyDetailController.h"
 #import "MoreViewController.h"
+#import "KHHDefaults.h"
 #import "KHHCalendarViewController.h"
 #import "KHHHomeViewController.h"
 #import "KHHExchangeViewController.h"
@@ -172,6 +173,7 @@
 }
 //签到
 - (IBAction)locationBtnClick:(id)sender{
+
     LocationInfoVC *locaVC = [[LocationInfoVC alloc] initWithNibName:nil bundle:nil];
     [self.navigationController pushViewController:locaVC animated:YES];
 }
