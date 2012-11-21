@@ -450,10 +450,20 @@
     
     //1.MessageList {
     NSArray *list = info[kInfoKeyObjectList];
-    [KHHMessage processIObjectList:list];
+    if (list) {
+        [KHHMessage processIObjectList:list];
+    }
+    
     // }
-    // 2.保存
+    //2.ContactList {
+    NSArray *contactList = info[kInfoKeyReceivedCard];
+    if (contactList) {
+        [ReceivedCard processIObjectList:contactList];
+    }
+    //}
+    // 3.保存
     [self saveContext];
+    //4.发送界面广播
     [self postASAPNotificationName:nUISyncMessagesSucceeded
                               info:info];
 }

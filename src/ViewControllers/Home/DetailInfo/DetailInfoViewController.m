@@ -52,7 +52,6 @@
 @synthesize cardView = _cardView;
 @synthesize visitCalView = _visitCalView;
 @synthesize containView = _containView;
-@synthesize segmCtrl = _segmCtrl;
 @synthesize customView = _customView;
 @synthesize lastBtn = _lastBtn;
 @synthesize app = _app;
@@ -175,12 +174,6 @@
     [iconImgView setImageWithURL:[NSURL URLWithString:self.card.logo.url] placeholderImage:iconImg];
     iconImgView.backgroundColor = [UIColor clearColor];
     [headerView addSubview:iconImgView];
-    _segmCtrl = [[UISegmentedControl alloc] initWithFrame:CGRectMake(0, 75, 320, 30)];
-    [_segmCtrl insertSegmentWithTitle:NSLocalizedString(@"客户评估", nil) atIndex:0 animated:NO];
-    [_segmCtrl insertSegmentWithTitle:NSLocalizedString(@"拜访日历", nil) atIndex:1 animated:NO];
-    [_segmCtrl insertSegmentWithTitle:NSLocalizedString(@"电子名片", nil) atIndex:2 animated:NO];
-    [_segmCtrl addTarget:self action:@selector(segCtrlClick:) forControlEvents:UIControlEventValueChanged];
-    _segmCtrl.selectedSegmentIndex = 0;
     UILabel *nameLab = [[UILabel alloc] initWithFrame:CGRectMake(75, 10, 120, 20)];
     nameLab.tag = LABEL_NAME_TAG;
     nameLab.text = NSLocalizedString(self.card.name, nil);

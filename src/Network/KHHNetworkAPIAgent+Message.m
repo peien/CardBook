@@ -36,6 +36,7 @@
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *responseDict = [self JSONDictionaryWithResponse:responseObject];
         DLog(@"[II] responseDict = %@", responseDict);
+        //获取消息列表
         NSArray *fsendList = responseDict[@"fsendList"];
         NSMutableArray *messageList = [NSMutableArray arrayWithCapacity:fsendList.count];
         for (id obj in fsendList) {
@@ -43,10 +44,26 @@
             [messageList addObject:im];
         }
         
+        //获取联系人列表
+        NSArray *cardBookList = responseDict[@"cardBookList"];
+        NSMutableArray *contactList = [NSMutableArray arrayWithCapacity:cardBookList.count];
+        for (id obj in cardBookList) {
+            InterCard * iCard = [InterCard interCardWithReceivedCardJSON:obj nodeName:nil];
+            if (iCard) {
+                [contactList addObject:iCard];
+            }
+        }
+        //名片发送者,客户端对这些名片做过处理后把id传给服务器把标记置掉后，下次就不会再拿到这些数据
+        NSString *senderIDs = responseDict[@"fsendIds"];
+        if (senderIDs) {
+            [self deleteMessagesByIDs:senderIDs sucessBlock:nil];   
+        }
+        
         KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
         NSDictionary *dict = @{
         kInfoKeyErrorCode  : @(code),
         kInfoKeyObjectList : messageList,
+        kInfoKeyReceivedCard: contactList,
         };
         [self postASAPNotificationName:NameWithActionAndCode(action, code)
                                   info:dict];
@@ -70,9 +87,7 @@
         [messageIDs addObject:[[message valueForKey:kAttributeKeyID]
                                stringValue]];
     }
-    NSDictionary *parameters = @{
-    @"ids" : [messageIDs componentsJoinedByString:@","]
-    };
+    
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *responseDict = [self JSONDictionaryWithResponse:responseObject];
         DLog(@"[II] responseDict = %@", responseDict);
@@ -84,10 +99,24 @@
         [self postASAPNotificationName:NameWithActionAndCode(action, code)
                                   info:dict];
     };
+    
+    [self deleteMessagesByIDs:[messageIDs componentsJoinedByString:@","] sucessBlock:success];
+}
+
+//删除消息(通过组装好的ids)
+- (void)deleteMessagesByIDs:(NSString *)messagesIDs sucessBlock:(KHHSuccessBlock) sucessBlock{
+    NSString *action = kActionNetworkDeleteMessages;
+    if (!messagesIDs) {
+        WarnParametersNotMeetRequirement(action);
+    }
+    NSDictionary *parameters = @{
+    @"ids" : messagesIDs
+    };
+    
     [self postAction:action
                query:@"customFsendService.delete"
           parameters:parameters
-             success:success];
+             success:sucessBlock];
 }
 ///**
 // 通知印象名片用户活动 tellActiveService.getTellActive

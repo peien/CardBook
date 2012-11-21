@@ -25,4 +25,8 @@
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=188
  */
 //- (void)promotionMessagesWithType:(NSString *)type;
+/**
+ 删除消息通过组装好的id,用于删除通过消息发送过来的联系人时，没有KHHMessage array时直接删除
+ */
+- (void)deleteMessagesByIDs:(NSString *)messagesIDs sucessBlock:(KHHSuccessBlock) sucessBlock;
 @end

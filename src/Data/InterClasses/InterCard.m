@@ -98,7 +98,29 @@
 }
 + (InterCard *)interCardWithReceivedCardJSON:(NSDictionary *)json {
     // 先填入普通名片
-    NSDictionary *card = json[@"card"];
+//    NSDictionary *card = json[@"card"];
+//    InterCard * iCard = [self interCardWithJSON:card];
+//    // 再填ReceivedCard相关的数据
+//    // isRead(col3),(col1?),memo
+//    iCard.modelType = KHHCardModelTypeReceivedCard;
+//    iCard.isDeleted = iCard.isDeleted || [NSNumber numberFromObject:json[JSONDataKeyIsDelete] zeroIfUnresolvable:YES].boolValue;
+//    iCard.isRead = [NSNumber numberFromObject:json[JSONDataKeyCol3] zeroIfUnresolvable:YES];
+//    iCard.memo = [NSString stringFromObject:json[JSONDataKeyMemo]];
+//    // 处理完毕，返回。
+//    return iCard;
+    return [self interCardWithReceivedCardJSON:json nodeName:@"card"];
+}
+//解析联系人，通过其它方式获取(json接点名不是card时用)
++ (InterCard *)interCardWithReceivedCardJSON:(NSDictionary *)json nodeName:(NSString *) nodeName {
+    //获取结点下的数据,有结点名就取此结点名下的，没有就不取
+    NSDictionary *card;
+    if (nodeName) {
+        card = json[@"card"];
+    }else {
+        card = [[NSDictionary alloc] initWithDictionary:json];
+    }
+    
+    // 先填入普通名片
     InterCard * iCard = [self interCardWithJSON:card];
     // 再填ReceivedCard相关的数据
     // isRead(col3),(col1?),memo

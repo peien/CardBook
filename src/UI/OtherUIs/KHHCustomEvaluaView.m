@@ -81,7 +81,7 @@
         if (_isFieldValueEdit) {
             customStarImageControl.userInteractionEnabled = YES;
         }else
-        customStarImageControl.userInteractionEnabled = NO;
+            customStarImageControl.userInteractionEnabled = NO;
         if (indexPath.row == 1) {
             cell.fieldName.text = @"关系拓展:";
             customStarImageControl.rating = _relationEx;

@@ -1127,16 +1127,18 @@
                             DLog(@"事件保存成功！");
                         }else{
                             DLog(@"事件保存失败！");
+                        }
                     }
-            }else{
-                //----- codes here when user NOT allow your app to access the calendar.
-                [[[UIAlertView alloc] initWithTitle:nil
-                                            message:@"由于系统版本小于6.0,不能访问日历且添加拜访事件！"
-                                           delegate:nil
-                                  cancelButtonTitle:@"确定"
-                                  otherButtonTitles:nil] show];
-            }}];}
+                }];
+            }
         }];
+    }else{
+        //----- codes here when user NOT allow your app to access the calendar.
+        [[[UIAlertView alloc] initWithTitle:nil
+                                    message:@"由于系统版本小于6.0,不能访问日历且添加拜访事件！"
+                                   delegate:nil
+                          cancelButtonTitle:@"确定"
+                          otherButtonTitles:nil] show];
     }
 }
 - (BOOL)checkIsDeviceVersionHigherThanRequiredVersion:(NSString *)requiredVersion

@@ -74,4 +74,6 @@
 + (InterCard *)interCardWithMyCardJSON:(NSDictionary *)json;
 + (InterCard *)interCardWithPrivateCardJSON:(NSDictionary *)json;
 + (InterCard *)interCardWithReceivedCardJSON:(NSDictionary *)json;
+//解析联系人，通过其它方式获取(json接点名不是card时用)
++ (InterCard *)interCardWithReceivedCardJSON:(NSDictionary *)json nodeName:(NSString *) nodeName;
 @end
