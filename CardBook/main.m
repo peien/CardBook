@@ -2,7 +2,7 @@
 //  main.m
 //  CardBook
 //
-//  Created by 孙铭 on 12-9-14.
+//  Created by 王定方 on 12-11-21.
 //  Copyright (c) 2012年 Kinghanhong. All rights reserved.
 //
 

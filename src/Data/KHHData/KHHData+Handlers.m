@@ -147,7 +147,6 @@
     DLog(@"[II] noti userInfo keys = %@", [noti.userInfo allKeys]);
     NSDictionary *info = noti.userInfo;
     // 处理返回的数据
-#warning TODO
     // 1. companyPromotionLinkList
     // 2. ICPPromotionLinkList
     // template List {
