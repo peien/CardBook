@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SuperViewController.h"
 
-@interface KHHManagementViewController : SuperViewController
+@interface KHHManagementViewController : SuperViewController <UIAlertViewDelegate>
 @property (nonatomic, strong) UIView *entranceView;
 @property (assign, nonatomic) bool   isBoss;
 - (IBAction)radarBtnClick:(id)sender;

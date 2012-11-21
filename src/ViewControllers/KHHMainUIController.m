@@ -67,7 +67,6 @@
         // 显示主界面
         KHHAppDelegate *app = (KHHAppDelegate *)[[UIApplication sharedApplication] delegate];
         app.aTabBarController = self.aTabBarController;
-        [[KHHData sharedData]syncMessages];
         //消息还没同步完，就直接显示主界面，以至于无法显示消息个数。
         [self performSelector:@selector(showMainUIFor) withObject:nil afterDelay:1];
     }

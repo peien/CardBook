@@ -18,7 +18,6 @@
 @property (strong, nonatomic) eCardViewController *eCardVC;
 @property (assign, nonatomic) bool                isToeCardVC;
 @property (strong, nonatomic) IBOutlet UIView     *containView;
-@property (strong, nonatomic) UISegmentedControl  *segmCtrl;
 @property (assign, nonatomic) NSUInteger          lastBtn;
 @property (assign, nonatomic) KHHAppDelegate      *app;
 @property (strong, nonatomic) Card                *card;
