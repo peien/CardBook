@@ -9,6 +9,7 @@
 #import "KHHManagementViewController.h"
 #import "KHHMyDetailController.h"
 #import "MoreViewController.h"
+#import "KHHDefaults.h"
 #import "KHHCalendarViewController.h"
 #import "KHHHomeViewController.h"
 #import "KHHExchangeViewController.h"
@@ -61,12 +62,14 @@ typedef enum {
         self.title = NSLocalizedString(@"蜂巢访销", nil);
         _isBoss = YES;
         self.dataCtrl = [KHHData sharedData];
-        self.myCard = [[self.dataCtrl allMyCards] objectAtIndex:0];
+        if ([self.dataCtrl allMyCards].count > 0) {
+            self.myCard = [[self.dataCtrl allMyCards] objectAtIndex:0];
+        }
         if (_isBoss) {
            _entranceView = [[[NSBundle mainBundle] loadNibNamed:@"KHHBossEntrance" owner:self options:nil] objectAtIndex:0]; 
         }else
             _entranceView = [[[NSBundle mainBundle] loadNibNamed:@"KHHStaffEntrance" owner:self options:nil] objectAtIndex:0];
-        
+
         [self.leftBtn setTitle:NSLocalizedString(@"消息", nil) forState:UIControlStateNormal];
         [self.rightBtn setTitle:NSLocalizedString(@"同步", nil) forState:UIControlStateNormal];
         [self showMessageNums];
@@ -205,6 +208,7 @@ typedef enum {
 }
 //签到
 - (IBAction)locationBtnClick:(id)sender{
+
     LocationInfoVC *locaVC = [[LocationInfoVC alloc] initWithNibName:nil bundle:nil];
     [self.navigationController pushViewController:locaVC animated:YES];
 }

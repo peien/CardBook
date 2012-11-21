@@ -105,6 +105,37 @@
         NSArray *faxArr = [_myCard.email componentsSeparatedByString:@"|"];
         [self.itemArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[faxArr objectAtIndex:0],@"value",@"邮箱",@"key", nil]];
     }
+    if (_myCard.company.name.length > 0) {
+        [self.itemArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:_myCard.company.name,@"value",@"公司",@"key", nil]];
+    }
+    if (_myCard.address.province.length > 0 || _myCard.address.city.length > 0 || _myCard.address.other.length > 0) {
+        NSString *address = [NSString stringWithFormat:@"%@%@%@",_myCard.address.province,_myCard.address.city,_myCard.address.other];
+        [self.itemArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:address,@"value",@"地址",@"key", nil]];
+    }
+    if (_myCard.address.zip.length > 0) {
+        [self.itemArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:_myCard.address.zip,@"value",@"邮编",@"key", nil]];
+    }
+    if (_myCard.department.length > 0) {
+        [self.itemArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:_myCard.department,@"value",@"邮编",@"key", nil]];
+    }
+    if (_myCard.company.email.length > 0) {
+        [self.itemArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:_myCard.company.email,@"value",@"公司邮箱",@"key", nil]];
+    }
+    if (_myCard.web.length > 0) {
+        [self.itemArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:_myCard.web,@"value",@"网页",@"key", nil]];
+    }
+    if (_myCard.qq.length > 0) {
+        [self.itemArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:_myCard.qq,@"value",@"QQ",@"key", nil]];
+    }
+    if (_myCard.msn.length > 0) {
+        [self.itemArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:_myCard.msn,@"value",@"MSN",@"key", nil]];
+    }
+    if (_myCard.aliWangWang.length > 0) {
+        [self.itemArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:_myCard.aliWangWang,@"value",@"旺旺",@"key", nil]];
+    }
+    if (_myCard.businessScope.length > 0) {
+        [self.itemArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:_myCard.businessScope,@"value",@"业务范围",@"key", nil]];
+    }
 
 }
 // 刷新表
