@@ -2,8 +2,8 @@
 //  main.m
 //  CardBook
 //
-//  Created by 孙铭 on 8/2/12.
-//  Copyright (c) 2012 KingHanHong. All rights reserved.
+//  Created by 王定方 on 12-11-21.
+//  Copyright (c) 2012年 Kinghanhong. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

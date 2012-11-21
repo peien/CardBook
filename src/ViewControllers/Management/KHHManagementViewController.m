@@ -1,0 +1,375 @@
+//
+//  KHHManagementViewController.m
+//  CardBook
+//
+//  Created by 孙铭 on 8/7/12.
+//  Copyright (c) 2012 KingHanHong. All rights reserved.
+//
+
+#import "KHHManagementViewController.h"
+#import "KHHMyDetailController.h"
+#import "MoreViewController.h"
+#import "KHHDefaults.h"
+#import "KHHCalendarViewController.h"
+#import "KHHHomeViewController.h"
+#import "KHHExchangeViewController.h"
+#import "LocationInfoVC.h"
+#import "MBProgressHUD.h"
+#import "KHHAppDelegate.h"
+#import "KHHRadarViewController.h"
+#import "KHHFunnelViewController.h"
+#import "KHHMessageViewController.h"
+#import "KHHShowHideTabBar.h"
+#import "KHHData+UI.h"
+#import "Card.h"
+#import "DetailInfoViewController.h"
+
+//定时同步消息时间(秒)
+static int const KHH_SYNC_MESSAGE_TIME = 30 * 60;//alert类型:1.新消息 2.新联系人
+typedef enum {
+    KHHAlertMessage   = 100,
+    KHHAlertContact   = 101,
+} KHHAlertType;
+
+@interface KHHManagementViewController ()
+@property (strong, nonatomic) KHHData        *dataCtrl;
+@property (strong, nonatomic) Card           *myCard;
+@property (strong, nonatomic) KHHAppDelegate *app;
+@property (strong, nonatomic) UIImageView    *messageImageView;
+@property (strong, nonatomic) UILabel        *numLab2;
+@property (strong, nonatomic) NSTimer        *syncMessageTimer;
+@property (assign, nonatomic) BOOL            isSingleContact;
+@property (strong, nonatomic) NSArray        *messageContactList;
+
+@end
+
+@implementation KHHManagementViewController
+@synthesize entranceView = _entranceView;
+@synthesize isBoss = _isBoss;
+@synthesize dataCtrl;
+@synthesize app;
+@synthesize messageImageView;
+@synthesize numLab2;
+@synthesize syncMessageTimer;
+@synthesize isSingleContact = _isSingleContact;
+@synthesize messageContactList = _messageContactList;
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+        self.title = NSLocalizedString(@"蜂巢访销", nil);
+        _isBoss = YES;
+        self.dataCtrl = [KHHData sharedData];
+        if ([self.dataCtrl allMyCards].count > 0) {
+            self.myCard = [[self.dataCtrl allMyCards] objectAtIndex:0];
+        }
+        if (_isBoss) {
+           _entranceView = [[[NSBundle mainBundle] loadNibNamed:@"KHHBossEntrance" owner:self options:nil] objectAtIndex:0]; 
+        }else
+            _entranceView = [[[NSBundle mainBundle] loadNibNamed:@"KHHStaffEntrance" owner:self options:nil] objectAtIndex:0];
+
+        [self.leftBtn setTitle:NSLocalizedString(@"消息", nil) forState:UIControlStateNormal];
+        [self.rightBtn setTitle:NSLocalizedString(@"同步", nil) forState:UIControlStateNormal];
+        [self showMessageNums];
+    }
+    return self;
+}
+
+//同步
+- (void)rightBarButtonClick:(id)sender{
+    [self synBtnClick];
+    //要输入的数字。0代表取消，不显示
+//    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:10];
+}
+//消息
+- (void)leftBarButtonClick:(id)sender{
+    [self gotoMessageListViewController];
+}
+
+//去消息列表
+-(void) gotoMessageListViewController
+{
+    KHHMessageViewController *messageVC = [[KHHMessageViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:messageVC animated:YES];
+}
+//显示消息个数
+- (void)showMessageNums{
+    
+    if (self.messageImageView == nil) {
+        self.messageImageView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"message_bg.png"]stretchableImageWithLeftCapWidth:0 topCapHeight:0]];
+        self.messageImageView.frame = CGRectMake(43, -5, 28, 28);
+        //self.messageImageView.backgroundColor = [UIColor grayColor];
+        numLab2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 3, 28, 28)];
+        numLab2.backgroundColor = [UIColor clearColor];
+        numLab2.font = [UIFont systemFontOfSize:10];
+        numLab2.textColor = [UIColor whiteColor];
+        numLab2.textAlignment = UITextAlignmentCenter;
+        [self.messageImageView addSubview:numLab2];
+        [self.leftBtn addSubview:self.messageImageView];
+    }
+    
+    if ([[KHHData sharedData] countOfUnreadMessages] > 0) {
+        self.messageImageView.hidden = NO;
+        numLab2.text = [NSString stringWithFormat:@"%d",[[KHHData sharedData] countOfUnreadMessages]];
+    }else if([[KHHData sharedData] countOfUnreadMessages] == 0){
+        self.messageImageView.hidden = YES;
+    }
+}
+- (void)synBtnClick
+{
+    NSLog(@"start syn");
+    [self observeNotificationName:nDataSyncAllSucceeded selector:@"handleDataSyncAllSucceeded:"];
+    [self observeNotificationName:nDataSyncAllFailed selector:@"handleDataSyncAllFailed:"];
+    app = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
+    [MBProgressHUD showHUDAddedTo:app.window animated:YES];
+    [[KHHData sharedData] startSyncAllData];
+}
+- (void)handleDataSyncAllSucceeded:(NSNotification *)noti{
+    [self stopObservingStartSynAllData];
+    DLog(@"handleDataSyncAllSucceeded! ====== noti is %@",noti.userInfo);
+}
+- (void)handleDataSyncAllFailed:(NSNotification *)noti{
+    [self stopObservingStartSynAllData];
+    DLog(@"handleDataSyncAllFailed! ====== noti is %@",noti.userInfo);
+}
+- (void)stopObservingStartSynAllData{
+    
+    [self stopObservingNotificationName:nDataSyncAllSucceeded];
+    [self stopObservingNotificationName:nDataSyncAllFailed];
+    app = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
+    [MBProgressHUD hideHUDForView:app.window animated:YES];
+}
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    _entranceView.center = self.view.center;
+    
+    [self.view addSubview:_entranceView];
+    
+    //启动定时同步消息timer
+    [self syncMessage];
+    //立马同步一次消息
+    [self handleSyncMessage];
+}
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    [KHHShowHideTabBar showTabbar];
+    [self showMessageNums];
+    
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    //[KHHShowHideTabBar hideTabbar];
+    
+}
+- (void)viewDidUnload
+{
+    //关闭timer同步接收广播
+    [self stopObservingNotificationName:nUISyncMessagesSucceeded];
+    [self stopObservingNotificationName:nUISyncMessagesFailed];
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+    self.dataCtrl = nil;
+    self.myCard = nil;
+    self.app = nil;
+    self.messageImageView = nil;
+    self.numLab2 = nil;
+    [self.syncMessageTimer invalidate];
+}
+
+- (IBAction)radarBtnClick:(id)sender{
+    
+    KHHRadarViewController *radarVC = [[KHHRadarViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:radarVC animated:YES];
+
+}
+- (IBAction)funnelBtnClick:(id)sender{
+    
+    KHHFunnelViewController *funnelVC = [[KHHFunnelViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:funnelVC animated:YES];
+
+}
+- (IBAction)calendarBtnClick:(id)sender{
+    KHHCalendarViewController *calVC = [[KHHCalendarViewController alloc] initWithNibName:nil bundle:nil];
+    calVC.card = self.myCard;
+    [self.navigationController pushViewController:calVC animated:YES];
+
+}
+//分组
+- (IBAction)manageEmployeesBtnClick:(id)sender{
+    KHHHomeViewController *homeVC = [[KHHHomeViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:homeVC animated:YES];
+    
+
+}
+//签到
+- (IBAction)locationBtnClick:(id)sender{
+
+    LocationInfoVC *locaVC = [[LocationInfoVC alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:locaVC animated:YES];
+}
+//交换
+- (IBAction)personBtnClick:(id)sender
+{
+    KHHExchangeViewController *exchangeVC = [[KHHExchangeViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:exchangeVC animated:YES];
+    
+}
+//更多
+- (IBAction)moreBtnClick:(id)sender{
+    MoreViewController *moreVC = [[MoreViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:moreVC animated:YES];
+}
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+- (void)showAlert
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"功能暂时未开放" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alert show];
+}
+
+//后台同步消息
+//每隔半小时去同步一次消息
+//有新联系人时要提示用户alert，有新消息时要push出来
+-(void) syncMessage
+{
+    //注册广播接收器
+    //注册同步消息
+    [self observeNotificationName:nUISyncMessagesSucceeded selector:@"handleSyncMessagesSucceeded:"];
+    [self observeNotificationName:nUISyncMessagesFailed selector:@"handlenUISyncMessagesFailed:"];
+    if (!self.syncMessageTimer) {
+        self.syncMessageTimer = [NSTimer scheduledTimerWithTimeInterval:KHH_SYNC_MESSAGE_TIME target:self selector:@selector(handleSyncMessage) userInfo:nil repeats:YES];
+    }
+    
+}
+
+//解析数据
+- (void)handleSyncMessagesSucceeded:(NSNotification *)noti{
+    //消息解析成功，看看解析结果中有没有联系人，有联系人就弹出预览框，有新消息就push消息（现在没有push就alert出来）
+    DLog(@"timer sync handleSyncMessagesSucceeded ! noti is ======%@",noti.userInfo);
+    NSArray *messgaeList = noti.userInfo[kInfoKeyMessageList];
+    if (messgaeList && messgaeList.count > 0) {
+        //显示有新消息到了
+        NSArray *viewControllers = self.navigationController.viewControllers;
+        UITableViewController *parent = [viewControllers lastObject];
+        //当前页不是消息界面时要弹出新消息到了的框
+        if (parent && ![parent isKindOfClass:[KHHMessageViewController class]]) {
+            //showalert
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"新消息"
+                                                            message:@"您有新消息到了,可到消息界面查看新消息。"
+                                                           delegate:self
+                                                  cancelButtonTitle:@"确认"
+                                                  otherButtonTitles:@"取消", nil];
+            alert.tag = KHHAlertMessage;
+            [alert show];
+        }
+    }
+    
+    //清空变量
+    self.messageContactList = nil;
+    self.isSingleContact = NO;
+    self.messageContactList = noti.userInfo[kInfoKeyReceivedCard];
+    if (self.messageContactList && self.messageContactList.count > 0) {
+        //提示有新联系人到了(一个人时就直接提示名称，点击可以去详细界面，多个人时提示有新联系人)
+        [self showNewCardInfo];
+    }
+}
+
+//同步失败
+- (void)handlenUISyncMessagesFailed:(NSNotification *)noti{
+    //消息解析失败，不做事情，只是显示本地最新的消息个数
+    DLog(@"timer sync handlenUISyncMessagesFailed! noti is ======%@",noti.userInfo);
+    [self showMessageNums];
+}
+
+//同步消息
+-(void) handleSyncMessage
+{
+    [NSThread detachNewThreadSelector:@selector(syncMessageWithServer) toTarget:self withObject:nil];
+//    [self performSelectorInBackground:@selector(syncMessageWithServer) withObject:nil];
+}
+
+-(void) syncMessageWithServer
+{
+    [[KHHData sharedData]syncMessages];
+}
+
+- (void)showNewCardInfo{
+    if (!self.messageContactList || self.messageContactList.count <= 0) {
+        return;
+    }
+    
+    NSString *message;
+    NSString *btnText;
+    if (self.messageContactList.count == 1) {
+        Card *card = [self.messageContactList objectAtIndex:0];
+        message = card.name;
+        self.isSingleContact = YES;
+        btnText = @"查看详情";
+    }else {
+        message = @"您有新名片到了，点击确认去查看联系人...";
+        btnText = @"查看详情";
+        self.isSingleContact = NO;
+    }
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"收到新到名片"
+                                                    message:message
+                                                   delegate:self
+                                          cancelButtonTitle:@"确认"
+                                          otherButtonTitles:@"取消", nil];
+    alert.tag = KHHAlertContact;
+    [alert show];
+}
+
+//收到新的名片，跳转到详细界面
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (!alertView || !alertView.tag) {
+        return;
+    }
+    KHHAlertType type = alertView.tag;
+    
+    switch (type) {
+        case KHHAlertContact:
+        {
+            if (buttonIndex == 0) {
+                if (!self.messageContactList || self.messageContactList.count <= 0) {
+                    return;
+                }
+                
+                if (self.isSingleContact) {
+                    //通过cardid，获取到ReceiveCard的card
+                    InterCard *intercard = [self.messageContactList objectAtIndex:0];
+                    ReceivedCard *card = [ReceivedCard objectByID:intercard.id  createIfNone:NO];
+                    DLog(@"messgaeContact card id=%@",card.id);
+                    if (card) {
+                        DetailInfoViewController *detail = [[DetailInfoViewController alloc] initWithNibName:nil bundle:nil];
+                        card.isReadValue = YES;
+                        detail.card = card;
+                        [self.navigationController pushViewController:detail animated:YES];
+                    }
+                }else {
+                    [self manageEmployeesBtnClick:nil];
+                }
+            }
+        }
+            break;
+        case KHHAlertMessage:
+        {
+            if (buttonIndex == 0) {
+                [self gotoMessageListViewController];
+            }
+        }
+        default:
+            break;
+    }
+    
+    
+}
+
+@end
