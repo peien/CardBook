@@ -32,7 +32,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    _ItemArray = [NSArray arrayWithObjects:@"写信息",@"分享到新浪微薄",@"复制链接地址", nil];
+    _ItemArray = [NSArray arrayWithObjects:@"写信息",@"分享到新浪微博",@"复制链接地址", nil];
 }
 
 - (void)viewDidUnload

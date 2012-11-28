@@ -23,7 +23,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        self.title =@"分享到新浪微薄";
+        self.title =@"分享到新浪微博";
         self.navigationItem.rightBarButtonItem = nil;
     }
     return self;

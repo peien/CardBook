@@ -110,7 +110,7 @@
     if (indexPath.row == 0) {
         cell.textLabel.text = @"爱心卡包帐号";
     }else if (indexPath.row == 1) {
-        cell.textLabel.text = @"新浪微薄帐号";
+        cell.textLabel.text = @"新浪微博帐号";
     }else {
         cell.textLabel.text = @"爱心号";
     }
