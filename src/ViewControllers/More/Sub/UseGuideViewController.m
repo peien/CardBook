@@ -7,8 +7,7 @@
 //
 
 #import "UseGuideViewController.h"
-
-#define URL_FAQ @"http://www.kinghanhong.com/XCardServer/useGuide.jsp"
+#import "KHHMacros.h"
 
 @interface UseGuideViewController ()
 
@@ -32,7 +31,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    NSURL *url = [NSURL URLWithString:URL_FAQ];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:KHHURLFormat, KHHServer, KHHURLUserGuide]];
     NSURLRequest *req = [NSURLRequest requestWithURL:url];
     [self.web loadRequest:req];
 }
