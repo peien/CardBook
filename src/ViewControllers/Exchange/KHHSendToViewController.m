@@ -173,6 +173,7 @@
     [theAddButton addTarget:self action:@selector(theAddButtonTapped) forControlEvents:UIControlEventTouchDown];
     self.theTokenField.textField.rightView = theAddButton;
     self.theTokenField.textField.rightViewMode = UITextFieldViewModeAlways;
+    [self.theTokenField.textField becomeFirstResponder];
     
     theBgView_y = self.theBgView.frame.origin.y;
     theScroll_y = self.theScroll.frame.origin.y;
