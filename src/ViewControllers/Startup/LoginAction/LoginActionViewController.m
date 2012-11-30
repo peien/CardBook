@@ -18,6 +18,8 @@
 //#define textStartAutoLogin NSLocalizedString(@"正在自动登录...", nil)
 #define textCreatingAccount   NSLocalizedString(@"正在注册帐户...", nil)
 #define textLoggingIn         NSLocalizedString(@"正在登录...", nil)
+#define textOfflineLogin NSLocalizedString(@"网络不可用,正在进行离线...", nil)
+#define textCheckNetwork NSLocalizedString(@"正在检测网络...", nil)
 #define textResettingPassword NSLocalizedString(@"正在重置密码...", nil)
 //#define textStartLogin NSLocalizedString(@"正在登录...", nil)
 //#define textLoginSucceeded NSLocalizedString(@"登录成功", nil)
@@ -63,6 +65,12 @@
         //Reset password
         [self observeNotificationName:nAppResettingPassword
                              selector:@"handleResettingPassword:"];
+        //offline login
+        [self observeNotificationName:nAppOfflineLoggingIn
+                             selector:@"handleOfflineLoggingIn:"];
+        //check network
+        [self observeNotificationName:nAppCheckNetwork
+                             selector:@"handleCheckNetwork:"];
     }
     return self;
 }
@@ -90,7 +98,14 @@
     // 显示正在重置密码
     self.actionLabel.text = textResettingPassword;
 }
-
+- (void)handleOfflineLoggingIn:(NSNotification *)noti {
+    // 显示正在进行离线登录
+    self.actionLabel.text = textOfflineLogin;
+}
+- (void)handleCheckNetwork:(NSNotification *)noti {
+    // 显示正在check网络
+    self.actionLabel.text = textCheckNetwork;
+}
 #pragma mark - Utilities
 
 @end

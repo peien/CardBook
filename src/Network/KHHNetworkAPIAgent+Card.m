@@ -310,7 +310,7 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(InterCard *iCard) {
         [cardIDs addObject:[[card valueForKey:kAttributeKeyID] stringValue]];
     }
     NSDictionary *parameters = @{
-            @"cardBookVo.cardIds" : [cardIDs componentsJoinedByString:@"|"]
+            @"cardBookVo.cardIds" : [cardIDs componentsJoinedByString:KHH_SEPARATOR]
     };
     [self postAction:@"deleteReceivedCards"
                query:@"relationGroupService.deleteCardBook"

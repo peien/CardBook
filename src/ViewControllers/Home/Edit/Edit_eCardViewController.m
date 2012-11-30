@@ -33,7 +33,6 @@
 #define kBaseTag 2400
 #define KBIGADDRESS_TAG 6699
 
-NSString *const kECardListSeparator = @"|";
 NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
 
 @interface Edit_eCardViewController ()<PickViewControllerDelegate,UIActionSheetDelegate>
@@ -260,7 +259,7 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
     
   //手机，电话，传真，邮箱有多个，默认显示第一个
 
-    NSArray *mobiels = [_glCard.mobilePhone componentsSeparatedByString:kECardListSeparator];
+    NSArray *mobiels = [_glCard.mobilePhone componentsSeparatedByString:KHH_SEPARATOR];
     for (int i = 0; i<mobiels.count; i++) {
         if (i == 0) {
             [_fieldValue replaceObjectAtIndex:3 withObject:[mobiels objectAtIndex:0]];
@@ -269,7 +268,7 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
         }
     }
     
-    NSArray *tels = [_glCard.telephone componentsSeparatedByString:kECardListSeparator];
+    NSArray *tels = [_glCard.telephone componentsSeparatedByString:KHH_SEPARATOR];
     for (int i = 0; i<tels.count; i++) {
         if (i == 0) {
             [_fieldValue replaceObjectAtIndex:4 withObject:[tels objectAtIndex:0]];
@@ -278,7 +277,7 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
         }
     }
     
-    NSArray *faxs = [_glCard.fax componentsSeparatedByString:kECardListSeparator];
+    NSArray *faxs = [_glCard.fax componentsSeparatedByString:KHH_SEPARATOR];
     for (int i = 0; i<faxs.count; i++) {
         if (i == 0) {
             [_fieldValue replaceObjectAtIndex:5 withObject:[faxs objectAtIndex:0]];
@@ -287,7 +286,7 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
         }
     }
     
-    NSArray *mails = [_glCard.email componentsSeparatedByString:kECardListSeparator];
+    NSArray *mails = [_glCard.email componentsSeparatedByString:KHH_SEPARATOR];
     for (int i = 0; i<mails.count; i++) {
         if (i == 0) {
             [_fieldValue replaceObjectAtIndex:6 withObject:[mails objectAtIndex:0]];
@@ -937,7 +936,8 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
     [self tableAnimationDown];
     [self.beginEditField resignFirstResponder];
     
-    NSString *name = [_fieldValue objectAtIndex:0];
+    //姓名去除前后空格
+    NSString *name = [[_fieldValue objectAtIndex:0] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
     NSString *job = [_fieldValue objectAtIndex:1];
     NSString *group = [_fieldValue objectAtIndex:2];
     [self saveToDictionary:name key:@"name"];
@@ -959,36 +959,36 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
             continue;
         }
         if([key isEqualToString:@"手机"]){
-            [mobiles appendFormat:@"%@%@", kECardListSeparator, value];
+            [mobiles appendFormat:@"%@%@", KHH_SEPARATOR, value];
             DLog(@"mobiles===%@",mobiles);
         }else if([key isEqualToString:@"电话"]){
-            [phones appendFormat:@"%@%@", kECardListSeparator, value];
+            [phones appendFormat:@"%@%@", KHH_SEPARATOR, value];
             DLog(@"phones===%@",phones);
         }else if([key isEqualToString:@"传真"]){
-            [faxes appendFormat:@"%@%@", kECardListSeparator, value];
+            [faxes appendFormat:@"%@%@", KHH_SEPARATOR, value];
         }else if([key isEqualToString:@"邮箱"]){
-            [mails appendFormat:@"%@%@", kECardListSeparator, value];
+            [mails appendFormat:@"%@%@", KHH_SEPARATOR, value];
         }
     }
     
     /////////////////检查第可变手机、电话、传真、邮箱第一行是否为空////////////////
     
-    if([mobiles hasPrefix:[NSString stringWithFormat:@"%@", kECardListSeparator]]){
+    if([mobiles hasPrefix:[NSString stringWithFormat:@"%@", KHH_SEPARATOR]]){
         [mobiles deleteCharactersInRange:NSMakeRange(0, 1)];
     }
-    if([phones hasPrefix:[NSString stringWithFormat:@"%@", kECardListSeparator]]){
+    if([phones hasPrefix:[NSString stringWithFormat:@"%@", KHH_SEPARATOR]]){
         [mobiles deleteCharactersInRange:NSMakeRange(0, 1)];
     }
-    if([faxes hasPrefix:[NSString stringWithFormat:@"%@", kECardListSeparator]]){
+    if([faxes hasPrefix:[NSString stringWithFormat:@"%@", KHH_SEPARATOR]]){
         [mobiles deleteCharactersInRange:NSMakeRange(0, 1)];
     }
-    if([mails hasPrefix:[NSString stringWithFormat:@"%@", kECardListSeparator]]){
+    if([mails hasPrefix:[NSString stringWithFormat:@"%@", KHH_SEPARATOR]]){
         [mobiles deleteCharactersInRange:NSMakeRange(0, 1)];
     }
     
     NSString *company = [_fieldValue objectAtIndex:7];
     NSString *address = [_fieldValue objectAtIndex:8];
-    NSArray *addressArr = [address componentsSeparatedByString:@"|"];
+    NSArray *addressArr = [address componentsSeparatedByString:KHH_SEPARATOR];
     NSArray *pcArr = [[addressArr objectAtIndex:0] componentsSeparatedByString:@" "];
     //区街道无法保存
     UIButton *pcBtn = (UIButton *)[self.view viewWithTag:KBIGADDRESS_TAG];
@@ -1025,55 +1025,61 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
         self.interCard.addressOther = [addressArr objectAtIndex:1];
     }
     
-    // 对是否为空或格式进行判断，然后把手机，电话，传真，邮箱保存起来
-        if (mobiles.length==0 && phones.length==0) {
-            //[self showMessage:@"名片上的电话未空!请至少填写一个手机号码或者电话号码!" withTitile:nil];
-            [self warnAlertMessage:@"名片上的电话未空!请至少填写一个手机号码或者电话号码!"];
-            return;
-        }
+    //姓名检查
+    if (name.length <= 0) {
+        [self warnAlertMessage:@"名片上的姓名为空!"];
+        return;
+    }
     
-        if(company.length==0 && address.length==0){
-            //[self showMessage:@"名片上的公司信息为空!请至少填写公司或地址中的一项!" withTitile:nil];
-            [self warnAlertMessage:@"名片上的公司信息为空!请至少填写公司或地址中的一项!"];
-            return;
-        }
+    // 对是否为空或格式进行判断，然后把手机，电话，传真，邮箱保存起来
+    if (mobiles.length==0 && phones.length==0) {
+        //[self showMessage:@"名片上的电话未空!请至少填写一个手机号码或者电话号码!" withTitile:nil];
+        [self warnAlertMessage:@"名片上的电话未空!请至少填写一个手机号码或者电话号码!"];
+        return;
+    }
+    
+    if(company.length==0 && address.length==0){
+        //[self showMessage:@"名片上的公司信息为空!请至少填写公司或地址中的一项!" withTitile:nil];
+        [self warnAlertMessage:@"名片上的公司信息为空!请至少填写公司或地址中的一项!"];
+        return;
+    }
     
     //    //////////////////////validate//////////////////////
-        //validate mobile
-        for(NSString *str in [mobiles componentsSeparatedByString:kECardListSeparator]){
-            if(str.length>0 && ![str isValidMobilePhoneNumber]){
-                //[self showMessage:@"手机格式错误!" withTitile:nil];
-                [self warnAlertMessage:@"手机格式错误!!"];
-                return;
-            }
+    //validate mobile
+    for(NSString *str in [mobiles componentsSeparatedByString:KHH_SEPARATOR]){
+        if(str.length>0 && ![str isValidMobilePhoneNumber]){
+            //[self showMessage:@"手机格式错误!" withTitile:nil];
+            [self warnAlertMessage:@"手机格式错误!!"];
+            return;
         }
+    }
     
     //    //validate phone
-        for(NSString *str in [phones componentsSeparatedByString:kECardListSeparator]){
-            if(str.length>0 && ![str isValidTelephoneNUmber]){
-                //[self showMessage:@"电话格式错误!" withTitile:nil];
-                [self warnAlertMessage:@"电话格式错误!"];
-                return;
-            }
+    for(NSString *str in [phones componentsSeparatedByString:KHH_SEPARATOR]){
+        if(str.length>0 && ![str isValidTelephoneNUmber]){
+            //[self showMessage:@"电话格式错误!" withTitile:nil];
+            [self warnAlertMessage:@"电话格式错误!"];
+            return;
         }
+    }
     
-        //validate fax
-        for(NSString *str in [faxes componentsSeparatedByString:kECardListSeparator]){
-            if(str.length>0 && ![str isValidTelephoneNUmber]){
-                //[self showMessage:@"传真格式错误!" withTitile:nil];
-                [self warnAlertMessage:@"传真格式错误!"];
-               return;
-            }
+    //validate fax
+    for(NSString *str in [faxes componentsSeparatedByString:KHH_SEPARATOR]){
+        if(str.length>0 && ![str isValidTelephoneNUmber]){
+            //[self showMessage:@"传真格式错误!" withTitile:nil];
+            [self warnAlertMessage:@"传真格式错误!"];
+            return;
         }
+    }
     
-        //validate email
-        for(NSString *str in [mails componentsSeparatedByString:kECardListSeparator]){
-            if(str.length>0 && ![str isValidEmail]){
-                //[self showMessage:@"邮箱格式错误!" withTitile:nil];
-                [self warnAlertMessage:@"邮箱格式错误!"];
-               return;
-            }
+    //validate email
+    for(NSString *str in [mails componentsSeparatedByString:KHH_SEPARATOR]){
+        if(str.length>0 && ![str isValidEmail]){
+            //[self showMessage:@"邮箱格式错误!" withTitile:nil];
+            [self warnAlertMessage:@"邮箱格式错误!"];
+            return;
         }
+    }
     
     [self saveToDictionary:mobiles key:@"mobilePhone"];
     [self saveToDictionary:phones key:@"telephone"];

@@ -159,6 +159,8 @@ static NSString * const KHHDefaultsKeyMobilePhoneGroup = @"isAddMobPhoneGroup";
         theUserDict[KHHDefaultsKeyPassword] = password;
     }
     theUserDict[KHHDefaultsKeyID] = userID;
+    theUserDict[KHHDefaultsKeyAuthorizationID] = authorizationID;
+    theUserDict[KHHDefaultsKeyAutoReceive] = autoReceive ? @"1" : @"0";
     
     // 保存数据：take 3，用户关联的公司列表
     // 从用户Dict里取出公司列表

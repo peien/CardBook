@@ -7,8 +7,8 @@
 //
 
 #import "RecomFridendsViewController.h"
-#import "ShareSinaViewController.h"
 #import <Social/Social.h>
+#import "KHHWebView.h"
 
 @interface RecomFridendsViewController ()<MFMessageComposeViewControllerDelegate>
 
@@ -65,15 +65,22 @@
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self tableView:tableView accessoryButtonTappedForRowWithIndexPath:indexPath];
+}
+
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.row == 0) {
         [self gotoSendSMS];
 
     }else if (indexPath.row ==1) {
+        KHHWebView *webView = [[KHHWebView alloc] initWithNibName:nil bundle:nil];
+        [webView initUrl:KHHURLRecommendation title:@"新浪微博分享" rightBarName:nil rightBarBlock:nil];
+        [self.navigationController pushViewController:webView animated:YES];
+        
         //ios 6 集成了sina
-        ShareSinaViewController *shareVC = [[ShareSinaViewController alloc] initWithNibName:@"ShareSinaViewController" bundle:nil];
-        [self.navigationController pushViewController:shareVC animated:YES];
 //        if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeSinaWeibo]) {
 //            SLComposeViewController *sinaVC = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeSinaWeibo];
 //            [sinaVC setInitialText:@"我正在手机上用印象名片,可以发送电子名片,很方便哦,推荐你用一下。下载地址:http://t.cn/zOksmJo"];
@@ -97,7 +104,7 @@
     if (MFMessageComposeViewController.canSendText) {
         MFMessageComposeViewController *smsVC = [[MFMessageComposeViewController alloc] init];
         smsVC.messageComposeDelegate = self;
-        smsVC.body = [NSString stringWithFormat:@"我正在手机上用“蜂巢“，可收录个人专属的会员卡和银行卡。推荐大家用一下，下载地址:%@",nil];
+        smsVC.body = [NSString stringWithFormat:@"我正在手机上用“蜂巢“，可以发送电子名片，很方便哦，推荐你用一下。下载地址:%@",KHH_Recommend_URL];
         [self presentModalViewController:smsVC animated:YES];
     } else {
         [[[UIAlertView alloc] 

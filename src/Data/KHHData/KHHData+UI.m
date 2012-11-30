@@ -413,7 +413,7 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
         [self.agent sendCard:myReplyCard toUser:[[NSString alloc] initWithFormat:@"%@",receiverCard.userID]];
     }else if ([receiverCard isKindOfClass: [PrivateCard class]]) {
         //取用户的手机号
-        NSArray *mobiles = [receiverCard.mobilePhone componentsSeparatedByString:@"|"];
+        NSArray *mobiles = [receiverCard.mobilePhone componentsSeparatedByString:KHH_SEPARATOR];
         if (!mobiles || mobiles.count <= 0) {
             //发送失败的广播
             return;

@@ -66,6 +66,7 @@ static NSString * const KHHDefaultsKeyUser = @"khh_user";
 
 static NSString * const KHHDefaultsKeyCompanyList = @"khh_companyList";
 static NSString * const KHHDefaultsKeyUserList = @"khh_userList";
+static NSString * const KHHDefaultsKeyAuthorizationID = @"khh_userList";
 
 @interface KHHDefaults : NSObject 
 + (KHHDefaults *)sharedDefaults;

@@ -101,7 +101,9 @@
            success:(KHHSuccessBlock)success
            failure:(KHHFailureBlock)failure
              extra:(NSDictionary *)extra {
-    
+    // 创建请求
+    KHHHTTPClient *httpClient = [KHHHTTPClient sharedClient];
+        
     // 处理成功的请求
     KHHSuccessBlock successBlock = success? success:
     ^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -117,14 +119,22 @@
                                         error:error];
     };
     
+    //网络不可用的时候直接返回错误信息
+    AFNetworkReachabilityStatus state = [httpClient networkReachabilityStatus];
+    if (AFNetworkReachabilityStatusNotReachable == state || AFNetworkReachabilityStatusUnknown == state) {
+        NSError *failed = [[NSError alloc] initWithDomain:@"网络不可用,不能进行操作!" code:KHHErrorCodeConnectionOffline userInfo:nil];
+        failureBlock(nil,failed);
+        return;
+    }
+
+    
     // 组合query url
     NSDictionary *queryDict = @{ @"method" : query };
     NSString *path = [NSString stringWithFormat:@"%@?%@",
                       pathRoot,
                       [self queryStringWithDictionary:queryDict]];
     
-    // 创建请求
-    KHHHTTPClient *httpClient = [KHHHTTPClient sharedClient];
+    
     NSURLRequest *request = [httpClient
                              multipartFormRequestWithMethod:@"POST"
                              path:path

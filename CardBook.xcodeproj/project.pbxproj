@@ -220,14 +220,8 @@
 		6274C013165C7C3300DB5EBE /* KHHEditMSGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62D3F40C1603188500E011E2 /* KHHEditMSGViewController.m */; };
 		6274C014165C7C3300DB5EBE /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E8A1602D66200A4A673 /* MoreViewController.m */; };
 		6274C015165C7C3300DB5EBE /* AboutController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E8E1602D66200A4A673 /* AboutController.m */; };
-		6274C016165C7C3300DB5EBE /* FeedBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E911602D66200A4A673 /* FeedBackViewController.m */; };
-		6274C017165C7C3300DB5EBE /* LoginSinaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E941602D66200A4A673 /* LoginSinaViewController.m */; };
 		6274C018165C7C3300DB5EBE /* ModifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E971602D66200A4A673 /* ModifyViewController.m */; };
 		6274C019165C7C3300DB5EBE /* RecomFridendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E9A1602D66200A4A673 /* RecomFridendsViewController.m */; };
-		6274C01A165C7C3300DB5EBE /* ShareSinaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E9D1602D66200A4A673 /* ShareSinaViewController.m */; };
-		6274C01B165C7C3300DB5EBE /* UseGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84EA01602D66200A4A673 /* UseGuideViewController.m */; };
-		6274C01C165C7C3300DB5EBE /* WebSinaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84EA31602D66200A4A673 /* WebSinaViewController.m */; };
-		6274C01D165C7C3300DB5EBE /* KHHSinaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A6B6B916153F000018F3DB /* KHHSinaViewController.m */; };
 		6274C02B165C7E0A00DB5EBE /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62A5F8A9165085EE00F303CA /* EventKit.framework */; };
 		6274C02C165C7E0A00DB5EBE /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62A5F8AA165085EE00F303CA /* EventKitUI.framework */; };
 		6274C02D165C7E0A00DB5EBE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 624595281625526A0028E944 /* AudioToolbox.framework */; };
@@ -414,7 +408,6 @@
 		6274C0E9165C9D1800DB5EBE /* PickViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E4C1602D66200A4A673 /* PickViewController.xib */; };
 		6274C0EA165C9D1800DB5EBE /* KHHBossEntrance.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E4E1602D66200A4A673 /* KHHBossEntrance.xib */; };
 		6274C0EB165C9D1800DB5EBE /* KHHManagementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E511602D66200A4A673 /* KHHManagementViewController.xib */; };
-		6274C0EC165C9D1800DB5EBE /* KHHStaffEntrance.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E521602D66200A4A673 /* KHHStaffEntrance.xib */; };
 		6274C0ED165C9D1800DB5EBE /* KHHCalendarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E651602D66200A4A673 /* KHHCalendarViewController.xib */; };
 		6274C0EE165C9D1800DB5EBE /* KHHFunnelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E711602D66200A4A673 /* KHHFunnelViewController.xib */; };
 		6274C0EF165C9D1800DB5EBE /* KHHRadarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E741602D66200A4A673 /* KHHRadarViewController.xib */; };
@@ -429,14 +422,8 @@
 		6274C0F8165C9D1800DB5EBE /* KHHEditMSGViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62D3F40D1603188500E011E2 /* KHHEditMSGViewController.xib */; };
 		6274C0F9165C9D1800DB5EBE /* MoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E8B1602D66200A4A673 /* MoreViewController.xib */; };
 		6274C0FA165C9D1800DB5EBE /* AboutController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E8F1602D66200A4A673 /* AboutController.xib */; };
-		6274C0FB165C9D1800DB5EBE /* FeedBackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E921602D66200A4A673 /* FeedBackViewController.xib */; };
-		6274C0FC165C9D1800DB5EBE /* LoginSinaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E951602D66200A4A673 /* LoginSinaViewController.xib */; };
 		6274C0FD165C9D1800DB5EBE /* ModifyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E981602D66200A4A673 /* ModifyViewController.xib */; };
 		6274C0FE165C9D1800DB5EBE /* RecomFridendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E9B1602D66200A4A673 /* RecomFridendsViewController.xib */; };
-		6274C0FF165C9D1800DB5EBE /* ShareSinaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E9E1602D66200A4A673 /* ShareSinaViewController.xib */; };
-		6274C100165C9D1800DB5EBE /* UseGuideViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84EA11602D66200A4A673 /* UseGuideViewController.xib */; };
-		6274C101165C9D1800DB5EBE /* WebSinaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84EA41602D66200A4A673 /* WebSinaViewController.xib */; };
-		6274C102165C9D1800DB5EBE /* KHHSinaViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62A6B6BA16153F000018F3DB /* KHHSinaViewController.xib */; };
 		6274C103165C9D3000DB5EBE /* left_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A850051602DA3F00A4A673 /* left_arrow.png */; };
 		6274C104165C9D3000DB5EBE /* left_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A850061602DA3F00A4A673 /* left_arrow@2x.png */; };
 		6274C105165C9D3000DB5EBE /* right_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A850071602DA3F00A4A673 /* right_arrow.png */; };
@@ -467,6 +454,11 @@
 		6274C11E165C9E2600DB5EBE /* ProvincesAndCities.plist in Resources */ = {isa = PBXBuildFile; fileRef = 98A850291602DA3F00A4A673 /* ProvincesAndCities.plist */; };
 		6274C11F165C9E3200DB5EBE /* sample_piechart_data.plist in Resources */ = {isa = PBXBuildFile; fileRef = 620713021650EB22000188E8 /* sample_piechart_data.plist */; };
 		6274C120165C9E4700DB5EBE /* CardBook-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6274BF41165C7A7400DB5EBE /* CardBook-Info.plist */; };
+		6292FCA8166892DA00D170A3 /* KHHWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6292FCA6166892D900D170A3 /* KHHWebView.m */; };
+		6292FCA9166892DA00D170A3 /* KHHWebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6292FCA7166892D900D170A3 /* KHHWebView.xib */; };
+		629BE111165F4B0A00FB3B04 /* KHHLocalNotificationUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 629BE110165F4B0A00FB3B04 /* KHHLocalNotificationUtil.m */; };
+		629BE114165F619200FB3B04 /* template_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 629BE112165F619200FB3B04 /* template_bg@2x.png */; };
+		62BD4F76165CDB71007B948E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62BD4F75165CDB70007B948E /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -552,6 +544,12 @@
 		628DC6431647B430008D1F3D /* KHHAllVisitedSchedusVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHAllVisitedSchedusVC.h; sourceTree = "<group>"; };
 		628DC6441647B430008D1F3D /* KHHAllVisitedSchedusVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHAllVisitedSchedusVC.m; sourceTree = "<group>"; };
 		628DC6451647B430008D1F3D /* KHHAllVisitedSchedusVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHAllVisitedSchedusVC.xib; sourceTree = "<group>"; };
+		6292FCA5166892D800D170A3 /* KHHWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHWebView.h; sourceTree = "<group>"; };
+		6292FCA6166892D900D170A3 /* KHHWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHWebView.m; sourceTree = "<group>"; };
+		6292FCA7166892D900D170A3 /* KHHWebView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHWebView.xib; sourceTree = "<group>"; };
+		629BE10F165F4B0A00FB3B04 /* KHHLocalNotificationUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHLocalNotificationUtil.h; sourceTree = "<group>"; };
+		629BE110165F4B0A00FB3B04 /* KHHLocalNotificationUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHLocalNotificationUtil.m; sourceTree = "<group>"; };
+		629BE112165F619200FB3B04 /* template_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "template_bg@2x.png"; sourceTree = "<group>"; };
 		629D358E1626AC6C0064C8F4 /* crm_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crm_bg@2x.png"; sourceTree = "<group>"; };
 		629D35A01626D7D40064C8F4 /* crm_leida_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crm_leida_selected@2x.png"; sourceTree = "<group>"; };
 		629D35A11626D7D40064C8F4 /* crm_loudou_selected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "crm_loudou_selected@2x.png"; sourceTree = "<group>"; };
@@ -568,9 +566,6 @@
 		62A6256516524F9F00FD2805 /* home_bg@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "home_bg@2x.jpg"; sourceTree = "<group>"; };
 		62A62C781653468C00F6F2C6 /* startnew_logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "startnew_logo@2x.png"; sourceTree = "<group>"; };
 		62A62C7A165346EF00F6F2C6 /* two_Frame@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "two_Frame@2x.jpg"; sourceTree = "<group>"; };
-		62A6B6B816153F000018F3DB /* KHHSinaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHSinaViewController.h; sourceTree = "<group>"; };
-		62A6B6B916153F000018F3DB /* KHHSinaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHSinaViewController.m; sourceTree = "<group>"; };
-		62A6B6BA16153F000018F3DB /* KHHSinaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHSinaViewController.xib; sourceTree = "<group>"; };
 		62A6C4DB160AAECE00ADA43E /* KHHFullFrameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KHHFullFrameController.h; path = ../../ViewControllers/KHHFullFrameController.h; sourceTree = "<group>"; };
 		62A6C4DC160AAECE00ADA43E /* KHHFullFrameController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KHHFullFrameController.m; path = ../../ViewControllers/KHHFullFrameController.m; sourceTree = "<group>"; };
 		62A6C4DD160AAECE00ADA43E /* KHHFullFrameController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = KHHFullFrameController.xib; path = ../../ViewControllers/KHHFullFrameController.xib; sourceTree = "<group>"; };
@@ -632,6 +627,7 @@
 		62AC98DD163A4A50009EF269 /* KHHCardTemplageVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHCardTemplageVC.xib; sourceTree = "<group>"; };
 		62ACD2F51623BF2800D88F57 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		62ACD2F61623BF2800D88F57 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		62BD4F75165CDB70007B948E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		62CCC9EA165231F5004BA1A4 /* KHHPreViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHPreViewViewController.h; sourceTree = "<group>"; };
 		62CCC9EB165231F5004BA1A4 /* KHHPreViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHPreViewViewController.m; sourceTree = "<group>"; };
 		62CCC9EC165231F5004BA1A4 /* KHHPreViewViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHPreViewViewController.xib; sourceTree = "<group>"; };
@@ -840,7 +836,6 @@
 		98A84E4F1602D66200A4A673 /* KHHManagementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHManagementViewController.h; sourceTree = "<group>"; };
 		98A84E501602D66200A4A673 /* KHHManagementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHManagementViewController.m; sourceTree = "<group>"; };
 		98A84E511602D66200A4A673 /* KHHManagementViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHManagementViewController.xib; sourceTree = "<group>"; };
-		98A84E521602D66200A4A673 /* KHHStaffEntrance.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHStaffEntrance.xib; sourceTree = "<group>"; };
 		98A84E631602D66200A4A673 /* KHHCalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHCalendarViewController.h; sourceTree = "<group>"; };
 		98A84E641602D66200A4A673 /* KHHCalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHCalendarViewController.m; sourceTree = "<group>"; };
 		98A84E651602D66200A4A673 /* KHHCalendarViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHCalendarViewController.xib; sourceTree = "<group>"; };
@@ -871,27 +866,12 @@
 		98A84E8D1602D66200A4A673 /* AboutController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AboutController.h; sourceTree = "<group>"; };
 		98A84E8E1602D66200A4A673 /* AboutController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AboutController.m; sourceTree = "<group>"; };
 		98A84E8F1602D66200A4A673 /* AboutController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AboutController.xib; sourceTree = "<group>"; };
-		98A84E901602D66200A4A673 /* FeedBackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedBackViewController.h; sourceTree = "<group>"; };
-		98A84E911602D66200A4A673 /* FeedBackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedBackViewController.m; sourceTree = "<group>"; };
-		98A84E921602D66200A4A673 /* FeedBackViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedBackViewController.xib; sourceTree = "<group>"; };
-		98A84E931602D66200A4A673 /* LoginSinaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginSinaViewController.h; sourceTree = "<group>"; };
-		98A84E941602D66200A4A673 /* LoginSinaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginSinaViewController.m; sourceTree = "<group>"; };
-		98A84E951602D66200A4A673 /* LoginSinaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoginSinaViewController.xib; sourceTree = "<group>"; };
 		98A84E961602D66200A4A673 /* ModifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyViewController.h; sourceTree = "<group>"; };
 		98A84E971602D66200A4A673 /* ModifyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyViewController.m; sourceTree = "<group>"; };
 		98A84E981602D66200A4A673 /* ModifyViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ModifyViewController.xib; sourceTree = "<group>"; };
 		98A84E991602D66200A4A673 /* RecomFridendsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecomFridendsViewController.h; sourceTree = "<group>"; };
 		98A84E9A1602D66200A4A673 /* RecomFridendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecomFridendsViewController.m; sourceTree = "<group>"; };
 		98A84E9B1602D66200A4A673 /* RecomFridendsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RecomFridendsViewController.xib; sourceTree = "<group>"; };
-		98A84E9C1602D66200A4A673 /* ShareSinaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareSinaViewController.h; sourceTree = "<group>"; };
-		98A84E9D1602D66200A4A673 /* ShareSinaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareSinaViewController.m; sourceTree = "<group>"; };
-		98A84E9E1602D66200A4A673 /* ShareSinaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ShareSinaViewController.xib; sourceTree = "<group>"; };
-		98A84E9F1602D66200A4A673 /* UseGuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UseGuideViewController.h; sourceTree = "<group>"; };
-		98A84EA01602D66200A4A673 /* UseGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UseGuideViewController.m; sourceTree = "<group>"; };
-		98A84EA11602D66200A4A673 /* UseGuideViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UseGuideViewController.xib; sourceTree = "<group>"; };
-		98A84EA21602D66200A4A673 /* WebSinaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebSinaViewController.h; sourceTree = "<group>"; };
-		98A84EA31602D66200A4A673 /* WebSinaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebSinaViewController.m; sourceTree = "<group>"; };
-		98A84EA41602D66200A4A673 /* WebSinaViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebSinaViewController.xib; sourceTree = "<group>"; };
 		98A84EF61602D67E00A4A673 /* AgreementViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AgreementViewController.h; sourceTree = "<group>"; };
 		98A84EF71602D67E00A4A673 /* AgreementViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AgreementViewController.m; sourceTree = "<group>"; };
 		98A84EF81602D67E00A4A673 /* AgreementViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AgreementViewController.xib; sourceTree = "<group>"; };
@@ -1205,6 +1185,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62BD4F76165CDB71007B948E /* SystemConfiguration.framework in Frameworks */,
 				6274C03E165C7FC700DB5EBE /* CFNetwork.framework in Frameworks */,
 				6274C03C165C7F5100DB5EBE /* MobileCoreServices.framework in Frameworks */,
 				6274C02B165C7E0A00DB5EBE /* EventKit.framework in Frameworks */,
@@ -1268,6 +1249,15 @@
 				6274BF4F165C7A7500DB5EBE /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		629BE10E165F4A6600FB3B04 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				629BE10F165F4B0A00FB3B04 /* KHHLocalNotificationUtil.h */,
+				629BE110165F4B0A00FB3B04 /* KHHLocalNotificationUtil.m */,
+			);
+			path = Util;
 			sourceTree = "<group>";
 		};
 		62AB297F160C06E90004A3E3 /* BaiduMap */ = {
@@ -1484,13 +1474,13 @@
 			isa = PBXGroup;
 			children = (
 				98A84FEA1602D80500A4A673 /* 3rdPart */,
-				98A84D9A1602D20000A4A673 /* src */,
-				98A84D981602D1F100A4A673 /* res */,
-				98A84D7F1602CD2500A4A673 /* CardBookTests */,
-				98838DF41608624800CE2353 /* CardBookLogicTests */,
 				6274BF3F165C7A7400DB5EBE /* CardBook */,
+				98838DF41608624800CE2353 /* CardBookLogicTests */,
+				98A84D7F1602CD2500A4A673 /* CardBookTests */,
 				98A84D601602CD2500A4A673 /* Frameworks */,
 				98A84D5E1602CD2500A4A673 /* Products */,
+				98A84D981602D1F100A4A673 /* res */,
+				98A84D9A1602D20000A4A673 /* src */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1505,6 +1495,7 @@
 		98A84D601602CD2500A4A673 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				62BD4F75165CDB70007B948E /* SystemConfiguration.framework */,
 				6274C03D165C7FC700DB5EBE /* CFNetwork.framework */,
 				6274C03B165C7F5100DB5EBE /* MobileCoreServices.framework */,
 				62A5F8A9165085EE00F303CA /* EventKit.framework */,
@@ -1558,6 +1549,7 @@
 		98A84D9A1602D20000A4A673 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				629BE10E165F4A6600FB3B04 /* Util */,
 				98A84D9C1602D21F00A4A673 /* App */,
 				98A84D9D1602D22600A4A673 /* Data */,
 				98542230162BA46500A9E50A /* KHHActions.h */,
@@ -1893,7 +1885,6 @@
 				98A84E4F1602D66200A4A673 /* KHHManagementViewController.h */,
 				98A84E501602D66200A4A673 /* KHHManagementViewController.m */,
 				98A84E511602D66200A4A673 /* KHHManagementViewController.xib */,
-				98A84E521602D66200A4A673 /* KHHStaffEntrance.xib */,
 				98A84E531602D66200A4A673 /* Sub */,
 			);
 			path = Management;
@@ -1966,30 +1957,12 @@
 				98A84E8D1602D66200A4A673 /* AboutController.h */,
 				98A84E8E1602D66200A4A673 /* AboutController.m */,
 				98A84E8F1602D66200A4A673 /* AboutController.xib */,
-				98A84E901602D66200A4A673 /* FeedBackViewController.h */,
-				98A84E911602D66200A4A673 /* FeedBackViewController.m */,
-				98A84E921602D66200A4A673 /* FeedBackViewController.xib */,
-				98A84E931602D66200A4A673 /* LoginSinaViewController.h */,
-				98A84E941602D66200A4A673 /* LoginSinaViewController.m */,
-				98A84E951602D66200A4A673 /* LoginSinaViewController.xib */,
 				98A84E961602D66200A4A673 /* ModifyViewController.h */,
 				98A84E971602D66200A4A673 /* ModifyViewController.m */,
 				98A84E981602D66200A4A673 /* ModifyViewController.xib */,
 				98A84E991602D66200A4A673 /* RecomFridendsViewController.h */,
 				98A84E9A1602D66200A4A673 /* RecomFridendsViewController.m */,
 				98A84E9B1602D66200A4A673 /* RecomFridendsViewController.xib */,
-				98A84E9C1602D66200A4A673 /* ShareSinaViewController.h */,
-				98A84E9D1602D66200A4A673 /* ShareSinaViewController.m */,
-				98A84E9E1602D66200A4A673 /* ShareSinaViewController.xib */,
-				98A84E9F1602D66200A4A673 /* UseGuideViewController.h */,
-				98A84EA01602D66200A4A673 /* UseGuideViewController.m */,
-				98A84EA11602D66200A4A673 /* UseGuideViewController.xib */,
-				98A84EA21602D66200A4A673 /* WebSinaViewController.h */,
-				98A84EA31602D66200A4A673 /* WebSinaViewController.m */,
-				98A84EA41602D66200A4A673 /* WebSinaViewController.xib */,
-				62A6B6B816153F000018F3DB /* KHHSinaViewController.h */,
-				62A6B6B916153F000018F3DB /* KHHSinaViewController.m */,
-				62A6B6BA16153F000018F3DB /* KHHSinaViewController.xib */,
 			);
 			path = Sub;
 			sourceTree = "<group>";
@@ -2167,6 +2140,9 @@
 				98A84F5D1602D6C500A4A673 /* myAlertView.m */,
 				98A84F5E1602D6C500A4A673 /* MyTabBarController.h */,
 				98A84F5F1602D6C500A4A673 /* MyTabBarController.m */,
+				6292FCA5166892D800D170A3 /* KHHWebView.h */,
+				6292FCA6166892D900D170A3 /* KHHWebView.m */,
+				6292FCA7166892D900D170A3 /* KHHWebView.xib */,
 			);
 			path = OtherUIs;
 			sourceTree = "<group>";
@@ -2184,6 +2160,7 @@
 		98A84F871602D72E00A4A673 /* img */ = {
 			isa = PBXGroup;
 			children = (
+				629BE112165F619200FB3B04 /* template_bg@2x.png */,
 				98A84F881602D7B300A4A673 /* 4@2x.png */,
 				98A84F891602D7B300A4A673 /* accessBtnico@2x.png */,
 				98A84F8A1602D7B300A4A673 /* addBtnimg@2x.png */,
@@ -2827,7 +2804,6 @@
 				6274C0E9165C9D1800DB5EBE /* PickViewController.xib in Resources */,
 				6274C0EA165C9D1800DB5EBE /* KHHBossEntrance.xib in Resources */,
 				6274C0EB165C9D1800DB5EBE /* KHHManagementViewController.xib in Resources */,
-				6274C0EC165C9D1800DB5EBE /* KHHStaffEntrance.xib in Resources */,
 				6274C0ED165C9D1800DB5EBE /* KHHCalendarViewController.xib in Resources */,
 				6274C0EE165C9D1800DB5EBE /* KHHFunnelViewController.xib in Resources */,
 				6274C0EF165C9D1800DB5EBE /* KHHRadarViewController.xib in Resources */,
@@ -2842,14 +2818,8 @@
 				6274C0F8165C9D1800DB5EBE /* KHHEditMSGViewController.xib in Resources */,
 				6274C0F9165C9D1800DB5EBE /* MoreViewController.xib in Resources */,
 				6274C0FA165C9D1800DB5EBE /* AboutController.xib in Resources */,
-				6274C0FB165C9D1800DB5EBE /* FeedBackViewController.xib in Resources */,
-				6274C0FC165C9D1800DB5EBE /* LoginSinaViewController.xib in Resources */,
 				6274C0FD165C9D1800DB5EBE /* ModifyViewController.xib in Resources */,
 				6274C0FE165C9D1800DB5EBE /* RecomFridendsViewController.xib in Resources */,
-				6274C0FF165C9D1800DB5EBE /* ShareSinaViewController.xib in Resources */,
-				6274C100165C9D1800DB5EBE /* UseGuideViewController.xib in Resources */,
-				6274C101165C9D1800DB5EBE /* WebSinaViewController.xib in Resources */,
-				6274C102165C9D1800DB5EBE /* KHHSinaViewController.xib in Resources */,
 				6274C103165C9D3000DB5EBE /* left_arrow.png in Resources */,
 				6274C104165C9D3000DB5EBE /* left_arrow@2x.png in Resources */,
 				6274C105165C9D3000DB5EBE /* right_arrow.png in Resources */,
@@ -2879,6 +2849,8 @@
 				6274C11E165C9E2600DB5EBE /* ProvincesAndCities.plist in Resources */,
 				6274C11F165C9E3200DB5EBE /* sample_piechart_data.plist in Resources */,
 				6274C120165C9E4700DB5EBE /* CardBook-Info.plist in Resources */,
+				629BE114165F619200FB3B04 /* template_bg@2x.png in Resources */,
+				6292FCA9166892DA00D170A3 /* KHHWebView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3100,15 +3072,11 @@
 				6274C013165C7C3300DB5EBE /* KHHEditMSGViewController.m in Sources */,
 				6274C014165C7C3300DB5EBE /* MoreViewController.m in Sources */,
 				6274C015165C7C3300DB5EBE /* AboutController.m in Sources */,
-				6274C016165C7C3300DB5EBE /* FeedBackViewController.m in Sources */,
-				6274C017165C7C3300DB5EBE /* LoginSinaViewController.m in Sources */,
 				6274C018165C7C3300DB5EBE /* ModifyViewController.m in Sources */,
 				6274C019165C7C3300DB5EBE /* RecomFridendsViewController.m in Sources */,
-				6274C01A165C7C3300DB5EBE /* ShareSinaViewController.m in Sources */,
-				6274C01B165C7C3300DB5EBE /* UseGuideViewController.m in Sources */,
-				6274C01C165C7C3300DB5EBE /* WebSinaViewController.m in Sources */,
-				6274C01D165C7C3300DB5EBE /* KHHSinaViewController.m in Sources */,
 				6274C11D165C9E0900DB5EBE /* CardBook.xcdatamodeld in Sources */,
+				629BE111165F4B0A00FB3B04 /* KHHLocalNotificationUtil.m in Sources */,
+				6292FCA8166892DA00D170A3 /* KHHWebView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

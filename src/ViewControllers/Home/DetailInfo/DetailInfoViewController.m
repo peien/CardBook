@@ -79,7 +79,10 @@
         self.tabBarController.tabBar.hidden = YES;
         self.dataCtrl = [KHHData sharedData];
         //回赠名片跟回赠按钮一起初始化
-        _myDefaultReplyCard = [[self.dataCtrl allMyCards] objectAtIndex:0];
+        NSArray *cards = [self.dataCtrl allMyCards];
+        if (cards) {
+            _myDefaultReplyCard = [cards objectAtIndex:0];
+        }
     }
     return self;
 }

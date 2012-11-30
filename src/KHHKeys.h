@@ -14,6 +14,10 @@ static NSString * const KHHErrorDomain = @"KHHErrorDomain";
 
 // 暂时空着的占位符号
 static NSString * const KHHPlaceholderForEmptyString = @"";
+static NSString * const KHH_SEMICOLON = @";";
+static NSString * const KHH_UNDERLINE = @"_";
+static NSString * const KHH_SEPARATOR = @"|";
+static NSString * const KHH_COMMA = @",";
 
 #pragma mark - kAccountKey* : 帐户相关的key
 static NSString * const kAccountKeyUser           = @"user";
@@ -245,5 +249,7 @@ static NSString * const  kPERMISSION_EMPLOYEE = @"company_employee";
 static NSString * const  kPERMISSION_DEPARTMENT = @"company_department";
 static NSString * const  kPERMISSION_BOSS = @"company_boss";
 
+#pragma mark - localNotification userInfo targetViewController Name
+static NSString * const kLocalNotification_Target_Name = @"target_ViewController_Name";
 
 #endif

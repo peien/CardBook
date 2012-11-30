@@ -37,6 +37,13 @@
     
     //捕获摇摇动作
     application.applicationSupportsShakeToEdit = YES;
+//    application.applicationIconBadgeNumber  = 0;
+    UILocalNotification *localNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
+    if (localNotif)
+    {
+        //更新应用程序新消息图标数
+        [self updateApplicationIconNumber:application];
+    }
     
     return YES;
 }
@@ -115,6 +122,7 @@
     startVC.defaults = [KHHDefaults sharedDefaults];
     self.window.rootViewController = startVC;
 }
+
 - (void)handleShowMainUI:(NSNotification *)noti {
 #if KHH_TEST_VIEWCONTROLLER == 1
     // 显示 THE TEST VIEW
@@ -124,6 +132,7 @@
     self.mainUI = [[KHHMainUIController alloc] init];
 #endif
 }
+
 - (void)handleLogout:(NSNotification *)noti {
     // 清除UserDefaults用户的数据
     [[KHHDefaults sharedDefaults] clearSettingsAfterLogout];
@@ -135,5 +144,54 @@
     [[KHHData sharedData] removeContext];
     // 切换到登陆界面
     [self postASAPNotificationName:KHHUIShowStartup];
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+
+    UIApplicationState state = application.applicationState;
+    //    NSLog(@"%@,%d",notification,state);
+    if (state == UIApplicationStateActive) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:KHH_APP_NAME
+                                                        message:notification.alertBody
+                                                       delegate:nil
+                                              cancelButtonTitle:nil
+                                              otherButtonTitles:@"确定",nil];
+        [alert show];
+    }
+
+    //若有notification里有数就取里面的dictionary
+    NSDictionary* infoDic = notification.userInfo;
+    if (infoDic) {
+        NSLog(@"userInfo description=%@",[infoDic description]);
+        //获取要跳转的viewcontrollerName
+        NSString * targetViewCtrollerName = infoDic[kLocalNotification_Target_Name];
+        if (targetViewCtrollerName && targetViewCtrollerName.length > 0) {
+            //测试跳转到某个界面
+            if(self.window.rootViewController && [self.window.rootViewController isKindOfClass:[UINavigationController class]]) {
+                id viewController = [[NSClassFromString(targetViewCtrollerName) alloc] initWithNibName:nil bundle:nil];
+                UINavigationController* navigate = (UINavigationController *) self.window.rootViewController;
+                if (navigate) {
+                    //不管在哪个界面回到主界面
+                    [navigate popToRootViewControllerAnimated:YES];
+                    //跳转到目标界面
+                    [navigate pushViewController:viewController animated:YES];
+                }
+            }
+        }
+    }
+    
+    //更新应用程序图标数字
+    [self updateApplicationIconNumber:application];
+}
+
+//更新应用程序图标数字
+-(void) updateApplicationIconNumber:(UIApplication *)application {
+    NSInteger number = application.applicationIconBadgeNumber;
+    if (number <= 0) {
+        return;
+    }
+    number -= 1;
+    application.applicationIconBadgeNumber = number;
 }
 @end

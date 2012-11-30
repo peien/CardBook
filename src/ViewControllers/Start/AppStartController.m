@@ -37,6 +37,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 @property (nonatomic, strong) UIViewController *createAccountController;
 @property (nonatomic, strong) UIViewController *loginController;
 @property (nonatomic, strong) UIViewController *previousController;
+@property (nonatomic, strong) NSDictionary     *OfflineLoginUserInfoDict;
 @end
 
 #pragma mark - 动作
@@ -57,6 +58,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 @end
 
 @implementation AppStartController
+@synthesize OfflineLoginUserInfoDict = _OfflineLoginUserInfoDict;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -186,15 +188,47 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     // 切换到 ActionView
     [self showActionView];
     
-    // 发“正在登录”消息
-    [self postASAPNotificationName:nAppLoggingIn];
+    // 发“校验网络”消息
+    [self postASAPNotificationName:nAppCheckNetwork];
     
+    //注册网络状态变化接受广播(网络为unknown时就去注册，其它状态就不去注册广播了)
+    AFNetworkReachabilityStatus state = [[KHHHTTPClient sharedClient] networkReachabilityStatus];
+    if (AFNetworkReachabilityStatusUnknown == state) {
+        [self observeNotificationName:AFNetworkingReachabilityDidChangeNotification selector:@"handleNetworkStatusChanged:"];
+    }else {
+        //登录 
+        [self loginWithNetworkStatus:state];
+    }
+}
+
+-(void) handleNetworkStatusChanged:(NSDictionary *) noti {
+    //关闭广播接受
+    [self stopObservingNotificationName:AFNetworkingReachabilityDidChangeNotification];
+    AFNetworkReachabilityStatus state = [[KHHHTTPClient sharedClient] networkReachabilityStatus];
+    [self loginWithNetworkStatus:state];
+}
+
+//AFNetworkReachabilityStatusNotReachable 时离线登录
+//AFNetworkReachabilityStatusReachableViaWiFi及AFNetworkReachabilityStatusReachableViaWWAN时在线登录
+-(void) loginWithNetworkStatus:(AFNetworkReachabilityStatus) status {
     // 调接口
     NSString *user = self.defaults.currentUser;
     NSString *password = self.defaults.currentPassword;
-    [self.agent login:user
-             password:password];
+    //添加离线登录
+    if (AFNetworkReachabilityStatusNotReachable == status || AFNetworkReachabilityStatusUnknown == status) {
+        //离线登录
+        // 发“离线登录”消息
+        [self postASAPNotificationName:nAppOfflineLoggingIn];
+        [self offlineLogin:user password:password];
+    }else {
+        //在线登录
+        // 发“校验网络”消息
+        [self postASAPNotificationName:nAppLoggingIn];
+        [self.agent login:user
+                 password:password];
+    }
 }
+
 - (void)resetPassword:(NSNotification *)noti {
     DLog(@"[II] 开始重置密码！");
     // 切换到 ActionView
@@ -237,11 +271,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     // 登陆成功
     BOOL isFirstLogin = [self isFirstLogin];
     // 保存用户数据: id,mobile,password,isAutoReceive
-    [self.defaults saveLoginOrRegisterResult:noti.userInfo];
-    [self.defaults setLoggedIn:YES];
-    // http鉴权
-    [self.agent authenticateWithUser:self.defaults.currentAuthorizationID.stringValue
-                            password:self.defaults.currentPassword];
+    [self saveUserInfoToDefaults:noti.userInfo];
     // 开始同步
     if (isFirstLogin) {
         //同步
@@ -251,6 +281,23 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
         [self handleSyncSucceeded:nil];
     }
 }
+
+- (void)handleNetworkLoginFailed:(NSNotification *)noti {
+    DLog(@"[II] 登录失败！");
+    KHHErrorCode code = [noti.userInfo[kInfoKeyErrorCode] integerValue];
+    NSString *message = noti.userInfo[kInfoKeyErrorMessage];
+    if (KHHErrorCodeConnectionOffline == code) {
+        // 无网络接着离线登录
+        [self loginWithNetworkStatus:AFNetworkReachabilityStatusNotReachable];
+//        [self postASAPNotificationName:nAppShowMainView];
+    }else {
+        [self.defaults setLoggedIn:NO];
+        [self alertWithTitle:titleLoginFailed
+                     message:MessageWithActionAndCode(code, message)];
+    }
+}
+
+
 
 //判断是否第一次在手机上登录
 -(BOOL) isFirstLogin
@@ -274,20 +321,79 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     return YES;
 }
 
-- (void)handleNetworkLoginFailed:(NSNotification *)noti {
-    DLog(@"[II] 登录失败！");
-    KHHErrorCode code = [noti.userInfo[kInfoKeyErrorCode] integerValue];
-    NSString *message = noti.userInfo[kInfoKeyErrorMessage];
-    if (KHHErrorCodeConnectionOffline == code
-        && [self.defaults isLoggedIn]) {
-        // 无网络且之前登录过则直接进
-        [self postASAPNotificationName:nAppShowMainView];
+//离线登录
+-(void) offlineLogin:(NSString *) user password:(NSString *) password {
+    if ([self isOfflineLoginSucess]) {
+        //离线登录成功
+        //更新用户信息
+        [self saveOfflineLoginUserInfo];
+        //进入主界面
+        [self postNowNotificationName:nAppShowMainView];
     }else {
-        [self.defaults setLoggedIn:NO];
-        [self alertWithTitle:titleLoginFailed
-                     message:MessageWithActionAndCode(code, message)];
+        //离线登录失败
+        //返回
+        self.OfflineLoginUserInfoDict = nil;
+        [self alertWithTitle:titleLoginFailed message:@"离线登录失败!"];
     }
 }
+
+//保存离线登录用户数据
+-(void) saveOfflineLoginUserInfo {
+    if (!self.OfflineLoginUserInfoDict) {
+        return;
+    }
+    
+    NSMutableDictionary *saveInfo = [[NSMutableDictionary alloc] initWithCapacity:0];
+    saveInfo[kInfoKeyAuthorizationID] = [self.OfflineLoginUserInfoDict objectForKey:KHHDefaultsKeyAuthorizationID];
+    saveInfo[kInfoKeyAutoReceive] = [self.OfflineLoginUserInfoDict objectForKey:KHHDefaultsKeyAutoReceive];
+    NSDictionary *companyinfo = [[self.OfflineLoginUserInfoDict objectForKey:KHHDefaultsKeyCompanyList] objectAtIndex:0];
+    saveInfo[kInfoKeyCompanyID] = companyinfo[KHHDefaultsKeyID];
+    saveInfo[kInfoKeyDepartmentID] = companyinfo[KHHDefaultsKeyDepartmentID];
+    saveInfo[kInfoKeyPermission] = companyinfo[KHHDefaultsKeypermission];
+    
+    //保存到defaults
+    [self saveUserInfoToDefaults:saveInfo];
+}
+
+-(void) saveUserInfoToDefaults:(NSDictionary *) dict {
+    [self.defaults saveLoginOrRegisterResult:dict];
+    [self.defaults setLoggedIn:YES];
+    // http鉴权
+    [self.agent authenticateWithUser:self.defaults.currentAuthorizationID.stringValue
+                            password:self.defaults.currentPassword];
+}
+
+
+//离线登录，判断输入的用户名与密码是否正确
+-(BOOL) isOfflineLoginSucess
+{
+    if (!self.defaults.currentUser || !self.defaults.currentPassword) {
+        return NO;
+    }
+    
+    NSArray* historyList = [self.defaults historyUserList];
+    if (!historyList) {
+        return NO;
+    }
+    
+    for (NSDictionary* dict in historyList) {
+        if (!dict) {
+            continue;
+        }
+        
+        NSString* user = dict[KHHDefaultsKeyUser];
+        NSString* psw  = dict[KHHDefaultsKeyPassword];
+        if ([user isEqualToString:[self.defaults currentUser]] &&
+            [psw isEqualToString:[self.defaults currentPassword]]) {
+            //保存用户信息
+            self.OfflineLoginUserInfoDict = [[NSDictionary alloc] initWithDictionary:dict];
+            return YES;
+        }
+    }
+    
+    return NO;
+}
+
 - (void)handleNetworkResetPasswordSucceeded:(NSNotification *)noti
 {
     DLog(@"[II] 重置密码成功！");
