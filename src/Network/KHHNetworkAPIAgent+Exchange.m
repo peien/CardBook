@@ -50,7 +50,7 @@
 
     NSString *ID = [[card valueForKey:kAttributeKeyID] stringValue];
     NSString *version = [[card valueForKey:kAttributeKeyVersion] stringValue];
-    NSString *numberstr = [numbers componentsJoinedByString:@";"];
+    NSString *numberstr = [numbers componentsJoinedByString:KHH_SEMICOLON];
     NSDictionary *parameters = @{
             @"mobiles" : (numberstr? numberstr: @""),
             @"cardId" : (ID? ID: @""),

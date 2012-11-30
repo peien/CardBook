@@ -20,7 +20,7 @@
     BOOL result = YES;
     ABMutableMultiValueRef phoneNumbers = ABMultiValueCreateMutable(kABMultiStringPropertyType);
     if (card.mobilePhone && card.mobilePhone.length > 0) {
-        NSArray *mobiles = [card.mobilePhone componentsSeparatedByString:@"|"];
+        NSArray *mobiles = [card.mobilePhone componentsSeparatedByString:KHH_SEPARATOR];
         for (NSString *mobileNum in mobiles) {
             if (mobileNum.length > 0) {
                 ABMultiValueAddValueAndLabel(phoneNumbers, (__bridge CFTypeRef)mobileNum, kABPersonPhoneMobileLabel, NULL);
@@ -28,7 +28,7 @@
         }
     }
     if (card.telephone && card.telephone.length > 0 ) {
-        NSArray *tels = [card.telephone componentsSeparatedByString:@"|"];
+        NSArray *tels = [card.telephone componentsSeparatedByString:KHH_SEPARATOR];
         for (NSString *tel in tels) {
             if (tel.length > 0) {
                 ABMultiValueAddValueAndLabel(phoneNumbers, (__bridge CFTypeRef)tel, kABPersonPhoneMainLabel, NULL);
@@ -36,7 +36,7 @@
         }
     }
     if (card.fax && card.fax.length > 0) {
-        NSArray *faxes = [card.fax componentsSeparatedByString:@"|"];
+        NSArray *faxes = [card.fax componentsSeparatedByString:KHH_SEPARATOR];
         for (NSString *faxNum in faxes) {
             if (faxNum.length > 0) {
                 ABMultiValueAddValueAndLabel(phoneNumbers, (__bridge CFTypeRef)faxNum, kABPersonPhoneWorkFAXLabel, NULL);
@@ -63,7 +63,7 @@
     //emails
     ABMutableMultiValueRef emails = ABMultiValueCreateMutable(kABMultiStringPropertyType);
     if (card.email && card.email.length > 0) {
-        NSArray *emails = [card.email componentsSeparatedByString:@"|"];
+        NSArray *emails = [card.email componentsSeparatedByString:KHH_SEPARATOR];
         for (NSString *email in emails) {
             if (email.length > 0) {
                  ABMultiValueAddValueAndLabel(phoneNumbers, (__bridge CFTypeRef)email, kABWorkLabel, NULL);

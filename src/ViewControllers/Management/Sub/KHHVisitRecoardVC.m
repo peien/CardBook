@@ -23,7 +23,7 @@
 #import "KHHAppDelegate.h"
 #import "NSString+SM.h"
 #import "UIImageView+WebCache.h"
-
+#import "KHHLocalNotificationUtil.h"
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import <EventKit/EventKit.h>
@@ -36,6 +36,7 @@
 #define NOTE_FIELD_TAG        3313
 #define TEXTFIELD_ADDRESS_TAG 3314
 #define TEXTFIELD_JOINER_TAG  3315
+#define TEXTVISIT_ALERT_TITLE NSLocalizedString(@"拜访计划提醒",nil)
 
 @interface KHHVisitRecoardVC ()<UITextFieldDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,
                                UINavigationControllerDelegate>
@@ -55,7 +56,6 @@
 @property (assign, nonatomic) int             warnMinus;
 @property (assign, nonatomic) bool            isDateSelected;
 @property (strong, nonatomic) NSDate          *selectDate;
-@property (strong, nonatomic) NSMutableString *defaultVisitedName;
 @property (strong, nonatomic) NSMutableDictionary *objectDic;
 @property (strong, nonatomic) UIButton        *warnBtn;
 @property (assign, nonatomic) bool            isPickerShow;
@@ -104,7 +104,6 @@
 @synthesize warnMinus;
 @synthesize isDateSelected;
 @synthesize selectDate;
-@synthesize defaultVisitedName;
 @synthesize selectedDateFromCal;
 @synthesize isFromCalVC;
 @synthesize objectDic;
@@ -160,17 +159,17 @@
     //如果不是新建，就获取数据让其显示
     if (_style == KVisitRecoardVCStyleShowInfo) {
         [self initViewData];
-        self.defaultVisitedName = [NSMutableString stringWithCapacity:0];
         self.title = NSLocalizedString(@"编辑详情", nil);
+        //是签到就获取当前位置
+        if (self.isFinishTask) {
+            [self getLocalAddress];
+        }
     }else if (_style == KVisitRecoardVCStyleNewBuild){
         self.title = NSLocalizedString(@"新建拜访日志", nil);
         self.isFirstLocation = YES;
         [self getLocalAddress];
         if (![self.visitInfoCard isKindOfClass:[MyCard class]] && self.visitInfoCard) {
-            self.defaultVisitedName = [NSMutableString stringWithFormat:@"%@(%@),",self.visitInfoCard.name,self.visitInfoCard.company.name];
-             [self.objectDic setObject:self.visitInfoCard forKey:self.visitInfoCard.name];
-        }else{
-            self.defaultVisitedName = [NSMutableString stringWithCapacity:0];
+           [self.objectDic setObject:self.visitInfoCard forKey:self.visitInfoCard.id.stringValue];
         }
     }
 
@@ -214,7 +213,6 @@
     self.oSched = nil;
     self.hud = nil;
     self.selectDate = nil;
-    self.defaultVisitedName = nil;
     self.selectedDateFromCal = nil;
     self.objectDic = nil;
     self.searchCard = nil;
@@ -225,29 +223,44 @@
 //选择多个拜访对象
 - (void)getVisitObjects{
     if (self.objectNameArr.count > 0 || self.visitInfoCard.name.length > 0) {
+        if (self.searchCard) {
+            [self.objectNameArr addObject:self.searchCard];
+        }
         DLog(@"self.objectNameArr ====== %@",self.objectNameArr);
         NSMutableString *nameObj = [[NSMutableString alloc] init];
         for (int i = 0; i < self.objectNameArr.count; i++) {
             Card *card = [self.objectNameArr objectAtIndex:i];
-            if (card.name.length > 0) {
-                [nameObj appendString:[NSString stringWithFormat:@"%@(%@),",card.name,card.company.name]];
-                [self.objectDic setObject:card forKey:card.name];
+            
+            NSString * nameWithCompany = [self combineNameAndCompany:card];
+            if (!nameWithCompany) {
+                continue;
             }
+            
+            //用分号与前一个分开
+            if (nameObj.length > 0) {
+                [nameObj appendString:KHH_SEMICOLON];
+            }
+            
+            //添加名称项
+            [nameObj appendString:nameWithCompany];
+            
+            [self.objectDic setObject:card forKey:card.id.stringValue];
         }
+        
         UITextField *objectTf = (UITextField *)[self.view viewWithTag:TEXTFIELD_OBJECT_TAG];
-        if (self.searchCard) { // 默认显示搜索一个联系人的信息
-            [self.defaultVisitedName appendString:[NSString stringWithFormat:@"%@(%@),",searchCard.name,self.searchCard.company.name]];
-            [self.objectDic setObject:self.searchCard forKey:self.searchCard.name];
+        NSString * oldCustomer = objectTf.text;
+        if (oldCustomer && oldCustomer.length > 0) {
+            if ([oldCustomer hasSuffix:KHH_SEMICOLON]) {
+                objectTf.text = [NSString stringWithFormat:@"%@%@",oldCustomer , nameObj];
+            }else {
+                objectTf.text = [NSString stringWithFormat:@"%@%@%@",oldCustomer , KHH_SEMICOLON, nameObj];
+            }
+        }else {
+            objectTf.text = nameObj;
         }
-        if (_style == KVisitRecoardVCStyleShowInfo && self.showInfoStr.length > 0) { // 查看一个拜访记录并且添加拜访对象时，会调用。
-            [self.defaultVisitedName appendString:[NSString stringWithFormat:@"%@",self.showInfoStr]];
-        }
-        if (self.defaultVisitedName.length > 0) {
-            [nameObj insertString:self.defaultVisitedName atIndex:0];
-        }
-        objectTf.text = nameObj;
-        self.defaultVisitedName = nameObj;
+        
         [self.objectNameArr removeAllObjects];
+        self.searchCard = nil;
     }
 }
 
@@ -256,15 +269,24 @@
     //获取对象模型，填充fieldvalue
     if (self.schedu.targets != nil) {
         NSMutableString *names = [[NSMutableString alloc] init];
+        //用户手动输入的拜访客户
+        if (self.schedu.customer) {
+            [names appendString:self.schedu.customer];
+        }
+        
         NSArray *objects = [self.schedu.targets allObjects];
         for (int i = 0; i < objects.count; i++) {
             Card *cardObj = [objects objectAtIndex:i];
-            NSString *name = [NSString stringByFilterNilFromString:cardObj.name];
-            NSString *companyName = [NSString stringByFilterNilFromString:cardObj.company.name];
-            if (name.length > 0) {
-                [names appendString:[NSString stringWithFormat:@"%@(%@),",name,companyName]];
+            NSString *nameWithCompany = [self combineNameAndCompany:cardObj];
+            if (nameWithCompany) {
+                //用逗号与前一个分开
+                if (names.length > 0) {
+                    [names appendString:KHH_SEMICOLON];
+                }
+                
+                [names appendString:nameWithCompany];
             }
-            [self.objectDic setObject:cardObj forKey:cardObj.name];
+            [self.objectDic setObject:cardObj forKey:cardObj.id.stringValue];
         }
         self.showInfoStr = names;
         [_fieldValue replaceObjectAtIndex:0 withObject:names];
@@ -356,16 +378,17 @@
 
     //调用数据库接口，或者是网络接口
     self.oSched.id = self.schedu.id;
-    self.oSched.minutesToRemind = [NSNumber numberWithInt:warnMinus];
-    self.oSched.customer = nil;
-    self.oSched.companion = joiner.text;
-    self.oSched.content = note.text;
-    
-    self.oSched.minutesToRemind = [NSNumber numberWithDouble:_timeInterval/60];
     
     NSArray *nameArr = [self.objectDic allValues];
     self.oSched.targetCardList = [[NSMutableArray alloc] initWithArray:nameArr];
     
+//    self.oSched.minutesToRemind = [NSNumber numberWithInt:warnMinus];
+    //保存用户手动输入的名称(若拜访对象是从联系人中选择的，就不用传这个参数，此参数只传用户手动输入的对象)
+    self.oSched.customer = [self userInputCustomerName];
+    self.oSched.companion = joiner.text;
+    self.oSched.content = note.text;
+    
+    self.oSched.minutesToRemind = [NSNumber numberWithDouble:_timeInterval/60];
     self.oSched.imageList = self.imgArray;
     self.oSched.addressProvince = [NSString stringWithFormat:@"%@",
                                    [NSString stringFromObject:self.placeMark.administrativeArea]];
@@ -377,20 +400,8 @@
     if (self.isDateSelected) {
         [self timeIntervalFromDateToNow:self.selectDate];
     }else{
-        if (self.selectedDateFromCal != nil) {
-            UITextField *timeTf = (UITextField *)[self.view viewWithTag:TEXTFIELD_TIME_TAG];
-            NSDateFormatter *dateForm = [[NSDateFormatter alloc] init];
-            [dateForm setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-            NSString *showDAte = [dateForm stringFromDate:self.selectedDateFromCal];
-            NSArray *dateArr = [showDAte componentsSeparatedByString:@" "];
-            NSString *dateS = [NSString stringWithFormat:@"%@ %@",[dateArr objectAtIndex:0],timeTf.text];
-            NSDate *selectDateUn = [dateForm dateFromString:dateS];
-            [self timeIntervalFromDateToNow:selectDateUn];
-        }else{
-            self.oSched.plannedDate = [NSDate date];
-            self.oSched.isFinished = [NSNumber numberWithBool:YES];
-            //self.oSched.plannedDate = [self dateFromString];
-        }
+        self.oSched.plannedDate = [self dateFromString];
+        [self timeIntervalFromDateToNow:self.oSched.plannedDate];
     }
     if (self.isFinishTask) { //如果点签到，就拜访完成
         self.oSched.isFinished = [NSNumber numberWithBool:YES];
@@ -402,20 +413,27 @@
     self.hud = [MBProgressHUD showHUDAddedTo:app.window animated:YES];
     
     if (_style == KVisitRecoardVCStyleNewBuild) {
-        MyCard *mycard = [[self.dataCtrl allMyCards] objectAtIndex:0];
-        [self.dataCtrl createSchedule:self.oSched withMyCard:mycard];
+        self.hud.labelText = @"正在创建拜访计划...";
+        NSArray *cards = [self.dataCtrl allMyCards];
+        if (cards) {
+            MyCard *mycard = [cards objectAtIndex:0];
+            [self.dataCtrl createSchedule:self.oSched withMyCard:mycard];
+        }
+        
     }else if (_style == KVisitRecoardVCStyleShowInfo){
+        self.hud.labelText = @"正在修改拜访计划...";
         [self.dataCtrl updateSchedule:self.oSched];
     }
 }
 //将来过去的五分钟之内，拜访完成
+//选择的时间如果是当前时间的前后5分钟之内都认为签到完成
 - (void)timeIntervalFromDateToNow:(NSDate *)date{
     double selectMs = [date timeIntervalSince1970];
     double nowS = [[NSDate date] timeIntervalSince1970];
     self.oSched.plannedDate = date;
     if (selectMs - nowS > 5*60.000) {
         self.oSched.isFinished = [NSNumber numberWithBool:NO];
-    }else if (selectMs - nowS > -5*60.000){
+    }else if (selectMs - nowS > -5*60.000 || selectMs - nowS <= 5*60.000){
         self.oSched.isFinished = [NSNumber numberWithBool:YES];
     }
 }
@@ -474,6 +492,7 @@
     NSDate *date = datePicker.date;
     double intervalOne = [date timeIntervalSince1970];
     double intervalTwo = [[NSDate date] timeIntervalSince1970];
+    //选择时间是当前时间前5分钟外认为无效时间
     if (intervalOne - intervalTwo < -5*60) {
         [[[UIAlertView alloc] initWithTitle:nil
                                     message:@"选择的拜访时间有误！"
@@ -535,7 +554,6 @@
             [cell.contentView addSubview:tf];
         }
         UITextField *textField = (UITextField *)[cell.contentView viewWithTag:9693];
-        UITextField *detail = (UITextField *)[cell.contentView viewWithTag:9694];
         if (indexPath.row == 0) {
             UIButton *objectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
             objectBtn.frame = CGRectMake(280, 0, 35, 35);
@@ -544,17 +562,26 @@
             [cell.contentView addSubview:objectBtn];
             textField.tag = TEXTFIELD_OBJECT_TAG;
             if (_style == KVisitRecoardVCStyleNewBuild) {
-                textField.placeholder = @"请输入拜访对象";
-                textField.text = self.defaultVisitedName;
+                textField.placeholder = @"请选择拜访对象";
+                //设置默认值（每次出现cell的时候都会调，但只有第一次真正的会赋值，后面再调都被忽略了？？？？？？就不会把最新值存在临时变量中了）
+                if (![self.visitInfoCard isKindOfClass:[MyCard class]] && self.visitInfoCard && (!textField.text || textField.text.length > 0)) {
+                    NSString *defaultCustomer = [self combineNameAndCompany:self.visitInfoCard];
+                    if (defaultCustomer) {
+                        textField.text = defaultCustomer;
+                    }
+                }
             }else if (_style == KVisitRecoardVCStyleShowInfo){
                 textField.text = [_fieldValue objectAtIndex:indexPath.row];
                 objectBtn.hidden = YES;
                 textField.enabled = NO;
             }
             if (self.isFinishTask || [self.schedu.isFinished isEqualToNumber:[NSNumber numberWithBool:NO]]) {
+                textField.text = [_fieldValue objectAtIndex:indexPath.row];
                 objectBtn.hidden = NO;
                 textField.enabled = YES;
             }
+            //20121123 wdf add 不让输入拜访客户，输入了也没有上传至服务器
+//            textField.enabled = NO;
             
         }else if (indexPath.row == 1){
             textField.enabled = NO;
@@ -601,7 +628,6 @@
         }else if (indexPath.row == 4){
             textField.enabled = NO;
             textField.tag = TEXTFIELD_ADDRESS_TAG;
-            detail.hidden = NO;
             if (_style == KVisitRecoardVCStyleNewBuild || [self.schedu.isFinished isEqualToNumber:[NSNumber numberWithBool:NO]]) {
                 textField.text = [_fieldValue objectAtIndex:indexPath.row];
                 textField.text = self.address;
@@ -786,9 +812,8 @@
     DLog(@"cell.text======%@",cell.textLabel.text);
     if ([cell.textLabel.text isEqualToString:@"对象"]) {
         if (textField.text.length == 0) {
-            self.defaultVisitedName = nil;
             if (self.visitInfoCard) {
-                [self.objectDic removeObjectForKey:self.visitInfoCard.name]; //移出默认的拜访对象。
+                [self.objectDic removeObjectForKey:self.visitInfoCard.id.stringValue]; //移出默认的拜访对象。
             }
         }
         [_fieldValue replaceObjectAtIndex:0 withObject:textField.text];
@@ -1090,47 +1115,59 @@
 }
 //向日历中添加事件
 - (void)addEventForCalendar{
-    
+    //已完成的事件不添加到提醒中
+    if (self.oSched || self.oSched.isFinished > [NSNumber numberWithBool:YES]) {
+        return;
+    }
     UIButton *btn = (UIButton *)[self.view viewWithTag:2277];
     if ([btn.titleLabel.text isEqualToString:@"不提醒"]) {
         return;
     }
-    EKEventStore *eventStore = [[EKEventStore alloc] init];
-    EKEvent *event = [EKEvent eventWithEventStore:eventStore];
+    
+    //获取拜访客户名称
+    NSString *customerName = nil;
+    UITextField *objectTf = (UITextField *)[self.view viewWithTag:TEXTFIELD_OBJECT_TAG];
+    if (objectTf) {
+        customerName = objectTf.text;
+    }
+    
+    //系统6.0以上时把事件存到系统日历事件中，6.0以下的用UIlocalNotification提醒
     if([self checkIsDeviceVersionHigherThanRequiredVersion:@"6.0"]) {
+        EKEventStore *eventStore = [[EKEventStore alloc] init];
+        EKEvent *event = [EKEvent eventWithEventStore:eventStore];    
     	[eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
         	if (granted){
-            	//---- codes here when user allow your app to access theirs' calendar.
-                [eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
-                    if (granted) {
-                        NSDate *endDate = [self dateFromString];
-                        NSDate *startDate = [endDate dateByAddingTimeInterval:-(_timeInterval)];
-                        event.title = @"拜访计划提醒";
-                        event.startDate = startDate;
-                        event.endDate = endDate;
-                        if (_timeInterval != 0) {
-                            EKAlarm *alerm = [EKAlarm alarmWithAbsoluteDate:startDate];
-                            [event addAlarm:alerm];
-                        }
-                        [event setCalendar:[eventStore defaultCalendarForNewEvents]];
-                        NSError *error;
-                        [eventStore saveEvent:event span:EKSpanThisEvent error:&error];
-                        if (error.code == noErr) {
-                            DLog(@"事件保存成功！");
-                        }else{
-                            DLog(@"事件保存失败！");
-                        }
-                    }
-                }];
+            	NSDate *endDate = [self dateFromString];
+                NSDate *startDate = [endDate dateByAddingTimeInterval:-(_timeInterval)];
+                if (customerName) {
+                    event.title = [NSString stringWithFormat:@"%@[%@]",TEXTVISIT_ALERT_TITLE,customerName];
+                }else {
+                    event.title = TEXTVISIT_ALERT_TITLE;
+                }
+                event.startDate = startDate;
+                event.endDate = endDate;
+                if (_timeInterval != 0) {
+                EKAlarm *alerm = [EKAlarm alarmWithAbsoluteDate:startDate];
+                [event addAlarm:alerm];
+                }
+                [event setCalendar:[eventStore defaultCalendarForNewEvents]];
+                NSError *error;
+                [eventStore saveEvent:event span:EKSpanThisEvent error:&error];
+                if (error.code == noErr) {
+                    DLog(@"事件保存成功！");
+                }else{
+                    DLog(@"事件保存失败！");
+                }
             }
         }];
     }else{
         //----- codes here when user NOT allow your app to access the calendar.
-        [[[UIAlertView alloc] initWithTitle:nil
-                                    message:@"由于系统版本小于6.0,不能访问日历且添加拜访事件！"
-                                   delegate:nil
-                          cancelButtonTitle:@"确定"
-                          otherButtonTitles:nil] show];
+//        [[[UIAlertView alloc] initWithTitle:nil
+//                                    message:@"由于系统版本小于6.0,不能访问日历且添加拜访事件！"
+//                                   delegate:nil
+//                          cancelButtonTitle:@"确定"
+//                          otherButtonTitles:nil] show];
+        [self localNotificationWithCustomerName:customerName];
     }
 }
 - (BOOL)checkIsDeviceVersionHigherThanRequiredVersion:(NSString *)requiredVersion
@@ -1146,5 +1183,84 @@
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
+
+//uilocalNotification
+-(void) localNotificationWithCustomerName:(NSString *) customerName{
+    NSString * alertBody = nil;
+    if (customerName) {
+        alertBody = [NSString stringWithFormat:@"%@[%@]",TEXTVISIT_ALERT_TITLE,customerName];
+    }else {
+        alertBody = TEXTVISIT_ALERT_TITLE;
+    }
+    NSDate *endDate = [self dateFromString];
+    NSDate *startDate = [endDate dateByAddingTimeInterval:-(_timeInterval)];
+    //添加到应用里
+    [KHHLocalNotificationUtil addLocalNotifiCation:startDate alertBody:alertBody];
+}
+
+/*  从拜访对象中过滤出用户手动输入的对象
+ *  非手动输入的只要在id里把联系人id传入，type中传入type就行了
+ */
+-(NSString *) userInputCustomerName{
+    if (!self.oSched.targetCardList || self.oSched.targetCardList.count <= 0) {
+        return nil;
+    }
+
+    UITextField *objectTf = (UITextField *)[self.view viewWithTag:TEXTFIELD_OBJECT_TAG];
+    if (!objectTf) {
+        return nil;
+    }
+    
+    NSString *customerName = objectTf.text;
+    //要过滤的客户名称
+    NSArray *names = [customerName componentsSeparatedByString:KHH_SEMICOLON];
+    //保留的客户名称
+    NSMutableArray *array = [[NSMutableArray alloc] initWithArray:names];
+    for (id subCard  in self.oSched.targetCardList) {
+        if ([subCard isKindOfClass:[Card class]]) {
+            Card *card = (Card *) subCard;
+            NSString * nameWithCompany = [self combineNameAndCompany:card];
+            if (!nameWithCompany) {
+                continue;
+            }
+            //在目标array中找有就删除
+            NSInteger index = [array indexOfObject:nameWithCompany];
+            if (index >= 0) {
+                [array removeObjectAtIndex:index];
+            }
+        }
+    }
+    
+    //保存在服务器上时是用“|”隔开的
+    return [array componentsJoinedByString:KHH_SEPARATOR];
+}
+
+-(NSString *) combineNameAndCompany:(Card *) card {
+    if (!card) {
+        return nil;
+    }
+    
+    NSMutableString *nameObj = [[NSMutableString alloc] init];
+    
+    //姓名
+    NSString *name = [NSString stringByFilterNilFromString:card.name];
+    if (name.length) {
+        [nameObj appendString:[NSString stringWithFormat:@"%@",name]];
+    }else {
+        //名称为空时添加一个空格作为标识
+        [nameObj appendString:@" "];
+    }
+    
+    //公司
+    if (card.company && card.company.name && card.company.name.length > 0) {
+        NSString *company = [NSString stringByFilterNilFromString:card.company.name];
+        if (company.length > 0) {
+            [nameObj appendString:[NSString stringWithFormat:@"(%@)",company]];
+        }
+    }
+    
+    return nameObj;
+}
+
 
 @end

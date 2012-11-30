@@ -100,7 +100,7 @@
                                   info:dict];
     };
     
-    [self deleteMessagesByIDs:[messageIDs componentsJoinedByString:@","] sucessBlock:success];
+    [self deleteMessagesByIDs:[messageIDs componentsJoinedByString:KHH_COMMA] sucessBlock:success];
 }
 
 //删除消息(通过组装好的ids)

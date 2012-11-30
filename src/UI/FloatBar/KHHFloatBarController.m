@@ -123,7 +123,7 @@
         
     }else{
         if (self.card.mobilePhone.length > 0 || self.card.telephone.length > 0) {
-            NSArray *mobielArr = [self.card.mobilePhone componentsSeparatedByString:@"|"];
+            NSArray *mobielArr = [self.card.mobilePhone componentsSeparatedByString:KHH_SEPARATOR];
             for (int i = 0; i < mobielArr.count; i++) {
                 [act addButtonWithTitle:[mobielArr objectAtIndex:i]];
                
@@ -153,7 +153,7 @@
         
     }else{
         if (self.card.mobilePhone.length > 0) {
-            NSArray *mobielArray = [self.card.mobilePhone componentsSeparatedByString:@"|"];
+            NSArray *mobielArray = [self.card.mobilePhone componentsSeparatedByString:KHH_SEPARATOR];
             for (int i = 0; i < mobielArray.count; i++) {
                 if ([[mobielArray objectAtIndex:i] isValidMobilePhoneNumber]) {
                     [actS addButtonWithTitle:[mobielArray objectAtIndex:i]];
@@ -194,7 +194,7 @@
             MFMailComposeViewController *mailPicker = [[MFMailComposeViewController alloc] init];
             mailPicker.mailComposeDelegate = self;
             [mailPicker setSubject:@"eMail主题"];
-            NSArray *emails = [self.card.email componentsSeparatedByString:@"|"];
+            NSArray *emails = [self.card.email componentsSeparatedByString:KHH_SEPARATOR];
             [mailPicker setToRecipients:emails];
             [mailPicker setMessageBody:@"123" isHTML:YES];
             [self.viewController presentModalViewController:mailPicker animated:YES];

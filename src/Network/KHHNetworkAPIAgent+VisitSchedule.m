@@ -52,8 +52,8 @@
     NSMutableString *cardIDs = [NSMutableString string];
     NSMutableString *cardTypes = [NSMutableString string];
     for (Card *card in oSchedule.targetCardList) {
-        [cardIDs appendFormat:@"%@|",card.id.stringValue];
-        [cardTypes appendFormat:@"%@|",card.nameForServer];
+        [cardIDs appendFormat:@"%@%@",card.id.stringValue, KHH_SEPARATOR];
+        [cardTypes appendFormat:@"%@%@",card.nameForServer, KHH_SEPARATOR];
     }
     if (cardIDs.length) {
         parameters[@"customCardIds"] = cardIDs;
@@ -129,6 +129,17 @@
         parameters[@"withPerson"]   = oSchedule.companion;
     if (oSchedule.isFinished)
         parameters[@"isFinished"]   = (oSchedule.isFinished.boolValue)? @"y": @"n";
+
+    NSMutableString *cardIDs = [NSMutableString string];
+    NSMutableString *cardTypes = [NSMutableString string];
+    for (Card *card in oSchedule.targetCardList) {
+        [cardIDs appendFormat:@"%@%@",card.id.stringValue, KHH_SEPARATOR];
+        [cardTypes appendFormat:@"%@%@",card.nameForServer, KHH_SEPARATOR];
+    }
+    if (cardIDs.length) {
+        parameters[@"customCardIds"] = cardIDs;
+        parameters[@"customTypes"]   = cardTypes;
+    }
     
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
         NSDictionary *responseDict = [self JSONDictionaryWithResponse:responseObject];

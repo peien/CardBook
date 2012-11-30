@@ -22,7 +22,7 @@
 @interface KHHAddGroupMemberVC ()<UISearchBarDelegate,UISearchDisplayDelegate,
                                  UITableViewDataSource,UITableViewDelegate,SMCheckboxDelegate>
 
-@property (strong, nonatomic) SMCheckbox *box;
+//@property (strong, nonatomic) SMCheckbox *box;
 @property (strong, nonatomic) KHHData    *dataCtrl;
 @property (strong, nonatomic) MBProgressHUD *hud;
 
@@ -36,7 +36,7 @@
 @synthesize cancelBtn = _cancelBtn;
 @synthesize numLab = _numLab;
 @synthesize isAdd = _isAdd;
-@synthesize box = _box;
+//@synthesize box = _box;
 @synthesize selectedItemArray = _selectedItemArray;
 @synthesize addOrDelGroupArray = _addOrDelGroupArray;
 @synthesize resultArray = _resultArray;
@@ -130,7 +130,7 @@
     _sureBtn = nil;
     _cancelBtn = nil;
     _numLab = nil;
-    _box = nil;
+//    _box = nil;
     _addOrDelGroupArray = nil;
     _selectedItemArray = nil;
     self.handleArray = nil;
@@ -212,34 +212,60 @@ int num = 0;
 {
     
     if (tableView == self.searbarCtrl.searchResultsTableView) {
+        NSInteger index = -1;
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
         for (KHHCardMode *card in self.handleArray) {
             if ([cell.textLabel.text isEqualToString:card.name]) {
-                [self.addOrDelGroupArray addObject:card];
+                index = [self.handleArray indexOfObject:card];
+                break;
             }
         }
         self.searbarCtrl.active = NO;
+        [self selectOrUnselectData:index indexPath:nil];
+
     }else{
-        NSNumber *state = [_selectedItemArray objectAtIndex:indexPath.row];
-        if ([state isEqualToNumber:[NSNumber numberWithBool:YES]]) {
-            state = [NSNumber numberWithBool:NO];
-            num--;
-        }else{
-            state = [NSNumber numberWithBool:YES];
-            num++;
-        }
-        NSString *s = [NSString stringWithFormat:@"(%d)",num];
-        self.numLab.text = s;
-        if (num == 0) {
-            self.numLab.hidden = YES;
-        }else{
-            self.numLab.hidden = NO;
-        }
+        //改变选中状态
+        [self selectOrUnselectData:-1 indexPath:indexPath];
+    }
+}
+
+/* 如果是搜索出来的，直接通过index创建出一个新的NSIndexPath传入会出错
+ * 所以如果是搜索获取的数据就只能刷新整个table
+ */
+-(void) selectOrUnselectData:(NSInteger) index indexPath: (NSIndexPath *)indexPath {
+    if (index < 0 && !indexPath) {
+        return;
+    }
+    
+    //获取原状态
+    NSUInteger arrayIndex = indexPath ? indexPath.row : index;
+    NSNumber *state = [_selectedItemArray objectAtIndex:arrayIndex];
+    if ([state isEqualToNumber:[NSNumber numberWithBool:YES]]) {
+        state = [NSNumber numberWithBool:NO];
+        num--;
+    }else{
+        state = [NSNumber numberWithBool:YES];
+        num++;
+    }
+    NSString *s = [NSString stringWithFormat:@"(%d)",num];
+    self.numLab.text = s;
+    if (num == 0) {
+        self.numLab.hidden = YES;
+    }else{
+        self.numLab.hidden = NO;
+    }
+    
+    if (indexPath) {
         [_selectedItemArray replaceObjectAtIndex:indexPath.row withObject:state];
         [_theTableM reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
         [_theTableM deselectRowAtIndexPath:indexPath animated:NO];
+    }else {
+        [_selectedItemArray replaceObjectAtIndex:index withObject:state];
+        [_theTableM reloadData];
     }
+    
 }
+
 #pragma mark -
 #pragma mark ButtonClick
 - (IBAction)sureBtnClick:(id)sender

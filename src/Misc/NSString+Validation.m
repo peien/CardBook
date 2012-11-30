@@ -20,11 +20,14 @@
 
 }
 
+//判断手机是否为有效手机号
+//8888开头的都为测试账号
 - (BOOL)isValidMobilePhoneNumber
 {
-    return [self matchString:self //phone number
-                 withPattern:@"(13[0-9]|14[0-9]|15[0-9]|18[0-9])\\d{8}"];
-    //[self matchString:self withPattern:@"(13[0-9]|14[5|7]|15[0-3|5-9]|18[0|2-3|5-9])\\d{8}"]
+    BOOL isMatch = [self matchString:self //phone number
+                         withPattern:@"(13[0-9]|14[0-9]|15[0-9]|18[0-9])\\d{8}"];
+    BOOL isTest = [self hasPrefix:@"8888"];
+    return isMatch || isTest;
 }
 
 - (BOOL)isValidTelephoneNUmber

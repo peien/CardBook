@@ -51,6 +51,13 @@
 #define KHH_JSON_BASE64 1
 #endif
 
+/*
+ *  KHH_APP_Name
+ */
+#ifndef KHH_APP_NAME
+#define KHH_APP_NAME [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleNameKey]
+#endif
+
 // URLs {
 #if KHH_RELEASE_SERVER == 1
 static NSString * const KHHServer = @"www.kinghanhong.com";
@@ -64,6 +71,11 @@ static NSString * const KHHURLUserGuide = @"useGuide.jsp";
 static NSString * const KHHURLContactUs = @"contactUs.jsp";
 static NSString * const KHHURLRecommendation = @"recommendFriend.html";
 static NSString * const KHHURLDisclaimer = @"disclaimer.jsp?language=chinese";
+
+
+#pragma mark - 分享网址
+static NSString * const KHH_Recommend_URL = @"http://www.fafamp.com";
+
 // }
 
 // 超时

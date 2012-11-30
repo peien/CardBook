@@ -90,19 +90,19 @@
 {
     self.itemArray = [[NSMutableArray alloc] initWithCapacity:0];
     if (_myCard.mobilePhone.length > 0) {
-        NSArray *phoneArr = [_myCard.mobilePhone componentsSeparatedByString:@"|"];
+        NSArray *phoneArr = [_myCard.mobilePhone componentsSeparatedByString:KHH_SEPARATOR];
         [self.itemArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[phoneArr objectAtIndex:0],@"value",@"手机",@"key", nil]];
     }
     if (_myCard.telephone.length > 0) {
-        NSArray *telArr = [_myCard.telephone componentsSeparatedByString:@"|"];
+        NSArray *telArr = [_myCard.telephone componentsSeparatedByString:KHH_SEPARATOR];
         [self.itemArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[telArr objectAtIndex:0],@"value",@"电话",@"key", nil]];
     }
     if (_myCard.fax.length > 0) {
-        NSArray *faxArr = [_myCard.fax componentsSeparatedByString:@"|"];
+        NSArray *faxArr = [_myCard.fax componentsSeparatedByString:KHH_SEPARATOR];
         [self.itemArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[faxArr objectAtIndex:0],@"value",@"传真",@"key", nil]];
     }
     if (_myCard.email.length > 0) {
-        NSArray *faxArr = [_myCard.email componentsSeparatedByString:@"|"];
+        NSArray *faxArr = [_myCard.email componentsSeparatedByString:KHH_SEPARATOR];
         [self.itemArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[faxArr objectAtIndex:0],@"value",@"邮箱",@"key", nil]];
     }
     if (_myCard.company.name.length > 0) {

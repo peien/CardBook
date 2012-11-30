@@ -78,7 +78,12 @@
         
         self.rightBtn.hidden = YES;
         self.dataCtrl = [KHHData sharedData];
-        self.card = [[self.dataCtrl allMyCards] objectAtIndex:0];
+        NSArray *cards = [self.dataCtrl allMyCards];
+        if (cards) {
+            self.card = [cards objectAtIndex:0];
+        }
+        
+        
         self.checkIn = [[ICheckIn alloc] initWithCard:card];
     }
     return self;

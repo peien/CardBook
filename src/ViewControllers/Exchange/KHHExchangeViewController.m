@@ -72,7 +72,10 @@
         //[self.leftBtn setTitle:NSLocalizedString(@"切换名片", nil) forState:UIControlStateNormal];
         self.httpAgent = [[KHHNetworkAPIAgent alloc] init];
         self.dataCtrl = [KHHData sharedData];
-        self.card = [[self.dataCtrl allMyCards] objectAtIndex:0];
+        NSArray *cards = [self.dataCtrl allMyCards];
+        if (cards) {
+            self.card = [cards objectAtIndex:0];
+        }
         self.app  = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
         self.myDefault = [KHHDefaults sharedDefaults];
     }
@@ -216,7 +219,10 @@
 }
 // 刷新卡片信息
 - (void)updateCardTempInfo{
-    self.card = [[self.dataCtrl allMyCards] objectAtIndex:0];
+    NSArray *cards = [self.dataCtrl allMyCards];
+    if (cards) {
+        self.card = [cards objectAtIndex:0];
+    }
     self.cardView.card = self.card;
     [self.cardView.scrView removeFromSuperview];
     [self.cardView.xlPage removeFromSuperview];
