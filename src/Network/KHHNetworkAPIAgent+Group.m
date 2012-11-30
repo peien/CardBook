@@ -172,7 +172,7 @@
         [idAndTypes addObject:[NSString stringWithFormat:@"%@;%@", cardID, cardType]];
     }
     NSDictionary *parameters = @{
-    @"cardIdAndTypes" : [idAndTypes componentsJoinedByString:@"|"],
+    @"cardIdAndTypes" : [idAndTypes componentsJoinedByString:KHH_SEPARATOR],
     @"delGroupId"     : fromGroup?fromGroup.id.stringValue:@"",
     @"addGroupId"     : toGroup?toGroup.id.stringValue:@"",
     };

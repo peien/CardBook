@@ -11,11 +11,10 @@
 #import "RecomFridendsViewController.h"
 #import "KHHShowHideTabBar.h"
 #import "LoginViewController.h"
-#import "UseGuideViewController.h"
-#import "FeedBackViewController.h"
 #import "AboutController.h"
 #import "KHHDefaults.h"
 #import "KHHNotifications.h"
+#import "KHHWebView.h"
 
 
 @interface MoreViewController ()<UIActionSheetDelegate,UIAlertViewDelegate>
@@ -89,7 +88,7 @@
 #pragma mark TableDelegates
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 4;
+    return 3;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -104,13 +103,14 @@
         case 0:
             return 3;
             break;
+//        //检测更新
+//        case 1:
+//            return 1;
+//            break;
         case 1:
-            return 1;
-            break;
-        case 2:
             return 4;
             break;
-        case 3:
+        case 2:
             return 0;
             break;
         default:
@@ -169,39 +169,39 @@
             }
             break;
     
-       case 1:
-        switch (indexPath.row) {
-        case 0:{
-            cellid = @"genxin";
-            cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-            if (cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
-                cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            }
-            cell.textLabel.text = NSLocalizedString(@"检查更新", nil);
-        }
-            
-            break;
-            
-        case 1:{
-            cellid = @"genxin style";
-            cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-            if (cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
-                cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            }
-            cell.textLabel.text = @"软件更新方式设置";
-            _updateStyle.frame = CGRectMake(25, 36, 260, 20);
-            [cell addSubview:_updateStyle];
-        }
-        default:
-            break;
-    }
-    break;
+//       case 1:
+//        switch (indexPath.row) {
+//        case 0:{
+//            cellid = @"genxin";
+//            cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+//            if (cell == nil) {
+//                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
+//                cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+//                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//            }
+//            cell.textLabel.text = NSLocalizedString(@"检查更新", nil);
+//        }
+//            
+//            break;
+//            
+//        case 1:{
+//            cellid = @"genxin style";
+//            cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+//            if (cell == nil) {
+//                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
+//                cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+//                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+//            }
+//            cell.textLabel.text = @"软件更新方式设置";
+//            _updateStyle.frame = CGRectMake(25, 36, 260, 20);
+//            [cell addSubview:_updateStyle];
+//        }
+//        default:
+//            break;
+//    }
+//    break;
     
-    case 2:
+    case 1:
     switch (indexPath.row) {
         case 0:{
             cellid = @"use guide";
@@ -256,7 +256,7 @@
     
     break;
     
-    case 3:
+    case 2:
     switch (indexPath.row) {
             
         case 0:{
@@ -286,8 +286,6 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self tableView:tableView accessoryButtonTappedForRowWithIndexPath:indexPath];
-    
-
 }
 
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
@@ -305,23 +303,25 @@
             [alert show];
 
         }
-    }else if (indexPath.section == 2) {
+    }else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
-            UseGuideViewController *useVC = [[UseGuideViewController alloc] initWithNibName:nil bundle:nil];
-            [self.navigationController pushViewController:useVC animated:YES];
+            KHHWebView *webView = [[KHHWebView alloc] initWithNibName:nil bundle:nil];
+            [webView initUrl:KHHURLUserGuide title:@"使用指南" rightBarName:nil rightBarBlock:nil];
+            [self.navigationController pushViewController:webView animated:YES];
         }else if (indexPath.row == 1) {
-            RecomFridendsViewController *recomVC = [[RecomFridendsViewController alloc] initWithNibName:@"RecomFridendsViewController" 
-                                                                                                 bundle:nil];
+            RecomFridendsViewController *recomVC = [[RecomFridendsViewController alloc] initWithNibName:@"RecomFridendsViewController" bundle:nil];
             [self.navigationController pushViewController:recomVC animated:YES];
         }else if (indexPath.row == 2) {
             //客户反馈
-            FeedBackViewController *backVC = [[FeedBackViewController alloc] initWithNibName:nil bundle:nil];
-            [self.navigationController pushViewController:backVC animated:YES];
+            KHHWebView *webView = [[KHHWebView alloc] initWithNibName:nil bundle:nil];
+            [webView initUrl:KHHURLContactUs title:@"客户反馈" rightBarName:nil rightBarBlock:nil];
+            [self.navigationController pushViewController:webView animated:YES];
         }else if (indexPath.row == 3){
             AboutController *aboutVC = [[AboutController alloc] initWithNibName:nil bundle:nil];
             [self.navigationController pushViewController:aboutVC animated:YES];
         }
-    }else if (indexPath.section == 1){
+        
+    }/*else if (indexPath.section == 1){
         if (indexPath.row == 1) {
             _titleStr = @"软件更新方式";
             [self showActionSheet];
@@ -331,7 +331,7 @@
             _titleStr = @"默认页面设置";
             [self showActionSheet];
         }
-    }
+    }*/
 }
 
 - (void)showActionSheet

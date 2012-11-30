@@ -28,7 +28,7 @@
         @"left":@"originX", @"top":@"originY", @"width":@"rectWidth", @"height":@"rectHeight",
         @"color":@"fontColor", @"font-size":@"fontSize", @"fontWeight":@"fontWeight",
         };
-        NSArray *styleAttrList = [self.style componentsSeparatedByString:@";"];
+        NSArray *styleAttrList = [self.style componentsSeparatedByString:KHH_SEMICOLON];
         for (NSString *styleAttr in styleAttrList) {
             NSArray *keyValuePair = [styleAttr componentsSeparatedByString:@":"];
             if (keyValuePair.count != 2) {

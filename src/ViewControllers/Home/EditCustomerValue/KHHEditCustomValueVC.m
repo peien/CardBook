@@ -69,9 +69,11 @@
     
     DLog(@"self.icustomerEva ====== %@",self.icustomerEva);
     self.hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    MyCard *myCard = [[self.dataCtrl allMyCards] objectAtIndex:0];
-    [self.dataCtrl saveEvaluation:self.icustomerEva aboutCustomer:self.card withMyCard:myCard];
-    
+    NSArray *cards = [self.dataCtrl allMyCards];
+    if (cards) {
+        MyCard *myCard = [cards objectAtIndex:0];
+        [self.dataCtrl saveEvaluation:self.icustomerEva aboutCustomer:self.card withMyCard:myCard];
+    }
 }
 //处理网络返回结果
 - (void)handleSaveEvaluationSucceeded:(NSNotification *)info{

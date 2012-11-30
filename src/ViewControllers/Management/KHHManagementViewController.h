@@ -11,7 +11,7 @@
 
 @interface KHHManagementViewController : SuperViewController <UIAlertViewDelegate>
 @property (nonatomic, strong) UIView *entranceView;
-@property (assign, nonatomic) bool   isBoss;
+@property (strong, nonatomic) UIButton *signButton;
 - (IBAction)radarBtnClick:(id)sender;
 - (IBAction)funnelBtnClick:(id)sender;
 - (IBAction)calendarBtnClick:(id)sender;

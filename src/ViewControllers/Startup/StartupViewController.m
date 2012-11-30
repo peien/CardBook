@@ -170,7 +170,7 @@
 {
     self.defaults.loggedIn = NO; // 设置标记避免自动重复登录
     
-    NSDictionary *info = notification.userInfo;
+//    NSDictionary *info = notification.userInfo;
     NSString *message = nil;
 //    AccountAgentErrorCode errCode = [[infoDict objectForKey:kAccountAgentUserInfoKeyErrorCode] integerValue];
 //    if (AccountAgentErrorCodeErrorInfo == errCode) {
@@ -214,7 +214,7 @@
 //}
 - (void)handleSignUpFailed:(NSNotification *)notification
 {
-    NSDictionary *info = notification.userInfo;
+//    NSDictionary *info = notification.userInfo;
     NSString *message = nil;
 //    AccountAgentErrorCode errCode = [[infoDict objectForKey:kAccountAgentUserInfoKeyErrorCode] integerValue];
 //    if (AccountAgentErrorCodeErrorInfo == errCode) {
@@ -242,7 +242,7 @@
 }
 - (void)handleResetPasswordFailed:(NSNotification *)notification
 {
-    NSDictionary *info = notification.userInfo;
+//    NSDictionary *info = notification.userInfo;
     NSString *message = nil;
 //    AccountAgentErrorCode errCode = [[infoDict objectForKey:kAccountAgentUserInfoKeyErrorCode] integerValue];
 //    if (AccountAgentErrorCodeErrorInfo == errCode) {

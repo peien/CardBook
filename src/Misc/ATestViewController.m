@@ -24,7 +24,10 @@
         self.view.backgroundColor = [UIColor whiteColor];
         _agent = [[KHHNetworkAPIAgent alloc] init];
         _data = [KHHData sharedData];
-        _card = [[self.data allMyCards] objectAtIndex:0];
+        NSArray *cards = [self.data allMyCards];
+        if (cards) {
+            _card = [cards objectAtIndex:0];
+        }
         NSNumber *aNumber = nil;
         NSString *aString = [aNumber stringValue];
         DLog(@"[II] aString = %@", aString);
@@ -80,7 +83,10 @@
 #pragma mark - 试验模板显示
 - (void)testVisualCardViewController {
     self.view.backgroundColor = [UIColor blackColor];
-    self.card = [[self.data allMyCards] objectAtIndex:0];
+    NSArray *cards = [self.data allMyCards];
+    if (cards) {
+        self.card = [cards objectAtIndex:0];
+    }
     if (self.card) {
         self.visualCard = [[KHHVisualCardViewController alloc] initWithNibName:nil bundle:nil];
         [self.view addSubview:self.visualCard.view];

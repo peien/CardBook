@@ -13,6 +13,7 @@
 static NSString * const KHHUIShowStartup     = @"UIshowStartup";
 static NSString * const nAppShowMainView     = @"nAppShowMainView";
 static NSString * const nAppShowPreviousView = @"nAppShowPreviousView";
+static NSString * const nAppNetworkError = @"nAppNetworkError";
 // Intro
 static NSString * const nAppSkipIntro    = @"nAppSkipIntro";
 // Logout
@@ -23,6 +24,8 @@ static NSString * const KHHAppLogout     = @"AppLogout";
 // 注意设置userInfo: 包含的keys @"user" @"password"
 static NSString * const nAppLogMeIn   = @"nAppLogMeIn";
 static NSString * const nAppLoggingIn = @"nAppLoggingIn";
+static NSString * const nAppOfflineLoggingIn = @"nAppOfflineLoggingIn";
+static NSString * const nAppCheckNetwork = @"nAppCheckNetwork";
 
 // 注册
 // 注意设置userInfo: 包含的keys @"user" @"password"

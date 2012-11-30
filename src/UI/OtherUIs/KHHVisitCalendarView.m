@@ -126,17 +126,44 @@
         NSString *date = [form stringFromDate:sched.plannedDate];
         cell.dateLab.text = date;
     }
-    //拜访对象
-    if (sched.targets!= nil ) {
+    //拜访对象 (customer里的存放的是用户手动输入的客户，可能不是联系人)
+    if (sched.targets != nil || sched.customer) {
         NSMutableString *names = [[NSMutableString alloc] init];
-        NSArray *objects = [sched.targets allObjects];
-        for (int i = 0; i < objects.count; i++) {
-            Card *cardObj = [objects objectAtIndex:i];
-            NSString *name = [NSString stringByFilterNilFromString:cardObj.name];
-            if (name.length) {
-                [names appendString:[NSString stringWithFormat:@" %@",name]];
+        //先添加到用户手动输入的
+        if (sched.customer) {
+            [names appendString:sched.customer];
+        }
+        
+        //循环添加联系人
+        if (sched.targets) {
+            NSArray *objects = [sched.targets allObjects];
+            for (int i = 0; i < objects.count; i++) {
+                Card *cardObj = [objects objectAtIndex:i];
+                //用分号与前一个分开
+                if (names.length > 0) {
+                    [names appendString:KHH_SEMICOLON];
+                }
+                
+                //姓名
+                NSString *name = [NSString stringByFilterNilFromString:cardObj.name];
+                if (name.length) {
+                    [names appendString:[NSString stringWithFormat:@"%@",name]];
+                }else {
+                    //名称为空时添加一个空格作为标识
+                    [names appendString:@" "];
+                }
+                
+                //公司
+                if (cardObj.company && cardObj.company.name && cardObj.company.name.length > 0) {
+                    NSString *company = [NSString stringByFilterNilFromString:cardObj.company.name];
+                    if (company.length) {
+                        [names appendString:[NSString stringWithFormat:@"(%@)",company]];
+                    }
+                }
             }
         }
+        
+        
         cell.objValueLab.text = names;
     }
     //地址

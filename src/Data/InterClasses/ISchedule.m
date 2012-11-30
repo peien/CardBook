@@ -41,8 +41,8 @@
     
     NSString *cardIDs   = [NSString stringFromObject:json[JSONDataKeyCustomCardIds]];
     NSString *cardTypes = [NSString stringFromObject:json[JSONDataKeyCustomTypes]];
-    NSArray *cardIDList = [cardIDs componentsSeparatedByString:@"|"];
-    NSArray *cardTypeList = [cardTypes componentsSeparatedByString:@"|"];
+    NSArray *cardIDList = [cardIDs componentsSeparatedByString:KHH_SEPARATOR];
+    NSArray *cardTypeList = [cardTypes componentsSeparatedByString:KHH_SEPARATOR];
     self.targetCardList= [NSMutableArray arrayWithCapacity:cardIDList.count];
     for (NSInteger i = 0; i < cardIDList.count; i++ ) {
         NSNumber *ID = [NSNumber numberFromObject:cardIDList[i] zeroIfUnresolvable:NO];

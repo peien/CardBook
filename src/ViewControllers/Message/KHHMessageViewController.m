@@ -65,7 +65,7 @@
     DLog(@"handlenUISyncMessagesFailed! noti is ======%@",noti.userInfo);
     [self stopObservingForMessage];
     [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"错误提示", nil)
-                               message:@"同步消息失败"
+                               message:@"同步消息失败,请确保网络可用"
                               delegate:nil
                      cancelButtonTitle:NSLocalizedString(@"确定", nil)
                      otherButtonTitles:nil] show];

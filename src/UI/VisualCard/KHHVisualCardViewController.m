@@ -14,6 +14,7 @@
 #import "UIColor+HexColor.h"
 #import "UIImageView+WebCache.h"
 #import "Card.h"
+//#import "KHHMacros.h"
 static CGFloat const CARD_WIDTH = 270.f;
 static CGFloat const CARD_RATIO = CARD_WIDTH / 450.f;
 static CGFloat const CARD_WIDTH_PADDING = 5.f;
@@ -147,7 +148,10 @@ static CGFloat const CARD_WIDTH_PADDING = 5.f;
 //        imgView.contentMode = UIViewContentModeScaleAspectFill;
 //        imgView.contentMode = UIViewContentModeScaleAspectFit;
         imgView.contentMode = UIViewContentModeScaleToFill;
-        [imgView setImageWithURL:[NSURL URLWithString:tmpl.bgImage.url]];
+//        UIImage *image = [UIImage imageNamed:@"template_bg"]; // cache在内存中，图片太大
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"template_bg@2x" ofType:@"png"];
+        UIImage *image = [UIImage imageWithContentsOfFile:path];
+        [imgView setImageWithURL:[NSURL URLWithString:tmpl.bgImage.url] placeholderImage:image];
         [self.view addSubview:imgView];
     }
     // 

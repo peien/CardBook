@@ -14,6 +14,8 @@
 typedef void (^KHHSuccessBlock)(AFHTTPRequestOperation *operation, id responseObject);
 typedef void (^KHHFailureBlock)(AFHTTPRequestOperation *operation, NSError *error);
 typedef void (^KHHConstructionBlock)(id <AFMultipartFormData> formData);
+//无参数的block
+typedef void (^KHHDefaultBlock)();
 
 // KHHCardModelType 名片模型，对应于数据库里的类
 typedef enum {
@@ -76,6 +78,5 @@ typedef enum {
     KHHQueuedOperationSyncVisitSchedulesAfterUpdate,
     KHHQueuedOperationSyncVisitSchedulesAfterUploadImage,
 } KHHQueuedOperationSyncType;
-
 
 #endif

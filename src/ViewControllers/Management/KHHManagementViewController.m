@@ -1,4 +1,4 @@
-//
+ //
 //  KHHManagementViewController.m
 //  CardBook
 //
@@ -23,9 +23,13 @@
 #import "KHHData+UI.h"
 #import "Card.h"
 #import "DetailInfoViewController.h"
+#import "KHHLocalNotificationUtil.h"
+
+#define TEXT_NEW_MESSAGE_COMMING NSLocalizedString(@"您有新消息到了,可到消息界面查看新消息。",nil)
+#define TEXT_NEW_CONTACT_COMMING NSLocalizedString(@"您有新名片到了，点击确认去查看联系人...",nil)
 
 //定时同步消息时间(秒)
-static int const KHH_SYNC_MESSAGE_TIME = 30 * 60;//alert类型:1.新消息 2.新联系人
+static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新联系人
 typedef enum {
     KHHAlertMessage   = 100,
     KHHAlertContact   = 101,
@@ -44,8 +48,8 @@ typedef enum {
 @end
 
 @implementation KHHManagementViewController
+@synthesize signButton = _signButton;
 @synthesize entranceView = _entranceView;
-@synthesize isBoss = _isBoss;
 @synthesize dataCtrl;
 @synthesize app;
 @synthesize messageImageView;
@@ -58,18 +62,16 @@ typedef enum {
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
-        self.title = NSLocalizedString(@"蜂巢访销", nil);
-        _isBoss = YES;
+        // Custom initialization CFBundleName
+//        self.title = NSLocalizedString(@"蜂巢访销", nil);
+        self.title = KHH_APP_NAME;
         self.dataCtrl = [KHHData sharedData];
-        if ([self.dataCtrl allMyCards].count > 0) {
-            self.myCard = [[self.dataCtrl allMyCards] objectAtIndex:0];
+        NSArray *cards = [self.dataCtrl allMyCards];
+        if (cards && cards.count > 0) {
+            self.myCard = [cards objectAtIndex:0];
         }
-        if (_isBoss) {
-           _entranceView = [[[NSBundle mainBundle] loadNibNamed:@"KHHBossEntrance" owner:self options:nil] objectAtIndex:0]; 
-        }else
-            _entranceView = [[[NSBundle mainBundle] loadNibNamed:@"KHHStaffEntrance" owner:self options:nil] objectAtIndex:0];
-
+        _entranceView = [[[NSBundle mainBundle] loadNibNamed:@"KHHBossEntrance" owner:self options:nil] objectAtIndex:0];
+        
         [self.leftBtn setTitle:NSLocalizedString(@"消息", nil) forState:UIControlStateNormal];
         [self.rightBtn setTitle:NSLocalizedString(@"同步", nil) forState:UIControlStateNormal];
         [self showMessageNums];
@@ -80,8 +82,6 @@ typedef enum {
 //同步
 - (void)rightBarButtonClick:(id)sender{
     [self synBtnClick];
-    //要输入的数字。0代表取消，不显示
-//    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:10];
 }
 //消息
 - (void)leftBarButtonClick:(id)sender{
@@ -148,8 +148,18 @@ typedef enum {
     _entranceView.center = self.view.center;
     
     [self.view addSubview:_entranceView];
-    
-    //启动定时同步消息timer
+    //根据nib里的tag获取view
+    self.signButton = (UIButton *)[_entranceView viewWithTag:1001];
+    if (self.signButton) {
+        //获取公司id
+        NSNumber *companyID = [[KHHDefaults sharedDefaults] currentCompanyID];
+        if (!companyID || companyID.longValue <= 0 ) {
+            self.signButton.hidden = YES;
+        }else {
+            self.signButton.hidden = NO;
+        }
+    }
+        //启动定时同步消息timer
     [self syncMessage];
     //立马同步一次消息
     [self handleSyncMessage];
@@ -158,7 +168,6 @@ typedef enum {
     [super viewWillAppear:animated];
     [KHHShowHideTabBar showTabbar];
     [self showMessageNums];
-    
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
@@ -243,41 +252,69 @@ typedef enum {
     //注册同步消息
     [self observeNotificationName:nUISyncMessagesSucceeded selector:@"handleSyncMessagesSucceeded:"];
     [self observeNotificationName:nUISyncMessagesFailed selector:@"handlenUISyncMessagesFailed:"];
-    if (!self.syncMessageTimer) {
-        self.syncMessageTimer = [NSTimer scheduledTimerWithTimeInterval:KHH_SYNC_MESSAGE_TIME target:self selector:@selector(handleSyncMessage) userInfo:nil repeats:YES];
-    }
-    
+    //设置后台handle
+    [self setupBackgroundHandler];
 }
 
 //解析数据
+//程序在后台运行的时候notify出来，程序在运行时alert
 - (void)handleSyncMessagesSucceeded:(NSNotification *)noti{
     //消息解析成功，看看解析结果中有没有联系人，有联系人就弹出预览框，有新消息就push消息（现在没有push就alert出来）
     DLog(@"timer sync handleSyncMessagesSucceeded ! noti is ======%@",noti.userInfo);
     NSArray *messgaeList = noti.userInfo[kInfoKeyMessageList];
-    if (messgaeList && messgaeList.count > 0) {
-        //显示有新消息到了
-        NSArray *viewControllers = self.navigationController.viewControllers;
-        UITableViewController *parent = [viewControllers lastObject];
-        //当前页不是消息界面时要弹出新消息到了的框
-        if (parent && ![parent isKindOfClass:[KHHMessageViewController class]]) {
-            //showalert
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"新消息"
-                                                            message:@"您有新消息到了,可到消息界面查看新消息。"
-                                                           delegate:self
-                                                  cancelButtonTitle:@"确认"
-                                                  otherButtonTitles:@"取消", nil];
-            alert.tag = KHHAlertMessage;
-            [alert show];
-        }
-    }
-    
     //清空变量
     self.messageContactList = nil;
     self.isSingleContact = NO;
     self.messageContactList = noti.userInfo[kInfoKeyReceivedCard];
-    if (self.messageContactList && self.messageContactList.count > 0) {
-        //提示有新联系人到了(一个人时就直接提示名称，点击可以去详细界面，多个人时提示有新联系人)
-        [self showNewCardInfo];
+
+    UIApplication *application = [UIApplication sharedApplication];
+    if([application applicationState] == UIApplicationStateBackground)
+    {
+        //在后台运行时notify出来
+        if (messgaeList && messgaeList.count > 0) {
+            //显示有新消息到了
+            NSString *alertBody = TEXT_NEW_MESSAGE_COMMING;
+            //添加跳转页面
+            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:NSLocalizedString(@"KHHMessageViewController", nil) forKey:kLocalNotification_Target_Name];
+            [KHHLocalNotificationUtil addLocalNotifiCation:[NSDate dateWithTimeIntervalSinceNow:10] alertBody:alertBody userinfo:userInfo];
+        }
+        
+        if (self.messageContactList && self.messageContactList.count > 0) {
+            //提示有新联系人到了(一个人时就直接提示名称，点击可以去详细界面，多个人时提示有新联系人)
+            NSString *alertBody = nil;
+            if (self.messageContactList.count == 1) {
+                Card *card = [self.messageContactList objectAtIndex:0];
+                alertBody = card.name;
+            }else {
+                alertBody = TEXT_NEW_CONTACT_COMMING;
+            }
+            //添加跳转页面
+            NSDictionary *userInfo = [NSDictionary dictionaryWithObject:NSLocalizedString(@"KHHHomeViewController", nil) forKey:kLocalNotification_Target_Name];
+            [KHHLocalNotificationUtil addLocalNotifiCation:[NSDate dateWithTimeIntervalSinceNow:15] alertBody:alertBody userinfo:userInfo];
+        }
+    }else if([application applicationState] == UIApplicationStateActive)
+    {
+        if (messgaeList && messgaeList.count > 0) {
+            //显示有新消息到了
+            NSArray *viewControllers = self.navigationController.viewControllers;
+            UITableViewController *parent = [viewControllers lastObject];
+            //当前页不是消息界面时要弹出新消息到了的框
+            if (parent && ![parent isKindOfClass:[KHHMessageViewController class]]) {
+                //showalert
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"新消息"
+                                                                message:TEXT_NEW_MESSAGE_COMMING
+                                                               delegate:self
+                                                      cancelButtonTitle:@"确认"
+                                                      otherButtonTitles:@"取消", nil];
+                alert.tag = KHHAlertMessage;
+                [alert show];
+            }
+        }
+        
+        if (self.messageContactList && self.messageContactList.count > 0) {
+            //提示有新联系人到了(一个人时就直接提示名称，点击可以去详细界面，多个人时提示有新联系人)
+            [self showNewCardInfo];
+        }
     }
 }
 
@@ -297,6 +334,7 @@ typedef enum {
 
 -(void) syncMessageWithServer
 {
+    DLog(@"sync time: %@",[NSDate new]);
     [[KHHData sharedData]syncMessages];
 }
 
@@ -313,7 +351,7 @@ typedef enum {
         self.isSingleContact = YES;
         btnText = @"查看详情";
     }else {
-        message = @"您有新名片到了，点击确认去查看联系人...";
+        message = TEXT_NEW_CONTACT_COMMING;
         btnText = @"查看详情";
         self.isSingleContact = NO;
     }
@@ -370,6 +408,44 @@ typedef enum {
     }
     
     
+}
+
+#pragma backgroud running
+//手机支持多线程时就启动后台运行那套方案，不支持后台运行时就用timer
+//后台运行时，不管程序有没有在活动状态都能执行同步函数，timer只能在程序active的状态下运行
+- (void)setupBackgroundHandler
+{
+    if([self UIUDeviceIsBackgroundSupported])
+    {
+        if(
+           [[UIApplication sharedApplication] setKeepAliveTimeout:600 handler: ^
+            {
+                //同步消息
+                [self syncMessageWithServer];
+            }
+            ]
+           )
+        {
+            DLog(@"Set Background handler successed!");
+        }else
+        {//failed
+            DLog(@"Set Background handler failed!");
+        }
+    }else
+    {
+        DLog(@"This Deviece is not Background supported.");
+        if (!self.syncMessageTimer) {
+            self.syncMessageTimer = [NSTimer scheduledTimerWithTimeInterval:KHH_SYNC_MESSAGE_TIME target:self selector:@selector(handleSyncMessage) userInfo:nil repeats:YES];
+        }
+    }
+}
+
+-(BOOL) UIUDeviceIsBackgroundSupported {
+    UIDevice* device = [UIDevice currentDevice];
+    BOOL backgroundSupported = NO;
+    if ([device respondsToSelector:@selector(isMultitaskingSupported)])
+    backgroundSupported = device.multitaskingSupported;
+    return backgroundSupported;
 }
 
 @end
