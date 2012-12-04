@@ -9,7 +9,8 @@
 #import "ModifyViewController.h"
 #import "NSString+Validation.h"
 #import "KHHDefaults.h"
-#import "KHHNetworkAPIAgent+Account.h"
+#import "KHHDataAPI.h"
+#import "MBProgressHUD.h"
 
 #define LABEL_CELL_TAG 555
 #define TEXTFIELD_CELL_TAG 666
@@ -28,16 +29,22 @@
 #define textChangePasswordFailed NSLocalizedString(@"修改密码失败！", @"")
 #define textPleaseReLogIn NSLocalizedString(@"请重新登录。", @"")
 #define textOK NSLocalizedString(@"确定", @"")
+#define textChanging NSLocalizedString(@"正在修改密码请稍后...", @"")
+#define textAlertTitle NSLocalizedString(@"修改密码", @"")
+#define textAlertMessageOK NSLocalizedString(@"修改密码成功，请重新登录。", @"")
+#define textAlertMessageFailed NSLocalizedString(@"修改密码失败，请稍后再试。", @"")
 
-@interface ModifyViewController ()<UITextFieldDelegate>
+@interface ModifyViewController ()<UITextFieldDelegate, UIAlertViewDelegate>
 @property (strong, nonatomic) KHHDefaults *defaults;
-@property (strong, nonatomic) KHHNetworkAPIAgent *httpAgent;
+@property (strong, nonatomic) KHHData  *dataCtr;
+@property (strong, nonatomic) MBProgressHUD *hud;
 @end
 
 @implementation ModifyViewController
 @synthesize theTable = _theTable;
 @synthesize defaults = _defaults;
-@synthesize httpAgent = _httpAgent;
+@synthesize dataCtr = _dataCtr;
+@synthesize hud = _hud;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -45,9 +52,9 @@
     if (self) {
         // Custom initialization
         [self.rightBtn setTitle:@"完成" forState:UIControlStateNormal];
-        self.title = @"修改密码";
+        self.title = textAlertTitle;
         _defaults = [KHHDefaults sharedDefaults];
-        _httpAgent = [[KHHNetworkAPIAgent alloc] init];
+        _dataCtr = [KHHData sharedData];
     }
     return self;
 }
@@ -142,21 +149,27 @@
     return (newLength > 12) ? NO : YES;
 }// return NO to not change text
 - (void)changePassword{
-    
+    _hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    _hud.labelText = textChanging;
     UITextField *oldField = ((UITextField*)[self.view viewWithTag:ChangePasswordTag_Old]);
     UITextField *newField = ((UITextField*)[self.view viewWithTag:ChangePasswordTag_New]);
     UITextField *reField = ((UITextField*)[self.view viewWithTag:ChangePasswordTag_Re]);
     [oldField resignFirstResponder];
     [newField resignFirstResponder];
     [reField resignFirstResponder];
+    //用户输入的当前密码
     NSString *oldPass = oldField.text;
+    //用户输入的新密码及确认密码
     NSString *newPass = newField.text;
     NSString *rePass = reField.text;
+    //用户当前的密码
+    NSString *oldRealPsw = self.defaults.currentPassword;
 #ifdef DEBUG
     NSLog(@"修改密码: old-%@, new-%@, re-%@.", oldPass, newPass, rePass);
     //    NSLog(@"修改密码: old-%@, new-%@.", oldPass, newPass);
 #endif
-    if (![oldPass isEqualToString:nil]) {
+    if (![oldPass isEqualToString:oldRealPsw]) { // || [oldPass stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]].length <= 0
+        [_hud hide:YES];
         //旧密码错误
         [self popAlartMessage:textOldPasswordWrong];
         return;
@@ -165,6 +178,7 @@
     //旧密码正确......
     
     if (0 == newPass.length) {
+        [_hud hide:YES];
         //新密码为空
         [self popAlartMessage:textEmptyNewPassword];
         return;
@@ -173,6 +187,7 @@
     //新密码不为空......
     
     if (!(newPass.isValidPassword)) {
+        [_hud hide:YES];
         //新密码非法
         [self popAlartMessage:textInvalidNewPassword];
         return;
@@ -181,6 +196,7 @@
     //新密码合法......
     
     if (![newPass isEqualToString:rePass]) {
+        [_hud hide:YES];
         //新密码两次输入不一致
         [self popAlartMessage:textNewPasswordsNotMatch];
         return;
@@ -189,14 +205,16 @@
     //两次输入一致......
     
     if ([newPass isEqualToString:oldPass]) {
+        [_hud hide:YES];
         //新密码跟旧密码相同
         [self popAlartMessage:textNewPasswordsEqualToOld];
         return;
     }
-    
     //万事ok
     NSLog(@"New Passwrod look valid! Let's change the password.");
-    [_httpAgent changePassword:oldPass toNewPassword:newPass];
+    [self observeNotificationName:KHHUIChangePasswordSucceeded selector:@"handleUIChangePasswordSucceeded:"];
+    [self observeNotificationName:KHHUIChangePasswordFailed selector:@"handleUIChangePasswordFailed:"];
+    [_dataCtr changePassword:oldPass newPassword:newPass];
 }
 #pragma mark - Utilites
 - (void)popAlartMessage:(NSString *)message
@@ -212,6 +230,38 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+
+//修改密码成功
+-(void) handleUIChangePasswordSucceeded:(NSNotification *) info {
+    [self stopObservingNotificationName:KHHUIChangePasswordSucceeded];
+    [self stopObservingNotificationName:KHHUIChangePasswordFailed];
+    DLog(@"handleUIChangePasswordSucceeded! ====== info is %@",info.userInfo);
+    [_hud hide:YES];
+    //提示密码修改成功
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:textAlertTitle message:textAlertMessageOK delegate:self cancelButtonTitle:textOK otherButtonTitles:nil, nil];
+    [alert show];
+}
+
+-(void) handleUIChangePasswordFailed:(NSNotification *) info {
+    [self stopObservingNotificationName:KHHUIChangePasswordSucceeded];
+    [self stopObservingNotificationName:KHHUIChangePasswordFailed];
+    [_hud hide:YES];
+    DLog(@"handleUIChangePasswordFailed! ====== info is %@",info.userInfo);
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:textAlertTitle message:textAlertMessageFailed delegate:nil cancelButtonTitle:textOK otherButtonTitles:nil, nil];
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    switch (buttonIndex) {
+        case 0:
+            //密码修改成功,要登出
+            [self postASAPNotificationName:KHHAppLogout];
+            break;
+        default:
+            break;
+    }
 }
 
 @end

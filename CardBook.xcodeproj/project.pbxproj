@@ -459,6 +459,444 @@
 		629BE111165F4B0A00FB3B04 /* KHHLocalNotificationUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 629BE110165F4B0A00FB3B04 /* KHHLocalNotificationUtil.m */; };
 		629BE114165F619200FB3B04 /* template_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 629BE112165F619200FB3B04 /* template_bg@2x.png */; };
 		62BD4F76165CDB71007B948E /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62BD4F75165CDB70007B948E /* SystemConfiguration.framework */; };
+		62ECD878166DE1D000A15E24 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6274BF45165C7A7400DB5EBE /* main.m */; };
+		62ECD879166DE1D000A15E24 /* PCPieChart.m in Sources */ = {isa = PBXBuildFile; fileRef = 620712FC1650E600000188E8 /* PCPieChart.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		62ECD87A166DE1D000A15E24 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 62ACD2F61623BF2800D88F57 /* MBProgressHUD.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		62ECD87B166DE1D000A15E24 /* JSONKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850EB1602EB5A00A4A673 /* JSONKit.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		62ECD87C166DE1D000A15E24 /* AFHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84FED1602DA3F00A4A673 /* AFHTTPClient.m */; };
+		62ECD87D166DE1D000A15E24 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84FEF1602DA3F00A4A673 /* AFHTTPRequestOperation.m */; };
+		62ECD87E166DE1D000A15E24 /* AFImageRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84FF11602DA3F00A4A673 /* AFImageRequestOperation.m */; };
+		62ECD87F166DE1D000A15E24 /* AFJSONRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84FF31602DA3F00A4A673 /* AFJSONRequestOperation.m */; };
+		62ECD880166DE1D000A15E24 /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84FF71602DA3F00A4A673 /* AFNetworkActivityIndicatorManager.m */; };
+		62ECD881166DE1D000A15E24 /* AFPropertyListRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84FFA1602DA3F00A4A673 /* AFPropertyListRequestOperation.m */; };
+		62ECD882166DE1D000A15E24 /* AFURLConnectionOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84FFC1602DA3F00A4A673 /* AFURLConnectionOperation.m */; };
+		62ECD883166DE1D000A15E24 /* AFXMLRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84FFE1602DA3F00A4A673 /* AFXMLRequestOperation.m */; };
+		62ECD884166DE1D000A15E24 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850001602DA3F00A4A673 /* UIImageView+AFNetworking.m */; };
+		62ECD885166DE1D000A15E24 /* CKCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850031602DA3F00A4A673 /* CKCalendarView.m */; };
+		62ECD886166DE1D000A15E24 /* DLStarRatingControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8500B1602DA3F00A4A673 /* DLStarRatingControl.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		62ECD887166DE1D000A15E24 /* DLStarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8500D1602DA3F00A4A673 /* DLStarView.m */; };
+		62ECD888166DE1D000A15E24 /* UIView+Subviews.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850161602DA3F00A4A673 /* UIView+Subviews.m */; };
+		62ECD889166DE1D000A15E24 /* JSTokenButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850191602DA3F00A4A673 /* JSTokenButton.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		62ECD88A166DE1D000A15E24 /* JSTokenField.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8501B1602DA3F00A4A673 /* JSTokenField.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		62ECD88B166DE1D000A15E24 /* TSLocateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8502B1602DA3F00A4A673 /* TSLocateView.m */; };
+		62ECD88C166DE1D000A15E24 /* TSLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8502E1602DA3F00A4A673 /* TSLocation.m */; };
+		62ECD88D166DE1D000A15E24 /* UIBarButtonItem+WEPopover.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850361602DA3F00A4A673 /* UIBarButtonItem+WEPopover.m */; };
+		62ECD88E166DE1D000A15E24 /* WEPopoverContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850381602DA3F00A4A673 /* WEPopoverContainerView.m */; };
+		62ECD88F166DE1D000A15E24 /* WEPopoverController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8503A1602DA3F00A4A673 /* WEPopoverController.m */; };
+		62ECD890166DE1D000A15E24 /* WETouchableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8503D1602DA3F00A4A673 /* WETouchableView.m */; };
+		62ECD891166DE1D000A15E24 /* NSObject+SBJson.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850401602DA3F00A4A673 /* NSObject+SBJson.m */; };
+		62ECD892166DE1D000A15E24 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850431602DA3F00A4A673 /* SBJsonParser.m */; };
+		62ECD893166DE1D000A15E24 /* SBJsonStreamParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850451602DA3F00A4A673 /* SBJsonStreamParser.m */; };
+		62ECD894166DE1D000A15E24 /* SBJsonStreamParserAccumulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850471602DA3F00A4A673 /* SBJsonStreamParserAccumulator.m */; };
+		62ECD895166DE1D000A15E24 /* SBJsonStreamParserAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850491602DA3F00A4A673 /* SBJsonStreamParserAdapter.m */; };
+		62ECD896166DE1D000A15E24 /* SBJsonStreamParserState.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8504B1602DA3F00A4A673 /* SBJsonStreamParserState.m */; };
+		62ECD897166DE1D000A15E24 /* SBJsonStreamWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8504D1602DA3F00A4A673 /* SBJsonStreamWriter.m */; };
+		62ECD898166DE1D000A15E24 /* SBJsonStreamWriterAccumulator.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8504F1602DA3F00A4A673 /* SBJsonStreamWriterAccumulator.m */; };
+		62ECD899166DE1D000A15E24 /* SBJsonStreamWriterState.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850511602DA3F00A4A673 /* SBJsonStreamWriterState.m */; };
+		62ECD89A166DE1D000A15E24 /* SBJsonTokeniser.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850531602DA3F00A4A673 /* SBJsonTokeniser.m */; };
+		62ECD89B166DE1D000A15E24 /* SBJsonUTF8Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850551602DA3F00A4A673 /* SBJsonUTF8Stream.m */; };
+		62ECD89C166DE1D000A15E24 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850571602DA3F00A4A673 /* SBJsonWriter.m */; };
+		62ECD89D166DE1D000A15E24 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8505A1602DA3F00A4A673 /* MKAnnotationView+WebCache.m */; };
+		62ECD89E166DE1D000A15E24 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8505C1602DA3F00A4A673 /* SDImageCache.m */; };
+		62ECD89F166DE1D000A15E24 /* SDWebImageDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850601602DA3F00A4A673 /* SDWebImageDecoder.m */; };
+		62ECD8A0166DE1D000A15E24 /* SDWebImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850621602DA3F00A4A673 /* SDWebImageDownloader.m */; };
+		62ECD8A1166DE1D000A15E24 /* SDWebImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850651602DA3F00A4A673 /* SDWebImageManager.m */; };
+		62ECD8A2166DE1D000A15E24 /* SDWebImagePrefetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850681602DA3F00A4A673 /* SDWebImagePrefetcher.m */; };
+		62ECD8A3166DE1D000A15E24 /* UIButton+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8506A1602DA3F00A4A673 /* UIButton+WebCache.m */; };
+		62ECD8A4166DE1D000A15E24 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8506C1602DA3F00A4A673 /* UIImageView+WebCache.m */; };
+		62ECD8A5166DE1D000A15E24 /* SMCheckbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8506F1602DA3F00A4A673 /* SMCheckbox.m */; };
+		62ECD8A6166DE1D000A15E24 /* SVGeocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850731602DA3F00A4A673 /* SVGeocoder.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		62ECD8A7166DE1D000A15E24 /* SVPlacemark.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850751602DA3F00A4A673 /* SVPlacemark.m */; };
+		62ECD8A8166DE1D000A15E24 /* XLPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850781602DA3F00A4A673 /* XLPageControl.m */; };
+		62ECD8A9166DE1D000A15E24 /* KHHLocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98332A2216258B1500EEE582 /* KHHLocationController.m */; };
+		62ECD8AA166DE1D000A15E24 /* KHHAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84D711602CD2500A4A673 /* KHHAppDelegate.m */; };
+		62ECD8AB166DE1D000A15E24 /* KHHApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 98F83BE6160740100036A516 /* KHHApp.m */; };
+		62ECD8AC166DE1D000A15E24 /* KHHDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DA41602D2DA00A4A673 /* KHHDefaults.m */; };
+		62ECD8AD166DE1D000A15E24 /* KHHMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 9845006E1637C79D002C579E /* KHHMessage.m */; };
+		62ECD8AE166DE1D000A15E24 /* NSManagedObject+KHH.m in Sources */ = {isa = PBXBuildFile; fileRef = 981BA0FD162EB8EE0036A4B8 /* NSManagedObject+KHH.m */; };
+		62ECD8AF166DE1D000A15E24 /* Address.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DC91602D3A300A4A673 /* Address.m */; };
+		62ECD8B0166DE1D000A15E24 /* BankAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DCB1602D3A300A4A673 /* BankAccount.m */; };
+		62ECD8B1166DE1D000A15E24 /* Card.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DCD1602D3A300A4A673 /* Card.m */; };
+		62ECD8B2166DE1D000A15E24 /* ContactCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 989B5FA016354316004DD8B3 /* ContactCard.m */; };
+		62ECD8B3166DE1D000A15E24 /* MyCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DDD1602D3A300A4A673 /* MyCard.m */; };
+		62ECD8B4166DE1D000A15E24 /* PrivateCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 984C2853160AF02D007D4D13 /* PrivateCard.m */; };
+		62ECD8B5166DE1D000A15E24 /* ReceivedCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DDF1602D3A300A4A673 /* ReceivedCard.m */; };
+		62ECD8B6166DE1D000A15E24 /* CardTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DCF1602D3A300A4A673 /* CardTemplate.m */; };
+		62ECD8B7166DE1D000A15E24 /* CardTemplateItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DD11602D3A300A4A673 /* CardTemplateItem.m */; };
+		62ECD8B8166DE1D000A15E24 /* Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DD31602D3A300A4A673 /* Company.m */; };
+		62ECD8B9166DE1D000A15E24 /* CustomerEvaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = 981BA0F6162EB4520036A4B8 /* CustomerEvaluation.m */; };
+		62ECD8BA166DE1D000A15E24 /* Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DD71602D3A300A4A673 /* Group.m */; };
+		62ECD8BB166DE1D000A15E24 /* Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DD91602D3A300A4A673 /* Image.m */; };
+		62ECD8BC166DE1D000A15E24 /* Schedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DE11602D3A300A4A673 /* Schedule.m */; };
+		62ECD8BD166DE1D000A15E24 /* SyncMark.m in Sources */ = {isa = PBXBuildFile; fileRef = 98F6491C16118012008DE515 /* SyncMark.m */; };
+		62ECD8BE166DE1D000A15E24 /* _KHHMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 984500711637C7AB002C579E /* _KHHMessage.m */; };
+		62ECD8BF166DE1D000A15E24 /* _ContactCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 989B5FA41635432E004DD8B3 /* _ContactCard.m */; };
+		62ECD8C0166DE1D000A15E24 /* _CardTemplateItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 989EAED016314C7400B0DA2A /* _CardTemplateItem.m */; };
+		62ECD8C1166DE1D000A15E24 /* _Address.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DAC1602D3A300A4A673 /* _Address.m */; };
+		62ECD8C2166DE1D000A15E24 /* _BankAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DAE1602D3A300A4A673 /* _BankAccount.m */; };
+		62ECD8C3166DE1D000A15E24 /* _Card.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DB01602D3A300A4A673 /* _Card.m */; };
+		62ECD8C4166DE1D000A15E24 /* _CardTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DB21602D3A300A4A673 /* _CardTemplate.m */; };
+		62ECD8C5166DE1D000A15E24 /* _Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DB61602D3A300A4A673 /* _Company.m */; };
+		62ECD8C6166DE1D000A15E24 /* _CustomerEvaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = 981BA0FA162EB49E0036A4B8 /* _CustomerEvaluation.m */; };
+		62ECD8C7166DE1D000A15E24 /* _Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DBA1602D3A300A4A673 /* _Group.m */; };
+		62ECD8C8166DE1D000A15E24 /* _Image.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DBC1602D3A300A4A673 /* _Image.m */; };
+		62ECD8C9166DE1D000A15E24 /* _MyCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DC01602D3A300A4A673 /* _MyCard.m */; };
+		62ECD8CA166DE1D000A15E24 /* _PrivateCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 984C2856160AF044007D4D13 /* _PrivateCard.m */; };
+		62ECD8CB166DE1D000A15E24 /* _ReceivedCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DC21602D3A300A4A673 /* _ReceivedCard.m */; };
+		62ECD8CC166DE1D000A15E24 /* _Schedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DC41602D3A300A4A673 /* _Schedule.m */; };
+		62ECD8CD166DE1D000A15E24 /* _SyncMark.m in Sources */ = {isa = PBXBuildFile; fileRef = 98F6492016118035008DE515 /* _SyncMark.m */; };
+		62ECD8CE166DE1D000A15E24 /* InterCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 98DF0ABF1612945E004826D5 /* InterCard.m */; };
+		62ECD8CF166DE1D000A15E24 /* ICheckIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 984B7FE016255AA400E8BDC0 /* ICheckIn.m */; };
+		62ECD8D0166DE1D000A15E24 /* ICustomerEvaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = 98326D041624076900B5038E /* ICustomerEvaluation.m */; };
+		62ECD8D1166DE1D000A15E24 /* IAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 98332A461626919300EEE582 /* IAddress.m */; };
+		62ECD8D2166DE1D000A15E24 /* IGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = 98542233162BDE1100A9E50A /* IGroup.m */; };
+		62ECD8D3166DE1D000A15E24 /* ICardGroupMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 98542236162C0B3C00A9E50A /* ICardGroupMap.m */; };
+		62ECD8D4166DE1D000A15E24 /* IImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 98F296FA1623F9DC00F9D7B2 /* IImage.m */; };
+		62ECD8D5166DE1D000A15E24 /* InMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 98BEF3BC16424ED4003EDF33 /* InMessage.m */; };
+		62ECD8D6166DE1D000A15E24 /* ISchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E6F4011623CEB700AE81D3 /* ISchedule.m */; };
+		62ECD8D7166DE1D000A15E24 /* OSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 984ABA01163662ED0047AFB2 /* OSchedule.m */; };
+		62ECD8D8166DE1D000A15E24 /* KHHData.m in Sources */ = {isa = PBXBuildFile; fileRef = 98F83BE116073C790036A516 /* KHHData.m */; };
+		62ECD8D9166DE1D000A15E24 /* KHHData+UI.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACBE1609BE6B002B9BAD /* KHHData+UI.m */; };
+		62ECD8DA166DE1D000A15E24 /* KHHData+Handlers.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACB91609BD08002B9BAD /* KHHData+Handlers.m */; };
+		62ECD8DB166DE1D000A15E24 /* ATestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 984FA63816104AF000344BDC /* ATestViewController.m */; };
+		62ECD8DC166DE1D000A15E24 /* SMObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 984B7FE41625642700E8BDC0 /* SMObject.m */; };
+		62ECD8DD166DE1D000A15E24 /* Encryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DFE1602D46000A4A673 /* Encryptor.m */; };
+		62ECD8DE166DE1D000A15E24 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E011602D46000A4A673 /* NSData+Base64.m */; };
+		62ECD8DF166DE1D000A15E24 /* NSNumber+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 98838E79160879C300CE2353 /* NSNumber+SM.m */; };
+		62ECD8E0166DE1D000A15E24 /* NSObject+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 9803EBA6160DA88D00402B53 /* NSObject+SM.m */; };
+		62ECD8E1166DE1D000A15E24 /* NSString+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E071602D46000A4A673 /* NSString+Base64.m */; };
+		62ECD8E2166DE1D000A15E24 /* NSString+MD5.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E091602D46000A4A673 /* NSString+MD5.m */; };
+		62ECD8E3166DE1D000A15E24 /* NSString+Networking.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E0B1602D46000A4A673 /* NSString+Networking.m */; };
+		62ECD8E4166DE1D000A15E24 /* NSString+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 98838E7C160886EC00CE2353 /* NSString+SM.m */; };
+		62ECD8E5166DE1D000A15E24 /* NSString+Validation.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E0F1602D46000A4A673 /* NSString+Validation.m */; };
+		62ECD8E6166DE1D000A15E24 /* NSURL+KHH.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E111602D46000A4A673 /* NSURL+KHH.m */; };
+		62ECD8E7166DE1D000A15E24 /* UIImage+KHH.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D2438C1627B75C00AC1C38 /* UIImage+KHH.m */; };
+		62ECD8E8166DE1D000A15E24 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 98CFC96D1607201E001B9B17 /* UIImage+Resize.m */; };
+		62ECD8E9166DE1D000A15E24 /* UIViewController+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACB61609ABB4002B9BAD /* UIViewController+SM.m */; };
+		62ECD8EA166DE1D000A15E24 /* UIColor+HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C23C26B1610BE42006FCD8A /* UIColor+HexColor.m */; };
+		62ECD8EB166DE1D000A15E24 /* KHHHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850C51602E63A00A4A673 /* KHHHTTPClient.m */; };
+		62ECD8EC166DE1D000A15E24 /* KHHNetworkAPIAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850C71602E63A00A4A673 /* KHHNetworkAPIAgent.m */; };
+		62ECD8ED166DE1D000A15E24 /* KHHNetworkAPIAgent+Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850C91602E63A00A4A673 /* KHHNetworkAPIAgent+Account.m */; };
+		62ECD8EE166DE1D000A15E24 /* KHHNetworkAPIAgent+Card.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850CB1602E63A00A4A673 /* KHHNetworkAPIAgent+Card.m */; };
+		62ECD8EF166DE1D000A15E24 /* KHHNetworkAPIAgent+EnterpriseManagement.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850CD1602E63A00A4A673 /* KHHNetworkAPIAgent+EnterpriseManagement.m */; };
+		62ECD8F0166DE1D000A15E24 /* KHHNetworkAPIAgent+Exchange.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850CF1602E63A00A4A673 /* KHHNetworkAPIAgent+Exchange.m */; };
+		62ECD8F1166DE1D000A15E24 /* KHHNetworkAPIAgent+Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850D11602E63A00A4A673 /* KHHNetworkAPIAgent+Group.m */; };
+		62ECD8F2166DE1D000A15E24 /* KHHNetworkAPIAgent+Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850D31602E63A00A4A673 /* KHHNetworkAPIAgent+Message.m */; };
+		62ECD8F3166DE1D000A15E24 /* KHHNetworkAPIAgent+Misc.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850D51602E63A00A4A673 /* KHHNetworkAPIAgent+Misc.m */; };
+		62ECD8F4166DE1D000A15E24 /* KHHNetworkAPIAgent+Statistics.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850D71602E63A00A4A673 /* KHHNetworkAPIAgent+Statistics.m */; };
+		62ECD8F5166DE1D000A15E24 /* KHHNetworkAPIAgent+Template.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850D91602E63A00A4A673 /* KHHNetworkAPIAgent+Template.m */; };
+		62ECD8F6166DE1D000A15E24 /* KHHNetworkAPIAgent+VisitSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850DB1602E63A00A4A673 /* KHHNetworkAPIAgent+VisitSchedule.m */; };
+		62ECD8F7166DE1D000A15E24 /* KHHNetworkAPIAgent+CustomerEvaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = 98326D001623FFB700B5038E /* KHHNetworkAPIAgent+CustomerEvaluation.m */; };
+		62ECD8F8166DE1D000A15E24 /* KHHVisualCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 984FA6331610297D00344BDC /* KHHVisualCardViewController.m */; };
+		62ECD8F9166DE1D000A15E24 /* KHHBMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62AB2982160C07270004A3E3 /* KHHBMapViewController.m */; };
+		62ECD8FA166DE1D000A15E24 /* KHHFrameCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F291602D6C500A4A673 /* KHHFrameCardView.m */; };
+		62ECD8FB166DE1D000A15E24 /* KHHCardMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 62812687161299BF0054B753 /* KHHCardMode.m */; };
+		62ECD8FC166DE1D000A15E24 /* KHHButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F2C1602D6C500A4A673 /* KHHButtonCell.m */; };
+		62ECD8FD166DE1D000A15E24 /* KHHClientCellLNP.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F2F1602D6C500A4A673 /* KHHClientCellLNP.m */; };
+		62ECD8FE166DE1D000A15E24 /* KHHClientCellLNPC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F321602D6C500A4A673 /* KHHClientCellLNPC.m */; };
+		62ECD8FF166DE1D000A15E24 /* KHHClientCellLNPCC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F351602D6C500A4A673 /* KHHClientCellLNPCC.m */; };
+		62ECD900166DE1D000A15E24 /* KHHLabFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F381602D6C500A4A673 /* KHHLabFieldCell.m */; };
+		62ECD901166DE1D000A15E24 /* KHHMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F3B1602D6C500A4A673 /* KHHMessageCell.m */; };
+		62ECD902166DE1D000A15E24 /* KHHAddImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 625BD93B16086FEF00F565AD /* KHHAddImageCell.m */; };
+		62ECD903166DE1D000A15E24 /* KHHFloatBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F431602D6C500A4A673 /* KHHFloatBarController.m */; };
+		62ECD904166DE1D000A15E24 /* CustomSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F471602D6C500A4A673 /* CustomSegmentedControl.m */; };
+		62ECD905166DE1D000A15E24 /* KHHAddImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F491602D6C500A4A673 /* KHHAddImageView.m */; };
+		62ECD906166DE1D000A15E24 /* KHHAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A9C99A16099AC100BF7D41 /* KHHAddressBook.m */; };
+		62ECD907166DE1D000A15E24 /* KHHCardTemplageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 62AC98DC163A4A50009EF269 /* KHHCardTemplageVC.m */; };
+		62ECD908166DE1D000A15E24 /* KHHCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F4C1602D6C500A4A673 /* KHHCardView.m */; };
+		62ECD909166DE1D000A15E24 /* KHHCustomEvaluaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F511602D6C500A4A673 /* KHHCustomEvaluaView.m */; };
+		62ECD90A166DE1D000A15E24 /* KHHFullFrameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A6C4DC160AAECE00ADA43E /* KHHFullFrameController.m */; };
+		62ECD90B166DE1D000A15E24 /* KHHMyAlertViewWithSubView.m in Sources */ = {isa = PBXBuildFile; fileRef = 621618AE164CAB8100A66DB5 /* KHHMyAlertViewWithSubView.m */; };
+		62ECD90C166DE1D000A15E24 /* KHHMySearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F561602D6C500A4A673 /* KHHMySearchBar.m */; };
+		62ECD90D166DE1D000A15E24 /* KHHShowHideTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F581602D6C500A4A673 /* KHHShowHideTabBar.m */; };
+		62ECD90E166DE1D000A15E24 /* KHHVisitCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F5A1602D6C500A4A673 /* KHHVisitCalendarView.m */; };
+		62ECD90F166DE1D000A15E24 /* myAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F5D1602D6C500A4A673 /* myAlertView.m */; };
+		62ECD910166DE1D000A15E24 /* MyTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F5F1602D6C500A4A673 /* MyTabBarController.m */; };
+		62ECD911166DE1D000A15E24 /* SuperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F621602D6C500A4A673 /* SuperViewController.m */; };
+		62ECD912166DE1D000A15E24 /* KHHPreViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62CCC9EB165231F5004BA1A4 /* KHHPreViewViewController.m */; };
+		62ECD913166DE1D000A15E24 /* KHHMainUIController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A851101602F69200A4A673 /* KHHMainUIController.m */; };
+		62ECD914166DE1D000A15E24 /* AppLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D29B71163A594900DE82E3 /* AppLoginController.m */; };
+		62ECD915166DE1D000A15E24 /* AppRegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEFF880163AFE7500E878C6 /* AppRegisterController.m */; };
+		62ECD916166DE1D000A15E24 /* AppStartController.m in Sources */ = {isa = PBXBuildFile; fileRef = 984500691637C5A1002C579E /* AppStartController.m */; };
+		62ECD917166DE1D000A15E24 /* AgreementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84EF71602D67E00A4A673 /* AgreementViewController.m */; };
+		62ECD918166DE1D000A15E24 /* IntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84EFB1602D67E00A4A673 /* IntroViewController.m */; };
+		62ECD919166DE1D000A15E24 /* LaunchImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84EFF1602D67E00A4A673 /* LaunchImageViewController.m */; };
+		62ECD91A166DE1D000A15E24 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F041602D67E00A4A673 /* LoginViewController.m */; };
+		62ECD91B166DE1D000A15E24 /* LoginActionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F081602D67E00A4A673 /* LoginActionViewController.m */; };
+		62ECD91C166DE1D000A15E24 /* RegViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F0C1602D67E00A4A673 /* RegViewController.m */; };
+		62ECD91D166DE1D000A15E24 /* ResetPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F101602D67E00A4A673 /* ResetPasswordViewController.m */; };
+		62ECD91E166DE1D000A15E24 /* StartupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F131602D67E00A4A673 /* StartupViewController.m */; };
+		62ECD91F166DE1D000A15E24 /* KHHExchangeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E251602D66200A4A673 /* KHHExchangeViewController.m */; };
+		62ECD920166DE1D000A15E24 /* KHHSendToViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E281602D66200A4A673 /* KHHSendToViewController.m */; };
+		62ECD921166DE1D000A15E24 /* KHHAddGroupMemberVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E2D1602D66200A4A673 /* KHHAddGroupMemberVC.m */; };
+		62ECD922166DE1D000A15E24 /* DetailInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E311602D66200A4A673 /* DetailInfoViewController.m */; };
+		62ECD923166DE1D000A15E24 /* Edit_eCardViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E351602D66200A4A673 /* Edit_eCardViewCell.m */; };
+		62ECD924166DE1D000A15E24 /* Edit_eCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E381602D66200A4A673 /* Edit_eCardViewController.m */; };
+		62ECD925166DE1D000A15E24 /* EditCardPersonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E3B1602D66200A4A673 /* EditCardPersonCell.m */; };
+		62ECD926166DE1D000A15E24 /* KHHAddressCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 62134B44160D7BDE00A8EC9F /* KHHAddressCell.m */; };
+		62ECD927166DE1D000A15E24 /* KHHEditCustomValueVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E3E1602D66200A4A673 /* KHHEditCustomValueVC.m */; };
+		62ECD928166DE1D000A15E24 /* KHHHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E411602D66200A4A673 /* KHHHomeViewController.m */; };
+		62ECD929166DE1D000A15E24 /* MapController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E441602D66200A4A673 /* MapController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		62ECD92A166DE1D000A15E24 /* KHHMyDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E471602D66200A4A673 /* KHHMyDetailController.m */; };
+		62ECD92B166DE1D000A15E24 /* PickViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E4B1602D66200A4A673 /* PickViewController.m */; };
+		62ECD92C166DE1D000A15E24 /* KHHManagementViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E501602D66200A4A673 /* KHHManagementViewController.m */; };
+		62ECD92D166DE1D000A15E24 /* KHHCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E641602D66200A4A673 /* KHHCalendarViewController.m */; };
+		62ECD92E166DE1D000A15E24 /* KHHFunnelViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E701602D66200A4A673 /* KHHFunnelViewController.m */; };
+		62ECD92F166DE1D000A15E24 /* KHHRadarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E731602D66200A4A673 /* KHHRadarViewController.m */; };
+		62ECD930166DE1D000A15E24 /* KHHVisitCalendarCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E761602D66200A4A673 /* KHHVisitCalendarCell.m */; };
+		62ECD931166DE1D000A15E24 /* KHHVisitRecoardVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E7C1602D66200A4A673 /* KHHVisitRecoardVC.m */; };
+		62ECD932166DE1D000A15E24 /* LocationInfoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E7F1602D66200A4A673 /* LocationInfoVC.m */; };
+		62ECD933166DE1D000A15E24 /* KHHAllVisitedSchedusVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 628DC6441647B430008D1F3D /* KHHAllVisitedSchedusVC.m */; };
+		62ECD934166DE1D000A15E24 /* KHHValueViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A625601651DDCF00FD2805 /* KHHValueViewController.m */; };
+		62ECD935166DE1D000A15E24 /* KHHVisitedPickVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 62813BDE16538F0800180DB7 /* KHHVisitedPickVC.m */; };
+		62ECD936166DE1D000A15E24 /* KHHMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E861602D66200A4A673 /* KHHMessageViewController.m */; };
+		62ECD937166DE1D000A15E24 /* KHHDetailMessageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E831602D66200A4A673 /* KHHDetailMessageVC.m */; };
+		62ECD938166DE1D000A15E24 /* KHHEditMSGViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62D3F40C1603188500E011E2 /* KHHEditMSGViewController.m */; };
+		62ECD939166DE1D000A15E24 /* MoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E8A1602D66200A4A673 /* MoreViewController.m */; };
+		62ECD93A166DE1D000A15E24 /* AboutController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E8E1602D66200A4A673 /* AboutController.m */; };
+		62ECD93B166DE1D000A15E24 /* ModifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E971602D66200A4A673 /* ModifyViewController.m */; };
+		62ECD93C166DE1D000A15E24 /* RecomFridendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E9A1602D66200A4A673 /* RecomFridendsViewController.m */; };
+		62ECD93D166DE1D000A15E24 /* CardBook.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DC51602D3A300A4A673 /* CardBook.xcdatamodeld */; };
+		62ECD93E166DE1D000A15E24 /* KHHLocalNotificationUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 629BE110165F4B0A00FB3B04 /* KHHLocalNotificationUtil.m */; };
+		62ECD93F166DE1D000A15E24 /* KHHWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6292FCA6166892D900D170A3 /* KHHWebView.m */; };
+		62ECD941166DE1D000A15E24 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62BD4F75165CDB70007B948E /* SystemConfiguration.framework */; };
+		62ECD942166DE1D000A15E24 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6274C03D165C7FC700DB5EBE /* CFNetwork.framework */; };
+		62ECD943166DE1D000A15E24 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6274C03B165C7F5100DB5EBE /* MobileCoreServices.framework */; };
+		62ECD944166DE1D000A15E24 /* EventKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62A5F8A9165085EE00F303CA /* EventKit.framework */; };
+		62ECD945166DE1D000A15E24 /* EventKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 62A5F8AA165085EE00F303CA /* EventKitUI.framework */; };
+		62ECD946166DE1D000A15E24 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 624595281625526A0028E944 /* AudioToolbox.framework */; };
+		62ECD947166DE1D000A15E24 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A850F01602EC1600A4A673 /* AddressBook.framework */; };
+		62ECD948166DE1D000A15E24 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A850F11602EC1600A4A673 /* AddressBookUI.framework */; };
+		62ECD949166DE1D000A15E24 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A851041602EDDD00A4A673 /* CoreData.framework */; };
+		62ECD94A166DE1D000A15E24 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A84D651602CD2500A4A673 /* CoreGraphics.framework */; };
+		62ECD94B166DE1D000A15E24 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A850F61602ECE800A4A673 /* CoreImage.framework */; };
+		62ECD94C166DE1D000A15E24 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A850FA1602ECFE00A4A673 /* CoreLocation.framework */; };
+		62ECD94D166DE1D000A15E24 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A84D631602CD2500A4A673 /* Foundation.framework */; };
+		62ECD94E166DE1D000A15E24 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A850F71602ECE800A4A673 /* ImageIO.framework */; };
+		62ECD94F166DE1D000A15E24 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A850FF1602ED6F00A4A673 /* MapKit.framework */; };
+		62ECD950166DE1D000A15E24 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A851021602EDCC00A4A673 /* MessageUI.framework */; };
+		62ECD951166DE1D000A15E24 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A850F41602ECAB00A4A673 /* QuartzCore.framework */; };
+		62ECD952166DE1D000A15E24 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98A84D611602CD2500A4A673 /* UIKit.framework */; };
+		62ECD954166DE1D000A15E24 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6274BF42165C7A7400DB5EBE /* InfoPlist.strings */; };
+		62ECD955166DE1D000A15E24 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 6274BF4B165C7A7500DB5EBE /* Default.png */; };
+		62ECD956166DE1D000A15E24 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6274BF4D165C7A7500DB5EBE /* Default@2x.png */; };
+		62ECD957166DE1D000A15E24 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6274BF4F165C7A7500DB5EBE /* Default-568h@2x.png */; };
+		62ECD958166DE1D000A15E24 /* logo57.png in Resources */ = {isa = PBXBuildFile; fileRef = 620712E71650D051000188E8 /* logo57.png */; };
+		62ECD959166DE1D000A15E24 /* logo114.png in Resources */ = {isa = PBXBuildFile; fileRef = 620712EA1650D05A000188E8 /* logo114.png */; };
+		62ECD95A166DE1D000A15E24 /* KHHAppSettings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 98A84FE81602D7DF00A4A673 /* KHHAppSettings.plist */; };
+		62ECD95B166DE1D000A15E24 /* two_Frame@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62A62C7A165346EF00F6F2C6 /* two_Frame@2x.jpg */; };
+		62ECD95C166DE1D000A15E24 /* startnew_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A62C781653468C00F6F2C6 /* startnew_logo@2x.png */; };
+		62ECD95D166DE1D000A15E24 /* home_bg@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 62A6256516524F9F00FD2805 /* home_bg@2x.jpg */; };
+		62ECD95E166DE1D000A15E24 /* guanxi_00@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 620713121650F964000188E8 /* guanxi_00@2x.png */; };
+		62ECD95F166DE1D000A15E24 /* guanxi_01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 620713081650F012000188E8 /* guanxi_01@2x.png */; };
+		62ECD960166DE1D000A15E24 /* guanxi_02@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 620713091650F012000188E8 /* guanxi_02@2x.png */; };
+		62ECD961166DE1D000A15E24 /* guanxi_03@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6207130A1650F012000188E8 /* guanxi_03@2x.png */; };
+		62ECD962166DE1D000A15E24 /* guanxi_04@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6207130B1650F012000188E8 /* guanxi_04@2x.png */; };
+		62ECD963166DE1D000A15E24 /* guanxi_05@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6207130C1650F012000188E8 /* guanxi_05@2x.png */; };
+		62ECD964166DE1D000A15E24 /* LoginImage_normal@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 620712F01650D263000188E8 /* LoginImage_normal@2x.jpg */; };
+		62ECD965166DE1D000A15E24 /* intro_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62409708164CF1BB003A59D4 /* intro_2@2x.png */; };
+		62ECD966166DE1D000A15E24 /* intro_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62409706164CF168003A59D4 /* intro_3@2x.png */; };
+		62ECD967166DE1D000A15E24 /* emailicon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 624096FE164CEEC1003A59D4 /* emailicon@2x.png */; };
+		62ECD968166DE1D000A15E24 /* intro_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 624096FC164CEE51003A59D4 /* intro_1@2x.png */; };
+		62ECD969166DE1D000A15E24 /* intro_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 624096F6164CDAE7003A59D4 /* intro_0@2x.png */; };
+		62ECD96A166DE1D000A15E24 /* exchangeNew_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 624096EC164CD1F0003A59D4 /* exchangeNew_selected@2x.png */; };
+		62ECD96B166DE1D000A15E24 /* exchangeNew@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 624096ED164CD1F0003A59D4 /* exchangeNew@2x.png */; };
+		62ECD96C166DE1D000A15E24 /* exch_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 624096EE164CD1F0003A59D4 /* exch_0@2x.png */; };
+		62ECD96D166DE1D000A15E24 /* newIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 624096DF164CA1C5003A59D4 /* newIcon@2x.png */; };
+		62ECD96E166DE1D000A15E24 /* addGroupIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62178119164BBA1D00E1CFD4 /* addGroupIcon@2x.png */; };
+		62ECD96F166DE1D000A15E24 /* ic_tianjia_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 6217811B164BBA1D00E1CFD4 /* ic_tianjia_selected.png */; };
+		62ECD970166DE1D000A15E24 /* jiaohuan_btn_shuaxin_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 6217811C164BBA1D00E1CFD4 /* jiaohuan_btn_shuaxin_selected.png */; };
+		62ECD971166DE1D000A15E24 /* exch_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6217811D164BBA1D00E1CFD4 /* exch_2@2x.png */; };
+		62ECD972166DE1D000A15E24 /* left_btn_bg_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 6217811E164BBA1D00E1CFD4 /* left_btn_bg_selected.png */; };
+		62ECD973166DE1D000A15E24 /* settingIcon_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6217811F164BBA1D00E1CFD4 /* settingIcon_selected@2x.png */; };
+		62ECD974166DE1D000A15E24 /* settingIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62178120164BBA1D00E1CFD4 /* settingIcon@2x.png */; };
+		62ECD975166DE1D000A15E24 /* 4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F881602D7B300A4A673 /* 4@2x.png */; };
+		62ECD976166DE1D000A15E24 /* accessBtnico@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F891602D7B300A4A673 /* accessBtnico@2x.png */; };
+		62ECD977166DE1D000A15E24 /* addBtnimg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F8A1602D7B300A4A673 /* addBtnimg@2x.png */; };
+		62ECD978166DE1D000A15E24 /* addIco@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F8B1602D7B300A4A673 /* addIco@2x.png */; };
+		62ECD979166DE1D000A15E24 /* beizhu_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A83C69162B9DAA0006B5A4 /* beizhu_btn@2x.png */; };
+		62ECD97A166DE1D000A15E24 /* bottom_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F8D1602D7B300A4A673 /* bottom_bg@2x.png */; };
+		62ECD97B166DE1D000A15E24 /* bottom_bg_ 2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F8C1602D7B300A4A673 /* bottom_bg_ 2@2x.png */; };
+		62ECD97C166DE1D000A15E24 /* chajianpop_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A61455163FB1460011048B /* chajianpop_bg@2x.png */; };
+		62ECD97D166DE1D000A15E24 /* flagcircle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6238BA7F16394AD80064B8A9 /* flagcircle@2x.png */; };
+		62ECD97E166DE1D000A15E24 /* visitedfinished@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6238BA8016394AD80064B8A9 /* visitedfinished@2x.png */; };
+		62ECD97F166DE1D000A15E24 /* visitedtoday@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6238BA8116394AD80064B8A9 /* visitedtoday@2x.png */; };
+		62ECD980166DE1D000A15E24 /* visitedunfinished@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6238BA8216394AD80064B8A9 /* visitedunfinished@2x.png */; };
+		62ECD981166DE1D000A15E24 /* Icon_pass@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B29105163E5DB500D062D9 /* Icon_pass@2x.png */; };
+		62ECD982166DE1D000A15E24 /* Icon_user@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B29106163E5DB500D062D9 /* Icon_user@2x.png */; };
+		62ECD983166DE1D000A15E24 /* Button_grey@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B290FB163E557900D062D9 /* Button_grey@2x.png */; };
+		62ECD984166DE1D000A15E24 /* Button_red@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B290FC163E557900D062D9 /* Button_red@2x.png */; };
+		62ECD985166DE1D000A15E24 /* calendarBtnimg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F8E1602D7B300A4A673 /* calendarBtnimg@2x.png */; };
+		62ECD986166DE1D000A15E24 /* cameraIco@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F8F1602D7B300A4A673 /* cameraIco@2x.png */; };
+		62ECD987166DE1D000A15E24 /* cardTouying@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 624421521615C5BB00D2A9B9 /* cardTouying@2x.png */; };
+		62ECD988166DE1D000A15E24 /* Cell_bottom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 983D6428163E4ACC00EBA9E4 /* Cell_bottom@2x.png */; };
+		62ECD989166DE1D000A15E24 /* Cell_middle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 983D6429163E4ACC00EBA9E4 /* Cell_middle@2x.png */; };
+		62ECD98A166DE1D000A15E24 /* Cell_top@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 983D642A163E4ACC00EBA9E4 /* Cell_top@2x.png */; };
+		62ECD98B166DE1D000A15E24 /* Checkbox_checked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 983D642B163E4ACC00EBA9E4 /* Checkbox_checked@2x.png */; };
+		62ECD98C166DE1D000A15E24 /* Checkbox_unchecked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 983D642C163E4ACC00EBA9E4 /* Checkbox_unchecked@2x.png */; };
+		62ECD98D166DE1D000A15E24 /* contact_select@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A77FDF161691D70015A969 /* contact_select@2x.png */; };
+		62ECD98E166DE1D000A15E24 /* crm__leida@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 626626BE1616A206004A8D85 /* crm__leida@2x.png */; };
+		62ECD98F166DE1D000A15E24 /* crm__loudou@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 626626C11616A261004A8D85 /* crm__loudou@2x.png */; };
+		62ECD990166DE1D000A15E24 /* crm__managerEm@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 626626C21616A261004A8D85 /* crm__managerEm@2x.png */; };
+		62ECD991166DE1D000A15E24 /* crm__person@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 626626C31616A261004A8D85 /* crm__person@2X.png */; };
+		62ECD992166DE1D000A15E24 /* crm__rili@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 626626C41616A261004A8D85 /* crm__rili@2x.png */; };
+		62ECD993166DE1D000A15E24 /* crm__weizhi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 626626C51616A261004A8D85 /* crm__weizhi@2x.png */; };
+		62ECD994166DE1D000A15E24 /* crm_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 629D358E1626AC6C0064C8F4 /* crm_bg@2x.png */; };
+		62ECD995166DE1D000A15E24 /* crm_leida_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 629D35A01626D7D40064C8F4 /* crm_leida_selected@2x.png */; };
+		62ECD996166DE1D000A15E24 /* crm_loudou_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 629D35A11626D7D40064C8F4 /* crm_loudou_selected@2x.png */; };
+		62ECD997166DE1D000A15E24 /* crm_managerEm_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 629D35A21626D7D40064C8F4 /* crm_managerEm_selected@2x.png */; };
+		62ECD998166DE1D000A15E24 /* crm_person_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 629D35A31626D7D40064C8F4 /* crm_person_selected@2x.png */; };
+		62ECD999166DE1D000A15E24 /* crm_rili_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 629D35A41626D7D40064C8F4 /* crm_rili_selected@2x.png */; };
+		62ECD99A166DE1D000A15E24 /* crm_weizhi_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 629D35A51626D7D40064C8F4 /* crm_weizhi_selected@2x.png */; };
+		62ECD99B166DE1D000A15E24 /* dingwei_green@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A77FDD1616904A0015A969 /* dingwei_green@2x.png */; };
+		62ECD99C166DE1D000A15E24 /* edit_Btn_Red@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A77FD4161687B20015A969 /* edit_Btn_Red@2x.png */; };
+		62ECD99D166DE1D000A15E24 /* editBtn_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F931602D7B300A4A673 /* editBtn_normal@2x.png */; };
+		62ECD99E166DE1D000A15E24 /* exch_00@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 626626D11616C9AF004A8D85 /* exch_00@2x.png */; };
+		62ECD99F166DE1D000A15E24 /* exch_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 626626D21616C9AF004A8D85 /* exch_1@2x.png */; };
+		62ECD9A0166DE1D000A15E24 /* exch_9@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 626626D01616C9AF004A8D85 /* exch_9@2x.png */; };
+		62ECD9A1166DE1D000A15E24 /* ic_shuaxin1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A9DF6816229A4300310E92 /* ic_shuaxin1@2x.png */; };
+		62ECD9A2166DE1D000A15E24 /* ic_shuaxin2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A9DF6916229A4300310E92 /* ic_shuaxin2@2x.png */; };
+		62ECD9A3166DE1D000A15E24 /* ic_shuaxin3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A9DF6A16229A4300310E92 /* ic_shuaxin3@2x.png */; };
+		62ECD9A4166DE1D000A15E24 /* ic_shuaxin4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A9DF6B16229A4300310E92 /* ic_shuaxin4@2x.png */; };
+		62ECD9A5166DE1D000A15E24 /* ic_shuaxin5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A9DF6C16229A4300310E92 /* ic_shuaxin5@2x.png */; };
+		62ECD9A6166DE1D000A15E24 /* ic_shuaxin6@@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A9DF6D16229A4300310E92 /* ic_shuaxin6@@2x.png */; };
+		62ECD9A7166DE1D000A15E24 /* ico0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F941602D7B300A4A673 /* ico0@2x.png */; };
+		62ECD9A8166DE1D000A15E24 /* ico1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F951602D7B300A4A673 /* ico1@2x.png */; };
+		62ECD9A9166DE1D000A15E24 /* ico2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F961602D7B300A4A673 /* ico2@2x.png */; };
+		62ECD9AA166DE1D000A15E24 /* ico3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F971602D7B300A4A673 /* ico3@2x.png */; };
+		62ECD9AB166DE1D000A15E24 /* ico4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F981602D7B300A4A673 /* ico4@2x.png */; };
+		62ECD9AC166DE1D000A15E24 /* left_bg2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 624421501615BA1900D2A9B9 /* left_bg2@2x.png */; };
+		62ECD9AD166DE1D000A15E24 /* left_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F991602D7B300A4A673 /* left_bg@2x.png */; };
+		62ECD9AE166DE1D000A15E24 /* left_btn_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6244214D1615B70800D2A9B9 /* left_btn_bg@2x.png */; };
+		62ECD9AF166DE1D000A15E24 /* left_btn_bg_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6244214C1615B70800D2A9B9 /* left_btn_bg_selected@2x.png */; };
+		62ECD9B0166DE1D000A15E24 /* left_btn_bgscrol@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F9A1602D7B300A4A673 /* left_btn_bgscrol@2x.png */; };
+		62ECD9B1166DE1D000A15E24 /* leftbtn_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F9B1602D7B300A4A673 /* leftbtn_bg@2x.png */; };
+		62ECD9B2166DE1D000A15E24 /* lingdang_Btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A77FD5161687B20015A969 /* lingdang_Btn@2x.png */; };
+		62ECD9B3166DE1D000A15E24 /* locationIco@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F9C1602D7B300A4A673 /* locationIco@2x.png */; };
+		62ECD9B4166DE1D000A15E24 /* locationImg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F9D1602D7B300A4A673 /* locationImg@2x.png */; };
+		62ECD9B5166DE1D000A15E24 /* login_btn_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 626626D81616D8B4004A8D85 /* login_btn_selected@2x.png */; };
+		62ECD9B6166DE1D000A15E24 /* login_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 626626D61616D74B004A8D85 /* login_logo@2x.png */; };
+		62ECD9B7166DE1D000A15E24 /* logopic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F9E1602D7B300A4A673 /* logopic@2x.png */; };
+		62ECD9B8166DE1D000A15E24 /* message_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F9F1602D7B300A4A673 /* message_bg@2x.png */; };
+		62ECD9B9166DE1D000A15E24 /* messageIco@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84FA01602D7B300A4A673 /* messageIco@2x.png */; };
+		62ECD9BA166DE1D000A15E24 /* myDetail_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A77FE1161696720015A969 /* myDetail_normal@2x.png */; };
+		62ECD9BB166DE1D000A15E24 /* myDetail_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A77FE2161696720015A969 /* myDetail_selected@2x.png */; };
+		62ECD9BC166DE1D000A15E24 /* navshadow_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84FA11602D7B300A4A673 /* navshadow_bg@2x.png */; };
+		62ECD9BD166DE1D000A15E24 /* p1.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84FA21602D7B300A4A673 /* p1.png */; };
+		62ECD9BE166DE1D000A15E24 /* p2.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84FA31602D7B300A4A673 /* p2.png */; };
+		62ECD9BF166DE1D000A15E24 /* phoneIco@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84FA41602D7B300A4A673 /* phoneIco@2x.png */; };
+		62ECD9C0166DE1D000A15E24 /* point@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84FA51602D7B300A4A673 /* point@2x.png */; };
+		62ECD9C1166DE1D000A15E24 /* popView_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84FA61602D7B300A4A673 /* popView_bg@2x.png */; };
+		62ECD9C2166DE1D000A15E24 /* qidong_logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A9DF53162262F300310E92 /* qidong_logo@2x.png */; };
+		62ECD9C3166DE1D000A15E24 /* rili_Btn_Red@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A77FD6161687B20015A969 /* rili_Btn_Red@2x.png */; };
+		62ECD9C4166DE1D000A15E24 /* searchbar_bg_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84FA71602D7B300A4A673 /* searchbar_bg_normal@2x.png */; };
+		62ECD9C5166DE1D000A15E24 /* searchBarbg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84FA81602D7B300A4A673 /* searchBarbg@2x.png */; };
+		62ECD9C6166DE1D000A15E24 /* shexiangtou@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84FA91602D7B300A4A673 /* shexiangtou@2x.png */; };
+		62ECD9C7166DE1D000A15E24 /* star_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84FAA1602D7B300A4A673 /* star_normal@2x.png */; };
+		62ECD9C8166DE1D000A15E24 /* star_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84FAB1602D7B300A4A673 /* star_selected@2x.png */; };
+		62ECD9C9166DE1D000A15E24 /* tabbar_jianjiao@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84FAC1602D7B300A4A673 /* tabbar_jianjiao@2x.png */; };
+		62ECD9CA166DE1D000A15E24 /* tianjia_Btn_Red@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62A77FD7161687B20015A969 /* tianjia_Btn_Red@2x.png */; };
+		62ECD9CB166DE1D000A15E24 /* title_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84FAD1602D7B300A4A673 /* title_bg@2x.png */; };
+		62ECD9CC166DE1D000A15E24 /* titlebtn_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84FAE1602D7B300A4A673 /* titlebtn_normal@2x.png */; };
+		62ECD9CD166DE1D000A15E24 /* tongbu_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84FB01602D7B300A4A673 /* tongbu_normal@2x.png */; };
+		62ECD9CE166DE1D000A15E24 /* xiangqing_btn13_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84FB31602D7B300A4A673 /* xiangqing_btn13_normal@2x.png */; };
+		62ECD9CF166DE1D000A15E24 /* xiangqing_btn2_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84FB21602D7B300A4A673 /* xiangqing_btn2_normal@2x.png */; };
+		62ECD9D0166DE1D000A15E24 /* xiangqing_top_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84FB41602D7B300A4A673 /* xiangqing_top_bg@2x.png */; };
+		62ECD9D1166DE1D000A15E24 /* xiaoxi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84FB51602D7B300A4A673 /* xiaoxi@2x.png */; };
+		62ECD9D2166DE1D000A15E24 /* xq_btn13_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84FB71602D7B300A4A673 /* xq_btn13_selected@2x.png */; };
+		62ECD9D3166DE1D000A15E24 /* xq_btn2_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84FB61602D7B300A4A673 /* xq_btn2_selected@2x.png */; };
+		62ECD9D4166DE1D000A15E24 /* TSLocateView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A8502C1602DA3F00A4A673 /* TSLocateView.xib */; };
+		62ECD9D5166DE1D000A15E24 /* SMCheckbox.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A850701602DA3F00A4A673 /* SMCheckbox.xib */; };
+		62ECD9D6166DE1D000A15E24 /* KHHVisualCardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 984FA6341610297D00344BDC /* KHHVisualCardViewController.xib */; };
+		62ECD9D7166DE1D000A15E24 /* KHHBMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62AB2983160C07270004A3E3 /* KHHBMapViewController.xib */; };
+		62ECD9D8166DE1D000A15E24 /* KHHCard.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F271602D6C500A4A673 /* KHHCard.xib */; };
+		62ECD9D9166DE1D000A15E24 /* KHHButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F2D1602D6C500A4A673 /* KHHButtonCell.xib */; };
+		62ECD9DA166DE1D000A15E24 /* KHHClientCellLNP.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F301602D6C500A4A673 /* KHHClientCellLNP.xib */; };
+		62ECD9DB166DE1D000A15E24 /* KHHClientCellLNPC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F331602D6C500A4A673 /* KHHClientCellLNPC.xib */; };
+		62ECD9DC166DE1D000A15E24 /* KHHClientCellLNPCC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F361602D6C500A4A673 /* KHHClientCellLNPCC.xib */; };
+		62ECD9DD166DE1D000A15E24 /* KHHLabFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F391602D6C500A4A673 /* KHHLabFieldCell.xib */; };
+		62ECD9DE166DE1D000A15E24 /* KHHMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F3C1602D6C500A4A673 /* KHHMessageCell.xib */; };
+		62ECD9DF166DE1D000A15E24 /* KHHAddImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 625BD93E1608701E00F565AD /* KHHAddImageCell.xib */; };
+		62ECD9E0166DE1D000A15E24 /* KHHFloatBarController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F441602D6C500A4A673 /* KHHFloatBarController.xib */; };
+		62ECD9E1166DE1D000A15E24 /* KHHAddImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F4A1602D6C500A4A673 /* KHHAddImageView.xib */; };
+		62ECD9E2166DE1D000A15E24 /* KHHCardTemplageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62AC98DD163A4A50009EF269 /* KHHCardTemplageVC.xib */; };
+		62ECD9E3166DE1D000A15E24 /* KHHCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F4D1602D6C500A4A673 /* KHHCardView.xib */; };
+		62ECD9E4166DE1D000A15E24 /* KHHCustomEvaluaView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F521602D6C500A4A673 /* KHHCustomEvaluaView.xib */; };
+		62ECD9E5166DE1D000A15E24 /* KHHFullFrameController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62A6C4DD160AAECE00ADA43E /* KHHFullFrameController.xib */; };
+		62ECD9E6166DE1D000A15E24 /* KHHVisitCalendarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F5B1602D6C500A4A673 /* KHHVisitCalendarView.xib */; };
+		62ECD9E7166DE1D000A15E24 /* SuperViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F631602D6C500A4A673 /* SuperViewController.xib */; };
+		62ECD9E8166DE1D000A15E24 /* KHHPreViewViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62CCC9EC165231F5004BA1A4 /* KHHPreViewViewController.xib */; };
+		62ECD9E9166DE1D000A15E24 /* AppLoginController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98D29B72163A594900DE82E3 /* AppLoginController.xib */; };
+		62ECD9EA166DE1D000A15E24 /* AppRegisterController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0CEFF881163AFE7500E878C6 /* AppRegisterController.xib */; };
+		62ECD9EB166DE1D000A15E24 /* AppStartController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9845006A1637C5A1002C579E /* AppStartController.xib */; };
+		62ECD9EC166DE1D000A15E24 /* AgreementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84EF81602D67E00A4A673 /* AgreementViewController.xib */; };
+		62ECD9ED166DE1D000A15E24 /* IntroViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84EFC1602D67E00A4A673 /* IntroViewController.xib */; };
+		62ECD9EE166DE1D000A15E24 /* LaunchImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F001602D67E00A4A673 /* LaunchImageViewController.xib */; };
+		62ECD9EF166DE1D000A15E24 /* LoginViewController2.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F051602D67E00A4A673 /* LoginViewController2.xib */; };
+		62ECD9F0166DE1D000A15E24 /* LoginView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F021602D67E00A4A673 /* LoginView.xib */; };
+		62ECD9F1166DE1D000A15E24 /* LoginActionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F091602D67E00A4A673 /* LoginActionViewController.xib */; };
+		62ECD9F2166DE1D000A15E24 /* RegViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F0D1602D67E00A4A673 /* RegViewController.xib */; };
+		62ECD9F3166DE1D000A15E24 /* ResetPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F111602D67E00A4A673 /* ResetPasswordViewController.xib */; };
+		62ECD9F4166DE1D000A15E24 /* StartupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F141602D67E00A4A673 /* StartupViewController.xib */; };
+		62ECD9F5166DE1D000A15E24 /* KHHExchangeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E261602D66200A4A673 /* KHHExchangeViewController.xib */; };
+		62ECD9F6166DE1D000A15E24 /* KHHSendToViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E291602D66200A4A673 /* KHHSendToViewController.xib */; };
+		62ECD9F7166DE1D000A15E24 /* KHHAddGroupMemberVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E2E1602D66200A4A673 /* KHHAddGroupMemberVC.xib */; };
+		62ECD9F8166DE1D000A15E24 /* DetailInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E321602D66200A4A673 /* DetailInfoViewController.xib */; };
+		62ECD9F9166DE1D000A15E24 /* Edit_eCardViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E361602D66200A4A673 /* Edit_eCardViewCell.xib */; };
+		62ECD9FA166DE1D000A15E24 /* Edit_eCardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E391602D66200A4A673 /* Edit_eCardViewController.xib */; };
+		62ECD9FB166DE1D000A15E24 /* KHHEditCustomValueVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E3F1602D66200A4A673 /* KHHEditCustomValueVC.xib */; };
+		62ECD9FC166DE1D000A15E24 /* KHHHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E421602D66200A4A673 /* KHHHomeViewController.xib */; };
+		62ECD9FD166DE1D000A15E24 /* KHHMyDetailController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E481602D66200A4A673 /* KHHMyDetailController.xib */; };
+		62ECD9FE166DE1D000A15E24 /* PickViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E4C1602D66200A4A673 /* PickViewController.xib */; };
+		62ECD9FF166DE1D000A15E24 /* KHHBossEntrance.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E4E1602D66200A4A673 /* KHHBossEntrance.xib */; };
+		62ECDA00166DE1D000A15E24 /* KHHManagementViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E511602D66200A4A673 /* KHHManagementViewController.xib */; };
+		62ECDA01166DE1D000A15E24 /* KHHCalendarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E651602D66200A4A673 /* KHHCalendarViewController.xib */; };
+		62ECDA02166DE1D000A15E24 /* KHHFunnelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E711602D66200A4A673 /* KHHFunnelViewController.xib */; };
+		62ECDA03166DE1D000A15E24 /* KHHRadarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E741602D66200A4A673 /* KHHRadarViewController.xib */; };
+		62ECDA04166DE1D000A15E24 /* KHHVisitCalendarCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E771602D66200A4A673 /* KHHVisitCalendarCell.xib */; };
+		62ECDA05166DE1D000A15E24 /* KHHVisitRecoardVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E7D1602D66200A4A673 /* KHHVisitRecoardVC.xib */; };
+		62ECDA06166DE1D000A15E24 /* LocationInfoVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E801602D66200A4A673 /* LocationInfoVC.xib */; };
+		62ECDA07166DE1D000A15E24 /* KHHAllVisitedSchedusVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 628DC6451647B430008D1F3D /* KHHAllVisitedSchedusVC.xib */; };
+		62ECDA08166DE1D000A15E24 /* KHHValueViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62A625611651DDCF00FD2805 /* KHHValueViewController.xib */; };
+		62ECDA09166DE1D000A15E24 /* KHHVisitedPickVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62813BDF16538F0800180DB7 /* KHHVisitedPickVC.xib */; };
+		62ECDA0A166DE1D000A15E24 /* KHHMessageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E871602D66200A4A673 /* KHHMessageViewController.xib */; };
+		62ECDA0B166DE1D000A15E24 /* KHHDetailMessageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E841602D66200A4A673 /* KHHDetailMessageVC.xib */; };
+		62ECDA0C166DE1D000A15E24 /* KHHEditMSGViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62D3F40D1603188500E011E2 /* KHHEditMSGViewController.xib */; };
+		62ECDA0D166DE1D000A15E24 /* MoreViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E8B1602D66200A4A673 /* MoreViewController.xib */; };
+		62ECDA0E166DE1D000A15E24 /* AboutController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E8F1602D66200A4A673 /* AboutController.xib */; };
+		62ECDA0F166DE1D000A15E24 /* ModifyViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E981602D66200A4A673 /* ModifyViewController.xib */; };
+		62ECDA10166DE1D000A15E24 /* RecomFridendsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84E9B1602D66200A4A673 /* RecomFridendsViewController.xib */; };
+		62ECDA11166DE1D000A15E24 /* left_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A850051602DA3F00A4A673 /* left_arrow.png */; };
+		62ECDA12166DE1D000A15E24 /* left_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A850061602DA3F00A4A673 /* left_arrow@2x.png */; };
+		62ECDA13166DE1D000A15E24 /* right_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A850071602DA3F00A4A673 /* right_arrow.png */; };
+		62ECDA14166DE1D000A15E24 /* right_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A850081602DA3F00A4A673 /* right_arrow@2x.png */; };
+		62ECDA15166DE1D000A15E24 /* star1.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A8500F1602DA3F00A4A673 /* star1.png */; };
+		62ECDA16166DE1D000A15E24 /* star@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A850101602DA3F00A4A673 /* star@2x.png */; };
+		62ECDA17166DE1D000A15E24 /* star_highlighted-darker.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A850111602DA3F00A4A673 /* star_highlighted-darker.png */; };
+		62ECDA18166DE1D000A15E24 /* star_highlighted-darker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A850121602DA3F00A4A673 /* star_highlighted-darker@2x.png */; };
+		62ECDA19166DE1D000A15E24 /* star_highlighted1.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A850131602DA3F00A4A673 /* star_highlighted1.png */; };
+		62ECDA1A166DE1D000A15E24 /* star_highlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A850141602DA3F00A4A673 /* star_highlighted@2x.png */; };
+		62ECDA1B166DE1D000A15E24 /* tokenHighlighted.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A8501C1602DA3F00A4A673 /* tokenHighlighted.png */; };
+		62ECDA1C166DE1D000A15E24 /* tokenHighlighted@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A8501D1602DA3F00A4A673 /* tokenHighlighted@2x.png */; };
+		62ECDA1D166DE1D000A15E24 /* tokenNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A8501E1602DA3F00A4A673 /* tokenNormal.png */; };
+		62ECDA1E166DE1D000A15E24 /* tokenNormal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A8501F1602DA3F00A4A673 /* tokenNormal@2x.png */; };
+		62ECDA1F166DE1D000A15E24 /* bg_023@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A850221602DA3F00A4A673 /* bg_023@2x.png */; };
+		62ECDA20166DE1D000A15E24 /* btn_020.disable@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A850231602DA3F00A4A673 /* btn_020.disable@2x.png */; };
+		62ECDA21166DE1D000A15E24 /* btn_020.press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A850241602DA3F00A4A673 /* btn_020.press@2x.png */; };
+		62ECDA22166DE1D000A15E24 /* btn_020@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A850251602DA3F00A4A673 /* btn_020@2x.png */; };
+		62ECDA23166DE1D000A15E24 /* btn_021.disable@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A850261602DA3F00A4A673 /* btn_021.disable@2x.png */; };
+		62ECDA24166DE1D000A15E24 /* btn_021.press@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A850271602DA3F00A4A673 /* btn_021.press@2x.png */; };
+		62ECDA25166DE1D000A15E24 /* btn_021@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A850281602DA3F00A4A673 /* btn_021@2x.png */; };
+		62ECDA26166DE1D000A15E24 /* popoverArrowDownSimple.png in Resources */ = {isa = PBXBuildFile; fileRef = 621371D61643A1050041FE22 /* popoverArrowDownSimple.png */; };
+		62ECDA27166DE1D000A15E24 /* popoverArrowLeftSimple.png in Resources */ = {isa = PBXBuildFile; fileRef = 621371D71643A1050041FE22 /* popoverArrowLeftSimple.png */; };
+		62ECDA28166DE1D000A15E24 /* popoverArrowUpSimple.png in Resources */ = {isa = PBXBuildFile; fileRef = 621371D81643A1050041FE22 /* popoverArrowUpSimple.png */; };
+		62ECDA29166DE1D000A15E24 /* popoverBgSimple.png in Resources */ = {isa = PBXBuildFile; fileRef = 621371CE16439EBE0041FE22 /* popoverBgSimple.png */; };
+		62ECDA2A166DE1D000A15E24 /* popoverArrowRightSimple.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A850321602DA3F00A4A673 /* popoverArrowRightSimple.png */; };
+		62ECDA2B166DE1D000A15E24 /* ProvincesAndCities.plist in Resources */ = {isa = PBXBuildFile; fileRef = 98A850291602DA3F00A4A673 /* ProvincesAndCities.plist */; };
+		62ECDA2C166DE1D000A15E24 /* sample_piechart_data.plist in Resources */ = {isa = PBXBuildFile; fileRef = 620713021650EB22000188E8 /* sample_piechart_data.plist */; };
+		62ECDA2D166DE1D000A15E24 /* CardBook-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6274BF41165C7A7400DB5EBE /* CardBook-Info.plist */; };
+		62ECDA2E166DE1D000A15E24 /* template_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 629BE112165F619200FB3B04 /* template_bg@2x.png */; };
+		62ECDA2F166DE1D000A15E24 /* KHHWebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6292FCA7166892D900D170A3 /* KHHWebView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -634,6 +1072,8 @@
 		62D3F40B1603188500E011E2 /* KHHEditMSGViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHEditMSGViewController.h; sourceTree = "<group>"; };
 		62D3F40C1603188500E011E2 /* KHHEditMSGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHEditMSGViewController.m; sourceTree = "<group>"; };
 		62D3F40D1603188500E011E2 /* KHHEditMSGViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHEditMSGViewController.xib; sourceTree = "<group>"; };
+		62ECDA34166DE1D000A15E24 /* CardBook copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CardBook copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		62ECDA36166DE1D100A15E24 /* CardBook copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "CardBook copy-Info.plist"; path = "/Volumes/work/ios_project/CardBook/CardBook copy-Info.plist"; sourceTree = "<absolute>"; };
 		9803EBA5160DA88D00402B53 /* NSObject+SM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SM.h"; sourceTree = "<group>"; };
 		9803EBA6160DA88D00402B53 /* NSObject+SM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SM.m"; sourceTree = "<group>"; };
 		981BA0F5162EB4520036A4B8 /* CustomerEvaluation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerEvaluation.h; sourceTree = "<group>"; };
@@ -1206,6 +1646,31 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		62ECD940166DE1D000A15E24 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				62ECD941166DE1D000A15E24 /* SystemConfiguration.framework in Frameworks */,
+				62ECD942166DE1D000A15E24 /* CFNetwork.framework in Frameworks */,
+				62ECD943166DE1D000A15E24 /* MobileCoreServices.framework in Frameworks */,
+				62ECD944166DE1D000A15E24 /* EventKit.framework in Frameworks */,
+				62ECD945166DE1D000A15E24 /* EventKitUI.framework in Frameworks */,
+				62ECD946166DE1D000A15E24 /* AudioToolbox.framework in Frameworks */,
+				62ECD947166DE1D000A15E24 /* AddressBook.framework in Frameworks */,
+				62ECD948166DE1D000A15E24 /* AddressBookUI.framework in Frameworks */,
+				62ECD949166DE1D000A15E24 /* CoreData.framework in Frameworks */,
+				62ECD94A166DE1D000A15E24 /* CoreGraphics.framework in Frameworks */,
+				62ECD94B166DE1D000A15E24 /* CoreImage.framework in Frameworks */,
+				62ECD94C166DE1D000A15E24 /* CoreLocation.framework in Frameworks */,
+				62ECD94D166DE1D000A15E24 /* Foundation.framework in Frameworks */,
+				62ECD94E166DE1D000A15E24 /* ImageIO.framework in Frameworks */,
+				62ECD94F166DE1D000A15E24 /* MapKit.framework in Frameworks */,
+				62ECD950166DE1D000A15E24 /* MessageUI.framework in Frameworks */,
+				62ECD951166DE1D000A15E24 /* QuartzCore.framework in Frameworks */,
+				62ECD952166DE1D000A15E24 /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -1481,6 +1946,7 @@
 				98A84D5E1602CD2500A4A673 /* Products */,
 				98A84D981602D1F100A4A673 /* res */,
 				98A84D9A1602D20000A4A673 /* src */,
+				62ECDA36166DE1D100A15E24 /* CardBook copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1488,6 +1954,7 @@
 			isa = PBXGroup;
 			children = (
 				6274BF3A165C7A7400DB5EBE /* CardBook.app */,
+				62ECDA34166DE1D000A15E24 /* CardBook copy.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2598,6 +3065,24 @@
 			productReference = 6274BF3A165C7A7400DB5EBE /* CardBook.app */;
 			productType = "com.apple.product-type.application";
 		};
+		62ECD876166DE1D000A15E24 /* CardBook_mod */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 62ECDA31166DE1D000A15E24 /* Build configuration list for PBXNativeTarget "CardBook_mod" */;
+			buildPhases = (
+				62ECD877166DE1D000A15E24 /* Sources */,
+				62ECD940166DE1D000A15E24 /* Frameworks */,
+				62ECD953166DE1D000A15E24 /* Resources */,
+				62ECDA30166DE1D000A15E24 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CardBook_mod;
+			productName = CardBook;
+			productReference = 62ECDA34166DE1D000A15E24 /* CardBook copy.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -2622,6 +3107,7 @@
 			targets = (
 				984C2849160AEC25007D4D13 /* mogenerator */,
 				6274BF39165C7A7400DB5EBE /* CardBook */,
+				62ECD876166DE1D000A15E24 /* CardBook_mod */,
 			);
 		};
 /* End PBXProject section */
@@ -2854,9 +3340,249 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		62ECD953166DE1D000A15E24 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				62ECD954166DE1D000A15E24 /* InfoPlist.strings in Resources */,
+				62ECD955166DE1D000A15E24 /* Default.png in Resources */,
+				62ECD956166DE1D000A15E24 /* Default@2x.png in Resources */,
+				62ECD957166DE1D000A15E24 /* Default-568h@2x.png in Resources */,
+				62ECD958166DE1D000A15E24 /* logo57.png in Resources */,
+				62ECD959166DE1D000A15E24 /* logo114.png in Resources */,
+				62ECD95A166DE1D000A15E24 /* KHHAppSettings.plist in Resources */,
+				62ECD95B166DE1D000A15E24 /* two_Frame@2x.jpg in Resources */,
+				62ECD95C166DE1D000A15E24 /* startnew_logo@2x.png in Resources */,
+				62ECD95D166DE1D000A15E24 /* home_bg@2x.jpg in Resources */,
+				62ECD95E166DE1D000A15E24 /* guanxi_00@2x.png in Resources */,
+				62ECD95F166DE1D000A15E24 /* guanxi_01@2x.png in Resources */,
+				62ECD960166DE1D000A15E24 /* guanxi_02@2x.png in Resources */,
+				62ECD961166DE1D000A15E24 /* guanxi_03@2x.png in Resources */,
+				62ECD962166DE1D000A15E24 /* guanxi_04@2x.png in Resources */,
+				62ECD963166DE1D000A15E24 /* guanxi_05@2x.png in Resources */,
+				62ECD964166DE1D000A15E24 /* LoginImage_normal@2x.jpg in Resources */,
+				62ECD965166DE1D000A15E24 /* intro_2@2x.png in Resources */,
+				62ECD966166DE1D000A15E24 /* intro_3@2x.png in Resources */,
+				62ECD967166DE1D000A15E24 /* emailicon@2x.png in Resources */,
+				62ECD968166DE1D000A15E24 /* intro_1@2x.png in Resources */,
+				62ECD969166DE1D000A15E24 /* intro_0@2x.png in Resources */,
+				62ECD96A166DE1D000A15E24 /* exchangeNew_selected@2x.png in Resources */,
+				62ECD96B166DE1D000A15E24 /* exchangeNew@2x.png in Resources */,
+				62ECD96C166DE1D000A15E24 /* exch_0@2x.png in Resources */,
+				62ECD96D166DE1D000A15E24 /* newIcon@2x.png in Resources */,
+				62ECD96E166DE1D000A15E24 /* addGroupIcon@2x.png in Resources */,
+				62ECD96F166DE1D000A15E24 /* ic_tianjia_selected.png in Resources */,
+				62ECD970166DE1D000A15E24 /* jiaohuan_btn_shuaxin_selected.png in Resources */,
+				62ECD971166DE1D000A15E24 /* exch_2@2x.png in Resources */,
+				62ECD972166DE1D000A15E24 /* left_btn_bg_selected.png in Resources */,
+				62ECD973166DE1D000A15E24 /* settingIcon_selected@2x.png in Resources */,
+				62ECD974166DE1D000A15E24 /* settingIcon@2x.png in Resources */,
+				62ECD975166DE1D000A15E24 /* 4@2x.png in Resources */,
+				62ECD976166DE1D000A15E24 /* accessBtnico@2x.png in Resources */,
+				62ECD977166DE1D000A15E24 /* addBtnimg@2x.png in Resources */,
+				62ECD978166DE1D000A15E24 /* addIco@2x.png in Resources */,
+				62ECD979166DE1D000A15E24 /* beizhu_btn@2x.png in Resources */,
+				62ECD97A166DE1D000A15E24 /* bottom_bg@2x.png in Resources */,
+				62ECD97B166DE1D000A15E24 /* bottom_bg_ 2@2x.png in Resources */,
+				62ECD97C166DE1D000A15E24 /* chajianpop_bg@2x.png in Resources */,
+				62ECD97D166DE1D000A15E24 /* flagcircle@2x.png in Resources */,
+				62ECD97E166DE1D000A15E24 /* visitedfinished@2x.png in Resources */,
+				62ECD97F166DE1D000A15E24 /* visitedtoday@2x.png in Resources */,
+				62ECD980166DE1D000A15E24 /* visitedunfinished@2x.png in Resources */,
+				62ECD981166DE1D000A15E24 /* Icon_pass@2x.png in Resources */,
+				62ECD982166DE1D000A15E24 /* Icon_user@2x.png in Resources */,
+				62ECD983166DE1D000A15E24 /* Button_grey@2x.png in Resources */,
+				62ECD984166DE1D000A15E24 /* Button_red@2x.png in Resources */,
+				62ECD985166DE1D000A15E24 /* calendarBtnimg@2x.png in Resources */,
+				62ECD986166DE1D000A15E24 /* cameraIco@2x.png in Resources */,
+				62ECD987166DE1D000A15E24 /* cardTouying@2x.png in Resources */,
+				62ECD988166DE1D000A15E24 /* Cell_bottom@2x.png in Resources */,
+				62ECD989166DE1D000A15E24 /* Cell_middle@2x.png in Resources */,
+				62ECD98A166DE1D000A15E24 /* Cell_top@2x.png in Resources */,
+				62ECD98B166DE1D000A15E24 /* Checkbox_checked@2x.png in Resources */,
+				62ECD98C166DE1D000A15E24 /* Checkbox_unchecked@2x.png in Resources */,
+				62ECD98D166DE1D000A15E24 /* contact_select@2x.png in Resources */,
+				62ECD98E166DE1D000A15E24 /* crm__leida@2x.png in Resources */,
+				62ECD98F166DE1D000A15E24 /* crm__loudou@2x.png in Resources */,
+				62ECD990166DE1D000A15E24 /* crm__managerEm@2x.png in Resources */,
+				62ECD991166DE1D000A15E24 /* crm__person@2X.png in Resources */,
+				62ECD992166DE1D000A15E24 /* crm__rili@2x.png in Resources */,
+				62ECD993166DE1D000A15E24 /* crm__weizhi@2x.png in Resources */,
+				62ECD994166DE1D000A15E24 /* crm_bg@2x.png in Resources */,
+				62ECD995166DE1D000A15E24 /* crm_leida_selected@2x.png in Resources */,
+				62ECD996166DE1D000A15E24 /* crm_loudou_selected@2x.png in Resources */,
+				62ECD997166DE1D000A15E24 /* crm_managerEm_selected@2x.png in Resources */,
+				62ECD998166DE1D000A15E24 /* crm_person_selected@2x.png in Resources */,
+				62ECD999166DE1D000A15E24 /* crm_rili_selected@2x.png in Resources */,
+				62ECD99A166DE1D000A15E24 /* crm_weizhi_selected@2x.png in Resources */,
+				62ECD99B166DE1D000A15E24 /* dingwei_green@2x.png in Resources */,
+				62ECD99C166DE1D000A15E24 /* edit_Btn_Red@2x.png in Resources */,
+				62ECD99D166DE1D000A15E24 /* editBtn_normal@2x.png in Resources */,
+				62ECD99E166DE1D000A15E24 /* exch_00@2x.png in Resources */,
+				62ECD99F166DE1D000A15E24 /* exch_1@2x.png in Resources */,
+				62ECD9A0166DE1D000A15E24 /* exch_9@2x.png in Resources */,
+				62ECD9A1166DE1D000A15E24 /* ic_shuaxin1@2x.png in Resources */,
+				62ECD9A2166DE1D000A15E24 /* ic_shuaxin2@2x.png in Resources */,
+				62ECD9A3166DE1D000A15E24 /* ic_shuaxin3@2x.png in Resources */,
+				62ECD9A4166DE1D000A15E24 /* ic_shuaxin4@2x.png in Resources */,
+				62ECD9A5166DE1D000A15E24 /* ic_shuaxin5@2x.png in Resources */,
+				62ECD9A6166DE1D000A15E24 /* ic_shuaxin6@@2x.png in Resources */,
+				62ECD9A7166DE1D000A15E24 /* ico0@2x.png in Resources */,
+				62ECD9A8166DE1D000A15E24 /* ico1@2x.png in Resources */,
+				62ECD9A9166DE1D000A15E24 /* ico2@2x.png in Resources */,
+				62ECD9AA166DE1D000A15E24 /* ico3@2x.png in Resources */,
+				62ECD9AB166DE1D000A15E24 /* ico4@2x.png in Resources */,
+				62ECD9AC166DE1D000A15E24 /* left_bg2@2x.png in Resources */,
+				62ECD9AD166DE1D000A15E24 /* left_bg@2x.png in Resources */,
+				62ECD9AE166DE1D000A15E24 /* left_btn_bg@2x.png in Resources */,
+				62ECD9AF166DE1D000A15E24 /* left_btn_bg_selected@2x.png in Resources */,
+				62ECD9B0166DE1D000A15E24 /* left_btn_bgscrol@2x.png in Resources */,
+				62ECD9B1166DE1D000A15E24 /* leftbtn_bg@2x.png in Resources */,
+				62ECD9B2166DE1D000A15E24 /* lingdang_Btn@2x.png in Resources */,
+				62ECD9B3166DE1D000A15E24 /* locationIco@2x.png in Resources */,
+				62ECD9B4166DE1D000A15E24 /* locationImg@2x.png in Resources */,
+				62ECD9B5166DE1D000A15E24 /* login_btn_selected@2x.png in Resources */,
+				62ECD9B6166DE1D000A15E24 /* login_logo@2x.png in Resources */,
+				62ECD9B7166DE1D000A15E24 /* logopic@2x.png in Resources */,
+				62ECD9B8166DE1D000A15E24 /* message_bg@2x.png in Resources */,
+				62ECD9B9166DE1D000A15E24 /* messageIco@2x.png in Resources */,
+				62ECD9BA166DE1D000A15E24 /* myDetail_normal@2x.png in Resources */,
+				62ECD9BB166DE1D000A15E24 /* myDetail_selected@2x.png in Resources */,
+				62ECD9BC166DE1D000A15E24 /* navshadow_bg@2x.png in Resources */,
+				62ECD9BD166DE1D000A15E24 /* p1.png in Resources */,
+				62ECD9BE166DE1D000A15E24 /* p2.png in Resources */,
+				62ECD9BF166DE1D000A15E24 /* phoneIco@2x.png in Resources */,
+				62ECD9C0166DE1D000A15E24 /* point@2x.png in Resources */,
+				62ECD9C1166DE1D000A15E24 /* popView_bg@2x.png in Resources */,
+				62ECD9C2166DE1D000A15E24 /* qidong_logo@2x.png in Resources */,
+				62ECD9C3166DE1D000A15E24 /* rili_Btn_Red@2x.png in Resources */,
+				62ECD9C4166DE1D000A15E24 /* searchbar_bg_normal@2x.png in Resources */,
+				62ECD9C5166DE1D000A15E24 /* searchBarbg@2x.png in Resources */,
+				62ECD9C6166DE1D000A15E24 /* shexiangtou@2x.png in Resources */,
+				62ECD9C7166DE1D000A15E24 /* star_normal@2x.png in Resources */,
+				62ECD9C8166DE1D000A15E24 /* star_selected@2x.png in Resources */,
+				62ECD9C9166DE1D000A15E24 /* tabbar_jianjiao@2x.png in Resources */,
+				62ECD9CA166DE1D000A15E24 /* tianjia_Btn_Red@2x.png in Resources */,
+				62ECD9CB166DE1D000A15E24 /* title_bg@2x.png in Resources */,
+				62ECD9CC166DE1D000A15E24 /* titlebtn_normal@2x.png in Resources */,
+				62ECD9CD166DE1D000A15E24 /* tongbu_normal@2x.png in Resources */,
+				62ECD9CE166DE1D000A15E24 /* xiangqing_btn13_normal@2x.png in Resources */,
+				62ECD9CF166DE1D000A15E24 /* xiangqing_btn2_normal@2x.png in Resources */,
+				62ECD9D0166DE1D000A15E24 /* xiangqing_top_bg@2x.png in Resources */,
+				62ECD9D1166DE1D000A15E24 /* xiaoxi@2x.png in Resources */,
+				62ECD9D2166DE1D000A15E24 /* xq_btn13_selected@2x.png in Resources */,
+				62ECD9D3166DE1D000A15E24 /* xq_btn2_selected@2x.png in Resources */,
+				62ECD9D4166DE1D000A15E24 /* TSLocateView.xib in Resources */,
+				62ECD9D5166DE1D000A15E24 /* SMCheckbox.xib in Resources */,
+				62ECD9D6166DE1D000A15E24 /* KHHVisualCardViewController.xib in Resources */,
+				62ECD9D7166DE1D000A15E24 /* KHHBMapViewController.xib in Resources */,
+				62ECD9D8166DE1D000A15E24 /* KHHCard.xib in Resources */,
+				62ECD9D9166DE1D000A15E24 /* KHHButtonCell.xib in Resources */,
+				62ECD9DA166DE1D000A15E24 /* KHHClientCellLNP.xib in Resources */,
+				62ECD9DB166DE1D000A15E24 /* KHHClientCellLNPC.xib in Resources */,
+				62ECD9DC166DE1D000A15E24 /* KHHClientCellLNPCC.xib in Resources */,
+				62ECD9DD166DE1D000A15E24 /* KHHLabFieldCell.xib in Resources */,
+				62ECD9DE166DE1D000A15E24 /* KHHMessageCell.xib in Resources */,
+				62ECD9DF166DE1D000A15E24 /* KHHAddImageCell.xib in Resources */,
+				62ECD9E0166DE1D000A15E24 /* KHHFloatBarController.xib in Resources */,
+				62ECD9E1166DE1D000A15E24 /* KHHAddImageView.xib in Resources */,
+				62ECD9E2166DE1D000A15E24 /* KHHCardTemplageVC.xib in Resources */,
+				62ECD9E3166DE1D000A15E24 /* KHHCardView.xib in Resources */,
+				62ECD9E4166DE1D000A15E24 /* KHHCustomEvaluaView.xib in Resources */,
+				62ECD9E5166DE1D000A15E24 /* KHHFullFrameController.xib in Resources */,
+				62ECD9E6166DE1D000A15E24 /* KHHVisitCalendarView.xib in Resources */,
+				62ECD9E7166DE1D000A15E24 /* SuperViewController.xib in Resources */,
+				62ECD9E8166DE1D000A15E24 /* KHHPreViewViewController.xib in Resources */,
+				62ECD9E9166DE1D000A15E24 /* AppLoginController.xib in Resources */,
+				62ECD9EA166DE1D000A15E24 /* AppRegisterController.xib in Resources */,
+				62ECD9EB166DE1D000A15E24 /* AppStartController.xib in Resources */,
+				62ECD9EC166DE1D000A15E24 /* AgreementViewController.xib in Resources */,
+				62ECD9ED166DE1D000A15E24 /* IntroViewController.xib in Resources */,
+				62ECD9EE166DE1D000A15E24 /* LaunchImageViewController.xib in Resources */,
+				62ECD9EF166DE1D000A15E24 /* LoginViewController2.xib in Resources */,
+				62ECD9F0166DE1D000A15E24 /* LoginView.xib in Resources */,
+				62ECD9F1166DE1D000A15E24 /* LoginActionViewController.xib in Resources */,
+				62ECD9F2166DE1D000A15E24 /* RegViewController.xib in Resources */,
+				62ECD9F3166DE1D000A15E24 /* ResetPasswordViewController.xib in Resources */,
+				62ECD9F4166DE1D000A15E24 /* StartupViewController.xib in Resources */,
+				62ECD9F5166DE1D000A15E24 /* KHHExchangeViewController.xib in Resources */,
+				62ECD9F6166DE1D000A15E24 /* KHHSendToViewController.xib in Resources */,
+				62ECD9F7166DE1D000A15E24 /* KHHAddGroupMemberVC.xib in Resources */,
+				62ECD9F8166DE1D000A15E24 /* DetailInfoViewController.xib in Resources */,
+				62ECD9F9166DE1D000A15E24 /* Edit_eCardViewCell.xib in Resources */,
+				62ECD9FA166DE1D000A15E24 /* Edit_eCardViewController.xib in Resources */,
+				62ECD9FB166DE1D000A15E24 /* KHHEditCustomValueVC.xib in Resources */,
+				62ECD9FC166DE1D000A15E24 /* KHHHomeViewController.xib in Resources */,
+				62ECD9FD166DE1D000A15E24 /* KHHMyDetailController.xib in Resources */,
+				62ECD9FE166DE1D000A15E24 /* PickViewController.xib in Resources */,
+				62ECD9FF166DE1D000A15E24 /* KHHBossEntrance.xib in Resources */,
+				62ECDA00166DE1D000A15E24 /* KHHManagementViewController.xib in Resources */,
+				62ECDA01166DE1D000A15E24 /* KHHCalendarViewController.xib in Resources */,
+				62ECDA02166DE1D000A15E24 /* KHHFunnelViewController.xib in Resources */,
+				62ECDA03166DE1D000A15E24 /* KHHRadarViewController.xib in Resources */,
+				62ECDA04166DE1D000A15E24 /* KHHVisitCalendarCell.xib in Resources */,
+				62ECDA05166DE1D000A15E24 /* KHHVisitRecoardVC.xib in Resources */,
+				62ECDA06166DE1D000A15E24 /* LocationInfoVC.xib in Resources */,
+				62ECDA07166DE1D000A15E24 /* KHHAllVisitedSchedusVC.xib in Resources */,
+				62ECDA08166DE1D000A15E24 /* KHHValueViewController.xib in Resources */,
+				62ECDA09166DE1D000A15E24 /* KHHVisitedPickVC.xib in Resources */,
+				62ECDA0A166DE1D000A15E24 /* KHHMessageViewController.xib in Resources */,
+				62ECDA0B166DE1D000A15E24 /* KHHDetailMessageVC.xib in Resources */,
+				62ECDA0C166DE1D000A15E24 /* KHHEditMSGViewController.xib in Resources */,
+				62ECDA0D166DE1D000A15E24 /* MoreViewController.xib in Resources */,
+				62ECDA0E166DE1D000A15E24 /* AboutController.xib in Resources */,
+				62ECDA0F166DE1D000A15E24 /* ModifyViewController.xib in Resources */,
+				62ECDA10166DE1D000A15E24 /* RecomFridendsViewController.xib in Resources */,
+				62ECDA11166DE1D000A15E24 /* left_arrow.png in Resources */,
+				62ECDA12166DE1D000A15E24 /* left_arrow@2x.png in Resources */,
+				62ECDA13166DE1D000A15E24 /* right_arrow.png in Resources */,
+				62ECDA14166DE1D000A15E24 /* right_arrow@2x.png in Resources */,
+				62ECDA15166DE1D000A15E24 /* star1.png in Resources */,
+				62ECDA16166DE1D000A15E24 /* star@2x.png in Resources */,
+				62ECDA17166DE1D000A15E24 /* star_highlighted-darker.png in Resources */,
+				62ECDA18166DE1D000A15E24 /* star_highlighted-darker@2x.png in Resources */,
+				62ECDA19166DE1D000A15E24 /* star_highlighted1.png in Resources */,
+				62ECDA1A166DE1D000A15E24 /* star_highlighted@2x.png in Resources */,
+				62ECDA1B166DE1D000A15E24 /* tokenHighlighted.png in Resources */,
+				62ECDA1C166DE1D000A15E24 /* tokenHighlighted@2x.png in Resources */,
+				62ECDA1D166DE1D000A15E24 /* tokenNormal.png in Resources */,
+				62ECDA1E166DE1D000A15E24 /* tokenNormal@2x.png in Resources */,
+				62ECDA1F166DE1D000A15E24 /* bg_023@2x.png in Resources */,
+				62ECDA20166DE1D000A15E24 /* btn_020.disable@2x.png in Resources */,
+				62ECDA21166DE1D000A15E24 /* btn_020.press@2x.png in Resources */,
+				62ECDA22166DE1D000A15E24 /* btn_020@2x.png in Resources */,
+				62ECDA23166DE1D000A15E24 /* btn_021.disable@2x.png in Resources */,
+				62ECDA24166DE1D000A15E24 /* btn_021.press@2x.png in Resources */,
+				62ECDA25166DE1D000A15E24 /* btn_021@2x.png in Resources */,
+				62ECDA26166DE1D000A15E24 /* popoverArrowDownSimple.png in Resources */,
+				62ECDA27166DE1D000A15E24 /* popoverArrowLeftSimple.png in Resources */,
+				62ECDA28166DE1D000A15E24 /* popoverArrowUpSimple.png in Resources */,
+				62ECDA29166DE1D000A15E24 /* popoverBgSimple.png in Resources */,
+				62ECDA2A166DE1D000A15E24 /* popoverArrowRightSimple.png in Resources */,
+				62ECDA2B166DE1D000A15E24 /* ProvincesAndCities.plist in Resources */,
+				62ECDA2C166DE1D000A15E24 /* sample_piechart_data.plist in Resources */,
+				62ECDA2D166DE1D000A15E24 /* CardBook-Info.plist in Resources */,
+				62ECDA2E166DE1D000A15E24 /* template_bg@2x.png in Resources */,
+				62ECDA2F166DE1D000A15E24 /* KHHWebView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		62ECDA30166DE1D000A15E24 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export CODESIGN_ALLOCATE=/Applications/Xcode_mod.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/codesign_allocate\nif [ \"${PLATFORM_NAME}\" == \"iphoneos\" ]; then\n/Applications/Xcode_mod.app/Contents/Developer/xcode-crack/gen_entitlements.py \"my.company.${PROJECT_NAME}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent\";\ncodesign -f -s \"iPhone Developer\" --entitlements \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/\"\nfi";
+		};
 		984C284D160AECBA007D4D13 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3080,6 +3806,213 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		62ECD877166DE1D000A15E24 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				62ECD878166DE1D000A15E24 /* main.m in Sources */,
+				62ECD879166DE1D000A15E24 /* PCPieChart.m in Sources */,
+				62ECD87A166DE1D000A15E24 /* MBProgressHUD.m in Sources */,
+				62ECD87B166DE1D000A15E24 /* JSONKit.m in Sources */,
+				62ECD87C166DE1D000A15E24 /* AFHTTPClient.m in Sources */,
+				62ECD87D166DE1D000A15E24 /* AFHTTPRequestOperation.m in Sources */,
+				62ECD87E166DE1D000A15E24 /* AFImageRequestOperation.m in Sources */,
+				62ECD87F166DE1D000A15E24 /* AFJSONRequestOperation.m in Sources */,
+				62ECD880166DE1D000A15E24 /* AFNetworkActivityIndicatorManager.m in Sources */,
+				62ECD881166DE1D000A15E24 /* AFPropertyListRequestOperation.m in Sources */,
+				62ECD882166DE1D000A15E24 /* AFURLConnectionOperation.m in Sources */,
+				62ECD883166DE1D000A15E24 /* AFXMLRequestOperation.m in Sources */,
+				62ECD884166DE1D000A15E24 /* UIImageView+AFNetworking.m in Sources */,
+				62ECD885166DE1D000A15E24 /* CKCalendarView.m in Sources */,
+				62ECD886166DE1D000A15E24 /* DLStarRatingControl.m in Sources */,
+				62ECD887166DE1D000A15E24 /* DLStarView.m in Sources */,
+				62ECD888166DE1D000A15E24 /* UIView+Subviews.m in Sources */,
+				62ECD889166DE1D000A15E24 /* JSTokenButton.m in Sources */,
+				62ECD88A166DE1D000A15E24 /* JSTokenField.m in Sources */,
+				62ECD88B166DE1D000A15E24 /* TSLocateView.m in Sources */,
+				62ECD88C166DE1D000A15E24 /* TSLocation.m in Sources */,
+				62ECD88D166DE1D000A15E24 /* UIBarButtonItem+WEPopover.m in Sources */,
+				62ECD88E166DE1D000A15E24 /* WEPopoverContainerView.m in Sources */,
+				62ECD88F166DE1D000A15E24 /* WEPopoverController.m in Sources */,
+				62ECD890166DE1D000A15E24 /* WETouchableView.m in Sources */,
+				62ECD891166DE1D000A15E24 /* NSObject+SBJson.m in Sources */,
+				62ECD892166DE1D000A15E24 /* SBJsonParser.m in Sources */,
+				62ECD893166DE1D000A15E24 /* SBJsonStreamParser.m in Sources */,
+				62ECD894166DE1D000A15E24 /* SBJsonStreamParserAccumulator.m in Sources */,
+				62ECD895166DE1D000A15E24 /* SBJsonStreamParserAdapter.m in Sources */,
+				62ECD896166DE1D000A15E24 /* SBJsonStreamParserState.m in Sources */,
+				62ECD897166DE1D000A15E24 /* SBJsonStreamWriter.m in Sources */,
+				62ECD898166DE1D000A15E24 /* SBJsonStreamWriterAccumulator.m in Sources */,
+				62ECD899166DE1D000A15E24 /* SBJsonStreamWriterState.m in Sources */,
+				62ECD89A166DE1D000A15E24 /* SBJsonTokeniser.m in Sources */,
+				62ECD89B166DE1D000A15E24 /* SBJsonUTF8Stream.m in Sources */,
+				62ECD89C166DE1D000A15E24 /* SBJsonWriter.m in Sources */,
+				62ECD89D166DE1D000A15E24 /* MKAnnotationView+WebCache.m in Sources */,
+				62ECD89E166DE1D000A15E24 /* SDImageCache.m in Sources */,
+				62ECD89F166DE1D000A15E24 /* SDWebImageDecoder.m in Sources */,
+				62ECD8A0166DE1D000A15E24 /* SDWebImageDownloader.m in Sources */,
+				62ECD8A1166DE1D000A15E24 /* SDWebImageManager.m in Sources */,
+				62ECD8A2166DE1D000A15E24 /* SDWebImagePrefetcher.m in Sources */,
+				62ECD8A3166DE1D000A15E24 /* UIButton+WebCache.m in Sources */,
+				62ECD8A4166DE1D000A15E24 /* UIImageView+WebCache.m in Sources */,
+				62ECD8A5166DE1D000A15E24 /* SMCheckbox.m in Sources */,
+				62ECD8A6166DE1D000A15E24 /* SVGeocoder.m in Sources */,
+				62ECD8A7166DE1D000A15E24 /* SVPlacemark.m in Sources */,
+				62ECD8A8166DE1D000A15E24 /* XLPageControl.m in Sources */,
+				62ECD8A9166DE1D000A15E24 /* KHHLocationController.m in Sources */,
+				62ECD8AA166DE1D000A15E24 /* KHHAppDelegate.m in Sources */,
+				62ECD8AB166DE1D000A15E24 /* KHHApp.m in Sources */,
+				62ECD8AC166DE1D000A15E24 /* KHHDefaults.m in Sources */,
+				62ECD8AD166DE1D000A15E24 /* KHHMessage.m in Sources */,
+				62ECD8AE166DE1D000A15E24 /* NSManagedObject+KHH.m in Sources */,
+				62ECD8AF166DE1D000A15E24 /* Address.m in Sources */,
+				62ECD8B0166DE1D000A15E24 /* BankAccount.m in Sources */,
+				62ECD8B1166DE1D000A15E24 /* Card.m in Sources */,
+				62ECD8B2166DE1D000A15E24 /* ContactCard.m in Sources */,
+				62ECD8B3166DE1D000A15E24 /* MyCard.m in Sources */,
+				62ECD8B4166DE1D000A15E24 /* PrivateCard.m in Sources */,
+				62ECD8B5166DE1D000A15E24 /* ReceivedCard.m in Sources */,
+				62ECD8B6166DE1D000A15E24 /* CardTemplate.m in Sources */,
+				62ECD8B7166DE1D000A15E24 /* CardTemplateItem.m in Sources */,
+				62ECD8B8166DE1D000A15E24 /* Company.m in Sources */,
+				62ECD8B9166DE1D000A15E24 /* CustomerEvaluation.m in Sources */,
+				62ECD8BA166DE1D000A15E24 /* Group.m in Sources */,
+				62ECD8BB166DE1D000A15E24 /* Image.m in Sources */,
+				62ECD8BC166DE1D000A15E24 /* Schedule.m in Sources */,
+				62ECD8BD166DE1D000A15E24 /* SyncMark.m in Sources */,
+				62ECD8BE166DE1D000A15E24 /* _KHHMessage.m in Sources */,
+				62ECD8BF166DE1D000A15E24 /* _ContactCard.m in Sources */,
+				62ECD8C0166DE1D000A15E24 /* _CardTemplateItem.m in Sources */,
+				62ECD8C1166DE1D000A15E24 /* _Address.m in Sources */,
+				62ECD8C2166DE1D000A15E24 /* _BankAccount.m in Sources */,
+				62ECD8C3166DE1D000A15E24 /* _Card.m in Sources */,
+				62ECD8C4166DE1D000A15E24 /* _CardTemplate.m in Sources */,
+				62ECD8C5166DE1D000A15E24 /* _Company.m in Sources */,
+				62ECD8C6166DE1D000A15E24 /* _CustomerEvaluation.m in Sources */,
+				62ECD8C7166DE1D000A15E24 /* _Group.m in Sources */,
+				62ECD8C8166DE1D000A15E24 /* _Image.m in Sources */,
+				62ECD8C9166DE1D000A15E24 /* _MyCard.m in Sources */,
+				62ECD8CA166DE1D000A15E24 /* _PrivateCard.m in Sources */,
+				62ECD8CB166DE1D000A15E24 /* _ReceivedCard.m in Sources */,
+				62ECD8CC166DE1D000A15E24 /* _Schedule.m in Sources */,
+				62ECD8CD166DE1D000A15E24 /* _SyncMark.m in Sources */,
+				62ECD8CE166DE1D000A15E24 /* InterCard.m in Sources */,
+				62ECD8CF166DE1D000A15E24 /* ICheckIn.m in Sources */,
+				62ECD8D0166DE1D000A15E24 /* ICustomerEvaluation.m in Sources */,
+				62ECD8D1166DE1D000A15E24 /* IAddress.m in Sources */,
+				62ECD8D2166DE1D000A15E24 /* IGroup.m in Sources */,
+				62ECD8D3166DE1D000A15E24 /* ICardGroupMap.m in Sources */,
+				62ECD8D4166DE1D000A15E24 /* IImage.m in Sources */,
+				62ECD8D5166DE1D000A15E24 /* InMessage.m in Sources */,
+				62ECD8D6166DE1D000A15E24 /* ISchedule.m in Sources */,
+				62ECD8D7166DE1D000A15E24 /* OSchedule.m in Sources */,
+				62ECD8D8166DE1D000A15E24 /* KHHData.m in Sources */,
+				62ECD8D9166DE1D000A15E24 /* KHHData+UI.m in Sources */,
+				62ECD8DA166DE1D000A15E24 /* KHHData+Handlers.m in Sources */,
+				62ECD8DB166DE1D000A15E24 /* ATestViewController.m in Sources */,
+				62ECD8DC166DE1D000A15E24 /* SMObject.m in Sources */,
+				62ECD8DD166DE1D000A15E24 /* Encryptor.m in Sources */,
+				62ECD8DE166DE1D000A15E24 /* NSData+Base64.m in Sources */,
+				62ECD8DF166DE1D000A15E24 /* NSNumber+SM.m in Sources */,
+				62ECD8E0166DE1D000A15E24 /* NSObject+SM.m in Sources */,
+				62ECD8E1166DE1D000A15E24 /* NSString+Base64.m in Sources */,
+				62ECD8E2166DE1D000A15E24 /* NSString+MD5.m in Sources */,
+				62ECD8E3166DE1D000A15E24 /* NSString+Networking.m in Sources */,
+				62ECD8E4166DE1D000A15E24 /* NSString+SM.m in Sources */,
+				62ECD8E5166DE1D000A15E24 /* NSString+Validation.m in Sources */,
+				62ECD8E6166DE1D000A15E24 /* NSURL+KHH.m in Sources */,
+				62ECD8E7166DE1D000A15E24 /* UIImage+KHH.m in Sources */,
+				62ECD8E8166DE1D000A15E24 /* UIImage+Resize.m in Sources */,
+				62ECD8E9166DE1D000A15E24 /* UIViewController+SM.m in Sources */,
+				62ECD8EA166DE1D000A15E24 /* UIColor+HexColor.m in Sources */,
+				62ECD8EB166DE1D000A15E24 /* KHHHTTPClient.m in Sources */,
+				62ECD8EC166DE1D000A15E24 /* KHHNetworkAPIAgent.m in Sources */,
+				62ECD8ED166DE1D000A15E24 /* KHHNetworkAPIAgent+Account.m in Sources */,
+				62ECD8EE166DE1D000A15E24 /* KHHNetworkAPIAgent+Card.m in Sources */,
+				62ECD8EF166DE1D000A15E24 /* KHHNetworkAPIAgent+EnterpriseManagement.m in Sources */,
+				62ECD8F0166DE1D000A15E24 /* KHHNetworkAPIAgent+Exchange.m in Sources */,
+				62ECD8F1166DE1D000A15E24 /* KHHNetworkAPIAgent+Group.m in Sources */,
+				62ECD8F2166DE1D000A15E24 /* KHHNetworkAPIAgent+Message.m in Sources */,
+				62ECD8F3166DE1D000A15E24 /* KHHNetworkAPIAgent+Misc.m in Sources */,
+				62ECD8F4166DE1D000A15E24 /* KHHNetworkAPIAgent+Statistics.m in Sources */,
+				62ECD8F5166DE1D000A15E24 /* KHHNetworkAPIAgent+Template.m in Sources */,
+				62ECD8F6166DE1D000A15E24 /* KHHNetworkAPIAgent+VisitSchedule.m in Sources */,
+				62ECD8F7166DE1D000A15E24 /* KHHNetworkAPIAgent+CustomerEvaluation.m in Sources */,
+				62ECD8F8166DE1D000A15E24 /* KHHVisualCardViewController.m in Sources */,
+				62ECD8F9166DE1D000A15E24 /* KHHBMapViewController.m in Sources */,
+				62ECD8FA166DE1D000A15E24 /* KHHFrameCardView.m in Sources */,
+				62ECD8FB166DE1D000A15E24 /* KHHCardMode.m in Sources */,
+				62ECD8FC166DE1D000A15E24 /* KHHButtonCell.m in Sources */,
+				62ECD8FD166DE1D000A15E24 /* KHHClientCellLNP.m in Sources */,
+				62ECD8FE166DE1D000A15E24 /* KHHClientCellLNPC.m in Sources */,
+				62ECD8FF166DE1D000A15E24 /* KHHClientCellLNPCC.m in Sources */,
+				62ECD900166DE1D000A15E24 /* KHHLabFieldCell.m in Sources */,
+				62ECD901166DE1D000A15E24 /* KHHMessageCell.m in Sources */,
+				62ECD902166DE1D000A15E24 /* KHHAddImageCell.m in Sources */,
+				62ECD903166DE1D000A15E24 /* KHHFloatBarController.m in Sources */,
+				62ECD904166DE1D000A15E24 /* CustomSegmentedControl.m in Sources */,
+				62ECD905166DE1D000A15E24 /* KHHAddImageView.m in Sources */,
+				62ECD906166DE1D000A15E24 /* KHHAddressBook.m in Sources */,
+				62ECD907166DE1D000A15E24 /* KHHCardTemplageVC.m in Sources */,
+				62ECD908166DE1D000A15E24 /* KHHCardView.m in Sources */,
+				62ECD909166DE1D000A15E24 /* KHHCustomEvaluaView.m in Sources */,
+				62ECD90A166DE1D000A15E24 /* KHHFullFrameController.m in Sources */,
+				62ECD90B166DE1D000A15E24 /* KHHMyAlertViewWithSubView.m in Sources */,
+				62ECD90C166DE1D000A15E24 /* KHHMySearchBar.m in Sources */,
+				62ECD90D166DE1D000A15E24 /* KHHShowHideTabBar.m in Sources */,
+				62ECD90E166DE1D000A15E24 /* KHHVisitCalendarView.m in Sources */,
+				62ECD90F166DE1D000A15E24 /* myAlertView.m in Sources */,
+				62ECD910166DE1D000A15E24 /* MyTabBarController.m in Sources */,
+				62ECD911166DE1D000A15E24 /* SuperViewController.m in Sources */,
+				62ECD912166DE1D000A15E24 /* KHHPreViewViewController.m in Sources */,
+				62ECD913166DE1D000A15E24 /* KHHMainUIController.m in Sources */,
+				62ECD914166DE1D000A15E24 /* AppLoginController.m in Sources */,
+				62ECD915166DE1D000A15E24 /* AppRegisterController.m in Sources */,
+				62ECD916166DE1D000A15E24 /* AppStartController.m in Sources */,
+				62ECD917166DE1D000A15E24 /* AgreementViewController.m in Sources */,
+				62ECD918166DE1D000A15E24 /* IntroViewController.m in Sources */,
+				62ECD919166DE1D000A15E24 /* LaunchImageViewController.m in Sources */,
+				62ECD91A166DE1D000A15E24 /* LoginViewController.m in Sources */,
+				62ECD91B166DE1D000A15E24 /* LoginActionViewController.m in Sources */,
+				62ECD91C166DE1D000A15E24 /* RegViewController.m in Sources */,
+				62ECD91D166DE1D000A15E24 /* ResetPasswordViewController.m in Sources */,
+				62ECD91E166DE1D000A15E24 /* StartupViewController.m in Sources */,
+				62ECD91F166DE1D000A15E24 /* KHHExchangeViewController.m in Sources */,
+				62ECD920166DE1D000A15E24 /* KHHSendToViewController.m in Sources */,
+				62ECD921166DE1D000A15E24 /* KHHAddGroupMemberVC.m in Sources */,
+				62ECD922166DE1D000A15E24 /* DetailInfoViewController.m in Sources */,
+				62ECD923166DE1D000A15E24 /* Edit_eCardViewCell.m in Sources */,
+				62ECD924166DE1D000A15E24 /* Edit_eCardViewController.m in Sources */,
+				62ECD925166DE1D000A15E24 /* EditCardPersonCell.m in Sources */,
+				62ECD926166DE1D000A15E24 /* KHHAddressCell.m in Sources */,
+				62ECD927166DE1D000A15E24 /* KHHEditCustomValueVC.m in Sources */,
+				62ECD928166DE1D000A15E24 /* KHHHomeViewController.m in Sources */,
+				62ECD929166DE1D000A15E24 /* MapController.m in Sources */,
+				62ECD92A166DE1D000A15E24 /* KHHMyDetailController.m in Sources */,
+				62ECD92B166DE1D000A15E24 /* PickViewController.m in Sources */,
+				62ECD92C166DE1D000A15E24 /* KHHManagementViewController.m in Sources */,
+				62ECD92D166DE1D000A15E24 /* KHHCalendarViewController.m in Sources */,
+				62ECD92E166DE1D000A15E24 /* KHHFunnelViewController.m in Sources */,
+				62ECD92F166DE1D000A15E24 /* KHHRadarViewController.m in Sources */,
+				62ECD930166DE1D000A15E24 /* KHHVisitCalendarCell.m in Sources */,
+				62ECD931166DE1D000A15E24 /* KHHVisitRecoardVC.m in Sources */,
+				62ECD932166DE1D000A15E24 /* LocationInfoVC.m in Sources */,
+				62ECD933166DE1D000A15E24 /* KHHAllVisitedSchedusVC.m in Sources */,
+				62ECD934166DE1D000A15E24 /* KHHValueViewController.m in Sources */,
+				62ECD935166DE1D000A15E24 /* KHHVisitedPickVC.m in Sources */,
+				62ECD936166DE1D000A15E24 /* KHHMessageViewController.m in Sources */,
+				62ECD937166DE1D000A15E24 /* KHHDetailMessageVC.m in Sources */,
+				62ECD938166DE1D000A15E24 /* KHHEditMSGViewController.m in Sources */,
+				62ECD939166DE1D000A15E24 /* MoreViewController.m in Sources */,
+				62ECD93A166DE1D000A15E24 /* AboutController.m in Sources */,
+				62ECD93B166DE1D000A15E24 /* ModifyViewController.m in Sources */,
+				62ECD93C166DE1D000A15E24 /* RecomFridendsViewController.m in Sources */,
+				62ECD93D166DE1D000A15E24 /* CardBook.xcdatamodeld in Sources */,
+				62ECD93E166DE1D000A15E24 /* KHHLocalNotificationUtil.m in Sources */,
+				62ECD93F166DE1D000A15E24 /* KHHWebView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
@@ -3115,27 +4048,8 @@
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CardBook/CardBook-Prefix.pch";
-				INFOPLIST_FILE = "CardBook/CardBook-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = app;
-			};
-			name = Debug;
-		};
-		6274BF53165C7A7500DB5EBE /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_WARN_EMPTY_BODY = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
@@ -3147,6 +4061,68 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		6274BF53165C7A7500DB5EBE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Wosheng Software";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Wosheng Software";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CardBook/CardBook-Prefix.pch";
+				INFOPLIST_FILE = "CardBook/CardBook-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "206FDEBC-C2A3-406F-9532-CA7FA6D109B0";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "206FDEBC-C2A3-406F-9532-CA7FA6D109B0";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		62ECDA32166DE1D000A15E24 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CardBook/CardBook-Prefix.pch";
+				INFOPLIST_FILE = "CardBook copy-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PRODUCT_NAME = "CardBook copy";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		62ECDA33166DE1D000A15E24 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CardBook/CardBook-Prefix.pch";
+				INFOPLIST_FILE = "CardBook copy-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PRODUCT_NAME = "CardBook copy";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -3222,6 +4198,15 @@
 			buildConfigurations = (
 				6274BF52165C7A7500DB5EBE /* Debug */,
 				6274BF53165C7A7500DB5EBE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		62ECDA31166DE1D000A15E24 /* Build configuration list for PBXNativeTarget "CardBook_mod" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				62ECDA32166DE1D000A15E24 /* Debug */,
+				62ECDA33166DE1D000A15E24 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

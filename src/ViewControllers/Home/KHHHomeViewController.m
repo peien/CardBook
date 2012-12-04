@@ -162,10 +162,10 @@ typedef enum {
 
 - (void)rightBarButtonClick:(id)sender
 {
-    self.isNeedReloadTable = YES;
-    KHHMyDetailController *myDetailVC = [[KHHMyDetailController alloc] initWithNibName:nil bundle:nil];
-    myDetailVC.card = [self.myCardArray lastObject];
-    [self.navigationController pushViewController:myDetailVC animated:YES];
+//    self.isNeedReloadTable = YES;
+//    KHHMyDetailController *myDetailVC = [[KHHMyDetailController alloc] initWithNibName:nil bundle:nil];
+//    myDetailVC.card = [self.myCardArray lastObject];
+//    [self.navigationController pushViewController:myDetailVC animated:YES];
 }
 #pragma mark -
 #pragma mark View LifeCycle

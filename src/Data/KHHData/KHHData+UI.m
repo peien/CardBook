@@ -427,3 +427,18 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
 }
 
 @end
+
+
+@implementation KHHData (UI_Password)
+
+-(void) changePassword:(NSString *) oldPassword newPassword:(NSString *) newPassword {
+    NSString *action = kActionNetworkChangePassword;
+    if (!oldPassword || !newPassword) {
+        WarnParametersNotMeetRequirement(action);
+        return;
+    }
+    
+    [self.agent changePassword:oldPassword toNewPassword:newPassword];
+}
+
+@end

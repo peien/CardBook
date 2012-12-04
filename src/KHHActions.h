@@ -25,4 +25,7 @@ static NSString * const kActionNetworkDeleteImageFromVisitSchedule = @"NetworkDe
 static NSString * const kActionNetworkAllMessages    = @"NetworkAllMessages";
 static NSString * const kActionNetworkDeleteMessages = @"NetworkDeleteMessages";
 
+#pragma mark - password
+static NSString * const kActionNetworkChangePassword = @"NetworkChangePassword";
+
 #endif
