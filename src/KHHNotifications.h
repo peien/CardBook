@@ -105,6 +105,10 @@ static NSString * const KHHUIReplyCardFailed        = @"UIReplyCardFailed";
 //MARK: -名片点击到全屏预览的callback actionName
 static NSString * const KHHUICanclePreViewActionName = @"UICancleFullScreenPreView";
 
+//MARK: - 修改密码
+static NSString * const KHHUIChangePasswordSucceeded = @"UIChangePasswordSucceeded";
+static NSString * const KHHUIChangePasswordFailed    = @"UIChangePasswordFailed";
+
 #pragma mark - Misc
 //MARK: - 位置
 /*!
@@ -129,8 +133,8 @@ static NSString * const nNetworkLoginFailed    = @"loginFailed";
 static NSString * const nNetworkCreateAccountSucceeded = @"createAccountSucceeded";
 static NSString * const nNetworkCreateAccountFailed    = @"createAccountFailed";
 // 改密码
-static NSString * const KHHNetworkChangePasswordSucceeded = @"changePasswordSucceeded";
-static NSString * const KHHNetworkChangePasswordFailed    = @"changePasswordFailed";
+static NSString * const KHHNetworkChangePasswordSucceeded = @"NetworkChangePasswordSucceeded";
+static NSString * const KHHNetworkChangePasswordFailed    = @"NetworkChangePasswordFailed";
 // 重置密码
 static NSString * const nNetworkResetPasswordSucceeded = @"resetPasswordSucceeded";
 static NSString * const nNetworkResetPasswordFailed    = @"resetPasswordFailed";

@@ -37,7 +37,8 @@
     
     //捕获摇摇动作
     application.applicationSupportsShakeToEdit = YES;
-//    application.applicationIconBadgeNumber  = 0;
+    //清除程序图标数字
+//    [application setApplicationIconBadgeNumber:0];
     UILocalNotification *localNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
     if (localNotif)
     {

@@ -167,7 +167,7 @@
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 3;
     
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -184,6 +184,9 @@
             return 1;
             break;
         case 1:
+            return 1;
+            break;
+        case 2:
             return [self.itemArray count];
             break;
         default:
@@ -199,19 +202,20 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5.0f, 10.0f, 60.0f, 15.0f)];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5.0f, 11.0f, 60.0f, 15.0f)];
         label.textAlignment = UITextAlignmentLeft;
-        label.font = [UIFont systemFontOfSize:12];
+        label.font = [UIFont systemFontOfSize:14];
         label.numberOfLines = 0;
         label.lineBreakMode = UILineBreakModeWordWrap;
         label.contentMode = UIViewContentModeScaleAspectFit;
+//        label.textAlignment = UITextAlignmentCenter;
         label.tag = LABEL_CELL_TAG;
         [cell.contentView addSubview:label];
-        UITextField *textfield = [[UITextField alloc] initWithFrame:CGRectMake(80.0f, 7.0f, 200.0f, 40.0f)];
+        UITextField *textfield = [[UITextField alloc] initWithFrame:CGRectMake(80.0f, 10.0f, 200.0f, 40.0f)];
         textfield.tag = TEXTFIELD_CELL_TAG;
         textfield.enabled = NO;
         textfield.textAlignment = UITextAlignmentLeft;
-        textfield.font = [UIFont systemFontOfSize:12];
+        textfield.font = [UIFont systemFontOfSize:14];
         [cell.contentView addSubview:textfield];
     }
     UILabel *lab = (UILabel *)[cell.contentView viewWithTag:LABEL_CELL_TAG];
@@ -234,11 +238,59 @@
         tf.text = _myCard.title;
         
     }else if (indexPath.section == 1){
+        lab.text = @"分组";
+        //首先默认为未分组
+        tf.text = @"未分组";
+        //获取该名片所在的所有分组名
+        NSString * groupNames = [self cardGroupNames];
+        if (groupNames) {
+            tf.text = groupNames;
+        }
+        
+    }else if (indexPath.section == 2){
         lab.text = [[self.itemArray objectAtIndex:indexPath.row] objectForKey:@"key"];
         tf.text = [[self.itemArray objectAtIndex:indexPath.row] objectForKey:@"value"];
-  }
+    }
     return cell;
 }
+
+//获取当前card所在的所有分组名，多个时用","分开
+-(NSString *) cardGroupNames {
+    if (!_myCard || !_myCard.groups || _myCard.groups.count <= 0) {
+        return nil;
+    }
+    @try {
+        NSSet *groups = _myCard.groups;
+        NSEnumerator *enumerator = [groups objectEnumerator];
+        NSMutableString *groupNames = [[NSMutableString alloc] initWithCapacity:0];
+        NSObject* obj = enumerator.nextObject;
+        while (obj) {
+            Group * group = (Group *) obj;
+            if (group) {
+                //多个分组用"," 隔开
+                if (groupNames.length > 0) {
+                    [groupNames appendString:KHH_COMMA];
+                }
+                
+                [groupNames appendString:group.name];
+            }
+            obj = enumerator.nextObject;
+        }
+        
+        //如果分组名不为空时显示分组名
+        if (groupNames.length > 0) {
+            return groupNames;
+        }
+    }
+    @catch (NSException *exception) {
+        DLog(@"KKCardView.m get groups failed! error is %@",exception);
+    }
+    @finally {
+        
+    }
+    return nil;
+}
+
 //添加card到通讯录
 - (void)saveToContactBtnClick:(id)sender
 {

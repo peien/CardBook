@@ -133,6 +133,11 @@
     [self observeNotificationName:nNetworkSendCardToPhoneFailed selector:@"handleNetworkSendCardFailed:"];
     [self observeNotificationName:KHHNetworkSendCardToUserSucceeded selector:@"handleNetworkSendCardSucceeded:"];
     [self observeNotificationName:KHHNetworkSendCardToUserFailed selector:@"handleNetworkSendCardFailed:"];
+    
+    //修改密码
+    [self observeNotificationName:KHHNetworkChangePasswordSucceeded selector:@"handleNetworkChangePasswordSucceeded:"];
+    [self observeNotificationName:KHHNetworkChangePasswordFailed selector:@"handleNetworkChangePasswordFailed:"];
+    
 }
 
 #pragma mark - Handlers
@@ -657,6 +662,17 @@
 
 - (void)handleNetworkSendCardFailed:(NSNotification *)noti {
     [self postASAPNotificationName:KHHUIReplyCardFailed
+                              info:noti.userInfo];
+}
+
+//修改密码广播
+- (void)handleNetworkChangePasswordSucceeded:(NSNotification *)noti {
+    // 发送成功消息
+    [self postASAPNotificationName:KHHUIChangePasswordSucceeded info:noti.userInfo];
+}
+
+- (void)handleNetworkChangePasswordFailed:(NSNotification *)noti {
+    [self postASAPNotificationName:KHHNetworkChangePasswordFailed
                               info:noti.userInfo];
 }
 

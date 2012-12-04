@@ -403,7 +403,7 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
 {
     switch (section) {
         case 0:
-            return 2;
+            return 1;
         case 1:
             return _oneNums;
         case 2:
@@ -458,22 +458,23 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
             cell.frame = rect;
             return cell;
         }else if (indexPath.row == 1){
-            Edit_eCardViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIDZero];
-            if (cell == nil) {
-                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"Edit_eCardViewCell" owner:self options:nil];
-                cell = [nib objectAtIndex:1];
-                cell.name.text = @"分组";
-                cell.value.tag = kBaseTag + 2;
-                cell.value.enabled = NO;
-                cell.value.text = [_fieldValue objectAtIndex:2];
-                cell.value.placeholder = [[self.placeName objectAtIndex:2] objectAtIndex:2];
-                UIButton *accessBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-                [accessBtn addTarget:self action:@selector(accessBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-                accessBtn.frame = CGRectMake(270, 5, 35, 35);
-                [accessBtn setBackgroundImage:[UIImage imageNamed:@"accessBtnico.png"] forState:UIControlStateNormal];
-                [cell addSubview:accessBtn];
-            }
-            return cell;
+            //编辑分组的cell
+//            Edit_eCardViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIDZero];
+//            if (cell == nil) {
+//                NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"Edit_eCardViewCell" owner:self options:nil];
+//                cell = [nib objectAtIndex:1];
+//                cell.name.text = @"分组";
+//                cell.value.tag = kBaseTag + 2;
+//                cell.value.enabled = NO;
+//                cell.value.text = [_fieldValue objectAtIndex:2];
+//                cell.value.placeholder = [[self.placeName objectAtIndex:2] objectAtIndex:2];
+//                UIButton *accessBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//                [accessBtn addTarget:self action:@selector(accessBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//                accessBtn.frame = CGRectMake(270, 5, 35, 35);
+//                [accessBtn setBackgroundImage:[UIImage imageNamed:@"accessBtnico.png"] forState:UIControlStateNormal];
+//                [cell addSubview:accessBtn];
+//            }
+//            return cell;
         }
     }else if (indexPath.section == 1){
         Edit_eCardViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIDOne];
@@ -1157,11 +1158,13 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
     [self.saveInfoDic setObject:object forKey:key];
 
 }
+
+//选择分组的PickViewController
 - (void)accessBtnClick:(id)sender
 {
     PickViewController *pickVC = [[PickViewController alloc] initWithNibName:@"PickViewController" bundle:nil];
     pickVC.PickFlag = 3;
-    NSArray *arr = [[NSArray alloc] initWithObjects:@"未分组",@"广东（自定义分组）", nil];
+    NSArray *arr = [[NSArray alloc] initWithObjects:@"未分组", nil];
     pickVC.groupArr = arr;
     pickVC.delegate = self;
     _whichexternIndex = -1;

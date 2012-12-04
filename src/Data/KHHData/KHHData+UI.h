@@ -104,3 +104,8 @@
 @interface KHHData (UI_Reply)
 - (void)replyCard:(Card *) receiverCard myDefaultReplyCard:(Card *) myReplyCard;// 回赠名片，是收到名片就调真正回赠接口，是自建联系人就掉发送到手机接口
 @end
+
+//密码
+@interface KHHData (UI_Password)
+-(void) changePassword:(NSString *) oldPassword newPassword:(NSString *) newPassword;
+@end

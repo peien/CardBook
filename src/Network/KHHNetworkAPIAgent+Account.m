@@ -157,7 +157,9 @@
     @"oldPassword" : encOld,
     @"newPassword" : encNew
     };
-    [self postAction:@"changePassword"
+    
+    //用默认成功与失败广播
+    [self postAction:kActionNetworkChangePassword
                query:@"userPasswordService.updatePwd"
           parameters:parameters
              success:nil];
