@@ -400,6 +400,8 @@
 - (void)handleNetworkChildGroupsOfGroupIDSucceeded:(NSNotification *)noti {
     NSDictionary *oldInfo = noti.userInfo;
     DLog(@"[II] info = %@", oldInfo);
+    //先删除本地所有分组
+    [Group processDeleteAllLocalGroups];
     NSArray *iGroupList = oldInfo[kInfoKeyGroupList];
     // 插入数据库
     for (id igrp in iGroupList) {
@@ -414,6 +416,7 @@
     NSDictionary *oldInfo = noti.userInfo;
     DLog(@"[II] info = %@", oldInfo);
     NSArray *iCardGroupMapList = oldInfo[kInfoKeyICardGroupMapList];
+    [Group processDeleteAllCardGroupMaps];
     // 插入数据库
     for (id obj in iCardGroupMapList) {
         [Group processICardGroupMap:obj];

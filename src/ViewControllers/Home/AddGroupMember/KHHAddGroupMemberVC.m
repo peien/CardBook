@@ -70,7 +70,7 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    KHHMySearchBar *searchBar = [[KHHMySearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 37) simple:YES];
+    KHHMySearchBar *searchBar = [[KHHMySearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 37) simple:YES showSearchBtn:NO];
     UISearchDisplayController *searCtrl = [[UISearchDisplayController alloc] initWithSearchBar:searchBar contentsController:self];
     searCtrl.delegate = self;
     searCtrl.searchResultsDataSource = self;

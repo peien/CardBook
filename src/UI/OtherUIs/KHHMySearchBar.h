@@ -10,7 +10,10 @@
 
 @interface KHHMySearchBar : UISearchBar
 @property (assign, nonatomic) bool isSimple;
+@property (assign, nonatomic) bool isShowSearchBarBtn;
+//homepage页给searchbar添加view后，改变searchBar textfiled的位置了，有这个标记是当进系统搜索searchBar里还原textfiled的位置
+@property (assign, nonatomic) bool isSearching;
 @property (strong, nonatomic) UIButton *takePhoto;
 @property (strong, nonatomic) UIButton *synBtn;
-- (id)initWithFrame:(CGRect)frame simple:(BOOL)sim;
+- (id)initWithFrame:(CGRect)frame simple:(BOOL)sim showSearchBtn:(BOOL) isShow;
 @end

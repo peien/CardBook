@@ -204,10 +204,10 @@ typedef enum {
     self.floatBarVC.popover = self.popover;
     
     //自定义searchBar(加同步按钮及摄像头iamgeButton)
-    KHHMySearchBar *mySearchBar = [[KHHMySearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44) simple:_isNormalSearchBar];
-    [mySearchBar.synBtn addTarget:self action:@selector(synBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    KHHMySearchBar *mySearchBar = [[KHHMySearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44) simple:_isNormalSearchBar showSearchBtn:NO];
+    //搜索按钮
+//    [mySearchBar.synBtn addTarget:self action:@selector(synBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [mySearchBar.takePhoto addTarget:self action:@selector(takePhotoClick:) forControlEvents:UIControlEventTouchUpInside];
-    
     mySearchBar.delegate = self;
     [self.view addSubview:mySearchBar];
     
@@ -1002,15 +1002,22 @@ typedef enum {
 #pragma mark - UISearchDisplayDelegate
 // when we start/end showing the search UI
 - (void) searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller {
-
+    //把原本的按钮隐藏，显示系统默认的按钮
     for (UIButton *btn in controller.searchBar.subviews) {
         if (btn.tag == 1111 || btn.tag == 2222) {
             btn.hidden = YES;
         }
     }
+    
+    //标记正在搜索YES
+    if ([controller.searchBar isKindOfClass:[KHHMySearchBar class]]) {
+        KHHMySearchBar *mySearchBar = (KHHMySearchBar *) controller.searchBar;
+        mySearchBar.isSearching = YES;
+    }
+    
     [self searcResult];
 }
-    
+
 - (void) searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller {
     
 }
@@ -1019,6 +1026,12 @@ typedef enum {
         if (btn.tag == 1111 || btn.tag == 2222) {
             btn.hidden = NO;
         }
+    }
+    
+    //标记正在搜索NO
+    if ([controller.searchBar isKindOfClass:[KHHMySearchBar class]]) {
+        KHHMySearchBar *mySearchBar = (KHHMySearchBar *) controller.searchBar;
+        mySearchBar.isSearching = NO;
     }
 }
 
