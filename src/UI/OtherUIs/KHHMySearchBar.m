@@ -11,23 +11,27 @@
 @implementation KHHMySearchBar
 @synthesize isSimple = _isSimple;
 @synthesize takePhoto = _takePhoto;
-- (id)initWithFrame:(CGRect)frame simple:(BOOL)sim
+@synthesize isSearching = _isSearching;
+- (id)initWithFrame:(CGRect)frame simple:(BOOL)sim  showSearchBtn:(BOOL) isShow
 {
      self = [super initWithFrame:frame];
    
     if (self) {
         _isSimple = sim;
+        _isShowSearchBarBtn = isShow;
         if (_isSimple) {
             
         }else{
-            UIButton *refreshBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-            refreshBtn.tag = 2222;
-            refreshBtn.frame = CGRectMake(250, 0, 65, 40);
-            refreshBtn.titleLabel.font = [UIFont systemFontOfSize:12];
-            [refreshBtn setBackgroundImage:[[UIImage imageNamed:@"tongbu_normal.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 8, 0, 8)] forState:UIControlStateNormal];
-            [refreshBtn setTitle:NSLocalizedString(@"同步", nil) forState:UIControlStateNormal];
-            [self addSubview:refreshBtn];
-            self.synBtn = refreshBtn;
+            if (_isShowSearchBarBtn) {
+                UIButton *refreshBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+                refreshBtn.tag = 2222;
+                refreshBtn.frame = CGRectMake(250, 0, 65, 40);
+                refreshBtn.titleLabel.font = [UIFont systemFontOfSize:12];
+                [refreshBtn setBackgroundImage:[[UIImage imageNamed:@"tongbu_normal.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 8, 0, 8)] forState:UIControlStateNormal];
+                [refreshBtn setTitle:NSLocalizedString(@"同步", nil) forState:UIControlStateNormal];
+                [self addSubview:refreshBtn];
+                self.synBtn = refreshBtn;
+            }
             
             UIButton *OneBtn = [UIButton buttonWithType:UIButtonTypeCustom];
             OneBtn.tag = 1111;
@@ -35,7 +39,6 @@
             OneBtn.frame = CGRectMake(3, -5, 50, 50);
             [self addSubview:OneBtn];
             _takePhoto = OneBtn;
-        
         }
     }
     return self;
@@ -57,11 +60,21 @@
         
     }else{
         for (UIView *view in self.subviews) {
-            if ([view isKindOfClass:[UITextField class]]) {
+            if ([view isKindOfClass:NSClassFromString(@"UISearchBarTextField")]) {
                 UITextField *tf = (UITextField *)view;
                 CGRect rect = tf.frame;
-                rect.size.width = 180;
-                rect.origin.x = 65;
+                if (!_isSearching) {
+                    if (!_isShowSearchBarBtn) {
+                        rect.size.width = 180 + 65;
+                    }else {
+                        rect.size.width = 180;
+                    }
+                    rect.origin.x = 65;
+                }else {
+                    rect.size.width = 180 + 65;
+                    rect.origin.x = 5;
+                }
+                
                 tf.frame = rect;
             }
         }
