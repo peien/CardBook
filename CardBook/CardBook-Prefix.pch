@@ -16,4 +16,5 @@
 #import "KHHMacros.h"
 #import "KHHStatusCodes.h"
 #import "KHHLog.h"
+#import "KHHStringRes.h"
 #endif

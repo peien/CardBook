@@ -16,7 +16,7 @@
 #import "KHHNetworkAPI.h"
 #import "KHHNotifications.h"
 
-#define textOK NSLocalizedString(@"确定", @"OK")
+#define textOK NSLocalizedString(KHHMessageSure, @"OK")
 #define textRegister NSLocalizedString(@"注册",nil)
 #define textWarnRealPhoneNumber NSLocalizedString(@"注册必须用你的真实手机号码，以备密码丢失时重设密码。使用他人手机号码可能导致你的数据外泄或丢失。蜂巢不会透露您的号码给第三方。",nil)
 #define textAlertYouShouldAgree NSLocalizedString(@"必须同意隐私声明才能使用本产品。", nil) 

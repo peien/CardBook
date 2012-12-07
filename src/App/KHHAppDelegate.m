@@ -157,7 +157,7 @@
                                                         message:notification.alertBody
                                                        delegate:nil
                                               cancelButtonTitle:nil
-                                              otherButtonTitles:@"确定",nil];
+                                              otherButtonTitles:KHHMessageSure,nil];
         [alert show];
     }
 

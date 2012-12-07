@@ -21,7 +21,7 @@
 #define TheScrollHeightPadding 5
 
 #define textCardSent NSLocalizedString(@"名片发送成功", @"")
-#define textOK NSLocalizedString(@"确定", @"")
+#define textOK NSLocalizedString(KHHMessageSure, @"")
 
 @implementation CardReceiver
 @synthesize name = _name;

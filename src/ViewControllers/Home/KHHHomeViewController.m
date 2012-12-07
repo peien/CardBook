@@ -361,17 +361,40 @@ typedef enum {
 }
 //获取分组
 - (NSArray *)getAllGroups{
-    BOOL isHaveMobilePhoneGroup = [self.myDefaults isAddMobPhoneGroup];
-    if (isHaveMobilePhoneGroup) {
-        BaseBtnTitleArrayMobiGrop;
-        self.baseNum = 4;
-    }else{
-        BaseBtnTitleArray;
-        self.baseNum = 3;
-    }
+    //初始化分组，如果是选择人的话就默认只有两个固定分组
     if (self.isNormalSearchBar) {
         BaseBtnTitleArrayVisited;
+    }else {
+        //默认只有2个分组（所有、未分组）如果用户设置显示手机就分组数 +1 ,如果是同事 +1
+        self.baseNum = 2;
+        //是否显示手机通讯录
+        BOOL isHaveMobilePhoneGroup = [self.myDefaults isAddMobPhoneGroup];
+        if (isHaveMobilePhoneGroup) {
+            self.baseNum += 1;
+        }
+        
+        //是否是公司用户（判断是否显示同事分组）
+        NSNumber *companyID = [self.myDefaults currentCompanyID];
+        if (companyID.longValue > 0) {
+            self.baseNum += 1;
+        }
+        
+        //根据固定分组数来初始化固定分组
+        switch (self.baseNum) {
+            case 4:
+                BaseBtnTitleArrayMobiGrop;
+                break;
+            case 3:
+                BaseBtnTitleArray;
+                break;
+            case 2:
+                BaseBtnTitleArrayVisited;
+                break;
+            default:
+                break;
+        }
     }
+    
     self.oWnGroupArray = [self.dataControl allTopLevelGroups];
     for (int i = 0; i < self.oWnGroupArray.count; i++) {
         Group *group = [self.oWnGroupArray objectAtIndex:i];
@@ -407,7 +430,7 @@ typedef enum {
     KHHButtonCell *cell = (KHHButtonCell *)[_btnTable cellForRowAtIndexPath:indexPath];
     if (self.messageImageView == nil) {
         self.messageImageView = [[UIImageView alloc] initWithImage:[[UIImage imageNamed:@"message_bg.png"]stretchableImageWithLeftCapWidth:0 topCapHeight:0]];
-        self.messageImageView.frame = CGRectMake(50, 0, 35, 35);
+        self.messageImageView.frame = CGRectMake(40, -8, 35, 35);
         //self.messageImageView.backgroundColor = [UIColor grayColor];
         numLab2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 3, 35, 35)];
         numLab2.backgroundColor = [UIColor clearColor];
@@ -476,6 +499,8 @@ typedef enum {
                     cell.backgroundColor = [UIColor clearColor];
                 }
                 cell.button.tag = indexPath.row + 100;
+                cell.button.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
+                cell.button.titleLabel.numberOfLines = 2;
                 [cell.button setTitle:NSLocalizedString([self.groupTitleArr objectAtIndex:indexPath.row], nil) forState:UIControlStateNormal];
                 [cell.button addTarget:self action:@selector(cellBtnClick:) forControlEvents:UIControlEventTouchUpInside];
                 UIEdgeInsets insets = {0, 0, 45, 25};
@@ -623,11 +648,7 @@ typedef enum {
                     KHHClientCellLNPCC *cell = (KHHClientCellLNPCC*)[tableView cellForRowAtIndexPath:indexPath];
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     DetailInfoViewController *detailVC = [[DetailInfoViewController alloc] initWithNibName:nil bundle:nil];
-                    //同事不可评估
-                    if (self.currentIndexPath.row == 1) {
-                        detailVC.isCompanyColleagues = YES;
-                        detailVC.isColleagues = YES;
-                    }
+                    
                     Card *card = (Card *)[self.generalArray objectAtIndex:indexPath.row];
                     detailVC.card = card;
                     if ([card isKindOfClass:[ReceivedCard class]]){
@@ -911,7 +932,7 @@ typedef enum {
             [self observeNotificationName:KHHUIUpdateGroupSucceeded selector:@"handleUpdateGroupSucceeded:"];
             [self observeNotificationName:KHHUIUpdateGroupFailed selector:@"handleUpdateGroupFailed:"];
             
-            myAlertView *alert = [[myAlertView alloc] initWithTitle:@"修改组名" message:nil delegate:self style:kMyAlertStyleTextField cancelButtonTitle:@"确定" otherButtonTitles:@"取消"];
+            myAlertView *alert = [[myAlertView alloc] initWithTitle:@"修改组名" message:nil delegate:self style:kMyAlertStyleTextField cancelButtonTitle:KHHMessageSure otherButtonTitles:@"取消"];
             _titleStr = NSLocalizedString(@"修改组名", nil);
             _isAddGroup = NO;
             _isDelGroup = NO;
@@ -925,8 +946,8 @@ typedef enum {
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"删除", nil) 
                                                             message:NSLocalizedString(@"将会删除该组", nil) 
                                                            delegate:self
-                                                  cancelButtonTitle:NSLocalizedString(@"确定", nil) 
-                                                  otherButtonTitles:NSLocalizedString(@"取消", nil), nil];
+                                                  cancelButtonTitle:NSLocalizedString(KHHMessageSure, nil) 
+                                                  otherButtonTitles:NSLocalizedString(KHHMessageCancle, nil), nil];
             _isDelGroup = YES;
             [alert show];
             return;
@@ -1057,8 +1078,8 @@ typedef enum {
                                        message:nil
                                       delegate:self
                                          style:kMyAlertStyleTextField
-                             cancelButtonTitle:NSLocalizedString(@"确定", nil)
-                             otherButtonTitles:NSLocalizedString(@"取消",nil)];
+                             cancelButtonTitle:NSLocalizedString(KHHMessageSure, nil)
+                             otherButtonTitles:NSLocalizedString(KHHMessageCancle,nil)];
     _isAddGroup = YES;
     _isDelGroup = NO;
     [_alert show];

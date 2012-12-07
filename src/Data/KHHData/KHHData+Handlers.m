@@ -144,9 +144,13 @@
 - (void)handleNetworkActionQueueFailed:(NSNotification *)noti {
     NSDictionary *info = noti.userInfo;
     ALog(@"[II] info = %@", info);
-    // 根据 queue 采取不同措施
-    NSDictionary *extra= info[kInfoKeyExtra];
-    [self startNextQueuedOperation:extra[kExtraKeyQueue]];
+    // 根据 queue 采取不同措施 如果是网络错误就直接返回错误
+    if ([[noti.userInfo objectForKey:@"errorCode"]intValue] == KHHErrorCodeConnectionOffline){
+        [self syncAllDataEnded:NO userInfo:noti.userInfo];
+    }else {
+        NSDictionary *extra= info[kInfoKeyExtra];
+        [self startNextQueuedOperation:extra[kExtraKeyQueue]];
+    }
 }
 - (void)handleAllDataAfterDateSucceeded:(NSNotification *)noti {
     DLog(@"[II] noti userInfo keys = %@", [noti.userInfo allKeys]);
@@ -675,7 +679,7 @@
 }
 
 - (void)handleNetworkChangePasswordFailed:(NSNotification *)noti {
-    [self postASAPNotificationName:KHHNetworkChangePasswordFailed
+    [self postASAPNotificationName:KHHUIChangePasswordFailed
                               info:noti.userInfo];
 }
 

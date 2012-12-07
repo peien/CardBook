@@ -27,7 +27,7 @@
 #pragma mark - Syncs
 // 开始批量同步所有信息
 - (void)startSyncAllData;
-- (void)syncAllDataEnded:(BOOL)succeed;
+- (void)syncAllDataEnded:(BOOL)succeed userInfo:(NSDictionary *) info;
 - (void)startNextQueuedOperation:(NSMutableArray *)queue;
 //
 - (void)syncPartly:(NSMutableArray *)queue; // 所谓的syncAll接口

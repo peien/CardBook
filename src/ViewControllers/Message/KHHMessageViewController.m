@@ -58,16 +58,21 @@
     
     DLog(@"handleSyncMessagesSucceeded! noti is ======%@",noti.userInfo);
     [self stopObservingForMessage];
+    [self refreshTable];
+}
+
+-(void) refreshTable {
     self.messageArr = [self.dataCtrl allMessages];
     [_theTable reloadData];
 }
+
 - (void)handlenUISyncMessagesFailed:(NSNotification *)noti{
     DLog(@"handlenUISyncMessagesFailed! noti is ======%@",noti.userInfo);
     [self stopObservingForMessage];
     [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"错误提示", nil)
                                message:@"同步消息失败,请确保网络可用"
                               delegate:nil
-                     cancelButtonTitle:NSLocalizedString(@"确定", nil)
+                     cancelButtonTitle:NSLocalizedString(KHHMessageSure, nil)
                      otherButtonTitles:nil] show];
 
 }
@@ -90,8 +95,7 @@
     [super viewWillAppear:animated];
     [KHHShowHideTabBar showTabbar];
     if (self.isNeedReloadTable) {
-        self.messageArr = [self.dataCtrl allMessages];
-        [_theTable reloadData];
+        [self refreshTable];
     }
 }
 - (void)viewWillDisappear:(BOOL)animated{

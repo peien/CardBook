@@ -27,7 +27,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        [self.rightBtn setTitle:@"确定" forState:UIControlStateNormal];
+        [self.rightBtn setTitle:KHHMessageSure forState:UIControlStateNormal];
     }
     return self;
 }

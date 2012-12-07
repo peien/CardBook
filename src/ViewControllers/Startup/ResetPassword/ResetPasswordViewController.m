@@ -13,11 +13,11 @@
 #import "KHHNotifications.h"
 #import "UIImage+KHH.h"
 
-#define textResetPassword NSLocalizedString(@"重置密码", @"")
-#define textInvalidPhone NSLocalizedString(@"无效手机号", @"")
-#define textRequestSent NSLocalizedString(@"重置请求已发送", @"")
-#define textOK   NSLocalizedString(@"确定", @"")
-#define textSend NSLocalizedString(@"发送", @"")
+#define textResetPassword NSLocalizedString(KHHMessageResetPassword, @"")
+#define textInvalidPhone NSLocalizedString(KHHMessageInvalidPhone, @"")
+#define textRequestSent NSLocalizedString(KHHMessageResetRequestIsSended, @"")
+#define textOK   NSLocalizedString(KHHMessageSure, @"")
+#define textSend NSLocalizedString(KHHMessageSend, @"")
 
 
 @implementation ResetPasswordViewController

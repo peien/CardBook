@@ -53,19 +53,19 @@
 }
 */
 - (void)initViewData{
-    NSSortDescriptor *descFini = [NSSortDescriptor sortDescriptorWithKey:@"isFinished" ascending:YES];
+//    NSSortDescriptor *descFini = [NSSortDescriptor sortDescriptorWithKey:@"isFinished" ascending:YES];
     NSSortDescriptor *descDate = [NSSortDescriptor sortDescriptorWithKey:@"plannedDate" ascending:NO];
     if (self.isAllVisitedSch) {
         KHHData *data = [KHHData sharedData];
         self.dataArray  = [data allSchedules];
     }else if(self.isFromHomeVC){
         NSSet *set = self.card.schedules;
-        self.dataArray = [[set allObjects] sortedArrayUsingDescriptors:@[descFini,descDate]];
+        self.dataArray = [[set allObjects] sortedArrayUsingDescriptors:@[descDate]];
     }else if (self.isFromCalVC){
         if ([self.card isKindOfClass:[MyCard class]]) {
             self.card = nil;
         }
-        self.dataArray = [[[KHHData sharedData] schedulesOnCard:self.card date:self.selectedDate] sortedArrayUsingDescriptors:@[descFini,descDate]];
+        self.dataArray = [[[KHHData sharedData] schedulesOnCard:self.card date:self.selectedDate] sortedArrayUsingDescriptors:@[descDate]];
     }
 }
 #pragma mark -
