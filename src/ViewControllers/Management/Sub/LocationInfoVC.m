@@ -382,7 +382,7 @@
     [[[UIAlertView alloc] initWithTitle:nil
                                 message:@"签到成功"
                                delegate:self
-                      cancelButtonTitle:@"确定"
+                      cancelButtonTitle:KHHMessageSure
                       otherButtonTitles:nil, nil] show];
 }
 - (void)handleCheckInFailed:(NSNotification *)info{
@@ -391,7 +391,7 @@
     [[[UIAlertView alloc] initWithTitle:nil
                                 message:@"签到失败"
                                delegate:nil
-                      cancelButtonTitle:@"确定"
+                      cancelButtonTitle:KHHMessageSure
                       otherButtonTitles:nil, nil] show];
 }
 - (void)stopObservingForUpdateLocation{

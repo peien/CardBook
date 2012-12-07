@@ -15,6 +15,7 @@
 #import "UIImageView+WebCache.h"
 #import "KHHAddressBook.h"
 #import "KHHAppDelegate.h"
+#import "KHHDefaults.h"
 
 #define CARD_IMGVIEW_TAG 333
 #define CARDMOD_VIEW_TAG 444
@@ -71,19 +72,20 @@
     [btnFooter addTarget:self action:@selector(saveToContactBtnClick:) forControlEvents:UIControlEventTouchUpInside];
     [footView addSubview:btnFooter];
     
-    UIButton *btnFooterDel = [UIButton buttonWithType:UIButtonTypeCustom];
-    btnFooterDel.frame = CGRectMake(60.0f, 55.0f, 200, 37);
-    [btnFooterDel setTitle:@"删除名片" forState:UIControlStateNormal];
-    [btnFooterDel setBackgroundImage:[[UIImage imageNamed:@"tongbu_normal.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10, 0, 10)] forState:UIControlStateNormal];
-    btnFooterDel.titleLabel.font = [UIFont systemFontOfSize:15];
-    [btnFooterDel setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [btnFooterDel addTarget:self action:@selector(delCardBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [footView addSubview:btnFooterDel];
-    _theTable.tableFooterView = footView;
-    //我的名片暂时不可以删除
-    if ([self.myCard isKindOfClass:[MyCard class]]) {
-        btnFooterDel.enabled = NO;
+    //是同事、我的名片的时候不添加
+    KHHDefaults *khhDefault = [KHHDefaults sharedDefaults];
+    NSNumber *companyID = [khhDefault currentCompanyID];
+    if (!([self.myCard isKindOfClass:[MyCard class]] || (self.myCard.company && self.myCard.company.id.longValue == companyID.longValue && companyID.longValue > 0))) {
+        UIButton *btnFooterDel = [UIButton buttonWithType:UIButtonTypeCustom];
+        btnFooterDel.frame = CGRectMake(60.0f, 55.0f, 200, 37);
+        [btnFooterDel setTitle:@"删除名片" forState:UIControlStateNormal];
+        [btnFooterDel setBackgroundImage:[[UIImage imageNamed:@"tongbu_normal.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10, 0, 10)] forState:UIControlStateNormal];
+        btnFooterDel.titleLabel.font = [UIFont systemFontOfSize:15];
+        [btnFooterDel setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btnFooterDel addTarget:self action:@selector(delCardBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+        [footView addSubview:btnFooterDel];
     }
+    _theTable.tableFooterView = footView;
 }
 //初始化界面数据
 - (void)initViewData

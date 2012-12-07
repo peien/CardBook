@@ -22,10 +22,8 @@
 @property (assign, nonatomic) KHHAppDelegate      *app;
 @property (strong, nonatomic) Card                *card;
 @property (strong, nonatomic) KHHCardMode         *cardM;
-@property (assign, nonatomic) bool                isCompanyColleagues;
 @property (nonatomic, assign) bool                isNeedReloadTable;
 @property (assign, nonatomic) bool                isReloadVisiteTable;
-@property (assign, nonatomic) bool                isColleagues;
 @property (strong, nonatomic) Card              *myDefaultReplyCard;
 
 @end

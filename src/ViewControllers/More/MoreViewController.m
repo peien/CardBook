@@ -298,8 +298,8 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"登出", nil)
                                                             message:@"确定要登出吗"
                                                            delegate:self
-                                                  cancelButtonTitle:@"取消"
-                                                  otherButtonTitles:@"确定", nil];
+                                                  cancelButtonTitle:KHHMessageCancle
+                                                  otherButtonTitles:KHHMessageSure, nil];
             [alert show];
 
         }

@@ -24,6 +24,7 @@
 #import "KHHDataAPI.h"
 #import "Company.h"
 #import "KHHMyAlertViewWithSubView.h"
+#import "KHHDefaults.h"
 
 #define POPDismiss [self.popover dismissPopoverAnimated:YES];
 #define LABEL_NAME_TAG    98980
@@ -60,12 +61,10 @@
 @synthesize card;
 @synthesize cardM;
 @synthesize isNeedReloadTable;
-@synthesize isCompanyColleagues;
 @synthesize dataCtrl;
 @synthesize isReloadCardTable;
 @synthesize isReloadVisiteTable;
 @synthesize isReloadCustomValTable;
-@synthesize isColleagues;
 @synthesize myDefaultReplyCard = _myDefaultReplyCard;
 
 #pragma mark -
@@ -75,7 +74,12 @@
     if (self) {
         // Custom initialization
         self.title = NSLocalizedString(@"详细信息", nil);
-        [self.rightBtn setTitle:NSLocalizedString(@"回赠", nil) forState:UIControlStateNormal];
+        //公司同事不显示回赠
+        if ([self isCompanyColleagues]) {
+            self.rightBtn.hidden = NO;
+        }else {
+            [self.rightBtn setTitle:NSLocalizedString(@"回赠", nil) forState:UIControlStateNormal];
+        }
         self.tabBarController.tabBar.hidden = YES;
         self.dataCtrl = [KHHData sharedData];
         //回赠名片跟回赠按钮一起初始化
@@ -156,6 +160,16 @@
 
 }
 
+//判断是否是同事
+-(BOOL) isCompanyColleagues {
+    KHHDefaults *myDefault = [KHHDefaults sharedDefaults];
+    NSNumber *companyID = [myDefault currentCompanyID];
+    if(self.card.company && self.card.company.id.longValue == companyID.longValue && companyID.longValue > 0){
+        return YES;
+    }
+    
+    return NO;
+}
 //初始化视图
 - (void)initView
 {
@@ -200,10 +214,17 @@
     [headerView addSubview:jobLab];
     [self.view addSubview:headerView];
     NSArray *arr = [NSArray arrayWithObjects:@"电子名片",@"拜访日志",@"客户评估", nil];
-    for (int i = 0; i<3; i++) {
+    NSInteger showTabCount = 3;
+    //同事只显示电子名片
+    if ([self isCompanyColleagues]) {
+        showTabCount = 1;
+    }
+    
+    //添加
+    for (int i = 0; i < showTabCount; i++) {
         UIButton *headBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         headBtn.adjustsImageWhenHighlighted = NO;
-        headBtn.frame = CGRectMake(0+i*(45+60), 63, 320/3, 37);
+        headBtn.frame = CGRectMake(0+i*(45+60), 63, 320/showTabCount, 37);
         [headBtn setTitle:NSLocalizedString([arr objectAtIndex:i], nil) forState:UIControlStateNormal];
         if (i == 0 || i == 2) {
             [headBtn setBackgroundImage:[UIImage imageNamed:@"xiangqing_btn13_normal.png"] forState:UIControlStateNormal];
@@ -217,13 +238,6 @@
         headBtn.tag = i + 999;
         [headBtn addTarget:self action:@selector(headBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [headerView addSubview:headBtn];
-        if (self.isColleagues) {
-            [headBtn setBackgroundImage:[UIImage imageNamed:@"xiangqing_btn13_normal.png"] forState:UIControlStateNormal];
-            if (headBtn.tag == 1000 || headBtn.tag == 1001) {
-                headBtn.enabled = NO;
-                //[headBtn setTitle:nil forState:UIControlStateNormal];
-            }
-        }
     }
 
     //电子名片视图
@@ -233,32 +247,34 @@
     [_cardView initView];
     [_cardView initViewData];
     [self.containView addSubview:_cardView];
-    //拜访日志
-    _visitCalView = [[[NSBundle mainBundle] loadNibNamed:@"KHHVisitCalendarView" owner:self options:nil] objectAtIndex:0];
-    _visitCalView.card = self.card;
-    _visitCalView.isFromHomeVC = YES;
-    [_visitCalView initViewData];
-    
-    CGRect rect = _visitCalView.footView.frame;
-    CGRect rectTable = _visitCalView.theTable.frame;
-    rect.origin.y = 280;
-    rectTable.size.height = 325;
-    rectTable.origin.y = 8;
-    _visitCalView.footView.frame = rect;
-    _visitCalView.theTable.frame = rectTable;
-    _visitCalView.viewCtrl = self;
-    _visitCalView.footView.backgroundColor = [UIColor clearColor];
-    [self.containView addSubview:_visitCalView];
-    
-    //客户评估视图
-    _customView = [[[NSBundle mainBundle] loadNibNamed:@"KHHCustomEvaluaView" owner:self options:nil] objectAtIndex:0];
-    if (self.card.evaluation != nil) {
-        _customView.importFlag = self.card.evaluation.remarks;
-        _customView.relationEx = [self.card.evaluation.degree floatValue];
-        _customView.customValue = [self.card.evaluation.value floatValue];
+    if (showTabCount > 1) {
+        //拜访日志
+        _visitCalView = [[[NSBundle mainBundle] loadNibNamed:@"KHHVisitCalendarView" owner:self options:nil] objectAtIndex:0];
+        _visitCalView.card = self.card;
+        _visitCalView.isFromHomeVC = YES;
+        [_visitCalView initViewData];
+        
+        CGRect rect = _visitCalView.footView.frame;
+        CGRect rectTable = _visitCalView.theTable.frame;
+        rect.origin.y = 280;
+        rectTable.size.height = 325;
+        rectTable.origin.y = 8;
+        _visitCalView.footView.frame = rect;
+        _visitCalView.theTable.frame = rectTable;
+        _visitCalView.viewCtrl = self;
+        _visitCalView.footView.backgroundColor = [UIColor clearColor];
+        [self.containView addSubview:_visitCalView];
+        
+        //客户评估视图
+        _customView = [[[NSBundle mainBundle] loadNibNamed:@"KHHCustomEvaluaView" owner:self options:nil] objectAtIndex:0];
+        if (self.card.evaluation != nil) {
+            _customView.importFlag = self.card.evaluation.remarks;
+            _customView.relationEx = [self.card.evaluation.degree floatValue];
+            _customView.customValue = [self.card.evaluation.value floatValue];
+        }
+        [self.containView addSubview:_customView];
     }
-    [self.containView addSubview:_customView];
-    
+        
     //接收到的卡片不能修改
     UIButton *bottomBtn = [UIButton buttonWithType:UIButtonTypeCustom];
     bottomBtn.tag = 323;
@@ -361,10 +377,6 @@
         [self.containView bringSubviewToFront:_customView];
         _isToeCardVC = NO;
         bottomBtn.hidden = NO;
-        //同事的客户评估及手机不能编辑
-        if (self.isCompanyColleagues) {
-            bottomBtn.hidden = YES;
-        }
     }
 }
 

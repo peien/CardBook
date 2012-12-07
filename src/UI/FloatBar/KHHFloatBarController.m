@@ -236,7 +236,7 @@
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:_title_
                                                     message:msg
                                                    delegate:nil
-                                          cancelButtonTitle:@"确定"
+                                          cancelButtonTitle:KHHMessageSure
                                           otherButtonTitles:nil];
     [alert show];
 }
@@ -254,7 +254,7 @@
         [[[UIAlertView alloc] initWithTitle:nil
                                    message:NSLocalizedString(@"没有地址或公司名称可定位", nil)
                                   delegate:nil
-                         cancelButtonTitle:NSLocalizedString(@"确定", nil)
+                         cancelButtonTitle:NSLocalizedString(KHHMessageSure, nil)
                          otherButtonTitles: nil] show];
     }
 

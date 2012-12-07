@@ -92,7 +92,7 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        [self.rightBtn setTitle:NSLocalizedString(@"保存", nil) forState:UIControlStateNormal];
+        [self.rightBtn setTitle:NSLocalizedString(KHHMessageSave, nil) forState:UIControlStateNormal];
         self.interCard = [[InterCard alloc] init];
         self.dataCtrl = [KHHData sharedData];
     }
@@ -106,8 +106,8 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
     //注册修改card 或 创建card消息
     [self observeNotificationName:KHHUIModifyCardSucceeded selector:@"handleModifyCardSucceeded"];
     [self observeNotificationName:KHHUIModifyCardFailed selector:@"handleModifyCardFailed:"];
-    [self observeNotificationName:KHHUICreateCardSucceeded selector:@"handleCreateCardSucceeded"];
-    [self observeNotificationName:KHHUICreateCardFailed selector:@"handleCreateCardFailed"];
+    [self observeNotificationName:KHHUICreateCardSucceeded selector:@"handleCreateCardSucceeded:"];
+    [self observeNotificationName:KHHUICreateCardFailed selector:@"handleCreateCardFailed:"];
     [self saveCardInfo];
 }
 #pragma mark - Handle Modify or Create Card Message
@@ -121,19 +121,41 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
 {
     DLog(@"ModifyCardFailed! noti = %@", noti);
     [self stopobservingFor];
-    [self warnAlertMessage:@"修改失败"];
+    [self warnAlertMessage:KHHMessageModifyFailed];
 }
-- (void)handleCreateCardSucceeded
+- (void)handleCreateCardSucceeded:(NSNotification *)noti
 {
     DLog(@"CreateCardSucceeded");
     [self stopobservingFor];
     [self.navigationController popViewControllerAnimated:YES];
 
 }
-- (void)handleCreateCardFailed
+- (void)handleCreateCardFailed:(NSNotification *)info
 {
    [self stopobservingFor];
     DLog(@"CreateCardFailed");
+    
+    //设置消息
+    NSString *message = nil;
+    if ([[info.userInfo objectForKey:@"errorCode"]intValue] == KHHErrorCodeConnectionOffline){
+        message = KHHMessageNetworkEorror;
+    }
+    
+    //设置标题
+    NSString *title = nil;
+    if (self.type == KCardViewControllerTypeNewCreate) {
+        title = KHHMessageCreateCardFailed;
+    }else {
+        title = KHHMessageModifyCardFailed;
+    }
+    
+    //提示没有收到新名片
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                    message:message
+                                                   delegate:nil
+                                          cancelButtonTitle:KHHMessageSure
+                                          otherButtonTitles:nil, nil];
+    [alert show];
 }
 - (void)stopobservingFor{
     [self stopObservingNotificationName:KHHUIModifyCardSucceeded];
@@ -662,7 +684,7 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
 //编辑头像
 - (void)tapIconImage:(UITapGestureRecognizer *)sender
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"不可编辑" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"不可编辑" delegate:nil cancelButtonTitle:KHHMessageSure otherButtonTitles:nil, nil];
     [alert show];
 
 }

@@ -84,7 +84,7 @@
 - (void)handleSaveEvaluationFailed:(NSNotification *)info{
     [self stopObservingForEvaluation];
     DLog(@"handleSaveEvaluationFailed! ====== %@",info);
-    self.hud.labelText = NSLocalizedString(@"保存失败", nil);
+    self.hud.labelText = NSLocalizedString(KHHMessageSaveFailed, nil);
     [self.hud hide:YES afterDelay:1];
 
 }

@@ -19,6 +19,7 @@
 @property (strong, nonatomic) NSMutableArray *selectItemArray;
 @property (strong, nonatomic) NSMutableArray *delMessageArr;
 @property (strong, nonatomic) KHHData        *dataCtrl;
+@property (strong, nonatomic) MBProgressHUD  *progressBar;
 @end
 
 @implementation KHHEditMSGViewController
@@ -28,13 +29,14 @@
 @synthesize delMessageArr = _delMessageArr;
 @synthesize messageArr;
 @synthesize dataCtrl;
+@synthesize progressBar;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        //self.navigationItem.leftBarButtonItem = nil;
+        self.title = KHHMessageEditMessage;
         [self.rightBtn setTitle:@"删除" forState:UIControlStateNormal];
         self.dataCtrl = [KHHData sharedData];
         
@@ -44,27 +46,44 @@
 - (void)rightBarButtonClick:(id)sender
 {
     //注册删除消息,改为本地删除，取消注册消息
-//    [self observeNotificationName:nUIDeleteMessagesSucceeded selector:@"handleDeleteMessagesSucceeded:"];
-//    [self observeNotificationName:nUIDeleteMessagesFailed selector:@"handleDeleteMessagesFailed:"];
-//    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    [self observeNotificationName:nUIDeleteMessagesSucceeded selector:@"handleDeleteMessagesSucceeded:"];
+    [self observeNotificationName:nUIDeleteMessagesFailed selector:@"handleDeleteMessagesFailed:"];
+    progressBar = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    progressBar.labelText = KHHMessageDeleteMessage;
     [self delMessageFromArray];
 }
 #pragma mark -
 - (void)handleDeleteMessagesSucceeded:(NSNotification *)noti{
     DLog(@"handleDeleteMessagesSucceeded! noti is ====== %@",noti.userInfo);
-    //[self stopObservingForDelMessage];
+    [self stopObservingForDelMessage];
+    //返回前一页
+    [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)handleDeleteMessagesFailed:(NSNotification *)noti{
     DLog(@"handleDeleteMessagesFailed! noti is ====== %@",noti.userInfo);
-    //[self stopObservingForDelMessage];
+    [self stopObservingForDelMessage];
+    NSString *message = nil;
+    if ([[noti.userInfo objectForKey:@"errorCode"]intValue] == KHHErrorCodeConnectionOffline){
+        message = KHHMessageNetworkEorror;
+    }else {
+        message = KHHMessageEditMessageFailed;
+    }
+    //提示没有收到新名片
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:KHHMessageEditMessage
+                                                    message:message
+                                                   delegate:nil
+                                          cancelButtonTitle:KHHMessageSure
+                                          otherButtonTitles:nil, nil];
+    [alert show];
 
 }
-//- (void)stopObservingForDelMessage{
-//    [self stopObservingNotificationName:nUIDeleteMessagesSucceeded];
-//    [self stopObservingNotificationName:nUIDeleteMessagesFailed];
-//    [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
-//
-//}
+- (void)stopObservingForDelMessage{
+    [self stopObservingNotificationName:nUIDeleteMessagesSucceeded];
+    [self stopObservingNotificationName:nUIDeleteMessagesFailed];
+    if (progressBar) {
+        [progressBar hide:YES];
+    }
+}
 #pragma mark -
 - (void)viewDidLoad
 {
@@ -159,7 +178,6 @@
         }
     }
     [self.dataCtrl deleteMessages:_delMessageArr];
-    [self.navigationController popViewControllerAnimated:YES];
 
 }
 -(void)setEditing:(BOOL)editing animated:(BOOL)animated
