@@ -390,12 +390,11 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
                                           sortDescriptors:nil];
     return fetched.count;
 }
+
+//删除用户消息（非系统通知）
+//主要是吧服务器上的标记置成已读
 - (void)deleteMessages:(NSArray *)msgList {
-//    [self.agent deleteMessages:msgList];
-    for (KHHMessage *msg in msgList) {
-        [self.context deleteObject:msg];
-    }
-    [self saveContext];
+    [self.agent deleteMessages:msgList];
 }
 
 @end

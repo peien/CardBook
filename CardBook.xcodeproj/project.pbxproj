@@ -950,6 +950,7 @@
 		624421501615BA1900D2A9B9 /* left_bg2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left_bg2@2x.png"; sourceTree = "<group>"; };
 		624421521615C5BB00D2A9B9 /* cardTouying@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cardTouying@2x.png"; sourceTree = "<group>"; };
 		624595281625526A0028E944 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		625B4BF0166F50A100FE3FE6 /* KHHStringRes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = KHHStringRes.h; sourceTree = "<group>"; };
 		625BD93A16086FEF00F565AD /* KHHAddImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHAddImageCell.h; sourceTree = "<group>"; };
 		625BD93B16086FEF00F565AD /* KHHAddImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHAddImageCell.m; sourceTree = "<group>"; };
 		625BD93E1608701E00F565AD /* KHHAddImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHAddImageCell.xib; sourceTree = "<group>"; };
@@ -2016,7 +2017,6 @@
 		98A84D9A1602D20000A4A673 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				629BE10E165F4A6600FB3B04 /* Util */,
 				98A84D9C1602D21F00A4A673 /* App */,
 				98A84D9D1602D22600A4A673 /* Data */,
 				98542230162BA46500A9E50A /* KHHActions.h */,
@@ -2026,11 +2026,13 @@
 				98A84DA61602D2DA00A4A673 /* KHHMacros.h */,
 				98A84DA71602D2DA00A4A673 /* KHHNotifications.h */,
 				98A84DA81602D2DA00A4A673 /* KHHStatusCodes.h */,
+				625B4BF0166F50A100FE3FE6 /* KHHStringRes.h */,
 				981BA0FF162FE6410036A4B8 /* KHHTransformation.h */,
 				982AACC21609C903002B9BAD /* KHHTypes.h */,
 				98A84D9E1602D23100A4A673 /* Misc */,
 				98A84D9F1602D23A00A4A673 /* Network */,
 				98A84DA01602D24600A4A673 /* UI */,
+				629BE10E165F4A6600FB3B04 /* Util */,
 				98A84DA11602D24D00A4A673 /* ViewControllers */,
 			);
 			path = src;

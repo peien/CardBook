@@ -201,15 +201,16 @@
             break;
         case 113:
         {
+            
             //同步所有，同步联系人，启动定位服务
-            //[self synBtnClick];
+            [self synBtnClick];
             //收到最后一张新的卡片
-            [self observeNotificationName:KHHUIPullLatestReceivedCardSucceeded selector:@"handlePullLatestReceivedCardSucceeded:"];
-            [self observeNotificationName:KHHUIPullLatestReceivedCardFailed selector:@"handlePullLatestReceivedCardFailed:"];
-            MBProgressHUD *progess = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-            progess.labelText = NSLocalizedString(@"正在收名片，请稍后", nil);
-            self.isHandleReceive = YES;
-            [self.dataCtrl pullLatestReceivedCard];
+//            [self observeNotificationName:KHHUIPullLatestReceivedCardSucceeded selector:@"handlePullLatestReceivedCardSucceeded:"];
+//            [self observeNotificationName:KHHUIPullLatestReceivedCardFailed selector:@"handlePullLatestReceivedCardFailed:"];
+//            MBProgressHUD *progess = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+//            progess.labelText = NSLocalizedString(@"正在收名片，请稍后", nil);
+//            self.isHandleReceive = YES;
+//            [self.dataCtrl pullLatestReceivedCard];
             break;
         }
         default:
@@ -277,7 +278,7 @@
         [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"设备未开启定位服务", nil)
                                    message:NSLocalizedString(@"请在系统设置里开启定位服务。", nil)
                                   delegate:nil
-                         cancelButtonTitle:NSLocalizedString(@"确定", nil)
+                         cancelButtonTitle:NSLocalizedString(KHHMessageSure, nil)
                          otherButtonTitles:nil] show];
         return;
     }
@@ -331,7 +332,7 @@
     if ([[info.userInfo objectForKey:@"errorCode"]intValue] == -21) {
         DLog(@"没有相对应的卡片要交换");
         [self exchangeFailed:@"没有匹配的名片可交换"];
-    }else if ([[info.userInfo objectForKey:@"errorCode"]intValue] == -1009){
+    }else if ([[info.userInfo objectForKey:@"errorCode"]intValue] == KHHErrorCodeConnectionOffline){
         [self exchangeFailed:@"网络错误"];
     }
 
@@ -375,11 +376,15 @@
         [self.mbHUD hide:YES];
     }
     
+    NSString *message = nil;
+    if ([[info.userInfo objectForKey:@"errorCode"]intValue] == KHHErrorCodeConnectionOffline){
+        message = KHHMessageNetworkEorror;
+    }
     //提示没有收到新名片
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"没有新到名片"
-                                                    message:self.latestCard.name
-                                                   delegate:self
-                                          cancelButtonTitle:@"确定"
+                                                    message:message
+                                                   delegate:nil
+                                          cancelButtonTitle:KHHMessageSure
                                           otherButtonTitles:nil, nil];
     [alert show];
     
@@ -436,7 +441,7 @@
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"交换失败"
                                                     message:message
                                                    delegate:nil
-                                          cancelButtonTitle:@"确定"
+                                          cancelButtonTitle:KHHMessageSure
                                           otherButtonTitles:nil, nil];
     [alert show];
 }
@@ -458,7 +463,9 @@
     [self observeNotificationName:nDataSyncAllSucceeded selector:@"handleDataSyncAllSucceeded:"];
     [self observeNotificationName:nDataSyncAllFailed selector:@"handleDataSyncAllFailed:"];
     app = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
-    [MBProgressHUD showHUDAddedTo:app.window animated:YES];
+//    [MBProgressHUD showHUDAddedTo:app.window animated:YES];
+    MBProgressHUD *progess = [MBProgressHUD showHUDAddedTo:app.window animated:YES];
+    progess.labelText = NSLocalizedString(KHHMessageSyncAll, nil);
     [[KHHData sharedData] startSyncAllData];
 }
 - (void)handleDataSyncAllSucceeded:(NSNotification *)noti{
@@ -468,6 +475,20 @@
 - (void)handleDataSyncAllFailed:(NSNotification *)noti{
     [self stopObservingStartSynAllData];
     DLog(@"handleDataSyncAllFailed! ====== noti is %@",noti.userInfo);
+    
+    //设置消息
+    NSString *message = nil;
+    if ([[noti.userInfo objectForKey:@"errorCode"]intValue] == KHHErrorCodeConnectionOffline){
+        message = KHHMessageNetworkEorror;
+    }
+    
+    //提示没有收到新名片
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:KHHMessageSyncAllFailed
+                                                    message:message
+                                                   delegate:nil
+                                          cancelButtonTitle:KHHMessageSure
+                                          otherButtonTitles:nil, nil];
+    [alert show];
 }
 - (void)stopObservingStartSynAllData{
     

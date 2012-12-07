@@ -28,7 +28,7 @@
 #define textChangePasswordSucceeded NSLocalizedString(@"密码修改成功", @"")
 #define textChangePasswordFailed NSLocalizedString(@"修改密码失败！", @"")
 #define textPleaseReLogIn NSLocalizedString(@"请重新登录。", @"")
-#define textOK NSLocalizedString(@"确定", @"")
+#define textOK NSLocalizedString(KHHMessageSure, @"")
 #define textChanging NSLocalizedString(@"正在修改密码请稍后...", @"")
 #define textAlertTitle NSLocalizedString(@"修改密码", @"")
 #define textAlertMessageOK NSLocalizedString(@"修改密码成功，请重新登录。", @"")
@@ -249,7 +249,14 @@
     [self stopObservingNotificationName:KHHUIChangePasswordFailed];
     [_hud hide:YES];
     DLog(@"handleUIChangePasswordFailed! ====== info is %@",info.userInfo);
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:textAlertTitle message:textAlertMessageFailed delegate:nil cancelButtonTitle:textOK otherButtonTitles:nil, nil];
+    //设置消息
+    NSString *message = nil;
+    if ([[info.userInfo objectForKey:@"errorCode"]intValue] == KHHErrorCodeConnectionOffline){
+        message = KHHMessageNetworkEorror;
+    }else {
+        message = textAlertMessageFailed;
+    }
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:textAlertTitle message:message delegate:nil cancelButtonTitle:textOK otherButtonTitles:nil, nil];
     [alert show];
 }
 

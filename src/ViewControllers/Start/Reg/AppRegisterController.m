@@ -38,7 +38,7 @@ enum Tag_TextField {
 #define Tag_Button_Reg        21002
 #define Tag_Scroll_Container  9999
 
-#define textOK                     NSLocalizedString(@"确定", @"OK")
+#define textOK                     NSLocalizedString(KHHMessageSure, @"OK")
 #define textAlertYouShouldAgree    NSLocalizedString(@"必须同意隐私声明才能使用本产品。", nil)
 #define textAlertPasswordInvalid   NSLocalizedString(@"密码必须包含4-12位数字、字母、下划线或减号！", nil)
 #define textAlertPhoneLooksInvalid NSLocalizedString(@"请输入有效的手机号码。", nil)

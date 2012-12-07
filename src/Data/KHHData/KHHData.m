@@ -124,7 +124,7 @@
 - (void)startNextQueuedOperation:(NSMutableArray *)queue {
     DLog(@"[II] 待同步的queue = %@", queue);
     if (0 == queue.count) {
-        [self syncAllDataEnded:YES];
+        [self syncAllDataEnded:YES userInfo:nil];
         return;
     }
     KHHQueuedOperationSyncType syncAction = [queue[0] integerValue];
@@ -188,11 +188,11 @@
     [queue addObject:@(KHHQueuedOperationSyncVisitSchedules)];
     [self startNextQueuedOperation:queue];
 }
-- (void)syncAllDataEnded:(BOOL)succeed {
+- (void)syncAllDataEnded:(BOOL)succeed userInfo:(NSDictionary *) info {
     if (succeed) {
         [self postNowNotificationName:nDataSyncAllSucceeded];
     } else {
-        [self postNowNotificationName:nDataSyncAllFailed];
+        [self postNowNotificationName:nDataSyncAllFailed info:info];
     }
 }
 //

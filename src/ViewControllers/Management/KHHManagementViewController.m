@@ -123,7 +123,9 @@ typedef enum {
     [self observeNotificationName:nDataSyncAllSucceeded selector:@"handleDataSyncAllSucceeded:"];
     [self observeNotificationName:nDataSyncAllFailed selector:@"handleDataSyncAllFailed:"];
     app = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
-    [MBProgressHUD showHUDAddedTo:app.window animated:YES];
+//    [MBProgressHUD showHUDAddedTo:app.window animated:YES];
+    MBProgressHUD *progess = [MBProgressHUD showHUDAddedTo:app.window animated:YES];
+    progess.labelText = NSLocalizedString(KHHMessageSyncAll, nil);
     [[KHHData sharedData] startSyncAllData];
 }
 - (void)handleDataSyncAllSucceeded:(NSNotification *)noti{
@@ -133,6 +135,19 @@ typedef enum {
 - (void)handleDataSyncAllFailed:(NSNotification *)noti{
     [self stopObservingStartSynAllData];
     DLog(@"handleDataSyncAllFailed! ====== noti is %@",noti.userInfo);
+    //设置消息
+    NSString *message = nil;
+    if ([[noti.userInfo objectForKey:@"errorCode"]intValue] == KHHErrorCodeConnectionOffline){
+        message = KHHMessageNetworkEorror;
+    }
+    
+    //提示没有收到新名片
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:KHHMessageSyncAllFailed
+                                                    message:message
+                                                   delegate:nil
+                                          cancelButtonTitle:KHHMessageSure
+                                          otherButtonTitles:nil, nil];
+    [alert show];
 }
 - (void)stopObservingStartSynAllData{
     
@@ -239,7 +254,7 @@ typedef enum {
 }
 - (void)showAlert
 {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"功能暂时未开放" delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"功能暂时未开放" delegate:self cancelButtonTitle:KHHMessageSure otherButtonTitles:nil, nil];
     [alert show];
 }
 

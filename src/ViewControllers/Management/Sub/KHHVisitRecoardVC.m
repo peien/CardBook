@@ -413,7 +413,7 @@
     self.hud = [MBProgressHUD showHUDAddedTo:app.window animated:YES];
     
     if (_style == KVisitRecoardVCStyleNewBuild) {
-        self.hud.labelText = @"正在创建拜访计划...";
+        self.hud.labelText = KHHMessageCreateVisitPlant;
         NSArray *cards = [self.dataCtrl allMyCards];
         if (cards) {
             MyCard *mycard = [cards objectAtIndex:0];
@@ -421,7 +421,7 @@
         }
         
     }else if (_style == KVisitRecoardVCStyleShowInfo){
-        self.hud.labelText = @"正在修改拜访计划...";
+        self.hud.labelText = KHHMessageModifyVisitPlant;
         [self.dataCtrl updateSchedule:self.oSched];
     }
 }
@@ -450,10 +450,14 @@
     DLog(@"KHHUICreateVisitScheduleFailed! ====== %@",info);
     [self.hud hide:YES];
     [self stopObservingForCreateVisitedSch];
+    NSString *message = nil;
+    if ([[info.userInfo objectForKey:@"errorCode"]intValue] == KHHErrorCodeConnectionOffline){
+        message = KHHMessageNetworkEorror;
+    }
     [[[UIAlertView alloc] initWithTitle:nil
-                                message:@"拜访内容不能为空"
+                                message:message
                                delegate:nil
-                      cancelButtonTitle:@"确定"
+                      cancelButtonTitle:KHHMessageSure
                       otherButtonTitles:nil] show];
 }
 - (void)handleUpdateVisitScheduleSucceeded:(NSNotification *)info{
@@ -469,9 +473,9 @@
     [self.hud hide:YES];
     [self stopObservingForUpdateVisitedSch];
     [[[UIAlertView alloc] initWithTitle:nil
-                                message:@"保存失败"
+                                message:KHHMessageSaveFailed
                                delegate:nil
-                      cancelButtonTitle:@"确定"
+                      cancelButtonTitle:KHHMessageSure
                       otherButtonTitles:nil] show];
 
 }
@@ -497,7 +501,7 @@
         [[[UIAlertView alloc] initWithTitle:nil
                                     message:@"选择的拜访时间有误！"
                                    delegate:nil
-                          cancelButtonTitle:@"确定"
+                          cancelButtonTitle:KHHMessageSure
                           otherButtonTitles: nil] show];
         return;
     }
@@ -1071,7 +1075,7 @@
     [[[UIAlertView alloc] initWithTitle:nil
                                 message:@"添加图片失败"
                                delegate:nil
-                      cancelButtonTitle:@"确定"
+                      cancelButtonTitle:KHHMessageSure
                       otherButtonTitles: nil] show];
 }
 //删除图片成功
@@ -1090,7 +1094,7 @@
     [[[UIAlertView alloc] initWithTitle:nil
                                 message:@"删除图片失败"
                                delegate:nil
-                      cancelButtonTitle:@"确定"
+                      cancelButtonTitle:KHHMessageSure
                       otherButtonTitles: nil] show];
 }
 - (void)stopObservingForUploadImage{
@@ -1165,7 +1169,7 @@
 //        [[[UIAlertView alloc] initWithTitle:nil
 //                                    message:@"由于系统版本小于6.0,不能访问日历且添加拜访事件！"
 //                                   delegate:nil
-//                          cancelButtonTitle:@"确定"
+//                          cancelButtonTitle:KHHMessageSure
 //                          otherButtonTitles:nil] show];
         [self localNotificationWithCustomerName:customerName];
     }

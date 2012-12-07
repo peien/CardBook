@@ -10,8 +10,8 @@
 #import "SuperViewController.h"
 #import "KHHMessage.h"
 
-@interface KHHDetailMessageVC : SuperViewController
-@property (strong, nonatomic) KHHMessage           *message;
-@property (strong, nonatomic) IBOutlet UILabel     *timeLabel;
-@property (strong, nonatomic) IBOutlet UITextView  *contentLabel;
+@interface KHHDetailMessageVC : SuperViewController<UIScrollViewDelegate>
+@property (strong, nonatomic) KHHMessage            *message;
+@property (strong, nonatomic) IBOutlet UILabel      *timeLabel;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 @end
