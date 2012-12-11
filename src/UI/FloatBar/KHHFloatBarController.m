@@ -7,7 +7,7 @@
 //
 
 #import "KHHFloatBarController.h"
-#import "MapController.h"
+//#import "MapController.h"
 #import "KHHVisitRecoardVC.h"
 #import "KHHBMapViewController.h"
 #import "Address.h"
@@ -243,7 +243,6 @@
 //定位
 - (void)goToMapVC
 {
-#warning 测试百度地图
     //先影藏popWindow
     [self.popover dismissPopoverAnimated:YES];
     if (self.card.address.province.length > 0 || (self.card.address.other.length > 0 || self.card.company.name.length > 0)) {

@@ -24,7 +24,7 @@
 #import "KHHAppDelegate.h"
 #import "MyTabBarController.h"
 #import "KHHShowHideTabBar.h"
-#import "MapController.h"
+//#import "MapController.h"
 #import "UIButton+WebCache.h"
 #import "Edit_eCardViewController.h"
 #import "KHHAddressBook.h"
