@@ -103,11 +103,12 @@
 - (void)testCheckIn {
     [self showLabelWithText:@"试验CheckIn"];
     ICheckIn *iCheckIn = [[ICheckIn alloc] initWithCard:self.card];
-    if (self.placemark) {
-        iCheckIn.placemark = self.placemark;
-        iCheckIn.latitude = [NSNumber numberWithDouble:self.location.coordinate.latitude];
-        iCheckIn.longitude = [NSNumber numberWithDouble:self.location.coordinate.longitude];
-    }
+    //定们改成百度地图了，这里不试用了，要用百度那套，详见签到界面
+//    if (self.placemark) {
+////        iCheckIn.placemark = self.placemark;
+//        iCheckIn.latitude = [NSNumber numberWithDouble:self.location.coordinate.latitude];
+//        iCheckIn.longitude = [NSNumber numberWithDouble:self.location.coordinate.longitude];
+//    }
     iCheckIn.memo = @"HELLO你好";
     iCheckIn.imageArray = @[
     [UIImage imageWithContentsOfFile:@"/Users/msun/Sceenshot/1.png"],
@@ -133,11 +134,11 @@
     static int num = 0;
     num = num + 1;
     ALog(@"[II] 第 %d 次！", num);
-    CLPlacemark *placemark = noti.userInfo[kInfoKeyPlacemark];
-    if (placemark) {
-        self.location = placemark.location;
-        self.placemark = placemark;
-    }
+//    CLPlacemark *placemark = noti.userInfo[kInfoKeyPlacemark];
+//    if (placemark) {
+//        self.location = placemark.location;
+//        self.placemark = placemark;
+//    }
     [self testCheckIn];
 }
 @end

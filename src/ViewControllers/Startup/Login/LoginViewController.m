@@ -54,7 +54,7 @@
                                               target:self 
                                               action:@selector(gotoRegView:)];
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc]
-                                                  initWithTitle:@"返回" 
+                                                  initWithTitle:KHHMessageBack 
                                                   style:UIBarButtonItemStylePlain 
                                                   target:self action:nil];
         _defaults = [KHHDefaults sharedDefaults];

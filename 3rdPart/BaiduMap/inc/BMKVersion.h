@@ -41,5 +41,5 @@
  */
 UIKIT_STATIC_INLINE NSString* BMKGetMapApiVersion()
 {
-	return @"1.2.1";
+	return @"1.2.2";
 }

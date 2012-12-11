@@ -128,7 +128,7 @@
     }else{
         pieChart.hidden = NO;
     }
-    NSArray *titlesArr = [[NSArray alloc] initWithObjects:@"潜在关系",@"待拓展关系",@"一般关系",@"轻关系",@"重要关系", nil];
+    NSArray *titlesArr = [[NSArray alloc] initWithObjects:@"潜在关系",@"待拓展关系",@"一般关系",@"较好关系",@"密切关系", nil];
     
     NSMutableArray *components = [NSMutableArray array];
     for (int i=0; i< titlesArr.count; i++)
@@ -147,11 +147,11 @@
         {
             [component setColour:PCColorOrange];
         }
-        else if (i==3) //轻关系 4星
+        else if (i==3) //较好关系 4星
         {
             [component setColour:PCColorRed];
         }
-        else if (i==4) //重要关系 5星
+        else if (i==4) //密切关系 5星
         {
             [component setColour:PCColorBlue];
         }

@@ -28,7 +28,7 @@ static const NSInteger KHHErrorCodeSomethingWrong = -999;
 static const NSInteger KHHErrorCodeUnresolvableData = 10000; // 不可解析
 static const NSInteger KHHErrorCodeConnectionOffline = -1009; //
 static const NSInteger KHHErrorCode404 = -1011; //
-static const NSInteger KHHErrorCodeConnectionTimeOut;
+//static const NSInteger KHHErrorCodeConnectionTimeOut;
 static const NSInteger KHHErrorCodeUnknownError = 3000; // 要你命3000
 
 static const NSInteger KHHErrorCodeLocalDataOperationFailed = 44001;//本地数据库操作失败

@@ -74,6 +74,23 @@ const NSTimeInterval KHH_LOCATION_REFRESH_INTERVAL = 30 * 60; // 30 min.
     }
 }
 #pragma mark - Utils
+/*
+ 地址更新成功把地址信息存入字典广播出去。解析方法
+ //默认的定位解析后地址拼装
+ self.locationLatitude = [info.userInfo objectForKey:@"locationLatitude"];
+ self.locationLongitude = [info.userInfo objectForKey:@"locationLongitude"];
+ self.placeMark = [info.userInfo objectForKey:@"placemark"];
+ NSString *province = [NSString stringWithFormat:@"%@",
+                           [NSString stringFromObject:self.placeMark.administrativeArea]];
+ NSString *city = [NSString stringWithFormat:@"%@",
+                               [NSString stringFromObject:self.placeMark.locality]];
+ NSString *other = [NSString stringWithFormat:@"%@",
+                                [NSString stringFromObject:self.placeMark.thoroughfare]];
+ NSString *other1 = [NSString stringWithFormat:@"%@",
+                         [NSString stringFromObject:self.placeMark.subThoroughfare]];
+ NSString *detailAddress = [NSString stringWithFormat:@"%@%@%@%@",province,city,other,other1];
+ NSString *addressString = ABCreateStringWithAddressDictionary(self.placeMark.addressDictionary, NO);
+ */
 - (void)updateSucceeded {
     CLLocationCoordinate2D coordinate = self.locationManager.location.coordinate;
     CLPlacemark *placemark = self.placemark;

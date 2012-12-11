@@ -24,13 +24,13 @@
 		</dict>
 		<dict>
 			<key>title</key>
-			<string>轻关系</string>
+			<string>较好关系</string>
 			<key>value</key>
 			<integer>30</integer>
 		</dict>
 		<dict>
 			<key>title</key>
-			<string>重要关系</string>
+			<string>密切关系</string>
 			<key>value</key>
 			<integer>40</integer>
 		</dict>

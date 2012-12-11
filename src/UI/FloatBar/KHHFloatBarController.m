@@ -243,12 +243,27 @@
 //定位
 - (void)goToMapVC
 {
+#warning 测试百度地图
+    //先影藏popWindow
     [self.popover dismissPopoverAnimated:YES];
-    MapController *mapVC = [[MapController alloc] initWithNibName:nil bundle:nil];
     if (self.card.address.province.length > 0 || (self.card.address.other.length > 0 || self.card.company.name.length > 0)) {
-        NSString *address = [NSString stringWithFormat:@"%@%@",self.card.address.province,self.card.address.other];
-        mapVC.companyAddr = address;
+        //直辖市只取一个
+        NSString *address = nil;
+        if (self.card.address.province && self.card.address.city && [self.card.address.province isEqualToString:self.card.address.city]) {
+            address = [NSString stringWithFormat:@"%@%@",self.card.address.province,self.card.address.other];
+        }else {
+            address = [NSString stringWithFormat:@"%@%@%@",self.card.address.province,self.card.address.city,self.card.address.other];
+        }
+//        ios提供的默认地图
+//        MapController *mapVC = [[MapController alloc] initWithNibName:nil bundle:nil];
+//        mapVC.companyAddr = address;
+//        mapVC.companyName = self.card.company.name;
+        //用百度地图
+        KHHBMapViewController *mapVC = [[KHHBMapViewController alloc] initWithNibName:nil bundle:nil];
+        mapVC.companyCity = self.card.address.city;
+        mapVC.companyDetailAddr = self.card.address.other;
         mapVC.companyName = self.card.company.name;
+        mapVC.companyAllAddr = address;
         [self.viewController.navigationController pushViewController:mapVC animated:YES];
     }else{
         [[[UIAlertView alloc] initWithTitle:nil
@@ -257,10 +272,7 @@
                          cancelButtonTitle:NSLocalizedString(KHHMessageSure, nil)
                          otherButtonTitles: nil] show];
     }
-
     
-    //    KHHBMapViewController *mapVC = [[KHHBMapViewController alloc] initWithNibName:nil bundle:nil];
-//    [self.navigationController pushViewController:mapVC animated:YES];
 
 }
 //新建拜访纪录
