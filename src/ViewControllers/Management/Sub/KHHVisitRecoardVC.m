@@ -11,7 +11,7 @@
 #import "KHHShowHideTabBar.h"
 #import "TSLocateView.h"
 #import "KHHAddImageView.h"
-#import "MapController.h"
+//#import "MapController.h"
 #import "KHHAddImageCell.h"
 #import "KHHFullFrameController.h"
 #import "KHHVisitedPickVC.h"
@@ -28,6 +28,7 @@
 #import <EventKit/EventKit.h>
 #import <EventKitUI/EventKitUI.h>
 #import "KHHBMapLocationController.h"
+#import "KHHBMapViewController.h"
 
 #define TEXTFIELD_OBJECT_TAG  5550
 #define TEXTFIELD_DATE_TAG    5551
@@ -853,8 +854,18 @@
 - (void)showMap:(id)sender
 {
     UITextField *addressMap = (UITextField *)[self.view viewWithTag:TEXTFIELD_ADDRESS_TAG];
-    MapController *mapVC = [[MapController alloc] initWithNibName:nil bundle:nil];
-    mapVC.companyAddr = addressMap.text;
+//    //默认地图
+//    MapController *mapVC = [[MapController alloc] initWithNibName:nil bundle:nil];
+//    mapVC.companyAddr = addressMap.text;
+    
+    //用百度地图
+    KHHBMapViewController *mapVC = [[KHHBMapViewController alloc] initWithNibName:nil bundle:nil];
+    if (self.schedu && self.schedu.address) {
+        mapVC.companyCity = self.schedu.address.city;
+        mapVC.companyName = self.schedu.customer;
+        mapVC.companyDetailAddr = self.schedu.address.other;
+    }
+    mapVC.companyAllAddr = addressMap.text;
     [self.navigationController pushViewController:mapVC animated:YES];
 }
 
