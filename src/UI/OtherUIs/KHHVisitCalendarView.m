@@ -12,12 +12,13 @@
 #import "KHHAllVisitedSchedusVC.h"
 #import "KHHVisitRecoardVC.h"
 #import "KHHFullFrameController.h"
-#import "MapController.h"
+//#import "MapController.h"
 #import "UIImageView+WebCache.h"
 #import "DetailInfoViewController.h"
 #import "KHHData+UI.h"
 #import "KHHData.h"
 #import "NSString+SM.h"
+#import "KHHBMapViewController.h"
 
 
 @implementation KHHVisitCalendarView
@@ -171,7 +172,12 @@
         NSString *p = [NSString stringByFilterNilFromString:sched.address.province];
         NSString *c = [NSString stringByFilterNilFromString:sched.address.city];
         NSString *o = [NSString stringByFilterNilFromString:sched.address.other];
-        cell.locValueLab.text = [NSString stringWithFormat:@"%@%@%@",p,c,o];
+        //直辖市只取一个
+        if (p && c && [p isEqualToString:c]) {
+            cell.locValueLab.text = [NSString stringWithFormat:@"%@%@",p,o];
+        }else {
+            cell.locValueLab.text = [NSString stringWithFormat:@"%@%@%@",p,c,o];
+        }
         self.mapAddress = cell.locValueLab.text;
     }
     //备注
@@ -237,9 +243,18 @@
 //地图
 - (void)showLocaButtonClick:(id)sender{
     DLog(@"showMap");
-    MapController *mapVC = [[MapController alloc] initWithNibName:nil bundle:nil];
-    mapVC.companyName = @"";
-    mapVC.companyAddr = self.mapAddress;
+//    //默认的地图
+//    MapController *mapVC = [[MapController alloc] initWithNibName:nil bundle:nil];
+//    mapVC.companyName = @"";
+//    mapVC.companyAddr = self.mapAddress;
+    
+    //用百度地图
+    KHHBMapViewController *mapVC = [[KHHBMapViewController alloc] initWithNibName:nil bundle:nil];
+    mapVC.companyCity = self.card.address.city;
+    mapVC.companyDetailAddr = self.card.address.other;
+    mapVC.companyName = self.card.company.name;
+    mapVC.companyAllAddr = self.mapAddress;
+
     [self.viewCtrl.navigationController pushViewController:mapVC animated:YES];
     
 }
