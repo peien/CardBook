@@ -26,6 +26,12 @@
     // 设置界面元素的公共属性
     [self customizeCommonUI];
     
+    //启动百度地图
+    _mapManager = [[BMKMapManager alloc] init];
+    BOOL ret = [_mapManager start:KHHBMapAPIKey generalDelegate:nil];
+    if (!ret) {
+        NSLog(@"mapManager start failed!");
+    }
     // 注册响应的消息
     [self observeNotificationName:KHHUIShowStartup selector:@"handleShowStartup:"]; // 显示主界面消息
     [self observeNotificationName:nAppShowMainView  selector:@"handleShowMainUI:"]; // 显示主界面消息

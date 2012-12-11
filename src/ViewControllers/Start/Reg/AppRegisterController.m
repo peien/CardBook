@@ -59,7 +59,7 @@ enum Tag_TextField {
     if (self) {
         self.navigationItem.title = NSLocalizedString(@"注册", nil);
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]
-                                                 initWithTitle:NSLocalizedString(@"返回", nil)
+                                                 initWithTitle:NSLocalizedString(KHHMessageBack, nil)
                                                  style:UIBarButtonItemStylePlain
                                                  target:self
                                                  action:@selector(goBack:)];

@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CoreLocation/CoreLocation.h>
+//#import <CoreLocation/CoreLocation.h>
 #import "SMObject.h"
 #import "Card.h"
 #import "IAddress.h"
+#import "BMapKit.h"
 
 /*!
  签到 kinghhEmployeeVisitCustomService.signInNew
@@ -34,7 +35,8 @@
 @property (nonatomic, strong) NSString    *deviceToken; // bean.deviceToken 否 手机设备号
 @property (nonatomic, strong) NSNumber    *latitude;// bean.latitude
 @property (nonatomic, strong) NSNumber    *longitude;// bean.longitude
-@property (nonatomic, strong) CLPlacemark *placemark;// 详细的地址信息
+//@property (nonatomic, strong) CLPlacemark *placemark;// 详细的地址信息（默认定位的）
+@property (nonatomic, strong) BMKGeocoderAddressComponent *addressComponent;
 @property (nonatomic, strong) NSString    *memo; //bean.col1 否 备忘录
 @property (nonatomic, strong) NSArray     *imageArray;//UIImage数组
 @end

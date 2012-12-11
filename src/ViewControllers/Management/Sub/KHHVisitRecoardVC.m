@@ -14,7 +14,6 @@
 #import "MapController.h"
 #import "KHHAddImageCell.h"
 #import "KHHFullFrameController.h"
-#import "KHHLocationController.h"
 #import "KHHVisitedPickVC.h"
 #import "MBProgressHUD.h"
 #import "KHHClasses.h"
@@ -28,6 +27,7 @@
 #import <AddressBookUI/AddressBookUI.h>
 #import <EventKit/EventKit.h>
 #import <EventKitUI/EventKitUI.h>
+#import "KHHBMapLocationController.h"
 
 #define TEXTFIELD_OBJECT_TAG  5550
 #define TEXTFIELD_DATE_TAG    5551
@@ -46,10 +46,10 @@
 @property (strong, nonatomic) UIImageView     *updateImageView;
 @property (strong, nonatomic) NSArray         *imageArray;
 @property (assign, nonatomic) bool            isFirstLocation;
-@property (strong, nonatomic) NSNumber        *locationLatitude;
-@property (strong, nonatomic) NSNumber        *locationLongitude;
+//@property (strong, nonatomic) NSNumber        *locationLatitude;
+//@property (strong, nonatomic) NSNumber        *locationLongitude;
+//@property (strong, nonatomic) CLPlacemark     *placeMark;
 @property (strong, nonatomic) NSString        *address;
-@property (strong, nonatomic) CLPlacemark     *placeMark;
 @property (strong, nonatomic) OSchedule       *oSched;
 @property (strong, nonatomic) KHHData         *dataCtrl;
 @property (strong, nonatomic) MBProgressHUD   *hud;
@@ -92,10 +92,10 @@
 @synthesize updateImageView;
 @synthesize imageArray;
 @synthesize isFirstLocation;
-@synthesize locationLatitude;
-@synthesize locationLongitude;
+//@synthesize locationLatitude;
+//@synthesize locationLongitude;
+//@synthesize placeMark;
 @synthesize address;
-@synthesize placeMark;
 @synthesize visitInfoCard;
 @synthesize schedu;
 @synthesize oSched;
@@ -204,10 +204,10 @@
     self.objectNameArr = nil;
     self.updateImageView = nil;
     self.imageArray = nil;
-    self.locationLongitude = nil;
-    self.locationLatitude = nil;
+//    self.locationLongitude = nil;
+//    self.locationLatitude = nil;
+//    self.placeMark = nil;
     self.address = nil;
-    self.placeMark = nil;
     self.visitInfoCard = nil;
     self.schedu = nil;
     self.oSched = nil;
@@ -390,12 +390,20 @@
     
     self.oSched.minutesToRemind = [NSNumber numberWithDouble:_timeInterval/60];
     self.oSched.imageList = self.imgArray;
-    self.oSched.addressProvince = [NSString stringWithFormat:@"%@",
-                                   [NSString stringFromObject:self.placeMark.administrativeArea]];
-    self.oSched.addressCity = [NSString stringWithFormat:@"%@",
-                               [NSString stringFromObject:self.placeMark.locality]];
-    self.oSched.addressOther = [NSString stringWithFormat:@"%@",
-                                [NSString stringFromObject:self.placeMark.thoroughfare]];
+//    //默认定位取省市信息的方法
+//    self.oSched.addressProvince = [NSString stringWithFormat:@"%@",
+//                                   [NSString stringFromObject:self.placeMark.administrativeArea]];
+//    self.oSched.addressCity = [NSString stringWithFormat:@"%@",
+//                               [NSString stringFromObject:self.placeMark.locality]];
+//    self.oSched.addressOther = [NSString stringWithFormat:@"%@",
+//                                [NSString stringFromObject:self.placeMark.thoroughfare]];
+    KHHBMapLocationController *locaVC = [KHHBMapLocationController sharedController];
+    BMKGeocoderAddressComponent * addrComp = locaVC.userAddressCompenent;
+    if (addrComp) {
+        self.oSched.addressProvince = [NSString stringWithFormat:@"%@" ,addrComp.province];
+        self.oSched.addressCity = [NSString stringWithFormat:@"%@" ,addrComp.city];
+        self.oSched.addressOther = [NSString stringWithFormat:@"%@%@%@" ,addrComp.district,addrComp.streetName,addrComp.streetNumber];
+    }
     
     if (self.isDateSelected) {
         [self timeIntervalFromDateToNow:self.selectDate];
@@ -878,37 +886,29 @@
     hud1.labelText = NSLocalizedString(@"正在获取地址...", nil);
     [self observeNotificationName:KHHLocationUpdateSucceeded selector:@"handleLocationUpdateSucceeded:"];
     [self observeNotificationName:KHHLocationUpdateFailed selector:@"handleLocationUpdateFailed:"];
-    KHHLocationController *locaVC = [KHHLocationController sharedController];
+//    KHHLocationController *locaVC = [KHHLocationController sharedController];
+    KHHBMapLocationController *locaVC = [KHHBMapLocationController sharedController];
     [locaVC updateLocation];
 }
+
+/*
+ 用苹果自带的定位的时候定位信息保存的通知的字典中，用百度map时就在KHHBMapLocationController里，
+ KHHBMapLocationController提供了返回详细地址及返回分层地址的两个函数
+ */
 - (void)handleLocationUpdateSucceeded:(NSNotification *)info{
     DLog(@"handleLocationUpdateSucceeded! ====== info is %@",info.userInfo);
     [self stopObservingForUpdateLocation];
     [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
     [self performSelector:@selector(stopAnimatingForUPdateLoca) withObject:nil afterDelay:0.5];
-    
-    self.locationLatitude = [info.userInfo objectForKey:@"locationLatitude"];
-    self.locationLongitude = [info.userInfo objectForKey:@"locationLongitude"];
-    self.placeMark = [info.userInfo objectForKey:@"placemark"];
-    NSString *province = [NSString stringWithFormat:@"%@",
-                          [NSString stringFromObject:self.placeMark.administrativeArea]];
-    
-    NSString *city = [NSString stringWithFormat:@"%@",
-                               [NSString stringFromObject:self.placeMark.locality]];
-    NSString *other = [NSString stringWithFormat:@"%@",
-                                [NSString stringFromObject:self.placeMark.thoroughfare]];
-    NSString *other1 = [NSString stringWithFormat:@"%@",
-                         [NSString stringFromObject:self.placeMark.subThoroughfare]];
-    
-    NSString *detailAddress = [NSString stringWithFormat:@"%@%@%@%@",province,city,other,other1];
+
     UITextField *addressTf = (UITextField *)[self.view viewWithTag:TEXTFIELD_ADDRESS_TAG];
-//    NSString *addressString = ABCreateStringWithAddressDictionary(self.placeMark.addressDictionary, NO);
-    if (detailAddress.length > 0) {
-        addressTf.text = detailAddress;
+    KHHBMapLocationController *locaVC = [KHHBMapLocationController sharedController];
+    if (locaVC.userDetailLocation.length > 0) {
+        addressTf.text = locaVC.userDetailLocation;
     }
     
     if (self.isFirstLocation) {
-        self.address = detailAddress;
+        self.address = locaVC.userDetailLocation;
         [_theTable reloadData];
     }
 }

@@ -44,7 +44,7 @@
         // Title:
         self.navigationItem.title = NSLocalizedString(@"登录", nil);
         self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc]
-                                                 initWithTitle:@"返回"
+                                                 initWithTitle:KHHMessageBack
                                                  style:UIBarButtonItemStylePlain
                                                  target:self action:nil];
         [self.rightBtn setTitle:NSLocalizedString(@"直接体验", nil) forState:UIControlStateNormal];

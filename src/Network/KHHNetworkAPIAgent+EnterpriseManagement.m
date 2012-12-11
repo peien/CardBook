@@ -10,6 +10,7 @@
 #import "NSString+SM.h"
 #import "NSString+Networking.h"
 #import "UIImage+KHH.h"
+#import "BMKGeocodeType.h"
 
 @implementation KHHNetworkAPIAgent (EnterpriseManagement)
 /*!
@@ -47,22 +48,29 @@
 - (void)checkIn:(ICheckIn *)iCheckIn {
     DLog(@"[II] iCheckIn = %@", iCheckIn);
     
-    CLPlacemark *placemark = iCheckIn.placemark;
+//    CLPlacemark *placemark = iCheckIn.placemark;
+    BMKGeocoderAddressComponent *addrComp = iCheckIn.addressComponent;
     // 组合string参数
     NSDictionary *parameters = @{
     @"bean.cardId"      : [NSString stringFromObject:iCheckIn.cardID],
     @"bean.deviceToken" : [NSString stringFromObject:iCheckIn.deviceToken],
     @"bean.latitude"    : [NSString stringFromObject:iCheckIn.latitude],
     @"bean.longitude"   : [NSString stringFromObject:iCheckIn.longitude],
-    @"bean.country"     : [NSString stringFromObject:placemark.country],
-    @"bean.province"    : [NSString stringWithFormat:@"%@",
-                           [NSString stringFromObject:placemark.administrativeArea]],
-    @"bean.city"        : [NSString stringWithFormat:@"%@%@",
-                           [NSString stringFromObject:placemark.locality],
-                           [NSString stringFromObject:placemark.subLocality]],
-    @"bean.address"     : [NSString stringWithFormat:@"%@%@",
-                           [NSString stringFromObject:placemark.thoroughfare],
-                           [NSString stringFromObject:placemark.subThoroughfare]],
+//    //默认的定们解析
+//    @"bean.country"     : [NSString stringFromObject:placemark.country],
+//    @"bean.province"    : [NSString stringWithFormat:@"%@",
+//                           [NSString stringFromObject:placemark.administrativeArea]],
+//    @"bean.city"        : [NSString stringWithFormat:@"%@%@",
+//                           [NSString stringFromObject:placemark.locality],
+//                           [NSString stringFromObject:placemark.subLocality]],
+//    @"bean.address"     : [NSString stringWithFormat:@"%@%@",
+//                           [NSString stringFromObject:placemark.thoroughfare],
+//                           [NSString stringFromObject:placemark.subThoroughfare]],
+    //百度地图(百度只能识别中国)
+    @"bean.country"     : [NSString stringFromObject:@"中国"],
+    @"bean.province"    : [NSString stringWithFormat:@"%@",addrComp.province],
+    @"bean.city"        : [NSString stringWithFormat:@"%@",addrComp.city],
+    @"bean.address"     : [NSString stringWithFormat:@"%@%@%@",addrComp.district,addrComp.streetName,addrComp.streetNumber],
     @"bean.col1"        : [NSString stringFromObject:iCheckIn.memo],
     };
     

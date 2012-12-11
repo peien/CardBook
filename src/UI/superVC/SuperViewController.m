@@ -29,7 +29,7 @@
         [leftBtn setBackgroundImage:[[UIImage imageNamed:@"titlebtn_normal.png"] stretchableImageWithLeftCapWidth:8 topCapHeight:2] forState:UIControlStateNormal];
         [leftBtn addTarget:self action:@selector(leftBarButtonClick:) forControlEvents:UIControlEventTouchUpInside];
         leftBtn.frame = CGRectMake(0, 0, 70, 30);
-        [leftBtn setTitle:@"返回" forState:UIControlStateNormal];
+        [leftBtn setTitle:KHHMessageBack forState:UIControlStateNormal];
         leftBtn.titleLabel.font = [UIFont systemFontOfSize:12];
         UIBarButtonItem *leftBar = [[UIBarButtonItem alloc] initWithCustomView:leftBtn];
         self.navigationItem.leftBarButtonItem = leftBar;

@@ -11,7 +11,7 @@
 #import "KHHShowHideTabBar.h"
 #import "KHHAddImageCell.h"
 #import "KHHFullFrameController.h"
-#import "KHHLocationController.h"
+//#import "KHHLocationController.h"
 #import "MBProgressHUD.h"
 #import "KHHClasses.h"
 #import "KHHDataAPI.h"
@@ -19,7 +19,7 @@
 #import "KHHNotifications.h"
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
-
+#import "KHHBMapLocationController.h"
 
 #define UPDATE_LOCATION_BTN_TAG     4401
 #define TEXTFIELD_DATE_TAG          5501
@@ -41,11 +41,12 @@
 @property (strong, nonatomic) KHHData           *dataCtrl;
 @property (strong, nonatomic) Card              *card;
 @property (strong, nonatomic) ICheckIn          *checkIn;
-@property (strong, nonatomic) NSNumber          *locationLatitude;
-@property (strong, nonatomic) NSNumber          *locationLongitude;
+//@property (strong, nonatomic) NSNumber          *locationLatitude;
+//@property (strong, nonatomic) NSNumber          *locationLongitude;
+//@property (strong, nonatomic) CLPlacemark       *placeMark;
 @property (assign, nonatomic) bool              isFirstLocation;
 @property (strong, nonatomic) NSString          *address;
-@property (strong, nonatomic) CLPlacemark       *placeMark;
+@property (strong, nonatomic) KHHBMapLocationController *locaVC;
 
 @end
 
@@ -63,11 +64,12 @@
 @synthesize dataCtrl;
 @synthesize card;
 @synthesize checkIn;
-@synthesize locationLatitude;
-@synthesize locationLongitude;
+//@synthesize locationLatitude;
+//@synthesize locationLongitude;
+//@synthesize placeMark;
 @synthesize isFirstLocation;
 @synthesize address;
-@synthesize placeMark;
+@synthesize locaVC = _locaVC;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -101,6 +103,8 @@
     // Do any additional setup after loading the view from its nib.
     
     self.isFirstLocation = YES;
+    //获取定位的controller
+    self.locaVC = [[KHHBMapLocationController alloc] init];
     [self getLocalAddress];
     self.view.backgroundColor = [UIColor colorWithRed:241 green:238 blue:232 alpha:1.0 ];
     UIView *footView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 150)];
@@ -138,10 +142,10 @@
     self.time = nil;
     self.dataCtrl = nil;
     self.card = nil;
-    self.locationLatitude = nil;
-    self.locationLongitude = nil;
+//    self.locationLatitude = nil;
+//    self.locationLongitude = nil;
+//    self.placeMark = nil;
     self.address = nil;
-    self.placeMark = nil;
     
 }
 - (void)viewWillAppear:(BOOL)animated
@@ -320,8 +324,8 @@
     hud.labelText = NSLocalizedString(@"正在获取地址...", nil);
     [self observeNotificationName:KHHLocationUpdateSucceeded selector:@"handleLocationUpdateSucceeded:"];
     [self observeNotificationName:KHHLocationUpdateFailed selector:@"handleLocationUpdateFailed:"];
-    KHHLocationController *locaVC = [KHHLocationController sharedController];
-    [locaVC updateLocation];
+//    KHHLocationController *locaVC = [KHHLocationController sharedController];
+    [_locaVC updateLocation];
 }
 //上传地理位置
 - (void)uploadBtnClick:(id)sender
@@ -330,10 +334,14 @@
     [self observeNotificationName:KHHNetworkCheckInFailed selector:@"handleCheckInFailed:"];
     UITextField *note = (UITextField *)[self.view viewWithTag:TEXTFIELD_NOTE_TAG];
     self.checkIn.memo = note.text;
-    self.checkIn.latitude =  self.locationLatitude;
-    self.checkIn.longitude = self.locationLongitude;
+    //签到要上传经纬度及详细位置
+//    self.checkIn.latitude =  self.locationLatitude;
+//    self.checkIn.longitude = self.locationLongitude;
+//    self.checkIn.placemark = self.placeMark;
+    self.checkIn.latitude = [NSNumber numberWithDouble:_locaVC.userLocationCoordinate2D.latitude];
+    self.checkIn.longitude = [NSNumber numberWithDouble:_locaVC.userLocationCoordinate2D.longitude];
+    self.checkIn.addressComponent = _locaVC.userAddressCompenent;
     self.checkIn.cardID = self.card.id;
-    self.checkIn.placemark = self.placeMark;
     self.checkIn.imageArray = self.imgArray;
     KHHNetworkAPIAgent *agent = [[KHHNetworkAPIAgent alloc] init];
     [agent checkIn:self.checkIn];
@@ -344,27 +352,13 @@
     [self stopObservingForUpdateLocation];
     [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
     [self performSelector:@selector(stopAnimatingForUPdateLoca) withObject:nil afterDelay:0.5];
-    
-    self.locationLatitude = [info.userInfo objectForKey:@"locationLatitude"];
-    self.locationLongitude = [info.userInfo objectForKey:@"locationLongitude"];
-    self.placeMark = [info.userInfo objectForKey:@"placemark"];
     UITextField *addressTf = (UITextField *)[self.view viewWithTag:TEXTFIELD_LOCATION_TAG];
-    //NSString *addressString = CFBridgingRelease((__bridge CFTypeRef)(ABCreateStringWithAddressDictionary(self.placeMark.addressDictionary, NO)));
-    NSString *province = [NSString stringWithFormat:@"%@",
-                          [NSString stringFromObject:self.placeMark.administrativeArea]];
-    NSString *city = [NSString stringWithFormat:@"%@",
-                      [NSString stringFromObject:self.placeMark.locality]];
-    NSString *other = [NSString stringWithFormat:@"%@",
-                       [NSString stringFromObject:self.placeMark.thoroughfare]];
-    NSString *other1 = [NSString stringWithFormat:@"%@",[NSString stringFromObject:self.placeMark.subThoroughfare]];
-    NSString *detailAddress = [NSString stringWithFormat:@"%@%@%@%@",province,city,other,other1];
-    
-    if (detailAddress.length > 0) {
-        addressTf.text = detailAddress;
+    if (_locaVC.userDetailLocation.length > 0) {
+        addressTf.text = _locaVC.userDetailLocation;
     }
     
     if (self.isFirstLocation) {
-        self.address = detailAddress;
+        self.address = _locaVC.userDetailLocation;
         [_theTable reloadData];
     }
     
