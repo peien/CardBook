@@ -79,4 +79,12 @@ typedef enum {
     KHHQueuedOperationSyncVisitSchedulesAfterUploadImage,
 } KHHQueuedOperationSyncType;
 
+//一个界面有多个alert 时区分alert的
+typedef enum {
+    KHHAlertMessage         = 100,
+    KHHAlertContact         = 101,
+    KHHAlertSync            = 102,
+    KHHAlertNewContact      = 103,
+} KHHAlertType;
+
 #endif

@@ -28,6 +28,7 @@ static NSString * const KHHMessageSyncAll                       = @"正在从服
 static NSString * const KHHMessageEditMessage                   = @"编辑消息";
 static NSString * const KHHMessageEditMessageFailed             = @"删除消息失败,请稍后再试";
 static NSString * const KHHMessageDeleteMessage                 = @"正在删除消息,请稍后";
-static NSString * const KHHBMapAPIKey                           = @"75A59306A8389FED58ED8A8D65FDCE5E6F83B052";
-
+static NSString * const KHHMessageBMapAPIKey                    = @"75A59306A8389FED58ED8A8D65FDCE5E6F83B052";
+static NSString * const KhhMessageAddressEditNotice             = @"点击选择省市";
+static NSString * const KhhMessageSyncDataWithServer            = @"与服务器同步数据，可能会消耗您的流量，建议在WiFi网络下同步。您确定要同步吗？";
 #endif
