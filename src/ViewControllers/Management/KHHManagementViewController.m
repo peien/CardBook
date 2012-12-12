@@ -30,10 +30,6 @@
 
 //定时同步消息时间(秒)
 static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新联系人
-typedef enum {
-    KHHAlertMessage   = 100,
-    KHHAlertContact   = 101,
-} KHHAlertType;
 
 @interface KHHManagementViewController ()
 @property (strong, nonatomic) KHHData        *dataCtrl;
@@ -81,7 +77,14 @@ typedef enum {
 
 //同步
 - (void)rightBarButtonClick:(id)sender{
-    [self synBtnClick];
+    //弹出同步提示框
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"同步数据"
+                                                    message:KhhMessageSyncDataWithServer
+                                                   delegate:self
+                                          cancelButtonTitle:@"确认"
+                                          otherButtonTitles:@"取消", nil];
+    alert.tag = KHHAlertSync;
+    [alert show];
 }
 //消息
 - (void)leftBarButtonClick:(id)sender{
@@ -252,11 +255,6 @@ typedef enum {
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
-- (void)showAlert
-{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil message:@"功能暂时未开放" delegate:self cancelButtonTitle:KHHMessageSure otherButtonTitles:nil, nil];
-    [alert show];
-}
 
 //后台同步消息
 //每隔半小时去同步一次消息
@@ -416,6 +414,11 @@ typedef enum {
         {
             if (buttonIndex == 0) {
                 [self gotoMessageListViewController];
+            }
+        }
+        case KHHAlertSync:{
+            if (buttonIndex == 0) {
+                [self synBtnClick];
             }
         }
         default:

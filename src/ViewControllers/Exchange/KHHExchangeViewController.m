@@ -202,8 +202,14 @@
         case 113:
         {
             
-            //同步所有，同步联系人，启动定位服务
-            [self synBtnClick];
+            //弹出同步提示框
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"同步数据"
+                                                            message:KhhMessageSyncDataWithServer
+                                                           delegate:self
+                                                  cancelButtonTitle:@"确认"
+                                                  otherButtonTitles:@"取消", nil];
+            alert.tag = KHHAlertSync;
+            [alert show];
             //收到最后一张新的卡片
 //            [self observeNotificationName:KHHUIPullLatestReceivedCardSucceeded selector:@"handlePullLatestReceivedCardSucceeded:"];
 //            [self observeNotificationName:KHHUIPullLatestReceivedCardFailed selector:@"handlePullLatestReceivedCardFailed:"];
@@ -360,6 +366,7 @@
                                                    delegate:self
                                           cancelButtonTitle:@"查看详情"
                                           otherButtonTitles:@"取消", nil];
+    alert.tag = KHHAlertNewContact;
     [alert show];
 }
 //收到最新card失败
@@ -447,15 +454,33 @@
 }
 //收到新的名片，跳转到详细界面
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 0) {
-        DetailInfoViewController *detail = [[DetailInfoViewController alloc] initWithNibName:nil bundle:nil];
-        if ([self.latestCard isKindOfClass:[ReceivedCard class]]) {
-            ReceivedCard *lastCard = (ReceivedCard *)self.latestCard;
-            lastCard.isReadValue = YES;
+    KHHAlertType type = alertView.tag;
+    switch (type) {
+        case KHHAlertNewContact:
+        {
+            if (buttonIndex == 0) {
+                DetailInfoViewController *detail = [[DetailInfoViewController alloc] initWithNibName:nil bundle:nil];
+                if ([self.latestCard isKindOfClass:[ReceivedCard class]]) {
+                    ReceivedCard *lastCard = (ReceivedCard *)self.latestCard;
+                    lastCard.isReadValue = YES;
+                }
+                detail.card = self.latestCard;
+                [self.navigationController pushViewController:detail animated:YES];
+            }
         }
-        detail.card = self.latestCard;
-        [self.navigationController pushViewController:detail animated:YES];
+            break;
+        case KHHAlertSync:
+        {
+            if (buttonIndex == 0) {
+                //同步所有，同步联系人，启动定位服务
+                [self synBtnClick];
+            }
+        }
+            break;
+        default:
+            break;
     }
+    
 }
 - (void)synBtnClick
 {

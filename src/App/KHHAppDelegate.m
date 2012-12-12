@@ -28,7 +28,7 @@
     
     //启动百度地图
     _mapManager = [[BMKMapManager alloc] init];
-    BOOL ret = [_mapManager start:KHHBMapAPIKey generalDelegate:nil];
+    BOOL ret = [_mapManager start:KHHMessageBMapAPIKey generalDelegate:nil];
     if (!ret) {
         NSLog(@"mapManager start failed!");
     }
