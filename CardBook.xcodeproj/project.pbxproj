@@ -1081,7 +1081,6 @@
 		62D3F40C1603188500E011E2 /* KHHEditMSGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHEditMSGViewController.m; sourceTree = "<group>"; };
 		62D3F40D1603188500E011E2 /* KHHEditMSGViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHEditMSGViewController.xib; sourceTree = "<group>"; };
 		62ECDA34166DE1D000A15E24 /* CardBook copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CardBook copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		62ECDA36166DE1D100A15E24 /* CardBook copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "CardBook copy-Info.plist"; path = "/Volumes/work/ios_project/CardBook/CardBook copy-Info.plist"; sourceTree = "<absolute>"; };
 		9803EBA5160DA88D00402B53 /* NSObject+SM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SM.h"; sourceTree = "<group>"; };
 		9803EBA6160DA88D00402B53 /* NSObject+SM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SM.m"; sourceTree = "<group>"; };
 		981BA0F5162EB4520036A4B8 /* CustomerEvaluation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerEvaluation.h; sourceTree = "<group>"; };
@@ -1947,7 +1946,6 @@
 				98A84D5E1602CD2500A4A673 /* Products */,
 				98A84D981602D1F100A4A673 /* res */,
 				98A84D9A1602D20000A4A673 /* src */,
-				62ECDA36166DE1D100A15E24 /* CardBook copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
