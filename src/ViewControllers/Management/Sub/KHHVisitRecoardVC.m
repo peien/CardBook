@@ -403,7 +403,21 @@
     if (addrComp) {
         self.oSched.addressProvince = [NSString stringWithFormat:@"%@" ,addrComp.province];
         self.oSched.addressCity = [NSString stringWithFormat:@"%@" ,addrComp.city];
-        self.oSched.addressOther = [NSString stringWithFormat:@"%@%@%@" ,addrComp.district,addrComp.streetName,addrComp.streetNumber];
+        
+        //组装详细地址，空的直接加入的会出现(null)值
+        NSMutableString *detailAddress = [[NSMutableString alloc] initWithCapacity:20];
+        if (addrComp.district) {
+            [detailAddress appendString:addrComp.district];
+        }
+        
+        if (addrComp.streetName) {
+            [detailAddress appendString:addrComp.streetName];
+        }
+        
+        if (addrComp.streetNumber) {
+            [detailAddress appendString:addrComp.streetNumber];
+        }
+        self.oSched.addressOther = detailAddress;
     }
     
     if (self.isDateSelected) {
@@ -593,9 +607,6 @@
                 objectBtn.hidden = NO;
                 textField.enabled = YES;
             }
-            //20121123 wdf add 不让输入拜访客户，输入了也没有上传至服务器
-//            textField.enabled = NO;
-            
         }else if (indexPath.row == 1){
             textField.enabled = NO;
             textField.tag = TEXTFIELD_DATE_TAG;
@@ -796,8 +807,23 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    if (textField.tag == TEXTFIELD_JOINER_TAG) {
-        [self theTableAnimationUp];
+    switch (textField.tag) {
+        case TEXTFIELD_JOINER_TAG:
+        {
+            //显示键盘
+            [self theTableAnimationUp];
+        }
+            break;
+        case TEXTFIELD_OBJECT_TAG:
+        {
+            //给对象末尾添加";"
+            NSString * customer = textField.text;
+            if (customer && customer.length > 0 && ![customer hasSuffix:KHH_SEMICOLON]) {
+                textField.text = [NSString stringWithFormat:@"%@%@",customer,KHH_SEMICOLON];
+            }
+        }
+        default:
+            break;
     }
     return YES;
 }
@@ -1217,16 +1243,17 @@
  *  非手动输入的只要在id里把联系人id传入，type中传入type就行了
  */
 -(NSString *) userInputCustomerName{
-    if (!self.oSched.targetCardList || self.oSched.targetCardList.count <= 0) {
-        return nil;
-    }
-
     UITextField *objectTf = (UITextField *)[self.view viewWithTag:TEXTFIELD_OBJECT_TAG];
     if (!objectTf) {
         return nil;
     }
     
     NSString *customerName = objectTf.text;
+    //如果列表card为空，那么拜访的人全是手动录入的，直接返回
+    if (!self.oSched.targetCardList || self.oSched.targetCardList.count <= 0) {
+        return customerName;
+    }
+    
     //要过滤的客户名称
     NSArray *names = [customerName componentsSeparatedByString:KHH_SEMICOLON];
     //保留的客户名称
