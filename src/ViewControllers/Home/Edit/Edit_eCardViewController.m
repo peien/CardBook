@@ -322,16 +322,15 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
     }
     
     if (self.type == KCardViewControllerTypeNewCreate || _glCard.address.province == nil) {
-        NSString *allAddress = @"点击选择省市";
+        NSString *allAddress = KhhMessageAddressEditNotice;
         [_fieldValue replaceObjectAtIndex:8 withObject:allAddress];
     }
     if (_glCard.address.province.length > 0 || _glCard.address.province.length > 0 || _glCard.address.other.length > 0) {
-        NSString *p = [NSString stringByFilterNilFromString:_glCard.address.province];
-        NSString *c = [NSString stringByFilterNilFromString:_glCard.address.city];
+        //赋给临时变量
+        self.province = _glCard.address.province;
+        self.city = _glCard.address.city;
         NSString *o = [NSString stringByFilterNilFromString:_glCard.address.other];
-        NSString *s1 = [NSString stringWithFormat:@"%@ %@",p,c];
-        NSString *all = [NSString stringWithFormat:@"%@|%@",s1,o];
-        [_fieldValue replaceObjectAtIndex:8 withObject:all];
+        [self updateAddressInFeildValue:o];
     }
     
     if (_glCard.address.zip.length > 0) {
@@ -564,12 +563,16 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
             }
             cell.detailAdress.tag = indexPath.row + 7 + _fieldExternOne.count + kBaseTag;
             
-            if (self.glCard.address.other.length > 0 || self.glCard.address.province.length > 0) {
-                NSString *p = [NSString stringByFilterNilFromString:self.glCard.address.province];
-                NSString *c = [NSString stringByFilterNilFromString:self.glCard.address.city];
-                NSString *other = [NSString stringByFilterNilFromString:self.glCard.address.other];
-                [cell.bigAdress setTitle:[NSString stringWithFormat:@"%@%@",p,c] forState:UIControlStateNormal];
-                cell.detailAdress.text = other;
+            if (self.glCard.address.other.length > 0 || self.province.length > 0) {
+                if (self.province.length > 0) {
+                    NSString *p = [NSString stringByFilterNilFromString:self.province];
+                    NSString *c = [NSString stringByFilterNilFromString:self.city];
+                    [cell.bigAdress setTitle:[NSString stringWithFormat:@"%@ %@",p,c] forState:UIControlStateNormal];
+                }else {
+                    [cell.bigAdress setTitle:KhhMessageAddressEditNotice forState:UIControlStateNormal];
+                }
+                
+                cell.detailAdress.text = [NSString stringByFilterNilFromString:self.glCard.address.other];
             }
             return cell;
         }
@@ -674,6 +677,7 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
         }
     }
 }
+
 #pragma mark -
 - (void)selectProvinceCity:(id)sender
 {
@@ -696,16 +700,36 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
         DLog(@"select city:");
         TSLocateView *locateView = (TSLocateView *)actionSheet;
         TSLocation *location = locateView.locate;
-        NSLog(@"country:%@ city:%@ lat:%f lon:%f", location.state,location.city, location.latitude, location.longitude);
+        NSLog(@"province:%@ city:%@ lat:%f lon:%f", location.state,location.city, location.latitude, location.longitude);
         self.province = location.state;
         self.city = location.city;
         UIButton *btn = (UIButton *)[self.view viewWithTag:KBIGADDRESS_TAG];
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         NSString *addStr = [NSString stringWithFormat:@"%@ %@",location.state,location.city];
         [btn setTitle:addStr forState:UIControlStateNormal];
+        //把记录的值换成新
+        [self updateAddressInFeildValue:nil];
     }
     
 }
+
+//更新地址
+-(void) updateAddressInFeildValue:(NSString *) detailAddress {
+    if (!_fieldValue) {
+        return;
+    }
+    NSString * newAddress = nil;
+    NSString * oldAddress = [_fieldValue objectAtIndex:8];
+    NSArray *addressArr = [oldAddress componentsSeparatedByString:KHH_SEPARATOR];
+    if (addressArr.count == 2 && !detailAddress) {
+        detailAddress = [addressArr objectAtIndex:1];
+    }
+    newAddress = [NSString stringWithFormat:@"%@ %@%@%@",self.province,self.city,KHH_SEPARATOR,detailAddress];
+    
+    //更新到feildValue中
+    [_fieldValue replaceObjectAtIndex:8 withObject:newAddress];
+}
+
 //判断是否添加过
 - (NSMutableArray *)isHaveAddedItem
 {
@@ -871,7 +895,6 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
     if([cell isKindOfClass:[KHHAddressCell class]]){
         self.beginEditLabel = [(KHHAddressCell *)cell name];
     }
-    
 }
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
@@ -935,22 +958,14 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
         NSDictionary *dic2 = [NSDictionary dictionaryWithObjectsAndKeys:textField.text,@"value",self.beginEditLabel.text,@"key", nil];
         [_fieldExternThree replaceObjectAtIndex:(textField.tag - kBaseTag - _fieldExternOne.count - _fieldExternTwo.count - 10) withObject:dic2];
     }
-    //地址格式特殊，单独写出来重新负值
+    //地址格式特殊，单独写出来重新赋值
     if ([self.beginEditLabel.text isEqualToString:@"地址"]) {
         KHHAddressCell *cell = (KHHAddressCell*)[[textField superview] superview];
-        NSString *s1;
-        if (self.province.length == 0) {
-            s1 = [NSString stringWithFormat:@"%@ %@",self.glCard.address.province,self.glCard.address.city];
-        }else{
-            s1 = [NSString stringWithFormat:@"%@ %@",self.province,self.city];
-        }
         NSString *s2 = cell.detailAdress.text;
-        [_fieldValue replaceObjectAtIndex:8 withObject:[NSString stringWithFormat:@"%@|%@",s1,s2]];
+        [self updateAddressInFeildValue:s2];
         //这个地方用户自己输入的详细地址，区，以及街道无法保存。
     }
     self.beginEditLabel = nil;
-    
-
 }
 - (void)saveCardInfo
 {
@@ -1061,7 +1076,7 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
         return;
     }
     
-    if(company.length==0 && address.length==0){
+    if(company.length==0 && (address.length == 0 || [address isEqualToString:KhhMessageAddressEditNotice]) ){
         //[self showMessage:@"名片上的公司信息为空!请至少填写公司或地址中的一项!" withTitile:nil];
         [self warnAlertMessage:@"名片上的公司信息为空!请至少填写公司或地址中的一项!"];
         return;

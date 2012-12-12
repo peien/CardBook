@@ -362,11 +362,11 @@ typedef enum {
 //获取分组
 - (NSArray *)getAllGroups{
     //初始化分组，如果是选择人的话就默认只有两个固定分组
+    //默认只有2个分组（所有、未分组）如果用户设置显示手机就分组数 +1 ,如果是同事 +1
+    self.baseNum = 2;
     if (self.isNormalSearchBar) {
         BaseBtnTitleArrayVisited;
     }else {
-        //默认只有2个分组（所有、未分组）如果用户设置显示手机就分组数 +1 ,如果是同事 +1
-        self.baseNum = 2;
         //是否显示手机通讯录
         BOOL isHaveMobilePhoneGroup = [self.myDefaults isAddMobPhoneGroup];
         if (isHaveMobilePhoneGroup) {
@@ -869,6 +869,9 @@ typedef enum {
     }
 }
 - (void)updateOwnGroupArray{
+    if (self.currentIndexPath.row - self.baseNum < 0) {
+        return;
+    }
     
     self.oWnGroupArray = [self.dataControl allTopLevelGroups];
     Group *group = [self.oWnGroupArray objectAtIndex:self.currentIndexPath.row - self.baseNum];
