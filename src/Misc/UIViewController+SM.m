@@ -17,7 +17,7 @@
     [self alertWithTitle:title
                  message:message
                 delegate:self
-       cancelButtonTitle:NSLocalizedString(@"OK", nil)];
+       cancelButtonTitle:NSLocalizedString(KHHMessageSure, nil)];
 }
 
 - (void)alertWithTitle:(NSString *)title message:(NSString *)message delegate:(id)delegate cancelButtonTitle:(NSString *)cancelButtonTitle {

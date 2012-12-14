@@ -12,4 +12,5 @@
 
 @interface UIViewController (SMAlert)
 - (void)alertWithTitle:(NSString *)title message:(NSString *)message;
+- (void)alertWithTitle:(NSString *)title message:(NSString *)message delegate:(id)delegate cancelButtonTitle:(NSString *)cancelButtonTitle;
 @end

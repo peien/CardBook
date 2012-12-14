@@ -58,6 +58,7 @@
 #define KHH_APP_NAME [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleNameKey]
 #endif
 
+
 // URLs {
 #if KHH_RELEASE_SERVER == 1
 static NSString * const KHHServer = @"www.kinghanhong.com";

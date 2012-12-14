@@ -50,7 +50,17 @@
     
 }
 - (void)saveCustomValue{
-   
+    NSArray *cards = [self.dataCtrl allMyCards];
+    if (!cards || cards.count <= 0) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:KhhMessageDataErrorTitle
+                                                        message:KhhMessageDataErrorNotice
+                                                       delegate:nil
+                                              cancelButtonTitle:KHHMessageSure
+                                              otherButtonTitles:nil, nil];
+        [alert show];
+        return;
+    }
+    
     //注册评估消息
     [self observeNotificationName:KHHUISaveEvaluationSucceeded selector:@"handleSaveEvaluationSucceeded:"];
     [self observeNotificationName:KHHUISaveEvaluationFailed selector:@"handleSaveEvaluationFailed:"];
@@ -69,11 +79,9 @@
     
     DLog(@"self.icustomerEva ====== %@",self.icustomerEva);
     self.hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    NSArray *cards = [self.dataCtrl allMyCards];
-    if (cards) {
-        MyCard *myCard = [cards objectAtIndex:0];
-        [self.dataCtrl saveEvaluation:self.icustomerEva aboutCustomer:self.card withMyCard:myCard];
-    }
+    self.hud.labelText = KHHMessageCreateCustomValue;
+    MyCard *myCard = [cards objectAtIndex:0];
+    [self.dataCtrl saveEvaluation:self.icustomerEva aboutCustomer:self.card withMyCard:myCard];
 }
 //处理网络返回结果
 - (void)handleSaveEvaluationSucceeded:(NSNotification *)info{

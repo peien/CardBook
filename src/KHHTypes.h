@@ -85,6 +85,7 @@ typedef enum {
     KHHAlertContact         = 101,
     KHHAlertSync            = 102,
     KHHAlertNewContact      = 103,
+    KHHAlertDelete          = 104,
 } KHHAlertType;
 
 #endif

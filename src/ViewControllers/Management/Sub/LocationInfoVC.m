@@ -81,11 +81,9 @@
         self.rightBtn.hidden = YES;
         self.dataCtrl = [KHHData sharedData];
         NSArray *cards = [self.dataCtrl allMyCards];
-        if (cards) {
+        if (cards && cards.count > 0) {
             self.card = [cards objectAtIndex:0];
         }
-        
-        
         self.checkIn = [[ICheckIn alloc] initWithCard:card];
     }
     return self;
@@ -101,7 +99,6 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    
     self.isFirstLocation = YES;
     //获取定位的controller
     self.locaVC = [[KHHBMapLocationController alloc] init];
@@ -330,6 +327,17 @@
 //上传地理位置
 - (void)uploadBtnClick:(id)sender
 {
+    if (!self.card){
+        //提示用户数据没有同步下来，先同步一下数据
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:KhhMessageDataErrorTitle
+                                                        message:KhhMessageDataErrorNotice
+                                                       delegate:nil
+                                              cancelButtonTitle:KHHMessageSure
+                                              otherButtonTitles:nil, nil];
+        alert.tag = KHHAlertSync;
+        [alert show];
+        return;
+    }
     [self observeNotificationName:KHHNetworkCheckInSucceeded selector:@"handleCheckInSucceeded:"];
     [self observeNotificationName:KHHNetworkCheckInFailed selector:@"handleCheckInFailed:"];
     UITextField *note = (UITextField *)[self.view viewWithTag:TEXTFIELD_NOTE_TAG];

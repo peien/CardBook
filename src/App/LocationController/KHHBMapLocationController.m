@@ -12,24 +12,27 @@
 #import "KHHNotifications.h"
 #import "KHHStatusCodes.h"
 #import "KHHTypes.h"
+#import "KHHLocationController.h"
 
+//两次定位间的时间
 const NSTimeInterval KHH_LOCATION_REFRESH_INTERVAL = 30 * 60; // 30 min.
+
+//用百度地图获取地址的超时时间
+const NSInteger KHH_LOCATION_REFRESH_TIMEOUT = 30; // 30 second.
 
 @interface KHHBMapLocationController ()
 @property (nonatomic, strong) BMKUserLocation *userLocation;
 @property (nonatomic, strong) NSDate *timestamp;
 @property (nonatomic, strong) BMKAddrInfo *addrInfo;
+@property (strong, nonatomic) NSTimer            *timer;
+@property (strong, nonatomic) KHHLocationController *systemLC;
+@property (assign, nonatomic) CLLocationCoordinate2D coordinate;
 
 //MARK: - 用于保存信息
 //@property (nonatomic, strong) CLPlacemark *placemark;
 @end
 
 @implementation KHHBMapLocationController
-@synthesize mapView = _mapView;
-@synthesize search = _search;
-@synthesize timestamp = _timestamp;
-@synthesize userLocation = _userLocation;
-@synthesize addrInfo = _addrInfo;
 
 - (id)init
 {
@@ -43,6 +46,8 @@ const NSTimeInterval KHH_LOCATION_REFRESH_INTERVAL = 30 * 60; // 30 min.
         _search.delegate = self;
         // timestamp
         _timestamp = [NSDate distantPast];
+        //系统的定位
+        _systemLC = [[KHHLocationController alloc] init];
     }
     return self;
 }
@@ -65,28 +70,49 @@ const NSTimeInterval KHH_LOCATION_REFRESH_INTERVAL = 30 * 60; // 30 min.
 
 - (void)updateLocation // 更新当前位置信息
 {
-    NSDate *now = [NSDate date];
-    if (nil == _userLocation || // 之前未获取过
-        [now timeIntervalSinceDate:self.timestamp] > KHH_LOCATION_REFRESH_INTERVAL)
-    {   // 两次刷新之间的时间间隔
-        // 刷新位置
-        [self.mapView setShowsUserLocation:NO];
-        [self.mapView setShowsUserLocation:YES];
-    } else {
-        // 间隔太短，立即返回之前的位置
-        // 当作更新成功处理
-        if (!_userLocation) {
-            _userLocation = self.mapView.userLocation;
-        }
-        
-        //解析一下地址
-        [self reverseGeocode];
-//        [self updateSucceeded];
-    }
+    //old 30分钟内的定位不去真定位
+//    NSDate *now = [NSDate date];
+//    if (nil == _userLocation || // 之前未获取过
+//        [now timeIntervalSinceDate:self.timestamp] > KHH_LOCATION_REFRESH_INTERVAL)
+//    {   // 两次刷新之间的时间间隔
+//        // 刷新位置
+//        [self.mapView setShowsUserLocation:NO];
+//        [self.mapView setShowsUserLocation:YES];
+//    } else {
+//        // 间隔太短，立即返回之前的位置
+//        // 当作更新成功处理
+//        if (!_userLocation) {
+//            _userLocation = self.mapView.userLocation;
+//        }
+//        
+//        //解析一下地址
+//        [self reverseGeocode];
+////        [self updateSucceeded];
+//    }
+    
+    //20121213 只要调更新就去取一次，定位时也用系统默认的开始定位，如果30s后百度还没有定到，就用系统定到的经纬度，用百度解析
+    //启动定位超时timer
+    ALog(@"[I_1_2] 启动定位超时timer。");
+    [self startTimer:@"BMapLocateTimeOut:"];
+    //开始定位
+     DLog(@"开始定位%@", [NSDate date]);
+    //百度的定位
+    [self.mapView setShowsUserLocation:NO];
+    [self.mapView setShowsUserLocation:YES];
+    //系统的定位
+    [_systemLC updateLocation:NO];
+}
+
+//启动30s的超时timer
+-(void) startTimer:(NSString *) selector {
+    //停止上次未完成的timer  NSSelectorFromString
+    [self stopTimer];
+    _timer = [NSTimer scheduledTimerWithTimeInterval:KHH_LOCATION_REFRESH_TIMEOUT target:self selector:NSSelectorFromString(selector) userInfo:nil repeats:NO];
 }
 #pragma mark - Utils
+//可能来自百度或者系统
 - (void)updateSucceeded {
-    if (!_userLocation) {
+    if (!_addrInfo) {
         [self postASAPNotificationName:KHHLocationUpdateFailed];
         return;
     }
@@ -100,17 +126,55 @@ const NSTimeInterval KHH_LOCATION_REFRESH_INTERVAL = 30 * 60; // 30 min.
                               info:info];
 }
 - (void)processUpdatedLocation {
-    ALog(@"[II] 获取到位置 location = %@", _userLocation);
+    ALog(@"[I_1_2] 获取到位置 location = %@", _userLocation);
     [self.mapView setShowsUserLocation:NO];
     // 用baiduMap的BMKSearch进行解析
     [self reverseGeocode];
+    
 }
+
+//解析地址，地址可能是系统或百度获取所得
 - (void)reverseGeocode // 解析位置信息为地址
 {
-    ALog(@"[II] 解析地址数据为地址...");
-    BOOL rect = [_search reverseGeocode:_userLocation.coordinate];
+    //百度有时候解析老久不返回数据，这里再加个timer如果15秒解析不出就返回解析失败
+    ALog(@"[I_1_2] 启动解析超时timer。");
+    [self startTimer:@"BMapReverseGeocodeTimeOut:"];
+    ALog(@"[II] 开始解析经纬度");
+    BOOL rect = [_search reverseGeocode:_coordinate];
     if (!rect) {
+        NSError *err = [NSError errorWithDomain:KHHErrorDomain
+                                           code:KHHErrorCodeBusy
+                                       userInfo:@{
+                          kInfoKeyErrorMessage : NSLocalizedString(@"解析失败，无法识别地址！", nil)
+                        }];
+        [self updateFailedWithError:err];
         DLog(@"解析失败");
+    }
+}
+
+//百度地图定位超时时
+-(void) BMapLocateTimeOut:(NSTimer *)timer {
+    //百度地图超时，取系统定位的数据
+    DLog(@"[I_2]百度定位超时! %@", [NSDate date]);
+    _mapView.showsUserLocation = NO;
+    [self stopTimer];
+    _coordinate = [_systemLC userLocationCoordinate2D];
+    [self reverseGeocode];
+}
+
+//百度地图解析超时时
+-(void) BMapReverseGeocodeTimeOut:(NSTimer *)timer {
+    //百度地图超时，取系统定位的数据
+    DLog(@"[III_2]百度解析地址超时! %@", [NSDate date]);
+    [self stopTimer];
+    //发送更新失败广播
+    [self postASAPNotificationName:KHHLocationUpdateFailed];
+}
+
+-(void) stopTimer {
+    if (_timer) {
+        [_timer invalidate];
+        _timer = nil;
     }
 }
 
@@ -135,11 +199,7 @@ const NSTimeInterval KHH_LOCATION_REFRESH_INTERVAL = 30 * 60; // 30 min.
 
 //用户当前位置的经纬度信息
 -(CLLocationCoordinate2D) userLocationCoordinate2D {
-    if (!_userLocation) {
-        return CLLocationCoordinate2DMake(0, 0);
-    }
-    
-    return _userLocation.coordinate;
+    return _coordinate;
 }
 
 
@@ -147,11 +207,12 @@ const NSTimeInterval KHH_LOCATION_REFRESH_INTERVAL = 30 * 60; // 30 min.
 #pragma BMKSearchDelegate
 - (void)onGetAddrResult:(BMKAddrInfo*)result errorCode:(int)error
 {
+    DLog(@"[III_1]解析地址完成,是否成功 = %d",error == 0);
 	if (error == 0) {
-        DLog(@"user location detail = %@",result);
         _addrInfo = result;
-        //test
+        //发送解析地址成功
         [self updateSucceeded];
+        ALog(@"[III_1] 解析地址数据为地址...%@",_addrInfo.strAddr);
 	}else {
         NSError *err = [NSError errorWithDomain:KHHErrorDomain
                                            code:KHHErrorCodeBusy
@@ -165,7 +226,14 @@ const NSTimeInterval KHH_LOCATION_REFRESH_INTERVAL = 30 * 60; // 30 min.
 #pragma bmkmapviewDelegate
 - (void)mapView:(BMKMapView *)mapView didUpdateUserLocation:(BMKUserLocation *)userLocation
 {
+    DLog(@"[I_1_1]百度地图定位完成! %@",[NSDate date]);
+    //停止计数timer
+    [self stopTimer];
     _userLocation = userLocation;
+    _coordinate = _userLocation.coordinate;
+    if (_systemLC) {
+        [_systemLC stopUpdateLocation];
+    }
     //解析地址
     [self processUpdatedLocation];
 	if (userLocation != nil) {

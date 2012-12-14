@@ -1181,10 +1181,14 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
     //为了避免保存失败，先给这个临时card给值 InterCard
     self.progressHud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     if ([_glCard isKindOfClass:[MyCard class]]) {
+        self.progressHud.labelText = KHHMessageModifyCard;
         [self.dataCtrl modifyMyCardWithInterCard:self.interCard];
     }else if ([_glCard isKindOfClass:[PrivateCard class]]){
+        self.progressHud.labelText = KHHMessageModifyCard;
         [self.dataCtrl modifyPrivateCardWithInterCard:self.interCard];
     }else if (self.type == KCardViewControllerTypeNewCreate){
+        //修改
+        self.progressHud.labelText = KHHMessageCreateCard;
         //暂时这样写 templateID不确定
         self.interCard.templateID = self.cardTemp.id;
         [self.dataCtrl createPrivateCardWithInterCard:self.interCard];
