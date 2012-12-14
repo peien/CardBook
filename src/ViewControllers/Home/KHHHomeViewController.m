@@ -42,9 +42,10 @@
 #import <AddressBookUI/AddressBookUI.h>
 
 #define POPDismiss [self.popover dismissPopoverAnimated:YES];
-#define BaseBtnTitleArrayMobiGrop   _btnTitleArr = [[NSMutableArray alloc] initWithObjects:@"所有",@"同事",@"未分组",@"手机", nil];
-#define BaseBtnTitleArray   _btnTitleArr = [[NSMutableArray alloc] initWithObjects:@"所有",@"同事",@"未分组", nil];
-#define BaseBtnTitleArrayVisited   _btnTitleArr = [[NSMutableArray alloc] initWithObjects:@"所有",@"未分组", nil];
+#define BaseBtnTitleArrayMobiGrop       _btnTitleArr = [[NSMutableArray alloc] initWithObjects:KHHMessageDefaultGroupAll,KHHMessageDefaultGroupColleague,KHHMessageDefaultGroupUnGroup,KHHMessageDefaultGroupLocal, nil];
+#define BaseBtnTitleArrayColleague      _btnTitleArr = [[NSMutableArray alloc] initWithObjects:KHHMessageDefaultGroupAll,KHHMessageDefaultGroupColleague,KHHMessageDefaultGroupUnGroup, nil];
+#define BaseBtnTitleArrayLocal          _btnTitleArr = [[NSMutableArray alloc] initWithObjects:KHHMessageDefaultGroupAll,KHHMessageDefaultGroupUnGroup,KHHMessageDefaultGroupLocal, nil];
+#define BaseBtnTitleArrayVisited        _btnTitleArr = [[NSMutableArray alloc] initWithObjects:KHHMessageDefaultGroupAll,KHHMessageDefaultGroupUnGroup, nil];
 
 typedef enum {
     KHHTableIndexGroup = 100,
@@ -67,7 +68,6 @@ typedef enum {
 @property (strong, nonatomic)  NSArray                *myCardArray;
 @property (strong, nonatomic)  KHHFloatBarController  *floatBarVC;
 @property (assign, nonatomic)  bool                   isOwnGroup;
-@property (assign, nonatomic)  NSArray                *privateArr;
 @property (assign, nonatomic)  bool                   isNeedReloadTable;
 @property (assign, nonatomic)  int                    currentTag;
 @property (assign, nonatomic)  bool                   isAddressBookData;
@@ -94,7 +94,6 @@ typedef enum {
 @synthesize isShowData = _isShowData;
 @synthesize currentBtn = _currentBtn;
 @synthesize isAddGroup = _isAddGroup;
-@synthesize isDelGroup = _isDelGroup;
 @synthesize dicBtnTttle = _dicBtnTttle;
 @synthesize keys = _keys;
 @synthesize searCtrl = _searCtrl;
@@ -123,7 +122,6 @@ typedef enum {
 @synthesize isOwnGroup;
 @synthesize oWnGroupArray;
 @synthesize myCardArray;
-@synthesize privateArr;
 @synthesize isNeedReloadTable;
 @synthesize currentTag;
 @synthesize isAddressBookData;
@@ -327,7 +325,6 @@ typedef enum {
     self.floatBarVC = nil;
     self.oWnGroupArray = nil;
     self.myCardArray = nil;
-    self.privateArr = nil;
     self.selectedItemArr = nil;
     self.currentIndexPath = nil;
     self.interGroup = nil;
@@ -356,8 +353,17 @@ typedef enum {
     self.generalArray = arr;
     //我的卡片
     self.myCardArray = [self.dataControl allMyCards];
-    //获取分组
-    
+    if (!self.myCardArray || self.myCardArray.count <= 0) {
+        //提示数据未同步完成
+        //提示用户数据没有同步下来，先同步一下数据
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:KhhMessageDataErrorTitle
+                                                        message:KhhMessageDataError
+                                                       delegate:self
+                                              cancelButtonTitle:KHHMessageSure
+                                              otherButtonTitles:KHHMessageCancle, nil];
+        alert.tag = KHHAlertSync;
+        [alert show];
+    }
 }
 //获取分组
 - (NSArray *)getAllGroups{
@@ -385,7 +391,11 @@ typedef enum {
                 BaseBtnTitleArrayMobiGrop;
                 break;
             case 3:
-                BaseBtnTitleArray;
+                if (isHaveMobilePhoneGroup) {
+                    BaseBtnTitleArrayLocal;
+                }else {
+                    BaseBtnTitleArrayColleague;
+                }
                 break;
             case 2:
                 BaseBtnTitleArrayVisited;
@@ -406,19 +416,20 @@ typedef enum {
 }
 - (void)reloadTable
 {
-    if (self.currentTag == 102) {
-        self.generalArray = [self.dataControl cardsOfUngrouped];
-    }else if (self.currentTag == 100){
-        self.allArray = [self.dataControl allReceivedCards];
-        NSMutableArray *arr = [[NSMutableArray alloc] initWithArray:self.allArray];
-        NSArray *priArr = [self.dataControl allPrivateCards];
-        [arr addObjectsFromArray:priArr];
-        self.generalArray = arr;
-    }else if (self.currentTag == 101){
-       
-    }else if (self.currentIndexPath.row > [self.myDefaults isAddMobPhoneGroup]?3:2){
-        if (!self.isDelGroup) {
-            [self updateOwnGroupArray];
+    if (self.isOwnGroup) {
+        [self updateOwnGroupArray];
+    }else {
+        NSString *btnName = _currentBtn.titleLabel.text;
+        if ([btnName isEqualToString:KHHMessageDefaultGroupUnGroup]) {
+            self.generalArray = [self.dataControl cardsOfUngrouped];
+        }else if ([btnName isEqualToString:KHHMessageDefaultGroupAll]){
+            self.allArray = [self.dataControl allReceivedCards];
+            NSMutableArray *arr = [[NSMutableArray alloc] initWithArray:self.allArray];
+            NSArray *priArr = [self.dataControl allPrivateCards];
+            [arr addObjectsFromArray:priArr];
+            self.generalArray = arr;
+        }else if ([btnName isEqualToString:KHHMessageDefaultGroupColleague]){
+            self.generalArray = [self.dataControl cardsOfColleague];
         }
     }
     [_bigTable reloadData];
@@ -769,7 +780,8 @@ typedef enum {
 - (void)cellBtnClick:(id)sender
 {
     UIButton *btn = (UIButton *)sender;
-    DLog(@"cellBtn.tag=======%d",btn.tag);
+    NSString *btnName = btn.titleLabel.text;
+    DLog(@"cellBtn.tag=======%d,name = %@",btn.tag,btnName);
     self.isAddressBookData = NO;
     self.floatBarVC.isContactCellClick = NO;
 
@@ -797,40 +809,6 @@ typedef enum {
         self.isOwnGroup = YES;
     }
     if (_isShowData) {
-        //刷新表
-        switch (btn.tag) {
-            case 100:{
-                self.allArray = [self.dataControl allReceivedCards];
-                NSMutableArray *arr = [[NSMutableArray alloc] initWithArray:self.allArray];
-                NSArray *priArr = [self.dataControl allPrivateCards];
-                [arr addObjectsFromArray:priArr];
-                self.generalArray = arr;
-            }
-                break;
-            case 101:
-                DLog(@"101 btn 数据源刷新");
-                self.generalArray = [self.dataControl cardsOfColleague];
-                if (self.isNormalSearchBar) {
-                self.generalArray = [self.dataControl cardsOfUngrouped];
-                }
-                break;
-            case 102:
-                DLog(@"102 btn 数据源刷新");
-                self.privateArr = [self.dataControl cardsOfUngrouped];
-                self.generalArray = self.privateArr;
-                break;
-            case 103:{
-                if ([self.myDefaults isAddMobPhoneGroup]) {
-                    self.isAddressBookData = YES;
-                    self.floatBarVC.isContactCellClick = YES;
-                    NSArray *addressArr = [KHHAddressBook getAddressBookData];
-                    self.generalArray = addressArr;
-                }
-            }
-                break;
-            default:
-                break;
-        }
         //DLog(@"刷新表");
         //当是自定义分组时，把btn的tag用groupid进行设置，再根据tag进行读取各个分组的成员//(每个分组有cards属性)
         if (self.isOwnGroup) {
@@ -838,6 +816,26 @@ typedef enum {
             self.currentTag = btn.tag;
             [self updateOwnGroupArray];
             
+        }else {
+            //刷新表
+            if ([btnName isEqualToString:KHHMessageDefaultGroupAll] || [btnName isEqualToString:[NSString string]]) {
+                self.allArray = [self.dataControl allReceivedCards];
+                NSMutableArray *arr = [[NSMutableArray alloc] initWithArray:self.allArray];
+                NSArray *priArr = [self.dataControl allPrivateCards];
+                [arr addObjectsFromArray:priArr];
+                self.generalArray = arr;
+            }else if([btnName isEqualToString:KHHMessageDefaultGroupColleague]){
+                self.generalArray = [self.dataControl cardsOfColleague];
+            }else if([btnName isEqualToString:KHHMessageDefaultGroupUnGroup]){
+                self.generalArray = [self.dataControl cardsOfUngrouped];
+            }else if([btnName isEqualToString:KHHMessageDefaultGroupLocal]){
+                if ([self.myDefaults isAddMobPhoneGroup]) {
+                    self.isAddressBookData = YES;
+                    self.floatBarVC.isContactCellClick = YES;
+                    NSArray *addressArr = [KHHAddressBook getAddressBookData];
+                        self.generalArray = addressArr;
+                    }
+            }
         }
         if (self.isNormalSearchBar) {
             self.selectedItemArr = [self mutilyFlagForSelected];
@@ -856,14 +854,14 @@ typedef enum {
         if (indexPath.row > self.baseNum - 1) {
             UIActionSheet *actSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                                   delegate:self
-                                                         cancelButtonTitle:NSLocalizedString(@"取消",nil)
+                                                         cancelButtonTitle:NSLocalizedString(KHHMessageCancle,nil)
                                                     destructiveButtonTitle:nil
                                                          otherButtonTitles:nil, nil];
             
-            [actSheet addButtonWithTitle:NSLocalizedString(@"添加组员", nil)];
-            [actSheet addButtonWithTitle:NSLocalizedString(@"移出组员", nil)];
-            [actSheet addButtonWithTitle:NSLocalizedString(@"修改组名", nil)];
-            [actSheet addButtonWithTitle:NSLocalizedString(@"删除分组", nil)];
+            [actSheet addButtonWithTitle:NSLocalizedString(KHHMessageAddGroupMember, nil)];
+            [actSheet addButtonWithTitle:NSLocalizedString(KHHMessageDeleteGroupMember, nil)];
+            [actSheet addButtonWithTitle:NSLocalizedString(KHHMessageModifyGroup, nil)];
+            [actSheet addButtonWithTitle:NSLocalizedString(KHHMessageDeleteGroup, nil)];
             [actSheet showInView:self.view];
         }
     }
@@ -891,7 +889,8 @@ typedef enum {
     [self observeNotificationName:nDataSyncAllSucceeded selector:@"handleDataSyncAllSucceeded:"];
     [self observeNotificationName:nDataSyncAllFailed selector:@"handleDataSyncAllFailed:"];
     KHHAppDelegate *app = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
-    [MBProgressHUD showHUDAddedTo:app.window animated:YES];
+    MBProgressHUD *hudp = [MBProgressHUD showHUDAddedTo:app.window animated:YES];
+    hudp.labelText = KHHMessageSyncAll;
     [self.dataControl startSyncAllData];
 }
 - (void)handleDataSyncAllSucceeded:(NSNotification *)noti{
@@ -922,12 +921,10 @@ typedef enum {
         if (buttonIndex == 1) {
             self.isNeedReloadTable = YES;
             addMemVC.isAdd = YES;
-            self.isDelGroup = NO;
             //addMemVC.handleArray = self.allArray;
         }else if(buttonIndex == 2){
             self.isNeedReloadTable = YES;
             addMemVC.isAdd = NO;
-            self.isDelGroup = NO;
             addMemVC.handleArray = self.generalArray;
         }else if (buttonIndex == 3){
             //修改组名
@@ -935,10 +932,9 @@ typedef enum {
             [self observeNotificationName:KHHUIUpdateGroupSucceeded selector:@"handleUpdateGroupSucceeded:"];
             [self observeNotificationName:KHHUIUpdateGroupFailed selector:@"handleUpdateGroupFailed:"];
             
-            myAlertView *alert = [[myAlertView alloc] initWithTitle:@"修改组名" message:nil delegate:self style:kMyAlertStyleTextField cancelButtonTitle:KHHMessageSure otherButtonTitles:@"取消"];
+            myAlertView *alert = [[myAlertView alloc] initWithTitle:@"修改组名" message:nil delegate:self style:kMyAlertStyleTextField cancelButtonTitle:KHHMessageSure otherButtonTitles:KHHMessageCancle];
             _titleStr = NSLocalizedString(@"修改组名", nil);
             _isAddGroup = NO;
-            _isDelGroup = NO;
             [alert show];
             return;
         }else if (buttonIndex == 4){
@@ -946,12 +942,12 @@ typedef enum {
             //注册删除分组的消息
             [self observeNotificationName:KHHUIDeleteGroupSucceeded selector:@"handleDeleteGroupSucceeded:"];
             [self observeNotificationName:KHHUIDeleteGroupFailed selector:@"handleDeleteGroupFailed:"];
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"删除", nil) 
-                                                            message:NSLocalizedString(@"将会删除该组", nil) 
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"删除", nil)
+                                                            message:NSLocalizedString(@"将会删除该组", nil)
                                                            delegate:self
                                                   cancelButtonTitle:NSLocalizedString(KHHMessageSure, nil) 
                                                   otherButtonTitles:NSLocalizedString(KHHMessageCancle, nil), nil];
-            _isDelGroup = YES;
+            alert.tag = KHHAlertDelete;
             [alert show];
             return;
         
@@ -1084,53 +1080,62 @@ typedef enum {
                              cancelButtonTitle:NSLocalizedString(KHHMessageSure, nil)
                              otherButtonTitles:NSLocalizedString(KHHMessageCancle,nil)];
     _isAddGroup = YES;
-    _isDelGroup = NO;
     [_alert show];
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (buttonIndex == 0 && !_isDelGroup) {
-        for (UIView *view in alertView.subviews) {
-            if ([view isKindOfClass:[UITextField class]]) {
-                UITextField *tf = (UITextField *)view;
-                
-                if (tf.text.length > 0 && _isAddGroup) {
-                    //[_btnTitleArr addObject:tf.text];
-                    //同步，从新调用自定义的所有分组，然后再刷新表
-                    [self showHudForNetWorkWarn];
-                    self.groupTf = tf;
-                    self.interGroup.name = tf.text;
-                    [self.dataControl createGroup:interGroup withMyCard:[self.myCardArray lastObject]];
-                    //[_btnTable reloadData];
-                    //[_btnTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_btnTitleArr count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-                    
-                }else{
-                    //修改组名，
-                    if (tf.text == nil) {
-                        return;
+    //是添加分组的alert
+    if ([alertView isMemberOfClass:[myAlertView class]]) {
+        if (buttonIndex == 0) {
+            for (UIView *view in alertView.subviews) {
+                if ([view isKindOfClass:[UITextField class]]) {
+                    UITextField *tf = (UITextField *)view;
+                    if (tf.text.length > 0 && _isAddGroup) {
+                        //[_btnTitleArr addObject:tf.text];
+                        if (!self.myCardArray || self.myCardArray.count <= 0) {
+                            [self handleCreateGroupFailed:nil];
+                            return;
+                        }
+                        //同步，从新调用自定义的所有分组，然后再刷新表
+                        [self showHudForNetWorkWarn:KHHMessageCreatingGroup];
+                        self.groupTf = tf;
+                        self.interGroup.name = tf.text;
+                        [self.dataControl createGroup:interGroup withMyCard:[self.myCardArray objectAtIndex:0]];
+                        //[_btnTable reloadData];
+                        //[_btnTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_btnTitleArr count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+                        
+                    }else{
+                        //修改组名，
+                        if (tf.text == nil) {
+                            return;
+                        }
+                        [self showHudForNetWorkWarn:KHHMessageModifingGroup];
+                        self.groupTf = tf;
+                        Group *group = [self.oWnGroupArray objectAtIndex:self.currentIndexPath.row - self.baseNum];
+                        self.interGroup.id = group.id;
+                        self.interGroup.name = tf.text;
+                        [self.dataControl updateGroup:self.interGroup];
                     }
-                    [self showHudForNetWorkWarn];
-                    self.groupTf = tf;
-                    Group *group = [self.oWnGroupArray objectAtIndex:self.currentIndexPath.row - self.baseNum];
-                    self.interGroup.id = group.id;
-                    self.interGroup.name = tf.text;
-                    [self.dataControl updateGroup:self.interGroup];
                 }
             }
         }
-    }else if(buttonIndex == 0 && _isDelGroup){
-        //自己添加的删除完以后，就不可删除
-        if (_btnTitleArr.count < self.baseNum + 1) {
-            return;
+    }else if(KHHAlertDelete == alertView.tag){
+        if (0 == buttonIndex) {
+            //自己添加的删除完以后，就不可删除
+            if (_btnTitleArr.count < self.baseNum + 1) {
+                return;
+            }
+            [self showHudForNetWorkWarn:KHHMessageDeletingGroup];
+            self.oWnGroupArray = [self.dataControl allTopLevelGroups];
+            Group *group = [self.oWnGroupArray objectAtIndex:currentIndexPath.row - self.baseNum];
+            [self.dataControl deleteGroup:group];
+            //[_btnTitleArr removeObjectAtIndex:_currentBtn.tag - 100];
+            //[_btnTable reloadData];
         }
-        [self showHudForNetWorkWarn];
-        self.oWnGroupArray = [self.dataControl allTopLevelGroups];
-        Group *group = [self.oWnGroupArray objectAtIndex:currentIndexPath.row - self.baseNum];
-        [self.dataControl deleteGroup:group];
-        //[_btnTitleArr removeObjectAtIndex:_currentBtn.tag - 100];
-        //[_btnTable reloadData];
-    }
-    if (buttonIndex == 1) {
-        return;
+    }else if(KHHAlertSync == alertView.tag) {
+        if (0 == buttonIndex) {
+            //同步数据
+            [self synBtnClick:nil];
+        }
     }
 }
 #pragma mark - handleGroup
@@ -1142,37 +1147,37 @@ typedef enum {
     self.groupTitleArr = [self getAllGroups];
     [_btnTable reloadData];
     [_btnTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.groupTitleArr count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-    [self netWorkWarnForHandleGroup:NSLocalizedString(@"", nil)];
+    [self netWorkWarnForHandleGroup:[NSString stringWithFormat:@"%@%@",KHHMessageCreateGroup,KHHMessageSucceed]];
     
 }
 - (void)handleCreateGroupFailed:(NSNotification *)info{
     DLog(@"handleCreateGroupFailed! info is ====== %@",info);
     [self stopObservingForCreatGroup];
-    [self netWorkWarnForHandleGroup:NSLocalizedString(@"创建失败", nil)];
+    [self netWorkWarnForHandleGroup:[NSString stringWithFormat:@"%@%@",KHHMessageCreateGroup,KHHMessageFailed]];
 
 }
 //删除组
 - (void)handleDeleteGroupSucceeded:(NSNotification *)info{
     DLog(@"handleDeleteGroupSucceeded! info is ====== %@",info);
     [self stopObservingForDelGroup];
-    [self netWorkWarnForHandleGroup:NSLocalizedString(@"", nil)];
+    [self netWorkWarnForHandleGroup:[NSString stringWithFormat:@"%@%@",KHHMessageDeleteGroup,KHHMessageSucceed]];
     [_btnTitleArr removeObjectAtIndex:_currentBtn.tag - 100];
     [_btnTable reloadData];
     self.generalArray = nil;
-    [_bigTable reloadData];
+    [self reloadTable];
 
 }
 - (void)handleDeleteGroupFailed:(NSNotification *)info{
     DLog(@"handleDeleteGroupFailed! info is ====== %@",info);
     [self stopObservingForDelGroup];
-     [self netWorkWarnForHandleGroup:NSLocalizedString(@"删除失败", nil)];
+     [self netWorkWarnForHandleGroup:[NSString stringWithFormat:@"%@%@",KHHMessageDeleteGroup,KHHMessageFailed]];
 
 }
 //修改组
 - (void)handleUpdateGroupSucceeded:(NSNotification *)info{
     DLog(@"handleUpdateGroupSucceeded! info is ====== %@",info);
     [self stopObservingForUpdateGroup];
-    [self netWorkWarnForHandleGroup:NSLocalizedString(@"", nil)];
+    [self netWorkWarnForHandleGroup:[NSString stringWithFormat:@"%@%@",KHHMessageModifyGroup,KHHMessageSucceed]];
     [_btnTitleArr replaceObjectAtIndex:_currentBtn.tag - 100 withObject:self.groupTf.text];
     [_currentBtn setTitle:self.groupTf.text forState:UIControlStateNormal];
     
@@ -1181,7 +1186,7 @@ typedef enum {
 - (void)handleUpdateGroupFailed:(NSNotification *)info{
     DLog(@"handleUpdateGroupFailed! info is ====== %@",info);
     [self stopObservingForUpdateGroup];
-    [self netWorkWarnForHandleGroup:NSLocalizedString(@"修改失败", nil)];
+    [self netWorkWarnForHandleGroup:[NSString stringWithFormat:@"%@%@",KHHMessageModifyGroup,KHHMessageFailed]];
     
 
 }
@@ -1205,9 +1210,12 @@ typedef enum {
     [self.hud hide:YES afterDelay:0.5];
 
 }
-- (void)showHudForNetWorkWarn{
+- (void)showHudForNetWorkWarn:(NSString *) message{
     KHHAppDelegate *app = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
     self.hud = [MBProgressHUD showHUDAddedTo:app.window animated:YES];
+    if (message) {
+        self.hud.labelText = message;
+    }
 
 }
 #pragma mark - test

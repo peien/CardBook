@@ -15,7 +15,7 @@
 #import "KHHData+UI.h"
 #import "KHHMessage.h"
 #import "MBProgressHUD.h"
-@interface KHHMessageViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface KHHMessageViewController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 @property (strong, nonatomic) NSArray *messageArr;
 @property (strong, nonatomic) KHHData *dataCtrl;
 @property (assign, nonatomic) bool    isNeedReloadTable;
@@ -42,7 +42,14 @@
 //刷新
 - (void)rightBarButtonClick:(id)sender
 {
-    [self synMessage];
+    //弹出同步提示框
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"同步数据"
+                                                    message:KhhMessageSyncDataWithServer
+                                                   delegate:self
+                                          cancelButtonTitle:@"确认"
+                                          otherButtonTitles:@"取消", nil];
+    alert.tag = KHHAlertSync;
+    [alert show];
 }
 //刷新新到的消
 - (void)synMessage{
@@ -50,7 +57,8 @@
     //注册同步消息
     [self observeNotificationName:nUISyncMessagesSucceeded selector:@"handleSyncMessagesSucceeded:"];
     [self observeNotificationName:nUISyncMessagesFailed selector:@"handlenUISyncMessagesFailed:"];
-    [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    hud.labelText = KHHMessageSyncMessage;
     [self.dataCtrl syncMessages];
 }
 #pragma mark -
@@ -163,6 +171,24 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+#pragma alert delegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (!alertView || !alertView.tag) {
+        return;
+    }
+    
+    KHHAlertType type = alertView.tag;
+    switch (type) {
+        case KHHAlertSync:{
+            if (buttonIndex == 0) {
+                [self synMessage];
+            }
+        }
+        default:
+            break;
+    }
 }
 
 @end

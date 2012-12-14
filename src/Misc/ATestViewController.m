@@ -119,10 +119,10 @@
 }
 #pragma mark - 试验LocationController
 - (void)testLocationController {
-    [self showLabelWithText:@"试验LocationController"];
-    [self observeNotificationName:KHHLocationUpdateSucceeded
-                         selector:@"handleLocationUpdateSucceeded:"];
-    [[KHHLocationController sharedController] updateLocation];
+//    [self showLabelWithText:@"试验LocationController"];
+//    [self observeNotificationName:KHHLocationUpdateSucceeded
+//                         selector:@"handleLocationUpdateSucceeded:"];
+//    [[KHHLocationController sharedController] updateLocation];
 }
 #pragma mark - 试验Messages
 - (void)testMessages {

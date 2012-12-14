@@ -26,6 +26,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        //先隐藏
+        self.rightBtn.hidden = YES;
         [self.rightBtn setTitle:@"所有" forState:UIControlStateNormal];
         self.title = @"价值漏斗";
         self.dataCtrl = [KHHData sharedData];

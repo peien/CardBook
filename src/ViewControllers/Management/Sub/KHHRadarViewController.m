@@ -29,6 +29,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        //先隐藏
+        self.rightBtn.hidden = YES;
        [self.rightBtn setTitle:@"所有" forState:UIControlStateNormal];
         self.dataCtrl = [KHHData sharedData];
         self.title = @"关系拓展";

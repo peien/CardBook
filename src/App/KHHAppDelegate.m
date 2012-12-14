@@ -43,8 +43,8 @@
     
     //捕获摇摇动作
     application.applicationSupportsShakeToEdit = YES;
-    //清除程序图标数字
-//    [application setApplicationIconBadgeNumber:0];
+    //清除程序图标数字（每次新进程序时默认把图标的数字清空）
+    [application setApplicationIconBadgeNumber:0];
     UILocalNotification *localNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
     if (localNotif)
     {

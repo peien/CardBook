@@ -62,10 +62,6 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
 //        self.title = NSLocalizedString(@"蜂巢访销", nil);
         self.title = KHH_APP_NAME;
         self.dataCtrl = [KHHData sharedData];
-        NSArray *cards = [self.dataCtrl allMyCards];
-        if (cards && cards.count > 0) {
-            self.myCard = [cards objectAtIndex:0];
-        }
         _entranceView = [[[NSBundle mainBundle] loadNibNamed:@"KHHBossEntrance" owner:self options:nil] objectAtIndex:0];
         
         [self.leftBtn setTitle:NSLocalizedString(@"消息", nil) forState:UIControlStateNormal];
@@ -162,6 +158,19 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSArray *cards = [self.dataCtrl allMyCards];
+    if (cards && cards.count > 0) {
+        self.myCard = [cards objectAtIndex:0];
+    }else {
+        //提示用户数据没有同步下来，先同步一下数据
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:KhhMessageDataErrorTitle
+                                                        message:KhhMessageDataError
+                                                       delegate:self
+                                              cancelButtonTitle:KHHMessageSure
+                                              otherButtonTitles:KHHMessageCancle, nil];
+        alert.tag = KHHAlertSync;
+        [alert show];
+    }
     // Do any additional setup after loading the view from its nib.
     _entranceView.center = self.view.center;
     
@@ -424,8 +433,6 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
         default:
             break;
     }
-    
-    
 }
 
 #pragma backgroud running
