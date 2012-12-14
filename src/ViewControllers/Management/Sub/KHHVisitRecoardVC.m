@@ -374,6 +374,17 @@
 // 保存或新建拜访计划
 - (void)saveVisitRecordInfo
 {
+    //判断拜访对象是否为空
+    UITextField *objectTf = (UITextField *)[self.view viewWithTag:TEXTFIELD_OBJECT_TAG];
+    if (objectTf && objectTf.text.length == 0) {
+        //提示用户拜访对象为空
+        [[[UIAlertView alloc] initWithTitle:KHHMessageSaveFailed
+                                    message:KhhMessageVisitRecordCustomerIsNull
+                                   delegate:nil
+                          cancelButtonTitle:KHHMessageSure
+                          otherButtonTitles:nil] show];
+        return;
+    }
     UITextField *note = (UITextField *)[self.view viewWithTag:NOTE_FIELD_TAG];
     UITextField *joiner = (UITextField *)[self.view viewWithTag:TEXTFIELD_JOINER_TAG];
 
@@ -403,7 +414,21 @@
     if (addrComp) {
         self.oSched.addressProvince = [NSString stringWithFormat:@"%@" ,addrComp.province];
         self.oSched.addressCity = [NSString stringWithFormat:@"%@" ,addrComp.city];
-        self.oSched.addressOther = [NSString stringWithFormat:@"%@%@%@" ,addrComp.district,addrComp.streetName,addrComp.streetNumber];
+        
+        //组装详细地址，空的直接加入的会出现(null)值
+        NSMutableString *detailAddress = [[NSMutableString alloc] initWithCapacity:20];
+        if (addrComp.district) {
+            [detailAddress appendString:addrComp.district];
+        }
+        
+        if (addrComp.streetName) {
+            [detailAddress appendString:addrComp.streetName];
+        }
+        
+        if (addrComp.streetNumber) {
+            [detailAddress appendString:addrComp.streetNumber];
+        }
+        self.oSched.addressOther = detailAddress;
     }
     
     if (self.isDateSelected) {
@@ -593,9 +618,6 @@
                 objectBtn.hidden = NO;
                 textField.enabled = YES;
             }
-            //20121123 wdf add 不让输入拜访客户，输入了也没有上传至服务器
-//            textField.enabled = NO;
-            
         }else if (indexPath.row == 1){
             textField.enabled = NO;
             textField.tag = TEXTFIELD_DATE_TAG;
@@ -796,11 +818,60 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    if (textField.tag == TEXTFIELD_JOINER_TAG) {
-        [self theTableAnimationUp];
+    switch (textField.tag) {
+        case TEXTFIELD_JOINER_TAG:
+        {
+            //显示键盘
+            [self theTableAnimationUp];
+        }
+            break;
+        case TEXTFIELD_OBJECT_TAG:
+        {
+            //给对象末尾添加";"
+            NSString * customer = textField.text;
+            if (customer && customer.length > 0 && ![customer hasSuffix:KHH_SEMICOLON]) {
+                textField.text = [NSString stringWithFormat:@"%@%@",customer,KHH_SEMICOLON];
+            }
+        }
+        default:
+            break;
     }
     return YES;
 }
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    UITableViewCell *cell = (UITableViewCell *)[[textField superview] superview];
+    DLog(@"cell.text======%@",cell.textLabel.text);
+    if ([cell.textLabel.text isEqualToString:@"对象"]) {
+        if (textField.text.length == 0) {
+            self.objectDic = nil; //移出默认的拜访对象。
+        }
+        [_fieldValue replaceObjectAtIndex:0 withObject:textField.text];
+    }else if ([cell.textLabel.text isEqualToString:@"备注"]){
+        [_fieldValue replaceObjectAtIndex:3 withObject:textField.text];
+    
+    }else if ([cell.textLabel.text isEqualToString:@"参与者"]){
+        [_fieldValue replaceObjectAtIndex:6 withObject:textField.text];
+    }
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    DLog(@"replacementString = %@", string);
+    //删除键按下 （还要根据tag来对指定textfiled来设定）
+    if (TEXTFIELD_OBJECT_TAG == textField.tag && [string isEqualToString:[NSString string]]) {
+        //把text清空
+        textField.text = @"";
+        self.objectDic = nil;
+        
+        return YES;
+    }
+    
+    return YES;
+}
+
+
+
 - (void)theTableAnimationUp{
     
     [UIView beginAnimations:nil context:nil];
@@ -817,26 +888,9 @@
     rect.origin.y = 0;
     _theTable.frame = rect;
     [UIView commitAnimations];
-
-}
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-    UITableViewCell *cell = (UITableViewCell *)[[textField superview] superview];
-    DLog(@"cell.text======%@",cell.textLabel.text);
-    if ([cell.textLabel.text isEqualToString:@"对象"]) {
-        if (textField.text.length == 0) {
-            if (self.visitInfoCard) {
-                [self.objectDic removeObjectForKey:self.visitInfoCard.id.stringValue]; //移出默认的拜访对象。
-            }
-        }
-        [_fieldValue replaceObjectAtIndex:0 withObject:textField.text];
-    }else if ([cell.textLabel.text isEqualToString:@"备注"]){
-        [_fieldValue replaceObjectAtIndex:3 withObject:textField.text];
     
-    }else if ([cell.textLabel.text isEqualToString:@"参与者"]){
-        [_fieldValue replaceObjectAtIndex:6 withObject:textField.text];
-    }
 }
+
 #pragma mark -
 - (void)warnBtnClick:(id)sender
 {
@@ -1131,7 +1185,7 @@
 //向日历中添加事件
 - (void)addEventForCalendar{
     //已完成的事件不添加到提醒中
-    if (self.oSched || self.oSched.isFinished > [NSNumber numberWithBool:YES]) {
+    if (!self.oSched || self.oSched.isFinished == [NSNumber numberWithBool:YES]) {
         return;
     }
     UIButton *btn = (UIButton *)[self.view viewWithTag:2277];
@@ -1146,8 +1200,11 @@
         customerName = objectTf.text;
     }
     
+    DLog(@"######添加拜访计划提醒。");
+    
     //系统6.0以上时把事件存到系统日历事件中，6.0以下的用UIlocalNotification提醒
     if([self checkIsDeviceVersionHigherThanRequiredVersion:@"6.0"]) {
+        DLog(@"###### ios6.0 用EKEvent");
         EKEventStore *eventStore = [[EKEventStore alloc] init];
         EKEvent *event = [EKEvent eventWithEventStore:eventStore];    
     	[eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError *error) {
@@ -1182,6 +1239,7 @@
 //                                   delegate:nil
 //                          cancelButtonTitle:KHHMessageSure
 //                          otherButtonTitles:nil] show];
+         DLog(@"###### ios6.0以下 用localNotification");
         [self localNotificationWithCustomerName:customerName];
     }
 }
@@ -1217,16 +1275,17 @@
  *  非手动输入的只要在id里把联系人id传入，type中传入type就行了
  */
 -(NSString *) userInputCustomerName{
-    if (!self.oSched.targetCardList || self.oSched.targetCardList.count <= 0) {
-        return nil;
-    }
-
     UITextField *objectTf = (UITextField *)[self.view viewWithTag:TEXTFIELD_OBJECT_TAG];
     if (!objectTf) {
         return nil;
     }
     
     NSString *customerName = objectTf.text;
+    //如果列表card为空，那么拜访的人全是手动录入的，直接返回
+    if (!self.oSched.targetCardList || self.oSched.targetCardList.count <= 0) {
+        return customerName;
+    }
+    
     //要过滤的客户名称
     NSArray *names = [customerName componentsSeparatedByString:KHH_SEMICOLON];
     //保留的客户名称

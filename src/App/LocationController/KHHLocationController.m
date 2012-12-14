@@ -7,7 +7,6 @@
 //
 
 #import "KHHLocationController.h"
-#import <CoreLocation/CoreLocation.h>
 #import "KHHClasses.h"
 #import "KHHMacros.h"
 #import "KHHNotifications.h"
@@ -20,6 +19,7 @@ const NSTimeInterval KHH_LOCATION_REFRESH_INTERVAL = 30 * 60; // 30 min.
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) CLGeocoder *geocoder;
 @property (nonatomic, strong) NSDate *timestamp;
+@property (nonatomic, assign) BOOL isNeedNotify;
 
 //MARK: - 用于保存信息
 @property (nonatomic, strong) CLPlacemark *placemark;
@@ -34,7 +34,7 @@ const NSTimeInterval KHH_LOCATION_REFRESH_INTERVAL = 30 * 60; // 30 min.
         _locationManager = [[CLLocationManager alloc] init];
         _locationManager.delegate = self;
         _locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters;
-        _locationManager.distanceFilter = 500;
+        _locationManager.distanceFilter = 100;
         // geocoder
         _geocoder = [[CLGeocoder alloc] init];
         // timestamp
@@ -49,28 +49,59 @@ const NSTimeInterval KHH_LOCATION_REFRESH_INTERVAL = 30 * 60; // 30 min.
     self.timestamp = nil;
 }
 #pragma mark - Interface methods
-+ (id)sharedController {
-    static id _sharedObj = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        _sharedObj = [[KHHLocationController alloc] init];
-    });
-    return _sharedObj;
-}
+//+ (id)sharedController {
+//    static id _sharedObj = nil;
+//    static dispatch_once_t onceToken;
+//    dispatch_once(&onceToken, ^{
+//        _sharedObj = [[KHHLocationController alloc] init];
+//    });
+//    return _sharedObj;
+//}
 
 - (void)updateLocation // 更新当前位置信息
 {
-    CLLocation *lastLocation = self.locationManager.location;
-    NSDate *now = [NSDate date];
-    if (nil == lastLocation || // 之前未获取过
-        [now timeIntervalSinceDate:self.timestamp] > KHH_LOCATION_REFRESH_INTERVAL)
-    {   // 两次刷新之间的时间间隔
-        // 刷新位置
-        [self.locationManager startUpdatingLocation];
-    } else {
-        // 间隔太短，立即返回之前的位置
-        // 当作更新成功处理
-        [self updateSucceeded];
+    [self updateLocation:YES];
+}
+
+/*
+ 主要用于 百度地图定位超时时，用系统自带的定位获取经纬度
+ 不发送定位成功广播
+ */
+-(void) updateLocation:(BOOL) notify{
+    //定位成功后是否要notify用户
+    _isNeedNotify = notify;
+    //    CLLocation *lastLocation = self.locationManager.location;
+    //    NSDate *now = [NSDate date];
+    //    if (nil == lastLocation || // 之前未获取过
+    //        [now timeIntervalSinceDate:self.timestamp] > KHH_LOCATION_REFRESH_INTERVAL)
+    //    {   // 两次刷新之间的时间间隔
+    //        // 刷新位置
+    [self.locationManager startUpdatingLocation];
+    //    } else {
+    //        // 间隔太短，立即返回之前的位置
+    //        // 当作更新成功处理
+    //        [self updateSucceeded];
+    //    }
+}
+
+/**
+ 获取用户当前经纬度
+ 用之前一定要调过updateLocation 或updateLocation:bool
+ */
+-(CLLocationCoordinate2D) userLocationCoordinate2D {
+    if (!_locationManager) {
+        return KHH_DEFAULT_COORDINATE;
+    }
+    
+    return _locationManager.location.coordinate;
+}
+
+/*
+ 外面强制关闭定位
+ */
+-(void) stopUpdateLocation {
+    if (_locationManager) {
+        [_locationManager stopUpdatingLocation];
     }
 }
 #pragma mark - Utils
@@ -107,8 +138,8 @@ const NSTimeInterval KHH_LOCATION_REFRESH_INTERVAL = 30 * 60; // 30 min.
         info[kInfoKeyLocationLongitude] = longitude;
     }
     self.timestamp = [NSDate date];// 时间戳
-    [self postASAPNotificationName:KHHLocationUpdateSucceeded
-                              info:info];
+    
+    [self postASAPNotificationName:KHHLocationUpdateSucceeded info:info];
 }
 - (void)updateFailedWithError:(NSError *)err {
     NSDictionary *info = @{ kInfoKeyErrorObject : err };
@@ -116,21 +147,26 @@ const NSTimeInterval KHH_LOCATION_REFRESH_INTERVAL = 30 * 60; // 30 min.
                               info:info];
 }
 - (void)processUpdatedLocation {
-    ALog(@"[II] 获取到位置 location = %@", self.locationManager.location);
+//    ALog(@"[II] 获取到位置 location = %@", self.locationManager.location);
+    DLog(@"系统定位完成! %@", [NSDate date]);
     [self.locationManager stopUpdatingLocation];
-    if (self.geocoder.geocoding) {
-        // geocoder 正在解析数据
-        // 本次更新失败，返回“忙”
-        NSError *err = [NSError errorWithDomain:KHHErrorDomain
-                                           code:KHHErrorCodeBusy
-                                       userInfo:@{
-                          kInfoKeyErrorMessage : NSLocalizedString(@"正忙着！", nil)
-                        }];
-        [self updateFailedWithError:err];
-        return;
+    
+    //要发送广播时就解析数据，不发送广播时就不解析
+    if (_isNeedNotify) {
+        if (self.geocoder.geocoding) {
+            // geocoder 正在解析数据
+            // 本次更新失败，返回“忙”
+            NSError *err = [NSError errorWithDomain:KHHErrorDomain
+                                               code:KHHErrorCodeBusy
+                                           userInfo:@{
+                              kInfoKeyErrorMessage : NSLocalizedString(@"正忙着！", nil)
+                            }];
+            [self updateFailedWithError:err];
+            return;
+        }
+        // geocoder 空闲，则开始解析数据
+        [self reverseGeocode];
     }
-    // geocoder 空闲，则开始解析数据
-    [self reverseGeocode];
 }
 - (void)reverseGeocode // 解析位置信息为地址
 {

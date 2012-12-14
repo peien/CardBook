@@ -50,6 +50,21 @@
     
 //    CLPlacemark *placemark = iCheckIn.placemark;
     BMKGeocoderAddressComponent *addrComp = iCheckIn.addressComponent;
+    
+    //组装详细地址，空的直接加入的会出现(null)值
+    NSMutableString *detailAddress = [[NSMutableString alloc] initWithCapacity:20];
+    if (addrComp.district) {
+        [detailAddress appendString:addrComp.district];
+    }
+    
+    if (addrComp.streetName) {
+        [detailAddress appendString:addrComp.streetName];
+    }
+    
+    if (addrComp.streetNumber) {
+        [detailAddress appendString:addrComp.streetNumber];
+    }
+    
     // 组合string参数
     NSDictionary *parameters = @{
     @"bean.cardId"      : [NSString stringFromObject:iCheckIn.cardID],
@@ -70,7 +85,7 @@
     @"bean.country"     : [NSString stringFromObject:@"中国"],
     @"bean.province"    : [NSString stringWithFormat:@"%@",addrComp.province],
     @"bean.city"        : [NSString stringWithFormat:@"%@",addrComp.city],
-    @"bean.address"     : [NSString stringWithFormat:@"%@%@%@",addrComp.district,addrComp.streetName,addrComp.streetNumber],
+    @"bean.address"     : detailAddress,
     @"bean.col1"        : [NSString stringFromObject:iCheckIn.memo],
     };
     

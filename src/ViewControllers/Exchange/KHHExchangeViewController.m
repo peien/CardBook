@@ -72,10 +72,6 @@
         //[self.leftBtn setTitle:NSLocalizedString(@"切换名片", nil) forState:UIControlStateNormal];
         self.httpAgent = [[KHHNetworkAPIAgent alloc] init];
         self.dataCtrl = [KHHData sharedData];
-        NSArray *cards = [self.dataCtrl allMyCards];
-        if (cards) {
-            self.card = [cards objectAtIndex:0];
-        }
         self.app  = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
         self.myDefault = [KHHDefaults sharedDefaults];
     }
@@ -91,6 +87,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSArray *cards = [self.dataCtrl allMyCards];
+    if (cards && cards.count > 0) {
+        self.card = [cards objectAtIndex:0];
+    }
+    
+    //检查是否要提示同步alert
+    [self checkNeedShowSyncAlert];
     // Do any additional setup after loading the view from its nib.
     //设置背景
     [self.view setBackgroundColor:[UIColor colorWithRed:241.0f green:238.0f blue:231.0f alpha:1.0f]];
@@ -118,6 +121,24 @@
     // 获取经度，纬度
     [self getLocationForExChange];
 }
+
+//显示数据未同步完全的alert
+-(BOOL) checkNeedShowSyncAlert {
+    if (self.card) {
+        return YES;
+    }else{
+        //提示用户数据没有同步下来，先同步一下数据
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:KhhMessageDataErrorTitle
+                                                        message:KhhMessageDataError
+                                                       delegate:self
+                                              cancelButtonTitle:KHHMessageSure
+                                              otherButtonTitles:KHHMessageCancle, nil];
+        alert.tag = KHHAlertSync;
+        [alert show];
+        return NO;
+    }
+}
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [KHHShowHideTabBar showTabbar];
@@ -187,6 +208,9 @@
 
 - (void)btnClick:(id)sender
 {
+    if (![self checkNeedShowSyncAlert]) {
+        return;
+    }
     UIButton *button = (UIButton *)sender;
     switch (button.tag) {
         case 111:
@@ -201,7 +225,6 @@
             break;
         case 113:
         {
-            
             //弹出同步提示框
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"同步数据"
                                                             message:KhhMessageSyncDataWithServer
@@ -227,7 +250,7 @@
 // 刷新卡片信息
 - (void)updateCardTempInfo{
     NSArray *cards = [self.dataCtrl allMyCards];
-    if (cards) {
+    if (cards && cards.count > 0) {
         self.card = [cards objectAtIndex:0];
     }
     self.cardView.card = self.card;

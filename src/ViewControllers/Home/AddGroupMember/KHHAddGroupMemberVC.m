@@ -282,10 +282,12 @@ int num = 0;
     }
     self.hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     if (_isAdd) {
+        self.hud.labelText = KHHMessageAddingGroupMember;
        //调用添加组员接口,
         [self.dataCtrl moveCards:_addOrDelGroupArray fromGroup:nil toGroup:self.group];
 
     }else{
+        self.hud.labelText = KHHMessageDeletingGroupMember;
        //调用移出组员接口
         [self.dataCtrl moveCards:_addOrDelGroupArray fromGroup:self.group toGroup:nil];
     }

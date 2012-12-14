@@ -130,7 +130,7 @@
 	
 	annotationView.centerOffset = CGPointMake(0, -(annotationView.frame.size.height * 0.5));
     annotationView.annotation = annotation;
-	annotationView.canShowCallout = TRUE;
+	annotationView.canShowCallout = YES;
     return annotationView;
 }
 
@@ -148,8 +148,7 @@
     item.coordinate = point;
     item.title = title;
     item.subtitle = subtitle;
-    [_mapView addAnnotation:item];
-    
+    [_mapView addAnnotation:item ];
     //地图动画切换的点
     [_mapView setCenterCoordinate:item.coordinate animated:YES];
     

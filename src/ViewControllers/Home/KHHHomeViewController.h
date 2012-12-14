@@ -28,7 +28,6 @@ typedef enum {
 @property (assign, nonatomic) bool                      isShowData;
 @property (strong, nonatomic) UIButton                  *currentBtn;
 @property (assign, nonatomic) bool                      isAddGroup;
-@property (assign, nonatomic) bool                      isDelGroup;
 @property (strong, nonatomic) UISearchDisplayController *searCtrl;
 @property (strong, nonatomic) NSIndexPath               *lastIndexPath;
 @property (assign, nonatomic) bool                      isNotHomePage;

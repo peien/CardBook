@@ -66,7 +66,7 @@
     UIButton *btnFooter = [UIButton buttonWithType:UIButtonTypeCustom];
     [btnFooter setBackgroundImage:[[UIImage imageNamed:@"tongbu_normal.png"]resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10, 0, 10)] forState:UIControlStateNormal];
     btnFooter.frame = CGRectMake(60.0f, 5.0f, 200, 37);
-    [btnFooter setTitle:@"保存至手机通讯录" forState:UIControlStateNormal];
+    [btnFooter setTitle:KHHMessageAddContactToLocal forState:UIControlStateNormal];
     btnFooter.titleLabel.font = [UIFont systemFontOfSize:15];
     [btnFooter setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [btnFooter addTarget:self action:@selector(saveToContactBtnClick:) forControlEvents:UIControlEventTouchUpInside];
@@ -296,8 +296,19 @@
 //添加card到通讯录
 - (void)saveToContactBtnClick:(id)sender
 {
-    [KHHAddressBook saveToCantactWithCard:_myCard];
+    NSString *message = nil;
+    if ([KHHAddressBook saveToCantactWithCard:_myCard]) {
+        message = [NSString stringWithFormat:@"%@%@",KHHMessageAddContactToLocal, KHHMessageSucceed];
+    }else {
+        message = [NSString stringWithFormat:@"%@%@",KHHMessageAddContactToLocal, KHHMessageFailed];
+    }
     
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:KHHMessageAddContactToLocal
+                                                    message:message
+                                                   delegate:nil
+                                          cancelButtonTitle:KHHMessageSure
+                                          otherButtonTitles:nil, nil];
+    [alert show];
 }
 
 - (void)delCardBtnClick:(id)sender
@@ -307,6 +318,7 @@
     [self observeNotificationName:KHHUIDeleteCardFailed selector:@"handleDeleteCardFailed"];
     //KHHAppDelegate *app = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
     self.progressHud = [MBProgressHUD showHUDAddedTo:self.detailVC.view animated:YES];
+    self.progressHud.labelText = KhhMessageDeleteContact;
     if ([self.myCard isKindOfClass:[PrivateCard class]]) {
         [self.dataCtrl deletePrivateCardByID:self.myCard.id];
     }else if ([self.myCard isKindOfClass:[ReceivedCard class]]){

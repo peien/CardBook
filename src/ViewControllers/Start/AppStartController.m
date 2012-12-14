@@ -27,6 +27,7 @@
 #define titleSyncFailed             NSLocalizedString(@"同步数据出错", nil)
 #define textNotAllDataAvailable     NSLocalizedString(@"部分数据可能暂时无法使用。", nil)
 #define textWillAutoLogin           NSLocalizedString(@"将自动登录...", nil)
+#define textWillSync                NSLocalizedString(@"登录成功,为了能正常使用软件，强烈建议您花点时间与服务器同步一下数据,是否立即与服务器同步数据?", nil)
 
 static const NSTimeInterval AppStart_TransitionDuration = 0.5f;
 static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOptionTransitionCrossDissolve;
@@ -151,16 +152,23 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 #pragma mark - UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
+    if (KHHAlertSync == alertView.tag) {
+        if (0 == buttonIndex) {
+            //同步
+            [self sync];
+        }else {
+            // 进主界面。
+            [self postNowNotificationName:nAppShowMainView];
+        }
+    }
     NSString *title = alertView.title;
     if ([title isEqualToString:titleCreateAccountSucceeded]) {
         [self login];//注册成功, 直接登录。
-    } else
-    if ([title isEqualToString:titleCreateAccountFailed]
+    } else if ([title isEqualToString:titleCreateAccountFailed]
         || [title isEqualToString:titleResetPasswordFailed]
         || [title isEqualToString:titleResetPasswordSucceeded]) {
         [self showPreviousView];
-    } else
-    if ([title isEqualToString:titleLoginFailed]) {
+    } else if ([title isEqualToString:titleLoginFailed]) {
         [self showLoginView];
     }
 }
@@ -274,8 +282,14 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     [self saveUserInfoToDefaults:noti.userInfo];
     // 开始同步
     if (isFirstLogin) {
-        //同步
-        [self sync];
+        //提示要同步数据
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
+                                   message:textWillSync
+                                  delegate:self 
+                         cancelButtonTitle:KHHMessageSure
+                         otherButtonTitles:KHHMessageCancle,nil];
+        alert.tag = KHHAlertSync;
+        [alert show];
     }else {
         //直接进入
         [self handleSyncSucceeded:nil];
