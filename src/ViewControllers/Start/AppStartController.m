@@ -450,10 +450,13 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
                                    options:options
                                 animations:nil
                                 completion:^(BOOL finished) {
+                                    if (finished) {
+                                        [fromVC.view removeFromSuperview];
+                                        [fromVC removeFromParentViewController];
+                                        self.previousController = fromVC;
+                                    } 
                                 }];
-        [fromVC.view removeFromSuperview];
-        [fromVC removeFromParentViewController];
-        self.previousController = fromVC;
+        
     } else {
         [self addChildViewController:toViewController];
         [self.view addSubview:toViewController.view];
