@@ -14,7 +14,11 @@
 #import "KHHCardMode.h"
 @class eCardViewController;
 
-@interface DetailInfoViewController : SuperViewController <UIAlertViewDelegate>
+@interface DetailInfoViewController : SuperViewController <UIAlertViewDelegate>{
+    
+        UIImageView *iconImgView;
+}
+
 @property (strong, nonatomic) eCardViewController *eCardVC;
 @property (assign, nonatomic) bool                isToeCardVC;
 @property (strong, nonatomic) IBOutlet UIView     *containView;

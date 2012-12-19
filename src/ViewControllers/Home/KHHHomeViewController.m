@@ -25,7 +25,9 @@
 #import "MyTabBarController.h"
 #import "KHHShowHideTabBar.h"
 //#import "MapController.h"
-#import "UIButton+WebCache.h"
+#import "UIImageView+WebCache.h"
+#import <QuartzCore/QuartzCore.h>
+
 #import "Edit_eCardViewController.h"
 #import "KHHAddressBook.h"
 #import "KHHClientCellLNPC.h"
@@ -596,11 +598,14 @@ typedef enum {
                     cell.newicon.hidden = YES;
                 }
                 
-                [cell.logoBtn setImageWithURL:[NSURL URLWithString:card.logo.url]
+                [cell.logoImage setImageWithURL:[NSURL URLWithString:card.logo.url]
                              placeholderImage:imgNor
                                       success:^(UIImage *image, BOOL cached){
-                                          if(CGSizeEqualToSize(image.size, CGSizeZero)){
-                                              [cell.logoBtn setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+                                          
+                                          if(!CGSizeEqualToSize(image.size, CGSizeZero)){
+                                              CALayer *l = [cell.logoImage layer];
+                                              [l setMasksToBounds:YES];
+                                              [l setCornerRadius:6.0];
                                           }
                                       }
                                       failure:^(NSError *error){

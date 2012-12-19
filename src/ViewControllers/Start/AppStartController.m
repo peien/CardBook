@@ -254,7 +254,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 }
 - (void)sync {
     DLog(@"[II] 开始同步！");
-    [self postASAPNotificationName:nAppSyncing];
+   // [self postASAPNotificationName:nAppSyncing];
     // 开始同步数据
     [self.data removeContext];
     [self.data startSyncAllData];
