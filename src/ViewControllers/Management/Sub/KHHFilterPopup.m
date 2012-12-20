@@ -89,9 +89,10 @@
 	//NSString *selectedCellText = [popUpBoxDatasource objectAtIndex:indexPath.row];
 	if (_delegate && [_delegate respondsToSelector:@selector(selectInAlert:)]) {
         if (indexPath.row == 0) {
-            [_delegate performSelector:@selector(selectInAlert:) withObject:nil];
+            [_delegate performSelector:@selector(selectInAlert:) withObject:nil ];
         } else {
-            [_delegate performSelector:@selector(selectInAlert:) withObject:[arrPro objectAtIndex:indexPath.row-1]];
+            NSDictionary *dic = [[NSDictionary alloc]initWithObjectsAndKeys:[arrPro objectAtIndex:indexPath.row-1],@"obj",[NSString stringWithFormat:@"%d",indexPath.row],@"groupIndex", nil];
+            [_delegate performSelector:@selector(selectInAlert:) withObject:dic ];
         }
                
     } 

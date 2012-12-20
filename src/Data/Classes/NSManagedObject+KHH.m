@@ -32,6 +32,7 @@
     return [self objectByKey:@"id" value:ID createIfNone:createIfNone];
 }
 
+
 /*!
  根据 Key-Value 查数据库。
  keyName 和 value 不能为nil，否则返回nil。

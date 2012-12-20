@@ -12,7 +12,9 @@
 #import "KHHClasses.h"
 
 @interface KHHFunnelViewController (){
-    int groupId;
+    NSNumber *_groupId;
+    int _groupIndex;
+    NSString *_rightTitle;
 }
 @property (strong, nonatomic) KHHData *dataCtrl;
 @property (strong, nonatomic) NSMutableDictionary *allDic;
@@ -40,7 +42,7 @@
 - (void)rightBarButtonClick:(id)sender
 {
 
-	[[KHHFilterPopup shareUtil]  showPopUpGroup:0 delegate:self];
+	[[KHHFilterPopup shareUtil]  showPopUpGroup:_groupIndex delegate:self];
    
 	
 }
@@ -51,11 +53,21 @@
     // Do any additional setup after loading the view from its nib.
     [self.view setBackgroundColor:[UIColor colorWithRed:241 green:238 blue:232 alpha:1.0]];
     self.allDic = [[NSMutableDictionary alloc] initWithCapacity:0];
-    NSArray *oneStarsArr = [self.dataCtrl cardsofStarts:1.0];
-    NSArray *twoStarsArr = [self.dataCtrl cardsofStarts:2.0];
-    NSArray *threeStarsArr = [self.dataCtrl cardsofStarts:3.0];
-    NSArray *fourStarsArr = [self.dataCtrl cardsofStarts:4.0];
-    NSArray *fiveStarsArr = [self.dataCtrl cardsofStarts:5.0];
+    [self refresh:nil];
+}
+
+- (void)refresh:(NSNumber *)groupId{
+    if (!groupId) {
+        [self.rightBtn setTitle:@"所有" forState:UIControlStateNormal];
+    }else{
+        [self.rightBtn setTitle:_rightTitle forState:UIControlStateNormal];
+    }
+    
+    NSArray *oneStarsArr = [self.dataCtrl cardsofStarts:1.0 groupId:groupId];
+    NSArray *twoStarsArr = [self.dataCtrl cardsofStarts:2.0 groupId:groupId];
+    NSArray *threeStarsArr = [self.dataCtrl cardsofStarts:3.0 groupId:groupId];
+    NSArray *fourStarsArr = [self.dataCtrl cardsofStarts:4.0 groupId:groupId];
+    NSArray *fiveStarsArr = [self.dataCtrl cardsofStarts:5.0 groupId:groupId];
     [self.allDic setObject:oneStarsArr forKey:@"oneStar"];
     [self.allDic setObject:twoStarsArr forKey:@"twoStar"];
     [self.allDic setObject:threeStarsArr forKey:@"threeStar"];
@@ -67,7 +79,6 @@
     self.lab4.text = [NSString stringWithFormat:@"%d",fourStarsArr.count];
     self.lab5.text = [NSString stringWithFormat:@"%d",fiveStarsArr.count];
 }
-
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -112,8 +123,29 @@
 }
 
 #pragma mark KHHFilterPopup delegate
-- (void)selectInAlert:(NSString *)index {
-    groupId = 
+- (void)selectInAlert:(id)obj{
+    
+    if (!obj) {        
+        _groupIndex = 0;
+        if (!_groupId) {
+            
+            return;
+        }
+        _groupId = nil;
+        [self refresh:nil];
+        return;
+    }
+    
+    NSDictionary *dic = (NSDictionary *)obj;
+    _groupIndex = [[dic objectForKey:@"groupIndex"] intValue];
+    Group *grp = (Group *)[dic objectForKey:@"obj"];
+    if (!_groupId || _groupId != grp.id) {
+        _groupId = grp.id;
+        _rightTitle = grp.name;
+        [self refresh:_groupId];
+        
+    } 
+   
 }
 
 @end
