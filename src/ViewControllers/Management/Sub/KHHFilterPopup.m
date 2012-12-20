@@ -23,10 +23,10 @@
 
 - (void)showPopUpGroup:(int)index delegate:(id<KHHFilterPopupDelegate>)delegate
 {
-    arrpro = [[KHHData sharedData]allTopLevelGroups];
+    arrPro = [[KHHData sharedData]allTopLevelGroups];
     NSMutableArray *arr = [[NSMutableArray alloc]init];
     [arr addObject:@"所有"];
-    [arrpro enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    [arrPro enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         Group *grp= (Group *)obj;
        [arr addObject: grp.name];
     }];
