@@ -10,8 +10,9 @@
 #import "SuperViewController.h"
 
 @interface KHHValueViewController : SuperViewController
-@property (strong, nonatomic) IBOutlet UITableView *theTable;
-@property (strong, nonatomic) NSArray              *generArr;
+@property (strong, nonatomic) IBOutlet UITableView      *theTable;
+@property (strong, nonatomic) NSArray                   *generArr;
+@property (assign, nonatomic) float                     value;
 @property (strong, nonatomic) UISearchDisplayController *searCtrl;
 
 @end

@@ -539,6 +539,11 @@
     NSDictionary *info = noti.userInfo;
     NSDictionary *extra= info[kInfoKeyExtra];
     NSMutableArray *queue = extra[kExtraKeyQueue];
+    //确保queue
+    if (!queue.count) {
+        [self startNextQueuedOperation:queue];
+        return;
+    }
     // 根据 queue 采取不同措施
     switch ([queue[0] integerValue]) {
         case KHHQueuedOperationSyncVisitSchedulesAfterCreation: {

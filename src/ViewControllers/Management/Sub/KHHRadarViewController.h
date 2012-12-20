@@ -15,5 +15,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *btn3;
 @property (weak, nonatomic) IBOutlet UIButton *btn4;
 @property (weak, nonatomic) IBOutlet UIButton *btn5;
+@property (weak, nonatomic) IBOutlet UIButton *btnLatent;
+@property (weak, nonatomic) IBOutlet UIButton *btnLackExpand;
+@property (weak, nonatomic) IBOutlet UIButton *btnNormal;
+@property (weak, nonatomic) IBOutlet UIButton *btnBetter;
+@property (weak, nonatomic) IBOutlet UIButton *btnIntimate;
 - (IBAction)btnClick:(id)sender;
 @end

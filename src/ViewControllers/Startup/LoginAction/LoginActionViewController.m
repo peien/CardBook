@@ -23,7 +23,7 @@
 #define textResettingPassword NSLocalizedString(@"正在重置密码...", nil)
 //#define textStartLogin NSLocalizedString(@"正在登录...", nil)
 //#define textLoginSucceeded NSLocalizedString(@"登录成功", nil)
-//#define textStartPostLoginSync NSLocalizedString(@"正在同步数据...", nil)
+#define textStartPostLoginSync NSLocalizedString(@"正在同步数据...", nil)
 //#define textPostLoginSyncSucceeded NSLocalizedString(@"同步完成", nil)
 //#define textStartSignUp NSLocalizedString(@"正在注册...", nil)
 //#define textSignUpSucceeded NSLocalizedString(@"注册成功", nil)
@@ -71,6 +71,9 @@
         //check network
         [self observeNotificationName:nAppCheckNetwork
                              selector:@"handleCheckNetwork:"];
+        //同步数据
+        [self observeNotificationName:nAppSyncing
+                             selector:@"handleSyncingWithServer:"];
     }
     return self;
 }
@@ -105,6 +108,10 @@
 - (void)handleCheckNetwork:(NSNotification *)noti {
     // 显示正在check网络
     self.actionLabel.text = textCheckNetwork;
+}
+- (void)handleSyncingWithServer:(NSNotification *)noti {
+    // 显示正在同步数据
+    self.actionLabel.text = textStartPostLoginSync;
 }
 #pragma mark - Utilities
 

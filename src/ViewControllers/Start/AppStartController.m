@@ -160,7 +160,9 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
             // 进主界面。
             [self postNowNotificationName:nAppShowMainView];
         }
+        return;
     }
+    
     NSString *title = alertView.title;
     if ([title isEqualToString:titleCreateAccountSucceeded]) {
         [self login];//注册成功, 直接登录。
