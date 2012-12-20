@@ -16,15 +16,18 @@
     Card *aCard;
     switch (icv.customerCardModelType) {
         case KHHCardModelTypePrivateCard:
-            aCard = [PrivateCard objectByID:icv.customerCardID createIfNone:YES];
+            aCard = [PrivateCard objectByID:icv.customerCardID createIfNone:NO];
             break;
         case KHHCardModelTypeReceivedCard:
-            aCard = [ReceivedCard objectByID:icv.customerCardID createIfNone:YES];
+            aCard = [ReceivedCard objectByID:icv.customerCardID createIfNone:NO];
             break;
         default:
             break;
     }
-    self.customerCard     = aCard;
+    
+    if (aCard) {
+        self.customerCard     = aCard;
+    }
     return self;
 }
 

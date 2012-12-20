@@ -11,13 +11,13 @@
 #import "PCPieChart.h"
 #import "KHHClasses.h"
 #import "KHHData+UI.h"
+#import "KHHFilterPopup.h"
 
 static NSInteger const KHH_PCPieChart_Tag = 1000;
 
-@interface KHHRadarViewController ()<UIPickerViewDataSource,UIPickerViewDelegate>
+@interface KHHRadarViewController ()<KHHFilterPopupDelegate>
 @property (strong, nonatomic) KHHData *dataCtrl;
 @property (strong, nonatomic) NSMutableArray    *valueItems;
-@property (strong, nonatomic) NSArray           *titleArr;
 @property (assign, nonatomic) BOOL              isNeedReloadTable;
 @property (strong, nonatomic) Group             *currentGroup;
 //当前分组下的名片总数
@@ -28,7 +28,6 @@ static NSInteger const KHH_PCPieChart_Tag = 1000;
 @implementation KHHRadarViewController
 @synthesize dataCtrl;
 @synthesize valueItems;
-@synthesize titleArr;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -36,61 +35,36 @@ static NSInteger const KHH_PCPieChart_Tag = 1000;
     if (self) {
         // Custom initialization
         //先隐藏
-        self.rightBtn.hidden = YES;
+//        self.rightBtn.hidden = YES;
        [self.rightBtn setTitle:@"所有" forState:UIControlStateNormal];
         self.dataCtrl = [KHHData sharedData];
         self.title = @"关系拓展";
-        self.titleArr = [self.dataCtrl allTopLevelGroups];
-        //默认指到所有
-#warning 给currentGroup设置个默认的
     }
     return self;
 }
 - (void)rightBarButtonClick:(id)sender{
-    UIPickerView *pick = [[UIPickerView alloc] initWithFrame:CGRectMake(0, 500, 320, 216)];
-    pick.showsSelectionIndicator = YES;
-    pick.delegate = self;
-    pick.dataSource = self;
-    [self.view addSubview:pick];
-    //[self pickAnimationUp:pick];
-    //NSArray *arr1 = [self.dataCtrl cardsofStartsValue:1.0 from:[self.titleArr objectAtIndex:0]];
-    //DLog(@"arr1 ====== %@",arr1);
+    //show 选择分组的alert
+    [[KHHFilterPopup shareUtil] showPopUpGroup:0 delegate:self];
 }
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
-    return 1;
-}
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
-    return self.titleArr.count;
-}
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
-    Group *group = [self.titleArr objectAtIndex:row];
-    return group.name;
 
-}
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-    [self pickAnimationDown:pickerView];
-    _currentGroup = [self.titleArr objectAtIndex:row];
-    [self.rightBtn setTitle:_currentGroup.name forState:UIControlStateNormal];
-    //根据分组刷新相应数据
-}
-- (void)pickAnimationUp:(UIPickerView *)pick{
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.3];
-    CGRect rect = pick.frame;
-    rect.origin.y = 200;
-    pick.frame = rect;
-    [UIView commitAnimations];
-
-}
-- (void)pickAnimationDown:(UIPickerView *)pick{
+//刷新title的右边按钮文字及重绘饼图
+-(void) refreshButtonAndChart:(Group *) group
+{
+    _currentGroup = group;
+    //更新按钮名称
+    if (group) {
+        [self.rightBtn setTitle:_currentGroup.name forState:UIControlStateNormal];
+    }else{
+        [self.rightBtn setTitle:@"所有" forState:UIControlStateNormal];
+    }
     
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.3];
-    CGRect rect = pick.frame;
-    rect.origin.y = 500;
-    pick.frame = rect;
-    [UIView commitAnimations];
+    //根据分组刷新相应数据
+    //重新获取数据
+    [self getDataForCircle:_currentGroup];
+    //重绘界面
+    [self drawCircle];
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -102,42 +76,43 @@ static NSInteger const KHH_PCPieChart_Tag = 1000;
     [self.btn3 setBackgroundColor:PCColorOrange];
     [self.btn4 setBackgroundColor:PCColorRed];
     [self.btn5 setBackgroundColor:PCColorBlue];
-    [self getDataForCircle:nil];
-    [self drawCircle];
+    //显示数据
+    [self refreshButtonAndChart:nil];
 }
 
 -(void) viewWillAppear:(BOOL)animated {
     if (_isNeedReloadTable) {
         _isNeedReloadTable = NO;
-        //重新获取数据
-        [self getDataForCircle:_currentGroup];
-        //重绘界面
-        [self drawCircle];
+        //刷新当前组
+        [self refreshButtonAndChart:_currentGroup];
     }
 }
 
+//获取数据
 - (void)getDataForCircle:(Group *)group{
+    //查询所有
+    //        [self.dataCtrl cardsOfstartsForRelation:-1]
     _totalCount = 0;
     valueItems = [[NSMutableArray alloc] initWithCapacity:0];
-    if (group == nil) {
-        //查询所有
-//        [self.dataCtrl cardsOfstartsForRelation:-1]
-        //查询某值下的数据
-        NSArray *arr1 = [self.dataCtrl cardsOfstartsForRelation:1.0];
-        NSArray *arr2 = [self.dataCtrl cardsOfstartsForRelation:2.0];
-        NSArray *arr3 = [self.dataCtrl cardsOfstartsForRelation:3.0];
-        NSArray *arr4 = [self.dataCtrl cardsOfstartsForRelation:4.0];
-        NSArray *arr5 = [self.dataCtrl cardsOfstartsForRelation:5.0];
-        //记录下所有名片的个数
-        _totalCount = arr1.count + arr2.count + arr3.count + arr4.count + arr5.count;
-        [valueItems addObject:arr1];
-        [valueItems addObject:arr2];
-        [valueItems addObject:arr3];
-        [valueItems addObject:arr4];
-        [valueItems addObject:arr5];
-    }else{
-        //根据分组查该分组下的relation分布
+    long groupID = -1;
+    if (group) {
+        groupID = group.id.longValue;
     }
+    
+    //根据分组查该分组下的relation分布
+    //查询某值下的数据
+    NSArray *arr1 = [self.dataCtrl cardsOfstartsForRelation:1.0 groupID:groupID];
+    NSArray *arr2 = [self.dataCtrl cardsOfstartsForRelation:2.0 groupID:groupID];
+    NSArray *arr3 = [self.dataCtrl cardsOfstartsForRelation:3.0 groupID:groupID];
+    NSArray *arr4 = [self.dataCtrl cardsOfstartsForRelation:4.0 groupID:groupID];
+    NSArray *arr5 = [self.dataCtrl cardsOfstartsForRelation:5.0 groupID:groupID];
+    //记录下所有名片的个数
+    _totalCount = arr1.count + arr2.count + arr3.count + arr4.count + arr5.count;
+    [valueItems addObject:arr1];
+    [valueItems addObject:arr2];
+    [valueItems addObject:arr3];
+    [valueItems addObject:arr4];
+    [valueItems addObject:arr5];
 }
 
 //画第三方的饼图
@@ -247,4 +222,10 @@ static NSInteger const KHH_PCPieChart_Tag = 1000;
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+#pragma 分组alert delegate
+- (void)selectInAlert:(id) group
+{
+    //如果group为空 就说明选择的是所有
+    [self refreshButtonAndChart:(Group *)group];
+}
 @end
