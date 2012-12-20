@@ -21,6 +21,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		31FCBC371682BD0A00ABFE3F /* KHHFilterPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FCBC361682BD0A00ABFE3F /* KHHFilterPopup.m */; };
+		31FCBC381682BD0A00ABFE3F /* KHHFilterPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FCBC361682BD0A00ABFE3F /* KHHFilterPopup.m */; };
 		624F8C7F1676C167006CD354 /* KHHBMapLocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 624F8C7E1676C167006CD354 /* KHHBMapLocationController.m */; };
 		624F8C801676C167006CD354 /* KHHBMapLocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 624F8C7E1676C167006CD354 /* KHHBMapLocationController.m */; };
 		626832AD16758BDA00EB04BF /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 626832AB16758BDA00EB04BF /* libbaidumapapi.a */; };
@@ -903,6 +905,8 @@
 		0CEFF87F163AFE7500E878C6 /* AppRegisterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppRegisterController.h; sourceTree = "<group>"; };
 		0CEFF880163AFE7500E878C6 /* AppRegisterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppRegisterController.m; sourceTree = "<group>"; };
 		0CEFF881163AFE7500E878C6 /* AppRegisterController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AppRegisterController.xib; sourceTree = "<group>"; };
+		31FCBC351682BD0A00ABFE3F /* KHHFilterPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHFilterPopup.h; sourceTree = "<group>"; };
+		31FCBC361682BD0A00ABFE3F /* KHHFilterPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHFilterPopup.m; sourceTree = "<group>"; };
 		620712E71650D051000188E8 /* logo57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo57.png; path = ../../logo57.png; sourceTree = "<group>"; };
 		620712EA1650D05A000188E8 /* logo114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo114.png; path = ../../logo114.png; sourceTree = "<group>"; };
 		620712F01650D263000188E8 /* LoginImage_normal@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "LoginImage_normal@2x.jpg"; sourceTree = "<group>"; };
@@ -1681,6 +1685,15 @@
 			path = Reg;
 			sourceTree = "<group>";
 		};
+		31FCBC301682B52600ABFE3F /* Popup */ = {
+			isa = PBXGroup;
+			children = (
+				31FCBC351682BD0A00ABFE3F /* KHHFilterPopup.h */,
+				31FCBC361682BD0A00ABFE3F /* KHHFilterPopup.m */,
+			);
+			name = Popup;
+			sourceTree = "<group>";
+		};
 		620712FA1650E585000188E8 /* PCPieChart */ = {
 			isa = PBXGroup;
 			children = (
@@ -2350,6 +2363,7 @@
 		98A84E531602D66200A4A673 /* Sub */ = {
 			isa = PBXGroup;
 			children = (
+				31FCBC301682B52600ABFE3F /* Popup */,
 				98A84E631602D66200A4A673 /* KHHCalendarViewController.h */,
 				98A84E641602D66200A4A673 /* KHHCalendarViewController.m */,
 				98A84E651602D66200A4A673 /* KHHCalendarViewController.xib */,
@@ -3784,6 +3798,7 @@
 				6292FCA8166892DA00D170A3 /* KHHWebView.m in Sources */,
 				626832B91675ACF800EB04BF /* MapController.m in Sources */,
 				624F8C7F1676C167006CD354 /* KHHBMapLocationController.m in Sources */,
+				31FCBC371682BD0A00ABFE3F /* KHHFilterPopup.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3992,6 +4007,7 @@
 				62ECD93F166DE1D000A15E24 /* KHHWebView.m in Sources */,
 				626832BA1675ACF800EB04BF /* MapController.m in Sources */,
 				624F8C801676C167006CD354 /* KHHBMapLocationController.m in Sources */,
+				31FCBC381682BD0A00ABFE3F /* KHHFilterPopup.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

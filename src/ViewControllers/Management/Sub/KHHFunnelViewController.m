@@ -27,12 +27,26 @@
     if (self) {
         // Custom initialization
         //先隐藏
-        self.rightBtn.hidden = YES;
+        //self.rightBtn.hidden = YES;
         [self.rightBtn setTitle:@"所有" forState:UIControlStateNormal];
         self.title = @"价值漏斗";
         self.dataCtrl = [KHHData sharedData];
     }
     return self;
+}
+
+- (void)rightBarButtonClick:(id)sender
+{
+//    popUpBox *myPopUpBox = [[popUpBox alloc] initWithFrame: CGRectMake(160, 0, 160, 60)];
+//    NSArray *arrpro = [Group objectArrayByPredicate:nil sortDescriptors:nil];
+//    DLog(@"%@",arrpro);
+	NSArray *boxData = [[NSArray alloc] initWithObjects: @"北京", @"上海", @"广州", @"深圳", @"大连", @"青岛", @"郑州", @"苏州", @"杭州", @"香港", @"澳门", @"秦皇岛", @"成都", nil];
+//	myPopUpBox.popUpBoxDatasource = boxData;
+//	NSString *initData = [boxData objectAtIndex:0];
+//	myPopUpBox.selectContentLabel.text = initData;
+	[[KHHFilterPopup shareUtil] showPopUp:boxData index:0 delegate:self];
+   
+	
 }
 
 - (void)viewDidLoad
@@ -99,6 +113,11 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+#pragma mark KHHFilterPopup delegate
+- (void)selectInAlert:(NSString *)index{
+    
 }
 
 @end
