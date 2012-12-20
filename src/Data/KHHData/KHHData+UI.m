@@ -209,6 +209,19 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
     result = FilterUnexpectedCardsFromArray(fetched);
     return result;
 }
+// 通过几颗星筛选评估价值（分组）
+- (NSArray *)cardsofStarts:(float)starts groupId:(NSNumber *)groupId{
+    if (!groupId) {
+        return [self cardsofStarts:starts];
+    } 
+    NSMutableArray *result;
+    NSArray *fetched;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"(evaluation.value == %f) AND (ANY groups.id = %d)",starts,[groupId intValue]]];
+    fetched = [ContactCard objectArrayByPredicate:predicate sortDescriptors:@[[Card nameSortDescriptor]]];
+    result = FilterUnexpectedCardsFromArray(fetched);
+    return result;
+}
+
 // 通过几颗星筛选关系
 - (NSArray *)cardsOfstartsForRelation:(float)starts{
     NSMutableArray *result;
