@@ -26,4 +26,6 @@
 - (void)showPopUp:(NSArray *)array index:(int)index delegate:(id<KHHFilterPopupDelegate>)delegate;
 - (void)showPopUp:(NSArray *)array index:(int)index Title:(NSString *)title delegate:(id<KHHFilterPopupDelegate>)delegate;
 
+- (void)showPopUpGroup:(int)index delegate:(id<KHHFilterPopupDelegate>)delegate;
+
 @end

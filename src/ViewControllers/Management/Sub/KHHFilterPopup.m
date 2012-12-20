@@ -7,8 +7,10 @@
 //
 
 #import "KHHFilterPopup.h"
-
+#import "KHHData+UI.h"
 @implementation KHHFilterPopup
+
+
 
 + (KHHFilterPopup *)shareUtil{
     static KHHFilterPopup *_sharedObj = nil;
@@ -17,6 +19,17 @@
         _sharedObj = [[KHHFilterPopup alloc] init];
     });
     return _sharedObj;
+}
+
+- (void)showPopUpGroup:(int)index delegate:(id<KHHFilterPopupDelegate>)delegate{
+    NSArray *arrpro = [[KHHData sharedData]allTopLevelGroups];
+    NSMutableArray *arr = [[NSMutableArray alloc]init];
+    [arr addObject:@"所有"];
+    [arrpro enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        Group *grp= (Group *)obj;
+       [arr addObject: grp.name];
+    }];
+    [self showPopUp:arr index:index delegate:delegate];
 }
 
 - (void)showPopUp:(NSArray *)array index:(int)index delegate:(id<KHHFilterPopupDelegate>)delegate
@@ -79,6 +92,7 @@
     
 	//selectContentLabel.text = selectedCellText;
 }
+
 
 
 
