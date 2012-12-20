@@ -12,10 +12,16 @@
 #import "KHHClasses.h"
 #import "KHHData+UI.h"
 
+static NSInteger const KHH_PCPieChart_Tag = 1000;
+
 @interface KHHRadarViewController ()<UIPickerViewDataSource,UIPickerViewDelegate>
 @property (strong, nonatomic) KHHData *dataCtrl;
-@property (strong, nonatomic) NSMutableArray *valueItems;
-@property (strong, nonatomic) NSArray        *titleArr;
+@property (strong, nonatomic) NSMutableArray    *valueItems;
+@property (strong, nonatomic) NSArray           *titleArr;
+@property (assign, nonatomic) BOOL              isNeedReloadTable;
+@property (strong, nonatomic) Group             *currentGroup;
+//当前分组下的名片总数
+@property (assign, nonatomic) NSInteger         totalCount;
 
 @end
 
@@ -35,6 +41,8 @@
         self.dataCtrl = [KHHData sharedData];
         self.title = @"关系拓展";
         self.titleArr = [self.dataCtrl allTopLevelGroups];
+        //默认指到所有
+#warning 给currentGroup设置个默认的
     }
     return self;
 }
@@ -61,8 +69,9 @@
 }
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
     [self pickAnimationDown:pickerView];
-    Group *group = [self.titleArr objectAtIndex:row];
-    [self.rightBtn setTitle:group.name forState:UIControlStateNormal];
+    _currentGroup = [self.titleArr objectAtIndex:row];
+    [self.rightBtn setTitle:_currentGroup.name forState:UIControlStateNormal];
+    //根据分组刷新相应数据
 }
 - (void)pickAnimationUp:(UIPickerView *)pick{
     [UIView beginAnimations:nil context:nil];
@@ -95,36 +104,64 @@
     [self.btn5 setBackgroundColor:PCColorBlue];
     [self getDataForCircle:nil];
     [self drawCircle];
-
 }
+
+-(void) viewWillAppear:(BOOL)animated {
+    if (_isNeedReloadTable) {
+        _isNeedReloadTable = NO;
+        //重新获取数据
+        [self getDataForCircle:_currentGroup];
+        //重绘界面
+        [self drawCircle];
+    }
+}
+
 - (void)getDataForCircle:(Group *)group{
+    _totalCount = 0;
     valueItems = [[NSMutableArray alloc] initWithCapacity:0];
     if (group == nil) {
+        //查询所有
+//        [self.dataCtrl cardsOfstartsForRelation:-1]
+        //查询某值下的数据
         NSArray *arr1 = [self.dataCtrl cardsOfstartsForRelation:1.0];
         NSArray *arr2 = [self.dataCtrl cardsOfstartsForRelation:2.0];
         NSArray *arr3 = [self.dataCtrl cardsOfstartsForRelation:3.0];
         NSArray *arr4 = [self.dataCtrl cardsOfstartsForRelation:4.0];
         NSArray *arr5 = [self.dataCtrl cardsOfstartsForRelation:5.0];
+        //记录下所有名片的个数
+        _totalCount = arr1.count + arr2.count + arr3.count + arr4.count + arr5.count;
         [valueItems addObject:arr1];
         [valueItems addObject:arr2];
         [valueItems addObject:arr3];
         [valueItems addObject:arr4];
         [valueItems addObject:arr5];
     }else{
-
+        //根据分组查该分组下的relation分布
     }
-
 }
+
+//画第三方的饼图
 - (void)drawCircle{
+    //更新chart
+    PCPieChart *pieChart = (PCPieChart *)[self.view viewWithTag:KHH_PCPieChart_Tag];
+    if (pieChart) {
+        //从父layout中移除
+        [pieChart removeFromSuperview];
+        pieChart = nil;
+    }
     
+    //每次有更发时都重新创建，第三方的图没有提供刷新的功能
     int height = [self.view bounds].size.width/3*2.; // 220;
     int width = [self.view bounds].size.width; //320;
-    PCPieChart *pieChart = [[PCPieChart alloc] initWithFrame:CGRectMake(([self.view bounds].size.width-width)/2,([self.view bounds].size.height-height)/2-80,width,height+80)];
+    pieChart = [[PCPieChart alloc] initWithFrame:CGRectMake(([self.view bounds].size.width-width)/2,([self.view bounds].size.height-height)/2-80,width,height+80)];
     [pieChart setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin|UIViewAutoresizingFlexibleRightMargin|UIViewAutoresizingFlexibleTopMargin|UIViewAutoresizingFlexibleBottomMargin];
     [pieChart setDiameter:width/2];
     [pieChart setSameColorLabel:YES];
+    pieChart.tag = KHH_PCPieChart_Tag;
     [self.view addSubview:pieChart];
-    if ([[self.dataCtrl cardsOfstartsForRelation:-1] count] == 0) {
+    
+    //-1查所有的
+    if (0 == _totalCount) {
         pieChart.hidden = YES;
         return;
     }else{
@@ -160,27 +197,40 @@
     }
     [pieChart setComponents:components];
 }
+
 - (IBAction)btnClick:(UIButton *)sender{
+    _isNeedReloadTable = YES;
     KHHValueViewController *valVC = [[KHHValueViewController alloc] initWithNibName:nil bundle:nil];
     switch (sender.tag) {
         case 220:
-            valVC.generArr = [self.valueItems objectAtIndex:0];
-            break;
         case 221:
-            valVC.generArr = [self.valueItems objectAtIndex:1];
+            valVC.generArr = [self.valueItems objectAtIndex:0];
+            valVC.value = 1;
             break;
         case 222:
-            valVC.generArr = [self.valueItems objectAtIndex:2];
-            break;
         case 223:
-            valVC.generArr = [self.valueItems objectAtIndex:3];
+            valVC.generArr = [self.valueItems objectAtIndex:1];
+            valVC.value = 2;
             break;
         case 224:
+        case 225:
+            valVC.generArr = [self.valueItems objectAtIndex:2];
+            valVC.value = 3;
+            break;
+        case 226:
+        case 227:
+            valVC.generArr = [self.valueItems objectAtIndex:3];
+            valVC.value = 4;
+            break;
+        case 228:
+        case 229:
             valVC.generArr = [self.valueItems objectAtIndex:4];
+            valVC.value = 5;
             break;
         default:
             break;
     }
+    
     [self.navigationController pushViewController:valVC animated:YES];
 
 }

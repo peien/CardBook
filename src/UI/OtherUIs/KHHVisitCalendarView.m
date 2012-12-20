@@ -34,7 +34,6 @@
 @synthesize isFromHomeVC;
 @synthesize selectedDate;
 @synthesize calBtn;
-@synthesize mapAddress;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -178,7 +177,6 @@
         }else {
             cell.locValueLab.text = [NSString stringWithFormat:@"%@%@%@",p,c,o];
         }
-        self.mapAddress = cell.locValueLab.text;
     }
     //备注
     if (sched.content.length > 0) {
@@ -247,16 +245,22 @@
 //    MapController *mapVC = [[MapController alloc] initWithNibName:nil bundle:nil];
 //    mapVC.companyName = @"";
 //    mapVC.companyAddr = self.mapAddress;
-    
-    //用百度地图
-    KHHBMapViewController *mapVC = [[KHHBMapViewController alloc] initWithNibName:nil bundle:nil];
-    mapVC.companyCity = self.card.address.city;
-    mapVC.companyDetailAddr = self.card.address.other;
-    mapVC.companyName = self.card.company.name;
-    mapVC.companyAllAddr = self.mapAddress;
-
-    [self.viewCtrl.navigationController pushViewController:mapVC animated:YES];
-    
+    //先获取点击的哪个cell的index
+    //[[sender superview] superview] ---> KHHVisitCalendarCell
+    if (sender) {
+        //用百度地图定位
+        KHHVisitCalendarCell *cell = (KHHVisitCalendarCell *)[[sender superview] superview];
+        NSIndexPath *index = [_theTable indexPathForCell:cell];
+        Schedule *sched = [self.dataArray objectAtIndex:index.row];
+        if (sched) {
+            KHHBMapViewController *mapVC = [[KHHBMapViewController alloc] initWithNibName:nil bundle:nil];
+            mapVC.companyCity = sched.address.city;
+            mapVC.companyDetailAddr = sched.address.other;
+            mapVC.companyName = cell.objValueLab.text;
+            mapVC.companyAllAddr = cell.locValueLab.text;
+            [self.viewCtrl.navigationController pushViewController:mapVC animated:YES];
+        }
+    }
 }
 - (IBAction)VisitCalendarBtnClick:(id)sender
 {

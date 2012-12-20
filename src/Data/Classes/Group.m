@@ -19,10 +19,17 @@
     }
     return grp;
 }
+
+//名片id与group对应关系
+//名片删除后，没有删除名片与分组的关系，ios在通过名片id查询时没有就创建了一张导致有空名片出现
 + (void)processICardGroupMap:(ICardGroupMap *)icgm {
     if (icgm.cardID && icgm.groupID) {
         // 查名片
-        Card *card   = [Card objectByID:icgm.cardID createIfNone:YES];
+        Card *card   = [Card objectByID:icgm.cardID createIfNone:NO];
+        if (!card) {
+            return;
+        }
+        
         // 查group
         Group *group = [Group objectByID:icgm.groupID createIfNone:YES];
         // 名片添加到group

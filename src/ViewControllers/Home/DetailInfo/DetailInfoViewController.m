@@ -432,6 +432,12 @@
 {
     KHHFloatBarController *floatBarVC = [[KHHFloatBarController alloc] initWithNibName:nil bundle:nil];
     floatBarVC.viewController = self;
+    NSNumber *companyID = [[KHHDefaults sharedDefaults] currentCompanyID];
+    if(companyID.longValue > 0 && card.company.id.longValue == companyID.longValue) {
+        floatBarVC.isJustNormalComunication = YES;
+    }else {
+        floatBarVC.isJustNormalComunication = NO;
+    }
     self.popover = [[WEPopoverController alloc] initWithContentViewController:floatBarVC];
     floatBarVC.popover = self.popover;
     floatBarVC.card = self.card;

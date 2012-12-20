@@ -207,12 +207,15 @@ const NSInteger KHH_LOCATION_REFRESH_TIMEOUT = 30; // 30 second.
 #pragma BMKSearchDelegate
 - (void)onGetAddrResult:(BMKAddrInfo*)result errorCode:(int)error
 {
+    //停止计数timer
+    [self stopTimer];
     DLog(@"[III_1]解析地址完成,是否成功 = %d",error == 0);
 	if (error == 0) {
         _addrInfo = result;
         //发送解析地址成功
         [self updateSucceeded];
         ALog(@"[III_1] 解析地址数据为地址...%@",_addrInfo.strAddr);
+        ALog(@"[III_2] 经纬度 ... long = %.16g,lati = %.16g",_coordinate.longitude,_coordinate.latitude);
 	}else {
         NSError *err = [NSError errorWithDomain:KHHErrorDomain
                                            code:KHHErrorCodeBusy

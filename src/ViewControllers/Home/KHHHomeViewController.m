@@ -38,7 +38,6 @@
 #import "MBProgressHUD.h"
 #import "SMCheckbox.h"
 #import "KHHClasses.h"
-
 #import <MessageUI/MessageUI.h>
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
@@ -73,7 +72,8 @@ typedef enum {
 @property (assign, nonatomic)  bool                   isNeedReloadTable;
 @property (assign, nonatomic)  int                    currentTag;
 @property (assign, nonatomic)  bool                   isAddressBookData;
-@property (strong, nonatomic)  NSMutableArray         *selectedItemArr;
+//多选时记录选择位置（bug 1176 要改成一次只先一个，方文苑确认了）
+//@property (strong, nonatomic)  NSMutableArray         *selectedItemArr;
 @property (strong, nonatomic)  NSIndexPath            *currentIndexPath;
 @property (strong, nonatomic)  IGroup                 *interGroup;
 @property (strong, nonatomic)  UITextField            *groupTf;
@@ -127,7 +127,6 @@ typedef enum {
 @synthesize isNeedReloadTable;
 @synthesize currentTag;
 @synthesize isAddressBookData;
-@synthesize selectedItemArr;
 @synthesize currentIndexPath;
 @synthesize interGroup;
 @synthesize groupTf;
@@ -156,6 +155,7 @@ typedef enum {
     }
     return self;
 }
+
 - (void)dealloc {
     self.popover = nil;
 }
@@ -184,7 +184,6 @@ typedef enum {
     
 //    UIBarButtonItem *searchBarItem = [[UIBarButtonItem alloc] initWithCustomView:self.searchBar];
 //    UIBarButtonItem *addButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:nil];
-//    [self.toolBar setItems:[NSArray arrayWithObjects:searchBarItem, addButtonItem, nil] animated:YES];
     
     //默认选中哪个按钮
     //cell是nil;
@@ -232,11 +231,17 @@ typedef enum {
         self.leftBtn.hidden = NO;
         _smallBtn.hidden = YES;
         self.rightBtn.hidden = YES;
-        CGRect Rect = _smalImageView.frame;
-        Rect.size.height = 61;
-        _smalImageView.frame = Rect;
-        _footView.hidden = NO;
-        [_btnForCancel setBackgroundImage:[[UIImage imageNamed:@"tongbu_normal.png"] stretchableImageWithLeftCapWidth:8 topCapHeight:2] forState:UIControlStateNormal];
+        
+        //显示下方的确定按钮 bug 1176 改成选中一个就返回了，就个view暂时不需要了
+        //把原来添加分组的高度设置成0 把btnTable的高度加上原添加分组的iamgeView的高度
+        CGRect rectImageView = _smalImageView.frame;
+        CGRect rectGroup = _btnTable.frame;
+        rectGroup.size.height = rectGroup.size.height + rectImageView.size.height;
+        rectImageView.size.height = 0;
+        _smalImageView.frame = rectImageView;
+        _btnTable.frame = rectGroup;
+//        _footView.hidden = NO;
+//        [_btnForCancel setBackgroundImage:[[UIImage imageNamed:@"tongbu_normal.png"] stretchableImageWithLeftCapWidth:8 topCapHeight:2] forState:UIControlStateNormal];
     }
     
 }
@@ -327,7 +332,7 @@ typedef enum {
     self.floatBarVC = nil;
     self.oWnGroupArray = nil;
     self.myCardArray = nil;
-    self.selectedItemArr = nil;
+//    self.selectedItemArr = nil;
     self.currentIndexPath = nil;
     self.interGroup = nil;
     self.groupTf = nil;
@@ -563,19 +568,19 @@ typedef enum {
                     cell.selectionStyle = UITableViewCellSelectionStyleNone;
                 }
                 //多选标记
-                if (self.isNormalSearchBar) {
-                    if ([[self.selectedItemArr objectAtIndex:indexPath.row] isEqualToNumber:[NSNumber numberWithBool:YES]]) {
-                        UIImageView *cellImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checked.png"]];
-                        cellImageView.frame = CGRectMake(200, 10, 30, 30);
-                        //[cell addSubview:cellImageView];
-                        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-                    }else{
-                        UIImageView *cellImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"unchecked.png"]];
-                        cellImageView.frame = CGRectMake(200, 10, 30, 30);
-                        //[cell addSubview:cellImageView];
-                        cell.accessoryType = UITableViewCellAccessoryNone;
-                    }
-                }
+//                if (self.isNormalSearchBar) {
+//                    if ([[self.selectedItemArr objectAtIndex:indexPath.row] isEqualToNumber:[NSNumber numberWithBool:YES]]) {
+//                        UIImageView *cellImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"checked.png"]];
+//                        cellImageView.frame = CGRectMake(200, 10, 30, 30);
+//                        //[cell addSubview:cellImageView];
+//                        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+//                    }else{
+//                        UIImageView *cellImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"unchecked.png"]];
+//                        cellImageView.frame = CGRectMake(200, 10, 30, 30);
+//                        //[cell addSubview:cellImageView];
+//                        cell.accessoryType = UITableViewCellAccessoryNone;
+//                    }
+//                }
                 //从网络获取头像
                 if ([[self.generalArray objectAtIndex:indexPath.row] isKindOfClass:[NSDictionary class]]) {
                     DLog(@"self.generalArray 应该是card 类型，但是却是字典类型，所以挂掉了");
@@ -593,8 +598,9 @@ typedef enum {
                 }else{
                     cell.newicon.hidden = YES;
                 }
+                
                 //同事不可能新的
-                if (self.currentIndexPath.row == 1) {
+                if (_currentBtn && [_currentBtn.titleLabel.text isEqualToString:KHHMessageDefaultGroupColleague]) {
                     cell.newicon.hidden = YES;
                 }
                 
@@ -639,17 +645,24 @@ typedef enum {
         }
         case KHHTableIndexClient: {
             if (_isNormalSearchBar) { //暂时限制手机
+                //20121217 bug1176 拜访人选中一个就返回(方文苑确认)
+//                NSNumber *state = [self.selectedItemArr objectAtIndex:indexPath.row];
+//                if ([state isEqualToNumber:[NSNumber numberWithBool:YES]]) {
+//                    state = [NSNumber numberWithBool:NO];
+//                }else{
+//                    state = [NSNumber numberWithBool:YES];
+//                }
+//                [self.selectedItemArr replaceObjectAtIndex:indexPath.row withObject:state];
+//                [_bigTable reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
+//                [_bigTable deselectRowAtIndexPath:indexPath animated:NO];
+                
                 //选中某一个对象并返回
-                //[self.navigationController popViewControllerAnimated:YES];
-                NSNumber *state = [self.selectedItemArr objectAtIndex:indexPath.row];
-                if ([state isEqualToNumber:[NSNumber numberWithBool:YES]]) {
-                    state = [NSNumber numberWithBool:NO];
-                }else{
-                    state = [NSNumber numberWithBool:YES];
+                if (!self.visitVC.objectNameArr) {
+                    self.visitVC.objectNameArr = [[NSMutableArray alloc] initWithCapacity:0];
                 }
-                [self.selectedItemArr replaceObjectAtIndex:indexPath.row withObject:state];
-                [_bigTable reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
-                [_bigTable deselectRowAtIndexPath:indexPath animated:NO];
+                
+                [self.visitVC.objectNameArr addObject:[self.generalArray objectAtIndex:indexPath.row]];
+                [self.navigationController popViewControllerAnimated:YES];
             }else{
                 if (self.isAddressBookData) {
                     DLog(@"contact item click!");
@@ -711,16 +724,17 @@ typedef enum {
 }
 
 //添加拜访对象下面按钮点击
+//20121217 bug1176 选中一个就返回，在table cell选中时就做了
 - (void)cancelBtnClick:(id)sender{
     
-    NSMutableArray *visitNameArr = [[NSMutableArray alloc] initWithCapacity:0];
-    for (int i = 0; i < self.selectedItemArr.count; i++) {
-        if ([[self.selectedItemArr objectAtIndex:i] isEqualToNumber:[NSNumber numberWithBool:YES]]) {
-            [visitNameArr addObject:[self.generalArray objectAtIndex:i]];
-        }
-    }
-    self.visitVC.objectNameArr = visitNameArr;
-    [self.navigationController popViewControllerAnimated:YES];
+//    NSMutableArray *visitNameArr = [[NSMutableArray alloc] initWithCapacity:0];
+//    for (int i = 0; i < self.selectedItemArr.count; i++) {
+//        if ([[self.selectedItemArr objectAtIndex:i] isEqualToNumber:[NSNumber numberWithBool:YES]]) {
+//            [visitNameArr addObject:[self.generalArray objectAtIndex:i]];
+//        }
+//    }
+//    self.visitVC.objectNameArr = visitNameArr;
+//    [self.navigationController popViewControllerAnimated:YES];
 }
 
 //点击图片弹出横框
@@ -767,8 +781,10 @@ typedef enum {
         self.floatBarVC.card = card;
         self.floatBarVC.contactDic = nil;
         NSNumber *companyID = [self.myDefaults currentCompanyID];
-        if(card.company.id.longValue == companyID.longValue) {
+        if(companyID.longValue > 0 && card.company.id.longValue == companyID.longValue) {
             self.floatBarVC.isJustNormalComunication = YES;
+        }else {
+            self.floatBarVC.isJustNormalComunication = NO;
         }
     }else {
         self.floatBarVC.card = nil;
@@ -820,7 +836,6 @@ typedef enum {
             //调用接口，获得self.ownGroupArray
             self.currentTag = btn.tag;
             [self updateOwnGroupArray];
-            
         }else {
             //刷新表
             if ([btnName isEqualToString:KHHMessageDefaultGroupAll] || [btnName isEqualToString:[NSString string]]) {
@@ -842,9 +857,11 @@ typedef enum {
                     }
             }
         }
-        if (self.isNormalSearchBar) {
-            self.selectedItemArr = [self mutilyFlagForSelected];
-        }
+        
+//        //bug 1176 需求改成一次只能选择一个
+//        if (self.isNormalSearchBar) {
+//            self.selectedItemArr = [self mutilyFlagForSelected];
+//        }
         
 //        UIEdgeInsets insets = {0,0,0,25};
 //        [btn setBackgroundImage:[[UIImage imageNamed:@"left_btn_bg_selected.png"] resizableImageWithCapInsets:insets] forState:UIControlStateNormal];
@@ -853,8 +870,8 @@ typedef enum {
         
         //导航条文字更改(直接设置self.navigationController.title值是有了，界面就是显示不出来)
         self.title = btn.titleLabel.text;
-    }else{
-        
+    }else if(!_isNormalSearchBar){
+        //不是选择拜访客户时才显示
         _type = KUIActionSheetStyleEditGroupMember;
         if (indexPath.row > self.baseNum - 1) {
             UIActionSheet *actSheet = [[UIActionSheet alloc] initWithTitle:nil
