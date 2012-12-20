@@ -25,6 +25,7 @@
 #import "Company.h"
 #import "KHHMyAlertViewWithSubView.h"
 #import "KHHDefaults.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define POPDismiss [self.popover dismissPopoverAnimated:YES];
 #define LABEL_NAME_TAG    98980
@@ -178,7 +179,7 @@
     UIImageView *bgimgView = [[UIImageView alloc] initWithImage:bgimg];
     bgimgView.frame = headerView.frame;
     [headerView addSubview:bgimgView];
-    UIImageView *iconImgView = [[UIImageView alloc] initWithFrame:CGRectMake(9, 7, 51, 51)];
+   iconImgView = [[UIImageView alloc] initWithFrame:CGRectMake(9, 7, 50, 50)];
     iconImgView.tag = LABEL_LOGIMG_TAG;
     iconImgView.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOne:)];
@@ -188,7 +189,22 @@
     [iconImgView addGestureRecognizer:tap];
     UIImage *iconImg = [UIImage imageNamed:@"logopic.png"];
     iconImgView.image = iconImg;
-    [iconImgView setImageWithURL:[NSURL URLWithString:self.card.logo.url] placeholderImage:iconImg];
+   
+    [iconImgView setImageWithURL:[NSURL URLWithString:self.card.logo.url]
+                   placeholderImage:iconImg
+                            success:^(UIImage *image, BOOL cached){
+                                
+                                if(!CGSizeEqualToSize(image.size, CGSizeZero)){
+                                    
+                                    CALayer *layer = [iconImgView layer];
+                                    [layer setMasksToBounds:YES];
+                                    [layer setCornerRadius:6.0];
+                                }
+                            }
+                            failure:^(NSError *error){
+                                
+                            }];
+   // [iconImgView setImageWithURL:[NSURL URLWithString:self.card.logo.url] placeholderImage:iconImg];
     iconImgView.backgroundColor = [UIColor clearColor];
     [headerView addSubview:iconImgView];
     UILabel *nameLab = [[UILabel alloc] initWithFrame:CGRectMake(75, 10, 120, 20)];
@@ -292,6 +308,8 @@
 
 }
 
+
+
 - (void)updateViewData:(Card *)temCard{
     UILabel *nameLab = (UILabel *)[self.view viewWithTag:LABEL_NAME_TAG];
     UILabel *jobLab = (UILabel *)[self.view viewWithTag:LABEL_JOB_TAG];
@@ -301,7 +319,21 @@
     jobLab.text = temCard.title;
     companyLab.text = temCard.company.name;
     UIImage *iconImg = [UIImage imageNamed:@"logopic.png"];
-    [logImageview setImageWithURL:[NSURL URLWithString:temCard.logo.url] placeholderImage:iconImg];
+    [logImageview setImageWithURL:[NSURL URLWithString:self.card.logo.url]
+                placeholderImage:iconImg
+                         success:^(UIImage *image, BOOL cached){
+                             
+                             if(!CGSizeEqualToSize(image.size, CGSizeZero)){
+                                 
+                                 CALayer *layer = [logImageview layer];
+                                 [layer setMasksToBounds:YES];
+                                 [layer setCornerRadius:6.0];
+                             }
+                         }
+                         failure:^(NSError *error){
+                             
+                         }];
+   // [logImageview setImageWithURL:[NSURL URLWithString:temCard.logo.url] placeholderImage:iconImg];
     
 }
 - (void)bottomBtnClick:(id)sender

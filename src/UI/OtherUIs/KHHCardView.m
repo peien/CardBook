@@ -16,6 +16,7 @@
 #import "KHHAddressBook.h"
 #import "KHHAppDelegate.h"
 #import "KHHDefaults.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define CARD_IMGVIEW_TAG 333
 #define CARDMOD_VIEW_TAG 444
@@ -225,10 +226,23 @@
     UITextField *tf = (UITextField *)[cell.contentView viewWithTag:TEXTFIELD_CELL_TAG];
     
     if (indexPath.section == 0) {
-        UIImageView *iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(13, 2, 55, 55)];
+        UIImageView *iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(13, 5, 50, 50)];
         //iconImage.backgroundColor = [UIColor blackColor];
         [cell addSubview:iconImage];
-        [iconImage setImageWithURL:[NSURL URLWithString:_myCard.logo.url] placeholderImage:[UIImage imageNamed:@"logopic.png"]];
+//        [iconImage setImageWithURL:[NSURL URLWithString:_myCard.logo.url] placeholderImage:[UIImage imageNamed:@"logopic.png"]];
+        [iconImage setImageWithURL:[NSURL URLWithString:_myCard.logo.url]
+                       placeholderImage:[UIImage imageNamed:@"logopic.png"]
+                                success:^(UIImage *image, BOOL cached){
+                                    
+                                    if(!CGSizeEqualToSize(image.size, CGSizeZero)){
+                                        CALayer *l = [iconImage layer];
+                                        [l setMasksToBounds:YES];
+                                        [l setCornerRadius:6.0];
+                                    }
+                                }
+                                failure:^(NSError *error){
+                                    
+                                }];
         CGRect rectLab = lab.frame;
         rectLab.origin.x = 65;
         lab.frame = rectLab;
