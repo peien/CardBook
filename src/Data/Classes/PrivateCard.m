@@ -14,9 +14,10 @@
             [[self currentContext] deleteObject:newCard];
         } else {
             card = newCard;
+            
+            // 更新数据
+            [card updateWithIObject:iCard];
         }
-        // 更新数据
-        [card updateWithIObject:iCard];
     }
     DLog(@"[II] card = %@", card);
     return card;

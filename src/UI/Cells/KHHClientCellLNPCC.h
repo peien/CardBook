@@ -11,6 +11,7 @@
 
 @interface KHHClientCellLNPCC : UITableViewCell
 @property (nonatomic, weak) IBOutlet UIImageView *logoView;
+@property (weak, nonatomic) IBOutlet UIImageView *logoImage;
 @property (strong, nonatomic) IBOutlet UIButton *logoBtn;
 @property (nonatomic, weak) IBOutlet UILabel *nameLabel;
 @property (nonatomic, weak) IBOutlet UILabel *positionLabel;

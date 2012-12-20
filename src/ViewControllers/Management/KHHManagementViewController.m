@@ -38,7 +38,7 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
 @property (strong, nonatomic) UIImageView    *messageImageView;
 @property (strong, nonatomic) UILabel        *numLab2;
 @property (strong, nonatomic) NSTimer        *syncMessageTimer;
-@property (assign, nonatomic) BOOL            isSingleContact;
+@property (assign, nonatomic) BOOL           isSingleContact;
 @property (strong, nonatomic) NSArray        *messageContactList;
 
 @end

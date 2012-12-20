@@ -55,8 +55,8 @@
         //提醒时间
         notification.soundName = UILocalNotificationDefaultSoundName;
         //给应用图标数字+1
-        NSInteger number = [[UIApplication sharedApplication] applicationIconBadgeNumber];
-        notification.applicationIconBadgeNumber = ++number;
+//        NSInteger number = [[UIApplication sharedApplication] applicationIconBadgeNumber];
+//        notification.applicationIconBadgeNumber = ++number;
         //alertBody
         notification.alertBody = alertBody;
         //notification.alertAction = @"打开";

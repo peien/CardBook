@@ -126,7 +126,7 @@
         case 0:
             switch (indexPath.row) {
                 case 0:{
-                    static NSString *identifier = @"SignIn";
+                    static NSString *identifier = @"ModifyPassword";
                     cell = [tableView dequeueReusableCellWithIdentifier:identifier];
                     if (cell == nil) {
                         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];

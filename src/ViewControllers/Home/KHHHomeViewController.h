@@ -16,9 +16,8 @@ typedef enum {
     KUIActionSheetStyleUpload
 }KUIActionSheetHomeType;
 @interface KHHHomeViewController : SuperViewController <UITableViewDelegate, UITableViewDataSource,
-                                                        UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (nonatomic, weak)   IBOutlet UISearchBar      *searchBar;
-@property (nonatomic, weak)   IBOutlet UIToolbar        *toolBar;
 @property (nonatomic, strong) NSMutableArray            *btnTitleArr;
 @property (nonatomic, strong) NSMutableDictionary       *dicBtnTttle;
 @property (nonatomic, assign) NSInteger                 lastBtnTag;

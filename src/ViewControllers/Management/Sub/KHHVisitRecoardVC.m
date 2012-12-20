@@ -916,9 +916,10 @@
     KHHBMapViewController *mapVC = [[KHHBMapViewController alloc] initWithNibName:nil bundle:nil];
     if (self.schedu && self.schedu.address) {
         mapVC.companyCity = self.schedu.address.city;
-        mapVC.companyName = self.schedu.customer;
         mapVC.companyDetailAddr = self.schedu.address.other;
     }
+    //地图上显示名称
+    mapVC.companyName = [_fieldValue objectAtIndex:0];
     mapVC.companyAllAddr = addressMap.text;
     [self.navigationController pushViewController:mapVC animated:YES];
 }

@@ -38,6 +38,8 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 @property (nonatomic, strong) UIViewController *createAccountController;
 @property (nonatomic, strong) UIViewController *loginController;
 @property (nonatomic, strong) UIViewController *previousController;
+@property (nonatomic, strong) UIViewController *introController;
+@property (nonatomic, strong) UIViewController *launchController;
 @property (nonatomic, strong) NSDictionary     *OfflineLoginUserInfoDict;
 @end
 
@@ -121,7 +123,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     DLog(@"[II] viewDidLoad...");
     
     // 先显示 Launch Image。
-    [self showLaunchImage];
+  //  [self showLaunchImage];
     
     // 判断是否是首次启动。首次启动显示引导页。
     if ([self.defaults isFirstLaunch]) {
@@ -160,7 +162,9 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
             // 进主界面。
             [self postNowNotificationName:nAppShowMainView];
         }
+        return;
     }
+    
     NSString *title = alertView.title;
     if ([title isEqualToString:titleCreateAccountSucceeded]) {
         [self login];//注册成功, 直接登录。
@@ -252,7 +256,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 }
 - (void)sync {
     DLog(@"[II] 开始同步！");
-    [self postASAPNotificationName:nAppSyncing];
+   // [self postASAPNotificationName:nAppSyncing];
     // 开始同步数据
     [self.data removeContext];
     [self.data startSyncAllData];
@@ -450,10 +454,13 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
                                    options:options
                                 animations:nil
                                 completion:^(BOOL finished) {
+                                    if (finished) {
+                                        [fromVC.view removeFromSuperview];
+                                        [fromVC removeFromParentViewController];
+                                        self.previousController = fromVC;
+                                    } 
                                 }];
-        [fromVC.view removeFromSuperview];
-        [fromVC removeFromParentViewController];
-        self.previousController = fromVC;
+        
     } else {
         [self addChildViewController:toViewController];
         [self.view addSubview:toViewController.view];
@@ -483,20 +490,57 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     UIViewController *toVC = [[IntroViewController alloc]
                               initWithNibName:nil
                               bundle:nil];
-    [self transitionToViewController:toVC
-                             options:AppStart_AnimationOptions];
+    self.introController = toVC;
+    [self addChildViewController:self.introController];
+    [self.view addSubview:self.introController.view];
+    [UIView animateWithDuration: 0.5
+                     animations:^{
+                         self.loginController.view.alpha = 1.0;
+                        // self.launchController.view.alpha = 0.0;
+                     }
+                     completion:^(BOOL finished) {
+                         [self.launchController.view removeFromSuperview];
+                        // [self.launchController removeFromParentViewController];
+                     }];
+//    [self transitionToViewController:toVC
+//                             options:AppStart_AnimationOptions];
 }
 - (void)showLaunchImage {
     UIViewController *toVC = [[LaunchImageViewController alloc]
                               initWithNibName:nil
                               bundle:nil];
+    self.launchController = toVC;
     [self transitionToViewController:toVC
                              options:AppStart_AnimationOptions];
 }
 - (void)showLoginView {
-    UIViewAnimationOptions options = UIViewAnimationOptionTransitionCrossDissolve;
-    [self transitionToViewController:self.loginController
-                             options:options];
+    self.loginController.view.alpha = 0.0;
+   
+    if (self.introController) {
+       
+        self.loginController.view.alpha = 0.0; 
+    } else {
+       
+        self.loginController.view.alpha = 1.0;
+    }
+    
+    [self addChildViewController:self.loginController];
+    [self.view addSubview:self.loginController.view];
+     if (self.introController) {
+        [UIView animateWithDuration: 0.5
+                         animations:^{
+                             self.loginController.view.alpha = 1.0;
+                             self.introController.view.alpha = 0.0;                             
+                         }
+                         completion:^(BOOL finished) {
+                             [self.introController.view removeFromSuperview];
+                             [self.introController removeFromParentViewController];                           
+                         }];
+    
+     }
+//    UIViewAnimationOptions options = UIViewAnimationOptionTransitionCrossDissolve;
+//    [self transitionToViewController:self.loginController
+//                             options:options];
 }
 - (void)showPreviousView {
     UIViewController *currentController = self.childViewControllers.lastObject;
