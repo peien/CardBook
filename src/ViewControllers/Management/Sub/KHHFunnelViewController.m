@@ -11,7 +11,9 @@
 #import "KHHData+UI.h"
 #import "KHHClasses.h"
 
-@interface KHHFunnelViewController ()
+@interface KHHFunnelViewController (){
+    int groupId;
+}
 @property (strong, nonatomic) KHHData *dataCtrl;
 @property (strong, nonatomic) NSMutableDictionary *allDic;
 
@@ -37,12 +39,7 @@
 
 - (void)rightBarButtonClick:(id)sender
 {
-//    popUpBox *myPopUpBox = [[popUpBox alloc] initWithFrame: CGRectMake(160, 0, 160, 60)];
-    
-	//NSArray *boxData = [[NSArray alloc] initWithObjects: @"北京", @"上海", @"广州", @"深圳", @"大连", @"青岛", @"郑州", @"苏州", @"杭州", @"香港", @"澳门", @"秦皇岛", @"成都", nil];
-//	myPopUpBox.popUpBoxDatasource = boxData;
-//	NSString *initData = [boxData objectAtIndex:0];
-//	myPopUpBox.selectContentLabel.text = initData;
+
 	[[KHHFilterPopup shareUtil]  showPopUpGroup:0 delegate:self];
    
 	
@@ -115,8 +112,8 @@
 }
 
 #pragma mark KHHFilterPopup delegate
-- (void)selectInAlert:(NSString *)index{
-    
+- (void)selectInAlert:(NSString *)index {
+    groupId = 
 }
 
 @end
