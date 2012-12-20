@@ -1692,6 +1692,7 @@
 				31FCBC361682BD0A00ABFE3F /* KHHFilterPopup.m */,
 			);
 			name = Popup;
+			path = ../ViewControllers/Management/Sub;
 			sourceTree = "<group>";
 		};
 		620712FA1650E585000188E8 /* PCPieChart */ = {
@@ -2143,6 +2144,7 @@
 		98A84DA01602D24600A4A673 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				31FCBC301682B52600ABFE3F /* Popup */,
 				626832B61675ACC700EB04BF /* OriginalMap */,
 				984FA630161028BF00344BDC /* VisualCard */,
 				62AB29B1160C47B90004A3E3 /* BMapVC */,
@@ -2363,7 +2365,6 @@
 		98A84E531602D66200A4A673 /* Sub */ = {
 			isa = PBXGroup;
 			children = (
-				31FCBC301682B52600ABFE3F /* Popup */,
 				98A84E631602D66200A4A673 /* KHHCalendarViewController.h */,
 				98A84E641602D66200A4A673 /* KHHCalendarViewController.m */,
 				98A84E651602D66200A4A673 /* KHHCalendarViewController.xib */,
