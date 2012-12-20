@@ -21,8 +21,9 @@
     return _sharedObj;
 }
 
-- (void)showPopUpGroup:(int)index delegate:(id<KHHFilterPopupDelegate>)delegate{
-    NSArray *arrpro = [[KHHData sharedData]allTopLevelGroups];
+- (void)showPopUpGroup:(int)index delegate:(id<KHHFilterPopupDelegate>)delegate
+{
+    arrpro = [[KHHData sharedData]allTopLevelGroups];
     NSMutableArray *arr = [[NSMutableArray alloc]init];
     [arr addObject:@"所有"];
     [arrpro enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -87,7 +88,12 @@
 	[alert dismissWithClickedButtonIndex: cancelButtonIndex animated: YES];
 	//NSString *selectedCellText = [popUpBoxDatasource objectAtIndex:indexPath.row];
 	if (_delegate && [_delegate respondsToSelector:@selector(selectInAlert:)]) {
-        [_delegate performSelector:@selector(selectInAlert:) withObject:[NSString stringWithFormat:@"%d", indexPath.row]];       
+        if (indexPath.row == 0) {
+            [_delegate performSelector:@selector(selectInAlert:) withObject:nil];
+        } else {
+            [_delegate performSelector:@selector(selectInAlert:) withObject:[arrPro objectAtIndex:indexPath.row-1]];
+        }
+               
     } 
     
 	//selectContentLabel.text = selectedCellText;

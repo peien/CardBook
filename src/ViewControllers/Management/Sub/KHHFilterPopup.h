@@ -10,14 +10,17 @@
 
 @protocol KHHFilterPopupDelegate <NSObject>
 @optional
-- (void)selectInAlert:(NSString *)index;
+- (void)selectInAlert:(id)obj;
 @end
 
 @interface KHHFilterPopup : NSObject <UITableViewDelegate, UITableViewDataSource> {
     
     UITableView	*popUpBoxTableView;
     UIAlertView *alert;
+    
     NSArray *dataArr;
+    NSArray *arrPro;
+    
     int seleIndex;
 }
 @property (nonatomic,strong) id<KHHFilterPopupDelegate> delegate;
