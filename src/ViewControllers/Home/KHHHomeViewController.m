@@ -1114,7 +1114,22 @@ typedef enum {
                     if (tf.text.length > 0 && _isAddGroup) {
                         //[_btnTitleArr addObject:tf.text];
                         if (!self.myCardArray || self.myCardArray.count <= 0) {
-                            [self handleCreateGroupFailed:nil];
+                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:KhhMessageDataErrorTitle
+                                                                            message:KhhMessageDataError
+                                                                           delegate:self
+                                                                  cancelButtonTitle:KHHMessageSure
+                                                                  otherButtonTitles:KHHMessageCancle, nil];
+                            alert.tag = KHHAlertSync;
+                            [alert show];
+                            return;
+                        }
+                        if ([Group objectByKey:@"name" value:tf.text createIfNone:NO]) {
+                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"不能创建同名分组"
+                                                                            message:nil
+                                                                           delegate:self
+                                                                  cancelButtonTitle:@"确定"
+                                                                  otherButtonTitles:nil];
+                             [alert show];
                             return;
                         }
                         //同步，从新调用自定义的所有分组，然后再刷新表
