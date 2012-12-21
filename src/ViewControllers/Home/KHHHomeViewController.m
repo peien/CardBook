@@ -1123,7 +1123,7 @@ typedef enum {
                             [alert show];
                             return;
                         }
-                        if ([Group objectByKey:@"name" value:tf.text createIfNone:NO]) {
+                        if ([self isInGroupNameDefault:tf.text]||[Group objectByKey:@"name" value:tf.text createIfNone:NO]) {
                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"不能创建同名分组"
                                                                             message:nil
                                                                            delegate:self
@@ -1143,6 +1143,15 @@ typedef enum {
                     }else{
                         //修改组名，
                         if (tf.text == nil) {
+                            return;
+                        }
+                        if ([self isInGroupNameDefault:tf.text]||[Group objectByKey:@"name" value:tf.text createIfNone:NO]) {
+                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分组不能重名"
+                                                                            message:nil
+                                                                           delegate:self
+                                                                  cancelButtonTitle:@"确定"
+                                                                  otherButtonTitles:nil];
+                            [alert show];
                             return;
                         }
                         [self showHudForNetWorkWarn:KHHMessageModifingGroup];
@@ -1175,6 +1184,15 @@ typedef enum {
         }
     }
 }
+
+- (Boolean)isInGroupNameDefault:(NSString *)name{
+    NSArray *arrPro =[NSArray arrayWithObjects:@"所有",@"未分组",@"同事",@"手机",nil];
+    for (NSString *strPro in arrPro) {
+        return [name isEqualToString:strPro];
+    }
+    return NO;
+}
+
 #pragma mark - handleGroup
 //创建组
 - (void)handleCreateGroupSucceeded:(NSNotification *)info{
