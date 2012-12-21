@@ -37,9 +37,13 @@
         //targetCardList, InterCard数组
         [self.targetsSet removeAllObjects];
         for (InterCard *ic in iObj.targetCardList) {
+            //如果名片已经删除
             Card *card = [Card cardByID:ic.id modelType:ic.modelType];
-            [self.targetsSet addObject:card];
+            if (card) {
+                [self.targetsSet addObject:card];
+            }
         }
+        
         //imageList, IImage数组
         [self.imagesSet removeAllObjects];
         for (IImage *ii in iObj.imageList) {

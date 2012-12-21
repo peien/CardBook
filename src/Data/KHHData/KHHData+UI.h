@@ -53,8 +53,10 @@
 - (NSArray *)cardsOfUngrouped;
 // 通过几颗星筛选评估价值
 - (NSArray *)cardsofStarts:(float)starts;
+// 通过几颗星筛选评估价值（分组）
+- (NSArray *)cardsofStarts:(float)starts groupId:(NSNumber *)groupId;
 // 通过几颗星筛选关系
-- (NSArray *)cardsOfstartsForRelation:(float)starts;
+- (NSArray *)cardsOfstartsForRelation:(float)starts  groupID: (long) groupID;
 #pragma mark - 分组 增删改
 // 分组增删改
 - (void)createGroup:(IGroup *)iGroup withMyCard:(MyCard *)myCard;

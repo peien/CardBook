@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "SuperViewController.h"
-
-@interface KHHFunnelViewController : SuperViewController
+#import "KHHFilterPopup.h"
+@interface KHHFunnelViewController : SuperViewController<KHHFilterPopupDelegate>
 @property (strong, nonatomic) IBOutlet UILabel *lab1;
 @property (strong, nonatomic) IBOutlet UILabel *lab2;
 @property (strong, nonatomic) IBOutlet UILabel *lab3;
