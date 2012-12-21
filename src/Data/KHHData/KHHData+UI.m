@@ -241,7 +241,7 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
     
     //分组的条件
     if (groupID > 0) {
-        [pre appendString:[NSString stringWithFormat:@"%@%d",@" && SOME groups.id == ",groupID]];
+        [pre appendString:[NSString stringWithFormat:@"%@%ld",@" && SOME groups.id == ",groupID]];
     }
     
     predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"%@", pre]];

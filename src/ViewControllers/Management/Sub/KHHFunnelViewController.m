@@ -99,22 +99,37 @@
     switch (sender.tag) {
         case 100:
             valueVC.generArr = [self.allDic objectForKey:@"oneStar"];
+            valueVC.value = 1;
             break;
         case 101:
             valueVC.generArr = [self.allDic objectForKey:@"twoStar"];
+            valueVC.value = 2;
             break;
         case 102:
             valueVC.generArr = [self.allDic objectForKey:@"threeStar"];
+            valueVC.value = 3;
             break;
         case 103:
             valueVC.generArr = [self.allDic objectForKey:@"fourStar"];
+            valueVC.value = 4;
             break;
         case 104:
             valueVC.generArr = [self.allDic objectForKey:@"fiveStar"];
+            valueVC.value = 5;
             break;
         default:
             break;
     }
+    
+    //把当前分组的id传过去
+    if (_groupId) {
+        valueVC.groupID = _groupId.longValue;
+    }else{
+        valueVC.groupID = -1;
+    }
+    
+    //指明界面的类型
+    valueVC.valueType = KHHCustomerVauleFunnel;
     [self.navigationController pushViewController:valueVC animated:YES];
 }
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

@@ -20,6 +20,7 @@ static NSInteger const KHH_PCPieChart_Tag = 1000;
 @property (strong, nonatomic) NSMutableArray    *valueItems;
 @property (assign, nonatomic) BOOL              isNeedReloadTable;
 @property (strong, nonatomic) Group             *currentGroup;
+@property (assign, nonatomic) int               currentIndex;
 //当前分组下的名片总数
 @property (assign, nonatomic) NSInteger         totalCount;
 
@@ -44,7 +45,7 @@ static NSInteger const KHH_PCPieChart_Tag = 1000;
 }
 - (void)rightBarButtonClick:(id)sender{
     //show 选择分组的alert
-    [[KHHFilterPopup shareUtil] showPopUpGroup:0 delegate:self];
+    [[KHHFilterPopup shareUtil] showPopUpGroup:_currentIndex delegate:self];
 }
 
 //刷新title的右边按钮文字及重绘饼图
@@ -206,6 +207,15 @@ static NSInteger const KHH_PCPieChart_Tag = 1000;
             break;
     }
     
+    //把当前分组的id传过去
+    if (_currentGroup) {
+        valVC.groupID = _currentGroup.id.longValue;
+    } else {
+        valVC.groupID = -1;
+    }
+    
+    //指明界面的类型
+    valVC.valueType = KHHCustomerVauleRadar;
     [self.navigationController pushViewController:valVC animated:YES];
 
 }
@@ -223,9 +233,19 @@ static NSInteger const KHH_PCPieChart_Tag = 1000;
 }
 
 #pragma 分组alert delegate
-- (void)selectInAlert:(id) group
+- (void)selectInAlert:(id) obj
 {
+    //从传回的字典中获取相应的数据
+    Group *grp = nil;
+    if (!obj) {
+        _currentIndex = 0;
+    }else {
+        NSDictionary *dic = (NSDictionary *)obj;
+        _currentIndex = [[dic objectForKey:@"groupIndex"] intValue];
+        grp = (Group *)[dic objectForKey:@"obj"];
+    }
+    
     //如果group为空 就说明选择的是所有
-    [self refreshButtonAndChart:(Group *)group];
+    [self refreshButtonAndChart:grp];
 }
 @end

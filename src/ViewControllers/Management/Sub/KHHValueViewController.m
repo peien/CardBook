@@ -76,7 +76,26 @@
 //刷新table
 - (void)reloadTable
 {
-    self.generArr = [self.dataCtrl cardsOfstartsForRelation:_value];
+    switch (_valueType) {
+        case KHHCustomerVauleFunnel:
+        {
+            if (_groupID <= 0) {
+                self.generArr = [self.dataCtrl cardsofStarts:_value];
+            }else {
+                self.generArr = [self.dataCtrl cardsofStarts:_value groupId:[NSNumber numberWithLong:_groupID]];
+            }
+            
+        }
+            break;
+        case KHHCustomerVauleRadar:
+        {
+            self.generArr = [self.dataCtrl cardsOfstartsForRelation:_value groupID:_groupID];
+        }
+            break;
+        default:
+            break;
+    }
+    
     [self.theTable reloadData];
 }
 

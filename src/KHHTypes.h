@@ -88,4 +88,10 @@ typedef enum {
     KHHAlertDelete          = 104,
 } KHHAlertType;
 
+//客户评估、客户价值详细界面的类型 (KHHValueViewController 界面用到)
+typedef enum {
+    KHHCustomerVauleFunnel    = 1,
+    KHHCustomerVauleRadar     = 2,
+} KHHCustomerVauleDetailType;
+
 #endif
