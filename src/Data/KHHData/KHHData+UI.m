@@ -200,6 +200,7 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
     result = FilterUnexpectedCardsFromArray(fetched);
     return result;
 }
+
 // 通过几颗星筛选评估价值
 - (NSArray *)cardsofStarts:(float)starts{
     NSMutableArray *result;
@@ -209,6 +210,7 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
     result = FilterUnexpectedCardsFromArray(fetched);
     return result;
 }
+
 // 通过几颗星筛选评估价值（分组）
 - (NSArray *)cardsofStarts:(float)starts groupId:(NSNumber *)groupId{
     if (!groupId) {
@@ -223,15 +225,27 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
 }
 
 // 通过几颗星筛选关系
-- (NSArray *)cardsOfstartsForRelation:(float)starts{
+- (NSArray *)cardsOfstartsForRelation:(float)starts groupID: (long) groupID{
     NSMutableArray *result;
     NSArray *fetched;
     NSPredicate *predicate;
+    
+    NSMutableString *pre = [[NSMutableString alloc] initWithCapacity:40];
+    
+    //关系条件
     if (starts == -1) {
-         predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"evaluation.degree >= 1"]];
-    }else{
-         predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"evaluation.degree == %f",starts]];
+        [pre appendString:[NSString stringWithFormat:@"evaluation.degree >= 1"]];
+    }else {
+        [pre appendString:[NSString stringWithFormat:@"evaluation.degree == %f",starts]];
     }
+    
+    //分组的条件
+    if (groupID > 0) {
+        [pre appendString:[NSString stringWithFormat:@"%@%ld",@" && SOME groups.id == ",groupID]];
+    }
+    
+    predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"%@", pre]];
+ 
     fetched = [ContactCard objectArrayByPredicate:predicate sortDescriptors:@[[Card nameSortDescriptor]]];
     result = FilterUnexpectedCardsFromArray(fetched);
     return result;
