@@ -7,7 +7,7 @@
 
 #import "KHHCardTemplageVC.h"
 #import "KHHData+UI.h"
-#import "UIImageView+WebCache.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "KHHClasses.h"
 
 #define UIIMAGE_WIDTH  140

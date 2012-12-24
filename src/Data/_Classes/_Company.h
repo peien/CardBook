@@ -37,7 +37,9 @@ extern const struct CompanyFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* email;
+
 
 
 //- (BOOL)validateEmail:(id*)value_ error:(NSError**)error_;
@@ -45,7 +47,9 @@ extern const struct CompanyFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* id;
+
 
 
 @property int64_t idValue;
@@ -57,7 +61,9 @@ extern const struct CompanyFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* name;
+
 
 
 //- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
@@ -66,14 +72,14 @@ extern const struct CompanyFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSSet* cards;
+@property (nonatomic, strong) NSSet *cards;
 
 - (NSMutableSet*)cardsSet;
 
 
 
 
-@property (nonatomic, strong) Image* logo;
+@property (nonatomic, strong) Image *logo;
 
 //- (BOOL)validateLogo:(id*)value_ error:(NSError**)error_;
 

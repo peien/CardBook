@@ -17,7 +17,7 @@
 #import "KHHAddressCell.h"
 #import "TSLocateView.h"
 #import "KHHShowHideTabBar.h"
-#import "UIImageView+WebCache.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "MBProgressHUD.h"
 #import "KHHVisualCardViewController.h"
 #import "KHHCardTemplageVC.h"

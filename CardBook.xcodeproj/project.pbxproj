@@ -28,8 +28,6 @@
 		31FCBC381682BD0A00ABFE3F /* KHHFilterPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FCBC361682BD0A00ABFE3F /* KHHFilterPopup.m */; };
 		624F8C7F1676C167006CD354 /* KHHBMapLocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 624F8C7E1676C167006CD354 /* KHHBMapLocationController.m */; };
 		624F8C801676C167006CD354 /* KHHBMapLocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 624F8C7E1676C167006CD354 /* KHHBMapLocationController.m */; };
-		626832AD16758BDA00EB04BF /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 626832AB16758BDA00EB04BF /* libbaidumapapi.a */; };
-		626832AE16758BDA00EB04BF /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 626832AB16758BDA00EB04BF /* libbaidumapapi.a */; };
 		626832AF16758BDA00EB04BF /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 626832AC16758BDA00EB04BF /* mapapi.bundle */; };
 		626832B016758BDA00EB04BF /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 626832AC16758BDA00EB04BF /* mapapi.bundle */; };
 		626832B91675ACF800EB04BF /* MapController.m in Sources */ = {isa = PBXBuildFile; fileRef = 626832B81675ACF800EB04BF /* MapController.m */; };
@@ -75,14 +73,6 @@
 		6274BF75165C7C3300DB5EBE /* SBJsonTokeniser.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850531602DA3F00A4A673 /* SBJsonTokeniser.m */; };
 		6274BF76165C7C3300DB5EBE /* SBJsonUTF8Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850551602DA3F00A4A673 /* SBJsonUTF8Stream.m */; };
 		6274BF77165C7C3300DB5EBE /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850571602DA3F00A4A673 /* SBJsonWriter.m */; };
-		6274BF78165C7C3300DB5EBE /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8505A1602DA3F00A4A673 /* MKAnnotationView+WebCache.m */; };
-		6274BF79165C7C3300DB5EBE /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8505C1602DA3F00A4A673 /* SDImageCache.m */; };
-		6274BF7A165C7C3300DB5EBE /* SDWebImageDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850601602DA3F00A4A673 /* SDWebImageDecoder.m */; };
-		6274BF7B165C7C3300DB5EBE /* SDWebImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850621602DA3F00A4A673 /* SDWebImageDownloader.m */; };
-		6274BF7C165C7C3300DB5EBE /* SDWebImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850651602DA3F00A4A673 /* SDWebImageManager.m */; };
-		6274BF7D165C7C3300DB5EBE /* SDWebImagePrefetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850681602DA3F00A4A673 /* SDWebImagePrefetcher.m */; };
-		6274BF7E165C7C3300DB5EBE /* UIButton+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8506A1602DA3F00A4A673 /* UIButton+WebCache.m */; };
-		6274BF7F165C7C3300DB5EBE /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8506C1602DA3F00A4A673 /* UIImageView+WebCache.m */; };
 		6274BF80165C7C3300DB5EBE /* SMCheckbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8506F1602DA3F00A4A673 /* SMCheckbox.m */; };
 		6274BF81165C7C3300DB5EBE /* SVGeocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850731602DA3F00A4A673 /* SVGeocoder.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6274BF82165C7C3300DB5EBE /* SVPlacemark.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850751602DA3F00A4A673 /* SVPlacemark.m */; };
@@ -461,7 +451,6 @@
 		6274C11D165C9E0900DB5EBE /* CardBook.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DC51602D3A300A4A673 /* CardBook.xcdatamodeld */; };
 		6274C11E165C9E2600DB5EBE /* ProvincesAndCities.plist in Resources */ = {isa = PBXBuildFile; fileRef = 98A850291602DA3F00A4A673 /* ProvincesAndCities.plist */; };
 		6274C11F165C9E3200DB5EBE /* sample_piechart_data.plist in Resources */ = {isa = PBXBuildFile; fileRef = 620713021650EB22000188E8 /* sample_piechart_data.plist */; };
-		6274C120165C9E4700DB5EBE /* CardBook-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6274BF41165C7A7400DB5EBE /* CardBook-Info.plist */; };
 		6292FCA8166892DA00D170A3 /* KHHWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6292FCA6166892D900D170A3 /* KHHWebView.m */; };
 		6292FCA9166892DA00D170A3 /* KHHWebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6292FCA7166892D900D170A3 /* KHHWebView.xib */; };
 		629BE111165F4B0A00FB3B04 /* KHHLocalNotificationUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 629BE110165F4B0A00FB3B04 /* KHHLocalNotificationUtil.m */; };
@@ -504,14 +493,6 @@
 		62ECD89A166DE1D000A15E24 /* SBJsonTokeniser.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850531602DA3F00A4A673 /* SBJsonTokeniser.m */; };
 		62ECD89B166DE1D000A15E24 /* SBJsonUTF8Stream.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850551602DA3F00A4A673 /* SBJsonUTF8Stream.m */; };
 		62ECD89C166DE1D000A15E24 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850571602DA3F00A4A673 /* SBJsonWriter.m */; };
-		62ECD89D166DE1D000A15E24 /* MKAnnotationView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8505A1602DA3F00A4A673 /* MKAnnotationView+WebCache.m */; };
-		62ECD89E166DE1D000A15E24 /* SDImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8505C1602DA3F00A4A673 /* SDImageCache.m */; };
-		62ECD89F166DE1D000A15E24 /* SDWebImageDecoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850601602DA3F00A4A673 /* SDWebImageDecoder.m */; };
-		62ECD8A0166DE1D000A15E24 /* SDWebImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850621602DA3F00A4A673 /* SDWebImageDownloader.m */; };
-		62ECD8A1166DE1D000A15E24 /* SDWebImageManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850651602DA3F00A4A673 /* SDWebImageManager.m */; };
-		62ECD8A2166DE1D000A15E24 /* SDWebImagePrefetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850681602DA3F00A4A673 /* SDWebImagePrefetcher.m */; };
-		62ECD8A3166DE1D000A15E24 /* UIButton+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8506A1602DA3F00A4A673 /* UIButton+WebCache.m */; };
-		62ECD8A4166DE1D000A15E24 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8506C1602DA3F00A4A673 /* UIImageView+WebCache.m */; };
 		62ECD8A5166DE1D000A15E24 /* SMCheckbox.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A8506F1602DA3F00A4A673 /* SMCheckbox.m */; };
 		62ECD8A6166DE1D000A15E24 /* SVGeocoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850731602DA3F00A4A673 /* SVGeocoder.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		62ECD8A7166DE1D000A15E24 /* SVPlacemark.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850751602DA3F00A4A673 /* SVPlacemark.m */; };
@@ -900,6 +881,8 @@
 		62ECDA2D166DE1D000A15E24 /* CardBook-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6274BF41165C7A7400DB5EBE /* CardBook-Info.plist */; };
 		62ECDA2E166DE1D000A15E24 /* template_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 629BE112165F619200FB3B04 /* template_bg@2x.png */; };
 		62ECDA2F166DE1D000A15E24 /* KHHWebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6292FCA7166892D900D170A3 /* KHHWebView.xib */; };
+		98F0F63C16885010009BAF81 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98F0F63B16885010009BAF81 /* SDWebImage.framework */; };
+		98F0F63D16885010009BAF81 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98F0F63B16885010009BAF81 /* SDWebImage.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1004,7 +987,6 @@
 		626832A716758BDA00EB04BF /* BMKTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKTypes.h; sourceTree = "<group>"; };
 		626832A816758BDA00EB04BF /* BMKUserLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKUserLocation.h; sourceTree = "<group>"; };
 		626832A916758BDA00EB04BF /* BMKVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKVersion.h; sourceTree = "<group>"; };
-		626832AB16758BDA00EB04BF /* libbaidumapapi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbaidumapapi.a; sourceTree = "<group>"; };
 		626832AC16758BDA00EB04BF /* mapapi.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = mapapi.bundle; sourceTree = "<group>"; };
 		626832B71675ACF800EB04BF /* MapController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapController.h; sourceTree = "<group>"; };
 		626832B81675ACF800EB04BF /* MapController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapController.m; sourceTree = "<group>"; };
@@ -1529,26 +1511,6 @@
 		98A850551602DA3F00A4A673 /* SBJsonUTF8Stream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonUTF8Stream.m; sourceTree = "<group>"; };
 		98A850561602DA3F00A4A673 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		98A850571602DA3F00A4A673 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
-		98A850591602DA3F00A4A673 /* MKAnnotationView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKAnnotationView+WebCache.h"; sourceTree = "<group>"; };
-		98A8505A1602DA3F00A4A673 /* MKAnnotationView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKAnnotationView+WebCache.m"; sourceTree = "<group>"; };
-		98A8505B1602DA3F00A4A673 /* SDImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDImageCache.h; sourceTree = "<group>"; };
-		98A8505C1602DA3F00A4A673 /* SDImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDImageCache.m; sourceTree = "<group>"; };
-		98A8505D1602DA3F00A4A673 /* SDImageCacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDImageCacheDelegate.h; sourceTree = "<group>"; };
-		98A8505E1602DA3F00A4A673 /* SDWebImageCompat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageCompat.h; sourceTree = "<group>"; };
-		98A8505F1602DA3F00A4A673 /* SDWebImageDecoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageDecoder.h; sourceTree = "<group>"; };
-		98A850601602DA3F00A4A673 /* SDWebImageDecoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageDecoder.m; sourceTree = "<group>"; };
-		98A850611602DA3F00A4A673 /* SDWebImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageDownloader.h; sourceTree = "<group>"; };
-		98A850621602DA3F00A4A673 /* SDWebImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageDownloader.m; sourceTree = "<group>"; };
-		98A850631602DA3F00A4A673 /* SDWebImageDownloaderDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageDownloaderDelegate.h; sourceTree = "<group>"; };
-		98A850641602DA3F00A4A673 /* SDWebImageManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageManager.h; sourceTree = "<group>"; };
-		98A850651602DA3F00A4A673 /* SDWebImageManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImageManager.m; sourceTree = "<group>"; };
-		98A850661602DA3F00A4A673 /* SDWebImageManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImageManagerDelegate.h; sourceTree = "<group>"; };
-		98A850671602DA3F00A4A673 /* SDWebImagePrefetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDWebImagePrefetcher.h; sourceTree = "<group>"; };
-		98A850681602DA3F00A4A673 /* SDWebImagePrefetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDWebImagePrefetcher.m; sourceTree = "<group>"; };
-		98A850691602DA3F00A4A673 /* UIButton+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+WebCache.h"; sourceTree = "<group>"; };
-		98A8506A1602DA3F00A4A673 /* UIButton+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+WebCache.m"; sourceTree = "<group>"; };
-		98A8506B1602DA3F00A4A673 /* UIImageView+WebCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+WebCache.h"; sourceTree = "<group>"; };
-		98A8506C1602DA3F00A4A673 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		98A8506E1602DA3F00A4A673 /* SMCheckbox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMCheckbox.h; sourceTree = "<group>"; };
 		98A8506F1602DA3F00A4A673 /* SMCheckbox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMCheckbox.m; sourceTree = "<group>"; };
 		98A850701602DA3F00A4A673 /* SMCheckbox.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SMCheckbox.xib; sourceTree = "<group>"; };
@@ -1614,6 +1576,7 @@
 		98DF0ABF1612945E004826D5 /* InterCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InterCard.m; sourceTree = "<group>"; };
 		98E6F4001623CEB700AE81D3 /* ISchedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISchedule.h; sourceTree = "<group>"; };
 		98E6F4011623CEB700AE81D3 /* ISchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISchedule.m; sourceTree = "<group>"; };
+		98F0F63B16885010009BAF81 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDWebImage.framework; path = 3rdPart/SDWebImage/SDWebImage.framework; sourceTree = "<group>"; };
 		98F296F91623F9DC00F9D7B2 /* IImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IImage.h; sourceTree = "<group>"; };
 		98F296FA1623F9DC00F9D7B2 /* IImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IImage.m; sourceTree = "<group>"; };
 		98F6491B16118012008DE515 /* SyncMark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SyncMark.h; sourceTree = "<group>"; };
@@ -1651,7 +1614,7 @@
 				6274C037165C7E0A00DB5EBE /* MessageUI.framework in Frameworks */,
 				6274C038165C7E0A00DB5EBE /* QuartzCore.framework in Frameworks */,
 				6274C03A165C7E0A00DB5EBE /* UIKit.framework in Frameworks */,
-				626832AD16758BDA00EB04BF /* libbaidumapapi.a in Frameworks */,
+				98F0F63C16885010009BAF81 /* SDWebImage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1677,7 +1640,7 @@
 				62ECD950166DE1D000A15E24 /* MessageUI.framework in Frameworks */,
 				62ECD951166DE1D000A15E24 /* QuartzCore.framework in Frameworks */,
 				62ECD952166DE1D000A15E24 /* UIKit.framework in Frameworks */,
-				626832AE16758BDA00EB04BF /* libbaidumapapi.a in Frameworks */,
+				98F0F63D16885010009BAF81 /* SDWebImage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1718,7 +1681,6 @@
 			isa = PBXGroup;
 			children = (
 				6268328C16758BDA00EB04BF /* inc */,
-				626832AA16758BDA00EB04BF /* libs */,
 				626832AC16758BDA00EB04BF /* mapapi.bundle */,
 			);
 			path = BaiduMap;
@@ -1758,14 +1720,6 @@
 				626832A916758BDA00EB04BF /* BMKVersion.h */,
 			);
 			path = inc;
-			sourceTree = "<group>";
-		};
-		626832AA16758BDA00EB04BF /* libs */ = {
-			isa = PBXGroup;
-			children = (
-				626832AB16758BDA00EB04BF /* libbaidumapapi.a */,
-			);
-			path = libs;
 			sourceTree = "<group>";
 		};
 		626832B61675ACC700EB04BF /* OriginalMap */ = {
@@ -1975,6 +1929,7 @@
 		98A84D601602CD2500A4A673 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				98F0F63B16885010009BAF81 /* SDWebImage.framework */,
 				3104E05E1687EE6600B0B45F /* libsqlite3.dylib */,
 				3104E0601687EE8100B0B45F /* libz.dylib */,
 				62BD4F75165CDB70007B948E /* SystemConfiguration.framework */,
@@ -2790,7 +2745,6 @@
 				98A850201602DA3F00A4A673 /* LocationView */,
 				98A8502F1602DA3F00A4A673 /* Popover */,
 				98A8503E1602DA3F00A4A673 /* SBJson */,
-				98A850581602DA3F00A4A673 /* SDWebImage */,
 				98A8506D1602DA3F00A4A673 /* SMCheckbox */,
 				98A850711602DA3F00A4A673 /* SVGeocoder */,
 				98A850761602DA3F00A4A673 /* XLPageController */,
@@ -2968,33 +2922,6 @@
 			path = SBJson;
 			sourceTree = "<group>";
 		};
-		98A850581602DA3F00A4A673 /* SDWebImage */ = {
-			isa = PBXGroup;
-			children = (
-				98A850591602DA3F00A4A673 /* MKAnnotationView+WebCache.h */,
-				98A8505A1602DA3F00A4A673 /* MKAnnotationView+WebCache.m */,
-				98A8505B1602DA3F00A4A673 /* SDImageCache.h */,
-				98A8505C1602DA3F00A4A673 /* SDImageCache.m */,
-				98A8505D1602DA3F00A4A673 /* SDImageCacheDelegate.h */,
-				98A8505E1602DA3F00A4A673 /* SDWebImageCompat.h */,
-				98A8505F1602DA3F00A4A673 /* SDWebImageDecoder.h */,
-				98A850601602DA3F00A4A673 /* SDWebImageDecoder.m */,
-				98A850611602DA3F00A4A673 /* SDWebImageDownloader.h */,
-				98A850621602DA3F00A4A673 /* SDWebImageDownloader.m */,
-				98A850631602DA3F00A4A673 /* SDWebImageDownloaderDelegate.h */,
-				98A850641602DA3F00A4A673 /* SDWebImageManager.h */,
-				98A850651602DA3F00A4A673 /* SDWebImageManager.m */,
-				98A850661602DA3F00A4A673 /* SDWebImageManagerDelegate.h */,
-				98A850671602DA3F00A4A673 /* SDWebImagePrefetcher.h */,
-				98A850681602DA3F00A4A673 /* SDWebImagePrefetcher.m */,
-				98A850691602DA3F00A4A673 /* UIButton+WebCache.h */,
-				98A8506A1602DA3F00A4A673 /* UIButton+WebCache.m */,
-				98A8506B1602DA3F00A4A673 /* UIImageView+WebCache.h */,
-				98A8506C1602DA3F00A4A673 /* UIImageView+WebCache.m */,
-			);
-			path = SDWebImage;
-			sourceTree = "<group>";
-		};
 		98A8506D1602DA3F00A4A673 /* SMCheckbox */ = {
 			isa = PBXGroup;
 			children = (
@@ -3104,7 +3031,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = KHH;
-				LastUpgradeCheck = 0440;
+				LastUpgradeCheck = 0450;
 				ORGANIZATIONNAME = Kinghanhong;
 			};
 			buildConfigurationList = 98A84D571602CD2500A4A673 /* Build configuration list for PBXProject "CardBook" */;
@@ -3344,7 +3271,6 @@
 				6274C11C165C9D4E00DB5EBE /* popoverArrowRightSimple.png in Resources */,
 				6274C11E165C9E2600DB5EBE /* ProvincesAndCities.plist in Resources */,
 				6274C11F165C9E3200DB5EBE /* sample_piechart_data.plist in Resources */,
-				6274C120165C9E4700DB5EBE /* CardBook-Info.plist in Resources */,
 				629BE114165F619200FB3B04 /* template_bg@2x.png in Resources */,
 				6292FCA9166892DA00D170A3 /* KHHWebView.xib in Resources */,
 				626832AF16758BDA00EB04BF /* mapapi.bundle in Resources */,
@@ -3648,14 +3574,6 @@
 				6274BF75165C7C3300DB5EBE /* SBJsonTokeniser.m in Sources */,
 				6274BF76165C7C3300DB5EBE /* SBJsonUTF8Stream.m in Sources */,
 				6274BF77165C7C3300DB5EBE /* SBJsonWriter.m in Sources */,
-				6274BF78165C7C3300DB5EBE /* MKAnnotationView+WebCache.m in Sources */,
-				6274BF79165C7C3300DB5EBE /* SDImageCache.m in Sources */,
-				6274BF7A165C7C3300DB5EBE /* SDWebImageDecoder.m in Sources */,
-				6274BF7B165C7C3300DB5EBE /* SDWebImageDownloader.m in Sources */,
-				6274BF7C165C7C3300DB5EBE /* SDWebImageManager.m in Sources */,
-				6274BF7D165C7C3300DB5EBE /* SDWebImagePrefetcher.m in Sources */,
-				6274BF7E165C7C3300DB5EBE /* UIButton+WebCache.m in Sources */,
-				6274BF7F165C7C3300DB5EBE /* UIImageView+WebCache.m in Sources */,
 				6274BF80165C7C3300DB5EBE /* SMCheckbox.m in Sources */,
 				6274BF81165C7C3300DB5EBE /* SVGeocoder.m in Sources */,
 				6274BF82165C7C3300DB5EBE /* SVPlacemark.m in Sources */,
@@ -3858,14 +3776,6 @@
 				62ECD89A166DE1D000A15E24 /* SBJsonTokeniser.m in Sources */,
 				62ECD89B166DE1D000A15E24 /* SBJsonUTF8Stream.m in Sources */,
 				62ECD89C166DE1D000A15E24 /* SBJsonWriter.m in Sources */,
-				62ECD89D166DE1D000A15E24 /* MKAnnotationView+WebCache.m in Sources */,
-				62ECD89E166DE1D000A15E24 /* SDImageCache.m in Sources */,
-				62ECD89F166DE1D000A15E24 /* SDWebImageDecoder.m in Sources */,
-				62ECD8A0166DE1D000A15E24 /* SDWebImageDownloader.m in Sources */,
-				62ECD8A1166DE1D000A15E24 /* SDWebImageManager.m in Sources */,
-				62ECD8A2166DE1D000A15E24 /* SDWebImagePrefetcher.m in Sources */,
-				62ECD8A3166DE1D000A15E24 /* UIButton+WebCache.m in Sources */,
-				62ECD8A4166DE1D000A15E24 /* UIImageView+WebCache.m in Sources */,
 				62ECD8A5166DE1D000A15E24 /* SMCheckbox.m in Sources */,
 				62ECD8A6166DE1D000A15E24 /* SVGeocoder.m in Sources */,
 				62ECD8A7166DE1D000A15E24 /* SVPlacemark.m in Sources */,
@@ -4065,8 +3975,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
-					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/3rdPart/SDWebImage\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CardBook/CardBook-Prefix.pch";
@@ -4074,12 +3983,13 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/3rdPart/BaiduMap/libs\"",
+					"$(SRCROOT)/3rdPart/BaiduMap/libs/Release$(EFFECTIVE_PLATFORM_NAME)",
 				);
 				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = (
 					"-lbaidumapapi",
 					"-all_load",
+					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -4097,8 +4007,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Wosheng Software";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
-					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/3rdPart/SDWebImage\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CardBook/CardBook-Prefix.pch";
@@ -4106,12 +4015,13 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/3rdPart/BaiduMap/libs\"",
+					"$(SRCROOT)/3rdPart/BaiduMap/libs/Release$(EFFECTIVE_PLATFORM_NAME)",
 				);
 				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = (
 					"-lbaidumapapi",
 					"-all_load",
+					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -4130,6 +4040,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+					"\"$(SRCROOT)/3rdPart/SDWebImage\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CardBook/CardBook-Prefix.pch";
@@ -4157,6 +4068,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+					"\"$(SRCROOT)/3rdPart/SDWebImage\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CardBook/CardBook-Prefix.pch";

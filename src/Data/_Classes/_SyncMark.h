@@ -31,7 +31,9 @@ extern const struct SyncMarkFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* key;
+
 
 
 //- (BOOL)validateKey:(id*)value_ error:(NSError**)error_;
@@ -39,7 +41,9 @@ extern const struct SyncMarkFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* value;
+
 
 
 //- (BOOL)validateValue:(id*)value_ error:(NSError**)error_;

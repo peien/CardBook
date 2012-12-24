@@ -11,6 +11,7 @@ const struct CardAttributes CardAttributes = {
 	.fax = @"fax",
 	.id = @"id",
 	.isFull = @"isFull",
+	.isRead = @"isRead",
 	.microblog = @"microblog",
 	.mobilePhone = @"mobilePhone",
 	.modelType = @"modelType",
@@ -65,32 +66,43 @@ const struct CardFetchedProperties CardFetchedProperties = {
 	return (CardID*)[super objectID];
 }
 
-+ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
++ (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
 	if ([key isEqualToString:@"idValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"id"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 	if ([key isEqualToString:@"isFullValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"isFull"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
+	}
+	if ([key isEqualToString:@"isReadValue"]) {
+		NSSet *affectingKey = [NSSet setWithObject:@"isRead"];
+		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 	if ([key isEqualToString:@"modelTypeValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"modelType"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 	if ([key isEqualToString:@"roleTypeValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"roleType"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 	if ([key isEqualToString:@"userIDValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"userID"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 	if ([key isEqualToString:@"versionValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"version"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 
 	return keyPaths;
@@ -180,6 +192,32 @@ const struct CardFetchedProperties CardFetchedProperties = {
 
 - (void)setPrimitiveIsFullValue:(BOOL)value_ {
 	[self setPrimitiveIsFull:[NSNumber numberWithBool:value_]];
+}
+
+
+
+
+
+@dynamic isRead;
+
+
+
+- (BOOL)isReadValue {
+	NSNumber *result = [self isRead];
+	return [result boolValue];
+}
+
+- (void)setIsReadValue:(BOOL)value_ {
+	[self setIsRead:[NSNumber numberWithBool:value_]];
+}
+
+- (BOOL)primitiveIsReadValue {
+	NSNumber *result = [self primitiveIsRead];
+	return [result boolValue];
+}
+
+- (void)setPrimitiveIsReadValue:(BOOL)value_ {
+	[self setPrimitiveIsRead:[NSNumber numberWithBool:value_]];
 }
 
 

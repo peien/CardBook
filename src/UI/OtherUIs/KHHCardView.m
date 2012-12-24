@@ -12,7 +12,7 @@
 #import "KHHClasses.h"
 #import "KHHDataAPI.h"
 #import "KHHNotifications.h"
-#import "UIImageView+WebCache.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "KHHAddressBook.h"
 #import "KHHAppDelegate.h"
 #import "KHHDefaults.h"

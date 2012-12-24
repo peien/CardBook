@@ -8,7 +8,7 @@
 
 #import "KHHDetailMessageVC.h"
 #import "KHHShowHideTabBar.h"
-#import "UIImageView+WebCache.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "Image.h"
 
 //两个ui间的间隔
