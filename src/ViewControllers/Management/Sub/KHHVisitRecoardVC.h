@@ -45,6 +45,8 @@ typedef enum
 @property (assign, nonatomic) bool                  isFromCalVC;
 @property (strong, nonatomic) Card                  *searchCard;
 @property (assign, nonatomic) double                timeInterval;
+//指定是来自哪个viewControlller
+@property (weak  , nonatomic) UIViewController      *viewCtl;
 
 - (void)datePickerValueChanged:(UIDatePicker *)sender;
 @end

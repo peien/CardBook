@@ -423,8 +423,19 @@ typedef enum {
 }
 - (void)reloadTable
 {
+    //如果删除的是最后一个自建分组，得把self.isOwnGroup置成false
+    if (_btnTitleArr.count == self.baseNum) {
+        self.isOwnGroup = NO;
+        _currentBtn = nil;
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.baseNum - 1 inSection:0];
+        KHHButtonCell *cell = (KHHButtonCell *)[_btnTable cellForRowAtIndexPath:indexPath];
+        [self performSelector:@selector(cellBtnClick:) withObject:cell.button afterDelay:0.1];
+        return;
+    }
+    
+    BOOL isNeedRefresh = YES;
     if (self.isOwnGroup) {
-        [self updateOwnGroupArray];
+        isNeedRefresh = [self updateOwnGroupArray];
     }else {
         NSString *btnName = _currentBtn.titleLabel.text;
         if ([btnName isEqualToString:KHHMessageDefaultGroupUnGroup]) {
@@ -439,7 +450,10 @@ typedef enum {
             self.generalArray = [self.dataControl cardsOfColleague];
         }
     }
-    [_bigTable reloadData];
+    
+    if (isNeedRefresh) {
+        [_bigTable reloadData];
+    }
 }
 //显示联系人个数
 - (void)showNewContactsNum{
@@ -888,13 +902,31 @@ typedef enum {
         }
     }
 }
-- (void)updateOwnGroupArray{
+
+//返回是否要刷新 _bigTable
+- (BOOL)updateOwnGroupArray{
     if (self.currentIndexPath.row - self.baseNum < 0) {
-        return;
+        return NO;
     }
     
+    int index = self.currentIndexPath.row - self.baseNum;
     self.oWnGroupArray = [self.dataControl allTopLevelGroups];
-    Group *group = [self.oWnGroupArray objectAtIndex:self.currentIndexPath.row - self.baseNum];
+    if (!self.oWnGroupArray) {
+        //默认选择所有
+        [self performSelector:@selector(defaultSelectBtn) withObject:nil afterDelay:0.3];
+        return NO;
+    }
+    
+    //如果当前index 大于等于
+    if (index >= self.oWnGroupArray.count) {
+        index = self.oWnGroupArray.count - 1;
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index + self.baseNum inSection:0];
+        KHHButtonCell *cell = (KHHButtonCell *)[_btnTable cellForRowAtIndexPath:indexPath];
+        [self performSelector:@selector(cellBtnClick:) withObject:cell.button afterDelay:0.1];
+        return NO;
+    }
+    
+    Group *group = [self.oWnGroupArray objectAtIndex:index];
     NSSet *set = group.cards;
     NSArray *cards = [set allObjects];
     if (cards.count == 0) {
@@ -902,6 +934,8 @@ typedef enum {
     }else{
         self.generalArray = cards;
     }
+    
+    return YES;
 }
 #pragma mark -
 #pragma mark synBtnClick
@@ -950,10 +984,6 @@ typedef enum {
             addMemVC.handleArray = self.generalArray;
         }else if (buttonIndex == 3){
             //修改组名
-            // 注册修改分组名消息
-            [self observeNotificationName:KHHUIUpdateGroupSucceeded selector:@"handleUpdateGroupSucceeded:"];
-            [self observeNotificationName:KHHUIUpdateGroupFailed selector:@"handleUpdateGroupFailed:"];
-            
             myAlertView *alert = [[myAlertView alloc] initWithTitle:@"修改组名" message:nil delegate:self style:kMyAlertStyleTextField cancelButtonTitle:KHHMessageSure otherButtonTitles:KHHMessageCancle];
             _titleStr = NSLocalizedString(@"修改组名", nil);
             _isAddGroup = NO;
@@ -961,9 +991,6 @@ typedef enum {
             return;
         }else if (buttonIndex == 4){
             //删除分组
-            //注册删除分组的消息
-            [self observeNotificationName:KHHUIDeleteGroupSucceeded selector:@"handleDeleteGroupSucceeded:"];
-            [self observeNotificationName:KHHUIDeleteGroupFailed selector:@"handleDeleteGroupFailed:"];
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"删除", nil)
                                                             message:NSLocalizedString(@"将会删除该组", nil)
                                                            delegate:self
@@ -1090,11 +1117,7 @@ typedef enum {
 }
 #pragma mark - ShowAlertView
 - (IBAction)addBtnClick:(id)sender{
-    //注册新建分组消息
-    [self observeNotificationName:KHHUICreateGroupSucceeded selector:@"handleCreateGroupSucceeded:"];
-    [self observeNotificationName:KHHUICreateGroupFailed selector:@"handleCreateGroupFailed:"];
-    
-    _titleStr = NSLocalizedString(@"新建分组", nil) ;
+   _titleStr = NSLocalizedString(@"新建分组", nil) ;
    _alert = [[myAlertView alloc] initWithTitle:_titleStr
                                        message:nil
                                       delegate:self
@@ -1132,6 +1155,10 @@ typedef enum {
                              [alert show];
                             return;
                         }
+                        //注册新建分组消息
+                        [self observeNotificationName:KHHUICreateGroupSucceeded selector:@"handleCreateGroupSucceeded:"];
+                        [self observeNotificationName:KHHUICreateGroupFailed selector:@"handleCreateGroupFailed:"];
+                        
                         //同步，从新调用自定义的所有分组，然后再刷新表
                         [self showHudForNetWorkWarn:KHHMessageCreatingGroup];
                         self.groupTf = tf;
@@ -1145,6 +1172,7 @@ typedef enum {
                         if (tf.text == nil) {
                             return;
                         }
+
                         if ([self isInGroupNameDefault:tf.text]||[Group objectByKey:@"name" value:tf.text createIfNone:NO]) {
                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分组不能重名"
                                                                             message:nil
@@ -1154,6 +1182,11 @@ typedef enum {
                             [alert show];
                             return;
                         }
+
+                        // 注册修改分组名消息
+                        [self observeNotificationName:KHHUIUpdateGroupSucceeded selector:@"handleUpdateGroupSucceeded:"];
+                        [self observeNotificationName:KHHUIUpdateGroupFailed selector:@"handleUpdateGroupFailed:"];            
+
                         [self showHudForNetWorkWarn:KHHMessageModifingGroup];
                         self.groupTf = tf;
                         Group *group = [self.oWnGroupArray objectAtIndex:self.currentIndexPath.row - self.baseNum];
@@ -1170,6 +1203,9 @@ typedef enum {
             if (_btnTitleArr.count < self.baseNum + 1) {
                 return;
             }
+            //注册删除分组的消息
+            [self observeNotificationName:KHHUIDeleteGroupSucceeded selector:@"handleDeleteGroupSucceeded:"];
+            [self observeNotificationName:KHHUIDeleteGroupFailed selector:@"handleDeleteGroupFailed:"];
             [self showHudForNetWorkWarn:KHHMessageDeletingGroup];
             self.oWnGroupArray = [self.dataControl allTopLevelGroups];
             Group *group = [self.oWnGroupArray objectAtIndex:currentIndexPath.row - self.baseNum];
