@@ -47,7 +47,9 @@ extern const struct CardTemplateFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* descriptionInfo;
+
 
 
 //- (BOOL)validateDescriptionInfo:(id*)value_ error:(NSError**)error_;
@@ -55,7 +57,9 @@ extern const struct CardTemplateFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* domainType;
+
 
 
 @property int32_t domainTypeValue;
@@ -67,7 +71,9 @@ extern const struct CardTemplateFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* id;
+
 
 
 @property int64_t idValue;
@@ -79,7 +85,9 @@ extern const struct CardTemplateFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* isFull;
+
 
 
 @property BOOL isFullValue;
@@ -91,7 +99,9 @@ extern const struct CardTemplateFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* ownerID;
+
 
 
 @property int64_t ownerIDValue;
@@ -103,7 +113,9 @@ extern const struct CardTemplateFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* style;
+
 
 
 //- (BOOL)validateStyle:(id*)value_ error:(NSError**)error_;
@@ -111,7 +123,9 @@ extern const struct CardTemplateFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* version;
+
 
 
 @property int64_t versionValue;
@@ -124,21 +138,21 @@ extern const struct CardTemplateFetchedProperties {
 
 
 
-@property (nonatomic, strong) Image* bgImage;
+@property (nonatomic, strong) Image *bgImage;
 
 //- (BOOL)validateBgImage:(id*)value_ error:(NSError**)error_;
 
 
 
 
-@property (nonatomic, strong) NSSet* cards;
+@property (nonatomic, strong) NSSet *cards;
 
 - (NSMutableSet*)cardsSet;
 
 
 
 
-@property (nonatomic, strong) NSSet* items;
+@property (nonatomic, strong) NSSet *items;
 
 - (NSMutableSet*)itemsSet;
 

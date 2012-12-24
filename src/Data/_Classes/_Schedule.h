@@ -51,7 +51,9 @@ extern const struct ScheduleFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* companions;
+
 
 
 //- (BOOL)validateCompanions:(id*)value_ error:(NSError**)error_;
@@ -59,7 +61,9 @@ extern const struct ScheduleFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* content;
+
 
 
 //- (BOOL)validateContent:(id*)value_ error:(NSError**)error_;
@@ -67,7 +71,9 @@ extern const struct ScheduleFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* customer;
+
 
 
 //- (BOOL)validateCustomer:(id*)value_ error:(NSError**)error_;
@@ -75,7 +81,9 @@ extern const struct ScheduleFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* id;
+
 
 
 @property int64_t idValue;
@@ -87,7 +95,9 @@ extern const struct ScheduleFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* isFinished;
+
 
 
 @property BOOL isFinishedValue;
@@ -99,7 +109,9 @@ extern const struct ScheduleFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* minutesToRemind;
+
 
 
 @property int32_t minutesToRemindValue;
@@ -111,7 +123,9 @@ extern const struct ScheduleFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSDate* plannedDate;
+
 
 
 //- (BOOL)validatePlannedDate:(id*)value_ error:(NSError**)error_;
@@ -119,7 +133,9 @@ extern const struct ScheduleFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* remind;
+
 
 
 @property BOOL remindValue;
@@ -131,7 +147,9 @@ extern const struct ScheduleFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* version;
+
 
 
 @property int64_t versionValue;
@@ -144,21 +162,21 @@ extern const struct ScheduleFetchedProperties {
 
 
 
-@property (nonatomic, strong) Address* address;
+@property (nonatomic, strong) Address *address;
 
 //- (BOOL)validateAddress:(id*)value_ error:(NSError**)error_;
 
 
 
 
-@property (nonatomic, strong) NSSet* images;
+@property (nonatomic, strong) NSSet *images;
 
 - (NSMutableSet*)imagesSet;
 
 
 
 
-@property (nonatomic, strong) NSSet* targets;
+@property (nonatomic, strong) NSSet *targets;
 
 - (NSMutableSet*)targetsSet;
 
