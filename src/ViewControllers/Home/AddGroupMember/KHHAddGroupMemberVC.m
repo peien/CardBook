@@ -11,7 +11,7 @@
 #import "SMCheckbox.h"
 #import "KHHShowHideTabBar.h"
 #import "KHHMySearchBar.h"
-#import "UIImageView+WebCache.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "MBProgressHUD.h"
 
 #import "KHHCardMode.h"

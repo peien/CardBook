@@ -13,7 +13,7 @@
 #import "KHHVisitRecoardVC.h"
 #import "KHHFullFrameController.h"
 //#import "MapController.h"
-#import "UIImageView+WebCache.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "DetailInfoViewController.h"
 #import "KHHData+UI.h"
 #import "KHHData.h"

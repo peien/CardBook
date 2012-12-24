@@ -25,7 +25,7 @@
 #import "MyTabBarController.h"
 #import "KHHShowHideTabBar.h"
 //#import "MapController.h"
-#import "UIImageView+WebCache.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import <QuartzCore/QuartzCore.h>
 
 #import "Edit_eCardViewController.h"

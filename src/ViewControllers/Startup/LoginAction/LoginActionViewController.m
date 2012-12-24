@@ -12,7 +12,7 @@
 #import "KHHMacros.h"
 #import "KHHNetworkAPI.h"
 #import "KHHNotifications.h"
-#import "UIImageView+WebCache.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "UIViewController+SM.h"
 
 //#define textStartAutoLogin NSLocalizedString(@"正在自动登录...", nil)
