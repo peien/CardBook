@@ -28,8 +28,6 @@
 		31FCBC381682BD0A00ABFE3F /* KHHFilterPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FCBC361682BD0A00ABFE3F /* KHHFilterPopup.m */; };
 		624F8C7F1676C167006CD354 /* KHHBMapLocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 624F8C7E1676C167006CD354 /* KHHBMapLocationController.m */; };
 		624F8C801676C167006CD354 /* KHHBMapLocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 624F8C7E1676C167006CD354 /* KHHBMapLocationController.m */; };
-		626832AD16758BDA00EB04BF /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 626832AB16758BDA00EB04BF /* libbaidumapapi.a */; };
-		626832AE16758BDA00EB04BF /* libbaidumapapi.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 626832AB16758BDA00EB04BF /* libbaidumapapi.a */; };
 		626832AF16758BDA00EB04BF /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 626832AC16758BDA00EB04BF /* mapapi.bundle */; };
 		626832B016758BDA00EB04BF /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 626832AC16758BDA00EB04BF /* mapapi.bundle */; };
 		626832B91675ACF800EB04BF /* MapController.m in Sources */ = {isa = PBXBuildFile; fileRef = 626832B81675ACF800EB04BF /* MapController.m */; };
@@ -1003,7 +1001,6 @@
 		626832A716758BDA00EB04BF /* BMKTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKTypes.h; sourceTree = "<group>"; };
 		626832A816758BDA00EB04BF /* BMKUserLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKUserLocation.h; sourceTree = "<group>"; };
 		626832A916758BDA00EB04BF /* BMKVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BMKVersion.h; sourceTree = "<group>"; };
-		626832AB16758BDA00EB04BF /* libbaidumapapi.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libbaidumapapi.a; sourceTree = "<group>"; };
 		626832AC16758BDA00EB04BF /* mapapi.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = mapapi.bundle; sourceTree = "<group>"; };
 		626832B71675ACF800EB04BF /* MapController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapController.h; sourceTree = "<group>"; };
 		626832B81675ACF800EB04BF /* MapController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapController.m; sourceTree = "<group>"; };
@@ -1650,7 +1647,6 @@
 				6274C037165C7E0A00DB5EBE /* MessageUI.framework in Frameworks */,
 				6274C038165C7E0A00DB5EBE /* QuartzCore.framework in Frameworks */,
 				6274C03A165C7E0A00DB5EBE /* UIKit.framework in Frameworks */,
-				626832AD16758BDA00EB04BF /* libbaidumapapi.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1676,7 +1672,6 @@
 				62ECD950166DE1D000A15E24 /* MessageUI.framework in Frameworks */,
 				62ECD951166DE1D000A15E24 /* QuartzCore.framework in Frameworks */,
 				62ECD952166DE1D000A15E24 /* UIKit.framework in Frameworks */,
-				626832AE16758BDA00EB04BF /* libbaidumapapi.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1717,7 +1712,6 @@
 			isa = PBXGroup;
 			children = (
 				6268328C16758BDA00EB04BF /* inc */,
-				626832AA16758BDA00EB04BF /* libs */,
 				626832AC16758BDA00EB04BF /* mapapi.bundle */,
 			);
 			path = BaiduMap;
@@ -1757,14 +1751,6 @@
 				626832A916758BDA00EB04BF /* BMKVersion.h */,
 			);
 			path = inc;
-			sourceTree = "<group>";
-		};
-		626832AA16758BDA00EB04BF /* libs */ = {
-			isa = PBXGroup;
-			children = (
-				626832AB16758BDA00EB04BF /* libbaidumapapi.a */,
-			);
-			path = libs;
 			sourceTree = "<group>";
 		};
 		626832B61675ACC700EB04BF /* OriginalMap */ = {
@@ -4061,18 +4047,14 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
-					"\"$(SRCROOT)\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CardBook/CardBook-Prefix.pch";
 				INFOPLIST_FILE = "CardBook/CardBook-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/3rdPart/BaiduMap/libs\"",
+					"$(SRCROOT)/3rdPart/BaiduMap/libs/Release$(EFFECTIVE_PLATFORM_NAME)",
 				);
 				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = (
@@ -4093,18 +4075,14 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Wosheng Software";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
-					"\"$(SRCROOT)\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CardBook/CardBook-Prefix.pch";
 				INFOPLIST_FILE = "CardBook/CardBook-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/3rdPart/BaiduMap/libs\"",
+					"$(SRCROOT)/3rdPart/BaiduMap/libs/Release$(EFFECTIVE_PLATFORM_NAME)",
 				);
 				OTHER_CODE_SIGN_FLAGS = "";
 				OTHER_LDFLAGS = (
