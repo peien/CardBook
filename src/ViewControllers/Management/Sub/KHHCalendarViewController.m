@@ -82,8 +82,8 @@
     visitView.theTable.frame = rectTable;
     [self.view addSubview:self.visitView];
     [self.view insertSubview:self.addBtn atIndex:100];
-    
-    
+    //日历默认选择当天
+    [self.calView setSelectedDate:[formt dateFromString:dateS]];
 }
 - (void)viewWillAppear:(BOOL)animated{
     [KHHShowHideTabBar hideTabbar];
@@ -93,7 +93,17 @@
         }else if ([self.card isKindOfClass:[PrivateCard class]]){
             self.card = [[KHHData sharedData] privateCardByID:self.card.id];
         }
-         self.visitView.card = self.card;
+        self.visitView.card = self.card;
+        //如果某条拜访计划的日期发生变化后，要定位到相应的日期
+        if (self.changedDate) {
+            [self.calView setSelectedDate:self.changedDate];
+            NSDateFormatter *formt = [[NSDateFormatter alloc] init];
+            [formt setDateFormat:@"yyyy-MM-dd"];
+            NSString *dateS = [formt stringFromDate:self.changedDate];
+            visitView.selectedDate = [formt dateFromString:dateS];
+            self.changedDate = nil;
+        }
+        
         [self.visitView reloadTheTable];
     }
         //[self.visitView reloadTheTable];

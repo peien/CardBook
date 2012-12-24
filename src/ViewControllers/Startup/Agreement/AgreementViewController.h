@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SuperViewController.h"
 
-@interface AgreementViewController : UIViewController
+@interface AgreementViewController : SuperViewController
 @property (nonatomic, weak) IBOutlet UIWebView *theWebView;
 @end
