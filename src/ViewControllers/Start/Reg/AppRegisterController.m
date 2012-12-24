@@ -177,7 +177,7 @@ enum Tag_TextField {
         return;
     }
 
-    DLog(@"[II] 用户名密码等数据看起来ok，开始注册！");        
+    DLog(@"[II] 用户名密码等数据看起来ok，开始注册！");
     // 把user和password保存到UserDefaults，其他通过Notification发出去
     self.defaults.currentUser     = user;
     self.defaults.currentPassword = password;

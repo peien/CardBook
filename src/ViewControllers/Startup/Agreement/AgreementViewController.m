@@ -19,7 +19,9 @@
     if (self) {
         // Custom initialization
         self.navigationItem.title = textAgreement;
-        self.navigationItem.rightBarButtonItem = nil;
+//        self.navigationItem.rightBarButtonItem = nil;
+        [self.leftBtn setTitle:KHHMessageBack forState:UIControlStateNormal];
+        self.rightBtn.hidden = YES;
     }
     return self;
 }

@@ -31,6 +31,7 @@
 @property (strong, nonatomic) KHHData                  *dataCtrl;
 @property (strong, nonatomic) MBProgressHUD            *progressHud;
 @property (strong, nonatomic) KHHFrameCardView         *cardView;
+@property (assign, nonatomic) BOOL                     isColleague;
 - (void)initView;
 - (void)initViewData;
 - (void)reloadTable;

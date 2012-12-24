@@ -29,6 +29,7 @@
 #import <EventKitUI/EventKitUI.h>
 #import "KHHBMapLocationController.h"
 #import "KHHBMapViewController.h"
+#import "KHHCalendarViewController.h"
 
 #define TEXTFIELD_OBJECT_TAG  5550
 #define TEXTFIELD_DATE_TAG    5551
@@ -477,6 +478,8 @@
     [self.hud hide:YES];
     [self stopObservingForCreateVisitedSch];
     [self addEventForCalendar];
+    //把当前拜访计划的最新时间赋给传入的viewCtl
+    [self restoreCurrentScheduleDate];
     [self.navigationController popViewControllerAnimated:YES];
 
 }
@@ -499,6 +502,7 @@
     [self.hud hide:YES];
     [self stopObservingForUpdateVisitedSch];
     [self addEventForCalendar];
+    [self restoreCurrentScheduleDate];
     [self.navigationController popViewControllerAnimated:YES];
 
 }
@@ -520,6 +524,14 @@
 - (void)stopObservingForUpdateVisitedSch{
     [self stopObservingNotificationName:KHHUIUpdateVisitScheduleSucceeded];
     [self stopObservingNotificationName:KHHUIUpdateVisitScheduleFailed];
+}
+
+//把当前的拜访计划的日期给KHHCalendarViewController，在返回时要刷新的
+-(void) restoreCurrentScheduleDate {
+    if (self.viewCtl && [self.viewCtl isKindOfClass:[KHHCalendarViewController class]]) {
+        KHHCalendarViewController *ctl = (KHHCalendarViewController *) self.viewCtl;
+        ctl.changedDate = [self dateFromString];
+    }
 }
 
 #pragma mark -
