@@ -339,12 +339,12 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
     NSPredicate *predicate = nil;
 //    predicate = [NSPredicate predicateWithFormat:@"company.id <> %@", myComID];
 
-//    NSSortDescriptor *sortDes = [NSSortDescriptor sortDescriptorWithKey:@"isFinished"
-//                                                              ascending:YES];
+    NSSortDescriptor *sortDes = [NSSortDescriptor sortDescriptorWithKey:@"isFinished"
+                                                              ascending:YES];
     NSSortDescriptor *timeSort = [NSSortDescriptor sortDescriptorWithKey:@"plannedDate"
                                                                ascending:NO];
     NSArray *result = [Schedule objectArrayByPredicate:predicate
-                                       sortDescriptors:@[timeSort]];
+                                       sortDescriptors:@[sortDes,timeSort]];
     return result;
 }
 - (NSArray *)schedulesOnCard:(Card *)aCard day:(NSString *)aDay {

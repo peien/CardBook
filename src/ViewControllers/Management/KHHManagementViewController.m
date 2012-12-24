@@ -187,9 +187,9 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
         }
     }
         //启动定时同步消息timer
-    [self syncMessage];
+  //  [self syncMessage];
     //立马同步一次消息
-  //  [self handleSyncMessage];
+    [self handleSyncMessage];
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
