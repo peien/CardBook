@@ -213,6 +213,7 @@
     if ([self.viewCtrl isKindOfClass:[KHHCalendarViewController class]]) {
         KHHCalendarViewController *calVC = (KHHCalendarViewController *)self.viewCtrl;
         calVC.isneedReloadeVisitTable = YES;
+        visitVC.viewCtl = self.viewCtrl;
     }
     if ([self.viewCtrl isKindOfClass:[KHHAllVisitedSchedusVC class]]) {
         KHHAllVisitedSchedusVC *calVC = (KHHAllVisitedSchedusVC *)self.viewCtrl;
@@ -235,6 +236,11 @@
         finishVC.isFinishTask = YES;
         finishVC.schedu = [self.dataArray objectAtIndex:index.row];
         finishVC.style = KVisitRecoardVCStyleShowInfo;
+        if ([self.viewCtrl isKindOfClass:[KHHCalendarViewController class]]) {
+            KHHCalendarViewController *calVC = (KHHCalendarViewController *)self.viewCtrl;
+            calVC.isneedReloadeVisitTable = YES;
+            finishVC.viewCtl = self.viewCtrl;
+        }
         [self.viewCtrl.navigationController pushViewController:finishVC animated:YES];
     }
 }

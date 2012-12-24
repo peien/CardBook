@@ -15,6 +15,7 @@
     NSNumber *_groupId;
     int _groupIndex;
     NSString *_rightTitle;
+    BOOL isNeedReloadTable;
 }
 @property (strong, nonatomic) KHHData *dataCtrl;
 @property (strong, nonatomic) NSMutableDictionary *allDic;
@@ -56,6 +57,14 @@
     [self refresh:nil];
 }
 
+-(void) viewWillAppear:(BOOL)animated {
+    if (isNeedReloadTable) {
+        isNeedReloadTable = NO;
+        //刷新当前组
+        [self refresh:_groupId];
+    }
+}
+
 - (void)refresh:(NSNumber *)groupId{
     if (!groupId) {
         [self.rightBtn setTitle:@"所有" forState:UIControlStateNormal];
@@ -95,6 +104,7 @@
 
 - (IBAction)btnClick:(UIButton *)sender{
     DLog(@"btnClick!");
+    isNeedReloadTable = YES;
     KHHValueViewController *valueVC = [[KHHValueViewController alloc] initWithNibName:nil bundle:nil];
     switch (sender.tag) {
         case 100:

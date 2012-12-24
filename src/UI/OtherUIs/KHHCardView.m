@@ -76,7 +76,11 @@
     //是同事、我的名片的时候不添加
     KHHDefaults *khhDefault = [KHHDefaults sharedDefaults];
     NSNumber *companyID = [khhDefault currentCompanyID];
-    if (!([self.myCard isKindOfClass:[MyCard class]] || (self.myCard.company && self.myCard.company.id.longValue == companyID.longValue && companyID.longValue > 0))) {
+    if (self.myCard.company && self.myCard.company.id.longValue == companyID.longValue && companyID.longValue > 0) {
+        self.isColleague = YES;
+    }
+    
+    if (!([self.myCard isKindOfClass:[MyCard class]] || self.isColleague)) {
         UIButton *btnFooterDel = [UIButton buttonWithType:UIButtonTypeCustom];
         btnFooterDel.frame = CGRectMake(60.0f, 55.0f, 200, 37);
         [btnFooterDel setTitle:@"删除名片" forState:UIControlStateNormal];
@@ -256,12 +260,19 @@
     }else if (indexPath.section == 1){
         lab.text = @"分组";
         //首先默认为未分组
-        tf.text = @"未分组";
-        //获取该名片所在的所有分组名
-        NSString * groupNames = [self cardGroupNames];
-        if (groupNames) {
-            tf.text = groupNames;
+        tf.text = KHHMessageDefaultGroupUnGroup;
+        if (self.isColleague) {
+            tf.text = KHHMessageDefaultGroupColleague;
+        }else {
+            //获取该名片所在的所有分组名
+            NSString * groupNames = [self cardGroupNames];
+            if (groupNames) {
+                tf.text = groupNames;
+            }
         }
+        
+        //如果是同事就要发成同事
+        
         
     }else if (indexPath.section == 2){
         lab.text = [[self.itemArray objectAtIndex:indexPath.row] objectForKey:@"key"];
