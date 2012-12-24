@@ -1188,7 +1188,9 @@ typedef enum {
 - (Boolean)isInGroupNameDefault:(NSString *)name{
     NSArray *arrPro =[NSArray arrayWithObjects:@"所有",@"未分组",@"同事",@"手机",nil];
     for (NSString *strPro in arrPro) {
-        return [name isEqualToString:strPro];
+        if([name isEqualToString:strPro]){
+            return YES;
+        }
     }
     return NO;
 }

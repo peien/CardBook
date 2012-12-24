@@ -400,7 +400,9 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
 @end
 
 @implementation KHHData (UI_Message)
-
+- (void)messageNew:(NSDictionary *)responseDict{
+    [self.agent doProgressWithMessageDic:responseDict];
+}
 -(void)syncMessages {
     [self.agent allMessages];
 }

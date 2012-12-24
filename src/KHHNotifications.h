@@ -254,5 +254,6 @@ static NSString * const nNetworkDeleteMessagesFailed    = @"NetworkDeleteMessage
 static NSString * const KHHNetworkPromotionMessagesWithTypeSucceeded = @"promotionMessagesWithTypeSucceeded";
 static NSString * const KHHNetworkPromotionMessagesWithTypeFailed    = @"promotionMessagesWithTypeFailed";
 
-
+static NSString * const KHHSaveLogin = @"saveLoginToServer";
+static NSString * const KHHAskSendMessage = @"AskSendMessage";
 #endif

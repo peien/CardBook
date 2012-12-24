@@ -17,4 +17,5 @@
  用户登录信息保存 kinghhLoginInfoService.saveLoginInfo
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=189
  */
+- (void)saveToken;
 @end

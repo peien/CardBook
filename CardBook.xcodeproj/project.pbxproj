@@ -21,6 +21,9 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		3104E05F1687EE6600B0B45F /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3104E05E1687EE6600B0B45F /* libsqlite3.dylib */; };
+		3104E0611687EE8100B0B45F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3104E0601687EE8100B0B45F /* libz.dylib */; };
+		3104E06C168800F200B0B45F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 3104E06B168800F100B0B45F /* Reachability.m */; };
 		31FCBC371682BD0A00ABFE3F /* KHHFilterPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FCBC361682BD0A00ABFE3F /* KHHFilterPopup.m */; };
 		31FCBC381682BD0A00ABFE3F /* KHHFilterPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FCBC361682BD0A00ABFE3F /* KHHFilterPopup.m */; };
 		624F8C7F1676C167006CD354 /* KHHBMapLocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 624F8C7E1676C167006CD354 /* KHHBMapLocationController.m */; };
@@ -905,6 +908,10 @@
 		0CEFF87F163AFE7500E878C6 /* AppRegisterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppRegisterController.h; sourceTree = "<group>"; };
 		0CEFF880163AFE7500E878C6 /* AppRegisterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppRegisterController.m; sourceTree = "<group>"; };
 		0CEFF881163AFE7500E878C6 /* AppRegisterController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AppRegisterController.xib; sourceTree = "<group>"; };
+		3104E05E1687EE6600B0B45F /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		3104E0601687EE8100B0B45F /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		3104E06A168800F100B0B45F /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		3104E06B168800F100B0B45F /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		31FCBC351682BD0A00ABFE3F /* KHHFilterPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHFilterPopup.h; sourceTree = "<group>"; };
 		31FCBC361682BD0A00ABFE3F /* KHHFilterPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHFilterPopup.m; sourceTree = "<group>"; };
 		620712E71650D051000188E8 /* logo57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo57.png; path = ../../logo57.png; sourceTree = "<group>"; };
@@ -1624,12 +1631,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3104E0611687EE8100B0B45F /* libz.dylib in Frameworks */,
+				3104E05F1687EE6600B0B45F /* libsqlite3.dylib in Frameworks */,
+				6274C02D165C7E0A00DB5EBE /* AudioToolbox.framework in Frameworks */,
 				62BD4F76165CDB71007B948E /* SystemConfiguration.framework in Frameworks */,
 				6274C03E165C7FC700DB5EBE /* CFNetwork.framework in Frameworks */,
 				6274C03C165C7F5100DB5EBE /* MobileCoreServices.framework in Frameworks */,
 				6274C02B165C7E0A00DB5EBE /* EventKit.framework in Frameworks */,
 				6274C02C165C7E0A00DB5EBE /* EventKitUI.framework in Frameworks */,
-				6274C02D165C7E0A00DB5EBE /* AudioToolbox.framework in Frameworks */,
 				6274C02E165C7E0A00DB5EBE /* AddressBook.framework in Frameworks */,
 				6274C02F165C7E0A00DB5EBE /* AddressBookUI.framework in Frameworks */,
 				6274C030165C7E0A00DB5EBE /* CoreData.framework in Frameworks */,
@@ -1966,6 +1975,8 @@
 		98A84D601602CD2500A4A673 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3104E05E1687EE6600B0B45F /* libsqlite3.dylib */,
+				3104E0601687EE8100B0B45F /* libz.dylib */,
 				62BD4F75165CDB70007B948E /* SystemConfiguration.framework */,
 				6274C03D165C7FC700DB5EBE /* CFNetwork.framework */,
 				6274C03B165C7F5100DB5EBE /* MobileCoreServices.framework */,
@@ -2110,6 +2121,8 @@
 		98A84D9F1602D23A00A4A673 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				3104E06A168800F100B0B45F /* Reachability.h */,
+				3104E06B168800F100B0B45F /* Reachability.m */,
 				98A850C41602E63A00A4A673 /* KHHHTTPClient.h */,
 				98A850C51602E63A00A4A673 /* KHHHTTPClient.m */,
 				982AACAE16096C3D002B9BAD /* KHHNetworkAPI.h */,
@@ -3800,6 +3813,7 @@
 				626832B91675ACF800EB04BF /* MapController.m in Sources */,
 				624F8C7F1676C167006CD354 /* KHHBMapLocationController.m in Sources */,
 				31FCBC371682BD0A00ABFE3F /* KHHFilterPopup.m in Sources */,
+				3104E06C168800F200B0B45F /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4052,6 +4066,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CardBook/CardBook-Prefix.pch";
@@ -4078,11 +4093,12 @@
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Wosheng Software";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Wosheng Software";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+					"\"$(SRCROOT)\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CardBook/CardBook-Prefix.pch";
@@ -4098,7 +4114,7 @@
 					"-all_load",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "206FDEBC-C2A3-406F-9532-CA7FA6D109B0";
+				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "206FDEBC-C2A3-406F-9532-CA7FA6D109B0";
 				WRAPPER_EXTENSION = app;
 			};
