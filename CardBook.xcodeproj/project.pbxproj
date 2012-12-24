@@ -24,6 +24,8 @@
 		3104E05F1687EE6600B0B45F /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3104E05E1687EE6600B0B45F /* libsqlite3.dylib */; };
 		3104E0611687EE8100B0B45F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3104E0601687EE8100B0B45F /* libz.dylib */; };
 		3104E06C168800F200B0B45F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 3104E06B168800F100B0B45F /* Reachability.m */; };
+		3104E073168856CB00B0B45F /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98F0F63B16885010009BAF81 /* SDWebImage.framework */; };
+		3104E0741688571000B0B45F /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98F0F63B16885010009BAF81 /* SDWebImage.framework */; };
 		31FCBC371682BD0A00ABFE3F /* KHHFilterPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FCBC361682BD0A00ABFE3F /* KHHFilterPopup.m */; };
 		31FCBC381682BD0A00ABFE3F /* KHHFilterPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FCBC361682BD0A00ABFE3F /* KHHFilterPopup.m */; };
 		624F8C7F1676C167006CD354 /* KHHBMapLocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 624F8C7E1676C167006CD354 /* KHHBMapLocationController.m */; };
@@ -881,8 +883,6 @@
 		62ECDA2D166DE1D000A15E24 /* CardBook-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6274BF41165C7A7400DB5EBE /* CardBook-Info.plist */; };
 		62ECDA2E166DE1D000A15E24 /* template_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 629BE112165F619200FB3B04 /* template_bg@2x.png */; };
 		62ECDA2F166DE1D000A15E24 /* KHHWebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6292FCA7166892D900D170A3 /* KHHWebView.xib */; };
-		98F0F63C16885010009BAF81 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98F0F63B16885010009BAF81 /* SDWebImage.framework */; };
-		98F0F63D16885010009BAF81 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98F0F63B16885010009BAF81 /* SDWebImage.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1614,7 +1614,7 @@
 				6274C037165C7E0A00DB5EBE /* MessageUI.framework in Frameworks */,
 				6274C038165C7E0A00DB5EBE /* QuartzCore.framework in Frameworks */,
 				6274C03A165C7E0A00DB5EBE /* UIKit.framework in Frameworks */,
-				98F0F63C16885010009BAF81 /* SDWebImage.framework in Frameworks */,
+				3104E073168856CB00B0B45F /* SDWebImage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1640,7 +1640,7 @@
 				62ECD950166DE1D000A15E24 /* MessageUI.framework in Frameworks */,
 				62ECD951166DE1D000A15E24 /* QuartzCore.framework in Frameworks */,
 				62ECD952166DE1D000A15E24 /* UIKit.framework in Frameworks */,
-				98F0F63D16885010009BAF81 /* SDWebImage.framework in Frameworks */,
+				3104E0741688571000B0B45F /* SDWebImage.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
