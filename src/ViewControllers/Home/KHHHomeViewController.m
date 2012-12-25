@@ -609,13 +609,13 @@ typedef enum {
                 if (_currentBtn && [_currentBtn.titleLabel.text isEqualToString:KHHMessageDefaultGroupColleague]) {
                     cell.newicon.hidden = YES;
                 }
-                
+                CALayer *l = [cell.logoImage layer];
                 [cell.logoImage setImageWithURL:[NSURL URLWithString:card.logo.url]
                              placeholderImage:imgNor
                                       success:^(UIImage *image, BOOL cached){
                                           
                                           if(!CGSizeEqualToSize(image.size, CGSizeZero)){
-                                              CALayer *l = [cell.logoImage layer];
+                                              
                                               [l setMasksToBounds:YES];
                                               [l setCornerRadius:6.0];
                                           }
