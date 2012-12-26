@@ -443,10 +443,12 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0 && indexPath.row == 0) {
+        //头像
         return 60;
     }else if (indexPath.section == 2 && indexPath.row == 1)
     {
-        return 55;
+        //地址编辑框
+        return 70;
     }
     return 44;
 }
