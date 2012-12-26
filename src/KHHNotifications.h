@@ -259,4 +259,6 @@ static NSString * const KHHNetworkSyncMyCardsSucceeded = @"myCardsAfterDateSucce
 static NSString * const KHHNetworkSyncMyCardsFailed    = @"myCardsAfterDateFailed";
 
 
+static NSString * const KHHSaveLogin = @"saveLoginToServer";
+static NSString * const KHHAskSendMessage = @"AskSendMessage";
 #endif

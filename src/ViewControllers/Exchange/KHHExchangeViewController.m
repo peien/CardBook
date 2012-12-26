@@ -11,7 +11,7 @@
 #import "KHHShowHideTabBar.h"
 #import "Edit_eCardViewController.h"
 #import "XLPageControl.h"
-#import "UIImageView+WebCache.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "KHHFrameCardView.h"
 #import "MBProgressHUD.h"
 #import "DetailInfoViewController.h"

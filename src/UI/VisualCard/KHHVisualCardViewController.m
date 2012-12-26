@@ -12,7 +12,7 @@
 #import "NSNumber+SM.h"
 #import "NSString+SM.h"
 #import "UIColor+HexColor.h"
-#import "UIImageView+WebCache.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "Card.h"
 //#import "KHHMacros.h"
 static CGFloat const CARD_WIDTH = 270.f;

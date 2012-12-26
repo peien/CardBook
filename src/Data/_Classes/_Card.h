@@ -12,6 +12,7 @@ extern const struct CardAttributes {
 	__unsafe_unretained NSString *fax;
 	__unsafe_unretained NSString *id;
 	__unsafe_unretained NSString *isFull;
+	__unsafe_unretained NSString *isRead;
 	__unsafe_unretained NSString *microblog;
 	__unsafe_unretained NSString *mobilePhone;
 	__unsafe_unretained NSString *modelType;
@@ -75,6 +76,7 @@ extern const struct CardFetchedProperties {
 
 
 
+
 @interface CardID : NSManagedObjectID {}
 @end
 
@@ -87,7 +89,9 @@ extern const struct CardFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* aliWangWang;
+
 
 
 //- (BOOL)validateAliWangWang:(id*)value_ error:(NSError**)error_;
@@ -95,7 +99,9 @@ extern const struct CardFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* businessScope;
+
 
 
 //- (BOOL)validateBusinessScope:(id*)value_ error:(NSError**)error_;
@@ -103,7 +109,9 @@ extern const struct CardFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* department;
+
 
 
 //- (BOOL)validateDepartment:(id*)value_ error:(NSError**)error_;
@@ -111,7 +119,9 @@ extern const struct CardFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* email;
+
 
 
 //- (BOOL)validateEmail:(id*)value_ error:(NSError**)error_;
@@ -119,7 +129,9 @@ extern const struct CardFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* fax;
+
 
 
 //- (BOOL)validateFax:(id*)value_ error:(NSError**)error_;
@@ -127,7 +139,9 @@ extern const struct CardFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* id;
+
 
 
 @property int64_t idValue;
@@ -139,7 +153,9 @@ extern const struct CardFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* isFull;
+
 
 
 @property BOOL isFullValue;
@@ -151,7 +167,23 @@ extern const struct CardFetchedProperties {
 
 
 
+
+@property (nonatomic, strong) NSNumber* isRead;
+
+
+
+@property BOOL isReadValue;
+- (BOOL)isReadValue;
+- (void)setIsReadValue:(BOOL)value_;
+
+//- (BOOL)validateIsRead:(id*)value_ error:(NSError**)error_;
+
+
+
+
+
 @property (nonatomic, strong) NSString* microblog;
+
 
 
 //- (BOOL)validateMicroblog:(id*)value_ error:(NSError**)error_;
@@ -159,7 +191,9 @@ extern const struct CardFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* mobilePhone;
+
 
 
 //- (BOOL)validateMobilePhone:(id*)value_ error:(NSError**)error_;
@@ -167,7 +201,9 @@ extern const struct CardFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* modelType;
+
 
 
 @property int32_t modelTypeValue;
@@ -179,7 +215,9 @@ extern const struct CardFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* moreInfo;
+
 
 
 //- (BOOL)validateMoreInfo:(id*)value_ error:(NSError**)error_;
@@ -187,7 +225,9 @@ extern const struct CardFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* msn;
+
 
 
 //- (BOOL)validateMsn:(id*)value_ error:(NSError**)error_;
@@ -195,7 +235,9 @@ extern const struct CardFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* name;
+
 
 
 //- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
@@ -203,7 +245,9 @@ extern const struct CardFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* qq;
+
 
 
 //- (BOOL)validateQq:(id*)value_ error:(NSError**)error_;
@@ -211,7 +255,9 @@ extern const struct CardFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* remarks;
+
 
 
 //- (BOOL)validateRemarks:(id*)value_ error:(NSError**)error_;
@@ -219,7 +265,9 @@ extern const struct CardFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* roleType;
+
 
 
 @property int32_t roleTypeValue;
@@ -231,7 +279,9 @@ extern const struct CardFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* telephone;
+
 
 
 //- (BOOL)validateTelephone:(id*)value_ error:(NSError**)error_;
@@ -239,7 +289,9 @@ extern const struct CardFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* title;
+
 
 
 //- (BOOL)validateTitle:(id*)value_ error:(NSError**)error_;
@@ -247,7 +299,9 @@ extern const struct CardFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* userID;
+
 
 
 @property int64_t userIDValue;
@@ -259,7 +313,9 @@ extern const struct CardFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* version;
+
 
 
 @property int64_t versionValue;
@@ -271,7 +327,9 @@ extern const struct CardFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* web;
+
 
 
 //- (BOOL)validateWeb:(id*)value_ error:(NSError**)error_;
@@ -280,63 +338,63 @@ extern const struct CardFetchedProperties {
 
 
 
-@property (nonatomic, strong) Address* address;
+@property (nonatomic, strong) Address *address;
 
 //- (BOOL)validateAddress:(id*)value_ error:(NSError**)error_;
 
 
 
 
-@property (nonatomic, strong) BankAccount* bankAccount;
+@property (nonatomic, strong) BankAccount *bankAccount;
 
 //- (BOOL)validateBankAccount:(id*)value_ error:(NSError**)error_;
 
 
 
 
-@property (nonatomic, strong) Company* company;
+@property (nonatomic, strong) Company *company;
 
 //- (BOOL)validateCompany:(id*)value_ error:(NSError**)error_;
 
 
 
 
-@property (nonatomic, strong) CustomerEvaluation* evaluation;
+@property (nonatomic, strong) CustomerEvaluation *evaluation;
 
 //- (BOOL)validateEvaluation:(id*)value_ error:(NSError**)error_;
 
 
 
 
-@property (nonatomic, strong) NSSet* frames;
+@property (nonatomic, strong) NSSet *frames;
 
 - (NSMutableSet*)framesSet;
 
 
 
 
-@property (nonatomic, strong) NSSet* groups;
+@property (nonatomic, strong) NSSet *groups;
 
 - (NSMutableSet*)groupsSet;
 
 
 
 
-@property (nonatomic, strong) Image* logo;
+@property (nonatomic, strong) Image *logo;
 
 //- (BOOL)validateLogo:(id*)value_ error:(NSError**)error_;
 
 
 
 
-@property (nonatomic, strong) NSSet* schedules;
+@property (nonatomic, strong) NSSet *schedules;
 
 - (NSMutableSet*)schedulesSet;
 
 
 
 
-@property (nonatomic, strong) CardTemplate* template;
+@property (nonatomic, strong) CardTemplate *template;
 
 //- (BOOL)validateTemplate:(id*)value_ error:(NSError**)error_;
 
@@ -412,6 +470,15 @@ extern const struct CardFetchedProperties {
 
 - (BOOL)primitiveIsFullValue;
 - (void)setPrimitiveIsFullValue:(BOOL)value_;
+
+
+
+
+- (NSNumber*)primitiveIsRead;
+- (void)setPrimitiveIsRead:(NSNumber*)value;
+
+- (BOOL)primitiveIsReadValue;
+- (void)setPrimitiveIsReadValue:(BOOL)value_;
 
 
 

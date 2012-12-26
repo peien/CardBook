@@ -12,7 +12,7 @@
 #import "KHHClasses.h"
 #import "KHHDataAPI.h"
 #import "KHHNotifications.h"
-#import "UIImageView+WebCache.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "KHHAddressBook.h"
 #import "KHHAppDelegate.h"
 #import "KHHDefaults.h"
@@ -233,13 +233,13 @@
         UIImageView *iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(13, 5, 50, 50)];
         //iconImage.backgroundColor = [UIColor blackColor];
         [cell addSubview:iconImage];
+        CALayer *l = [iconImage layer];
 //        [iconImage setImageWithURL:[NSURL URLWithString:_myCard.logo.url] placeholderImage:[UIImage imageNamed:@"logopic.png"]];
         [iconImage setImageWithURL:[NSURL URLWithString:_myCard.logo.url]
                        placeholderImage:[UIImage imageNamed:@"logopic.png"]
                                 success:^(UIImage *image, BOOL cached){
                                     
-                                    if(!CGSizeEqualToSize(image.size, CGSizeZero)){
-                                        CALayer *l = [iconImage layer];
+                                    if(!CGSizeEqualToSize(image.size, CGSizeZero)){                                        
                                         [l setMasksToBounds:YES];
                                         [l setCornerRadius:6.0];
                                     }

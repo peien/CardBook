@@ -13,7 +13,7 @@
 #import "KHHStatusCodes.h"
 #import "KHHTypes.h"
 
-const NSTimeInterval KHH_LOCATION_REFRESH_INTERVAL = 30 * 60; // 30 min.
+//const NSTimeInterval KHH_LOCATION_REFRESH_INTERVAL = 30 * 60; // 30 min.
 
 @interface KHHLocationController () <CLLocationManagerDelegate>
 @property (nonatomic, strong) CLLocationManager *locationManager;

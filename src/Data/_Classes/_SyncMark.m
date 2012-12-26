@@ -37,7 +37,7 @@ const struct SyncMarkFetchedProperties SyncMarkFetchedProperties = {
 	return (SyncMarkID*)[super objectID];
 }
 
-+ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
++ (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
 

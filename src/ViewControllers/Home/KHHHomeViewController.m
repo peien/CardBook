@@ -25,7 +25,7 @@
 #import "MyTabBarController.h"
 #import "KHHShowHideTabBar.h"
 //#import "MapController.h"
-#import "UIImageView+WebCache.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import <QuartzCore/QuartzCore.h>
 
 #import "Edit_eCardViewController.h"
@@ -64,7 +64,7 @@ typedef enum {
 @property (strong, nonatomic)  NSArray                *resultArray;
 @property (strong, nonatomic)  NSArray                *searchArray;
 @property (strong, nonatomic)  KHHData                *dataControl;
-@property (strong, nonatomic)  NSArray                *allArray;
+//@property (strong, nonatomic)  NSArray                *allArray;
 @property (strong, nonatomic)  NSArray                *ReceNewArray;
 @property (strong, nonatomic)  NSArray                *myCardArray;
 @property (strong, nonatomic)  KHHFloatBarController  *floatBarVC;
@@ -117,7 +117,7 @@ typedef enum {
 @synthesize searchArray = _searchArray;
 @synthesize type = _type;
 @synthesize dataControl;
-@synthesize allArray;
+//@synthesize allArray;
 @synthesize generalArray;
 @synthesize ReceNewArray;
 @synthesize floatBarVC;
@@ -326,7 +326,7 @@ typedef enum {
     self.resultArray = nil;
     self.searchArray = nil;
     self.dataControl = nil;
-    self.allArray = nil;
+//    self.allArray = nil;
     self.generalArray = nil;
     self.ReceNewArray = nil;
     self.floatBarVC = nil;
@@ -353,11 +353,7 @@ typedef enum {
 {
     //调用数据库接口，获取各个分组的array
     //所有
-    self.allArray = [self.dataControl allReceivedCards];
-    NSMutableArray *arr = [[NSMutableArray alloc] initWithArray:self.allArray];
-    NSArray *priArr = [self.dataControl allPrivateCards];
-    [arr addObjectsFromArray:priArr];
-    self.generalArray = arr;
+    self.generalArray = [self.dataControl cardsOfAll];
     //我的卡片
     self.myCardArray = [self.dataControl allMyCards];
     if (!self.myCardArray || self.myCardArray.count <= 0) {
@@ -441,11 +437,7 @@ typedef enum {
         if ([btnName isEqualToString:KHHMessageDefaultGroupUnGroup]) {
             self.generalArray = [self.dataControl cardsOfUngrouped];
         }else if ([btnName isEqualToString:KHHMessageDefaultGroupAll]){
-            self.allArray = [self.dataControl allReceivedCards];
-            NSMutableArray *arr = [[NSMutableArray alloc] initWithArray:self.allArray];
-            NSArray *priArr = [self.dataControl allPrivateCards];
-            [arr addObjectsFromArray:priArr];
-            self.generalArray = arr;
+            self.generalArray = [self.dataControl cardsOfAll];
         }else if ([btnName isEqualToString:KHHMessageDefaultGroupColleague]){
             self.generalArray = [self.dataControl cardsOfColleague];
         }
@@ -617,13 +609,13 @@ typedef enum {
                 if (_currentBtn && [_currentBtn.titleLabel.text isEqualToString:KHHMessageDefaultGroupColleague]) {
                     cell.newicon.hidden = YES;
                 }
-                
+                CALayer *l = [cell.logoImage layer];
                 [cell.logoImage setImageWithURL:[NSURL URLWithString:card.logo.url]
                              placeholderImage:imgNor
                                       success:^(UIImage *image, BOOL cached){
                                           
                                           if(!CGSizeEqualToSize(image.size, CGSizeZero)){
-                                              CALayer *l = [cell.logoImage layer];
+                                              
                                               [l setMasksToBounds:YES];
                                               [l setCornerRadius:6.0];
                                           }
@@ -853,11 +845,7 @@ typedef enum {
         }else {
             //刷新表
             if ([btnName isEqualToString:KHHMessageDefaultGroupAll] || [btnName isEqualToString:[NSString string]]) {
-                self.allArray = [self.dataControl allReceivedCards];
-                NSMutableArray *arr = [[NSMutableArray alloc] initWithArray:self.allArray];
-                NSArray *priArr = [self.dataControl allPrivateCards];
-                [arr addObjectsFromArray:priArr];
-                self.generalArray = arr;
+                self.generalArray = [self.dataControl cardsOfAll];
             }else if([btnName isEqualToString:KHHMessageDefaultGroupColleague]){
                 self.generalArray = [self.dataControl cardsOfColleague];
             }else if([btnName isEqualToString:KHHMessageDefaultGroupUnGroup]){
@@ -925,16 +913,8 @@ typedef enum {
         [self performSelector:@selector(cellBtnClick:) withObject:cell.button afterDelay:0.1];
         return NO;
     }
-    
     Group *group = [self.oWnGroupArray objectAtIndex:index];
-    NSSet *set = group.cards;
-    NSArray *cards = [set allObjects];
-    if (cards.count == 0) {
-        self.generalArray = nil;
-    }else{
-        self.generalArray = cards;
-    }
-    
+    self.generalArray = [group.cards sortedArrayUsingDescriptors:[Card defaultSortDescriptors]];    
     return YES;
 }
 #pragma mark -
@@ -1146,7 +1126,7 @@ typedef enum {
                             [alert show];
                             return;
                         }
-                        if ([Group objectByKey:@"name" value:tf.text createIfNone:NO]) {
+                        if ([self isInGroupNameDefault:tf.text]||[Group objectByKey:@"name" value:tf.text createIfNone:NO]) {
                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"不能创建同名分组"
                                                                             message:nil
                                                                            delegate:self
@@ -1172,9 +1152,21 @@ typedef enum {
                         if (tf.text == nil) {
                             return;
                         }
+
+                        if ([self isInGroupNameDefault:tf.text]||[Group objectByKey:@"name" value:tf.text createIfNone:NO]) {
+                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"分组不能重名"
+                                                                            message:nil
+                                                                           delegate:self
+                                                                  cancelButtonTitle:@"确定"
+                                                                  otherButtonTitles:nil];
+                            [alert show];
+                            return;
+                        }
+
                         // 注册修改分组名消息
                         [self observeNotificationName:KHHUIUpdateGroupSucceeded selector:@"handleUpdateGroupSucceeded:"];
                         [self observeNotificationName:KHHUIUpdateGroupFailed selector:@"handleUpdateGroupFailed:"];            
+
                         [self showHudForNetWorkWarn:KHHMessageModifingGroup];
                         self.groupTf = tf;
                         Group *group = [self.oWnGroupArray objectAtIndex:self.currentIndexPath.row - self.baseNum];
@@ -1208,6 +1200,17 @@ typedef enum {
         }
     }
 }
+
+- (Boolean)isInGroupNameDefault:(NSString *)name{
+    NSArray *arrPro =[NSArray arrayWithObjects:@"所有",@"未分组",@"同事",@"手机",nil];
+    for (NSString *strPro in arrPro) {
+        if([name isEqualToString:strPro]){
+            return YES;
+        }
+    }
+    return NO;
+}
+
 #pragma mark - handleGroup
 //创建组
 - (void)handleCreateGroupSucceeded:(NSNotification *)info{

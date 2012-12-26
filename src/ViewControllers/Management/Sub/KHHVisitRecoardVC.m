@@ -21,7 +21,7 @@
 #import "MBProgressHUD.h"
 #import "KHHAppDelegate.h"
 #import "NSString+SM.h"
-#import "UIImageView+WebCache.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "KHHLocalNotificationUtil.h"
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
