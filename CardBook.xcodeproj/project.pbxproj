@@ -897,6 +897,8 @@
 		62ECDA2D166DE1D000A15E24 /* CardBook-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6274BF41165C7A7400DB5EBE /* CardBook-Info.plist */; };
 		62ECDA2E166DE1D000A15E24 /* template_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 629BE112165F619200FB3B04 /* template_bg@2x.png */; };
 		62ECDA2F166DE1D000A15E24 /* KHHWebView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6292FCA7166892D900D170A3 /* KHHWebView.xib */; };
+		8413659216883F5000BB0400 /* KHHKeyBoardManagerUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 8413659116883F5000BB0400 /* KHHKeyBoardManagerUtil.m */; };
+		8413659316883F5000BB0400 /* KHHKeyBoardManagerUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 8413659116883F5000BB0400 /* KHHKeyBoardManagerUtil.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1077,6 +1079,8 @@
 		62D3F40C1603188500E011E2 /* KHHEditMSGViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHEditMSGViewController.m; sourceTree = "<group>"; };
 		62D3F40D1603188500E011E2 /* KHHEditMSGViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHEditMSGViewController.xib; sourceTree = "<group>"; };
 		62ECDA34166DE1D000A15E24 /* CardBook copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CardBook copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8413659016883F5000BB0400 /* KHHKeyBoardManagerUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHKeyBoardManagerUtil.h; sourceTree = "<group>"; };
+		8413659116883F5000BB0400 /* KHHKeyBoardManagerUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHKeyBoardManagerUtil.m; sourceTree = "<group>"; };
 		9803EBA5160DA88D00402B53 /* NSObject+SM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SM.h"; sourceTree = "<group>"; };
 		9803EBA6160DA88D00402B53 /* NSObject+SM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SM.m"; sourceTree = "<group>"; };
 		981BA0F5162EB4520036A4B8 /* CustomerEvaluation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerEvaluation.h; sourceTree = "<group>"; };
@@ -1795,6 +1799,8 @@
 			children = (
 				629BE10F165F4B0A00FB3B04 /* KHHLocalNotificationUtil.h */,
 				629BE110165F4B0A00FB3B04 /* KHHLocalNotificationUtil.m */,
+				8413659016883F5000BB0400 /* KHHKeyBoardManagerUtil.h */,
+				8413659116883F5000BB0400 /* KHHKeyBoardManagerUtil.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -3800,6 +3806,7 @@
 				626832B91675ACF800EB04BF /* MapController.m in Sources */,
 				624F8C7F1676C167006CD354 /* KHHBMapLocationController.m in Sources */,
 				31FCBC371682BD0A00ABFE3F /* KHHFilterPopup.m in Sources */,
+				8413659216883F5000BB0400 /* KHHKeyBoardManagerUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4009,6 +4016,7 @@
 				626832BA1675ACF800EB04BF /* MapController.m in Sources */,
 				624F8C801676C167006CD354 /* KHHBMapLocationController.m in Sources */,
 				31FCBC381682BD0A00ABFE3F /* KHHFilterPopup.m in Sources */,
+				8413659316883F5000BB0400 /* KHHKeyBoardManagerUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4049,10 +4057,7 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CardBook/CardBook-Prefix.pch";
 				INFOPLIST_FILE = "CardBook/CardBook-Info.plist";
@@ -4080,10 +4085,7 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Wosheng Software";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Wosheng Software";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CardBook/CardBook-Prefix.pch";
 				INFOPLIST_FILE = "CardBook/CardBook-Info.plist";

@@ -104,8 +104,9 @@
     }else{
         self.cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(0, 0, 320, 220) delegate:self isVer:NO callbackAction:nil];
     }
-    self.cardView.card = self.card;
-    [self.cardView showView];
+    //在viewWillApear时会再画一次，所以这里不画了
+//    self.cardView.card = self.card;
+//    [self.cardView showView];
     [self.view addSubview:self.cardView];
     for (int i = 0; i<3; i++) {
         UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];

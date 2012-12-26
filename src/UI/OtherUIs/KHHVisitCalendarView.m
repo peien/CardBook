@@ -183,14 +183,26 @@
         cell.noteValueLab.text = sched.content;
     }
     //是否完成
-    if ([sched.isFinished isEqualToNumber:[NSNumber numberWithBool:YES]]) {
+    BOOL isFinished = [sched.isFinished isEqualToNumber:[NSNumber numberWithBool:YES]];
+    if (isFinished) {
         cell.finishBtn.hidden = YES;
     }else{
         cell.finishBtn.hidden = NO;
     }
-    if (sched.minutesToRemindValue > 0) {
+    
+    //铃铛显示与隐藏
+    //显示条件(未完成的拜访计划、有提醒并且没有提醒过的)
+    int remindVaule = sched.minutesToRemindValue;
+    DLog(@"visit plant remindValue = %d",remindVaule);
+    NSDate * remindTime = [sched.plannedDate dateByAddingTimeInterval:-remindVaule * 60];
+    //这两个时间都没有考虑时区的，因为求差，只要两个时间都用同一时区就可以
+    DLog(@"visit plant remindDate = %@",remindTime);
+    NSTimeInterval interval = [remindTime timeIntervalSinceNow];
+    DLog(@"visit plant now = %@, interval = %f",[NSDate new],interval);
+    if (remindVaule > 0 && !isFinished && interval > 0.0f) {
         cell.Btn.hidden = NO;
     }
+    
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

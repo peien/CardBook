@@ -254,5 +254,9 @@ static NSString * const nNetworkDeleteMessagesFailed    = @"NetworkDeleteMessage
 static NSString * const KHHNetworkPromotionMessagesWithTypeSucceeded = @"promotionMessagesWithTypeSucceeded";
 static NSString * const KHHNetworkPromotionMessagesWithTypeFailed    = @"promotionMessagesWithTypeFailed";
 
+//同步我的名片
+static NSString * const KHHNetworkSyncMyCardsSucceeded = @"myCardsAfterDateSucceeded";
+static NSString * const KHHNetworkSyncMyCardsFailed    = @"myCardsAfterDateFailed";
+
 
 #endif
