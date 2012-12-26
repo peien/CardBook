@@ -15,13 +15,16 @@
 #import "KHHData+UI.h"
 #import "KHHMessage.h"
 #import "MBProgressHUD.h"
+
 @interface KHHMessageViewController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 @property (strong, nonatomic) NSArray *messageArr;
 @property (strong, nonatomic) KHHData *dataCtrl;
 @property (assign, nonatomic) bool    isNeedReloadTable;
 @end
 
-@implementation KHHMessageViewController
+@implementation KHHMessageViewController{
+    KHHMessage *_message;
+}
 @synthesize theTable = _theTable;
 @synthesize messageArr;
 @synthesize dataCtrl;
@@ -136,7 +139,7 @@
         cell.selectionStyle = UITableViewCellSeparatorStyleNone;
         cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     }
-    KHHMessage *message = [self.messageArr objectAtIndex:indexPath.row];
+   KHHMessage *message = [self.messageArr objectAtIndex:indexPath.row];
     cell.subTitleLab.text = message.subject;
     cell.contentLab.text = message.content;
     cell.timeLab.text = message.time;
@@ -150,9 +153,35 @@
 {
     [self tableView:tableView accessoryButtonTappedForRowWithIndexPath:indexPath];
     self.isNeedReloadTable = YES;
-    KHHMessage *message = [self.messageArr objectAtIndex:indexPath.row];
-    message.isRead = [NSNumber numberWithBool:YES];
+     _message= [self.messageArr objectAtIndex:indexPath.row];
+    if (![_message.isRead boolValue]) {
+        [self observeNotificationName:nUIDeleteMessagesSucceeded selector:@"handleDeleteMessagesSucceeded:"];
+        [self observeNotificationName:nUIDeleteMessagesFailed selector:@"handleDeleteMessagesFailed:"];
+    }
+    [self.dataCtrl.agent deleteMessages:[NSArray arrayWithObject:_message.id]];
+   
 }
+
+
+
+#pragma mark -
+- (void)handleDeleteMessagesSucceeded:(NSNotification *)noti{
+    DLog(@"handleDeleteMessagesSucceeded! noti is ====== %@",noti.userInfo);
+    [self stopObservingForDelMessage];
+     _message.isRead = [NSNumber numberWithBool:YES];
+    
+}
+- (void)handleDeleteMessagesFailed:(NSNotification *)noti{
+    [self stopObservingForDelMessage];
+     _message.isRead = [NSNumber numberWithBool:NO];
+}
+
+- (void)stopObservingForDelMessage{
+    [self stopObservingNotificationName:nUIDeleteMessagesSucceeded];
+    [self stopObservingNotificationName:nUIDeleteMessagesFailed];
+    
+}
+
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
     KHHDetailMessageVC *messageVC = [[KHHDetailMessageVC alloc] initWithNibName:@"KHHDetailMessageVC" bundle:nil];

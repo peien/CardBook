@@ -16,6 +16,8 @@
 #import "ATestViewController.h"
 #import "AppStartController.h"
 //#import <Parse/Parse.h>
+#import "NSString+Base64.h"
+
 
 @implementation KHHAppDelegate
 
@@ -112,8 +114,16 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    DLog(@"userInfo%@",userInfo);
     //PFPush handlePush:userInfo];
-    [[KHHData sharedData]messageNew:userInfo];
+   NSString *type = [userInfo objectForKey:@"type"];
+    if([type isEqualToString:@"0"]){        
+        [[KHHData sharedData] syncMessages];
+    }else{
+        [self postASAPNotificationName:KHHNetworkReceivedCardsAfterDateLastCardExpectedCountSucceeded];
+    }
+    
+    [self updateApplicationIconNumber:application];
     
 }
 

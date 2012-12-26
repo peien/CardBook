@@ -30,6 +30,7 @@
    [param setValue:[KHHDefaults sharedDefaults].token forKey:@"device.deviceToken"];
    [param setValue:@"IOS" forKey:@"device.opsType"];
     [param setValue:[[UIDevice currentDevice] systemVersion]  forKey:@"device.opsVersion"];
+    [param setValue:@"Apple" forKey:@"device.phoneBrand"];
 
     [self postAction:@"loginSaveToServer" query:@"kinghhLoginInfoService.saveLoginInfo" parameters:param];
 }

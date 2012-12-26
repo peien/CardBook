@@ -463,6 +463,7 @@
     NSArray *list = info[kInfoKeyObjectList];
     if (list) {
         [KHHMessage processIObjectList:list];
+       
     }
     
     // }

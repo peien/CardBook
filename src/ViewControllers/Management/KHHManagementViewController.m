@@ -155,9 +155,30 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
     app = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
     [MBProgressHUD hideHUDForView:app.window animated:YES];
 }
+
+- (void)test
+{
+    UILocalNotification * localNotif = [[UILocalNotification alloc]init];
+    localNotif.fireDate = [[NSDate alloc]init];
+//    
+//    localNotif.timeZone = [NSTimeZone defaultTimeZone];
+//    localNotif.alertBody = [NSString stringWithFormat:NSLocalizedString(@"%@ in %i minutes.", nil),
+//                            item.eventName, minutesBefore];
+//    localNotif.alertAction = NSLocalizedString(@"View Details", nil);
+//    localNotif.soundName = UILocalNotificationDefaultSoundName;
+//    localNotif.applicationIconBadgeNumber = 1;
+//    NSDictionary *infoDict = [NSDictionary dictionaryWithObject:item.eventName forKey:ToDoItemKey];
+//    localNotif.userInfo = infoDict;
+//    [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(10, 20, 50, 30)];
+    button.titleLabel.text = @"message";
+    [button addTarget:self action:@selector(test) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:button];
     NSArray *cards = [self.dataCtrl allMyCards];
     if (cards && cards.count > 0) {
         self.myCard = [cards objectAtIndex:0];
@@ -187,7 +208,7 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
         }
     }
         //启动定时同步消息timer
-  //  [self syncMessage];
+    [self syncMessage];
     //立马同步一次消息
     [self handleSyncMessage];
 }
@@ -275,7 +296,7 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
     [self observeNotificationName:nUISyncMessagesSucceeded selector:@"handleSyncMessagesSucceeded:"];
     [self observeNotificationName:nUISyncMessagesFailed selector:@"handlenUISyncMessagesFailed:"];
     //设置后台handle
-    [self setupBackgroundHandler];
+   // [self setupBackgroundHandler];
 }
 
 //解析数据
@@ -283,7 +304,8 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
 - (void)handleSyncMessagesSucceeded:(NSNotification *)noti{
     //消息解析成功，看看解析结果中有没有联系人，有联系人就弹出预览框，有新消息就push消息（现在没有push就alert出来）
     DLog(@"timer sync handleSyncMessagesSucceeded ! noti is ======%@",noti.userInfo);
-    NSArray *messgaeList = noti.userInfo[kInfoKeyMessageList];
+   // DLog(@"%@",noti.userInfo);
+    NSArray *messgaeList = noti.userInfo[kInfoKeyObjectList];
     //清空变量
     self.messageContactList = nil;
     self.isSingleContact = NO;
@@ -295,10 +317,10 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
         //在后台运行时notify出来
         if (messgaeList && messgaeList.count > 0) {
             //显示有新消息到了
-            NSString *alertBody = TEXT_NEW_MESSAGE_COMMING;
+  //          NSString *alertBody = TEXT_NEW_MESSAGE_COMMING;
             //添加跳转页面
             NSDictionary *userInfo = [NSDictionary dictionaryWithObject:NSLocalizedString(@"KHHMessageViewController", nil) forKey:kLocalNotification_Target_Name];
-            [KHHLocalNotificationUtil addLocalNotifiCation:[NSDate dateWithTimeIntervalSinceNow:10] alertBody:alertBody userinfo:userInfo];
+//            [KHHLocalNotificationUtil addLocalNotifiCation:[NSDate dateWithTimeIntervalSinceNow:10] alertBody:alertBody userinfo:userInfo];
         }
         
         if (self.messageContactList && self.messageContactList.count > 0) {
@@ -424,6 +446,7 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
             if (buttonIndex == 0) {
                 [self gotoMessageListViewController];
             }
+            break;
         }
         case KHHAlertSync:{
             if (buttonIndex == 0) {

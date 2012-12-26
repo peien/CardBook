@@ -19,6 +19,7 @@
 #import "LoginActionViewController.h"
 #import "KHHDefaults.h"
 #import "KHHNetworkAPIAgent+Statistics.h"
+#import "Reachability.h"
 
 #define titleCreateAccountSucceeded NSLocalizedString(@"用户注册成功", nil)
 #define titleCreateAccountFailed    NSLocalizedString(@"用户注册失败", nil)
@@ -61,7 +62,9 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 - (void)showPreviousView;
 @end
 
-@implementation AppStartController
+@implementation AppStartController{
+    Reachability *r;
+}
 @synthesize OfflineLoginUserInfoDict = _OfflineLoginUserInfoDict;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -215,8 +218,10 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     [self postASAPNotificationName:nAppCheckNetwork];
     
     //注册网络状态变化接受广播(网络为unknown时就去注册，其它状态就不去注册广播了)
+     r = [Reachability reachabilityWithHostname:@"www.apple.com"];
+    
     AFNetworkReachabilityStatus state = [[KHHHTTPClient sharedClient] networkReachabilityStatus];
-    if (AFNetworkReachabilityStatusUnknown == state) {
+    if ([r currentReachabilityStatus] == NotReachable) {
         [self observeNotificationName:AFNetworkingReachabilityDidChangeNotification selector:@"handleNetworkStatusChanged:"];
     }else {
         //登录 
@@ -238,7 +243,8 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     NSString *user = self.defaults.currentUser;
     NSString *password = self.defaults.currentPassword;
     //添加离线登录
-    if (AFNetworkReachabilityStatusNotReachable == status || AFNetworkReachabilityStatusUnknown == status) {
+    
+    if ([r currentReachabilityStatus] == NotReachable) {
         //离线登录
         // 发“离线登录”消息
         [self postASAPNotificationName:nAppOfflineLoggingIn];

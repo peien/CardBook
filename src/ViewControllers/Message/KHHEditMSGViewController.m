@@ -46,8 +46,8 @@
 - (void)rightBarButtonClick:(id)sender
 {
     //注册删除消息,改为本地删除，取消注册消息
-    [self observeNotificationName:nUIDeleteMessagesSucceeded selector:@"handleDeleteMessagesSucceeded:"];
-    [self observeNotificationName:nUIDeleteMessagesFailed selector:@"handleDeleteMessagesFailed:"];
+    
+    
     progressBar = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     progressBar.labelText = KHHMessageDeleteMessage;
     [self delMessageFromArray];
