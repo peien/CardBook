@@ -136,9 +136,14 @@
         [cardIDs appendFormat:@"%@%@",card.id.stringValue, KHH_SEPARATOR];
         [cardTypes appendFormat:@"%@%@",card.nameForServer, KHH_SEPARATOR];
     }
+    
+    //如果有选择的联系人就存入相应值，没有就存nil(可能是更新把原先的删除了)
     if (cardIDs.length) {
         parameters[@"customCardIds"] = cardIDs;
         parameters[@"customTypes"]   = cardTypes;
+    }else {
+        parameters[@"customCardIds"] = @"";
+        parameters[@"customTypes"]   = @"";
     }
     
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {

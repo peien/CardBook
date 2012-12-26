@@ -28,4 +28,7 @@ static NSString * const kActionNetworkDeleteMessages = @"NetworkDeleteMessages";
 #pragma mark - password
 static NSString * const kActionNetworkChangePassword = @"NetworkChangePassword";
 
+#pragma mark - sync mycard
+static NSString * const kActionNetworkSyncMyCards = @"myCardsAfterDate";
+
 #endif
