@@ -13,15 +13,12 @@
 @end
 @interface KHHVisitCalendarCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UIButton *Btn;
+@property (strong, nonatomic) IBOutlet UIButton *photoBtn;
 @property (assign, nonatomic) id<KHHVisitCalendarCellDelegate>delegate;
 @property (strong, nonatomic) IBOutlet UIButton    *finishBtn;
 @property (strong, nonatomic) IBOutlet UILabel     *objValueLab;
 @property (strong, nonatomic) IBOutlet UILabel     *locValueLab;
 @property (strong, nonatomic) IBOutlet UILabel     *noteValueLab;
-@property (strong, nonatomic) IBOutlet UIImageView *imgviewIco1;
-@property (strong, nonatomic) IBOutlet UIImageView *imgviewIco2;
-@property (strong, nonatomic) IBOutlet UIImageView *imgviewIco3;
-@property (strong, nonatomic) IBOutlet UIImageView *imgviewIco4;
 @property (strong, nonatomic) IBOutlet UIButton    *showLocBtn;
 @property (strong, nonatomic) IBOutlet UILabel     *dateLab;
 
