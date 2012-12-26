@@ -11,8 +11,8 @@
 #import "KHHClientCellLNPCC.h"
 #import "KHHClasses.h"
 #import "DetailInfoViewController.h"
-#import "UIImageView+WebCache.h"
-#import "UIButton+WebCache.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <SDWebImage/UIButton+WebCache.h>
 #import "KHHFloatBarController.h"
 #import "WEPopoverController.h"
 #import "KHHDataAPI.h"

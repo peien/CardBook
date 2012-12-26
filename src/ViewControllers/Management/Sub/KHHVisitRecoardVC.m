@@ -21,7 +21,7 @@
 #import "MBProgressHUD.h"
 #import "KHHAppDelegate.h"
 #import "NSString+SM.h"
-#import "UIImageView+WebCache.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "KHHLocalNotificationUtil.h"
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
@@ -30,6 +30,7 @@
 #import "KHHBMapLocationController.h"
 #import "KHHBMapViewController.h"
 #import "KHHCalendarViewController.h"
+#import "KHHKeyBoardManagerUtil.h"
 
 #define TEXTFIELD_OBJECT_TAG  5550
 #define TEXTFIELD_DATE_TAG    5551
@@ -834,7 +835,7 @@
         case TEXTFIELD_JOINER_TAG:
         {
             //显示键盘
-            [self theTableAnimationUp];
+            [self theTableAnimationUp: textField];
         }
             break;
         case TEXTFIELD_OBJECT_TAG:
@@ -883,24 +884,13 @@
 }
 
 
-
-- (void)theTableAnimationUp{
-    
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.3];
-    CGRect rect = _theTable.frame;
-    rect.origin.y = -100;
-    _theTable.frame = rect;
-    [UIView commitAnimations];
+//显示键盘动画
+- (void)theTableAnimationUp:(UITextField *) textField{
+    CGRect frame = [[textField superview] superview].frame;
+    [KHHKeyBoardManagerUtil adjustPanelsWithKeybord:self.view textFieldRect:frame];
 }
 - (void)theTableAnimationDown{
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.3];
-    CGRect rect = _theTable.frame;
-    rect.origin.y = 0;
-    _theTable.frame = rect;
-    [UIView commitAnimations];
-    
+    [KHHKeyBoardManagerUtil hideKeyboard:self.view];
 }
 
 #pragma mark -

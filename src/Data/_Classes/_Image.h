@@ -43,7 +43,9 @@ extern const struct ImageFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* id;
+
 
 
 @property int64_t idValue;
@@ -55,7 +57,9 @@ extern const struct ImageFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* url;
+
 
 
 //- (BOOL)validateUrl:(id*)value_ error:(NSError**)error_;
@@ -64,42 +68,42 @@ extern const struct ImageFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSSet* cardsWithFrame;
+@property (nonatomic, strong) NSSet *cardsWithFrame;
 
 - (NSMutableSet*)cardsWithFrameSet;
 
 
 
 
-@property (nonatomic, strong) NSSet* cardsWithLogo;
+@property (nonatomic, strong) NSSet *cardsWithLogo;
 
 - (NSMutableSet*)cardsWithLogoSet;
 
 
 
 
-@property (nonatomic, strong) NSSet* companies;
+@property (nonatomic, strong) NSSet *companies;
 
 - (NSMutableSet*)companiesSet;
 
 
 
 
-@property (nonatomic, strong) NSSet* messages;
+@property (nonatomic, strong) NSSet *messages;
 
 - (NSMutableSet*)messagesSet;
 
 
 
 
-@property (nonatomic, strong) NSSet* schedules;
+@property (nonatomic, strong) NSSet *schedules;
 
 - (NSMutableSet*)schedulesSet;
 
 
 
 
-@property (nonatomic, strong) NSSet* templates;
+@property (nonatomic, strong) NSSet *templates;
 
 - (NSMutableSet*)templatesSet;
 

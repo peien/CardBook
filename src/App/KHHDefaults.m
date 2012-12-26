@@ -188,7 +188,8 @@ static NSString * const KHHDefaultsKeyMobilePhoneGroup = @"isAddMobPhoneGroup";
     // 保存数据：take 4，把全部修改结果存回UserDefaults
     [self setArray:userList forKey:KHHDefaultsKeyUserList];
     DLog(@"[II] UserDefaults = %@", [[NSUserDefaults standardUserDefaults] dictionaryRepresentation]);
-}
+    
+    }
 - (void)clearSettingsAfterLogout {
     self.loggedIn = NO;
     self.currentUser = @"";
@@ -368,5 +369,14 @@ static NSString * const KHHDefaultsKeyMobilePhoneGroup = @"isAddMobPhoneGroup";
         [array removeObjectAtIndex:idx];
     }
     return result;
+}
+
+- (void)setToken:(NSString *)token{
+    [self.defaults setValue:token forKey:@"token"];
+    [self.defaults synchronize];    
+}
+
+- (NSString *)token{
+   return  [self.defaults stringForKey:@"token"];
 }
 @end

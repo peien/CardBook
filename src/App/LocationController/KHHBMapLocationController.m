@@ -15,7 +15,7 @@
 #import "KHHLocationController.h"
 
 //两次定位间的时间
-const NSTimeInterval KHH_LOCATION_REFRESH_INTERVAL = 30 * 60; // 30 min.
+//const NSTimeInterval KHH_LOCATION_REFRESH_INTERVAL = 30 * 60; // 30 min.
 
 //用百度地图获取地址的超时时间
 const NSInteger KHH_LOCATION_REFRESH_TIMEOUT = 30; // 30 second.

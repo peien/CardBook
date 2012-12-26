@@ -15,6 +15,7 @@
 #import "MyTabBarController.h"
 #import "ATestViewController.h"
 #import "AppStartController.h"
+//#import <Parse/Parse.h>
 
 @implementation KHHAppDelegate
 
@@ -23,6 +24,9 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // 设置window默认背景
     self.window.backgroundColor = [UIColor blackColor];
+    
+//    [Parse setApplicationId:@"7AXnSGuIT5qc2U5MQ7kUf7XLD5KK1otCK4hP33If" clientKey:@"TKmkS6FGHBdV0J1QX8Wcq99XYKUQsoIBHjANIVdv"];
+     [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
     // 设置界面元素的公共属性
     [self customizeCommonUI];
     
@@ -81,6 +85,38 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    NSString *_deviceToken = [[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    _deviceToken = [_deviceToken stringByReplacingOccurrencesOfString:@" " withString:@""];
+    //NSString *str = [[NSString alloc] initWithData:deviceToken encoding:NSUTF16StringEncoding];
+    DLog(@"%@",_deviceToken);
+    [KHHDefaults sharedDefaults].token = _deviceToken;
+//    [PFPush storeDeviceToken:deviceToken];
+//    [PFPush subscribeToChannelInBackground:@"" block:^(BOOL succeeded, NSError *error) {
+//        if (succeeded)
+//            NSLog(@"Successfully subscribed to broadcast channel!");
+//        else
+//            NSLog(@"Failed to subscribe to broadcast channel; Error: %@",error);
+//    }];
+    
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    if (error.code == 3010) {
+        NSLog(@"Push notifications are not supported in the iOS Simulator.");
+    } else {
+        // show some alert or otherwise handle the failure to register.
+        NSLog(@"application:didFailToRegisterForRemoteNotificationsWithError: %@", error);
+	}
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    //PFPush handlePush:userInfo];
+    [[KHHData sharedData]messageNew:userInfo];
+    
+}
+
 
 #pragma mark -
 - (void)customizeCommonUI {

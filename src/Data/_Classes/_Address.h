@@ -45,7 +45,9 @@ extern const struct AddressFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* city;
+
 
 
 //- (BOOL)validateCity:(id*)value_ error:(NSError**)error_;
@@ -53,7 +55,9 @@ extern const struct AddressFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* country;
+
 
 
 //- (BOOL)validateCountry:(id*)value_ error:(NSError**)error_;
@@ -61,7 +65,9 @@ extern const struct AddressFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* district;
+
 
 
 //- (BOOL)validateDistrict:(id*)value_ error:(NSError**)error_;
@@ -69,7 +75,9 @@ extern const struct AddressFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* other;
+
 
 
 //- (BOOL)validateOther:(id*)value_ error:(NSError**)error_;
@@ -77,7 +85,9 @@ extern const struct AddressFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* province;
+
 
 
 //- (BOOL)validateProvince:(id*)value_ error:(NSError**)error_;
@@ -85,7 +95,9 @@ extern const struct AddressFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* street;
+
 
 
 //- (BOOL)validateStreet:(id*)value_ error:(NSError**)error_;
@@ -93,7 +105,9 @@ extern const struct AddressFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* zip;
+
 
 
 //- (BOOL)validateZip:(id*)value_ error:(NSError**)error_;
@@ -102,14 +116,14 @@ extern const struct AddressFetchedProperties {
 
 
 
-@property (nonatomic, strong) Card* card;
+@property (nonatomic, strong) Card *card;
 
 //- (BOOL)validateCard:(id*)value_ error:(NSError**)error_;
 
 
 
 
-@property (nonatomic, strong) Schedule* schedule;
+@property (nonatomic, strong) Schedule *schedule;
 
 //- (BOOL)validateSchedule:(id*)value_ error:(NSError**)error_;
 

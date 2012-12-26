@@ -18,6 +18,7 @@
 #import "AppRegisterController.h"
 #import "LoginActionViewController.h"
 #import "KHHDefaults.h"
+#import "KHHNetworkAPIAgent+Statistics.h"
 
 #define titleCreateAccountSucceeded NSLocalizedString(@"用户注册成功", nil)
 #define titleCreateAccountFailed    NSLocalizedString(@"用户注册失败", nil)
@@ -110,9 +111,19 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
                              selector:@"handleSyncSucceeded:"];
         [self observeNotificationName:nDataSyncAllFailed
                              selector:@"handleSyncFailed:"];
+        
+        //save loginToServer
+        [self observeNotificationName:KHHSaveLogin
+                             selector:@"saveLoginToServer"];
+        
     }
     return self;
 }
+
+- (void)saveLoginToServer{
+    [((KHHNetworkAPIAgent *)_agent) saveToken];
+}
+
 - (void)dealloc {
     [self stopObservingAllNotifications];
 }//dealloc
@@ -254,6 +265,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     NSString *user = noti.userInfo[kInfoKeyUser];
     [self.agent resetPassword:user];
 }
+
 - (void)sync {
     DLog(@"[II] 开始同步！");
     [self postASAPNotificationName:nAppSyncing];
@@ -268,6 +280,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     DLog(@"[II] 注册成功，保存用户数据。");
     // 保存用户数据: id,mobile,password
     [self.defaults saveLoginOrRegisterResult:noti.userInfo];
+    [self postASAPNotificationName:KHHSaveLogin];
     // 自动登录
     [self alertWithTitle:titleCreateAccountSucceeded
                  message:textWillAutoLogin];
@@ -375,6 +388,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 
 -(void) saveUserInfoToDefaults:(NSDictionary *) dict {
     [self.defaults saveLoginOrRegisterResult:dict];
+    [self postASAPNotificationName:KHHSaveLogin];
     [self.defaults setLoggedIn:YES];
     // http鉴权
     [self.agent authenticateWithUser:self.defaults.currentAuthorizationID.stringValue

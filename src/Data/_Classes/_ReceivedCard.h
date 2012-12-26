@@ -5,7 +5,6 @@
 #import "ContactCard.h"
 
 extern const struct ReceivedCardAttributes {
-	__unsafe_unretained NSString *isRead;
 	__unsafe_unretained NSString *memo;
 } ReceivedCardAttributes;
 
@@ -14,7 +13,6 @@ extern const struct ReceivedCardRelationships {
 
 extern const struct ReceivedCardFetchedProperties {
 } ReceivedCardFetchedProperties;
-
 
 
 
@@ -31,19 +29,9 @@ extern const struct ReceivedCardFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSNumber* isRead;
-
-
-@property BOOL isReadValue;
-- (BOOL)isReadValue;
-- (void)setIsReadValue:(BOOL)value_;
-
-//- (BOOL)validateIsRead:(id*)value_ error:(NSError**)error_;
-
-
-
 
 @property (nonatomic, strong) NSString* memo;
+
 
 
 //- (BOOL)validateMemo:(id*)value_ error:(NSError**)error_;
@@ -60,15 +48,6 @@ extern const struct ReceivedCardFetchedProperties {
 @end
 
 @interface _ReceivedCard (CoreDataGeneratedPrimitiveAccessors)
-
-
-- (NSNumber*)primitiveIsRead;
-- (void)setPrimitiveIsRead:(NSNumber*)value;
-
-- (BOOL)primitiveIsReadValue;
-- (void)setPrimitiveIsReadValue:(BOOL)value_;
-
-
 
 
 - (NSString*)primitiveMemo;

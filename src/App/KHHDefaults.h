@@ -97,7 +97,8 @@ static NSString * const KHHDefaultsKeyAuthorizationID = @"khh_userList";
 @property (nonatomic) BOOL rememberPassword;// 记住密码
 @property (nonatomic) BOOL showCompanyLogo;// 是否显示公司logo
 @property (nonatomic) BOOL isAddMobPhoneGroup;// 是否添加手机分组
-
+//user login token;
+@property (nonatomic,strong)NSString *token;
 #pragma mark - App - MainUI
 @property (nonatomic) NSInteger selectedMainTabIndex;
 @property (nonatomic) NSInteger defaultMainUIIndex;

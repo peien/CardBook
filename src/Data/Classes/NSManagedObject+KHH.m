@@ -99,12 +99,14 @@
     NSSortDescriptor *result;
     result = [NSSortDescriptor sortDescriptorWithKey:kAttributeKeyName
                                            ascending:YES
-                                            selector:@selector(caseInsensitiveCompare:)];
+                                            selector:@selector(localizedCaseInsensitiveCompare:)];
     return result;
 }
 + (NSSortDescriptor *)newCardSortDescriptor{
     NSSortDescriptor *result;
-    result = [NSSortDescriptor sortDescriptorWithKey:kAttributeKeyIsRead ascending:YES selector:@selector(compare:)];
+    result = [NSSortDescriptor sortDescriptorWithKey:kAttributeKeyIsRead
+                                           ascending:YES
+                                            selector:@selector(compare:)];
     return result;
 }
 

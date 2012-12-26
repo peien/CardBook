@@ -37,7 +37,9 @@ extern const struct GroupFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* id;
+
 
 
 @property int64_t idValue;
@@ -49,7 +51,9 @@ extern const struct GroupFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* name;
+
 
 
 //- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
@@ -58,21 +62,21 @@ extern const struct GroupFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSSet* cards;
+@property (nonatomic, strong) NSSet *cards;
 
 - (NSMutableSet*)cardsSet;
 
 
 
 
-@property (nonatomic, strong) NSSet* children;
+@property (nonatomic, strong) NSSet *children;
 
 - (NSMutableSet*)childrenSet;
 
 
 
 
-@property (nonatomic, strong) Group* parent;
+@property (nonatomic, strong) Group *parent;
 
 //- (BOOL)validateParent:(id*)value_ error:(NSError**)error_;
 

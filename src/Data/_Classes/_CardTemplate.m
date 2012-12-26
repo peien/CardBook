@@ -45,28 +45,33 @@ const struct CardTemplateFetchedProperties CardTemplateFetchedProperties = {
 	return (CardTemplateID*)[super objectID];
 }
 
-+ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
++ (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
 	if ([key isEqualToString:@"domainTypeValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"domainType"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 	if ([key isEqualToString:@"idValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"id"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 	if ([key isEqualToString:@"isFullValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"isFull"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 	if ([key isEqualToString:@"ownerIDValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"ownerID"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 	if ([key isEqualToString:@"versionValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"version"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 
 	return keyPaths;

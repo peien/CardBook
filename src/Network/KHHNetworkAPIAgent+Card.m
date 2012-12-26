@@ -475,3 +475,57 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(InterCard *iCard) {
              success:nil];
 }
 @end
+
+#pragma mark - MyCards 我的名片
+@implementation KHHNetworkAPIAgent (MyCard)
+/**
+ 增量查 kinghhPrivateCardService.synCard
+ http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=27
+ */
+- (void)myCardsAfterDate:(NSString *)lastDate extra:(NSDictionary *)extra {
+
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
+#warning 解析mycards 要把if里的内容换成解析我的名片
+        // 把返回的数据转成本地数据
+        KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        if (KHHErrorCodeSucceeded == code) {
+            // count
+            dict[kInfoKeyCount] = responseDict[JSONDataKeyCount];
+            
+            // synTime -> syncTime
+            NSString *syncTime = responseDict[JSONDataKeySynTime];
+            dict[kInfoKeySyncTime] = syncTime? syncTime: @"";
+            
+            // mycard -->myCardList
+            NSArray *myCardList = responseDict[JSONDataKeyMyCard];
+            NSMutableArray *newList = [NSMutableArray arrayWithCapacity:myCardList.count];
+            for (id obj in myCardList) {
+                InterCard *card = [InterCard interCardWithMyCardJSON:obj];
+                DLog(@"[II] card = %@", card);
+                [newList addObject:card];
+            }
+            dict[kInfoKeyObjectList] = newList;
+        }
+        
+        // errorCode 和 extra
+        dict[kInfoKeyErrorCode] = @(code);
+        dict[kInfoKeyExtra] = extra;
+        // 把处理完的数据发出去。
+        [self postASAPNotificationName:NameWithActionAndCode(kActionNetworkSyncMyCards, code)
+                                  info:dict];
+    };
+    
+    NSDictionary *parameters = @{
+    @"lastUpdateDateStr" : [lastDate length] > 0? lastDate: @""
+    };
+    
+    [self postAction:kActionNetworkSyncMyCards
+               query:@"kinghhCardService.synCard"
+          parameters:parameters
+             success:success
+               extra:extra];
+    
+}
+@end

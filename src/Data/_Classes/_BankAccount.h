@@ -37,7 +37,9 @@ extern const struct BankAccountFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* bank;
+
 
 
 //- (BOOL)validateBank:(id*)value_ error:(NSError**)error_;
@@ -45,7 +47,9 @@ extern const struct BankAccountFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* branch;
+
 
 
 //- (BOOL)validateBranch:(id*)value_ error:(NSError**)error_;
@@ -53,7 +57,9 @@ extern const struct BankAccountFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* name;
+
 
 
 //- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
@@ -61,7 +67,9 @@ extern const struct BankAccountFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* number;
+
 
 
 //- (BOOL)validateNumber:(id*)value_ error:(NSError**)error_;
@@ -70,7 +78,7 @@ extern const struct BankAccountFetchedProperties {
 
 
 
-@property (nonatomic, strong) NSSet* cards;
+@property (nonatomic, strong) NSSet *cards;
 
 - (NSMutableSet*)cardsSet;
 

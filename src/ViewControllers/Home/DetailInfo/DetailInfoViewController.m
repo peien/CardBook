@@ -20,7 +20,7 @@
 #import "MyTabBarController.h"
 #import "KHHShowHideTabBar.h"
 #import "KHHVisitRecoardVC.h"
-#import "UIImageView+WebCache.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "KHHDataAPI.h"
 #import "Company.h"
 #import "KHHMyAlertViewWithSubView.h"

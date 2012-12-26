@@ -7,6 +7,9 @@
 // 根据ID和type查询。
 // 无则新建。
 + (id)cardByID:(NSNumber *)ID modelType:(KHHCardModelType)type;
+
+// 名片的默认排序规则
++ (NSArray *)defaultSortDescriptors;
 @end
 
 @interface Card (Type_And_Name)
