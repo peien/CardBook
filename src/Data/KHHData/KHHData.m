@@ -173,6 +173,16 @@
             [self postASAPNotificationName:KHHUIUploadImageForVisitScheduleSucceeded];
             break;
         }
+        case KHHQueuedOperationSyncMyCard: {
+            //同步我的名片
+            [self syncMyCards:queue];
+            break;
+        }
+        case KHHQueuedOperationSyncMyCardsAfterUpdate: {
+            //更新名片成功(不管是我的名片还是私有名片)
+            [self postASAPNotificationName:KHHUIModifyCardSucceeded];
+            break;
+        }
     }
 }
 // 开始批量同步所有信息
@@ -249,6 +259,15 @@
     NSDictionary *extra = @{ kExtraKeyQueue : queue };
     SyncMark *lastTime = [SyncMark syncMarkByKey:kSyncMarkKeyVisitScheduleLastTime];
     [self.agent visitSchedulesAfterDate:lastTime.value
+                                  extra:extra];
+}
+
+
+- (void)syncMyCards:(NSMutableArray *)queue {
+    // 同步我的名片
+    NSDictionary *extra = @{ kExtraKeyQueue : queue };
+    SyncMark *lastTime = [SyncMark syncMarkByKey:kSyncMarkKeySyncMyCardsLastTime];
+    [self.agent myCardsAfterDate:lastTime.value
                                   extra:extra];
 }
 

@@ -88,3 +88,12 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(InterCard *card);
  */
 - (void)privateCardsAfterDate:(NSString *)lastDate;
 @end
+
+#pragma mark - MyCards 我的名片
+@interface KHHNetworkAPIAgent (MyCard)
+/**
+ 增量查 kinghhPrivateCardService.synCard
+ http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=27
+ */
+- (void)myCardsAfterDate:(NSString *)lastDate extra:(NSDictionary *)extra;
+@end

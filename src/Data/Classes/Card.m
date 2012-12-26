@@ -21,6 +21,9 @@
     }
     return card;
 }
++ (NSArray *)defaultSortDescriptors {
+    return @[[Card newCardSortDescriptor], [Card nameSortDescriptor]];
+}
 @end
 
 @implementation Card (Type_And_Name)

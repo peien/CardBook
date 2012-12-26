@@ -11,7 +11,6 @@
 #import "KHHCalendarViewController.h"
 #import "KHHAllVisitedSchedusVC.h"
 #import "KHHVisitRecoardVC.h"
-#import "KHHFullFrameController.h"
 //#import "MapController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "DetailInfoViewController.h"
@@ -76,12 +75,12 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Schedule *sched = [self.dataArray objectAtIndex:indexPath.row];
-    if ([sched.images allObjects].count > 0) {
-        return 140;
-    }else{
-        return 80;
-    }
+//    Schedule *sched = [self.dataArray objectAtIndex:indexPath.row];
+//    if ([sched.images allObjects].count > 0) {
+//        return 140;
+//    }else{
+        return 85;
+//    }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -99,25 +98,8 @@
    
     //是否有图片
     if ([sched.images allObjects].count > 0) {
-        for (int i = 0; i < [sched.images allObjects].count; i++) {
-            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapFullFrame:)];
-            tap.numberOfTapsRequired = 1;
-            tap.numberOfTouchesRequired = 1;
-            Image *img = [[sched.images allObjects] objectAtIndex:i];
-            if (i == 0) {
-                [cell.imgviewIco1 addGestureRecognizer:tap];
-                [cell.imgviewIco1 setImageWithURL:[NSURL URLWithString:img.url] placeholderImage:[UIImage imageNamed:@"logopic.png"]];
-            }else if (i == 1){
-                [cell.imgviewIco2 addGestureRecognizer:tap];
-                [cell.imgviewIco2 setImageWithURL:[NSURL URLWithString:img.url] placeholderImage:[UIImage imageNamed:@"logopic.png"]];
-            }else if (i == 2){
-                [cell.imgviewIco3 addGestureRecognizer:tap];
-                [cell.imgviewIco3 setImageWithURL:[NSURL URLWithString:img.url] placeholderImage:[UIImage imageNamed:@"logopic.png"]];
-            }else if (i == 3){
-                [cell.imgviewIco4 addGestureRecognizer:tap];
-                [cell.imgviewIco4 setImageWithURL:[NSURL URLWithString:img.url] placeholderImage:[UIImage imageNamed:@"logopic.png"]];
-            }
-        }
+        //显示有图的图标
+        cell.photoBtn.hidden = NO;
     }
     //拜访日期
     if (sched.plannedDate != nil) {
@@ -183,14 +165,27 @@
         cell.noteValueLab.text = sched.content;
     }
     //是否完成
-    if ([sched.isFinished isEqualToNumber:[NSNumber numberWithBool:YES]]) {
+    BOOL isFinished = [sched.isFinished isEqualToNumber:[NSNumber numberWithBool:YES]];
+    if (isFinished) {
         cell.finishBtn.hidden = YES;
     }else{
         cell.finishBtn.hidden = NO;
     }
-    if (sched.minutesToRemindValue > 0) {
+    
+    //铃铛显示与隐藏
+    //显示条件(未完成的拜访计划、有提醒并且没有提醒过的)
+    int remindVaule = sched.minutesToRemindValue;
+    DLog(@"visit plant remindValue = %d",remindVaule);
+    NSDate * remindTime = [sched.plannedDate dateByAddingTimeInterval:-remindVaule * 60];
+    //这两个时间都没有考虑时区的，因为求差，只要两个时间都用同一时区就可以
+    DLog(@"visit plant remindDate = %@",remindTime);
+    NSTimeInterval interval = [remindTime timeIntervalSinceNow];
+    DLog(@"visit plant now = %@, interval = %f",[NSDate new],interval);
+    if (remindVaule > 0 && !isFinished && interval > 0.0f) {
         cell.Btn.hidden = NO;
     }
+    
+    
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -289,14 +284,7 @@
         [self.viewCtrl.navigationController pushViewController:calendarVC animated:YES];
     }
 }
-- (void)tapFullFrame:(UITapGestureRecognizer *)sender
-{
-    self.imgview = (UIImageView *)[sender view];
-    KHHFullFrameController *fullVC = [[KHHFullFrameController alloc] initWithNibName:nil bundle:nil];
-    fullVC.image = self.imgview.image;
-    [self.viewCtrl.navigationController pushViewController:fullVC animated:YES];
-    
-}
+
 - (void)reloadTheTable{
     [self initViewData];
     [_theTable reloadData];

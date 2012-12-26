@@ -77,6 +77,8 @@ typedef enum {
     KHHQueuedOperationSyncVisitSchedulesAfterCreation,
     KHHQueuedOperationSyncVisitSchedulesAfterUpdate,
     KHHQueuedOperationSyncVisitSchedulesAfterUploadImage,
+    KHHQueuedOperationSyncMyCard,
+    KHHQueuedOperationSyncMyCardsAfterUpdate,
 } KHHQueuedOperationSyncType;
 
 //一个界面有多个alert 时区分alert的

@@ -64,7 +64,7 @@ typedef enum {
 @property (strong, nonatomic)  NSArray                *resultArray;
 @property (strong, nonatomic)  NSArray                *searchArray;
 @property (strong, nonatomic)  KHHData                *dataControl;
-@property (strong, nonatomic)  NSArray                *allArray;
+//@property (strong, nonatomic)  NSArray                *allArray;
 @property (strong, nonatomic)  NSArray                *ReceNewArray;
 @property (strong, nonatomic)  NSArray                *myCardArray;
 @property (strong, nonatomic)  KHHFloatBarController  *floatBarVC;
@@ -117,7 +117,7 @@ typedef enum {
 @synthesize searchArray = _searchArray;
 @synthesize type = _type;
 @synthesize dataControl;
-@synthesize allArray;
+//@synthesize allArray;
 @synthesize generalArray;
 @synthesize ReceNewArray;
 @synthesize floatBarVC;
@@ -326,7 +326,7 @@ typedef enum {
     self.resultArray = nil;
     self.searchArray = nil;
     self.dataControl = nil;
-    self.allArray = nil;
+//    self.allArray = nil;
     self.generalArray = nil;
     self.ReceNewArray = nil;
     self.floatBarVC = nil;
@@ -353,11 +353,7 @@ typedef enum {
 {
     //调用数据库接口，获取各个分组的array
     //所有
-    self.allArray = [self.dataControl allReceivedCards];
-    NSMutableArray *arr = [[NSMutableArray alloc] initWithArray:self.allArray];
-    NSArray *priArr = [self.dataControl allPrivateCards];
-    [arr addObjectsFromArray:priArr];
-    self.generalArray = arr;
+    self.generalArray = [self.dataControl cardsOfAll];
     //我的卡片
     self.myCardArray = [self.dataControl allMyCards];
     if (!self.myCardArray || self.myCardArray.count <= 0) {
@@ -441,11 +437,7 @@ typedef enum {
         if ([btnName isEqualToString:KHHMessageDefaultGroupUnGroup]) {
             self.generalArray = [self.dataControl cardsOfUngrouped];
         }else if ([btnName isEqualToString:KHHMessageDefaultGroupAll]){
-            self.allArray = [self.dataControl allReceivedCards];
-            NSMutableArray *arr = [[NSMutableArray alloc] initWithArray:self.allArray];
-            NSArray *priArr = [self.dataControl allPrivateCards];
-            [arr addObjectsFromArray:priArr];
-            self.generalArray = arr;
+            self.generalArray = [self.dataControl cardsOfAll];
         }else if ([btnName isEqualToString:KHHMessageDefaultGroupColleague]){
             self.generalArray = [self.dataControl cardsOfColleague];
         }
@@ -853,11 +845,7 @@ typedef enum {
         }else {
             //刷新表
             if ([btnName isEqualToString:KHHMessageDefaultGroupAll] || [btnName isEqualToString:[NSString string]]) {
-                self.allArray = [self.dataControl allReceivedCards];
-                NSMutableArray *arr = [[NSMutableArray alloc] initWithArray:self.allArray];
-                NSArray *priArr = [self.dataControl allPrivateCards];
-                [arr addObjectsFromArray:priArr];
-                self.generalArray = arr;
+                self.generalArray = [self.dataControl cardsOfAll];
             }else if([btnName isEqualToString:KHHMessageDefaultGroupColleague]){
                 self.generalArray = [self.dataControl cardsOfColleague];
             }else if([btnName isEqualToString:KHHMessageDefaultGroupUnGroup]){
@@ -925,16 +913,8 @@ typedef enum {
         [self performSelector:@selector(cellBtnClick:) withObject:cell.button afterDelay:0.1];
         return NO;
     }
-    
     Group *group = [self.oWnGroupArray objectAtIndex:index];
-    NSSet *set = group.cards;
-    NSArray *cards = [set allObjects];
-    if (cards.count == 0) {
-        self.generalArray = nil;
-    }else{
-        self.generalArray = cards;
-    }
-    
+    self.generalArray = [group.cards sortedArrayUsingDescriptors:[Card defaultSortDescriptors]];    
     return YES;
 }
 #pragma mark -

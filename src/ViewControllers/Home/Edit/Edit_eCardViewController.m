@@ -443,10 +443,12 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0 && indexPath.row == 0) {
+        //头像
         return 60;
     }else if (indexPath.section == 2 && indexPath.row == 1)
     {
-        return 55;
+        //地址编辑框
+        return 70;
     }
     return 44;
 }
@@ -1176,6 +1178,9 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
     self.interCard.version = _glCard.version;
     self.interCard.userID = _glCard.userID;
     self.interCard.templateID = _glCard.template.id;
+
+    //20121225
+    //头像字段没考虑，所以保存后要及时同步一下
     
     // 保存到数据库或调用网络接口
     //为了避免保存失败，先给这个临时card给值 InterCard

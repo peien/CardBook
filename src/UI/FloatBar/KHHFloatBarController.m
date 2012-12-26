@@ -245,7 +245,7 @@
 {
     //先影藏popWindow
     [self.popover dismissPopoverAnimated:YES];
-    if (self.card.address.province.length > 0 || (self.card.address.other.length > 0 || self.card.company.name.length > 0)) {
+    if (self.card.address.province.length > 0 || (self.card.address.other.length > 0)) { // || self.card.company.name.length > 0
         //直辖市只取一个
         NSString *address = nil;
         if (self.card.address.province && self.card.address.city && [self.card.address.province isEqualToString:self.card.address.city]) {
@@ -261,12 +261,17 @@
         KHHBMapViewController *mapVC = [[KHHBMapViewController alloc] initWithNibName:nil bundle:nil];
         mapVC.companyCity = self.card.address.city;
         mapVC.companyDetailAddr = self.card.address.other;
-        mapVC.companyName = self.card.company.name;
+        //如果公司名不为空时显示公司名，否则显示姓名
+        if(self.card.company.name) {
+            mapVC.companyName = self.card.company.name;
+        }else {
+            mapVC.companyName = self.card.name;
+        }
         mapVC.companyAllAddr = address;
         [self.viewController.navigationController pushViewController:mapVC animated:YES];
     }else{
         [[[UIAlertView alloc] initWithTitle:nil
-                                   message:NSLocalizedString(@"没有地址或公司名称可定位", nil)
+                                   message:NSLocalizedString(@"没有有效地址", nil)
                                   delegate:nil
                          cancelButtonTitle:NSLocalizedString(KHHMessageSure, nil)
                          otherButtonTitles: nil] show];
