@@ -179,7 +179,7 @@
     UIImageView *bgimgView = [[UIImageView alloc] initWithImage:bgimg];
     bgimgView.frame = headerView.frame;
     [headerView addSubview:bgimgView];
-   iconImgView = [[UIImageView alloc] initWithFrame:CGRectMake(9, 7, 50, 50)];
+    iconImgView = [[UIImageView alloc] initWithFrame:CGRectMake(9, 7, 50, 50)];
     iconImgView.tag = LABEL_LOGIMG_TAG;
     iconImgView.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOne:)];
@@ -242,7 +242,7 @@
         headBtn.adjustsImageWhenHighlighted = NO;
         headBtn.frame = CGRectMake(0+i*(45+60), 63, 320/showTabCount, 37);
         [headBtn setTitle:NSLocalizedString([arr objectAtIndex:i], nil) forState:UIControlStateNormal];
-        if (i == 0 || i == 2) {
+        if (i == showTabCount - 1) {
             [headBtn setBackgroundImage:[UIImage imageNamed:@"xiangqing_btn13_normal.png"] forState:UIControlStateNormal];
         }else{
             UIImage *img = [[UIImage imageNamed:@"xiangqing_btn2_normal.png"] stretchableImageWithLeftCapWidth:2 topCapHeight:1];
@@ -367,14 +367,14 @@
     
     if (_lastBtn != btn.tag && _lastBtn != 0) {
         UIButton *lastBtn = (UIButton *)[self.view viewWithTag:_lastBtn];
-        if (lastBtn.tag != 1000) {
+        if (lastBtn.tag == 1001 || [self isCompanyColleagues]) {
             [lastBtn setBackgroundImage:[UIImage imageNamed:@"xiangqing_btn13_normal.png"] forState:UIControlStateNormal];
         }else{
             UIImage *img = [[UIImage imageNamed:@"xiangqing_btn2_normal.png"] stretchableImageWithLeftCapWidth:2 topCapHeight:2];
             [lastBtn setBackgroundImage:img forState:UIControlStateNormal];
         }
     }
-    if (btn.tag != 1000) {
+    if (btn.tag == 1001 || [self isCompanyColleagues]) {
        [btn setBackgroundImage:[UIImage imageNamed:@"xq_btn13_selected.png"] forState:UIControlStateNormal];
     }else{
         UIImage *img = [[UIImage imageNamed:@"xq_btn2_selected.png"] stretchableImageWithLeftCapWidth:2 topCapHeight:2];
