@@ -237,6 +237,30 @@
 				<key>lon</key>
 				<integer>0</integer>
 			</dict>
+			<dict>
+				<key>city</key>
+				<string>基隆市</string>
+				<key>lat</key>
+				<integer>0</integer>
+				<key>lon</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>city</key>
+				<string>高雄县</string>
+				<key>lat</key>
+				<integer>0</integer>
+				<key>lon</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>city</key>
+				<string>台北县</string>
+				<key>lat</key>
+				<integer>0</integer>
+				<key>lon</key>
+				<integer>0</integer>
+			</dict>
 		</array>
 	</dict>
 	<dict>
@@ -2427,7 +2451,7 @@
 			</dict>
 			<dict>
 				<key>city</key>
-				<string>威海</string>
+				<string>威海市</string>
 				<key>lat</key>
 				<real>37.51</real>
 				<key>lon</key>
@@ -2456,14 +2480,6 @@
 				<real>36.81</real>
 				<key>lon</key>
 				<real>118.05</real>
-			</dict>
-			<dict>
-				<key>city</key>
-				<string>威海市</string>
-				<key>lat</key>
-				<integer>0</integer>
-				<key>lon</key>
-				<integer>0</integer>
 			</dict>
 			<dict>
 				<key>city</key>
@@ -3257,6 +3273,14 @@
 				<real>29.31</real>
 				<key>lon</key>
 				<real>120.07</real>
+			</dict>
+			<dict>
+				<key>city</key>
+				<string>舟山市</string>
+				<key>lat</key>
+				<integer>0</integer>
+				<key>lon</key>
+				<integer>0</integer>
 			</dict>
 		</array>
 	</dict>

@@ -36,12 +36,12 @@ static NSInteger const KHH_Message_UIImage_Default_Height = 300;
 }
 - (void)rightBarButtonClick:(id)sender
 {
- 
+    
 }
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    [self.view setBackgroundColor:[UIColor colorWithRed:241 green:238 blue:232 alpha:1.0]];
+    //    [self.view setBackgroundColor:[UIColor colorWithRed:241 green:238 blue:232 alpha:1.0]];
     //计算size
     //设置消息时间
     self.timeLabel.text = self.message.time;
@@ -81,7 +81,7 @@ static NSInteger const KHH_Message_UIImage_Default_Height = 300;
     //消息的图片
     if (self.message.image.url.length > 0) {
         [self addAutoHeightImageViewByUrl:self.message.image.url];
-//        [self addAutoHeightImageViewByUIImage:[UIImage imageNamed:@"template_bg"]];
+        //        [self addAutoHeightImageViewByUIImage:[UIImage imageNamed:@"template_bg"]];
     }
 }
 
@@ -90,7 +90,7 @@ static NSInteger const KHH_Message_UIImage_Default_Height = 300;
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0,0,0,0)];//后面还会重新设置其size。
     [label setNumberOfLines:0];
     //每段文字前空点字符
-//    NSString * content= [NSString stringWithFormat:@"%@%@",@"   ",labelText];
+    //    NSString * content= [NSString stringWithFormat:@"%@%@",@"   ",labelText];
     NSString * content= [NSString stringWithFormat:@"%@",labelText];
     UIFont *font = [UIFont fontWithName:@"Arial" size:17];
     //最大大小

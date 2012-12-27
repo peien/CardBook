@@ -28,7 +28,7 @@
 @synthesize card;
 @synthesize dataArray;
 @synthesize isDetailVC;
-@synthesize isAllVisitedSch;
+@synthesize visitType;
 @synthesize isFromCalVC;
 @synthesize isFromHomeVC;
 @synthesize selectedDate;
@@ -54,10 +54,7 @@
 - (void)initViewData{
 //    NSSortDescriptor *descFini = [NSSortDescriptor sortDescriptorWithKey:@"isFinished" ascending:YES];
     NSSortDescriptor *descDate = [NSSortDescriptor sortDescriptorWithKey:@"plannedDate" ascending:NO];
-    if (self.isAllVisitedSch) {
-        KHHData *data = [KHHData sharedData];
-        self.dataArray  = [data allSchedules];
-    }else if(self.isFromHomeVC){
+    if(self.isFromHomeVC){
         NSSet *set = self.card.schedules;
         self.dataArray = [[set allObjects] sortedArrayUsingDescriptors:@[descDate]];
     }else if (self.isFromCalVC){
@@ -65,6 +62,37 @@
             self.card = nil;
         }
         self.dataArray = [[[KHHData sharedData] schedulesOnCard:self.card date:self.selectedDate] sortedArrayUsingDescriptors:@[descDate]];
+    }else {
+        KHHData *data = [KHHData sharedData];
+#warning 根据类型获取相应的拜访计划
+        switch (self.visitType) {
+            case KHHVisitPlanExecuting:
+            {
+                //正在执行（当前时间以后的）
+                self.dataArray  = [data executingSchedules];
+            }
+                break;
+            case KHHVisitPlanOverdue:
+            {
+                //过期(当前时间以前的并且没有finish的)
+                self.dataArray  = [data overdueSchedules];
+            }
+                break;
+            case KHHVisitPlanFinished:
+            {
+                //已完成(finish标记为yes)
+                self.dataArray  = [data finishedSchedules];
+            }
+                break;
+            case KHHVisitPlanAll:
+            {
+                //所有
+                self.dataArray  = [data allSchedules];
+            }
+                break;
+            default:
+                break;
+        }
     }
 }
 #pragma mark -

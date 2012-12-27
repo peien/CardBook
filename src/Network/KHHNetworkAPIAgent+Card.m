@@ -487,7 +487,6 @@ NSMutableDictionary * ParametersToCreateOrUpdateCard(InterCard *iCard) {
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
         NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
-#warning 解析mycards 要把if里的内容换成解析我的名片
         // 把返回的数据转成本地数据
         KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
         if (KHHErrorCodeSucceeded == code) {
