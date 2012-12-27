@@ -46,8 +46,8 @@
 - (void)rightBarButtonClick:(id)sender
 {
     //注册删除消息,改为本地删除，取消注册消息
-    
-    
+    [self observeNotificationName:nUIDeleteMessagesSucceeded selector:@"handleDeleteMessagesSucceeded:"];
+    [self observeNotificationName:nUIDeleteMessagesFailed selector:@"handleDeleteMessagesFailed:"];
     progressBar = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     progressBar.labelText = KHHMessageDeleteMessage;
     [self delMessageFromArray];
@@ -75,7 +75,7 @@
                                           cancelButtonTitle:KHHMessageSure
                                           otherButtonTitles:nil, nil];
     [alert show];
-
+    
 }
 - (void)stopObservingForDelMessage{
     [self stopObservingNotificationName:nUIDeleteMessagesSucceeded];
@@ -166,7 +166,7 @@
     [_selectItemArray replaceObjectAtIndex:indexPath.row withObject:state];
     [tableView reloadRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationNone];
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-
+    
 }
 // 删除消息
 - (void)delMessageFromArray
@@ -178,7 +178,7 @@
         }
     }
     [self.dataCtrl deleteMessages:_delMessageArr];
-
+    
 }
 -(void)setEditing:(BOOL)editing animated:(BOOL)animated
 {

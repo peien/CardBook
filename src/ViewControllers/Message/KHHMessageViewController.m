@@ -15,16 +15,13 @@
 #import "KHHData+UI.h"
 #import "KHHMessage.h"
 #import "MBProgressHUD.h"
-
 @interface KHHMessageViewController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 @property (strong, nonatomic) NSArray *messageArr;
 @property (strong, nonatomic) KHHData *dataCtrl;
 @property (assign, nonatomic) bool    isNeedReloadTable;
 @end
 
-@implementation KHHMessageViewController{
-    KHHMessage *_message;
-}
+@implementation KHHMessageViewController
 @synthesize theTable = _theTable;
 @synthesize messageArr;
 @synthesize dataCtrl;
@@ -81,11 +78,11 @@
     DLog(@"handlenUISyncMessagesFailed! noti is ======%@",noti.userInfo);
     [self stopObservingForMessage];
     [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"错误提示", nil)
-                               message:@"同步消息失败,请确保网络可用"
-                              delegate:nil
-                     cancelButtonTitle:NSLocalizedString(KHHMessageSure, nil)
-                     otherButtonTitles:nil] show];
-
+                                message:@"同步消息失败,请确保网络可用"
+                               delegate:nil
+                      cancelButtonTitle:NSLocalizedString(KHHMessageSure, nil)
+                      otherButtonTitles:nil] show];
+    
 }
 - (void)stopObservingForMessage{
     [self stopObservingNotificationName:nUISyncMessagesSucceeded];
@@ -139,7 +136,7 @@
         cell.selectionStyle = UITableViewCellSeparatorStyleNone;
         cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     }
-   KHHMessage *message = [self.messageArr objectAtIndex:indexPath.row];
+    KHHMessage *message = [self.messageArr objectAtIndex:indexPath.row];
     cell.subTitleLab.text = message.subject;
     cell.contentLab.text = message.content;
     cell.timeLab.text = message.time;
@@ -147,47 +144,21 @@
         cell.messageImage.hidden = YES;
     }
     return cell;
-
+    
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self tableView:tableView accessoryButtonTappedForRowWithIndexPath:indexPath];
     self.isNeedReloadTable = YES;
-     _message= [self.messageArr objectAtIndex:indexPath.row];
-    if (![_message.isRead boolValue]) {
-        [self observeNotificationName:nUIDeleteMessagesSucceeded selector:@"handleDeleteMessagesSucceeded:"];
-        [self observeNotificationName:nUIDeleteMessagesFailed selector:@"handleDeleteMessagesFailed:"];
-    }
-    [self.dataCtrl.agent deleteMessages:[NSArray arrayWithObject:_message.id]];
-   
+    KHHMessage *message = [self.messageArr objectAtIndex:indexPath.row];
+    message.isRead = [NSNumber numberWithBool:YES];
 }
-
-
-
-#pragma mark -
-- (void)handleDeleteMessagesSucceeded:(NSNotification *)noti{
-    DLog(@"handleDeleteMessagesSucceeded! noti is ====== %@",noti.userInfo);
-    [self stopObservingForDelMessage];
-     _message.isRead = [NSNumber numberWithBool:YES];
-    
-}
-- (void)handleDeleteMessagesFailed:(NSNotification *)noti{
-    [self stopObservingForDelMessage];
-     _message.isRead = [NSNumber numberWithBool:NO];
-}
-
-- (void)stopObservingForDelMessage{
-    [self stopObservingNotificationName:nUIDeleteMessagesSucceeded];
-    [self stopObservingNotificationName:nUIDeleteMessagesFailed];
-    
-}
-
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
     KHHDetailMessageVC *messageVC = [[KHHDetailMessageVC alloc] initWithNibName:@"KHHDetailMessageVC" bundle:nil];
     messageVC.message = [messageArr objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:messageVC animated:YES];
-
+    
 }
 #pragma mark -
 - (IBAction)editMessageBtnClick:(id)sender{

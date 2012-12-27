@@ -117,7 +117,7 @@
     DLog(@"userInfo%@",userInfo);
     //PFPush handlePush:userInfo];
    NSString *type = [userInfo objectForKey:@"type"];
-    if([type isEqualToString:@"0"]){        
+    if([type isEqualToString:@"1"]){        
         [[KHHData sharedData] syncMessages];
     }else{
         [self postASAPNotificationName:KHHNetworkReceivedCardsAfterDateLastCardExpectedCountSucceeded];
