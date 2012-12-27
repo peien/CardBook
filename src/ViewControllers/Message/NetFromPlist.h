@@ -10,4 +10,9 @@
 
 @interface NetFromPlist : NSObject
 
+
+@property(nonatomic,strong) NSDictionary *dic;
+
+- (NSURL *)currentUrl;
+
 @end

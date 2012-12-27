@@ -7,7 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Encryptor.h"
+#import "NetClient.h"
 
 @interface User : NSObject
+
+@property(nonatomic,strong)NSString *phone;
+@property(nonatomic,strong)NSString *password;
+
+
++ (User *)sharedInstance;
 
 @end

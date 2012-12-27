@@ -6,8 +6,12 @@
 //  Copyright (c) 2012年 Kinghanhong. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "AFHTTPClient.h"
+#import "NetFromPlist.h"
+@interface NetClient : AFHTTPClient
 
-@interface NetClient : NSObject
+@property (nonatomic,strong) NetFromPlist *netFromPlist;
+
++ (NetClient *)sharedClient;
 
 @end
