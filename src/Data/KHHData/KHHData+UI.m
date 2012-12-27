@@ -349,6 +349,48 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
                                        sortDescriptors:@[sortDes,timeSort]];
     return result;
 }
+
+//正在执行
+- (NSArray *)executingSchedules
+{
+    NSPredicate *predicate = nil;
+    predicate = [NSPredicate predicateWithFormat:@"isFinished = no AND plannedDate >= %@", [NSDate new]];
+
+    NSSortDescriptor *timeSort = [NSSortDescriptor sortDescriptorWithKey:@"plannedDate"
+                                                               ascending:NO];
+    NSArray *result = [Schedule objectArrayByPredicate:predicate
+                                       sortDescriptors:@[timeSort]];
+    return result;
+}
+
+//过期的拜访记录
+- (NSArray *)overdueSchedules
+{
+    NSPredicate *predicate = nil;
+    predicate = [NSPredicate predicateWithFormat:@"isFinished = no AND plannedDate < %@", [NSDate new]];
+    
+    NSSortDescriptor *timeSort = [NSSortDescriptor sortDescriptorWithKey:@"plannedDate"
+                                                               ascending:NO];
+    NSArray *result = [Schedule objectArrayByPredicate:predicate
+                                       sortDescriptors:@[timeSort]];
+    return result;
+}
+
+//完成的
+- (NSArray *)finishedSchedules
+{
+    NSPredicate *predicate = nil;
+    predicate = [NSPredicate predicateWithFormat:@"isFinished <> no"];
+    
+    NSSortDescriptor *sortDes = [NSSortDescriptor sortDescriptorWithKey:@"isFinished"
+                                                              ascending:YES];
+    NSSortDescriptor *timeSort = [NSSortDescriptor sortDescriptorWithKey:@"plannedDate"
+                                                               ascending:NO];
+    NSArray *result = [Schedule objectArrayByPredicate:predicate
+                                       sortDescriptors:@[sortDes,timeSort]];
+    return result;
+}
+
 - (NSArray *)schedulesOnCard:(Card *)aCard day:(NSString *)aDay {
     NSDate *date = DateFromKHHDateString([aDay stringByAppendingString:@" 00:00:00"]);
     return [self schedulesOnCard:aCard date:date];

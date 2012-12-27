@@ -96,4 +96,12 @@ typedef enum {
     KHHCustomerVauleRadar     = 2,
 } KHHCustomerVauleDetailType;
 
+
+//拜访计划类型
+typedef enum {
+    KHHVisitPlanAll          = 1,
+    KHHVisitPlanExecuting,
+    KHHVisitPlanOverdue,
+    KHHVisitPlanFinished,
+} KHHVisitPlanType;
 #endif
