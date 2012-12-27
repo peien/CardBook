@@ -78,11 +78,11 @@
     DLog(@"handlenUISyncMessagesFailed! noti is ======%@",noti.userInfo);
     [self stopObservingForMessage];
     [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"错误提示", nil)
-                               message:@"同步消息失败,请确保网络可用"
-                              delegate:nil
-                     cancelButtonTitle:NSLocalizedString(KHHMessageSure, nil)
-                     otherButtonTitles:nil] show];
-
+                                message:@"同步消息失败,请确保网络可用"
+                               delegate:nil
+                      cancelButtonTitle:NSLocalizedString(KHHMessageSure, nil)
+                      otherButtonTitles:nil] show];
+    
 }
 - (void)stopObservingForMessage{
     [self stopObservingNotificationName:nUISyncMessagesSucceeded];
@@ -144,7 +144,7 @@
         cell.messageImage.hidden = YES;
     }
     return cell;
-
+    
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -158,7 +158,7 @@
     KHHDetailMessageVC *messageVC = [[KHHDetailMessageVC alloc] initWithNibName:@"KHHDetailMessageVC" bundle:nil];
     messageVC.message = [messageArr objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:messageVC animated:YES];
-
+    
 }
 #pragma mark -
 - (IBAction)editMessageBtnClick:(id)sender{
