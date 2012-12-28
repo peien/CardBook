@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "SuperViewController.h"
+#import "Delegates.h"
+#import "KHHManagementViewController.h"
 
 @interface KHHManagementViewController : SuperViewController <UIAlertViewDelegate>
 @property (nonatomic, strong) UIView *entranceView;

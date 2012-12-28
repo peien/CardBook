@@ -133,7 +133,7 @@
     NSString *path = [NSString stringWithFormat:@"%@?%@",
                       pathRoot,
                       [self queryStringWithDictionary:queryDict]];
-    
+    DLog(@"path%@",path);
     
     NSURLRequest *request = [httpClient
                              multipartFormRequestWithMethod:@"POST"
