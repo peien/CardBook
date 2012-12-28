@@ -338,22 +338,22 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
         }
     }else if([application applicationState] == UIApplicationStateActive)
     {
-        if (messgaeList && messgaeList.count > 0) {
-            //显示有新消息到了
-            NSArray *viewControllers = self.navigationController.viewControllers;
-            UITableViewController *parent = [viewControllers lastObject];
-            //当前页不是消息界面时要弹出新消息到了的框
-            if (parent && ![parent isKindOfClass:[KHHMessageViewController class]]) {
-                //showalert
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"新消息"
-                                                                message:TEXT_NEW_MESSAGE_COMMING
-                                                               delegate:self
-                                                      cancelButtonTitle:@"确认"
-                                                      otherButtonTitles:@"取消", nil];
-                alert.tag = KHHAlertMessage;
-                [alert show];
-            }
-        }
+//        if (messgaeList && messgaeList.count > 0) {
+//            //显示有新消息到了
+//            NSArray *viewControllers = self.navigationController.viewControllers;
+//            UITableViewController *parent = [viewControllers lastObject];
+//            //当前页不是消息界面时要弹出新消息到了的框
+//            if (parent && ![parent isKindOfClass:[KHHMessageViewController class]]) {
+//                //showalert
+//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"新消息"
+//                                                                message:TEXT_NEW_MESSAGE_COMMING
+//                                                               delegate:self
+//                                                      cancelButtonTitle:@"确认"
+//                                                      otherButtonTitles:@"取消", nil];
+//                alert.tag = KHHAlertMessage;
+//                [alert show];
+//            }
+//        }
         
         if (self.messageContactList && self.messageContactList.count > 0) {
             //提示有新联系人到了(一个人时就直接提示名称，点击可以去详细界面，多个人时提示有新联系人)
@@ -410,7 +410,80 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
 }
 
 //收到新的名片，跳转到详细界面
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+
+
+#pragma backgroud running
+//手机支持多线程时就启动后台运行那套方案，不支持后台运行时就用timer
+//后台运行时，不管程序有没有在活动状态都能执行同步函数，timer只能在程序active的状态下运行
+- (void)setupBackgroundHandler
+{
+    if([self UIUDeviceIsBackgroundSupported])
+    {
+        if(
+           [[UIApplication sharedApplication] setKeepAliveTimeout:600 handler: ^
+            {
+                //同步消息
+                [self syncMessageWithServer];
+            }
+            ]
+           )
+        {
+            DLog(@"Set Background handler successed!");
+        }else
+        {//failed
+            DLog(@"Set Background handler failed!");
+        }
+    }else
+    {
+        DLog(@"This Deviece is not Background supported.");
+        if (!self.syncMessageTimer) {
+            self.syncMessageTimer = [NSTimer scheduledTimerWithTimeInterval:KHH_SYNC_MESSAGE_TIME target:self selector:@selector(handleSyncMessage) userInfo:nil repeats:YES];
+        }
+    }
+}
+
+-(BOOL) UIUDeviceIsBackgroundSupported {
+    UIDevice* device = [UIDevice currentDevice];
+    BOOL backgroundSupported = NO;
+    if ([device respondsToSelector:@selector(isMultitaskingSupported)])
+    backgroundSupported = device.multitaskingSupported;
+    return backgroundSupported;
+}
+
+#pragma mark - delegateMsgForMain
+
+- (void)reseaveDone:(Boolean)haveNewMsg
+
+{
+    if (haveNewMsg) {
+        //显示有新消息到了
+        NSArray *viewControllers = self.navigationController.viewControllers;
+        UITableViewController *parent = [viewControllers lastObject];
+        //当前页不是消息界面时要弹出新消息到了的框
+        if (parent && ![parent isKindOfClass:[KHHMessageViewController class]]) {
+            //showalert
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"新消息"
+                                                            message:TEXT_NEW_MESSAGE_COMMING
+                                                           delegate:self
+                                                  cancelButtonTitle:@"确认"
+                                                  otherButtonTitles:@"取消", nil];
+            alert.tag = KHHAlertMessage;
+            [alert show];
+        }
+    }
+
+}
+
+- (void)reseaveFail
+
+{
+    
+}
+
+#pragma mark - alert delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
     if (!alertView || !alertView.tag) {
         return;
     }
@@ -457,43 +530,4 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
             break;
     }
 }
-
-#pragma backgroud running
-//手机支持多线程时就启动后台运行那套方案，不支持后台运行时就用timer
-//后台运行时，不管程序有没有在活动状态都能执行同步函数，timer只能在程序active的状态下运行
-- (void)setupBackgroundHandler
-{
-    if([self UIUDeviceIsBackgroundSupported])
-    {
-        if(
-           [[UIApplication sharedApplication] setKeepAliveTimeout:600 handler: ^
-            {
-                //同步消息
-                [self syncMessageWithServer];
-            }
-            ]
-           )
-        {
-            DLog(@"Set Background handler successed!");
-        }else
-        {//failed
-            DLog(@"Set Background handler failed!");
-        }
-    }else
-    {
-        DLog(@"This Deviece is not Background supported.");
-        if (!self.syncMessageTimer) {
-            self.syncMessageTimer = [NSTimer scheduledTimerWithTimeInterval:KHH_SYNC_MESSAGE_TIME target:self selector:@selector(handleSyncMessage) userInfo:nil repeats:YES];
-        }
-    }
-}
-
--(BOOL) UIUDeviceIsBackgroundSupported {
-    UIDevice* device = [UIDevice currentDevice];
-    BOOL backgroundSupported = NO;
-    if ([device respondsToSelector:@selector(isMultitaskingSupported)])
-    backgroundSupported = device.multitaskingSupported;
-    return backgroundSupported;
-}
-
 @end
