@@ -13,6 +13,7 @@
 #import "MBProgressHUD.h"
 #import "KHHData+UI.h"
 #import "KHHShowHideTabBar.h"
+#import "NetClient+Message.h"
 
 @interface KHHEditMSGViewController ()
 @property (assign, nonatomic) bool edit;
@@ -46,10 +47,10 @@
 - (void)rightBarButtonClick:(id)sender
 {
     //注册删除消息,改为本地删除，取消注册消息
-    [self observeNotificationName:nUIDeleteMessagesSucceeded selector:@"handleDeleteMessagesSucceeded:"];
-    [self observeNotificationName:nUIDeleteMessagesFailed selector:@"handleDeleteMessagesFailed:"];
-    progressBar = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-    progressBar.labelText = KHHMessageDeleteMessage;
+//    [self observeNotificationName:nUIDeleteMessagesSucceeded selector:@"handleDeleteMessagesSucceeded:"];
+//    [self observeNotificationName:nUIDeleteMessagesFailed selector:@"handleDeleteMessagesFailed:"];
+//    progressBar = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+//    progressBar.labelText = KHHMessageDeleteMessage;
     [self delMessageFromArray];
 }
 #pragma mark -
@@ -95,11 +96,20 @@
         [_selectItemArray addObject:[NSNumber numberWithBool:NO]];
     }
 }
+
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [KHHShowHideTabBar hideTabbar];
+    [NetClient sharedClient].inMsgView = YES;
     
 }
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [NetClient sharedClient].inMsgView = NO;
+}
+
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -134,7 +144,12 @@
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
     KHHMessage *message = [self.messageArr objectAtIndex:indexPath.row];
-    cell.subTitleLab.text = message.subject;
+    if (!message.subject||[message.subject isEqualToString:@""]) {
+        cell.subTitleLab.text = @"无标题";
+    }else{
+        cell.subTitleLab.text = message.subject;
+    }
+   
     cell.timeLab.text = message.time;
     cell.contentLab.text = message.content;
     if ([message.isRead isEqualToNumber:[NSNumber numberWithBool:YES]]) {
@@ -177,7 +192,8 @@
             [_delMessageArr addObject:[self.messageArr objectAtIndex:i]];
         }
     }
-    [self.dataCtrl deleteMessages:_delMessageArr];
+    [[NetClient sharedClient] doDeleteInEdit:self messages:_delMessageArr];
+   // [self.dataCtrl deleteMessages:_delMessageArr];
     
 }
 -(void)setEditing:(BOOL)editing animated:(BOOL)animated
@@ -189,6 +205,20 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+#pragma mark - del delegate
+
+- (void)deleFail
+{
+    
+    self.messageArr = [self.dataCtrl allMessages];   
+    [_theTable reloadData];
+}
+
+- (void)deleDone
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

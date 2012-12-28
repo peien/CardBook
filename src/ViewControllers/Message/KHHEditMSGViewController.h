@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "SuperViewController.h"
+#import "Delegates.h"
 
-@interface KHHEditMSGViewController : SuperViewController<UITableViewDataSource,UITableViewDelegate>
+@interface KHHEditMSGViewController : SuperViewController<UITableViewDataSource,UITableViewDelegate,delegateMsgForRead>
 @property (strong, nonatomic) IBOutlet UITableView *theTable;
 @property (strong, nonatomic) NSArray              *messageArr;
 @end

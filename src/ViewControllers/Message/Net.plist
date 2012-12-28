@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>base2Test</key>
+	<string>XCardServer</string>
+	<key>base2Official</key>
+	<string>cardbook</string>
+	<key>base1Test</key>
+	<string>s2.kinghanhong.com:9999</string>
+	<key>base1Official</key>
+	<string>www.kinghanhong.com</string>
+	<key>base1Haibo</key>
+	<string>192.168.1.70:8081</string>
+	<key>networkName</key>
+	<dict>
+		<key>message</key>
+		<string></string>
+		<key>login</key>
+		<dict>
+			<key>pathRoot</key>
+			<string>registerOrLogin</string>
+		</dict>
+	</dict>
+	<key>security
+Security
+security</key>
+	<dict>
+		<key>secKeyEncry</key>
+		<string>12345678</string>
+	</dict>
+</dict>
+</plist>
