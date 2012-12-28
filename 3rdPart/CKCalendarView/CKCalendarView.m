@@ -306,6 +306,13 @@
         date = [self nextDay:date];
         dateButtonPosition++;
         
+        
+        //如果要设置的日期是选中的日期就不设置有无未完成的拜访计划背景颜色
+        if ([self date:dateButton.date isSameDayAsDate:self.selectedDate])  {
+            continue;
+        }
+        
+        //从数据库中取当天的拜访计划，并设置相应的背景颜色
         NSArray *arr = [[self stringFromDate:dateButton.date] componentsSeparatedByString:@" "];
         NSString *dateS = [arr objectAtIndex:0];
         if ([self.card isKindOfClass:[MyCard class]]) {

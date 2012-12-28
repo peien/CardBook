@@ -189,14 +189,12 @@
     [iconImgView addGestureRecognizer:tap];
     UIImage *iconImg = [UIImage imageNamed:@"logopic.png"];
     iconImgView.image = iconImg;
-   
+    CALayer *layer = [iconImgView layer];
     [iconImgView setImageWithURL:[NSURL URLWithString:self.card.logo.url]
                    placeholderImage:iconImg
                             success:^(UIImage *image, BOOL cached){
                                 
                                 if(!CGSizeEqualToSize(image.size, CGSizeZero)){
-                                    
-                                    CALayer *layer = [iconImgView layer];
                                     [layer setMasksToBounds:YES];
                                     [layer setCornerRadius:6.0];
                                 }
@@ -319,13 +317,13 @@
     jobLab.text = temCard.title;
     companyLab.text = temCard.company.name;
     UIImage *iconImg = [UIImage imageNamed:@"logopic.png"];
+    
+    CALayer *layer = [logImageview layer];
     [logImageview setImageWithURL:[NSURL URLWithString:self.card.logo.url]
                 placeholderImage:iconImg
                          success:^(UIImage *image, BOOL cached){
                              
                              if(!CGSizeEqualToSize(image.size, CGSizeZero)){
-                                 
-                                 CALayer *layer = [logImageview layer];
                                  [layer setMasksToBounds:YES];
                                  [layer setCornerRadius:6.0];
                              }
