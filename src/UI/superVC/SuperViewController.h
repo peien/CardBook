@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-@interface SuperViewController : UIViewController
+#import "KHHTypes.h"
+#import "Delegates.h"
+
+@interface SuperViewController : UIViewController<delegateMsgForMain>
 @property (strong, nonatomic) UIButton *leftBtn;
 @property (strong, nonatomic) UIButton *rightBtn;
 @end
