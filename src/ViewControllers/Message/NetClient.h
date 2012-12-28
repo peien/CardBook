@@ -11,7 +11,13 @@
 @interface NetClient : AFHTTPClient
 
 @property (nonatomic,strong) NetFromPlist *netFromPlist;
+#pragma mark - flags
+@property (nonatomic,assign)Boolean inMsgView;
 
 + (NetClient *)sharedClient;
+
+#pragma mark - Utils
+- (NSString *)queryStringWithDictionary:(NSDictionary *)aDictionary;
+- (NSMutableDictionary *)JSONDictionaryWithResponse:(NSData *)responseData;
 
 @end

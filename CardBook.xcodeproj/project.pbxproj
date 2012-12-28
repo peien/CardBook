@@ -26,6 +26,11 @@
 		3104E06C168800F200B0B45F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 3104E06B168800F100B0B45F /* Reachability.m */; };
 		3104E073168856CB00B0B45F /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98F0F63B16885010009BAF81 /* SDWebImage.framework */; };
 		3104E0741688571000B0B45F /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98F0F63B16885010009BAF81 /* SDWebImage.framework */; };
+		310A3F41168D3E9D009FF135 /* CardBook_test_haibo-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 310A3F3E168D3E9D009FF135 /* CardBook_test_haibo-Info.plist */; };
+		310A3F42168D3E9D009FF135 /* CardBook_test-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 310A3F3F168D3E9D009FF135 /* CardBook_test-Info.plist */; };
+		310A3F46168D677A009FF135 /* NetWorking.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A3F45168D6779009FF135 /* NetWorking.m */; };
+		310A3F47168D677A009FF135 /* NetWorking.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A3F45168D6779009FF135 /* NetWorking.m */; };
+		310A3F48168D677A009FF135 /* NetWorking.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A3F45168D6779009FF135 /* NetWorking.m */; };
 		314A0000168BEE9A00029324 /* settingIcon_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6217811F164BBA1D00E1CFD4 /* settingIcon_selected@2x.png */; };
 		314A0001168BEE9A00029324 /* settingIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62178120164BBA1D00E1CFD4 /* settingIcon@2x.png */; };
 		314A0002168BEE9A00029324 /* 4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F881602D7B300A4A673 /* 4@2x.png */; };
@@ -656,6 +661,10 @@
 		314A0287168C0D2700029324 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 314A0286168C0D2700029324 /* User.m */; };
 		314A0288168C0D2700029324 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 314A0286168C0D2700029324 /* User.m */; };
 		314A0289168C0D2700029324 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 314A0286168C0D2700029324 /* User.m */; };
+		314A032C168C52D000029324 /* NetClient+Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 314A032B168C52D000029324 /* NetClient+Message.m */; };
+		314A032D168C52D000029324 /* NetClient+Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 314A032B168C52D000029324 /* NetClient+Message.m */; };
+		314A032E168C52D000029324 /* NetClient+Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 314A032B168C52D000029324 /* NetClient+Message.m */; };
+		314A032F168C52D000029324 /* NetClient+Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 314A032B168C52D000029324 /* NetClient+Message.m */; };
 		314AFEF9168BEC3700029324 /* NetClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 314AFEF8168BEC3700029324 /* NetClient.m */; };
 		314AFEFA168BEC3700029324 /* NetClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 314AFEF8168BEC3700029324 /* NetClient.m */; };
 		314AFEFC168BEC4A00029324 /* Net.plist in Resources */ = {isa = PBXBuildFile; fileRef = 314AFEFB168BEC4A00029324 /* Net.plist */; };
@@ -1785,6 +1794,11 @@
 		3104E0601687EE8100B0B45F /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		3104E06A168800F100B0B45F /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		3104E06B168800F100B0B45F /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		310A3F36168D2C43009FF135 /* Delegates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Delegates.h; sourceTree = "<group>"; };
+		310A3F3E168D3E9D009FF135 /* CardBook_test_haibo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CardBook_test_haibo-Info.plist"; sourceTree = SOURCE_ROOT; };
+		310A3F3F168D3E9D009FF135 /* CardBook_test-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CardBook_test-Info.plist"; sourceTree = SOURCE_ROOT; };
+		310A3F44168D6778009FF135 /* NetWorking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetWorking.h; sourceTree = "<group>"; };
+		310A3F45168D6779009FF135 /* NetWorking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetWorking.m; sourceTree = "<group>"; };
 		314A00BE168BEE9A00029324 /* CardBook_test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardBook_test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		314A00C0168BEE9A00029324 /* CardBook copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "CardBook copy-Info.plist"; path = "/Users/sanzang/CardBook/CardBook copy-Info.plist"; sourceTree = "<absolute>"; };
 		314A027D168BEF3800029324 /* CardBook_test_haibo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardBook_test_haibo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1792,6 +1806,8 @@
 		314A0281168C08F100029324 /* LoginLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginLogic.m; sourceTree = "<group>"; };
 		314A0285168C0D2700029324 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		314A0286168C0D2700029324 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		314A032A168C52D000029324 /* NetClient+Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NetClient+Message.h"; sourceTree = "<group>"; };
+		314A032B168C52D000029324 /* NetClient+Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NetClient+Message.m"; sourceTree = "<group>"; };
 		314AFEF7168BEC3700029324 /* NetClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetClient.h; sourceTree = "<group>"; };
 		314AFEF8168BEC3700029324 /* NetClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetClient.m; sourceTree = "<group>"; };
 		314AFEFB168BEC4A00029324 /* Net.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Net.plist; sourceTree = "<group>"; };
@@ -2642,9 +2658,14 @@
 			children = (
 				314AFEF7168BEC3700029324 /* NetClient.h */,
 				314AFEF8168BEC3700029324 /* NetClient.m */,
+				314A032A168C52D000029324 /* NetClient+Message.h */,
+				314A032B168C52D000029324 /* NetClient+Message.m */,
 				314AFEFB168BEC4A00029324 /* Net.plist */,
 				314AFEFE168BECBB00029324 /* NetFromPlist.h */,
 				314AFEFF168BECBB00029324 /* NetFromPlist.m */,
+				310A3F36168D2C43009FF135 /* Delegates.h */,
+				310A3F44168D6778009FF135 /* NetWorking.h */,
+				310A3F45168D6779009FF135 /* NetWorking.m */,
 			);
 			name = network;
 			sourceTree = "<group>";
@@ -2734,6 +2755,8 @@
 		6274BF40165C7A7400DB5EBE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				310A3F3E168D3E9D009FF135 /* CardBook_test_haibo-Info.plist */,
+				310A3F3F168D3E9D009FF135 /* CardBook_test-Info.plist */,
 				6274BF41165C7A7400DB5EBE /* CardBook-Info.plist */,
 				6274BF42165C7A7400DB5EBE /* InfoPlist.strings */,
 				6274BF45165C7A7400DB5EBE /* main.m */,
@@ -4312,6 +4335,7 @@
 				314A0277168BEF3800029324 /* mapapi.bundle in Resources */,
 				314A0278168BEF3800029324 /* ic_photo@2x.png in Resources */,
 				314A0279168BEF3800029324 /* Net.plist in Resources */,
+				310A3F41168D3E9D009FF135 /* CardBook_test_haibo-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4537,6 +4561,7 @@
 				314A00B8168BEE9A00029324 /* mapapi.bundle in Resources */,
 				314A00B9168BEE9A00029324 /* ic_photo@2x.png in Resources */,
 				314A00BA168BEE9A00029324 /* Net.plist in Resources */,
+				310A3F42168D3E9D009FF135 /* CardBook_test-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5227,6 +5252,8 @@
 				314A0188168BEF3800029324 /* NetFromPlist.m in Sources */,
 				314A0284168C08F100029324 /* LoginLogic.m in Sources */,
 				314A0289168C0D2700029324 /* User.m in Sources */,
+				314A032F168C52D000029324 /* NetClient+Message.m in Sources */,
+				310A3F48168D677A009FF135 /* NetWorking.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5434,6 +5461,8 @@
 				314AFFC9168BEE9A00029324 /* NetFromPlist.m in Sources */,
 				314A0283168C08F100029324 /* LoginLogic.m in Sources */,
 				314A0288168C0D2700029324 /* User.m in Sources */,
+				314A032E168C52D000029324 /* NetClient+Message.m in Sources */,
+				310A3F47168D677A009FF135 /* NetWorking.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5641,6 +5670,8 @@
 				314AFF00168BECBB00029324 /* NetFromPlist.m in Sources */,
 				314A0282168C08F100029324 /* LoginLogic.m in Sources */,
 				314A0287168C0D2700029324 /* User.m in Sources */,
+				314A032C168C52D000029324 /* NetClient+Message.m in Sources */,
+				310A3F46168D677A009FF135 /* NetWorking.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5845,6 +5876,7 @@
 				8413659316883F5000BB0400 /* KHHKeyBoardManagerUtil.m in Sources */,
 				314AFEFA168BEC3700029324 /* NetClient.m in Sources */,
 				314AFF01168BECBB00029324 /* NetFromPlist.m in Sources */,
+				314A032D168C52D000029324 /* NetClient+Message.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

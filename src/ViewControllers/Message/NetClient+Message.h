@@ -7,7 +7,12 @@
 //
 
 #import "NetClient.h"
+#import "Delegates.h"
 
 @interface NetClient (Message)
+
+- (void)doDeleteInEdit:(id<delegateMsgForRead>)delegate messages:(NSArray *)messages;
+- (void)doDelete:(id<delegateMsgForRead>) delegate messages:(NSArray *)messages;
+- (void)doReseaveMessage:(id<delegateMsgForMain>) delegate;
 
 @end

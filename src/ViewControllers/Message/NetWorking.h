@@ -9,5 +9,16 @@
 #import <UIKit/UIKit.h>
 
 @interface NetWorking : UIView
+{
+    NSTimer *timer;
+    UIActivityIndicatorView *actView;
+    UILabel *label;
+    int num;
+}
+
++ (NetWorking *)sharedInstance;
+
+- (void)start;
+- (void)stop;
 
 @end

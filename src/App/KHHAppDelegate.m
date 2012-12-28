@@ -117,8 +117,13 @@
     DLog(@"userInfo%@",userInfo);
     //PFPush handlePush:userInfo];
    NSString *type = [userInfo objectForKey:@"type"];
-    if([type isEqualToString:@"1"]){        
-        [[KHHData sharedData] syncMessages];
+    if([type isEqualToString:@"1"]){
+        if ([self.window.rootViewController isKindOfClass:[UINavigationController class]]) {
+            [[NetClient sharedClient]doReseaveMessage:(id<delegateMsgForMain>)[(UINavigationController *)self.window.rootViewController topViewController]];
+                
+        }
+        
+       // [[KHHData sharedData] syncMessages];
     }else{
         [self postASAPNotificationName:KHHNetworkReceivedCardsAfterDateLastCardExpectedCountSucceeded];
     }
