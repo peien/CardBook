@@ -204,10 +204,17 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellID = @"cellID";
+    static NSString *cellID_Logo = @"cellID_Logo";
+    NSString *realCellID = nil;
+    if (indexPath.section == 0) {
+        realCellID = cellID_Logo;
+    }else {
+        realCellID = cellID;
+    }
     UITableViewCell *cell = nil;
-    cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+    cell = [tableView dequeueReusableCellWithIdentifier:realCellID];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:realCellID];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(5.0f, 11.0f, 60.0f, 15.0f)];
         label.textAlignment = UITextAlignmentLeft;
@@ -225,35 +232,42 @@
         textfield.font = [UIFont systemFontOfSize:14];
         [cell.contentView addSubview:textfield];
     }
+    
     UILabel *lab = (UILabel *)[cell.contentView viewWithTag:LABEL_CELL_TAG];
     [lab setBackgroundColor:[UIColor clearColor]];
     UITextField *tf = (UITextField *)[cell.contentView viewWithTag:TEXTFIELD_CELL_TAG];
     
     if (indexPath.section == 0) {
-        UIImageView *iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(13, 5, 50, 50)];
-        //iconImage.backgroundColor = [UIColor blackColor];
-        [cell addSubview:iconImage];
-        CALayer *l = [iconImage layer];
-//        [iconImage setImageWithURL:[NSURL URLWithString:_myCard.logo.url] placeholderImage:[UIImage imageNamed:@"logopic.png"]];
-        [iconImage setImageWithURL:[NSURL URLWithString:_myCard.logo.url]
-                       placeholderImage:[UIImage imageNamed:@"logopic.png"]
-                                success:^(UIImage *image, BOOL cached){
-                                    
-                                    if(!CGSizeEqualToSize(image.size, CGSizeZero)){                                        
-                                        [l setMasksToBounds:YES];
-                                        [l setCornerRadius:6.0];
-                                    }
-                                }
-                                failure:^(NSError *error){
-                                    
-                                }];
-        CGRect rectLab = lab.frame;
-        rectLab.origin.x = 65;
-        lab.frame = rectLab;
-        CGRect rectTf = tf.frame;
-        rectTf.origin.y = 30;
-        rectTf.origin.x = 69;
-        tf.frame = rectTf;
+        static id imageViewID = nil;
+        //只有当真的没有头像时才添加，要不然多查看几次就会添加很多头像的iamgeView
+        if (![[cell subviews]containsObject:imageViewID]) {
+            UIImageView *iconImage = [[UIImageView alloc] initWithFrame:CGRectMake(13, 5, 50, 50)];
+            //iconImage.backgroundColor = [UIColor blackColor];
+            [cell addSubview:iconImage];
+            imageViewID = iconImage;
+            CALayer *l = [iconImage layer];
+            //        [iconImage setImageWithURL:[NSURL URLWithString:_myCard.logo.url] placeholderImage:[UIImage imageNamed:@"logopic.png"]];
+            [iconImage setImageWithURL:[NSURL URLWithString:_myCard.logo.url]
+                      placeholderImage:[UIImage imageNamed:@"logopic.png"]
+                               success:^(UIImage *image, BOOL cached){
+                                   
+                                   if(!CGSizeEqualToSize(image.size, CGSizeZero)){
+                                       [l setMasksToBounds:YES];
+                                       [l setCornerRadius:6.0];
+                                   }
+                               }
+                               failure:^(NSError *error){
+                                   
+                               }];
+            CGRect rectLab = lab.frame;
+            rectLab.origin.x = 65;
+            lab.frame = rectLab;
+            CGRect rectTf = tf.frame;
+            rectTf.origin.y = 30;
+            rectTf.origin.x = 69;
+            tf.frame = rectTf;
+        }
+        
         lab.text = _myCard.name;
         tf.text = _myCard.title;
         
