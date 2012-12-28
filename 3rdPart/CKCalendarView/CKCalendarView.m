@@ -291,6 +291,8 @@
         } else if ([self dateIsToday:dateButton.date]) {
             [dateButton setTitleColor:self.currentDateTextColor forState:UIControlStateNormal];
             [dateButton setBackgroundImage:[UIImage imageNamed:@"flagcircle.png"] forState:UIControlStateNormal];
+            //如果今天不是选中的天那么就先默认把颜色设置成默认的颜色，后面再去判断当天的拜访计划的状态
+            dateButton.backgroundColor = [self dateBackgroundColor];
         } else if ([date compare:self.minimumDate] == NSOrderedAscending ||
                 [date compare:self.maximumDate] == NSOrderedDescending) {
             [dateButton setTitleColor:self.disabledDateTextColor forState:UIControlStateNormal];

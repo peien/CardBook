@@ -136,6 +136,7 @@ static NSInteger KHH_Map_Zoom_Level = 16;
 	annotationView.centerOffset = CGPointMake(0, -(annotationView.frame.size.height * 0.5));
     annotationView.annotation = annotation;
 	annotationView.canShowCallout = YES;
+    [annotationView setSelected:YES];
     return annotationView;
 }
 
