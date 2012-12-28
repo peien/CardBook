@@ -17,7 +17,7 @@
 #import "AppStartController.h"
 //#import <Parse/Parse.h>
 #import "NSString+Base64.h"
-
+#import "KHHTypes.h"
 
 @implementation KHHAppDelegate
 
@@ -125,7 +125,7 @@
         
        // [[KHHData sharedData] syncMessages];
     }else{
-        [self postASAPNotificationName:KHHNetworkReceivedCardsAfterDateLastCardExpectedCountSucceeded];
+        [[KHHData sharedData]syncReceivedCards:[NSArray arrayWithObject:@(KHHQueuedOperationSyncReceivedCards)]];
     }
     
     [self updateApplicationIconNumber:application];
