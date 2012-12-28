@@ -676,8 +676,8 @@
         }else if (indexPath.row == 4){
             textField.enabled = NO;
             textField.tag = TEXTFIELD_ADDRESS_TAG;
+            textField.text = [_fieldValue objectAtIndex:indexPath.row];
             if (_style == KVisitRecoardVCStyleNewBuild || [self.schedu.isFinished isEqualToNumber:[NSNumber numberWithBool:NO]]) {
-                textField.text = [_fieldValue objectAtIndex:indexPath.row];
                 textField.text = self.address;
                 if (self.updateImageView == nil) {
                     self.updateImageView = [[UIImageView alloc] initWithImage:[self.imageArray objectAtIndex:0]];
@@ -691,7 +691,6 @@
                 }
 
             }else if(_style == KVisitRecoardVCStyleShowInfo && [self.schedu.isFinished isEqualToNumber:[NSNumber numberWithBool:YES]]){
-                textField.text = [_fieldValue objectAtIndex:indexPath.row];
                 UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
                 [btn setBackgroundImage:[UIImage imageNamed:@"dingwei_green.png"] forState:UIControlStateNormal];
                 [btn addTarget:self action:@selector(showMap:) forControlEvents:UIControlEventTouchUpInside];
