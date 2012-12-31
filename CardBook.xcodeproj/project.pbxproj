@@ -1808,11 +1808,11 @@
 		314A0286168C0D2700029324 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		314A032A168C52D000029324 /* NetClient+Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NetClient+Message.h"; sourceTree = "<group>"; };
 		314A032B168C52D000029324 /* NetClient+Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NetClient+Message.m"; sourceTree = "<group>"; };
-		314AFEF7168BEC3700029324 /* NetClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetClient.h; sourceTree = "<group>"; };
-		314AFEF8168BEC3700029324 /* NetClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetClient.m; sourceTree = "<group>"; };
-		314AFEFB168BEC4A00029324 /* Net.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Net.plist; sourceTree = "<group>"; };
-		314AFEFE168BECBB00029324 /* NetFromPlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetFromPlist.h; sourceTree = "<group>"; };
-		314AFEFF168BECBB00029324 /* NetFromPlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetFromPlist.m; sourceTree = "<group>"; };
+		314AFEF7168BEC3700029324 /* NetClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetClient.h; path = ../ViewControllers/Message/NetClient.h; sourceTree = "<group>"; };
+		314AFEF8168BEC3700029324 /* NetClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetClient.m; path = ../ViewControllers/Message/NetClient.m; sourceTree = "<group>"; };
+		314AFEFB168BEC4A00029324 /* Net.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Net.plist; path = ../ViewControllers/Message/Net.plist; sourceTree = "<group>"; };
+		314AFEFE168BECBB00029324 /* NetFromPlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetFromPlist.h; path = ../ViewControllers/Message/NetFromPlist.h; sourceTree = "<group>"; };
+		314AFEFF168BECBB00029324 /* NetFromPlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetFromPlist.m; path = ../ViewControllers/Message/NetFromPlist.m; sourceTree = "<group>"; };
 		31FCBC351682BD0A00ABFE3F /* KHHFilterPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHFilterPopup.h; sourceTree = "<group>"; };
 		31FCBC361682BD0A00ABFE3F /* KHHFilterPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHFilterPopup.m; sourceTree = "<group>"; };
 		620712E71650D051000188E8 /* logo57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo57.png; path = ../../logo57.png; sourceTree = "<group>"; };
@@ -2656,18 +2656,26 @@
 		314AFEF6168BEB4800029324 /* network */ = {
 			isa = PBXGroup;
 			children = (
-				314AFEF7168BEC3700029324 /* NetClient.h */,
-				314AFEF8168BEC3700029324 /* NetClient.m */,
 				314A032A168C52D000029324 /* NetClient+Message.h */,
 				314A032B168C52D000029324 /* NetClient+Message.m */,
-				314AFEFB168BEC4A00029324 /* Net.plist */,
-				314AFEFE168BECBB00029324 /* NetFromPlist.h */,
-				314AFEFF168BECBB00029324 /* NetFromPlist.m */,
 				310A3F36168D2C43009FF135 /* Delegates.h */,
 				310A3F44168D6778009FF135 /* NetWorking.h */,
 				310A3F45168D6779009FF135 /* NetWorking.m */,
 			);
 			name = network;
+			sourceTree = "<group>";
+		};
+		31C52AB216916E3F00446006 /* NetClient */ = {
+			isa = PBXGroup;
+			children = (
+				314AFEF7168BEC3700029324 /* NetClient.h */,
+				314AFEF8168BEC3700029324 /* NetClient.m */,
+				314AFEFB168BEC4A00029324 /* Net.plist */,
+				314AFEFE168BECBB00029324 /* NetFromPlist.h */,
+				314AFEFF168BECBB00029324 /* NetFromPlist.m */,
+			);
+			name = NetClient;
+			path = Network;
 			sourceTree = "<group>";
 		};
 		31FCBC301682B52600ABFE3F /* Popup */ = {
@@ -3020,6 +3028,7 @@
 				982AACC21609C903002B9BAD /* KHHTypes.h */,
 				98A84D9E1602D23100A4A673 /* Misc */,
 				98A84D9F1602D23A00A4A673 /* Network */,
+				31C52AB216916E3F00446006 /* NetClient */,
 				98A84DA01602D24600A4A673 /* UI */,
 				629BE10E165F4A6600FB3B04 /* Util */,
 				98A84DA11602D24D00A4A673 /* ViewControllers */,
