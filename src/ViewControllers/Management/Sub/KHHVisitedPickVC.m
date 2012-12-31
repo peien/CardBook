@@ -8,8 +8,13 @@
 
 #import "KHHVisitedPickVC.h"
 
-@interface KHHVisitedPickVC ()
+#define pickFrame  CGRectMake(0, 85, 320, 216)
 
+@interface KHHVisitedPickVC () <UIPickerViewDelegate>
+{
+    UIDatePicker *datePick;
+    UIPickerView *pick;
+}
 @end
 
 @implementation KHHVisitedPickVC
@@ -19,8 +24,6 @@
 @synthesize isShowWarnValue;
 @synthesize visitVC;
 @synthesize visitedUpdateVale;
-@synthesize datePick;
-@synthesize pick;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -38,17 +41,35 @@
     // Do any additional setup after loading the view from its nib.
     [self.view setBackgroundColor:[UIColor colorWithRed:241 green:238 blue:232 alpha:1.0]];
     if (self.isShowTimeValue) {
-        self.pick.hidden = YES;
+//        pick.hidden = YES;
+        [self initDatePickView];
     }else if (self.isShowNoteValue || self.isShowWarnValue){
-        self.datePick.hidden = YES;
+//        datePick.hidden = YES;
+        [self initPickView];
     }
 }
+
+-(void) initDatePickView {
+
+    datePick = [[UIDatePicker alloc] initWithFrame:pickFrame];
+    //只能选择未来的时间
+    datePick.minimumDate = [NSDate new];
+    [self.view addSubview:datePick];
+}
+
+-(void) initPickView {
+    pick = [[UIPickerView alloc] initWithFrame:pickFrame];
+    pick.delegate = self;
+    [pick setShowsSelectionIndicator:YES];
+    [self.view addSubview:pick];
+}
+
 - (void)rightBarButtonClick:(id)sender{
     if (self.isShowTimeValue) {
         [self.visitVC datePickerValueChanged:datePick];
         
     }else{
-        int row = [self.pick selectedRowInComponent:0];
+        int row = [pick selectedRowInComponent:0];
         NSString *title = [_tempPickArr objectAtIndex:row];
         if ([visitedUpdateVale isKindOfClass:[UITextField class]]) {
             UITextField *tf = (UITextField *)visitedUpdateVale;
@@ -60,7 +81,7 @@
     
     }
     if (self.isShowWarnValue) {
-        int row = [self.pick selectedRowInComponent:0];
+        int row = [pick selectedRowInComponent:0];
         if (row == 0) {
             self.visitVC.timeInterval = 0;
         }else if (row == 1){

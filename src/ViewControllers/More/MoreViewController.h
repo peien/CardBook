@@ -14,7 +14,6 @@
 @property (strong, nonatomic) IBOutlet UISwitch *groupMobilePhoneSwi;
 @property (strong, nonatomic) IBOutlet UISwitch *autoReturn;
 @property (strong, nonatomic) IBOutlet UILabel *updateStyle;
-@property (strong, nonatomic) IBOutlet UILabel *defaultPage;
 @property (strong, nonatomic) NSString         *titleStr;
 
 - (IBAction)addMobileGroupSwitchValueChange:(id)sender;
