@@ -15,6 +15,11 @@
 @end
 
 @implementation IntroViewController
+
+{
+    UILabel *label;
+}
+
 @synthesize xlPage;
 
 - (void)dealloc
@@ -42,15 +47,28 @@
     CGFloat hh = self.theScrollView.frame.size.height;
     int count= 4;
     self.theScrollView.contentSize = CGSizeMake(ww * count, hh);
-    self.theTitleLabel.text = @"弘“云”服务";
+    label = [[UILabel alloc]initWithFrame:CGRectMake(320/2-200/2, 0, 200, 50)];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.text = @"弘“云”服务";
+    label.backgroundColor = [UIColor clearColor];
+    label.font = [UIFont systemFontOfSize:20];
+    [self.view addSubview:label];
+    //self.theTitleLabel.text = @"弘“云”服务";
     for (int i = 0; i < count; i++)
     {
         CGFloat x = i * ww;
-        UIImage *anImage = [UIImage imageNamed:[NSString stringWithFormat:@"intro_%i.png", i]];
+        UIImage *anImage = [UIImage imageNamed:[NSString stringWithFormat:@"intro_%i", i]];
         UIImageView *aView = [[UIImageView alloc] initWithImage:anImage];
         aView.backgroundColor = [UIColor clearColor];
         aView.frame = CGRectMake(x, 0, ww, hh);
+        if (i == 3) {
+            UIButton* but =[[UIButton alloc]initWithFrame:CGRectMake(200, 50, 100, 40)];
+            [but setTitle:@"立即体验" forState:UIControlStateNormal];
+            but.backgroundColor = [UIColor grayColor];
+            [aView addSubview:but];
+        }
         [self.theScrollView addSubview:aView];
+        
     }
     
     xlPage = [[XLPageControl alloc] initWithFrame:CGRectMake(65, 420, 200, 15)];
@@ -81,7 +99,8 @@
     CGFloat pageWidth = self.theScrollView.frame.size.width;
     int page = floor((self.theScrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
     self.xlPage.currentPage = page;
-    self.theTitleLabel.text = titles[page];
+   label.text = titles[page];
+    
 }
 
 - (IBAction)startNow:(id)sender {

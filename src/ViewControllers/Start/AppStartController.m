@@ -508,20 +508,19 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 }
 - (void)showIntroView {
     UIViewController *toVC = [[IntroViewController alloc]
-                              initWithNibName:nil
-                              bundle:nil];
+                              init];
     self.introController = toVC;
-    [self addChildViewController:self.introController];
+  //  [self addChildViewController:self.introController];
     [self.view addSubview:self.introController.view];
-    [UIView animateWithDuration: 0.5
-                     animations:^{
-                         self.loginController.view.alpha = 1.0;
-                        // self.launchController.view.alpha = 0.0;
-                     }
-                     completion:^(BOOL finished) {
-                         [self.launchController.view removeFromSuperview];
-                        // [self.launchController removeFromParentViewController];
-                     }];
+//    [UIView animateWithDuration: 0.5
+//                     animations:^{
+//                         self.loginController.view.alpha = 1.0;
+//                        // self.launchController.view.alpha = 0.0;
+//                     }
+//                     completion:^(BOOL finished) {
+//                         [self.launchController.view removeFromSuperview];
+//                        // [self.launchController removeFromParentViewController];
+//                     }];
 //    [self transitionToViewController:toVC
 //                             options:AppStart_AnimationOptions];
 }
