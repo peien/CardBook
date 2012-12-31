@@ -64,7 +64,6 @@
         self.dataArray = [[[KHHData sharedData] schedulesOnCard:self.card date:self.selectedDate] sortedArrayUsingDescriptors:@[descDate]];
     }else {
         KHHData *data = [KHHData sharedData];
-#warning 根据类型获取相应的拜访计划
         switch (self.visitType) {
             case KHHVisitPlanExecuting:
             {

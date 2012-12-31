@@ -126,17 +126,16 @@
 //显示数据未同步完全的alert
 -(BOOL) checkNeedShowSyncAlert {
     if (self.card) {
-        return YES;
+        return NO;
     }else{
         //提示用户数据没有同步下来，先同步一下数据
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:KhhMessageDataErrorTitle
-                                                        message:KhhMessageDataError
+                                                        message:KhhMessageDataErrorNotice
                                                        delegate:self
                                               cancelButtonTitle:KHHMessageSure
-                                              otherButtonTitles:KHHMessageCancle, nil];
-        alert.tag = KHHAlertSync;
+                                              otherButtonTitles:nil, nil];
         [alert show];
-        return NO;
+        return YES;
     }
 }
 
@@ -209,7 +208,7 @@
 
 - (void)btnClick:(id)sender
 {
-    if (![self checkNeedShowSyncAlert]) {
+    if ([self checkNeedShowSyncAlert]) {
         return;
     }
     UIButton *button = (UIButton *)sender;
@@ -226,21 +225,7 @@
             break;
         case 113:
         {
-            //弹出同步提示框
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"同步数据"
-                                                            message:KhhMessageSyncDataWithServer
-                                                           delegate:self
-                                                  cancelButtonTitle:@"确认"
-                                                  otherButtonTitles:@"取消", nil];
-            alert.tag = KHHAlertSync;
-            [alert show];
-            //收到最后一张新的卡片
-//            [self observeNotificationName:KHHUIPullLatestReceivedCardSucceeded selector:@"handlePullLatestReceivedCardSucceeded:"];
-//            [self observeNotificationName:KHHUIPullLatestReceivedCardFailed selector:@"handlePullLatestReceivedCardFailed:"];
-//            MBProgressHUD *progess = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-//            progess.labelText = NSLocalizedString(@"正在收名片，请稍后", nil);
-//            self.isHandleReceive = YES;
-//            [self.dataCtrl pullLatestReceivedCard];
+            
             break;
         }
         default:
@@ -493,59 +478,12 @@
             }
         }
             break;
-        case KHHAlertSync:
-        {
-            if (buttonIndex == 0) {
-                //同步所有，同步联系人，启动定位服务
-                [self synBtnClick];
-            }
-        }
-            break;
         default:
             break;
     }
     
 }
-- (void)synBtnClick
-{
-    NSLog(@"start syn");
-    [self observeNotificationName:nDataSyncAllSucceeded selector:@"handleDataSyncAllSucceeded:"];
-    [self observeNotificationName:nDataSyncAllFailed selector:@"handleDataSyncAllFailed:"];
-    app = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
-//    [MBProgressHUD showHUDAddedTo:app.window animated:YES];
-    MBProgressHUD *progess = [MBProgressHUD showHUDAddedTo:app.window animated:YES];
-    progess.labelText = NSLocalizedString(KHHMessageSyncAll, nil);
-    [[KHHData sharedData] startSyncAllData];
-}
-- (void)handleDataSyncAllSucceeded:(NSNotification *)noti{
-    [self stopObservingStartSynAllData];
-    DLog(@"handleDataSyncAllSucceeded! ====== noti is %@",noti.userInfo);
-}
-- (void)handleDataSyncAllFailed:(NSNotification *)noti{
-    [self stopObservingStartSynAllData];
-    DLog(@"handleDataSyncAllFailed! ====== noti is %@",noti.userInfo);
-    
-    //设置消息
-    NSString *message = nil;
-    if ([[noti.userInfo objectForKey:@"errorCode"]intValue] == KHHErrorCodeConnectionOffline){
-        message = KHHMessageNetworkEorror;
-    }
-    
-    //提示没有收到新名片
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:KHHMessageSyncAllFailed
-                                                    message:message
-                                                   delegate:nil
-                                          cancelButtonTitle:KHHMessageSure
-                                          otherButtonTitles:nil, nil];
-    [alert show];
-}
-- (void)stopObservingStartSynAllData{
-    
-    [self stopObservingNotificationName:nDataSyncAllSucceeded];
-    [self stopObservingNotificationName:nDataSyncAllFailed];
-    app = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
-    [MBProgressHUD hideHUDForView:app.window animated:YES];
-}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
