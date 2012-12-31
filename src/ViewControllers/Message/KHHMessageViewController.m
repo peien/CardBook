@@ -219,13 +219,15 @@
 
 - (void)inNetWorking
 {
-    [self.navigationController.view addSubview:[NetWorking sharedInstance]];
-    [[NetWorking sharedInstance] start];
+//    [self.navigationController.view addSubview:[NetWorking sharedInstance]];
+//    [[NetWorking sharedInstance] start];
+//    [self.view addSubview:[NetWorking sharedInstance]];
 }
 
 - (void)outNetWorking
 {
-   [[NetWorking sharedInstance] stop];
+//    [[NetWorking sharedInstance] stop];
+//    [[NetWorking sharedInstance] removeFromSuperview];
 }
 
 @end

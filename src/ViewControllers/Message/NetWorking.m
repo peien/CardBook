@@ -26,12 +26,15 @@
 - (void)initSubs{
     actView = [[UIActivityIndicatorView alloc]initWithFrame:CGRectMake(0,10,20,20)];
     label = [[UILabel alloc]initWithFrame:CGRectMake(30,10,70,20)];
+    [self addSubview:actView];
+    [self addSubview:label];
 }
 
 - (void)start
 {
     timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(animDo) userInfo:nil repeats:YES];
     [actView startAnimating];
+    
 }
 
 - (void)stop
@@ -40,7 +43,7 @@
     if (timer) {
         [timer invalidate];
         timer = nil;
-    }
+    }   
 }
 - (void)animDo
 {

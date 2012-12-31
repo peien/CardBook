@@ -15,9 +15,9 @@
 #import "MyTabBarController.h"
 #import "ATestViewController.h"
 #import "AppStartController.h"
-//#import <Parse/Parse.h>
-#import "NSString+Base64.h"
 
+#import "NSString+Base64.h"
+#import "KHHTypes.h"
 
 @implementation KHHAppDelegate
 
@@ -27,7 +27,7 @@
     // 设置window默认背景
     self.window.backgroundColor = [UIColor blackColor];
     
-//    [Parse setApplicationId:@"7AXnSGuIT5qc2U5MQ7kUf7XLD5KK1otCK4hP33If" clientKey:@"TKmkS6FGHBdV0J1QX8Wcq99XYKUQsoIBHjANIVdv"];
+
      [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
     // 设置界面元素的公共属性
     [self customizeCommonUI];
@@ -41,11 +41,21 @@
     // 注册响应的消息
     [self observeNotificationName:KHHUIShowStartup selector:@"handleShowStartup:"]; // 显示主界面消息
     [self observeNotificationName:nAppShowMainView  selector:@"handleShowMainUI:"]; // 显示主界面消息
-    [self observeNotificationName:KHHAppLogout     selector:@"handleLogout:"];// 登出
+    [self observeNotificationName:KHHAppLogout     selector:@"handleLogout:"];// 登出    
+   
+        AppStartController *startVC = [[AppStartController alloc] initWithNibName:nil bundle:nil];
+        startVC.agent    = [[KHHNetworkAPIAgent alloc] init];
+        startVC.data     = [KHHData sharedData];
+        startVC.defaults = [KHHDefaults sharedDefaults];
+        self.window.rootViewController = startVC;
+    
+    
+    // 显示启动界面
+   
     
     // 显示Startup界面
     [self.window makeKeyAndVisible];
-    [self postASAPNotificationName:KHHUIShowStartup];
+   // [self postASAPNotificationName:KHHUIShowStartup];
     
     //捕获摇摇动作
     application.applicationSupportsShakeToEdit = YES;
@@ -125,7 +135,7 @@
         
        // [[KHHData sharedData] syncMessages];
     }else{
-        [self postASAPNotificationName:KHHNetworkReceivedCardsAfterDateLastCardExpectedCountSucceeded];
+        [[KHHData sharedData]syncReceivedCards:[NSArray arrayWithObject:@(KHHQueuedOperationSyncReceivedCards)]];
     }
     
     [self updateApplicationIconNumber:application];

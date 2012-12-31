@@ -8,6 +8,8 @@
 
 #import "AFHTTPClient.h"
 #import "NetFromPlist.h"
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 @interface NetClient : AFHTTPClient
 
 @property (nonatomic,strong) NetFromPlist *netFromPlist;
