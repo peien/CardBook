@@ -104,4 +104,13 @@ typedef enum {
     KHHVisitPlanOverdue,
     KHHVisitPlanFinished,
 } KHHVisitPlanType;
+
+
+//插件类型
+typedef enum {
+    KUIActionSheetStylePhone,
+    KUIActionSheetStyleMessage,
+    KUIActionSheetStyleEditGroupMember,
+    KUIActionSheetStyleUpload
+}KUIActionSheetHomeType;
 #endif

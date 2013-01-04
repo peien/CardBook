@@ -24,6 +24,7 @@
 #import "Card.h"
 #import "DetailInfoViewController.h"
 #import "KHHLocalNotificationUtil.h"
+#import "KHHOrganizationViewController.h"
 
 #define TEXT_NEW_MESSAGE_COMMING NSLocalizedString(@"您有新消息到了,可到消息界面查看新消息。",nil)
 #define TEXT_NEW_CONTACT_COMMING NSLocalizedString(@"您有新名片到了，点击确认去查看联系人...",nil)
@@ -258,9 +259,10 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
 }
 //分组
 - (IBAction)manageEmployeesBtnClick:(id)sender{
-    KHHHomeViewController *homeVC = [[KHHHomeViewController alloc] initWithNibName:nil bundle:nil];
+//    KHHHomeViewController *homeVC = [[KHHHomeViewController alloc] initWithNibName:nil bundle:nil];
+//    [self.navigationController pushViewController:homeVC animated:YES];
+    KHHOrganizationViewController *homeVC = [[KHHOrganizationViewController alloc] initWithNibName:nil bundle:nil];
     [self.navigationController pushViewController:homeVC animated:YES];
-    
 
 }
 //签到

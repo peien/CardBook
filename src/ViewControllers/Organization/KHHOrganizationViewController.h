@@ -1,5 +1,5 @@
 //
-//  KHHHomeViewController.h
+//  KHHOrganizationViewController.h
 //  CardBook
 //
 //  Created by 孙铭 on 8/6/12.
@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SuperViewController.h"
 #import "KHHVisitRecoardVC.h"
-@interface KHHHomeViewController : SuperViewController <UITableViewDelegate, UITableViewDataSource,
+@interface KHHOrganizationViewController : SuperViewController <UITableViewDelegate, UITableViewDataSource,
 UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (nonatomic, weak)   IBOutlet UISearchBar      *searchBar;
 @property (nonatomic, strong) NSMutableArray            *btnTitleArr;
