@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface KHHPopUpTable : UITableView
+@interface KHHPopUpTable : UITableView<UITableViewDataSource,UITableViewDelegate>
 
 @end
