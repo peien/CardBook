@@ -21,7 +21,7 @@
 #import "MBProgressHUD.h"
 #import "KHHAppDelegate.h"
 #import "NSString+SM.h"
-#import "UIImageView+WebCache.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "KHHLocalNotificationUtil.h"
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
@@ -29,6 +29,8 @@
 #import <EventKitUI/EventKitUI.h>
 #import "KHHBMapLocationController.h"
 #import "KHHBMapViewController.h"
+#import "KHHCalendarViewController.h"
+#import "KHHKeyBoardManagerUtil.h"
 
 #define TEXTFIELD_OBJECT_TAG  5550
 #define TEXTFIELD_DATE_TAG    5551
@@ -477,6 +479,8 @@
     [self.hud hide:YES];
     [self stopObservingForCreateVisitedSch];
     [self addEventForCalendar];
+    //把当前拜访计划的最新时间赋给传入的viewCtl
+    [self restoreCurrentScheduleDate];
     [self.navigationController popViewControllerAnimated:YES];
 
 }
@@ -499,6 +503,7 @@
     [self.hud hide:YES];
     [self stopObservingForUpdateVisitedSch];
     [self addEventForCalendar];
+    [self restoreCurrentScheduleDate];
     [self.navigationController popViewControllerAnimated:YES];
 
 }
@@ -520,6 +525,14 @@
 - (void)stopObservingForUpdateVisitedSch{
     [self stopObservingNotificationName:KHHUIUpdateVisitScheduleSucceeded];
     [self stopObservingNotificationName:KHHUIUpdateVisitScheduleFailed];
+}
+
+//把当前的拜访计划的日期给KHHCalendarViewController，在返回时要刷新的
+-(void) restoreCurrentScheduleDate {
+    if (self.viewCtl && [self.viewCtl isKindOfClass:[KHHCalendarViewController class]]) {
+        KHHCalendarViewController *ctl = (KHHCalendarViewController *) self.viewCtl;
+        ctl.changedDate = [self dateFromString];
+    }
 }
 
 #pragma mark -
@@ -575,97 +588,50 @@
 {
     if (indexPath.row < 7) {
         static NSString *cellID = @"cellID";
+        static NSString *cellID_A = @"cellID_Address";
+        NSString *realCellID = cellID;
         UITableViewCell *cell = nil;
-        cell = [tableView dequeueReusableCellWithIdentifier:cellID];
+        //地址时要用textView，可以换行
+        if (indexPath.row == 4) {
+            realCellID = cellID_A;
+        }
+        
+        cell = [tableView dequeueReusableCellWithIdentifier:realCellID];
         if (cell == nil) {
-            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:realCellID];
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
             cell.textLabel.text = [_fieldName objectAtIndex:indexPath.row];
             cell.textLabel.font = [UIFont systemFontOfSize:12];
-            UITextField *tf = [[UITextField alloc] initWithFrame:CGRectMake(65, 0, 220, 37)];
-            [tf setBackgroundColor:[UIColor clearColor]];
-            tf.leftViewMode = UITextFieldViewModeAlways;
-            tf.tag = 9693;
-            tf.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-            tf.font = [UIFont systemFontOfSize:13];
-            tf.delegate = self;
-            [cell.contentView addSubview:tf];
-        }
-        UITextField *textField = (UITextField *)[cell.contentView viewWithTag:9693];
-        if (indexPath.row == 0) {
-            UIButton *objectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-            objectBtn.frame = CGRectMake(280, 0, 35, 35);
-            [objectBtn addTarget:self action:@selector(objectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-            [objectBtn setBackgroundImage:[UIImage imageNamed:@"contact_select.png"] forState:UIControlStateNormal];
-            [cell.contentView addSubview:objectBtn];
-            textField.tag = TEXTFIELD_OBJECT_TAG;
-            if (_style == KVisitRecoardVCStyleNewBuild) {
-                textField.placeholder = @"请选择拜访对象";
-                //设置默认值（每次出现cell的时候都会调，但只有第一次真正的会赋值，后面再调都被忽略了？？？？？？就不会把最新值存在临时变量中了）
-                if (![self.visitInfoCard isKindOfClass:[MyCard class]] && self.visitInfoCard && (!textField.text || textField.text.length > 0)) {
-                    NSString *defaultCustomer = [self combineNameAndCompany:self.visitInfoCard];
-                    if (defaultCustomer) {
-                        textField.text = defaultCustomer;
-                    }
-                }
-            }else if (_style == KVisitRecoardVCStyleShowInfo){
-                textField.text = [_fieldValue objectAtIndex:indexPath.row];
-                objectBtn.hidden = YES;
-                textField.enabled = NO;
-            }
-            if (self.isFinishTask || [self.schedu.isFinished isEqualToNumber:[NSNumber numberWithBool:NO]]) {
-                textField.text = [_fieldValue objectAtIndex:indexPath.row];
-                objectBtn.hidden = NO;
-                textField.enabled = YES;
-            }
-        }else if (indexPath.row == 1){
-            textField.enabled = NO;
-            textField.tag = TEXTFIELD_DATE_TAG;
-            if (_style == KVisitRecoardVCStyleNewBuild) {
-                textField.text = _dateStr;
-                if (self.isFromCalVC && self.selectedDateFromCal != nil) {
-                    NSDateFormatter *dateForm = [[NSDateFormatter alloc] init];
-                    [dateForm setDateFormat:@"yyyy-MM-dd HH:mm"];
-                    NSString *showDAte = [dateForm stringFromDate:self.selectedDateFromCal];
-                    NSArray *dateArr = [showDAte componentsSeparatedByString:@" "];
-                    textField.text = [dateArr objectAtIndex:0];
-                }else{
-                   textField.text = _dateStr;
-                }
-            }else if (_style == KVisitRecoardVCStyleShowInfo){
-                textField.text = [_fieldValue objectAtIndex:1];
-            }
-
-        }else if (indexPath.row == 2){
-            textField.enabled = NO;
-            textField.tag = TEXTFIELD_TIME_TAG;
-            if (_style == KVisitRecoardVCStyleNewBuild) {
-                textField.text = _timeStr;
-            }else if (_style == KVisitRecoardVCStyleShowInfo){
-                textField.text = [_fieldValue objectAtIndex:2];
-            }
-        }else if (indexPath.row == 3){
-            textField.placeholder = @"请输入备注信息（限制400字内）";
-            textField.tag = NOTE_FIELD_TAG;
-            if (_style == KVisitRecoardVCStyleNewBuild) {
-            }else if (_style == KVisitRecoardVCStyleShowInfo){
-                textField.text = [_fieldValue objectAtIndex:indexPath.row];
-            }
-            if (YES) {
-                UIButton *noteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-                noteBtn.frame = CGRectMake(280, 5, 30, 30);
-                [noteBtn setBackgroundImage:[UIImage imageNamed:@"beizhu_btn.png"] forState:UIControlStateNormal];
-                noteBtn.tag = NOTE_BTN_TAG;
-                [noteBtn addTarget:self action:@selector(noteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-                [cell.contentView addSubview:noteBtn];
-            }
             
-        }else if (indexPath.row == 4){
-            textField.enabled = NO;
-            textField.tag = TEXTFIELD_ADDRESS_TAG;
+            if (indexPath.row == 4) {
+                UITextView *tv= [[UITextView alloc] initWithFrame:CGRectMake(65, 0, 220, 44)];
+                [tv setBackgroundColor:[UIColor clearColor]];
+                tv.tag = 9693;
+                tv.font = [UIFont systemFontOfSize:13];
+                [cell.contentView addSubview:tv];
+            }else{
+                UITextField *tf = [[UITextField alloc] initWithFrame:CGRectMake(65, 0, 220, 44)];
+                [tf setBackgroundColor:[UIColor clearColor]];
+                tf.leftViewMode = UITextFieldViewModeAlways;
+                tf.tag = 9693;
+                tf.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+                tf.font = [UIFont systemFontOfSize:13];
+                tf.delegate = self;
+                [cell.contentView addSubview:tf];
+            }
+        }
+        
+        if (indexPath.row == 4){
+            //contentView为textView的行
+            UITextView *textView = (UITextView *)[cell.contentView viewWithTag:9693];
+            textView.editable = NO;
+            textView.tag = TEXTFIELD_ADDRESS_TAG;
+//            CGFloat topCorrect = ([textView bounds].size.height - [textView contentSize].height);
+//            topCorrect = (topCorrect <0.0 ?0.0 : topCorrect);
+//            textView.contentOffset = (CGPoint){.x =0, .y = -topCorrect/2};
+//            textView.text = [_fieldValue objectAtIndex:indexPath.row];
             if (_style == KVisitRecoardVCStyleNewBuild || [self.schedu.isFinished isEqualToNumber:[NSNumber numberWithBool:NO]]) {
-                textField.text = [_fieldValue objectAtIndex:indexPath.row];
-                textField.text = self.address;
+                textView.text = self.address;
                 if (self.updateImageView == nil) {
                     self.updateImageView = [[UIImageView alloc] initWithImage:[self.imageArray objectAtIndex:0]];
                     self.updateImageView.userInteractionEnabled = YES;
@@ -676,9 +642,8 @@
                     [self.updateImageView addGestureRecognizer:tap];
                     [cell addSubview:self.updateImageView];
                 }
-
+                
             }else if(_style == KVisitRecoardVCStyleShowInfo && [self.schedu.isFinished isEqualToNumber:[NSNumber numberWithBool:YES]]){
-                textField.text = [_fieldValue objectAtIndex:indexPath.row];
                 UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
                 [btn setBackgroundImage:[UIImage imageNamed:@"dingwei_green.png"] forState:UIControlStateNormal];
                 [btn addTarget:self action:@selector(showMap:) forControlEvents:UIControlEventTouchUpInside];
@@ -686,34 +651,106 @@
                 [cell.contentView addSubview:btn];
             }
             
-        }else if (indexPath.row == 5){
-            [textField removeFromSuperview];
-            if (self.warnBtn == nil) {
-                warnBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-                [warnBtn setBackgroundImage:[[UIImage imageNamed:@"tongbu_normal.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 8, 0, 8)] forState:UIControlStateNormal];
-                warnBtn.tag = 2277;
-                warnBtn.frame = CGRectMake(80, 8, 180, 37);
-                warnBtn.titleLabel.font = [UIFont systemFontOfSize:14];
-                [warnBtn addTarget:self action:@selector(warnBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-                [cell addSubview:warnBtn];
-            }
-            if (_style == KVisitRecoardVCStyleShowInfo) {
-               [warnBtn setTitle:[_fieldValue objectAtIndex:5] forState:UIControlStateNormal];
-            }else if(_style == KVisitRecoardVCStyleNewBuild){
-               [warnBtn setTitle:[_warnTitleArr objectAtIndex:0] forState:UIControlStateNormal];
-            }
-            if (_isNeedWarn) {
-                [warnBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            }else{
-                [warnBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
-                warnBtn.enabled = NO;
-            }
-            
-        }else if (indexPath.row == 6){
-            textField.placeholder = @"请输入参与者姓名";
-            textField.tag = TEXTFIELD_JOINER_TAG;
-            if (_style == KVisitRecoardVCStyleShowInfo) {
-                textField.text = [_fieldValue objectAtIndex:indexPath.row];
+        }else {
+            //contentView为textFiled的行
+            UITextField *textField = (UITextField *)[cell.contentView viewWithTag:9693];
+            if (indexPath.row == 0) {
+                UIButton *objectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+                objectBtn.frame = CGRectMake(280, 0, 35, 35);
+                [objectBtn addTarget:self action:@selector(objectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+                [objectBtn setBackgroundImage:[UIImage imageNamed:@"contact_select.png"] forState:UIControlStateNormal];
+                [cell.contentView addSubview:objectBtn];
+                textField.tag = TEXTFIELD_OBJECT_TAG;
+                if (_style == KVisitRecoardVCStyleNewBuild) {
+                    textField.placeholder = @"请选择拜访对象";
+                    //设置默认值（每次出现cell的时候都会调，但只有第一次真正的会赋值，后面再调都被忽略了？？？？？？就不会把最新值存在临时变量中了）
+                    if (![self.visitInfoCard isKindOfClass:[MyCard class]] && self.visitInfoCard && (!textField.text || textField.text.length > 0)) {
+                        NSString *defaultCustomer = [self combineNameAndCompany:self.visitInfoCard];
+                        if (defaultCustomer) {
+                            textField.text = defaultCustomer;
+                        }
+                    }
+                }else if (_style == KVisitRecoardVCStyleShowInfo){
+                    textField.text = [_fieldValue objectAtIndex:indexPath.row];
+                    objectBtn.hidden = YES;
+                    textField.enabled = NO;
+                }
+                if (self.isFinishTask || [self.schedu.isFinished isEqualToNumber:[NSNumber numberWithBool:NO]]) {
+                    textField.text = [_fieldValue objectAtIndex:indexPath.row];
+                    objectBtn.hidden = NO;
+                    textField.enabled = YES;
+                }
+            }else if (indexPath.row == 1){
+                textField.enabled = NO;
+                textField.tag = TEXTFIELD_DATE_TAG;
+                if (_style == KVisitRecoardVCStyleNewBuild) {
+                    textField.text = _dateStr;
+                    if (self.isFromCalVC && self.selectedDateFromCal != nil) {
+                        NSDateFormatter *dateForm = [[NSDateFormatter alloc] init];
+                        [dateForm setDateFormat:@"yyyy-MM-dd HH:mm"];
+                        NSString *showDAte = [dateForm stringFromDate:self.selectedDateFromCal];
+                        NSArray *dateArr = [showDAte componentsSeparatedByString:@" "];
+                        textField.text = [dateArr objectAtIndex:0];
+                    }else{
+                        textField.text = _dateStr;
+                    }
+                }else if (_style == KVisitRecoardVCStyleShowInfo){
+                    textField.text = [_fieldValue objectAtIndex:1];
+                }
+                
+            }else if (indexPath.row == 2){
+                textField.enabled = NO;
+                textField.tag = TEXTFIELD_TIME_TAG;
+                if (_style == KVisitRecoardVCStyleNewBuild) {
+                    textField.text = _timeStr;
+                }else if (_style == KVisitRecoardVCStyleShowInfo){
+                    textField.text = [_fieldValue objectAtIndex:2];
+                }
+            }else if (indexPath.row == 3){
+                textField.placeholder = @"请输入备注信息（限制400字内）";
+                textField.tag = NOTE_FIELD_TAG;
+                if (_style == KVisitRecoardVCStyleNewBuild) {
+                }else if (_style == KVisitRecoardVCStyleShowInfo){
+                    textField.text = [_fieldValue objectAtIndex:indexPath.row];
+                }
+                if (YES) {
+                    UIButton *noteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+                    noteBtn.frame = CGRectMake(280, 5, 30, 30);
+                    [noteBtn setBackgroundImage:[UIImage imageNamed:@"beizhu_btn.png"] forState:UIControlStateNormal];
+                    noteBtn.tag = NOTE_BTN_TAG;
+                    [noteBtn addTarget:self action:@selector(noteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+                    [cell.contentView addSubview:noteBtn];
+                }
+                
+            }else if (indexPath.row == 5){
+                [textField removeFromSuperview];
+                if (self.warnBtn == nil) {
+                    warnBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+                    [warnBtn setBackgroundImage:[[UIImage imageNamed:@"tongbu_normal.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 8, 0, 8)] forState:UIControlStateNormal];
+                    warnBtn.tag = 2277;
+                    warnBtn.frame = CGRectMake(80, 8, 180, 37);
+                    warnBtn.titleLabel.font = [UIFont systemFontOfSize:14];
+                    [warnBtn addTarget:self action:@selector(warnBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+                    [cell addSubview:warnBtn];
+                }
+                if (_style == KVisitRecoardVCStyleShowInfo) {
+                    [warnBtn setTitle:[_fieldValue objectAtIndex:5] forState:UIControlStateNormal];
+                }else if(_style == KVisitRecoardVCStyleNewBuild){
+                    [warnBtn setTitle:[_warnTitleArr objectAtIndex:0] forState:UIControlStateNormal];
+                }
+                if (_isNeedWarn) {
+                    [warnBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                }else{
+                    [warnBtn setTitleColor:[UIColor grayColor] forState:UIControlStateNormal];
+                    warnBtn.enabled = NO;
+                }
+                
+            }else if (indexPath.row == 6){
+                textField.placeholder = @"请输入参与者姓名";
+                textField.tag = TEXTFIELD_JOINER_TAG;
+                if (_style == KVisitRecoardVCStyleShowInfo) {
+                    textField.text = [_fieldValue objectAtIndex:indexPath.row];
+                }
             }
         }
         return cell;
@@ -822,7 +859,7 @@
         case TEXTFIELD_JOINER_TAG:
         {
             //显示键盘
-            [self theTableAnimationUp];
+            [self theTableAnimationUp: textField];
         }
             break;
         case TEXTFIELD_OBJECT_TAG:
@@ -871,24 +908,13 @@
 }
 
 
-
-- (void)theTableAnimationUp{
-    
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.3];
-    CGRect rect = _theTable.frame;
-    rect.origin.y = -100;
-    _theTable.frame = rect;
-    [UIView commitAnimations];
+//显示键盘动画
+- (void)theTableAnimationUp:(UITextField *) textField{
+    CGRect frame = [[textField superview] superview].frame;
+    [KHHKeyBoardManagerUtil adjustPanelsWithKeybord:self.view textFieldRect:frame];
 }
 - (void)theTableAnimationDown{
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration:0.3];
-    CGRect rect = _theTable.frame;
-    rect.origin.y = 0;
-    _theTable.frame = rect;
-    [UIView commitAnimations];
-    
+    [KHHKeyBoardManagerUtil hideKeyboard:self.view];
 }
 
 #pragma mark -
@@ -907,7 +933,7 @@
 //定位
 - (void)showMap:(id)sender
 {
-    UITextField *addressMap = (UITextField *)[self.view viewWithTag:TEXTFIELD_ADDRESS_TAG];
+    UITextView *addressMap = (UITextView *)[self.view viewWithTag:TEXTFIELD_ADDRESS_TAG];
 //    //默认地图
 //    MapController *mapVC = [[MapController alloc] initWithNibName:nil bundle:nil];
 //    mapVC.companyAddr = addressMap.text;
@@ -916,9 +942,10 @@
     KHHBMapViewController *mapVC = [[KHHBMapViewController alloc] initWithNibName:nil bundle:nil];
     if (self.schedu && self.schedu.address) {
         mapVC.companyCity = self.schedu.address.city;
-        mapVC.companyName = self.schedu.customer;
         mapVC.companyDetailAddr = self.schedu.address.other;
     }
+    //地图上显示名称
+    mapVC.companyName = [_fieldValue objectAtIndex:0];
     mapVC.companyAllAddr = addressMap.text;
     [self.navigationController pushViewController:mapVC animated:YES];
 }
@@ -966,7 +993,7 @@
     [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
     [self performSelector:@selector(stopAnimatingForUPdateLoca) withObject:nil afterDelay:0.5];
 
-    UITextField *addressTf = (UITextField *)[self.view viewWithTag:TEXTFIELD_ADDRESS_TAG];
+    UITextView *addressTf = (UITextView *)[self.view viewWithTag:TEXTFIELD_ADDRESS_TAG];
     KHHBMapLocationController *locaVC = [KHHBMapLocationController sharedController];
     if (locaVC.userDetailLocation.length > 0) {
         addressTf.text = locaVC.userDetailLocation;
@@ -1062,9 +1089,9 @@
             TSLocateView *locateView = (TSLocateView *)actionSheet;
             TSLocation *location = locateView.locate;
             NSLog(@"country:%@ city:%@ lat:%f lon:%f", location.state,location.city, location.latitude, location.longitude);
-            UITextField *tf = (UITextField *)[self.view viewWithTag:TEXTFIELD_ADDRESS_TAG];
+            UITextView *tv = (UITextView *)[self.view viewWithTag:TEXTFIELD_ADDRESS_TAG];
             NSString *addStr = [NSString stringWithFormat:@"%@ %@",location.state,location.city];
-            tf.text = addStr;
+            tv.text = addStr;
             //You can uses location to your application
         }else{
             if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {

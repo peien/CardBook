@@ -46,32 +46,38 @@ const struct CardTemplateItemFetchedProperties CardTemplateItemFetchedProperties
 	return (CardTemplateItemID*)[super objectID];
 }
 
-+ (NSSet *)keyPathsForValuesAffectingValueForKey:(NSString *)key {
++ (NSSet*)keyPathsForValuesAffectingValueForKey:(NSString*)key {
 	NSSet *keyPaths = [super keyPathsForValuesAffectingValueForKey:key];
 	
 	if ([key isEqualToString:@"fontSizeValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"fontSize"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 	if ([key isEqualToString:@"idValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"id"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 	if ([key isEqualToString:@"originXValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"originX"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 	if ([key isEqualToString:@"originYValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"originY"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 	if ([key isEqualToString:@"rectHeightValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"rectHeight"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 	if ([key isEqualToString:@"rectWidthValue"]) {
 		NSSet *affectingKey = [NSSet setWithObject:@"rectWidth"];
 		keyPaths = [keyPaths setByAddingObjectsFromSet:affectingKey];
+		return keyPaths;
 	}
 
 	return keyPaths;

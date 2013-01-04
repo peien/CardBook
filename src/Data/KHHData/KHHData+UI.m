@@ -13,6 +13,17 @@
 #import "NSManagedObject+KHH.h"
 //#import "ContactCard.h"
 
+// 过滤掉意外的名片：比如cardid＝＝0
+NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
+    NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:oldArray.count];
+    for (Card *card in oldArray) {
+        if (card.idValue && card.isFullValue) {
+            [newArray addObject:card];
+        }
+    }
+    return newArray;
+}
+
 @implementation KHHData (UI_Card)
 // 交换名片后取最新一张名片
 - (void)pullLatestReceivedCard {
@@ -86,8 +97,6 @@
  */
 - (NSArray *)allReceivedCards {
     NSArray *array;
-//    array = [ReceivedCard objectArrayByPredicate:nil
-//                                 sortDescriptors:@[[Card nameSortDescriptor]]];
     NSNumber *myComID = [KHHDefaults sharedDefaults].currentCompanyID;
     NSPredicate *predicate = nil;
     if (myComID.integerValue) {
@@ -96,7 +105,7 @@
         predicate = [NSPredicate predicateWithFormat:@"company.id <> %@", myComID];
     }
     array = [ReceivedCard objectArrayByPredicate:predicate
-                                 sortDescriptors:@[[Card newCardSortDescriptor],[Card nameSortDescriptor]]];
+                                 sortDescriptors:[Card defaultSortDescriptors]];
     return array;
 }
 - (ReceivedCard *)receivedCardByID:(NSNumber *)cardID {
@@ -114,16 +123,6 @@
 
 @end
 @implementation KHHData (UI_Group)
-// 过滤掉意外的名片：比如cardid＝＝0
-NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
-    NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:oldArray.count];
-    for (Card *card in oldArray) {
-        if (card.idValue && card.isFullValue) {
-            [newArray addObject:card];
-        }
-    }
-    return newArray;
-}
 // 所有 顶级分组（即父分组 id 为 0）
 - (NSArray *)allTopLevelGroups {
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"parent.id = %@", @(0)];
@@ -143,7 +142,7 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
     }
     NSArray *fetched;
     fetched = [ContactCard objectArrayByPredicate:predicate
-                                  sortDescriptors:@[[Card nameSortDescriptor]]];
+                                  sortDescriptors:[Card defaultSortDescriptors]];
     // 过滤掉意外情况
     NSMutableArray *result = FilterUnexpectedCardsFromArray(fetched);
     return result;
@@ -172,7 +171,7 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
         NSPredicate *predicate =  [NSPredicate predicateWithFormat:@"company.id == %@", myComID];
         NSArray *fetched;
         fetched = [ContactCard objectArrayByPredicate:predicate
-                                      sortDescriptors:@[[Card nameSortDescriptor]]];
+                                      sortDescriptors:[Card defaultSortDescriptors]];
         // 过滤掉意外情况
         result = FilterUnexpectedCardsFromArray(fetched);
     }
@@ -195,31 +194,61 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
     NSArray *fetched;
     NSPredicate *predicate =  [NSPredicate predicateWithFormat:@"evaluation.value >= 3.0"];
     fetched = [ContactCard objectArrayByPredicate:predicate
-                                  sortDescriptors:@[[Card nameSortDescriptor]]];
+                                  sortDescriptors:[Card defaultSortDescriptors]];
     // 过滤掉意外情况
     result = FilterUnexpectedCardsFromArray(fetched);
     return result;
 }
+
 // 通过几颗星筛选评估价值
 - (NSArray *)cardsofStarts:(float)starts{
     NSMutableArray *result;
     NSArray *fetched;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"evaluation.value == %f",starts]];
-    fetched = [ContactCard objectArrayByPredicate:predicate sortDescriptors:@[[Card nameSortDescriptor]]];
+    fetched = [ContactCard objectArrayByPredicate:predicate
+                                  sortDescriptors:[Card defaultSortDescriptors]];
     result = FilterUnexpectedCardsFromArray(fetched);
     return result;
 }
+
+// 通过几颗星筛选评估价值（分组）
+- (NSArray *)cardsofStarts:(float)starts groupId:(NSNumber *)groupId{
+    if (!groupId) {
+        return [self cardsofStarts:starts];
+    } 
+    NSMutableArray *result;
+    NSArray *fetched;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"(evaluation.value == %f) AND (ANY groups.id = %d)",starts,[groupId intValue]]];
+    fetched = [ContactCard objectArrayByPredicate:predicate
+                                  sortDescriptors:[Card defaultSortDescriptors]];
+    result = FilterUnexpectedCardsFromArray(fetched);
+    return result;
+}
+
 // 通过几颗星筛选关系
-- (NSArray *)cardsOfstartsForRelation:(float)starts{
+- (NSArray *)cardsOfstartsForRelation:(float)starts groupID: (long) groupID{
     NSMutableArray *result;
     NSArray *fetched;
     NSPredicate *predicate;
+    
+    NSMutableString *pre = [[NSMutableString alloc] initWithCapacity:40];
+    
+    //关系条件
     if (starts == -1) {
-         predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"evaluation.degree >= 1"]];
-    }else{
-         predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"evaluation.degree == %f",starts]];
+        [pre appendString:[NSString stringWithFormat:@"evaluation.degree >= 1"]];
+    }else {
+        [pre appendString:[NSString stringWithFormat:@"evaluation.degree == %f",starts]];
     }
-    fetched = [ContactCard objectArrayByPredicate:predicate sortDescriptors:@[[Card nameSortDescriptor]]];
+    
+    //分组的条件
+    if (groupID > 0) {
+        [pre appendString:[NSString stringWithFormat:@"%@%ld",@" && SOME groups.id == ",groupID]];
+    }
+    
+    predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"%@", pre]];
+ 
+    fetched = [ContactCard objectArrayByPredicate:predicate
+                                  sortDescriptors:[Card defaultSortDescriptors]];
     result = FilterUnexpectedCardsFromArray(fetched);
     return result;
 
@@ -235,7 +264,7 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
     }
     NSArray *fetched;
     fetched = [ContactCard objectArrayByPredicate:predicate
-                                  sortDescriptors:@[[Card nameSortDescriptor]]];
+                                  sortDescriptors:[Card defaultSortDescriptors]];
     NSMutableArray *filtered = [NSMutableArray arrayWithCapacity:fetched.count];
     for (Card *card in fetched) {
         if (card.groups.count < 1) {
@@ -320,6 +349,48 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
                                        sortDescriptors:@[sortDes,timeSort]];
     return result;
 }
+
+//正在执行
+- (NSArray *)executingSchedules
+{
+    NSPredicate *predicate = nil;
+    predicate = [NSPredicate predicateWithFormat:@"isFinished = no AND plannedDate >= %@", [NSDate new]];
+
+    NSSortDescriptor *timeSort = [NSSortDescriptor sortDescriptorWithKey:@"plannedDate"
+                                                               ascending:NO];
+    NSArray *result = [Schedule objectArrayByPredicate:predicate
+                                       sortDescriptors:@[timeSort]];
+    return result;
+}
+
+//过期的拜访记录
+- (NSArray *)overdueSchedules
+{
+    NSPredicate *predicate = nil;
+    predicate = [NSPredicate predicateWithFormat:@"isFinished = no AND plannedDate < %@", [NSDate new]];
+    
+    NSSortDescriptor *timeSort = [NSSortDescriptor sortDescriptorWithKey:@"plannedDate"
+                                                               ascending:NO];
+    NSArray *result = [Schedule objectArrayByPredicate:predicate
+                                       sortDescriptors:@[timeSort]];
+    return result;
+}
+
+//完成的
+- (NSArray *)finishedSchedules
+{
+    NSPredicate *predicate = nil;
+    predicate = [NSPredicate predicateWithFormat:@"isFinished <> no"];
+    
+    NSSortDescriptor *sortDes = [NSSortDescriptor sortDescriptorWithKey:@"isFinished"
+                                                              ascending:YES];
+    NSSortDescriptor *timeSort = [NSSortDescriptor sortDescriptorWithKey:@"plannedDate"
+                                                               ascending:NO];
+    NSArray *result = [Schedule objectArrayByPredicate:predicate
+                                       sortDescriptors:@[sortDes,timeSort]];
+    return result;
+}
+
 - (NSArray *)schedulesOnCard:(Card *)aCard day:(NSString *)aDay {
     NSDate *date = DateFromKHHDateString([aDay stringByAppendingString:@" 00:00:00"]);
     return [self schedulesOnCard:aCard date:date];
@@ -373,7 +444,9 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
 @end
 
 @implementation KHHData (UI_Message)
-
+- (void)messageNew:(NSDictionary *)responseDict{
+    [self.agent doProgressWithMessageDic:responseDict];
+}
 -(void)syncMessages {
     [self.agent allMessages];
 }

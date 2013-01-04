@@ -15,6 +15,10 @@
 #import "KHHData+UI.h"
 #import "KHHMessage.h"
 #import "MBProgressHUD.h"
+#import "NetClient+Message.h"
+
+#import "NetWorking.h"
+
 @interface KHHMessageViewController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 @property (strong, nonatomic) NSArray *messageArr;
 @property (strong, nonatomic) KHHData *dataCtrl;
@@ -69,7 +73,7 @@
     [self refreshTable];
 }
 
--(void) refreshTable {
+- (void) refreshTable {
     self.messageArr = [self.dataCtrl allMessages];
     [_theTable reloadData];
 }
@@ -78,11 +82,11 @@
     DLog(@"handlenUISyncMessagesFailed! noti is ======%@",noti.userInfo);
     [self stopObservingForMessage];
     [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"错误提示", nil)
-                               message:@"同步消息失败,请确保网络可用"
-                              delegate:nil
-                     cancelButtonTitle:NSLocalizedString(KHHMessageSure, nil)
-                     otherButtonTitles:nil] show];
-
+                                message:@"同步消息失败,请确保网络可用"
+                               delegate:nil
+                      cancelButtonTitle:NSLocalizedString(KHHMessageSure, nil)
+                      otherButtonTitles:nil] show];
+    
 }
 - (void)stopObservingForMessage{
     [self stopObservingNotificationName:nUISyncMessagesSucceeded];
@@ -101,6 +105,8 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    [NetClient sharedClient].inMsgView = YES;
+    
     [KHHShowHideTabBar showTabbar];
     if (self.isNeedReloadTable) {
         [self refreshTable];
@@ -108,6 +114,7 @@
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [NetClient sharedClient].inMsgView = NO;
     //[KHHShowHideTabBar hideTabbar];
     
 }
@@ -137,14 +144,19 @@
         cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
     }
     KHHMessage *message = [self.messageArr objectAtIndex:indexPath.row];
-    cell.subTitleLab.text = message.subject;
+    if (!message.subject||[message.subject isEqualToString:@""]) {
+        cell.subTitleLab.text = @"无标题";
+    }else{
+        cell.subTitleLab.text = message.subject;
+    }
+    
     cell.contentLab.text = message.content;
     cell.timeLab.text = message.time;
     if ([message.isRead isEqualToNumber:[NSNumber numberWithBool:YES]]) {
         cell.messageImage.hidden = YES;
     }
     return cell;
-
+    
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -152,19 +164,21 @@
     self.isNeedReloadTable = YES;
     KHHMessage *message = [self.messageArr objectAtIndex:indexPath.row];
     message.isRead = [NSNumber numberWithBool:YES];
+    [[NetClient sharedClient] doDelete:self messages:[NSArray arrayWithObject:message]];
 }
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {
     KHHDetailMessageVC *messageVC = [[KHHDetailMessageVC alloc] initWithNibName:@"KHHDetailMessageVC" bundle:nil];
     messageVC.message = [messageArr objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:messageVC animated:YES];
-
+    
 }
 #pragma mark -
 - (IBAction)editMessageBtnClick:(id)sender{
     
     KHHEditMSGViewController *editVC = [[KHHEditMSGViewController alloc] initWithNibName:nil bundle:nil];
     editVC.messageArr = self.messageArr;
+    
     self.isNeedReloadTable = YES;
     [self.navigationController pushViewController:editVC animated:YES];
 }
@@ -173,7 +187,7 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#pragma alert delegate
+#pragma mark - alert
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if (!alertView || !alertView.tag) {
         return;
@@ -189,6 +203,31 @@
         default:
             break;
     }
+}
+
+#pragma mark - del delegate
+
+- (void)deleFail
+{
+    [self refreshTable];
+}
+
+- (void)deleDone
+{
+    
+}
+
+- (void)inNetWorking
+{
+//    [self.navigationController.view addSubview:[NetWorking sharedInstance]];
+//    [[NetWorking sharedInstance] start];
+//    [self.view addSubview:[NetWorking sharedInstance]];
+}
+
+- (void)outNetWorking
+{
+//    [[NetWorking sharedInstance] stop];
+//    [[NetWorking sharedInstance] removeFromSuperview];
 }
 
 @end

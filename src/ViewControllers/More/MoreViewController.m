@@ -18,7 +18,6 @@
 
 
 @interface MoreViewController ()<UIActionSheetDelegate,UIAlertViewDelegate>
-@property (strong, nonatomic) KHHDefaults *defaultSet;
 @end
 
 @implementation MoreViewController
@@ -26,9 +25,7 @@
 @synthesize groupMobilePhoneSwi = _groupMobilePhoneSwi;
 @synthesize autoReturn = _autoReturn;
 @synthesize updateStyle = _updateStyle;
-@synthesize defaultPage = _defaultPage;
 @synthesize titleStr = _titleStr;
-@synthesize defaultSet;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -36,7 +33,6 @@
     if (self) {
         // Custom initialization
         self.title = NSLocalizedString(@"更多", nil);
-        self.defaultSet = [KHHDefaults sharedDefaults];
         self.rightBtn.hidden = YES;
     }
     return self;
@@ -48,18 +44,6 @@
     // Do any additional setup after loading the view from its nib.
     //_theTable.backgroundColor = [UIColor clearColor];
     [self.view setBackgroundColor:[UIColor colorWithRed:241 green:238 blue:232 alpha:1.0]];
-    int index = self.defaultSet.defaultMainUIIndex;
-    if (index == 100) {
-        _defaultPage.text = NSLocalizedString(@"(名片夹界面)", nil);
-    }else if (index == 101){
-        _defaultPage.text = NSLocalizedString(@"(CRM管理界面)", nil);
-    }else if (index == 102){
-        _defaultPage.text = NSLocalizedString(@"(交换名片界面)", nil);
-    }else if (index == 103){
-        _defaultPage.text = NSLocalizedString(@"(消息界面)", nil);
-    }else{
-       _defaultPage.text = NSLocalizedString(@"(名片夹界面)", nil);
-    }
 }
 - (void)viewWillAppear:(BOOL)animated{
       [super viewWillAppear:animated];
@@ -81,9 +65,7 @@
     _groupMobilePhoneSwi = nil;
     _autoReturn = nil;
     _updateStyle = nil;
-    _defaultPage = nil;
     _titleStr = nil;
-    self.defaultSet = nil;
 }
 #pragma mark TableDelegates
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -126,7 +108,7 @@
         case 0:
             switch (indexPath.row) {
                 case 0:{
-                    static NSString *identifier = @"SignIn";
+                    static NSString *identifier = @"ModifyPassword";
                     cell = [tableView dequeueReusableCellWithIdentifier:identifier];
                     if (cell == nil) {
                         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
@@ -341,12 +323,6 @@
         [actSheet addButtonWithTitle:@"仅在wifi网络下自动下载更新"];
         [actSheet addButtonWithTitle:@"自动下载更新"];
         [actSheet addButtonWithTitle:@"手动更新"];
-    }else{
-        [actSheet addButtonWithTitle:@"名片夹界面"];
-        [actSheet addButtonWithTitle:@"CRM管理界面"];
-        [actSheet addButtonWithTitle:@"交换名片界面"];
-        [actSheet addButtonWithTitle:@"消息界面"];
-    
     }
     [actSheet showInView:self.view];
 
@@ -360,17 +336,6 @@
     NSString *change = [NSString stringWithFormat:@"(%@)",s];
     if ([actionSheet.title isEqualToString:@"软件更新方式"]) {
         _updateStyle.text = change;
-    }else{
-        _defaultPage.text = change;
-        if (buttonIndex == 1) {
-            self.defaultSet.defaultMainUIIndex = 100;
-        }else if (buttonIndex == 2){
-            self.defaultSet.defaultMainUIIndex = 101;
-        }else if (buttonIndex == 3){
-            self.defaultSet.defaultMainUIIndex = 102;
-        }else if (buttonIndex == 4){
-            self.defaultSet.defaultMainUIIndex = 103;
-        }
     }
 }
 //是否添加手机分组

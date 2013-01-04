@@ -7,6 +7,10 @@
 //
 
 #import "SuperViewController.h"
+#import "NetClient.h"
+#import "KHHMessageViewController.h"
+
+#define TEXT_NEW_MESSAGE_COMMING NSLocalizedString(@"您有新消息到了,可到消息界面查看新消息。",nil)
 
 @implementation SuperViewController
 @synthesize leftBtn;
@@ -66,6 +70,63 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+#pragma mark - delegateMsgForMain
+
+- (void)reseaveDone:(Boolean)haveNewMsg
+
+{
+    if (haveNewMsg) {
+       
+        //当前页不是消息界面时要弹出新消息到了的框
+        if (![NetClient sharedClient].inMsgView ) {
+            //showalert
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"新消息"
+                                                            message:TEXT_NEW_MESSAGE_COMMING
+                                                           delegate:self
+                                                  cancelButtonTitle:@"确认"
+                                                  otherButtonTitles:@"取消", nil];
+            alert.tag = KHHAlertMessage;
+            [alert show];
+        }else{
+            [(KHHMessageViewController *)[self.navigationController.viewControllers lastObject] refreshTable];
+        }
+    }
+    
+}
+
+- (void)reseaveFail
+{
+    
+}
+
+#pragma mark - alert delegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (!alertView || !alertView.tag) {
+        return;
+    }
+    KHHAlertType type = alertView.tag;
+    switch (type) {
+       
+        case KHHAlertMessage:
+        {
+            if (buttonIndex == 0) {
+                [self gotoMessageListViewController];
+            }
+            break;
+        }
+            default:
+            break;
+    }
+}
+
+-(void) gotoMessageListViewController
+{
+    KHHMessageViewController *messageVC = [[KHHMessageViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:messageVC animated:YES];
 }
 
 @end

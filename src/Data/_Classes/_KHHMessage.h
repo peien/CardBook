@@ -41,7 +41,9 @@ extern const struct KHHMessageFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* company;
+
 
 
 //- (BOOL)validateCompany:(id*)value_ error:(NSError**)error_;
@@ -49,7 +51,9 @@ extern const struct KHHMessageFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* content;
+
 
 
 //- (BOOL)validateContent:(id*)value_ error:(NSError**)error_;
@@ -57,7 +61,9 @@ extern const struct KHHMessageFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* id;
+
 
 
 @property int64_t idValue;
@@ -69,7 +75,9 @@ extern const struct KHHMessageFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* isRead;
+
 
 
 @property BOOL isReadValue;
@@ -81,7 +89,9 @@ extern const struct KHHMessageFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* subject;
+
 
 
 //- (BOOL)validateSubject:(id*)value_ error:(NSError**)error_;
@@ -89,7 +99,9 @@ extern const struct KHHMessageFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* time;
+
 
 
 //- (BOOL)validateTime:(id*)value_ error:(NSError**)error_;
@@ -98,7 +110,7 @@ extern const struct KHHMessageFetchedProperties {
 
 
 
-@property (nonatomic, strong) Image* image;
+@property (nonatomic, strong) Image *image;
 
 //- (BOOL)validateImage:(id*)value_ error:(NSError**)error_;
 

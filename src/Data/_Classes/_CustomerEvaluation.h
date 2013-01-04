@@ -43,7 +43,9 @@ extern const struct CustomerEvaluationFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* degree;
+
 
 
 @property float degreeValue;
@@ -55,7 +57,9 @@ extern const struct CustomerEvaluationFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* firstMeetAddress;
+
 
 
 //- (BOOL)validateFirstMeetAddress:(id*)value_ error:(NSError**)error_;
@@ -63,7 +67,9 @@ extern const struct CustomerEvaluationFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* firstMeetDate;
+
 
 
 //- (BOOL)validateFirstMeetDate:(id*)value_ error:(NSError**)error_;
@@ -71,7 +77,9 @@ extern const struct CustomerEvaluationFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* id;
+
 
 
 @property int64_t idValue;
@@ -83,7 +91,9 @@ extern const struct CustomerEvaluationFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* remarks;
+
 
 
 //- (BOOL)validateRemarks:(id*)value_ error:(NSError**)error_;
@@ -91,7 +101,9 @@ extern const struct CustomerEvaluationFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* value;
+
 
 
 @property float valueValue;
@@ -103,7 +115,9 @@ extern const struct CustomerEvaluationFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* version;
+
 
 
 @property int64_t versionValue;
@@ -116,7 +130,7 @@ extern const struct CustomerEvaluationFetchedProperties {
 
 
 
-@property (nonatomic, strong) Card* customerCard;
+@property (nonatomic, strong) Card *customerCard;
 
 //- (BOOL)validateCustomerCard:(id*)value_ error:(NSError**)error_;
 

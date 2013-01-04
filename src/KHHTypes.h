@@ -77,6 +77,8 @@ typedef enum {
     KHHQueuedOperationSyncVisitSchedulesAfterCreation,
     KHHQueuedOperationSyncVisitSchedulesAfterUpdate,
     KHHQueuedOperationSyncVisitSchedulesAfterUploadImage,
+    KHHQueuedOperationSyncMyCard,
+    KHHQueuedOperationSyncMyCardsAfterUpdate,
 } KHHQueuedOperationSyncType;
 
 //一个界面有多个alert 时区分alert的
@@ -88,4 +90,18 @@ typedef enum {
     KHHAlertDelete          = 104,
 } KHHAlertType;
 
+//客户评估、客户价值详细界面的类型 (KHHValueViewController 界面用到)
+typedef enum {
+    KHHCustomerVauleFunnel    = 1,
+    KHHCustomerVauleRadar     = 2,
+} KHHCustomerVauleDetailType;
+
+
+//拜访计划类型
+typedef enum {
+    KHHVisitPlanAll          = 1,
+    KHHVisitPlanExecuting,
+    KHHVisitPlanOverdue,
+    KHHVisitPlanFinished,
+} KHHVisitPlanType;
 #endif

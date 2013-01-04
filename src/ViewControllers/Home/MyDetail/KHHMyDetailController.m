@@ -72,7 +72,7 @@
     //拜访日历界面
     _visitView = [[[NSBundle mainBundle] loadNibNamed:@"KHHVisitCalendarView" owner:self options:nil] objectAtIndex:0];
     _visitView.card = self.card;
-    _visitView.isAllVisitedSch = YES;
+    _visitView.visitType = KHHVisitPlanAll;
     [_visitView initViewData];
     
     CGRect rect = _visitView.footView.frame;

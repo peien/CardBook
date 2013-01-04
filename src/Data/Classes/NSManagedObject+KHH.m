@@ -32,6 +32,7 @@
     return [self objectByKey:@"id" value:ID createIfNone:createIfNone];
 }
 
+
 /*!
  根据 Key-Value 查数据库。
  keyName 和 value 不能为nil，否则返回nil。
@@ -98,12 +99,14 @@
     NSSortDescriptor *result;
     result = [NSSortDescriptor sortDescriptorWithKey:kAttributeKeyName
                                            ascending:YES
-                                            selector:@selector(caseInsensitiveCompare:)];
+                                            selector:@selector(localizedCaseInsensitiveCompare:)];
     return result;
 }
 + (NSSortDescriptor *)newCardSortDescriptor{
     NSSortDescriptor *result;
-    result = [NSSortDescriptor sortDescriptorWithKey:kAttributeKeyIsRead ascending:YES selector:@selector(compare:)];
+    result = [NSSortDescriptor sortDescriptorWithKey:kAttributeKeyIsRead
+                                           ascending:YES
+                                            selector:@selector(compare:)];
     return result;
 }
 

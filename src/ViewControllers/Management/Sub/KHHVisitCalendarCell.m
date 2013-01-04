@@ -10,12 +10,9 @@
 
 @implementation KHHVisitCalendarCell
 @synthesize Btn = _Btn;
+@synthesize photoBtn = _photoBtn;
 @synthesize delegate = _delegate;
 @synthesize finishBtn = _finishBtn;
-@synthesize imgviewIco1;
-@synthesize imgviewIco2;
-@synthesize imgviewIco3;
-@synthesize imgviewIco4;
 @synthesize showLocBtn;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier

@@ -26,6 +26,7 @@
         <attribute name="fax" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" syncable="YES"/>
         <attribute name="isFull" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
+        <attribute name="isRead" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
         <attribute name="microblog" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mobilePhone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="modelType" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -122,7 +123,6 @@
     <entity name="MyCard" representedClassName="MyCard" parentEntity="Card" syncable="YES"/>
     <entity name="PrivateCard" representedClassName="PrivateCard" parentEntity="ContactCard" syncable="YES"/>
     <entity name="ReceivedCard" representedClassName="ReceivedCard" parentEntity="ContactCard" syncable="YES">
-        <attribute name="isRead" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="memo" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Schedule" representedClassName="Schedule" syncable="YES">
@@ -146,7 +146,7 @@
     <elements>
         <element name="Address" positionX="0" positionY="0" width="128" height="180"/>
         <element name="BankAccount" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="Card" positionX="0" positionY="0" width="128" height="495"/>
+        <element name="Card" positionX="0" positionY="0" width="128" height="510"/>
         <element name="CardTemplate" positionX="0" positionY="0" width="128" height="195"/>
         <element name="CardTemplateItem" positionX="0" positionY="0" width="128" height="210"/>
         <element name="Company" positionX="0" positionY="0" width="128" height="120"/>
@@ -157,7 +157,7 @@
         <element name="KHHMessage" positionX="0" positionY="0" width="128" height="150"/>
         <element name="MyCard" positionX="0" positionY="0" width="128" height="45"/>
         <element name="PrivateCard" positionX="160" positionY="192" width="128" height="45"/>
-        <element name="ReceivedCard" positionX="0" positionY="0" width="128" height="75"/>
+        <element name="ReceivedCard" positionX="0" positionY="0" width="128" height="60"/>
         <element name="Schedule" positionX="0" positionY="0" width="128" height="225"/>
         <element name="SyncMark" positionX="160" positionY="192" width="128" height="75"/>
     </elements>

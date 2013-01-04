@@ -11,10 +11,11 @@
 /*
  *  KHH_RELEASE_SERVER
  *  1   正式服务器
+ *  2   海波电脑
  *  非1 测试服务器
  */
 #ifndef KHH_RELEASE_SERVER
-#define KHH_RELEASE_SERVER 1
+#define KHH_RELEASE_SERVER 0
 #endif
 
 /*
@@ -63,9 +64,11 @@
 #if KHH_RELEASE_SERVER == 1
 static NSString * const KHHServer = @"www.kinghanhong.com";
 static NSString * const KHHURLFormat = @"http://%@/cardbook/%@";
+#elif KHH_RELEASE_SERVER == 2
+static NSString * const KHHServer = @"192.168.1.70:8081"; //海波
+static NSString * const KHHURLFormat = @"http://%@/XCardServer/%@";
 #else
 static NSString * const KHHServer = @"s2.kinghanhong.com:9999";
-//static NSString * const KHHServer = @"192.168.1.70:8081"; //海波
 static NSString * const KHHURLFormat = @"http://%@/XCardServer/%@";
 #endif
 static NSString * const KHHURLUserGuide = @"useGuide.jsp";

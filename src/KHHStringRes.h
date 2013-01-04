@@ -63,3 +63,7 @@ static NSString * const KHHMessageDefaultGroupLocal             = @"手机";
 #ifndef KHH_DEFAULT_COORDINATE
 #define KHH_DEFAULT_COORDINATE CLLocationCoordinate2DMake(0, 0)
 #endif
+
+#ifndef KHH_Default_Point
+#define KHH_Default_Point CGPointMake(0.0f, 0.0f)
+#endif

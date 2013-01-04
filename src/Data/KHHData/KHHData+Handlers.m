@@ -138,6 +138,10 @@
     [self observeNotificationName:KHHNetworkChangePasswordSucceeded selector:@"handleNetworkChangePasswordSucceeded:"];
     [self observeNotificationName:KHHNetworkChangePasswordFailed selector:@"handleNetworkChangePasswordFailed:"];
     
+    //同步我的名片
+    [self observeNotificationName:KHHNetworkSyncMyCardsSucceeded selector:@"handleNetworkSyncMyCardsSucceeded:"];
+    [self observeNotificationName:KHHNetworkSyncMyCardsFailed selector:@"handleNetworkSyncMyCardsFailed:"];
+    
 }
 
 #pragma mark - Handlers
@@ -210,25 +214,41 @@
                               info:noti.userInfo];
 }
 - (void)handleUpdateCardSucceeded:(NSNotification *)noti {
+    //这里添入的iCard可能不准确，有些字段没有上传，所以与服务器进行一次同步
+    //私有名片可以直接更发数据库
     NSDictionary *info = noti.userInfo;
     NSDictionary *extra = info[kInfoKeyExtra];
     DLog(@"[II] extra = %@", extra);
+    
     InterCard *iCard = extra[kExtraKeyInterCard];
     // 填入数据库
     switch (iCard.modelType) {
         case KHHCardModelTypeMyCard:
-            [MyCard processIObject:iCard];
+        {
+//            [MyCard processIObject:iCard];
+            NSMutableArray *queue = [NSMutableArray array];
+            [queue addObject:@(KHHQueuedOperationSyncMyCard)];
+            [queue addObject:@(KHHQueuedOperationSyncMyCardsAfterUpdate)];
+            [self startNextQueuedOperation:queue];
             break;
+        }
         case KHHCardModelTypePrivateCard:
             [PrivateCard processIObject:iCard];
+            
+            // 保存数据库
+            [self saveContext];
+            
+            
+            // 发送成功消息
+            [self postASAPNotificationName:KHHUIModifyCardSucceeded];
             break;
         default:
             break;
     }
-    // 保存数据库
-    [self saveContext];
-    // 发送成功消息
-    [self postASAPNotificationName:KHHUIModifyCardSucceeded];
+    
+    
+
+    
 }
 - (void)handleUpdateCardFailed:(NSNotification *)noti {
     [self postASAPNotificationName:KHHUIModifyCardFailed
@@ -463,6 +483,7 @@
     NSArray *list = info[kInfoKeyObjectList];
     if (list) {
         [KHHMessage processIObjectList:list];
+       
     }
     
     // }
@@ -539,6 +560,11 @@
     NSDictionary *info = noti.userInfo;
     NSDictionary *extra= info[kInfoKeyExtra];
     NSMutableArray *queue = extra[kExtraKeyQueue];
+    //确保queue
+    if (!queue.count) {
+        [self startNextQueuedOperation:queue];
+        return;
+    }
     // 根据 queue 采取不同措施
     switch ([queue[0] integerValue]) {
         case KHHQueuedOperationSyncVisitSchedulesAfterCreation: {
@@ -681,6 +707,42 @@
 - (void)handleNetworkChangePasswordFailed:(NSNotification *)noti {
     [self postASAPNotificationName:KHHUIChangePasswordFailed
                               info:noti.userInfo];
+}
+
+
+//同步我的名片
+- (void)handleNetworkSyncMyCardsSucceeded:(NSNotification *)noti {
+    //保存数据，执行下个节点
+    NSDictionary *info = noti.userInfo;
+    DLog(@"[II] info = %@", info);
+    // 1.List
+    NSArray *list = info[kInfoKeyObjectList];
+    [MyCard processIObjectList:list];
+    // 2.Timestamp
+    [SyncMark UpdateKey:kSyncMarkKeySyncMyCardsLastTime
+                  value:info[kInfoKeySyncTime]];
+    // 3.保存
+    [self saveContext];
+    // 根据 queue 采取不同措施
+    NSDictionary *extra= info[kInfoKeyExtra];
+    [self startNextQueuedOperation:extra[kExtraKeyQueue]];
+}
+
+- (void)handleNetworkSyncMyCardsFailed:(NSNotification *)noti {
+    //执行下个节点
+    NSDictionary *info = noti.userInfo;
+    NSDictionary *extra= info[kInfoKeyExtra];
+    NSMutableArray *queue = extra[kExtraKeyQueue];
+    //确保queue
+    if (!queue.count) {
+        [self startNextQueuedOperation:queue];
+        return;
+    }
+    
+    //发送更新名片失败
+    if (KHHQueuedOperationSyncMyCardsAfterUpdate == [queue[0] integerValue]) {
+        [self postASAPNotificationName:KHHUIModifyCardFailed info:info];
+    }
 }
 
 @end

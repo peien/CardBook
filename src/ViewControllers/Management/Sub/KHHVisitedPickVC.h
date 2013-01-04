@@ -11,8 +11,6 @@
 #import "KHHVisitRecoardVC.h"
 
 @interface KHHVisitedPickVC : SuperViewController
-@property (weak, nonatomic) IBOutlet UIDatePicker *datePick;
-@property (weak, nonatomic) IBOutlet UIPickerView *pick;
 @property (strong, nonatomic) NSArray *tempPickArr;
 @property (assign, nonatomic) bool    isShowTimeValue;
 @property (assign, nonatomic) bool    isShowNoteValue;

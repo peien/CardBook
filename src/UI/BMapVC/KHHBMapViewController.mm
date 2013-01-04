@@ -9,6 +9,8 @@
 #import "KHHBMapViewController.h"
 #import "SVGeocoder.h"
 
+static NSInteger KHH_Map_Zoom_Level = 16;
+
 @interface KHHBMapViewController ()
 @end
 
@@ -44,6 +46,9 @@
 -(void)showMap
 {
     _mapView = [[BMKMapView alloc] initWithFrame:CGRectMake(0, 0, 320, 416)];
+    //设置zoom level
+    [_mapView setZoomLevel:KHH_Map_Zoom_Level];
+    
     //切换到指定地址
     _search = [[BMKSearch alloc] init];
     _mapView.delegate = self;
@@ -131,6 +136,7 @@
 	annotationView.centerOffset = CGPointMake(0, -(annotationView.frame.size.height * 0.5));
     annotationView.annotation = annotation;
 	annotationView.canShowCallout = YES;
+    [annotationView setSelected:YES];
     return annotationView;
 }
 
@@ -139,7 +145,9 @@
 	if (error == 0) {
 //		[self addAnnotationToMap:result.geoPt title:result.strAddr subTitle:nil];
 		[self addAnnotationToMap:result.geoPt title:_companyName subTitle:nil];
-	}
+	}else {
+        [[[UIAlertView alloc] initWithTitle:nil message:@"定位失败！" delegate:nil cancelButtonTitle:KHHMessageSure otherButtonTitles:nil, nil] show];
+    }
 }
 
 //在地图上添加一个标识

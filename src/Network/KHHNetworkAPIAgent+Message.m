@@ -73,6 +73,47 @@
           parameters:nil
              success:success];
 }
+
+
+#pragma mark - new Dictionary for message
+
+- (void)doProgressWithMessageDic:(NSDictionary *)responseDict{
+    NSLog(@"%@",responseDict);
+    NSString *action = kActionNetworkAllMessages;
+    //获取消息列表
+    NSArray *fsendList = responseDict[@"fsendList"];
+    NSMutableArray *messageList = [NSMutableArray arrayWithCapacity:fsendList.count];
+    for (id obj in fsendList) {
+        InMessage *im = [[[InMessage alloc] init] updateWithJSON:obj];
+        [messageList addObject:im];
+    }
+    
+    //获取联系人列表
+    NSArray *cardBookList = responseDict[@"cardBookList"];
+    NSMutableArray *contactList = [NSMutableArray arrayWithCapacity:cardBookList.count];
+    for (id obj in cardBookList) {
+        InterCard * iCard = [InterCard interCardWithReceivedCardJSON:obj nodeName:nil];
+        if (iCard) {
+            [contactList addObject:iCard];
+        }
+    }
+    //名片发送者,客户端对这些名片做过处理后把id传给服务器把标记置掉后，下次就不会再拿到这些数据
+    NSString *senderIDs = responseDict[@"fsendIds"];
+    if (senderIDs) {
+        [self deleteMessagesByIDs:senderIDs sucessBlock:nil];
+    }
+    
+    KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+    NSDictionary *dict = @{
+    kInfoKeyErrorCode  : @(code),
+    kInfoKeyObjectList : messageList,
+kInfoKeyReceivedCard: contactList,
+    };
+    [self postASAPNotificationName:NameWithActionAndCode(action, code)
+                              info:dict];
+
+}
+
 /**
  删除消息 customFsendService.delete
  http://s1.kinghanhong.com:8888/zentaopms/www/index.php?m=doc&f=view&docID=187

@@ -8,18 +8,21 @@
     id card = nil;
     switch (type) {
         case KHHCardModelTypeMyCard:
-            card = [MyCard objectByID:ID createIfNone:YES];
+            card = [MyCard objectByID:ID createIfNone:NO];
             break;
         case KHHCardModelTypePrivateCard:
-            card = [PrivateCard objectByID:ID createIfNone:YES];
+            card = [PrivateCard objectByID:ID createIfNone:NO];
             break;
         case KHHCardModelTypeReceivedCard:
-            card = [ReceivedCard objectByID:ID createIfNone:YES];
+            card = [ReceivedCard objectByID:ID createIfNone:NO];
             break;
         case KHHCardModelTypeCard:
             break;
     }
     return card;
+}
++ (NSArray *)defaultSortDescriptors {
+    return @[[Card newCardSortDescriptor], [Card nameSortDescriptor]];
 }
 @end
 
@@ -85,9 +88,11 @@
             [[self currentContext] deleteObject:newCard];
         } else {
             card = newCard;
+            
+            // 更新数据
+            [card updateWithIObject:iCard];
         }
-        // 更新数据
-        [card updateWithIObject:iCard];
+        
     }
     DLog(@"[II] card = %@", card);
     return card;

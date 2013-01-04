@@ -18,6 +18,8 @@
 #import "AppRegisterController.h"
 #import "LoginActionViewController.h"
 #import "KHHDefaults.h"
+#import "KHHNetworkAPIAgent+Statistics.h"
+#import "Reachability.h"
 
 #define titleCreateAccountSucceeded NSLocalizedString(@"用户注册成功", nil)
 #define titleCreateAccountFailed    NSLocalizedString(@"用户注册失败", nil)
@@ -38,6 +40,8 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 @property (nonatomic, strong) UIViewController *createAccountController;
 @property (nonatomic, strong) UIViewController *loginController;
 @property (nonatomic, strong) UIViewController *previousController;
+@property (nonatomic, strong) UIViewController *introController;
+@property (nonatomic, strong) UIViewController *launchController;
 @property (nonatomic, strong) NSDictionary     *OfflineLoginUserInfoDict;
 @end
 
@@ -58,7 +62,9 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 - (void)showPreviousView;
 @end
 
-@implementation AppStartController
+@implementation AppStartController{
+    Reachability *r;
+}
 @synthesize OfflineLoginUserInfoDict = _OfflineLoginUserInfoDict;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -108,9 +114,19 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
                              selector:@"handleSyncSucceeded:"];
         [self observeNotificationName:nDataSyncAllFailed
                              selector:@"handleSyncFailed:"];
+        
+        //save loginToServer
+        [self observeNotificationName:KHHSaveLogin
+                             selector:@"saveLoginToServer"];
+        
     }
     return self;
 }
+
+- (void)saveLoginToServer{
+    [((KHHNetworkAPIAgent *)_agent) saveToken];
+}
+
 - (void)dealloc {
     [self stopObservingAllNotifications];
 }//dealloc
@@ -121,7 +137,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     DLog(@"[II] viewDidLoad...");
     
     // 先显示 Launch Image。
-    [self showLaunchImage];
+  //  [self showLaunchImage];
     
     // 判断是否是首次启动。首次启动显示引导页。
     if ([self.defaults isFirstLaunch]) {
@@ -160,7 +176,9 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
             // 进主界面。
             [self postNowNotificationName:nAppShowMainView];
         }
+        return;
     }
+    
     NSString *title = alertView.title;
     if ([title isEqualToString:titleCreateAccountSucceeded]) {
         [self login];//注册成功, 直接登录。
@@ -200,8 +218,10 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     [self postASAPNotificationName:nAppCheckNetwork];
     
     //注册网络状态变化接受广播(网络为unknown时就去注册，其它状态就不去注册广播了)
+     r = [Reachability reachabilityWithHostname:@"www.apple.com"];
+    
     AFNetworkReachabilityStatus state = [[KHHHTTPClient sharedClient] networkReachabilityStatus];
-    if (AFNetworkReachabilityStatusUnknown == state) {
+    if ([r currentReachabilityStatus] == NotReachable) {
         [self observeNotificationName:AFNetworkingReachabilityDidChangeNotification selector:@"handleNetworkStatusChanged:"];
     }else {
         //登录 
@@ -223,7 +243,8 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     NSString *user = self.defaults.currentUser;
     NSString *password = self.defaults.currentPassword;
     //添加离线登录
-    if (AFNetworkReachabilityStatusNotReachable == status || AFNetworkReachabilityStatusUnknown == status) {
+    
+    if ([r currentReachabilityStatus] == NotReachable) {
         //离线登录
         // 发“离线登录”消息
         [self postASAPNotificationName:nAppOfflineLoggingIn];
@@ -250,6 +271,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     NSString *user = noti.userInfo[kInfoKeyUser];
     [self.agent resetPassword:user];
 }
+
 - (void)sync {
     DLog(@"[II] 开始同步！");
     [self postASAPNotificationName:nAppSyncing];
@@ -264,6 +286,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     DLog(@"[II] 注册成功，保存用户数据。");
     // 保存用户数据: id,mobile,password
     [self.defaults saveLoginOrRegisterResult:noti.userInfo];
+    [self postASAPNotificationName:KHHSaveLogin];
     // 自动登录
     [self alertWithTitle:titleCreateAccountSucceeded
                  message:textWillAutoLogin];
@@ -371,6 +394,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 
 -(void) saveUserInfoToDefaults:(NSDictionary *) dict {
     [self.defaults saveLoginOrRegisterResult:dict];
+    [self postASAPNotificationName:KHHSaveLogin];
     [self.defaults setLoggedIn:YES];
     // http鉴权
     [self.agent authenticateWithUser:self.defaults.currentAuthorizationID.stringValue
@@ -450,10 +474,13 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
                                    options:options
                                 animations:nil
                                 completion:^(BOOL finished) {
+                                    if (finished) {
+                                        [fromVC.view removeFromSuperview];
+                                        [fromVC removeFromParentViewController];
+                                        self.previousController = fromVC;
+                                    } 
                                 }];
-        [fromVC.view removeFromSuperview];
-        [fromVC removeFromParentViewController];
-        self.previousController = fromVC;
+        
     } else {
         [self addChildViewController:toViewController];
         [self.view addSubview:toViewController.view];
@@ -481,22 +508,58 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 }
 - (void)showIntroView {
     UIViewController *toVC = [[IntroViewController alloc]
-                              initWithNibName:nil
-                              bundle:nil];
-    [self transitionToViewController:toVC
-                             options:AppStart_AnimationOptions];
+                              init];
+    self.introController = toVC;
+  //  [self addChildViewController:self.introController];
+    [self.view addSubview:self.introController.view];
+//    [UIView animateWithDuration: 0.5
+//                     animations:^{
+//                         self.loginController.view.alpha = 1.0;
+//                        // self.launchController.view.alpha = 0.0;
+//                     }
+//                     completion:^(BOOL finished) {
+//                         [self.launchController.view removeFromSuperview];
+//                        // [self.launchController removeFromParentViewController];
+//                     }];
+//    [self transitionToViewController:toVC
+//                             options:AppStart_AnimationOptions];
 }
 - (void)showLaunchImage {
     UIViewController *toVC = [[LaunchImageViewController alloc]
                               initWithNibName:nil
                               bundle:nil];
+    self.launchController = toVC;
     [self transitionToViewController:toVC
                              options:AppStart_AnimationOptions];
 }
 - (void)showLoginView {
-    UIViewAnimationOptions options = UIViewAnimationOptionTransitionCrossDissolve;
-    [self transitionToViewController:self.loginController
-                             options:options];
+    self.loginController.view.alpha = 0.0;
+   
+    if (self.introController) {
+       
+        self.loginController.view.alpha = 0.0; 
+    } else {
+       
+        self.loginController.view.alpha = 1.0;
+    }
+    
+    [self addChildViewController:self.loginController];
+    [self.view addSubview:self.loginController.view];
+     if (self.introController) {
+        [UIView animateWithDuration: 0.5
+                         animations:^{
+                             self.loginController.view.alpha = 1.0;
+                             self.introController.view.alpha = 0.0;                             
+                         }
+                         completion:^(BOOL finished) {
+                             [self.introController.view removeFromSuperview];
+                             [self.introController removeFromParentViewController];                           
+                         }];
+    
+     }
+//    UIViewAnimationOptions options = UIViewAnimationOptionTransitionCrossDissolve;
+//    [self transitionToViewController:self.loginController
+//                             options:options];
 }
 - (void)showPreviousView {
     UIViewController *currentController = self.childViewControllers.lastObject;

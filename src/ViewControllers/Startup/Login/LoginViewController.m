@@ -91,6 +91,7 @@
 {
     [super viewDidLoad];
     
+    
     // 更换背景
     UIImage *bgImage = [[UIImage imageNamed:@"activity_bg.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
     UIImageView *bgImageView = [[UIImageView alloc] initWithImage:bgImage];
@@ -98,6 +99,9 @@
     [self.inputTable  setBackgroundView:bgImageView];
 
     [self.view addSubview:self.latestView];
+//    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"kFirstLoad"]) {
+//        self.view addSubview:<#(UIView *)#>
+//    }
     
 }
 

@@ -20,11 +20,12 @@
 #import "MyTabBarController.h"
 #import "KHHShowHideTabBar.h"
 #import "KHHVisitRecoardVC.h"
-#import "UIImageView+WebCache.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "KHHDataAPI.h"
 #import "Company.h"
 #import "KHHMyAlertViewWithSubView.h"
 #import "KHHDefaults.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define POPDismiss [self.popover dismissPopoverAnimated:YES];
 #define LABEL_NAME_TAG    98980
@@ -178,7 +179,7 @@
     UIImageView *bgimgView = [[UIImageView alloc] initWithImage:bgimg];
     bgimgView.frame = headerView.frame;
     [headerView addSubview:bgimgView];
-    UIImageView *iconImgView = [[UIImageView alloc] initWithFrame:CGRectMake(9, 7, 51, 51)];
+    iconImgView = [[UIImageView alloc] initWithFrame:CGRectMake(9, 7, 50, 50)];
     iconImgView.tag = LABEL_LOGIMG_TAG;
     iconImgView.userInteractionEnabled = YES;
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapOne:)];
@@ -188,7 +189,20 @@
     [iconImgView addGestureRecognizer:tap];
     UIImage *iconImg = [UIImage imageNamed:@"logopic.png"];
     iconImgView.image = iconImg;
-    [iconImgView setImageWithURL:[NSURL URLWithString:self.card.logo.url] placeholderImage:iconImg];
+    CALayer *layer = [iconImgView layer];
+    [iconImgView setImageWithURL:[NSURL URLWithString:self.card.logo.url]
+                   placeholderImage:iconImg
+                            success:^(UIImage *image, BOOL cached){
+                                
+                                if(!CGSizeEqualToSize(image.size, CGSizeZero)){
+                                    [layer setMasksToBounds:YES];
+                                    [layer setCornerRadius:6.0];
+                                }
+                            }
+                            failure:^(NSError *error){
+                                
+                            }];
+   // [iconImgView setImageWithURL:[NSURL URLWithString:self.card.logo.url] placeholderImage:iconImg];
     iconImgView.backgroundColor = [UIColor clearColor];
     [headerView addSubview:iconImgView];
     UILabel *nameLab = [[UILabel alloc] initWithFrame:CGRectMake(75, 10, 120, 20)];
@@ -226,7 +240,7 @@
         headBtn.adjustsImageWhenHighlighted = NO;
         headBtn.frame = CGRectMake(0+i*(45+60), 63, 320/showTabCount, 37);
         [headBtn setTitle:NSLocalizedString([arr objectAtIndex:i], nil) forState:UIControlStateNormal];
-        if (i == 0 || i == 2) {
+        if (i == showTabCount - 1) {
             [headBtn setBackgroundImage:[UIImage imageNamed:@"xiangqing_btn13_normal.png"] forState:UIControlStateNormal];
         }else{
             UIImage *img = [[UIImage imageNamed:@"xiangqing_btn2_normal.png"] stretchableImageWithLeftCapWidth:2 topCapHeight:1];
@@ -292,6 +306,8 @@
 
 }
 
+
+
 - (void)updateViewData:(Card *)temCard{
     UILabel *nameLab = (UILabel *)[self.view viewWithTag:LABEL_NAME_TAG];
     UILabel *jobLab = (UILabel *)[self.view viewWithTag:LABEL_JOB_TAG];
@@ -301,7 +317,21 @@
     jobLab.text = temCard.title;
     companyLab.text = temCard.company.name;
     UIImage *iconImg = [UIImage imageNamed:@"logopic.png"];
-    [logImageview setImageWithURL:[NSURL URLWithString:temCard.logo.url] placeholderImage:iconImg];
+    
+    CALayer *layer = [logImageview layer];
+    [logImageview setImageWithURL:[NSURL URLWithString:self.card.logo.url]
+                placeholderImage:iconImg
+                         success:^(UIImage *image, BOOL cached){
+                             
+                             if(!CGSizeEqualToSize(image.size, CGSizeZero)){
+                                 [layer setMasksToBounds:YES];
+                                 [layer setCornerRadius:6.0];
+                             }
+                         }
+                         failure:^(NSError *error){
+                             
+                         }];
+   // [logImageview setImageWithURL:[NSURL URLWithString:temCard.logo.url] placeholderImage:iconImg];
     
 }
 - (void)bottomBtnClick:(id)sender
@@ -335,14 +365,14 @@
     
     if (_lastBtn != btn.tag && _lastBtn != 0) {
         UIButton *lastBtn = (UIButton *)[self.view viewWithTag:_lastBtn];
-        if (lastBtn.tag != 1000) {
+        if (lastBtn.tag == 1001 || [self isCompanyColleagues]) {
             [lastBtn setBackgroundImage:[UIImage imageNamed:@"xiangqing_btn13_normal.png"] forState:UIControlStateNormal];
         }else{
             UIImage *img = [[UIImage imageNamed:@"xiangqing_btn2_normal.png"] stretchableImageWithLeftCapWidth:2 topCapHeight:2];
             [lastBtn setBackgroundImage:img forState:UIControlStateNormal];
         }
     }
-    if (btn.tag != 1000) {
+    if (btn.tag == 1001 || [self isCompanyColleagues]) {
        [btn setBackgroundImage:[UIImage imageNamed:@"xq_btn13_selected.png"] forState:UIControlStateNormal];
     }else{
         UIImage *img = [[UIImage imageNamed:@"xq_btn2_selected.png"] stretchableImageWithLeftCapWidth:2 topCapHeight:2];
@@ -400,6 +430,12 @@
 {
     KHHFloatBarController *floatBarVC = [[KHHFloatBarController alloc] initWithNibName:nil bundle:nil];
     floatBarVC.viewController = self;
+    NSNumber *companyID = [[KHHDefaults sharedDefaults] currentCompanyID];
+    if(companyID.longValue > 0 && card.company.id.longValue == companyID.longValue) {
+        floatBarVC.isJustNormalComunication = YES;
+    }else {
+        floatBarVC.isJustNormalComunication = NO;
+    }
     self.popover = [[WEPopoverController alloc] initWithContentViewController:floatBarVC];
     floatBarVC.popover = self.popover;
     floatBarVC.card = self.card;

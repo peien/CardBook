@@ -49,7 +49,9 @@ extern const struct CardTemplateItemFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* fontColor;
+
 
 
 //- (BOOL)validateFontColor:(id*)value_ error:(NSError**)error_;
@@ -57,7 +59,9 @@ extern const struct CardTemplateItemFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* fontSize;
+
 
 
 @property float fontSizeValue;
@@ -69,7 +73,9 @@ extern const struct CardTemplateItemFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* fontWeight;
+
 
 
 //- (BOOL)validateFontWeight:(id*)value_ error:(NSError**)error_;
@@ -77,7 +83,9 @@ extern const struct CardTemplateItemFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* id;
+
 
 
 @property int64_t idValue;
@@ -89,7 +97,9 @@ extern const struct CardTemplateItemFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* name;
+
 
 
 //- (BOOL)validateName:(id*)value_ error:(NSError**)error_;
@@ -97,7 +107,9 @@ extern const struct CardTemplateItemFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* originX;
+
 
 
 @property float originXValue;
@@ -109,7 +121,9 @@ extern const struct CardTemplateItemFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* originY;
+
 
 
 @property float originYValue;
@@ -121,7 +135,9 @@ extern const struct CardTemplateItemFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* rectHeight;
+
 
 
 @property float rectHeightValue;
@@ -133,7 +149,9 @@ extern const struct CardTemplateItemFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSNumber* rectWidth;
+
 
 
 @property float rectWidthValue;
@@ -145,7 +163,9 @@ extern const struct CardTemplateItemFetchedProperties {
 
 
 
+
 @property (nonatomic, strong) NSString* style;
+
 
 
 //- (BOOL)validateStyle:(id*)value_ error:(NSError**)error_;
@@ -154,7 +174,7 @@ extern const struct CardTemplateItemFetchedProperties {
 
 
 
-@property (nonatomic, strong) CardTemplate* template;
+@property (nonatomic, strong) CardTemplate *template;
 
 //- (BOOL)validateTemplate:(id*)value_ error:(NSError**)error_;
 

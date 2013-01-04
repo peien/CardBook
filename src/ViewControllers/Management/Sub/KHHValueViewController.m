@@ -11,17 +11,19 @@
 #import "KHHClientCellLNPCC.h"
 #import "KHHClasses.h"
 #import "DetailInfoViewController.h"
-#import "UIImageView+WebCache.h"
-#import "UIButton+WebCache.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <SDWebImage/UIButton+WebCache.h>
 #import "KHHFloatBarController.h"
 #import "WEPopoverController.h"
+#import "KHHDataAPI.h"
 
 @interface KHHValueViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,UISearchDisplayDelegate>
-@property (strong, nonatomic)  NSArray                *resultArray;
-@property (strong, nonatomic)  NSArray                *searchArray;
-@property (strong, nonatomic)  KHHFloatBarController  *floatBarVC;
-@property (strong, nonatomic)  WEPopoverController    *popover;
-
+@property (strong, nonatomic)   NSArray                     *resultArray;
+@property (strong, nonatomic)   NSArray                     *searchArray;
+@property (strong, nonatomic)   KHHFloatBarController       *floatBarVC;
+@property (strong, nonatomic)   WEPopoverController         *popover;
+@property (assign, nonatomic)   BOOL                        isNeedReloadTable;
+@property (strong, nonatomic)   KHHData                     *dataCtrl;
 @end
 
 @implementation KHHValueViewController
@@ -38,6 +40,7 @@
     if (self) {
         // Custom initialization
         self.rightBtn.hidden = YES;
+        self.dataCtrl = [KHHData sharedData];
     }
     return self;
 }
@@ -62,6 +65,40 @@
     self.popover = [[WEPopoverController alloc] initWithContentViewController:floatBarVC];
     self.floatBarVC.popover = self.popover;
 }
+
+-(void) viewWillAppear:(BOOL)animated {
+    if (_isNeedReloadTable) {
+        _isNeedReloadTable = NO;
+        [self reloadTable];
+    }
+}
+
+//刷新table
+- (void)reloadTable
+{
+    switch (_valueType) {
+        case KHHCustomerVauleFunnel:
+        {
+            if (_groupID <= 0) {
+                self.generArr = [self.dataCtrl cardsofStarts:_value];
+            }else {
+                self.generArr = [self.dataCtrl cardsofStarts:_value groupId:[NSNumber numberWithLong:_groupID]];
+            }
+            
+        }
+            break;
+        case KHHCustomerVauleRadar:
+        {
+            self.generArr = [self.dataCtrl cardsOfstartsForRelation:_value groupID:_groupID];
+        }
+            break;
+        default:
+            break;
+    }
+    
+    [self.theTable reloadData];
+}
+
 //点击图片弹出横框
 - (void)logoBtnClick:(id)sender
 {
@@ -133,6 +170,7 @@
     }
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    _isNeedReloadTable = YES;
     DetailInfoViewController *detailVC = [[DetailInfoViewController alloc] initWithNibName:nil bundle:nil];
     if (tableView == self.searCtrl.searchResultsTableView) {
         UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];

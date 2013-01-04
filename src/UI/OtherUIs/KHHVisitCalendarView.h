@@ -22,11 +22,10 @@
 @property (strong, nonatomic) Card                     *card;
 @property (strong, nonatomic) NSArray                  *dataArray;
 @property (assign, nonatomic) bool                     isDetailVC;
-@property (assign, nonatomic) bool                     isAllVisitedSch;
+@property (assign, nonatomic) KHHVisitPlanType         visitType;
 @property (assign, nonatomic) bool                     isFromHomeVC;
 @property (assign, nonatomic) bool                     isFromCalVC;
 @property (strong, nonatomic) NSDate                   *selectedDate;
-@property (strong, nonatomic) NSString                 *mapAddress;
 
 - (IBAction)VisitCalendarBtnClick:(id)sender;
 - (void)initViewData;

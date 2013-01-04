@@ -53,8 +53,10 @@
 - (NSArray *)cardsOfUngrouped;
 // 通过几颗星筛选评估价值
 - (NSArray *)cardsofStarts:(float)starts;
+// 通过几颗星筛选评估价值（分组）
+- (NSArray *)cardsofStarts:(float)starts groupId:(NSNumber *)groupId;
 // 通过几颗星筛选关系
-- (NSArray *)cardsOfstartsForRelation:(float)starts;
+- (NSArray *)cardsOfstartsForRelation:(float)starts  groupID: (long) groupID;
 #pragma mark - 分组 增删改
 // 分组增删改
 - (void)createGroup:(IGroup *)iGroup withMyCard:(MyCard *)myCard;
@@ -79,6 +81,9 @@
 - (void)deleteImage:(Image *)image  fromSchedule:(Schedule *)schedule;
 #pragma mark - 我拜访别人的纪录
 - (NSArray *)allSchedules;
+- (NSArray *)executingSchedules;
+- (NSArray *)overdueSchedules;
+- (NSArray *)finishedSchedules;
 - (NSArray *)schedulesOnCard:(Card *)aCard day:(NSString *)aDay;// 结果是从day开始一天内的所有schedule。
 - (NSArray *)schedulesOnCard:(Card *)aCard date:(NSDate *)aDate;// 结果是从day开始一天内的所有schedule。
 
@@ -94,6 +99,7 @@
 @end
 
 @interface KHHData (UI_Message)
+- (void)messageNew:(NSDictionary *)responseDict;
 - (void)syncMessages;// 从服务器同步消息
 - (NSArray *)allMessages;// 从数据库查询消息
 - (NSUInteger)countOfUnreadMessages;// 未读消息的个数。
@@ -109,3 +115,4 @@
 @interface KHHData (UI_Password)
 -(void) changePassword:(NSString *) oldPassword newPassword:(NSString *) newPassword;
 @end
+

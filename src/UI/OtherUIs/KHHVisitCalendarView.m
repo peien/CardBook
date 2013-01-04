@@ -11,9 +11,8 @@
 #import "KHHCalendarViewController.h"
 #import "KHHAllVisitedSchedusVC.h"
 #import "KHHVisitRecoardVC.h"
-#import "KHHFullFrameController.h"
 //#import "MapController.h"
-#import "UIImageView+WebCache.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "DetailInfoViewController.h"
 #import "KHHData+UI.h"
 #import "KHHData.h"
@@ -29,12 +28,11 @@
 @synthesize card;
 @synthesize dataArray;
 @synthesize isDetailVC;
-@synthesize isAllVisitedSch;
+@synthesize visitType;
 @synthesize isFromCalVC;
 @synthesize isFromHomeVC;
 @synthesize selectedDate;
 @synthesize calBtn;
-@synthesize mapAddress;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -56,10 +54,7 @@
 - (void)initViewData{
 //    NSSortDescriptor *descFini = [NSSortDescriptor sortDescriptorWithKey:@"isFinished" ascending:YES];
     NSSortDescriptor *descDate = [NSSortDescriptor sortDescriptorWithKey:@"plannedDate" ascending:NO];
-    if (self.isAllVisitedSch) {
-        KHHData *data = [KHHData sharedData];
-        self.dataArray  = [data allSchedules];
-    }else if(self.isFromHomeVC){
+    if(self.isFromHomeVC){
         NSSet *set = self.card.schedules;
         self.dataArray = [[set allObjects] sortedArrayUsingDescriptors:@[descDate]];
     }else if (self.isFromCalVC){
@@ -67,6 +62,36 @@
             self.card = nil;
         }
         self.dataArray = [[[KHHData sharedData] schedulesOnCard:self.card date:self.selectedDate] sortedArrayUsingDescriptors:@[descDate]];
+    }else {
+        KHHData *data = [KHHData sharedData];
+        switch (self.visitType) {
+            case KHHVisitPlanExecuting:
+            {
+                //正在执行（当前时间以后的）
+                self.dataArray  = [data executingSchedules];
+            }
+                break;
+            case KHHVisitPlanOverdue:
+            {
+                //过期(当前时间以前的并且没有finish的)
+                self.dataArray  = [data overdueSchedules];
+            }
+                break;
+            case KHHVisitPlanFinished:
+            {
+                //已完成(finish标记为yes)
+                self.dataArray  = [data finishedSchedules];
+            }
+                break;
+            case KHHVisitPlanAll:
+            {
+                //所有
+                self.dataArray  = [data allSchedules];
+            }
+                break;
+            default:
+                break;
+        }
     }
 }
 #pragma mark -
@@ -77,12 +102,12 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Schedule *sched = [self.dataArray objectAtIndex:indexPath.row];
-    if ([sched.images allObjects].count > 0) {
-        return 140;
-    }else{
-        return 80;
-    }
+//    Schedule *sched = [self.dataArray objectAtIndex:indexPath.row];
+//    if ([sched.images allObjects].count > 0) {
+//        return 140;
+//    }else{
+        return 85;
+//    }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -100,25 +125,8 @@
    
     //是否有图片
     if ([sched.images allObjects].count > 0) {
-        for (int i = 0; i < [sched.images allObjects].count; i++) {
-            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapFullFrame:)];
-            tap.numberOfTapsRequired = 1;
-            tap.numberOfTouchesRequired = 1;
-            Image *img = [[sched.images allObjects] objectAtIndex:i];
-            if (i == 0) {
-                [cell.imgviewIco1 addGestureRecognizer:tap];
-                [cell.imgviewIco1 setImageWithURL:[NSURL URLWithString:img.url] placeholderImage:[UIImage imageNamed:@"logopic.png"]];
-            }else if (i == 1){
-                [cell.imgviewIco2 addGestureRecognizer:tap];
-                [cell.imgviewIco2 setImageWithURL:[NSURL URLWithString:img.url] placeholderImage:[UIImage imageNamed:@"logopic.png"]];
-            }else if (i == 2){
-                [cell.imgviewIco3 addGestureRecognizer:tap];
-                [cell.imgviewIco3 setImageWithURL:[NSURL URLWithString:img.url] placeholderImage:[UIImage imageNamed:@"logopic.png"]];
-            }else if (i == 3){
-                [cell.imgviewIco4 addGestureRecognizer:tap];
-                [cell.imgviewIco4 setImageWithURL:[NSURL URLWithString:img.url] placeholderImage:[UIImage imageNamed:@"logopic.png"]];
-            }
-        }
+        //显示有图的图标
+        cell.photoBtn.hidden = NO;
     }
     //拜访日期
     if (sched.plannedDate != nil) {
@@ -178,21 +186,33 @@
         }else {
             cell.locValueLab.text = [NSString stringWithFormat:@"%@%@%@",p,c,o];
         }
-        self.mapAddress = cell.locValueLab.text;
     }
     //备注
     if (sched.content.length > 0) {
         cell.noteValueLab.text = sched.content;
     }
     //是否完成
-    if ([sched.isFinished isEqualToNumber:[NSNumber numberWithBool:YES]]) {
+    BOOL isFinished = [sched.isFinished isEqualToNumber:[NSNumber numberWithBool:YES]];
+    if (isFinished) {
         cell.finishBtn.hidden = YES;
     }else{
         cell.finishBtn.hidden = NO;
     }
-    if (sched.minutesToRemindValue > 0) {
+    
+    //铃铛显示与隐藏
+    //显示条件(未完成的拜访计划、有提醒并且没有提醒过的)
+    int remindVaule = sched.minutesToRemindValue;
+    DLog(@"visit plant remindValue = %d",remindVaule);
+    NSDate * remindTime = [sched.plannedDate dateByAddingTimeInterval:-remindVaule * 60];
+    //这两个时间都没有考虑时区的，因为求差，只要两个时间都用同一时区就可以
+    DLog(@"visit plant remindDate = %@",remindTime);
+    NSTimeInterval interval = [remindTime timeIntervalSinceNow];
+    DLog(@"visit plant now = %@, interval = %f",[NSDate new],interval);
+    if (remindVaule > 0 && !isFinished && interval > 0.0f) {
         cell.Btn.hidden = NO;
     }
+    
+    
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -215,6 +235,7 @@
     if ([self.viewCtrl isKindOfClass:[KHHCalendarViewController class]]) {
         KHHCalendarViewController *calVC = (KHHCalendarViewController *)self.viewCtrl;
         calVC.isneedReloadeVisitTable = YES;
+        visitVC.viewCtl = self.viewCtrl;
     }
     if ([self.viewCtrl isKindOfClass:[KHHAllVisitedSchedusVC class]]) {
         KHHAllVisitedSchedusVC *calVC = (KHHAllVisitedSchedusVC *)self.viewCtrl;
@@ -237,6 +258,11 @@
         finishVC.isFinishTask = YES;
         finishVC.schedu = [self.dataArray objectAtIndex:index.row];
         finishVC.style = KVisitRecoardVCStyleShowInfo;
+        if ([self.viewCtrl isKindOfClass:[KHHCalendarViewController class]]) {
+            KHHCalendarViewController *calVC = (KHHCalendarViewController *)self.viewCtrl;
+            calVC.isneedReloadeVisitTable = YES;
+            finishVC.viewCtl = self.viewCtrl;
+        }
         [self.viewCtrl.navigationController pushViewController:finishVC animated:YES];
     }
 }
@@ -247,16 +273,22 @@
 //    MapController *mapVC = [[MapController alloc] initWithNibName:nil bundle:nil];
 //    mapVC.companyName = @"";
 //    mapVC.companyAddr = self.mapAddress;
-    
-    //用百度地图
-    KHHBMapViewController *mapVC = [[KHHBMapViewController alloc] initWithNibName:nil bundle:nil];
-    mapVC.companyCity = self.card.address.city;
-    mapVC.companyDetailAddr = self.card.address.other;
-    mapVC.companyName = self.card.company.name;
-    mapVC.companyAllAddr = self.mapAddress;
-
-    [self.viewCtrl.navigationController pushViewController:mapVC animated:YES];
-    
+    //先获取点击的哪个cell的index
+    //[[sender superview] superview] ---> KHHVisitCalendarCell
+    if (sender) {
+        //用百度地图定位
+        KHHVisitCalendarCell *cell = (KHHVisitCalendarCell *)[[sender superview] superview];
+        NSIndexPath *index = [_theTable indexPathForCell:cell];
+        Schedule *sched = [self.dataArray objectAtIndex:index.row];
+        if (sched) {
+            KHHBMapViewController *mapVC = [[KHHBMapViewController alloc] initWithNibName:nil bundle:nil];
+            mapVC.companyCity = sched.address.city;
+            mapVC.companyDetailAddr = sched.address.other;
+            mapVC.companyName = cell.objValueLab.text;
+            mapVC.companyAllAddr = cell.locValueLab.text;
+            [self.viewCtrl.navigationController pushViewController:mapVC animated:YES];
+        }
+    }
 }
 - (IBAction)VisitCalendarBtnClick:(id)sender
 {
@@ -279,14 +311,7 @@
         [self.viewCtrl.navigationController pushViewController:calendarVC animated:YES];
     }
 }
-- (void)tapFullFrame:(UITapGestureRecognizer *)sender
-{
-    self.imgview = (UIImageView *)[sender view];
-    KHHFullFrameController *fullVC = [[KHHFullFrameController alloc] initWithNibName:nil bundle:nil];
-    fullVC.image = self.imgview.image;
-    [self.viewCtrl.navigationController pushViewController:fullVC animated:YES];
-    
-}
+
 - (void)reloadTheTable{
     [self initViewData];
     [_theTable reloadData];

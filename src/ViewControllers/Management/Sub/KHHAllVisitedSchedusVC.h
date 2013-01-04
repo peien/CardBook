@@ -10,6 +10,7 @@
 #import "SuperViewController.h"
 
 @interface KHHAllVisitedSchedusVC : SuperViewController
+@property (strong, nonatomic) IBOutlet UIView *headerView;
+@property (strong, nonatomic) IBOutlet UIView *tableContainer;
 @property (assign, nonatomic) bool   isNeedReloadData;
-
 @end

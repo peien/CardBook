@@ -11,7 +11,12 @@
 #import "KHHData+UI.h"
 #import "KHHClasses.h"
 
-@interface KHHFunnelViewController ()
+@interface KHHFunnelViewController (){
+    NSNumber *_groupId;
+    int _groupIndex;
+    NSString *_rightTitle;
+    BOOL isNeedReloadTable;
+}
 @property (strong, nonatomic) KHHData *dataCtrl;
 @property (strong, nonatomic) NSMutableDictionary *allDic;
 
@@ -27,12 +32,20 @@
     if (self) {
         // Custom initialization
         //先隐藏
-        self.rightBtn.hidden = YES;
+        //self.rightBtn.hidden = YES;
         [self.rightBtn setTitle:@"所有" forState:UIControlStateNormal];
         self.title = @"价值漏斗";
         self.dataCtrl = [KHHData sharedData];
     }
     return self;
+}
+
+- (void)rightBarButtonClick:(id)sender
+{
+
+	[[KHHFilterPopup shareUtil]  showPopUpGroup:_groupIndex delegate:self];
+   
+	
 }
 
 - (void)viewDidLoad
@@ -41,11 +54,29 @@
     // Do any additional setup after loading the view from its nib.
     [self.view setBackgroundColor:[UIColor colorWithRed:241 green:238 blue:232 alpha:1.0]];
     self.allDic = [[NSMutableDictionary alloc] initWithCapacity:0];
-    NSArray *oneStarsArr = [self.dataCtrl cardsofStarts:1.0];
-    NSArray *twoStarsArr = [self.dataCtrl cardsofStarts:2.0];
-    NSArray *threeStarsArr = [self.dataCtrl cardsofStarts:3.0];
-    NSArray *fourStarsArr = [self.dataCtrl cardsofStarts:4.0];
-    NSArray *fiveStarsArr = [self.dataCtrl cardsofStarts:5.0];
+    [self refresh:nil];
+}
+
+-(void) viewWillAppear:(BOOL)animated {
+    if (isNeedReloadTable) {
+        isNeedReloadTable = NO;
+        //刷新当前组
+        [self refresh:_groupId];
+    }
+}
+
+- (void)refresh:(NSNumber *)groupId{
+    if (!groupId) {
+        [self.rightBtn setTitle:@"所有" forState:UIControlStateNormal];
+    }else{
+        [self.rightBtn setTitle:_rightTitle forState:UIControlStateNormal];
+    }
+    
+    NSArray *oneStarsArr = [self.dataCtrl cardsofStarts:1.0 groupId:groupId];
+    NSArray *twoStarsArr = [self.dataCtrl cardsofStarts:2.0 groupId:groupId];
+    NSArray *threeStarsArr = [self.dataCtrl cardsofStarts:3.0 groupId:groupId];
+    NSArray *fourStarsArr = [self.dataCtrl cardsofStarts:4.0 groupId:groupId];
+    NSArray *fiveStarsArr = [self.dataCtrl cardsofStarts:5.0 groupId:groupId];
     [self.allDic setObject:oneStarsArr forKey:@"oneStar"];
     [self.allDic setObject:twoStarsArr forKey:@"twoStar"];
     [self.allDic setObject:threeStarsArr forKey:@"threeStar"];
@@ -57,7 +88,6 @@
     self.lab4.text = [NSString stringWithFormat:@"%d",fourStarsArr.count];
     self.lab5.text = [NSString stringWithFormat:@"%d",fiveStarsArr.count];
 }
-
 - (void)viewDidUnload
 {
     [super viewDidUnload];
@@ -74,31 +104,73 @@
 
 - (IBAction)btnClick:(UIButton *)sender{
     DLog(@"btnClick!");
+    isNeedReloadTable = YES;
     KHHValueViewController *valueVC = [[KHHValueViewController alloc] initWithNibName:nil bundle:nil];
     switch (sender.tag) {
         case 100:
             valueVC.generArr = [self.allDic objectForKey:@"oneStar"];
+            valueVC.value = 1;
             break;
         case 101:
             valueVC.generArr = [self.allDic objectForKey:@"twoStar"];
+            valueVC.value = 2;
             break;
         case 102:
             valueVC.generArr = [self.allDic objectForKey:@"threeStar"];
+            valueVC.value = 3;
             break;
         case 103:
             valueVC.generArr = [self.allDic objectForKey:@"fourStar"];
+            valueVC.value = 4;
             break;
         case 104:
             valueVC.generArr = [self.allDic objectForKey:@"fiveStar"];
+            valueVC.value = 5;
             break;
         default:
             break;
     }
+    
+    //把当前分组的id传过去
+    if (_groupId) {
+        valueVC.groupID = _groupId.longValue;
+    }else{
+        valueVC.groupID = -1;
+    }
+    
+    //指明界面的类型
+    valueVC.valueType = KHHCustomerVauleFunnel;
     [self.navigationController pushViewController:valueVC animated:YES];
 }
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+#pragma mark KHHFilterPopup delegate
+- (void)selectInAlert:(id)obj{
+    
+    if (!obj) {        
+        _groupIndex = 0;
+        if (!_groupId) {
+            
+            return;
+        }
+        _groupId = nil;
+        [self refresh:nil];
+        return;
+    }
+    
+    NSDictionary *dic = (NSDictionary *)obj;
+    _groupIndex = [[dic objectForKey:@"groupIndex"] intValue];
+    Group *grp = (Group *)[dic objectForKey:@"obj"];
+    if (!_groupId || _groupId != grp.id) {
+        _groupId = grp.id;
+        _rightTitle = grp.name;
+        [self refresh:_groupId];
+        
+    } 
+   
 }
 
 @end

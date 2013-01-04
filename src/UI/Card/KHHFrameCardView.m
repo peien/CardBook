@@ -7,7 +7,7 @@
 //
 
 #import "KHHFrameCardView.h"
-#import "UIImageView+WebCache.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "KHHVisualCardViewController.h"
 #import "KHHCardTemplageVC.h"
 #import "KHHClasses.h"

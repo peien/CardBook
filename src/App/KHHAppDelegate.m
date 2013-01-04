@@ -16,6 +16,9 @@
 #import "ATestViewController.h"
 #import "AppStartController.h"
 
+#import "NSString+Base64.h"
+#import "KHHTypes.h"
+
 @implementation KHHAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -23,6 +26,9 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // 设置window默认背景
     self.window.backgroundColor = [UIColor blackColor];
+    
+
+     [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
     // 设置界面元素的公共属性
     [self customizeCommonUI];
     
@@ -35,11 +41,21 @@
     // 注册响应的消息
     [self observeNotificationName:KHHUIShowStartup selector:@"handleShowStartup:"]; // 显示主界面消息
     [self observeNotificationName:nAppShowMainView  selector:@"handleShowMainUI:"]; // 显示主界面消息
-    [self observeNotificationName:KHHAppLogout     selector:@"handleLogout:"];// 登出
+    [self observeNotificationName:KHHAppLogout     selector:@"handleLogout:"];// 登出    
+   
+        AppStartController *startVC = [[AppStartController alloc] initWithNibName:nil bundle:nil];
+        startVC.agent    = [[KHHNetworkAPIAgent alloc] init];
+        startVC.data     = [KHHData sharedData];
+        startVC.defaults = [KHHDefaults sharedDefaults];
+        self.window.rootViewController = startVC;
+    
+    
+    // 显示启动界面
+   
     
     // 显示Startup界面
     [self.window makeKeyAndVisible];
-    [self postASAPNotificationName:KHHUIShowStartup];
+   // [self postASAPNotificationName:KHHUIShowStartup];
     
     //捕获摇摇动作
     application.applicationSupportsShakeToEdit = YES;
@@ -81,6 +97,51 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+    NSString *_deviceToken = [[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    _deviceToken = [_deviceToken stringByReplacingOccurrencesOfString:@" " withString:@""];
+    //NSString *str = [[NSString alloc] initWithData:deviceToken encoding:NSUTF16StringEncoding];
+    DLog(@"%@",_deviceToken);
+    [KHHDefaults sharedDefaults].token = _deviceToken;
+//    [PFPush storeDeviceToken:deviceToken];
+//    [PFPush subscribeToChannelInBackground:@"" block:^(BOOL succeeded, NSError *error) {
+//        if (succeeded)
+//            NSLog(@"Successfully subscribed to broadcast channel!");
+//        else
+//            NSLog(@"Failed to subscribe to broadcast channel; Error: %@",error);
+//    }];
+    
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
+    if (error.code == 3010) {
+        NSLog(@"Push notifications are not supported in the iOS Simulator.");
+    } else {
+        // show some alert or otherwise handle the failure to register.
+        NSLog(@"application:didFailToRegisterForRemoteNotificationsWithError: %@", error);
+	}
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+    DLog(@"userInfo%@",userInfo);
+    //PFPush handlePush:userInfo];
+   NSString *type = [userInfo objectForKey:@"type"];
+    if([type isEqualToString:@"1"]){
+        if ([self.window.rootViewController isKindOfClass:[UINavigationController class]]) {
+            [[NetClient sharedClient]doReseaveMessage:(id<delegateMsgForMain>)[(UINavigationController *)self.window.rootViewController topViewController]];
+                
+        }
+        
+       // [[KHHData sharedData] syncMessages];
+    }else{
+        [[KHHData sharedData]syncReceivedCards:[NSArray arrayWithObject:@(KHHQueuedOperationSyncReceivedCards)]];
+    }
+    
+    [self updateApplicationIconNumber:application];
+    
+}
+
 
 #pragma mark -
 - (void)customizeCommonUI {
