@@ -18,6 +18,7 @@
 
 {
     UILabel *label;
+    UIButton* but;
 }
 
 @synthesize xlPage;
@@ -59,16 +60,20 @@
         CGFloat x = i * ww;
         UIImage *anImage = [UIImage imageNamed:[NSString stringWithFormat:@"intro_%i", i]];
         UIImageView *aView = [[UIImageView alloc] initWithImage:anImage];
-        aView.backgroundColor = [UIColor clearColor];
+       // aView.backgroundColor = [UIColor clearColor];
         aView.frame = CGRectMake(x, 0, ww, hh);
         if (i == 3) {
-            UIButton* but =[[UIButton alloc]initWithFrame:CGRectMake(200, 50, 100, 40)];
-            [but setTitle:@"立即体验" forState:UIControlStateNormal];
-            but.backgroundColor = [UIColor grayColor];
-            [aView addSubview:but];
+           
+           // [aView addSubview:but];
         }
         [self.theScrollView addSubview:aView];
+        but =[[UIButton alloc]initWithFrame:CGRectMake(3*ww+200, 50, 100, 40)];
+        [but setTitle:@"立即体验" forState:UIControlStateNormal];
+        but.backgroundColor = [UIColor grayColor];
         
+        [but addTarget:self action:@selector(btnUse) forControlEvents:UIControlEventTouchUpInside];      
+        [self.theScrollView addSubview:but];
+               
     }
     
     xlPage = [[XLPageControl alloc] initWithFrame:CGRectMake(65, 420, 200, 15)];
@@ -101,6 +106,15 @@
     self.xlPage.currentPage = page;
    label.text = titles[page];
     
+}
+
+
+- (void)btnUse
+{
+    self.defaults.firstLaunch = NO;
+    NSString *name = nAppSkipIntro;
+  
+    [self postASAPNotificationName:name];
 }
 
 - (IBAction)startNow:(id)sender {
