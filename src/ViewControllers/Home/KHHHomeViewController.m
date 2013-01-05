@@ -48,11 +48,6 @@
 #define BaseBtnTitleArrayLocal          _btnTitleArr = [[NSMutableArray alloc] initWithObjects:KHHMessageDefaultGroupAll,KHHMessageDefaultGroupUnGroup,KHHMessageDefaultGroupLocal, nil];
 #define BaseBtnTitleArrayVisited        _btnTitleArr = [[NSMutableArray alloc] initWithObjects:KHHMessageDefaultGroupAll,KHHMessageDefaultGroupUnGroup, nil];
 
-typedef enum {
-    KHHTableIndexGroup = 100,
-    KHHTableIndexClient = 101
-} KHHTableIndexType;
-
 @interface KHHHomeViewController ()<UIActionSheetDelegate,UIAlertViewDelegate,
                                    UITextFieldDelegate,UISearchBarDelegate,UISearchDisplayDelegate
                                    >

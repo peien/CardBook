@@ -25,6 +25,7 @@
 #import "DetailInfoViewController.h"
 #import "KHHLocalNotificationUtil.h"
 #import "KHHOrganizationViewController.h"
+#import "KHHPopUpTable.h"
 
 #define TEXT_NEW_MESSAGE_COMMING NSLocalizedString(@"您有新消息到了,可到消息界面查看新消息。",nil)
 #define TEXT_NEW_CONTACT_COMMING NSLocalizedString(@"您有新名片到了，点击确认去查看联系人...",nil)
@@ -251,26 +252,34 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
     [self.navigationController pushViewController:funnelVC animated:YES];
 
 }
-- (IBAction)calendarBtnClick:(id)sender{
-    KHHCalendarViewController *calVC = [[KHHCalendarViewController alloc] initWithNibName:nil bundle:nil];
-    calVC.card = self.myCard;
-    [self.navigationController pushViewController:calVC animated:YES];
 
+//公司组织架构
+- (IBAction)calendarBtnClick:(id)sender{
+//    KHHCalendarViewController *calVC = [[KHHCalendarViewController alloc] initWithNibName:nil bundle:nil];
+//    calVC.card = self.myCard;
+//    [self.navigationController pushViewController:calVC animated:YES];
+    KHHOrganizationViewController *orgVC = [[KHHOrganizationViewController alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:orgVC animated:YES];
 }
 //分组
 - (IBAction)manageEmployeesBtnClick:(id)sender{
-//    KHHHomeViewController *homeVC = [[KHHHomeViewController alloc] initWithNibName:nil bundle:nil];
-//    [self.navigationController pushViewController:homeVC animated:YES];
-    KHHOrganizationViewController *homeVC = [[KHHOrganizationViewController alloc] initWithNibName:nil bundle:nil];
+    KHHHomeViewController *homeVC = [[KHHHomeViewController alloc] initWithNibName:nil bundle:nil];
     [self.navigationController pushViewController:homeVC animated:YES];
-
 }
 //签到
 - (IBAction)locationBtnClick:(id)sender{
-
-    LocationInfoVC *locaVC = [[LocationInfoVC alloc] initWithNibName:nil bundle:nil];
-    [self.navigationController pushViewController:locaVC animated:YES];
+    [[KHHFilterPopup shareUtil]showPopUp:[NSArray arrayWithObjects:@"新建计划",@"数据采集",@"签到",@"显示日历", nil] index:0 Title:@"选择类型" delegate:self];
+//    KHHPopUpTable *popupView = [[KHHPopUpTable alloc]initWithFrame:CGRectMake(100, 30, 60, 70)];
+//    [self.navigationController.view addSubview:popupView];
+//    LocationInfoVC *locaVC = [[LocationInfoVC alloc] initWithNibName:nil bundle:nil];
+//    [self.navigationController pushViewController:locaVC animated:YES];
 }
+
+- (void)selectInAlert:(id)obj
+{
+    [self.navigationController pushViewController:[[UIViewController alloc]init] animated:YES];
+}
+
 //交换
 - (IBAction)personBtnClick:(id)sender
 {

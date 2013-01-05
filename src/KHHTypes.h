@@ -113,4 +113,11 @@ typedef enum {
     KUIActionSheetStyleEditGroupMember,
     KUIActionSheetStyleUpload
 }KUIActionSheetHomeType;
+
+//界面有多个table（home、组织架构页）,table类型
+typedef enum {
+    KHHTableIndexGroup = 100,
+    KHHTableIndexClient = 101
+} KHHTableIndexType;
+
 #endif

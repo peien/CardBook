@@ -10,8 +10,9 @@
 #import "SuperViewController.h"
 #import "Delegates.h"
 #import "KHHManagementViewController.h"
+#import "KHHFilterPopup.h"
 
-@interface KHHManagementViewController : SuperViewController <UIAlertViewDelegate>
+@interface KHHManagementViewController : SuperViewController <UIAlertViewDelegate,KHHFilterPopupDelegate>
 @property (nonatomic, strong) UIView *entranceView;
 @property (strong, nonatomic) UIButton *signButton;
 - (IBAction)radarBtnClick:(id)sender;
