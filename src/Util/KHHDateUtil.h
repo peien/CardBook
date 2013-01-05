@@ -10,4 +10,6 @@
 
 @interface KHHDateUtil : NSObject
 
++ (NSString *)nowDate;
+
 @end

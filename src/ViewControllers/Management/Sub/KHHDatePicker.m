@@ -15,17 +15,39 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
+        self.minimumDate = [NSDate date];       
+       
     }
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+
+
+#pragma mark - animation
+
+- (void)showInView:(UIView *) view
 {
-    // Drawing code
+    self.frame = CGRectMake(0, view.frame.size.height, self.frame.size.width, self.frame.size.height);
+    [view addSubview:self];
+    
+    [UIView animateWithDuration:0.3 animations:^{
+        self.frame = CGRectMake(0, view.frame.size.height - self.frame.size.height, self.frame.size.width, self.frame.size.height);
+    }];
+    
 }
-*/
+
+- (void)cancelPicker
+{
+    
+    [UIView animateWithDuration:0.3
+                     animations:^{
+                         self.frame = CGRectMake(0, self.frame.origin.y+self.frame.size.height, self.frame.size.width, self.frame.size.height);
+                     }
+                     completion:^(BOOL finished){
+                         [self removeFromSuperview];
+                         
+                     }];
+    
+}
 
 @end

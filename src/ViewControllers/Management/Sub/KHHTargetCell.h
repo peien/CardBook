@@ -10,4 +10,7 @@
 
 @interface KHHTargetCell : UITableViewCell
 
+@property (nonatomic,strong)NSString *headStr;
+@property (nonatomic,strong)NSString *placeStr;
+
 @end

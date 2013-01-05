@@ -10,4 +10,7 @@
 
 @interface KHHDatePicker : UIDatePicker
 
+- (void)showInView:(UIView *) view;
+- (void)cancelPicker;
+
 @end

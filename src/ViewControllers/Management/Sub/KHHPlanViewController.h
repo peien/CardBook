@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface KHHPlanViewController : UITableViewController
-
+#import "SuperViewController.h"
+#import "KHHDatePicker.h"
+@interface KHHPlanViewController : SuperViewController<UITableViewDelegate,UITableViewDataSource>
+{
+    UITableView *table;
+}
+@property (nonatomic,strong)KHHDatePicker *datePicker;
 @end

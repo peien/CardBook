@@ -33,6 +33,22 @@
 		3102673D1696ACA200FBE156 /* KHHTargetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102673B1696ACA200FBE156 /* KHHTargetCell.m */; };
 		3102673E1696ACA200FBE156 /* KHHTargetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102673B1696ACA200FBE156 /* KHHTargetCell.m */; };
 		3102673F1696ACA200FBE156 /* KHHTargetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102673B1696ACA200FBE156 /* KHHTargetCell.m */; };
+		3102675F1696B05B00FBE156 /* KHHPlanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102675E1696B05B00FBE156 /* KHHPlanViewController.m */; };
+		310267601696B05B00FBE156 /* KHHPlanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102675E1696B05B00FBE156 /* KHHPlanViewController.m */; };
+		310267611696B05B00FBE156 /* KHHPlanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102675E1696B05B00FBE156 /* KHHPlanViewController.m */; };
+		310267621696B05B00FBE156 /* KHHPlanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102675E1696B05B00FBE156 /* KHHPlanViewController.m */; };
+		310267671696D02000FBE156 /* KHHDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267661696D02000FBE156 /* KHHDatePicker.m */; };
+		310267681696D02000FBE156 /* KHHDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267661696D02000FBE156 /* KHHDatePicker.m */; };
+		310267691696D02000FBE156 /* KHHDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267661696D02000FBE156 /* KHHDatePicker.m */; };
+		3102676A1696D02000FBE156 /* KHHDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267661696D02000FBE156 /* KHHDatePicker.m */; };
+		3102676E1696D20400FBE156 /* KHHDateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102676D1696D20400FBE156 /* KHHDateCell.m */; };
+		3102676F1696D20400FBE156 /* KHHDateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102676D1696D20400FBE156 /* KHHDateCell.m */; };
+		310267701696D20400FBE156 /* KHHDateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102676D1696D20400FBE156 /* KHHDateCell.m */; };
+		310267711696D20400FBE156 /* KHHDateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102676D1696D20400FBE156 /* KHHDateCell.m */; };
+		310267741696D55600FBE156 /* KHHDateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267731696D55600FBE156 /* KHHDateUtil.m */; };
+		310267751696D55600FBE156 /* KHHDateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267731696D55600FBE156 /* KHHDateUtil.m */; };
+		310267761696D55600FBE156 /* KHHDateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267731696D55600FBE156 /* KHHDateUtil.m */; };
+		310267771696D55600FBE156 /* KHHDateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267731696D55600FBE156 /* KHHDateUtil.m */; };
 		3104E05F1687EE6600B0B45F /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3104E05E1687EE6600B0B45F /* libsqlite3.dylib */; };
 		3104E0611687EE8100B0B45F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3104E0601687EE8100B0B45F /* libz.dylib */; };
 		3104E06C168800F200B0B45F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 3104E06B168800F100B0B45F /* Reachability.m */; };
@@ -1808,6 +1824,14 @@
 		310267301696826F00FBE156 /* KHHPopUpCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHPopUpCell.m; sourceTree = "<group>"; };
 		3102673A1696ACA200FBE156 /* KHHTargetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHTargetCell.h; sourceTree = "<group>"; };
 		3102673B1696ACA200FBE156 /* KHHTargetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHTargetCell.m; sourceTree = "<group>"; };
+		3102675D1696B05B00FBE156 /* KHHPlanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHPlanViewController.h; sourceTree = "<group>"; };
+		3102675E1696B05B00FBE156 /* KHHPlanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHPlanViewController.m; sourceTree = "<group>"; };
+		310267651696D02000FBE156 /* KHHDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHDatePicker.h; sourceTree = "<group>"; };
+		310267661696D02000FBE156 /* KHHDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHDatePicker.m; sourceTree = "<group>"; };
+		3102676C1696D20300FBE156 /* KHHDateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHDateCell.h; sourceTree = "<group>"; };
+		3102676D1696D20400FBE156 /* KHHDateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHDateCell.m; sourceTree = "<group>"; };
+		310267721696D55600FBE156 /* KHHDateUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHDateUtil.h; sourceTree = "<group>"; };
+		310267731696D55600FBE156 /* KHHDateUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHDateUtil.m; sourceTree = "<group>"; };
 		3104E05E1687EE6600B0B45F /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		3104E0601687EE8100B0B45F /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		3104E06A168800F100B0B45F /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
@@ -2666,9 +2690,9 @@
 		310267391696AC2400FBE156 /* NewLocalGroupCell */ = {
 			isa = PBXGroup;
 			children = (
+				3102676B1696D1D200FBE156 /* Cells */,
+				310267641696D00500FBE156 /* DatePicker */,
 				310267401696AD6800FBE156 /* NewLocalGroupTable */,
-				3102673A1696ACA200FBE156 /* KHHTargetCell.h */,
-				3102673B1696ACA200FBE156 /* KHHTargetCell.m */,
 			);
 			name = NewLocalGroupCell;
 			sourceTree = "<group>";
@@ -2676,8 +2700,30 @@
 		310267401696AD6800FBE156 /* NewLocalGroupTable */ = {
 			isa = PBXGroup;
 			children = (
+				3102675D1696B05B00FBE156 /* KHHPlanViewController.h */,
+				3102675E1696B05B00FBE156 /* KHHPlanViewController.m */,
 			);
 			name = NewLocalGroupTable;
+			sourceTree = "<group>";
+		};
+		310267641696D00500FBE156 /* DatePicker */ = {
+			isa = PBXGroup;
+			children = (
+				310267651696D02000FBE156 /* KHHDatePicker.h */,
+				310267661696D02000FBE156 /* KHHDatePicker.m */,
+			);
+			name = DatePicker;
+			sourceTree = "<group>";
+		};
+		3102676B1696D1D200FBE156 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				3102673A1696ACA200FBE156 /* KHHTargetCell.h */,
+				3102673B1696ACA200FBE156 /* KHHTargetCell.m */,
+				3102676C1696D20300FBE156 /* KHHDateCell.h */,
+				3102676D1696D20400FBE156 /* KHHDateCell.m */,
+			);
+			name = Cells;
 			sourceTree = "<group>";
 		};
 		314A027F168C08CA00029324 /* login */ = {
@@ -2829,6 +2875,8 @@
 				629BE110165F4B0A00FB3B04 /* KHHLocalNotificationUtil.m */,
 				8413659016883F5000BB0400 /* KHHKeyBoardManagerUtil.h */,
 				8413659116883F5000BB0400 /* KHHKeyBoardManagerUtil.m */,
+				310267721696D55600FBE156 /* KHHDateUtil.h */,
+				310267731696D55600FBE156 /* KHHDateUtil.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -5314,6 +5362,10 @@
 				3102672E169680FE00FBE156 /* KHHPopUpTable.m in Sources */,
 				310267341696826F00FBE156 /* KHHPopUpCell.m in Sources */,
 				3102673F1696ACA200FBE156 /* KHHTargetCell.m in Sources */,
+				310267621696B05B00FBE156 /* KHHPlanViewController.m in Sources */,
+				3102676A1696D02000FBE156 /* KHHDatePicker.m in Sources */,
+				310267711696D20400FBE156 /* KHHDateCell.m in Sources */,
+				310267771696D55600FBE156 /* KHHDateUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5526,6 +5578,10 @@
 				3102672D169680FE00FBE156 /* KHHPopUpTable.m in Sources */,
 				310267331696826F00FBE156 /* KHHPopUpCell.m in Sources */,
 				3102673E1696ACA200FBE156 /* KHHTargetCell.m in Sources */,
+				310267611696B05B00FBE156 /* KHHPlanViewController.m in Sources */,
+				310267691696D02000FBE156 /* KHHDatePicker.m in Sources */,
+				310267701696D20400FBE156 /* KHHDateCell.m in Sources */,
+				310267761696D55600FBE156 /* KHHDateUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5738,6 +5794,10 @@
 				3102672B169680FE00FBE156 /* KHHPopUpTable.m in Sources */,
 				310267311696826F00FBE156 /* KHHPopUpCell.m in Sources */,
 				3102673C1696ACA200FBE156 /* KHHTargetCell.m in Sources */,
+				3102675F1696B05B00FBE156 /* KHHPlanViewController.m in Sources */,
+				310267671696D02000FBE156 /* KHHDatePicker.m in Sources */,
+				3102676E1696D20400FBE156 /* KHHDateCell.m in Sources */,
+				310267741696D55600FBE156 /* KHHDateUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5946,6 +6006,10 @@
 				3102672C169680FE00FBE156 /* KHHPopUpTable.m in Sources */,
 				310267321696826F00FBE156 /* KHHPopUpCell.m in Sources */,
 				3102673D1696ACA200FBE156 /* KHHTargetCell.m in Sources */,
+				310267601696B05B00FBE156 /* KHHPlanViewController.m in Sources */,
+				310267681696D02000FBE156 /* KHHDatePicker.m in Sources */,
+				3102676F1696D20400FBE156 /* KHHDateCell.m in Sources */,
+				310267751696D55600FBE156 /* KHHDateUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

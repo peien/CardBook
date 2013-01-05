@@ -9,5 +9,11 @@
 #import "KHHDateUtil.h"
 
 @implementation KHHDateUtil
++ (NSString *)nowDate
+{
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    return [dateFormatter stringFromDate:[NSDate date]];    
+}
 
 @end

@@ -7,6 +7,8 @@
 //
 
 #import "KHHPlanViewController.h"
+#import "KHHTargetCell.h"
+#import "KHHDateCell.h"
 
 @interface KHHPlanViewController ()
 
@@ -14,57 +16,81 @@
 
 @implementation KHHPlanViewController
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+
 {
-    self = [super initWithStyle:style];
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        table = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, 320, 400)];
+        table.delegate = self;
+        table.dataSource = self;
+        table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     }
     return self;
 }
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationController.title = @"新建计划";
+    [self.view addSubview:table];
+   
+}
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    if (self.datePicker) {
+        [self cancelLocatePicker];
+    }
+}
+
+- (void)dateChanged
+{
+
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 #pragma mark - Table view data source
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-#warning Potentially incomplete method implementation.
-    // Return the number of sections.
-    return 0;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    return 0;
+    return 2;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
-    
-    // Configure the cell...
+    static NSString *CellIdentifier;
+    UITableViewCell *cell;
+    if (indexPath.row == 0) {
+        CellIdentifier = @"Target";
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (!cell) {
+            cell = [[KHHTargetCell alloc]init];
+            ((KHHTargetCell *)cell).headStr = @"对象";
+            ((KHHTargetCell *)cell).placeStr = @"请选择拜访对象";
+        }
+    }
+    if (indexPath.row == 1) {
+        CellIdentifier = @"Date";
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (!cell) {
+            cell = [[KHHDateCell alloc]init];
+            ((KHHDateCell *)cell).headStr = @"日期";
+            
+        }
+    }
+      
     
     return cell;
 }
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -105,17 +131,31 @@
 }
 */
 
+#pragma mark - Picker 
+-(void)cancelLocatePicker
+{
+    [self.datePicker cancelPicker];
+   
+    self.datePicker = nil;
+}
+
+
 #pragma mark - Table view delegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // Navigation logic may go here. Create and push another view controller.
-    /*
-     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:@"<#Nib name#>" bundle:nil];
-     // ...
-     // Pass the selected object to the new view controller.
-     [self.navigationController pushViewController:detailViewController animated:YES];
-     */
+    if (indexPath.row == 1) {
+        self.datePicker = [[ KHHDatePicker alloc] initWithFrame:CGRectMake(0.0,460-200.0,320.0,200.0)];
+        [self.datePicker addTarget:self action:@selector(dateChanged) forControlEvents:UIControlEventValueChanged];
+        [self.datePicker showInView:self.navigationController.view ];
+        
+    }else{
+        [self cancelLocatePicker];
+    }
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 45;
+}
 @end

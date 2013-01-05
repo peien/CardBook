@@ -10,4 +10,7 @@
 
 @interface KHHDateCell : UITableViewCell
 
+@property (nonatomic,strong)NSString *headStr;
+
+
 @end
