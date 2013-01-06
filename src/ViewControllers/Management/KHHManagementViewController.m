@@ -25,7 +25,7 @@
 #import "DetailInfoViewController.h"
 #import "KHHLocalNotificationUtil.h"
 #import "KHHOrganizationViewController.h"
-#import "KHHPopUpTable.h"
+
 #import "IntroViewController.h"
 #import "KHHPlanViewController.h"
 

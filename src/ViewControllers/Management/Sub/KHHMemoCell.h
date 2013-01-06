@@ -8,8 +8,18 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol KHHMemoCellDelegate <NSObject>
+
+- (void)selectPicker:(NSIndexPath *)indexPath;
+
+@end
+
 @interface KHHMemoCell : UITableViewCell
 
-@property(nonatomic,strong) UIButton *butTitle;
+@property(nonatomic,strong) NSString *butTitle;
+@property(nonatomic,strong) NSString *headStr;
+@property(nonatomic,strong) NSIndexPath *indexpath;
+@property(nonatomic,strong) id<KHHMemoCellDelegate> pickerDelegate;
+
 
 @end
