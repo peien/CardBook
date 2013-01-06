@@ -21,6 +21,18 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		3102672B169680FE00FBE156 /* KHHPopUpTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102672A169680FE00FBE156 /* KHHPopUpTable.m */; };
+		3102672C169680FE00FBE156 /* KHHPopUpTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102672A169680FE00FBE156 /* KHHPopUpTable.m */; };
+		3102672D169680FE00FBE156 /* KHHPopUpTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102672A169680FE00FBE156 /* KHHPopUpTable.m */; };
+		3102672E169680FE00FBE156 /* KHHPopUpTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102672A169680FE00FBE156 /* KHHPopUpTable.m */; };
+		310267311696826F00FBE156 /* KHHPopUpCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267301696826F00FBE156 /* KHHPopUpCell.m */; };
+		310267321696826F00FBE156 /* KHHPopUpCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267301696826F00FBE156 /* KHHPopUpCell.m */; };
+		310267331696826F00FBE156 /* KHHPopUpCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267301696826F00FBE156 /* KHHPopUpCell.m */; };
+		310267341696826F00FBE156 /* KHHPopUpCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267301696826F00FBE156 /* KHHPopUpCell.m */; };
+		3102673C1696ACA200FBE156 /* KHHTargetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102673B1696ACA200FBE156 /* KHHTargetCell.m */; };
+		3102673D1696ACA200FBE156 /* KHHTargetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102673B1696ACA200FBE156 /* KHHTargetCell.m */; };
+		3102673E1696ACA200FBE156 /* KHHTargetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102673B1696ACA200FBE156 /* KHHTargetCell.m */; };
+		3102673F1696ACA200FBE156 /* KHHTargetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102673B1696ACA200FBE156 /* KHHTargetCell.m */; };
 		3104E05F1687EE6600B0B45F /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3104E05E1687EE6600B0B45F /* libsqlite3.dylib */; };
 		3104E0611687EE8100B0B45F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3104E0601687EE8100B0B45F /* libz.dylib */; };
 		3104E06C168800F200B0B45F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 3104E06B168800F100B0B45F /* Reachability.m */; };
@@ -1790,6 +1802,12 @@
 		0CEFF87F163AFE7500E878C6 /* AppRegisterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppRegisterController.h; sourceTree = "<group>"; };
 		0CEFF880163AFE7500E878C6 /* AppRegisterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppRegisterController.m; sourceTree = "<group>"; };
 		0CEFF881163AFE7500E878C6 /* AppRegisterController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AppRegisterController.xib; sourceTree = "<group>"; };
+		31026729169680FE00FBE156 /* KHHPopUpTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHPopUpTable.h; sourceTree = "<group>"; };
+		3102672A169680FE00FBE156 /* KHHPopUpTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHPopUpTable.m; sourceTree = "<group>"; };
+		3102672F1696826F00FBE156 /* KHHPopUpCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHPopUpCell.h; sourceTree = "<group>"; };
+		310267301696826F00FBE156 /* KHHPopUpCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHPopUpCell.m; sourceTree = "<group>"; };
+		3102673A1696ACA200FBE156 /* KHHTargetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHTargetCell.h; sourceTree = "<group>"; };
+		3102673B1696ACA200FBE156 /* KHHTargetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHTargetCell.m; sourceTree = "<group>"; };
 		3104E05E1687EE6600B0B45F /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		3104E0601687EE8100B0B45F /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		3104E06A168800F100B0B45F /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
@@ -1808,11 +1826,11 @@
 		314A0286168C0D2700029324 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		314A032A168C52D000029324 /* NetClient+Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NetClient+Message.h"; sourceTree = "<group>"; };
 		314A032B168C52D000029324 /* NetClient+Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NetClient+Message.m"; sourceTree = "<group>"; };
-		314AFEF7168BEC3700029324 /* NetClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetClient.h; sourceTree = "<group>"; };
-		314AFEF8168BEC3700029324 /* NetClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetClient.m; sourceTree = "<group>"; };
-		314AFEFB168BEC4A00029324 /* Net.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Net.plist; sourceTree = "<group>"; };
-		314AFEFE168BECBB00029324 /* NetFromPlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetFromPlist.h; sourceTree = "<group>"; };
-		314AFEFF168BECBB00029324 /* NetFromPlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetFromPlist.m; sourceTree = "<group>"; };
+		314AFEF7168BEC3700029324 /* NetClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetClient.h; path = ../ViewControllers/Message/NetClient.h; sourceTree = "<group>"; };
+		314AFEF8168BEC3700029324 /* NetClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetClient.m; path = ../ViewControllers/Message/NetClient.m; sourceTree = "<group>"; };
+		314AFEFB168BEC4A00029324 /* Net.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Net.plist; path = ../ViewControllers/Message/Net.plist; sourceTree = "<group>"; };
+		314AFEFE168BECBB00029324 /* NetFromPlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetFromPlist.h; path = ../ViewControllers/Message/NetFromPlist.h; sourceTree = "<group>"; };
+		314AFEFF168BECBB00029324 /* NetFromPlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetFromPlist.m; path = ../ViewControllers/Message/NetFromPlist.m; sourceTree = "<group>"; };
 		31FCBC351682BD0A00ABFE3F /* KHHFilterPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHFilterPopup.h; sourceTree = "<group>"; };
 		31FCBC361682BD0A00ABFE3F /* KHHFilterPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHFilterPopup.m; sourceTree = "<group>"; };
 		620712E71650D051000188E8 /* logo57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo57.png; path = ../../logo57.png; sourceTree = "<group>"; };
@@ -2634,6 +2652,34 @@
 			path = Reg;
 			sourceTree = "<group>";
 		};
+		310267211696808000FBE156 /* PopUpView */ = {
+			isa = PBXGroup;
+			children = (
+				31026729169680FE00FBE156 /* KHHPopUpTable.h */,
+				3102672A169680FE00FBE156 /* KHHPopUpTable.m */,
+				3102672F1696826F00FBE156 /* KHHPopUpCell.h */,
+				310267301696826F00FBE156 /* KHHPopUpCell.m */,
+			);
+			name = PopUpView;
+			sourceTree = "<group>";
+		};
+		310267391696AC2400FBE156 /* NewLocalGroupCell */ = {
+			isa = PBXGroup;
+			children = (
+				310267401696AD6800FBE156 /* NewLocalGroupTable */,
+				3102673A1696ACA200FBE156 /* KHHTargetCell.h */,
+				3102673B1696ACA200FBE156 /* KHHTargetCell.m */,
+			);
+			name = NewLocalGroupCell;
+			sourceTree = "<group>";
+		};
+		310267401696AD6800FBE156 /* NewLocalGroupTable */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = NewLocalGroupTable;
+			sourceTree = "<group>";
+		};
 		314A027F168C08CA00029324 /* login */ = {
 			isa = PBXGroup;
 			children = (
@@ -2656,18 +2702,26 @@
 		314AFEF6168BEB4800029324 /* network */ = {
 			isa = PBXGroup;
 			children = (
-				314AFEF7168BEC3700029324 /* NetClient.h */,
-				314AFEF8168BEC3700029324 /* NetClient.m */,
 				314A032A168C52D000029324 /* NetClient+Message.h */,
 				314A032B168C52D000029324 /* NetClient+Message.m */,
-				314AFEFB168BEC4A00029324 /* Net.plist */,
-				314AFEFE168BECBB00029324 /* NetFromPlist.h */,
-				314AFEFF168BECBB00029324 /* NetFromPlist.m */,
 				310A3F36168D2C43009FF135 /* Delegates.h */,
 				310A3F44168D6778009FF135 /* NetWorking.h */,
 				310A3F45168D6779009FF135 /* NetWorking.m */,
 			);
 			name = network;
+			sourceTree = "<group>";
+		};
+		31C52AB216916E3F00446006 /* NetClient */ = {
+			isa = PBXGroup;
+			children = (
+				314AFEF7168BEC3700029324 /* NetClient.h */,
+				314AFEF8168BEC3700029324 /* NetClient.m */,
+				314AFEFB168BEC4A00029324 /* Net.plist */,
+				314AFEFE168BECBB00029324 /* NetFromPlist.h */,
+				314AFEFF168BECBB00029324 /* NetFromPlist.m */,
+			);
+			name = NetClient;
+			path = Network;
 			sourceTree = "<group>";
 		};
 		31FCBC301682B52600ABFE3F /* Popup */ = {
@@ -3020,6 +3074,7 @@
 				982AACC21609C903002B9BAD /* KHHTypes.h */,
 				98A84D9E1602D23100A4A673 /* Misc */,
 				98A84D9F1602D23A00A4A673 /* Network */,
+				31C52AB216916E3F00446006 /* NetClient */,
 				98A84DA01602D24600A4A673 /* UI */,
 				629BE10E165F4A6600FB3B04 /* Util */,
 				98A84DA11602D24D00A4A673 /* ViewControllers */,
@@ -3341,6 +3396,7 @@
 		98A84E4D1602D66200A4A673 /* Management */ = {
 			isa = PBXGroup;
 			children = (
+				310267211696808000FBE156 /* PopUpView */,
 				98A84E4E1602D66200A4A673 /* KHHBossEntrance.xib */,
 				98A84E4F1602D66200A4A673 /* KHHManagementViewController.h */,
 				98A84E501602D66200A4A673 /* KHHManagementViewController.m */,
@@ -3353,6 +3409,7 @@
 		98A84E531602D66200A4A673 /* Sub */ = {
 			isa = PBXGroup;
 			children = (
+				310267391696AC2400FBE156 /* NewLocalGroupCell */,
 				98A84E631602D66200A4A673 /* KHHCalendarViewController.h */,
 				98A84E641602D66200A4A673 /* KHHCalendarViewController.m */,
 				98A84E651602D66200A4A673 /* KHHCalendarViewController.xib */,
@@ -5254,6 +5311,9 @@
 				314A0289168C0D2700029324 /* User.m in Sources */,
 				314A032F168C52D000029324 /* NetClient+Message.m in Sources */,
 				310A3F48168D677A009FF135 /* NetWorking.m in Sources */,
+				3102672E169680FE00FBE156 /* KHHPopUpTable.m in Sources */,
+				310267341696826F00FBE156 /* KHHPopUpCell.m in Sources */,
+				3102673F1696ACA200FBE156 /* KHHTargetCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5463,6 +5523,9 @@
 				314A0288168C0D2700029324 /* User.m in Sources */,
 				314A032E168C52D000029324 /* NetClient+Message.m in Sources */,
 				310A3F47168D677A009FF135 /* NetWorking.m in Sources */,
+				3102672D169680FE00FBE156 /* KHHPopUpTable.m in Sources */,
+				310267331696826F00FBE156 /* KHHPopUpCell.m in Sources */,
+				3102673E1696ACA200FBE156 /* KHHTargetCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5672,6 +5735,9 @@
 				314A0287168C0D2700029324 /* User.m in Sources */,
 				314A032C168C52D000029324 /* NetClient+Message.m in Sources */,
 				310A3F46168D677A009FF135 /* NetWorking.m in Sources */,
+				3102672B169680FE00FBE156 /* KHHPopUpTable.m in Sources */,
+				310267311696826F00FBE156 /* KHHPopUpCell.m in Sources */,
+				3102673C1696ACA200FBE156 /* KHHTargetCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5877,6 +5943,9 @@
 				314AFEFA168BEC3700029324 /* NetClient.m in Sources */,
 				314AFF01168BECBB00029324 /* NetFromPlist.m in Sources */,
 				314A032D168C52D000029324 /* NetClient+Message.m in Sources */,
+				3102672C169680FE00FBE156 /* KHHPopUpTable.m in Sources */,
+				310267321696826F00FBE156 /* KHHPopUpCell.m in Sources */,
+				3102673D1696ACA200FBE156 /* KHHTargetCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
