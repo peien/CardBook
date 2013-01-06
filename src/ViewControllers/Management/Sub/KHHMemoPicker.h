@@ -7,17 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-@protocol KHHMemoPickerDelegate <NSObject>
 
-@required
-- (void)showTitle:(NSString*)title;
-
-@end
 
 
 @interface KHHMemoPicker : UIPickerView<UIPickerViewDataSource,UIPickerViewDelegate>
 
-@property(nonatomic,strong) id<KHHMemoPickerDelegate> showDelegate;
+
+
+@property(nonatomic,strong) void (^showTitle)(NSString *title, int tag);
 
 - (void)showInView:(UIView *) view;
 - (void)cancelPicker:(Boolean)remove;

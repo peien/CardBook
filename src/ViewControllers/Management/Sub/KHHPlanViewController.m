@@ -11,7 +11,7 @@
 #import "KHHDateCell.h"
 #import "KHHLocationCell.h"
 #import "KHHImageCell.h"
-#import "KHHMemoCell.h"
+
 #import "KHHUpperView.h"
 
 @interface KHHPlanViewController ()
@@ -19,6 +19,7 @@
     NSDictionary *dicTemp;
     CGRect rectForKey;
     NSMutableArray *inputsForKeyboard;
+   
 }
 @end
 
@@ -78,7 +79,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationController.title = @"新建计划";
+    self.title =  @"新建计划";
+    [self doUIRightButton];
     // NSLog(@"%f",);
     
     table.frame =  CGRectMake(0, 0, 320, self.view.bounds.size.height-44-50);
@@ -89,13 +91,24 @@
     KHHUpperView *upView = [[KHHUpperView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height-44-50, 320, 50)];
     [self.view addSubview:upView];
     
+    //weakself = self;
+    
 }
 
+- (void)doUIRightButton
+{
+    [self.rightBtn setTitle:@"日历" forState:0];
+    [self.rightBtn setTitle:@"日历" forState:1];
+}
 
+- (void)rightBarButtonClick:(id)sender
+{
+    [self.navigationController pushViewController:[[UIViewController alloc]init] animated:YES];
+}
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    if (self.datePicker||self.areaPicker||self.memoPicker) {
+    if (self.datePicker||self.areaPicker||self.memoPicker||self.remindPicker) {
         [self cancelLocatePicker];
     }
     
@@ -203,21 +216,26 @@
             cell = [[KHHMemoCell alloc]init];
         }
         if (indexPath.row == 5) {
-             ((KHHMemoCell *)cell).butTitle.titleLabel.text = [dicTemp objectForKey:@"date"];
-//            if ([dicTemp objectForKey:@"date"]) {
-//               
-//            }else{
-//                ((KHHDateCell *)cell).dateStr = [KHHDateUtil nowDate];
-//            }
+             
+            ((KHHMemoCell *)cell).headStr = @"备注";
+            ((KHHMemoCell *)cell).indexpath = indexPath;
+            ((KHHMemoCell *)cell).pickerDelegate = self;
+            if ([dicTemp objectForKey:@"memo"]) {
+                ((KHHMemoCell *)cell).butTitle = [dicTemp objectForKey:@"memo"];
+            }else{
+                ((KHHMemoCell *)cell).butTitle = @"请选择";
+            }
         }
         if (indexPath.row == 6) {
-            ((KHHMemoCell *)cell).butTitle.titleLabel.text = [dicTemp objectForKey:@"date"];
-//            ((KHHDateCell *)cell).headStr = @"提醒";
-//            if ([dicTemp objectForKey:@"time"]) {
-//                ((KHHDateCell *)cell).dateStr = [dicTemp objectForKey:@"time"];
-//            }else{
-//                ((KHHDateCell *)cell).dateStr = [KHHDateUtil strTimeFromDate:[NSDate new]];
-//            }
+            ((KHHMemoCell *)cell).headStr = @"提醒";
+            ((KHHMemoCell *)cell).indexpath = indexPath;
+            ((KHHMemoCell *)cell).pickerDelegate = self;
+            if ([dicTemp objectForKey:@"remind"]) {
+                ((KHHMemoCell *)cell).butTitle = [dicTemp objectForKey:@"remind"];
+            }else{
+                ((KHHMemoCell *)cell).butTitle = @"不提醒";
+            }
+
         }
     }
     if (indexPath.row == 7) {
@@ -287,6 +305,9 @@
     if (!self.memoPicker.hidden) {
         [self.memoPicker cancelPicker:NO];
     }
+    if (!self.remindPicker.hidden) {
+        [self.remindPicker cancelPicker:NO];
+    }
     
 }
 
@@ -306,12 +327,18 @@
 {
     [self.datePicker cancelPicker:YES];
     self.datePicker = nil;
+    
     [self.areaPicker cancelPicker:YES];
     self.areaPicker.delegate = nil;
     self.areaPicker = nil;
     
     [self.memoPicker cancelPicker:YES];
+   
     self.memoPicker = nil;
+    
+    [self.remindPicker cancelPicker:YES];
+    
+    self.remindPicker = nil;
 }
 
 - (void)pickerDidChaneStatus:(HZAreaPickerView *)picker
@@ -324,12 +351,17 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 1||indexPath.row == 2||indexPath.row == 3||indexPath.row == 5) {
+    
+    if (indexPath.row == 1||indexPath.row == 2||indexPath.row == 3||indexPath.row == 5||indexPath.row == 6) {
         rectForKey = [tableView cellForRowAtIndexPath:indexPath].frame;
         rectForKey = CGRectMake(rectForKey.origin.x, rectForKey.origin.y+30, rectForKey.size.width, rectForKey.size.height);
         [table goToInsetForKeyboard:rectForKey];
     }
     
+    if (indexPath.row == 4) {
+        [self hiddenKeyboard];
+        [table showNormal];
+    }
     if (indexPath.row == 1||indexPath.row == 2) {        
         [self hiddenKeyboard];
         if (!self.datePicker) {
@@ -367,19 +399,40 @@
         return;
     }
     
-    if (indexPath.row == 5) {
-//        [self registResponder];
-//        if(!self.memoPicker.hidden){
-//            [self.memoPicker cancelPicker:NO];
-//        }
+    if (indexPath.row == 5 ) {
         [self hiddenKeyboard];
         if (!self.memoPicker) {
             self.memoPicker = [[ KHHMemoPicker alloc] initWithFrame:CGRectMake(0.0,460-200.0,320.0,200.0)];
             self.memoPicker.hidden = YES;
+            self.memoPicker.tag = 10030;
+            __block KHHPlanViewController *weakself = self;
+            self.memoPicker.showTitle = ^(NSString *title, int tag){
+                [weakself showTitle:title tag:tag];
+            };
             [self addRes:_memoPicker];
         }
         if (self.memoPicker.hidden) {
             [self.memoPicker showInView:self.navigationController.view ];
+        }else{
+            [table showNormal];
+        }
+        
+        return;
+    }
+    if (indexPath.row == 6) {
+        [self hiddenKeyboard];
+        if (!self.remindPicker) {
+            self.remindPicker = [[ KHHMemoPicker alloc] initWithFrame:CGRectMake(0.0,460-200.0,320.0,200.0)];
+            self.remindPicker.hidden = YES;
+            self.remindPicker.tag = 10031;
+            __block KHHPlanViewController *weakself = self;
+            self.remindPicker.showTitle = ^(NSString *title, int tag){
+                [weakself showTitle:title tag:tag];
+            };
+            [self addRes:_remindPicker];
+        }
+        if (self.remindPicker.hidden) {
+            [self.remindPicker showInView:self.navigationController.view ];
         }else{
             [table showNormal];
         }
@@ -448,10 +501,69 @@
 }
 
 
+#pragma mark - memoPicker delegate
+- (void)selectPicker:(NSIndexPath *)indexPath
+{
+   
+        rectForKey = [table cellForRowAtIndexPath:indexPath].frame;
+        rectForKey = CGRectMake(rectForKey.origin.x, rectForKey.origin.y+30, rectForKey.size.width, rectForKey.size.height);
+        [table goToInsetForKeyboard:rectForKey];
+   
+    if (indexPath.row == 5 ) {
+        [self hiddenKeyboard];
+        if (!self.memoPicker) {
+            self.memoPicker = [[ KHHMemoPicker alloc] initWithFrame:CGRectMake(0.0,460-200.0,320.0,200.0)];
+            self.memoPicker.hidden = YES;
+            
+            self.memoPicker.tag = 10030;
+            __block KHHPlanViewController *weakself = self;
+            self.memoPicker.showTitle = ^(NSString *title, int tag){
+                [weakself showTitle:title tag:tag];
+            };
+            [self addRes:_memoPicker];
+        }
+        if (self.memoPicker.hidden) {
+            [self.memoPicker showInView:self.navigationController.view ];
+        }else{
+            [table showNormal];
+        }
+        
+        return;
+    }
+    if (indexPath.row == 6) {
+        [self hiddenKeyboard];
+        if (!self.remindPicker) {
+            self.remindPicker = [[ KHHMemoPicker alloc] initWithFrame:CGRectMake(0.0,460-200.0,320.0,200.0)];
+            self.remindPicker.hidden = YES;
+            __block KHHPlanViewController *weakself = self;
+            self.remindPicker.showTitle = ^(NSString *title, int tag){
+                [weakself showTitle:title tag:tag];
+            };
+            self.remindPicker.tag = 10031;
+            [self addRes:_remindPicker];
+        }
+        if (self.remindPicker.hidden) {
+            [self.remindPicker showInView:self.navigationController.view ];
+        }else{
+            [table showNormal];
+        }
+        
+        return;
+    }
+}
 
-
-
-
+- (void)showTitle:(NSString *)title tag:(int)tag
+{
+    if(tag == 10030){
+        [dicTemp setValue:title forKey:@"memo"];
+        [table reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:5 inSection:0]]  withRowAnimation:UITableViewRowAnimationNone];
+    }
+    if(tag == 10031){
+        [dicTemp setValue:title forKey:@"remind"];
+        [table reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:6 inSection:0]]  withRowAnimation:UITableViewRowAnimationNone];
+    }
+    
+}
 @end
 
 

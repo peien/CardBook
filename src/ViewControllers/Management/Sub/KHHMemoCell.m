@@ -11,6 +11,7 @@
 @implementation KHHMemoCell
 {
     UIFont *font;
+    UIButton *button;
    
     
 }
@@ -22,9 +23,10 @@
         font = [UIFont systemFontOfSize:13];
         self.textLabel.font = [UIFont systemFontOfSize:12];
         
-        _butTitle = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-        _butTitle.backgroundColor = [UIColor brownColor];
-        _butTitle.titleLabel.font = font;
+        button = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        //button.backgroundColor = [UIColor brownColor];
+        button.titleLabel.font = font;
+        [button addTarget:self action:@selector(butToDelagte) forControlEvents:UIControlEventTouchUpInside];
     }
     return self;
 }
@@ -34,16 +36,26 @@
     [super setSelected:selected animated:animated];   
 }
 
+- (void)butToDelagte
+{
+    if ([_pickerDelegate respondsToSelector:@selector(selectPicker:)]) {
+        [_pickerDelegate performSelector:@selector(selectPicker:) withObject:_indexpath];
+    }
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    self.textLabel.text = @"备注";
+    self.textLabel.text = _headStr;
     
     
     CGRect r = self.bounds;
     CGSize size = [self.textLabel.text sizeWithFont:font];
-    _butTitle.frame = CGRectMake(r.origin.x+10+size.width+30, (r.size.height-50)/2, 50, 50);
-    [self.contentView addSubview:_butTitle];
+    button.frame = CGRectMake(r.origin.x+10+size.width+30, (r.size.height-20)/2, 160, 20);
+    [button setTitle:_butTitle forState:0];
+    [button setTitle:_butTitle forState:1];
+    [self.contentView addSubview:button];
+    
 }
 
 @end

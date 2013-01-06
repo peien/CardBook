@@ -9,6 +9,9 @@
 #import "KHHUpperView.h"
 
 @implementation KHHUpperView
+{
+    UIButton *upperBtn;
+}
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -16,25 +19,27 @@
     if (self) {
         // Initialization code
         self.backgroundColor = [UIColor grayColor];
-        
+        upperBtn = [[UIButton alloc]init];
+              
     }
     return self;
 }
 
-- (void)subViews
-{
-    UIButton *upperBtn = [[UIButton alloc]init];
-   
-    upperBtn.frame = CGRectMake(320/2-200/2, 50/2-30/2, 200, 30);
-    upperBtn.titleLabel.text = @"我要上传";
-    [self addSubview:upperBtn];
-}
 
-- (void)drawRect:(CGRect)rect
+
+
+
+- (void)layoutSubviews
 {
-    [super drawRect:rect];
+    [super layoutSubviews];    
     
-    
+    upperBtn.frame = CGRectMake(320/2-200/2, 50/2-30/2, 200, 30);
+    upperBtn.backgroundColor = [UIColor whiteColor];
+    [upperBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [upperBtn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+     [upperBtn setTitle:@"我要上传" forState:UIControlStateNormal];
+    [upperBtn setTitle:@"我要上传" forState:UIControlStateHighlighted];
+    [self addSubview:upperBtn];
 }
 
 
