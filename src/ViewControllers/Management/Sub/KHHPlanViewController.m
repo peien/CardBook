@@ -86,10 +86,6 @@
     inputsForKeyboard = [[NSMutableArray alloc]initWithCapacity:10];
     [self.view addSubview:table];
     dicTemp = [[NSMutableDictionary alloc]init];
-    NSLog(@"origin.y%f",self.view.frame.origin.y);
-     NSLog(@"nav.origin.y%f",self.navigationController.view.frame.origin.y);
-    NSLog(@"origin.y%f",self.view.frame.origin.y);
-    NSLog(@"navigationBar.height%f",self.navigationController.navigationBar.frame.size.height);
     KHHUpperView *upView = [[KHHUpperView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height-44-50, 320, 50)];
     [self.view addSubview:upView];
     

@@ -10,8 +10,7 @@
 
 @implementation KHHDateCell
 
-{
-   
+{   
     UILabel *label;
     UIFont *font;
 }
