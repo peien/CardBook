@@ -79,11 +79,13 @@
 }
 
 #pragma mark tableView delegate
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return 40.0f;
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	return 40.0f;    
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
 	// 点击使alertView消失
 	NSUInteger cancelButtonIndex = alert.cancelButtonIndex;
 	[alert dismissWithClickedButtonIndex: cancelButtonIndex animated: YES];
