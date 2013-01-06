@@ -15,6 +15,7 @@
 @interface KHHManagementViewController : SuperViewController <UIAlertViewDelegate,KHHFilterPopupDelegate>
 @property (nonatomic, strong) UIView *entranceView;
 @property (strong, nonatomic) UIButton *signButton;
+@property (strong, nonatomic) IBOutlet UIButton *guide;
 - (IBAction)radarBtnClick:(id)sender;
 - (IBAction)funnelBtnClick:(id)sender;
 - (IBAction)calendarBtnClick:(id)sender;
@@ -22,4 +23,5 @@
 - (IBAction)locationBtnClick:(id)sender;
 - (IBAction)personBtnClick:(id)sender;
 - (IBAction)moreBtnClick:(id)sender;
+- (IBAction)reviewGuide:(id)sender;
 @end

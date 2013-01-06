@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface AppRegisterController : UIViewController
-
+@property (nonatomic, assign) BOOL isCompany;
 @end

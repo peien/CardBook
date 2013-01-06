@@ -20,7 +20,7 @@
     
     NSArray *dataArr;
     NSArray *arrPro;
-    
+    BOOL isSelectGroup;
     int seleIndex;
 }
 @property (nonatomic,strong) id<KHHFilterPopupDelegate> delegate;

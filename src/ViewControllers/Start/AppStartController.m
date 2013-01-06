@@ -20,6 +20,7 @@
 #import "KHHDefaults.h"
 #import "KHHNetworkAPIAgent+Statistics.h"
 #import "Reachability.h"
+#import "KHHFilterPopup.h"
 
 #define titleCreateAccountSucceeded NSLocalizedString(@"用户注册成功", nil)
 #define titleCreateAccountFailed    NSLocalizedString(@"用户注册失败", nil)
@@ -35,7 +36,7 @@ static const NSTimeInterval AppStart_TransitionDuration = 0.5f;
 static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOptionTransitionCrossDissolve;
 
 #pragma mark -
-@interface AppStartController ()
+@interface AppStartController () <KHHFilterPopupDelegate>
 @property (nonatomic, strong) UIViewController *actionController;
 @property (nonatomic, strong) UIViewController *createAccountController;
 @property (nonatomic, strong) UIViewController *loginController;
@@ -62,7 +63,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 - (void)showPreviousView;
 @end
 
-@implementation AppStartController{
+@implementation AppStartController {
     Reachability *r;
 }
 @synthesize OfflineLoginUserInfoDict = _OfflineLoginUserInfoDict;
@@ -502,15 +503,14 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
                              options:options];
 }
 - (void)showCreateAccountView {
-    UIViewAnimationOptions options = UIViewAnimationOptionTransitionFlipFromLeft;
-    [self transitionToViewController:self.createAccountController
-                             options:options];
+    //弹出选择框，供用户选择是注册什么账号（个人、公司）
+    NSArray *array = [[NSArray alloc] initWithObjects:KHHMessagePersonalAccount, KHHMessageCompanyAccount, nil];
+   [[KHHFilterPopup shareUtil] showPopUp:array index:0 Title:@"选择注册类型" delegate:self];
 }
 - (void)showIntroView {
-    UIViewController *toVC = [[IntroViewController alloc]
-                              init];
-    self.introController = toVC;
-  //  [self addChildViewController:self.introController];
+    IntroViewController *toVC = [[IntroViewController alloc] init];
+    toVC.isFromStartUp = YES;
+    self.introController = toVC;  //  [self addChildViewController:self.introController];
     [self.view addSubview:self.introController.view];
 //    [UIView animateWithDuration: 0.5
 //                     animations:^{
@@ -571,6 +571,26 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     }
     
     [self transitionToViewController:self.previousController
+                             options:options];
+}
+
+//KHHFilterPopupDelegate
+- (void)selectInAlert:(id) obj
+{
+    DLog(@"selected object = %@", obj);
+    //默认是个人，如果选择是公司就把公司标记置上
+    if (obj && [[self.createAccountController childViewControllers] count] > 0) {
+        NSDictionary *dic = (NSDictionary *) obj;
+        DLog(@"selected object = %@", self.createAccountController.childViewControllers);
+        AppRegisterController * control = (AppRegisterController *) [[self.createAccountController childViewControllers] objectAtIndex:0];
+        if([[dic objectForKey:@"selectItem"] isEqualToString:KHHMessageCompanyAccount]) {
+            control.isCompany = YES;
+        }else {
+            control.isCompany = NO;
+        }   
+    }
+    UIViewAnimationOptions options = UIViewAnimationOptionTransitionFlipFromLeft;
+    [self transitionToViewController:self.createAccountController
                              options:options];
 }
 @end
