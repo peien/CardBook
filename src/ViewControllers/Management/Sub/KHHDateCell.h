@@ -1,5 +1,5 @@
 //
-//  KHHTargetCell.h
+//  KHHDateCell.h
 //  CardBook
 //
 //  Created by CJK on 13-1-4.
@@ -8,12 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface KHHTargetCell : UITableViewCell
+@interface KHHDateCell : UITableViewCell
 
 @property (nonatomic,strong)NSString *headStr;
-@property (nonatomic,strong)NSString *placeStr;
-@property (nonatomic,strong)UITextField *field;
 
-- (void)registResponder;
+@property (nonatomic,strong)NSString *dateStr;
 
 @end

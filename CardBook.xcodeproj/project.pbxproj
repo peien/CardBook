@@ -21,18 +21,26 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		3102672B169680FE00FBE156 /* KHHPopUpTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102672A169680FE00FBE156 /* KHHPopUpTable.m */; };
-		3102672C169680FE00FBE156 /* KHHPopUpTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102672A169680FE00FBE156 /* KHHPopUpTable.m */; };
-		3102672D169680FE00FBE156 /* KHHPopUpTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102672A169680FE00FBE156 /* KHHPopUpTable.m */; };
-		3102672E169680FE00FBE156 /* KHHPopUpTable.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102672A169680FE00FBE156 /* KHHPopUpTable.m */; };
-		310267311696826F00FBE156 /* KHHPopUpCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267301696826F00FBE156 /* KHHPopUpCell.m */; };
-		310267321696826F00FBE156 /* KHHPopUpCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267301696826F00FBE156 /* KHHPopUpCell.m */; };
-		310267331696826F00FBE156 /* KHHPopUpCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267301696826F00FBE156 /* KHHPopUpCell.m */; };
-		310267341696826F00FBE156 /* KHHPopUpCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267301696826F00FBE156 /* KHHPopUpCell.m */; };
 		3102673C1696ACA200FBE156 /* KHHTargetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102673B1696ACA200FBE156 /* KHHTargetCell.m */; };
 		3102673D1696ACA200FBE156 /* KHHTargetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102673B1696ACA200FBE156 /* KHHTargetCell.m */; };
 		3102673E1696ACA200FBE156 /* KHHTargetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102673B1696ACA200FBE156 /* KHHTargetCell.m */; };
 		3102673F1696ACA200FBE156 /* KHHTargetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102673B1696ACA200FBE156 /* KHHTargetCell.m */; };
+		3102675F1696B05B00FBE156 /* KHHPlanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102675E1696B05B00FBE156 /* KHHPlanViewController.m */; };
+		310267601696B05B00FBE156 /* KHHPlanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102675E1696B05B00FBE156 /* KHHPlanViewController.m */; };
+		310267611696B05B00FBE156 /* KHHPlanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102675E1696B05B00FBE156 /* KHHPlanViewController.m */; };
+		310267621696B05B00FBE156 /* KHHPlanViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102675E1696B05B00FBE156 /* KHHPlanViewController.m */; };
+		310267671696D02000FBE156 /* KHHDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267661696D02000FBE156 /* KHHDatePicker.m */; };
+		310267681696D02000FBE156 /* KHHDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267661696D02000FBE156 /* KHHDatePicker.m */; };
+		310267691696D02000FBE156 /* KHHDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267661696D02000FBE156 /* KHHDatePicker.m */; };
+		3102676A1696D02000FBE156 /* KHHDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267661696D02000FBE156 /* KHHDatePicker.m */; };
+		3102676E1696D20400FBE156 /* KHHDateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102676D1696D20400FBE156 /* KHHDateCell.m */; };
+		3102676F1696D20400FBE156 /* KHHDateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102676D1696D20400FBE156 /* KHHDateCell.m */; };
+		310267701696D20400FBE156 /* KHHDateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102676D1696D20400FBE156 /* KHHDateCell.m */; };
+		310267711696D20400FBE156 /* KHHDateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102676D1696D20400FBE156 /* KHHDateCell.m */; };
+		310267741696D55600FBE156 /* KHHDateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267731696D55600FBE156 /* KHHDateUtil.m */; };
+		310267751696D55600FBE156 /* KHHDateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267731696D55600FBE156 /* KHHDateUtil.m */; };
+		310267761696D55600FBE156 /* KHHDateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267731696D55600FBE156 /* KHHDateUtil.m */; };
+		310267771696D55600FBE156 /* KHHDateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267731696D55600FBE156 /* KHHDateUtil.m */; };
 		3104E05F1687EE6600B0B45F /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3104E05E1687EE6600B0B45F /* libsqlite3.dylib */; };
 		3104E0611687EE8100B0B45F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3104E0601687EE8100B0B45F /* libz.dylib */; };
 		3104E06C168800F200B0B45F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 3104E06B168800F100B0B45F /* Reachability.m */; };
@@ -43,6 +51,22 @@
 		310A3F46168D677A009FF135 /* NetWorking.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A3F45168D6779009FF135 /* NetWorking.m */; };
 		310A3F47168D677A009FF135 /* NetWorking.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A3F45168D6779009FF135 /* NetWorking.m */; };
 		310A3F48168D677A009FF135 /* NetWorking.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A3F45168D6779009FF135 /* NetWorking.m */; };
+		310B2ED01699090B00818461 /* KHHInputTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 310B2ECF1699090B00818461 /* KHHInputTableView.m */; };
+		310B2ED11699090B00818461 /* KHHInputTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 310B2ECF1699090B00818461 /* KHHInputTableView.m */; };
+		310B2ED21699090B00818461 /* KHHInputTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 310B2ECF1699090B00818461 /* KHHInputTableView.m */; };
+		310B2ED31699090B00818461 /* KHHInputTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 310B2ECF1699090B00818461 /* KHHInputTableView.m */; };
+		310B2ED81699247100818461 /* KHHMemoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 310B2ED71699247100818461 /* KHHMemoPicker.m */; };
+		310B2ED91699247100818461 /* KHHMemoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 310B2ED71699247100818461 /* KHHMemoPicker.m */; };
+		310B2EDA1699247100818461 /* KHHMemoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 310B2ED71699247100818461 /* KHHMemoPicker.m */; };
+		310B2EDB1699247100818461 /* KHHMemoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 310B2ED71699247100818461 /* KHHMemoPicker.m */; };
+		310B2EDE16992FFC00818461 /* KHHMemoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 310B2EDD16992FFC00818461 /* KHHMemoCell.m */; };
+		310B2EDF16992FFC00818461 /* KHHMemoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 310B2EDD16992FFC00818461 /* KHHMemoCell.m */; };
+		310B2EE016992FFC00818461 /* KHHMemoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 310B2EDD16992FFC00818461 /* KHHMemoCell.m */; };
+		310B2EE116992FFC00818461 /* KHHMemoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 310B2EDD16992FFC00818461 /* KHHMemoCell.m */; };
+		310B2EE41699461500818461 /* KHHUpperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 310B2EE31699461500818461 /* KHHUpperView.m */; };
+		310B2EE51699461500818461 /* KHHUpperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 310B2EE31699461500818461 /* KHHUpperView.m */; };
+		310B2EE61699461500818461 /* KHHUpperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 310B2EE31699461500818461 /* KHHUpperView.m */; };
+		310B2EE71699461500818461 /* KHHUpperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 310B2EE31699461500818461 /* KHHUpperView.m */; };
 		314A0000168BEE9A00029324 /* settingIcon_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6217811F164BBA1D00E1CFD4 /* settingIcon_selected@2x.png */; };
 		314A0001168BEE9A00029324 /* settingIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62178120164BBA1D00E1CFD4 /* settingIcon@2x.png */; };
 		314A0002168BEE9A00029324 /* 4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F881602D7B300A4A673 /* 4@2x.png */; };
@@ -933,6 +957,38 @@
 		314AFFFD168BEE9A00029324 /* jiaohuan_btn_shuaxin_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 6217811C164BBA1D00E1CFD4 /* jiaohuan_btn_shuaxin_selected.png */; };
 		314AFFFE168BEE9A00029324 /* exch_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6217811D164BBA1D00E1CFD4 /* exch_2@2x.png */; };
 		314AFFFF168BEE9A00029324 /* left_btn_bg_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 6217811E164BBA1D00E1CFD4 /* left_btn_bg_selected.png */; };
+		3180A5071697D15000DD9501 /* UITextField+HideKeyBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A5061697D15000DD9501 /* UITextField+HideKeyBoard.m */; };
+		3180A5081697D15000DD9501 /* UITextField+HideKeyBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A5061697D15000DD9501 /* UITextField+HideKeyBoard.m */; };
+		3180A5091697D15000DD9501 /* UITextField+HideKeyBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A5061697D15000DD9501 /* UITextField+HideKeyBoard.m */; };
+		3180A50A1697D15000DD9501 /* UITextField+HideKeyBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A5061697D15000DD9501 /* UITextField+HideKeyBoard.m */; };
+		3180A50D1697FED100DD9501 /* KHHLocationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A50C1697FED100DD9501 /* KHHLocationCell.m */; };
+		3180A50E1697FED100DD9501 /* KHHLocationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A50C1697FED100DD9501 /* KHHLocationCell.m */; };
+		3180A50F1697FED100DD9501 /* KHHLocationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A50C1697FED100DD9501 /* KHHLocationCell.m */; };
+		3180A5101697FED100DD9501 /* KHHLocationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A50C1697FED100DD9501 /* KHHLocationCell.m */; };
+		3180A52C1698029600DD9501 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3180A5181698029600DD9501 /* area.plist */; };
+		3180A52D1698029600DD9501 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3180A5181698029600DD9501 /* area.plist */; };
+		3180A52E1698029600DD9501 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3180A5181698029600DD9501 /* area.plist */; };
+		3180A52F1698029600DD9501 /* area.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3180A5181698029600DD9501 /* area.plist */; };
+		3180A5341698029600DD9501 /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3180A51B1698029600DD9501 /* city.plist */; };
+		3180A5351698029600DD9501 /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3180A51B1698029600DD9501 /* city.plist */; };
+		3180A5361698029600DD9501 /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3180A51B1698029600DD9501 /* city.plist */; };
+		3180A5371698029600DD9501 /* city.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3180A51B1698029600DD9501 /* city.plist */; };
+		3180A5401698029600DD9501 /* HZAreaPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A5211698029600DD9501 /* HZAreaPickerView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		3180A5411698029600DD9501 /* HZAreaPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A5211698029600DD9501 /* HZAreaPickerView.m */; };
+		3180A5421698029600DD9501 /* HZAreaPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A5211698029600DD9501 /* HZAreaPickerView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		3180A5431698029600DD9501 /* HZAreaPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A5211698029600DD9501 /* HZAreaPickerView.m */; };
+		3180A5441698029600DD9501 /* HZAreaPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3180A5221698029600DD9501 /* HZAreaPickerView.xib */; };
+		3180A5451698029600DD9501 /* HZAreaPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3180A5221698029600DD9501 /* HZAreaPickerView.xib */; };
+		3180A5461698029600DD9501 /* HZAreaPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3180A5221698029600DD9501 /* HZAreaPickerView.xib */; };
+		3180A5471698029600DD9501 /* HZAreaPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3180A5221698029600DD9501 /* HZAreaPickerView.xib */; };
+		3180A5481698029600DD9501 /* HZLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A5241698029600DD9501 /* HZLocation.m */; };
+		3180A5491698029600DD9501 /* HZLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A5241698029600DD9501 /* HZLocation.m */; };
+		3180A54A1698029600DD9501 /* HZLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A5241698029600DD9501 /* HZLocation.m */; };
+		3180A54B1698029600DD9501 /* HZLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A5241698029600DD9501 /* HZLocation.m */; };
+		3180A55616981E8F00DD9501 /* KHHImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A55516981E8F00DD9501 /* KHHImageCell.m */; };
+		3180A55716981E8F00DD9501 /* KHHImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A55516981E8F00DD9501 /* KHHImageCell.m */; };
+		3180A55816981E8F00DD9501 /* KHHImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A55516981E8F00DD9501 /* KHHImageCell.m */; };
+		3180A55916981E8F00DD9501 /* KHHImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A55516981E8F00DD9501 /* KHHImageCell.m */; };
 		31FCBC371682BD0A00ABFE3F /* KHHFilterPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FCBC361682BD0A00ABFE3F /* KHHFilterPopup.m */; };
 		31FCBC381682BD0A00ABFE3F /* KHHFilterPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FCBC361682BD0A00ABFE3F /* KHHFilterPopup.m */; };
 		624F8C7F1676C167006CD354 /* KHHBMapLocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 624F8C7E1676C167006CD354 /* KHHBMapLocationController.m */; };
@@ -1802,12 +1858,16 @@
 		0CEFF87F163AFE7500E878C6 /* AppRegisterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppRegisterController.h; sourceTree = "<group>"; };
 		0CEFF880163AFE7500E878C6 /* AppRegisterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppRegisterController.m; sourceTree = "<group>"; };
 		0CEFF881163AFE7500E878C6 /* AppRegisterController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AppRegisterController.xib; sourceTree = "<group>"; };
-		31026729169680FE00FBE156 /* KHHPopUpTable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHPopUpTable.h; sourceTree = "<group>"; };
-		3102672A169680FE00FBE156 /* KHHPopUpTable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHPopUpTable.m; sourceTree = "<group>"; };
-		3102672F1696826F00FBE156 /* KHHPopUpCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHPopUpCell.h; sourceTree = "<group>"; };
-		310267301696826F00FBE156 /* KHHPopUpCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHPopUpCell.m; sourceTree = "<group>"; };
 		3102673A1696ACA200FBE156 /* KHHTargetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHTargetCell.h; sourceTree = "<group>"; };
 		3102673B1696ACA200FBE156 /* KHHTargetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHTargetCell.m; sourceTree = "<group>"; };
+		3102675D1696B05B00FBE156 /* KHHPlanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHPlanViewController.h; sourceTree = "<group>"; };
+		3102675E1696B05B00FBE156 /* KHHPlanViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHPlanViewController.m; sourceTree = "<group>"; };
+		310267651696D02000FBE156 /* KHHDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHDatePicker.h; sourceTree = "<group>"; };
+		310267661696D02000FBE156 /* KHHDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHDatePicker.m; sourceTree = "<group>"; };
+		3102676C1696D20300FBE156 /* KHHDateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHDateCell.h; sourceTree = "<group>"; };
+		3102676D1696D20400FBE156 /* KHHDateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHDateCell.m; sourceTree = "<group>"; };
+		310267721696D55600FBE156 /* KHHDateUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHDateUtil.h; sourceTree = "<group>"; };
+		310267731696D55600FBE156 /* KHHDateUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHDateUtil.m; sourceTree = "<group>"; };
 		3104E05E1687EE6600B0B45F /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		3104E0601687EE8100B0B45F /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		3104E06A168800F100B0B45F /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
@@ -1817,6 +1877,14 @@
 		310A3F3F168D3E9D009FF135 /* CardBook_test-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CardBook_test-Info.plist"; sourceTree = SOURCE_ROOT; };
 		310A3F44168D6778009FF135 /* NetWorking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetWorking.h; sourceTree = "<group>"; };
 		310A3F45168D6779009FF135 /* NetWorking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetWorking.m; sourceTree = "<group>"; };
+		310B2ECE1699090B00818461 /* KHHInputTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHInputTableView.h; sourceTree = "<group>"; };
+		310B2ECF1699090B00818461 /* KHHInputTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHInputTableView.m; sourceTree = "<group>"; };
+		310B2ED61699247100818461 /* KHHMemoPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHMemoPicker.h; sourceTree = "<group>"; };
+		310B2ED71699247100818461 /* KHHMemoPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHMemoPicker.m; sourceTree = "<group>"; };
+		310B2EDC16992FFC00818461 /* KHHMemoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHMemoCell.h; sourceTree = "<group>"; };
+		310B2EDD16992FFC00818461 /* KHHMemoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHMemoCell.m; sourceTree = "<group>"; };
+		310B2EE21699461500818461 /* KHHUpperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHUpperView.h; sourceTree = "<group>"; };
+		310B2EE31699461500818461 /* KHHUpperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHUpperView.m; sourceTree = "<group>"; };
 		314A00BE168BEE9A00029324 /* CardBook_test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardBook_test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		314A00C0168BEE9A00029324 /* CardBook copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "CardBook copy-Info.plist"; path = "/Users/sanzang/CardBook/CardBook copy-Info.plist"; sourceTree = "<absolute>"; };
 		314A027D168BEF3800029324 /* CardBook_test_haibo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardBook_test_haibo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1831,6 +1899,19 @@
 		314AFEFB168BEC4A00029324 /* Net.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Net.plist; path = ../ViewControllers/Message/Net.plist; sourceTree = "<group>"; };
 		314AFEFE168BECBB00029324 /* NetFromPlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetFromPlist.h; path = ../ViewControllers/Message/NetFromPlist.h; sourceTree = "<group>"; };
 		314AFEFF168BECBB00029324 /* NetFromPlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetFromPlist.m; path = ../ViewControllers/Message/NetFromPlist.m; sourceTree = "<group>"; };
+		3180A5051697D15000DD9501 /* UITextField+HideKeyBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+HideKeyBoard.h"; sourceTree = "<group>"; };
+		3180A5061697D15000DD9501 /* UITextField+HideKeyBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+HideKeyBoard.m"; sourceTree = "<group>"; };
+		3180A50B1697FED100DD9501 /* KHHLocationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHLocationCell.h; sourceTree = "<group>"; };
+		3180A50C1697FED100DD9501 /* KHHLocationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHLocationCell.m; sourceTree = "<group>"; };
+		3180A5181698029600DD9501 /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
+		3180A51B1698029600DD9501 /* city.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = city.plist; sourceTree = "<group>"; };
+		3180A5201698029600DD9501 /* HZAreaPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZAreaPickerView.h; sourceTree = "<group>"; };
+		3180A5211698029600DD9501 /* HZAreaPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZAreaPickerView.m; sourceTree = "<group>"; };
+		3180A5221698029600DD9501 /* HZAreaPickerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HZAreaPickerView.xib; sourceTree = "<group>"; };
+		3180A5231698029600DD9501 /* HZLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HZLocation.h; sourceTree = "<group>"; };
+		3180A5241698029600DD9501 /* HZLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZLocation.m; sourceTree = "<group>"; };
+		3180A55416981E8E00DD9501 /* KHHImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHImageCell.h; sourceTree = "<group>"; };
+		3180A55516981E8F00DD9501 /* KHHImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHImageCell.m; sourceTree = "<group>"; };
 		31FCBC351682BD0A00ABFE3F /* KHHFilterPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHFilterPopup.h; sourceTree = "<group>"; };
 		31FCBC361682BD0A00ABFE3F /* KHHFilterPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHFilterPopup.m; sourceTree = "<group>"; };
 		620712E71650D051000188E8 /* logo57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = logo57.png; path = ../../logo57.png; sourceTree = "<group>"; };
@@ -2652,23 +2733,15 @@
 			path = Reg;
 			sourceTree = "<group>";
 		};
-		310267211696808000FBE156 /* PopUpView */ = {
-			isa = PBXGroup;
-			children = (
-				31026729169680FE00FBE156 /* KHHPopUpTable.h */,
-				3102672A169680FE00FBE156 /* KHHPopUpTable.m */,
-				3102672F1696826F00FBE156 /* KHHPopUpCell.h */,
-				310267301696826F00FBE156 /* KHHPopUpCell.m */,
-			);
-			name = PopUpView;
-			sourceTree = "<group>";
-		};
 		310267391696AC2400FBE156 /* NewLocalGroupCell */ = {
 			isa = PBXGroup;
 			children = (
+				310B2ED51699243300818461 /* MemoPicker */,
+				3180A5151698029500DD9501 /* areapicker */,
+				3180A5041697D11500DD9501 /* TextFiledHide */,
+				3102676B1696D1D200FBE156 /* Cells */,
+				310267641696D00500FBE156 /* DatePicker */,
 				310267401696AD6800FBE156 /* NewLocalGroupTable */,
-				3102673A1696ACA200FBE156 /* KHHTargetCell.h */,
-				3102673B1696ACA200FBE156 /* KHHTargetCell.m */,
 			);
 			name = NewLocalGroupCell;
 			sourceTree = "<group>";
@@ -2676,8 +2749,49 @@
 		310267401696AD6800FBE156 /* NewLocalGroupTable */ = {
 			isa = PBXGroup;
 			children = (
+				3102675D1696B05B00FBE156 /* KHHPlanViewController.h */,
+				3102675E1696B05B00FBE156 /* KHHPlanViewController.m */,
+				310B2ECE1699090B00818461 /* KHHInputTableView.h */,
+				310B2ECF1699090B00818461 /* KHHInputTableView.m */,
+				310B2EE21699461500818461 /* KHHUpperView.h */,
+				310B2EE31699461500818461 /* KHHUpperView.m */,
 			);
 			name = NewLocalGroupTable;
+			sourceTree = "<group>";
+		};
+		310267641696D00500FBE156 /* DatePicker */ = {
+			isa = PBXGroup;
+			children = (
+				310267651696D02000FBE156 /* KHHDatePicker.h */,
+				310267661696D02000FBE156 /* KHHDatePicker.m */,
+			);
+			name = DatePicker;
+			sourceTree = "<group>";
+		};
+		3102676B1696D1D200FBE156 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				3102673A1696ACA200FBE156 /* KHHTargetCell.h */,
+				3102673B1696ACA200FBE156 /* KHHTargetCell.m */,
+				3102676C1696D20300FBE156 /* KHHDateCell.h */,
+				3102676D1696D20400FBE156 /* KHHDateCell.m */,
+				3180A50B1697FED100DD9501 /* KHHLocationCell.h */,
+				3180A50C1697FED100DD9501 /* KHHLocationCell.m */,
+				3180A55416981E8E00DD9501 /* KHHImageCell.h */,
+				3180A55516981E8F00DD9501 /* KHHImageCell.m */,
+				310B2EDC16992FFC00818461 /* KHHMemoCell.h */,
+				310B2EDD16992FFC00818461 /* KHHMemoCell.m */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		310B2ED51699243300818461 /* MemoPicker */ = {
+			isa = PBXGroup;
+			children = (
+				310B2ED61699247100818461 /* KHHMemoPicker.h */,
+				310B2ED71699247100818461 /* KHHMemoPicker.m */,
+			);
+			name = MemoPicker;
 			sourceTree = "<group>";
 		};
 		314A027F168C08CA00029324 /* login */ = {
@@ -2709,6 +2823,29 @@
 				310A3F45168D6779009FF135 /* NetWorking.m */,
 			);
 			name = network;
+			sourceTree = "<group>";
+		};
+		3180A5041697D11500DD9501 /* TextFiledHide */ = {
+			isa = PBXGroup;
+			children = (
+				3180A5051697D15000DD9501 /* UITextField+HideKeyBoard.h */,
+				3180A5061697D15000DD9501 /* UITextField+HideKeyBoard.m */,
+			);
+			name = TextFiledHide;
+			sourceTree = "<group>";
+		};
+		3180A5151698029500DD9501 /* areapicker */ = {
+			isa = PBXGroup;
+			children = (
+				3180A5181698029600DD9501 /* area.plist */,
+				3180A51B1698029600DD9501 /* city.plist */,
+				3180A5201698029600DD9501 /* HZAreaPickerView.h */,
+				3180A5211698029600DD9501 /* HZAreaPickerView.m */,
+				3180A5221698029600DD9501 /* HZAreaPickerView.xib */,
+				3180A5231698029600DD9501 /* HZLocation.h */,
+				3180A5241698029600DD9501 /* HZLocation.m */,
+			);
+			path = areapicker;
 			sourceTree = "<group>";
 		};
 		31C52AB216916E3F00446006 /* NetClient */ = {
@@ -2829,6 +2966,8 @@
 				629BE110165F4B0A00FB3B04 /* KHHLocalNotificationUtil.m */,
 				8413659016883F5000BB0400 /* KHHKeyBoardManagerUtil.h */,
 				8413659116883F5000BB0400 /* KHHKeyBoardManagerUtil.m */,
+				310267721696D55600FBE156 /* KHHDateUtil.h */,
+				310267731696D55600FBE156 /* KHHDateUtil.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -3396,7 +3535,6 @@
 		98A84E4D1602D66200A4A673 /* Management */ = {
 			isa = PBXGroup;
 			children = (
-				310267211696808000FBE156 /* PopUpView */,
 				98A84E4E1602D66200A4A673 /* KHHBossEntrance.xib */,
 				98A84E4F1602D66200A4A673 /* KHHManagementViewController.h */,
 				98A84E501602D66200A4A673 /* KHHManagementViewController.m */,
@@ -4393,6 +4531,9 @@
 				314A0278168BEF3800029324 /* ic_photo@2x.png in Resources */,
 				314A0279168BEF3800029324 /* Net.plist in Resources */,
 				310A3F41168D3E9D009FF135 /* CardBook_test_haibo-Info.plist in Resources */,
+				3180A52F1698029600DD9501 /* area.plist in Resources */,
+				3180A5371698029600DD9501 /* city.plist in Resources */,
+				3180A5471698029600DD9501 /* HZAreaPickerView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4619,6 +4760,9 @@
 				314A00B9168BEE9A00029324 /* ic_photo@2x.png in Resources */,
 				314A00BA168BEE9A00029324 /* Net.plist in Resources */,
 				310A3F42168D3E9D009FF135 /* CardBook_test-Info.plist in Resources */,
+				3180A52E1698029600DD9501 /* area.plist in Resources */,
+				3180A5361698029600DD9501 /* city.plist in Resources */,
+				3180A5461698029600DD9501 /* HZAreaPickerView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4844,6 +4988,9 @@
 				626832AF16758BDA00EB04BF /* mapapi.bundle in Resources */,
 				849FBC93168AA80A00C54EE5 /* ic_photo@2x.png in Resources */,
 				314AFEFC168BEC4A00029324 /* Net.plist in Resources */,
+				3180A52C1698029600DD9501 /* area.plist in Resources */,
+				3180A5341698029600DD9501 /* city.plist in Resources */,
+				3180A5441698029600DD9501 /* HZAreaPickerView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5070,6 +5217,9 @@
 				626832B016758BDA00EB04BF /* mapapi.bundle in Resources */,
 				849FBC94168AA80B00C54EE5 /* ic_photo@2x.png in Resources */,
 				314AFEFD168BEC4A00029324 /* Net.plist in Resources */,
+				3180A52D1698029600DD9501 /* area.plist in Resources */,
+				3180A5351698029600DD9501 /* city.plist in Resources */,
+				3180A5451698029600DD9501 /* HZAreaPickerView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5311,9 +5461,20 @@
 				314A0289168C0D2700029324 /* User.m in Sources */,
 				314A032F168C52D000029324 /* NetClient+Message.m in Sources */,
 				310A3F48168D677A009FF135 /* NetWorking.m in Sources */,
-				3102672E169680FE00FBE156 /* KHHPopUpTable.m in Sources */,
-				310267341696826F00FBE156 /* KHHPopUpCell.m in Sources */,
 				3102673F1696ACA200FBE156 /* KHHTargetCell.m in Sources */,
+				310267621696B05B00FBE156 /* KHHPlanViewController.m in Sources */,
+				3102676A1696D02000FBE156 /* KHHDatePicker.m in Sources */,
+				310267711696D20400FBE156 /* KHHDateCell.m in Sources */,
+				310267771696D55600FBE156 /* KHHDateUtil.m in Sources */,
+				3180A50A1697D15000DD9501 /* UITextField+HideKeyBoard.m in Sources */,
+				3180A5101697FED100DD9501 /* KHHLocationCell.m in Sources */,
+				3180A5431698029600DD9501 /* HZAreaPickerView.m in Sources */,
+				3180A54B1698029600DD9501 /* HZLocation.m in Sources */,
+				3180A55916981E8F00DD9501 /* KHHImageCell.m in Sources */,
+				310B2ED31699090B00818461 /* KHHInputTableView.m in Sources */,
+				310B2EDB1699247100818461 /* KHHMemoPicker.m in Sources */,
+				310B2EE116992FFC00818461 /* KHHMemoCell.m in Sources */,
+				310B2EE71699461500818461 /* KHHUpperView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5523,9 +5684,20 @@
 				314A0288168C0D2700029324 /* User.m in Sources */,
 				314A032E168C52D000029324 /* NetClient+Message.m in Sources */,
 				310A3F47168D677A009FF135 /* NetWorking.m in Sources */,
-				3102672D169680FE00FBE156 /* KHHPopUpTable.m in Sources */,
-				310267331696826F00FBE156 /* KHHPopUpCell.m in Sources */,
 				3102673E1696ACA200FBE156 /* KHHTargetCell.m in Sources */,
+				310267611696B05B00FBE156 /* KHHPlanViewController.m in Sources */,
+				310267691696D02000FBE156 /* KHHDatePicker.m in Sources */,
+				310267701696D20400FBE156 /* KHHDateCell.m in Sources */,
+				310267761696D55600FBE156 /* KHHDateUtil.m in Sources */,
+				3180A5091697D15000DD9501 /* UITextField+HideKeyBoard.m in Sources */,
+				3180A50F1697FED100DD9501 /* KHHLocationCell.m in Sources */,
+				3180A5421698029600DD9501 /* HZAreaPickerView.m in Sources */,
+				3180A54A1698029600DD9501 /* HZLocation.m in Sources */,
+				3180A55816981E8F00DD9501 /* KHHImageCell.m in Sources */,
+				310B2ED21699090B00818461 /* KHHInputTableView.m in Sources */,
+				310B2EDA1699247100818461 /* KHHMemoPicker.m in Sources */,
+				310B2EE016992FFC00818461 /* KHHMemoCell.m in Sources */,
+				310B2EE61699461500818461 /* KHHUpperView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5735,9 +5907,20 @@
 				314A0287168C0D2700029324 /* User.m in Sources */,
 				314A032C168C52D000029324 /* NetClient+Message.m in Sources */,
 				310A3F46168D677A009FF135 /* NetWorking.m in Sources */,
-				3102672B169680FE00FBE156 /* KHHPopUpTable.m in Sources */,
-				310267311696826F00FBE156 /* KHHPopUpCell.m in Sources */,
 				3102673C1696ACA200FBE156 /* KHHTargetCell.m in Sources */,
+				3102675F1696B05B00FBE156 /* KHHPlanViewController.m in Sources */,
+				310267671696D02000FBE156 /* KHHDatePicker.m in Sources */,
+				3102676E1696D20400FBE156 /* KHHDateCell.m in Sources */,
+				310267741696D55600FBE156 /* KHHDateUtil.m in Sources */,
+				3180A5071697D15000DD9501 /* UITextField+HideKeyBoard.m in Sources */,
+				3180A50D1697FED100DD9501 /* KHHLocationCell.m in Sources */,
+				3180A5401698029600DD9501 /* HZAreaPickerView.m in Sources */,
+				3180A5481698029600DD9501 /* HZLocation.m in Sources */,
+				3180A55616981E8F00DD9501 /* KHHImageCell.m in Sources */,
+				310B2ED01699090B00818461 /* KHHInputTableView.m in Sources */,
+				310B2ED81699247100818461 /* KHHMemoPicker.m in Sources */,
+				310B2EDE16992FFC00818461 /* KHHMemoCell.m in Sources */,
+				310B2EE41699461500818461 /* KHHUpperView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5943,9 +6126,20 @@
 				314AFEFA168BEC3700029324 /* NetClient.m in Sources */,
 				314AFF01168BECBB00029324 /* NetFromPlist.m in Sources */,
 				314A032D168C52D000029324 /* NetClient+Message.m in Sources */,
-				3102672C169680FE00FBE156 /* KHHPopUpTable.m in Sources */,
-				310267321696826F00FBE156 /* KHHPopUpCell.m in Sources */,
 				3102673D1696ACA200FBE156 /* KHHTargetCell.m in Sources */,
+				310267601696B05B00FBE156 /* KHHPlanViewController.m in Sources */,
+				310267681696D02000FBE156 /* KHHDatePicker.m in Sources */,
+				3102676F1696D20400FBE156 /* KHHDateCell.m in Sources */,
+				310267751696D55600FBE156 /* KHHDateUtil.m in Sources */,
+				3180A5081697D15000DD9501 /* UITextField+HideKeyBoard.m in Sources */,
+				3180A50E1697FED100DD9501 /* KHHLocationCell.m in Sources */,
+				3180A5411698029600DD9501 /* HZAreaPickerView.m in Sources */,
+				3180A5491698029600DD9501 /* HZLocation.m in Sources */,
+				3180A55716981E8F00DD9501 /* KHHImageCell.m in Sources */,
+				310B2ED11699090B00818461 /* KHHInputTableView.m in Sources */,
+				310B2ED91699247100818461 /* KHHMemoPicker.m in Sources */,
+				310B2EDF16992FFC00818461 /* KHHMemoCell.m in Sources */,
+				310B2EE51699461500818461 /* KHHUpperView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6124,8 +6318,8 @@
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ming Sun (BWKVEKZTR4)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ming Sun (BWKVEKZTR4)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/3rdPart/SDWebImage\"",
@@ -6149,8 +6343,8 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6723B90E-D1BC-4B1D-84FA-D72BC51472A2";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6723B90E-D1BC-4B1D-84FA-D72BC51472A2";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
@@ -6161,8 +6355,8 @@
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Ming Sun (BWKVEKZTR4)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ming Sun (BWKVEKZTR4)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/3rdPart/SDWebImage\"",
@@ -6183,8 +6377,8 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "6723B90E-D1BC-4B1D-84FA-D72BC51472A2";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "6723B90E-D1BC-4B1D-84FA-D72BC51472A2";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};

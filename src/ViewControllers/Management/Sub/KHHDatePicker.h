@@ -1,5 +1,5 @@
 //
-//  KHHPopUpCell.h
+//  KHHDatePicker.h
 //  CardBook
 //
 //  Created by CJK on 13-1-4.
@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface KHHPopUpCell : UITableViewCell
+@interface KHHDatePicker : UIDatePicker
+
+- (void)showInView:(UIView *) view;
+- (void)cancelPicker:(Boolean)remove;
+
 
 @end
