@@ -395,17 +395,6 @@
                 }
                 Card *card = [self.generalArray objectAtIndex:indexPath.row];
                 UIImage *imgNor = [UIImage imageNamed:@"logopic.png"];
-                if ([card isKindOfClass:[ReceivedCard class]]) {
-                    ReceivedCard *reCard = (ReceivedCard *)card;
-                    if (reCard.isReadValue) {
-                        cell.newicon.hidden = YES;
-                    }else{
-                        cell.newicon.hidden =  NO;
-                    }
-                }else{
-                    cell.newicon.hidden = YES;
-                }
-                
                 //同事不可能为新的
                 cell.newicon.hidden = YES;
                 
@@ -428,7 +417,9 @@
                 //填充单元格数据
                 cell.nameLabel.text = card.name;
                 cell.positionLabel.text = card.title;
-                cell.companyLabel.text =card.company.name;
+                //都是同事，公司名就不显示了，改成显示手机
+//                cell.companyLabel.text = card.company.name;
+                cell.companyLabel.text = card.mobilePhone;
                 return cell;
                 break;
             }

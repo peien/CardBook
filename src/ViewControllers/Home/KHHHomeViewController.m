@@ -42,10 +42,9 @@
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 
+//同事移到组织架构里去
 #define POPDismiss [self.popover dismissPopoverAnimated:YES];
-#define BaseBtnTitleArrayMobiGrop       _btnTitleArr = [[NSMutableArray alloc] initWithObjects:KHHMessageDefaultGroupAll,KHHMessageDefaultGroupColleague,KHHMessageDefaultGroupUnGroup,KHHMessageDefaultGroupLocal, nil];
-#define BaseBtnTitleArrayColleague      _btnTitleArr = [[NSMutableArray alloc] initWithObjects:KHHMessageDefaultGroupAll,KHHMessageDefaultGroupColleague,KHHMessageDefaultGroupUnGroup, nil];
-#define BaseBtnTitleArrayLocal          _btnTitleArr = [[NSMutableArray alloc] initWithObjects:KHHMessageDefaultGroupAll,KHHMessageDefaultGroupUnGroup,KHHMessageDefaultGroupLocal, nil];
+#define BaseBtnTitleArrayMobiGrop       _btnTitleArr = [[NSMutableArray alloc] initWithObjects:KHHMessageDefaultGroupAll,KHHMessageDefaultGroupUnGroup,KHHMessageDefaultGroupLocal, nil];
 #define BaseBtnTitleArrayVisited        _btnTitleArr = [[NSMutableArray alloc] initWithObjects:KHHMessageDefaultGroupAll,KHHMessageDefaultGroupUnGroup, nil];
 
 @interface KHHHomeViewController ()<UIActionSheetDelegate,UIAlertViewDelegate,
@@ -377,23 +376,10 @@
             self.baseNum += 1;
         }
         
-        //是否是公司用户（判断是否显示同事分组）
-        NSNumber *companyID = [self.myDefaults currentCompanyID];
-        if (companyID.longValue > 0) {
-            self.baseNum += 1;
-        }
-        
         //根据固定分组数来初始化固定分组
         switch (self.baseNum) {
-            case 4:
-                BaseBtnTitleArrayMobiGrop;
-                break;
             case 3:
-                if (isHaveMobilePhoneGroup) {
-                    BaseBtnTitleArrayLocal;
-                }else {
-                    BaseBtnTitleArrayColleague;
-                }
+                BaseBtnTitleArrayMobiGrop;
                 break;
             case 2:
                 BaseBtnTitleArrayVisited;
@@ -433,8 +419,6 @@
             self.generalArray = [self.dataControl cardsOfUngrouped];
         }else if ([btnName isEqualToString:KHHMessageDefaultGroupAll]){
             self.generalArray = [self.dataControl cardsOfAll];
-        }else if ([btnName isEqualToString:KHHMessageDefaultGroupColleague]){
-            self.generalArray = [self.dataControl cardsOfColleague];
         }
     }
     
@@ -600,10 +584,6 @@
                     cell.newicon.hidden = YES;
                 }
                 
-                //同事不可能新的
-                if (_currentBtn && [_currentBtn.titleLabel.text isEqualToString:KHHMessageDefaultGroupColleague]) {
-                    cell.newicon.hidden = YES;
-                }
                 CALayer *l = [cell.logoImage layer];
                 [cell.logoImage setImageWithURL:[NSURL URLWithString:card.logo.url]
                              placeholderImage:imgNor
@@ -841,8 +821,6 @@
             //刷新表
             if ([btnName isEqualToString:KHHMessageDefaultGroupAll] || [btnName isEqualToString:[NSString string]]) {
                 self.generalArray = [self.dataControl cardsOfAll];
-            }else if([btnName isEqualToString:KHHMessageDefaultGroupColleague]){
-                self.generalArray = [self.dataControl cardsOfColleague];
             }else if([btnName isEqualToString:KHHMessageDefaultGroupUnGroup]){
                 self.generalArray = [self.dataControl cardsOfUngrouped];
             }else if([btnName isEqualToString:KHHMessageDefaultGroupLocal]){

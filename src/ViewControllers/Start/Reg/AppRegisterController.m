@@ -21,7 +21,6 @@ enum Tag_ImageView_Cell {
     Tag_ImageView_Cell_Top = 20001,
     Tag_ImageView_Cell_Middle_0,
     Tag_ImageView_Cell_Middle_1,
-    Tag_ImageView_Cell_Middle_2,
     Tag_ImageView_Cell_Bottom,
 };
 
@@ -30,21 +29,29 @@ enum Tag_TextField {
     Tag_TextField_Mobile,
     Tag_TextField_Pass,
     Tag_TextField_Company,
-    Tag_TextField_Invation,
 };
 
 #define Tag_Checkbox_ShowPass 23001
 #define Tag_Checkbox_Agree    23002
 #define Tag_Button_Reg        21002
 #define Tag_Scroll_Container  9999
+#define Tag_Label_Company     24001
 
 #define textOK                     NSLocalizedString(KHHMessageSure, @"OK")
 #define textAlertYouShouldAgree    NSLocalizedString(@"必须同意隐私声明才能使用本产品。", nil)
 #define textAlertPasswordInvalid   NSLocalizedString(@"密码必须包含4-12位数字、字母、下划线或减号！", nil)
 #define textAlertPhoneLooksInvalid NSLocalizedString(@"请输入有效的手机号码。", nil)
 #define textAlertShouldNotBeEmpty  NSLocalizedString(@"姓名手机号和密码不能为空！", nil)
+#define textAlertCompanyNotBeEmpty NSLocalizedString(@"公司名称不能为空！", nil)
 #define textWarnRealPhoneNumber    NSLocalizedString(@"注册必须用你的真实手机号码，以备密码丢失时重设密码。使用他人手机号码可能导致你的数据外泄或丢失。蜂巢不会透露您的号码给第三方。",nil)
 
+@interface AppRegisterController ()
+{
+    UILabel         *companyLabel;
+    UITextField     *companyText;
+    UIImageView     *companyImage;
+}
+@end
 @interface AppRegisterController ()<SMCheckboxDelegate>
 @property (nonatomic, strong) KHHDefaults *defaults;
 - (IBAction)createAccount:(id)sender;
@@ -91,16 +98,21 @@ enum Tag_TextField {
     // Cell background:
     UIEdgeInsets cellBgInsets = {0, 13, 0, 13};
     UIImage *topBgImg    = [UIImage imageNamed:@"Cell_top.png"    capInsets:cellBgInsets];
-    UIImage *bottomBgImg = [UIImage imageNamed:@"Cell_bottom.png" capInsets:cellBgInsets];
     UIImage *middleBgImg = [UIImage imageNamed:@"Cell_middle.png" capInsets:cellBgInsets];
+    UIImage *bottomBgImg = [UIImage imageNamed:@"Cell_bottom.png" capInsets:cellBgInsets];
     UIImageView *topBg    = (UIImageView *)[root viewWithTag:Tag_ImageView_Cell_Top];
-    UIImageView *bottomBg = (UIImageView *)[root viewWithTag:Tag_ImageView_Cell_Bottom];
+    companyImage = (UIImageView *)[root viewWithTag:Tag_ImageView_Cell_Bottom];
     topBg.image    = topBgImg;
-    bottomBg.image = bottomBgImg;
+    companyImage.image = bottomBgImg;
     for (NSInteger tag = Tag_ImageView_Cell_Middle_0;
-         tag <= Tag_ImageView_Cell_Middle_2; tag++) {
+         tag <= Tag_ImageView_Cell_Middle_1; tag++) {
         UIImageView *middleBg = (UIImageView *)[root viewWithTag:tag];
-        middleBg.image = middleBgImg;
+        //不是公司的时候密码就是最后一个
+        if (!_isCompany && tag == Tag_ImageView_Cell_Middle_1) {
+            middleBg.image = bottomBgImg;
+        }else {
+            middleBg.image = middleBgImg;
+        }
     }
     
     // Button:
@@ -109,6 +121,40 @@ enum Tag_TextField {
     [regButton setBackgroundImage:[UIImage imageNamed:@"Button_red.png"
                                             capInsets:buttonBgInsets]
                            forState:UIControlStateNormal];
+}
+
+-(void) viewWillAppear:(BOOL)animated {
+    //不是公司时要把公司那栏隐藏
+    UIEdgeInsets cellBgInsets = {0, 13, 0, 13};
+    UIImage *middleBgImg = [UIImage imageNamed:@"Cell_middle.png" capInsets:cellBgInsets];
+    UIImage *bottomBgImg = [UIImage imageNamed:@"Cell_bottom.png" capInsets:cellBgInsets];
+    UITextField *passField = (UITextField *)[self.view viewWithTag:Tag_TextField_Pass];
+    UIImageView *passImageView = (UIImageView *)[self.view viewWithTag:Tag_ImageView_Cell_Middle_1];
+    if (!companyImage) {
+        companyImage = (UIImageView *)[self.view viewWithTag:Tag_ImageView_Cell_Bottom];
+    }
+    if (!companyLabel) {
+        companyLabel = (UILabel *) [self.view viewWithTag:Tag_Label_Company];
+    }
+    if (!companyText) {
+        companyText =  (UITextField *)[self.view viewWithTag:Tag_TextField_Company];
+    }
+    
+    //判断显隐
+    if (!_isCompany) {
+        passField.returnKeyType = UIReturnKeyDone;
+        passImageView.image = bottomBgImg;
+        companyText.hidden = YES;
+        companyLabel.hidden = YES;
+        companyImage.hidden = YES;
+    }else {
+        passField.returnKeyType = UIReturnKeyNext;
+        passImageView.image = middleBgImg;
+        companyText.hidden = NO;
+        companyLabel.hidden = NO;
+        companyImage.hidden = NO;
+    }
+    [super viewWillAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning
@@ -121,12 +167,11 @@ enum Tag_TextField {
 - (void)goBack:(id)sender {
     [self postASAPNotificationName:nAppShowPreviousView];
 }
+
 - (IBAction)createAccount:(id)sender {
     UITextField *nameField = (UITextField *)[self.view viewWithTag:Tag_TextField_Name];
     UITextField *userField = (UITextField *)[self.view viewWithTag:Tag_TextField_Mobile];
     UITextField *passField = (UITextField *)[self.view viewWithTag:Tag_TextField_Pass];
-    UITextField *comField  = (UITextField *)[self.view viewWithTag:Tag_TextField_Company];
-    UITextField *invField  = (UITextField *)[self.view viewWithTag:Tag_TextField_Invation];
     NSString *name     = nameField.text;
     NSString *user     = userField.text;
     NSString *password = passField.text;
@@ -176,6 +221,17 @@ enum Tag_TextField {
           otherButtonTitles:nil] show];
         return;
     }
+    
+    //如果是注册公司那么公司必须添
+    if (_isCompany && companyText.text.length == 0) {
+        [[[UIAlertView alloc]
+          initWithTitle:nil
+          message:textAlertCompanyNotBeEmpty
+          delegate:nil
+          cancelButtonTitle:textOK
+          otherButtonTitles:nil] show];
+        return;
+    }
 
     DLog(@"[II] 用户名密码等数据看起来ok，开始注册！");
     // 把user和password保存到UserDefaults，其他通过Notification发出去
@@ -185,8 +241,7 @@ enum Tag_TextField {
     info[kAccountKeyName]     = name;
     info[kAccountKeyUser]     = user;
     info[kAccountKeyPassword] = password;
-    if(comField.text.length) info[kAccountKeyCompany] = comField.text;
-    if(invField.text.length) info[kAccountKeyInvitationCode] = invField.text;
+    if(companyText.text.length) info[kAccountKeyCompany] = companyText.text;
     [self postASAPNotificationName:nAppCreateThisAccount
                               info:info];
 }
@@ -234,12 +289,12 @@ enum Tag_TextField {
 // called when 'return' key pressed. return NO to ignore.
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     NSInteger theTag = textField.tag;
-    if (theTag >= Tag_TextField_Name
-        && theTag < Tag_TextField_Invation) {
+    if (textField.returnKeyType == UIReturnKeyDone) {
+        [textField resignFirstResponder];
+    }else if (theTag >= Tag_TextField_Name
+             && theTag < Tag_TextField_Company) {
         UITextField *tf = (UITextField *)[self.view viewWithTag:(theTag + 1)];
         [tf becomeFirstResponder];
-    } else {
-        [textField resignFirstResponder];
     }
     return YES;
 }

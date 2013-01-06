@@ -59,7 +59,12 @@
 #define KHH_APP_NAME [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleNameKey]
 #endif
 
-
+/*
+ * iphone5
+ */
+#ifndef iPhone5
+#define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
+#endif
 // URLs {
 #if KHH_RELEASE_SERVER == 1
 static NSString * const KHHServer = @"www.kinghanhong.com";
