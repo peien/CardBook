@@ -24,7 +24,7 @@
 #import "Card.h"
 #import "DetailInfoViewController.h"
 #import "KHHLocalNotificationUtil.h"
-#import "KHHPopUpTable.h"
+
 #import "KHHPlanViewController.h"
 
 

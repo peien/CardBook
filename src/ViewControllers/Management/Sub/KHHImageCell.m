@@ -1,23 +1,16 @@
 //
-//  KHHDateCell.m
+//  KHHImageCell.m
 //  CardBook
 //
-//  Created by CJK on 13-1-4.
+//  Created by CJK on 13-1-5.
 //  Copyright (c) 2013年 Kinghanhong. All rights reserved.
 //
 
-#import "KHHDateCell.h"
+#import "KHHImageCell.h"
 
-@implementation KHHDateCell
-
+@implementation KHHImageCell
 {
-   
-    UILabel *label;
     UIFont *font;
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
     
 }
 
@@ -27,24 +20,26 @@
     if (self) {
         font = [UIFont systemFontOfSize:13];
         self.textLabel.font = [UIFont systemFontOfSize:12];
-        label = [[UILabel alloc]init];
-        label.font = font;
+        _imageBtn = [[UIButton alloc]init];
     }
     return self;
+}
+
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated
+{
+  //  [super setSelected:selected animated:animated];
 }
 
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+    [_imageBtn setImage:[UIImage imageNamed:@"tianjia_Btn_Red"] forState: UIControlStateNormal];
+    [_imageBtn setImage:[UIImage imageNamed:@"tianjia_Btn_Red"] forState: UIControlStateHighlighted];
     CGRect r = self.bounds;
     CGSize size = [self.textLabel.text sizeWithFont:font];
-    label.frame = CGRectMake(r.origin.x+10+size.width+30, (r.size.height-size.height)/2, r.size.width - 40-40 -size.width, size.height);
-    
+    _imageBtn.frame = CGRectMake(r.origin.x+10+size.width+30, (r.size.height-50)/2, 50, 50);
+    [self.contentView addSubview:_imageBtn];
     self.textLabel.text = _headStr;
-    label.text = _dateStr;
-    [self.contentView addSubview:label];
-    self.textLabel.font = [UIFont systemFontOfSize:12];
 }
-
 
 @end

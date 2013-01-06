@@ -9,9 +9,17 @@
 #import <UIKit/UIKit.h>
 #import "SuperViewController.h"
 #import "KHHDatePicker.h"
-@interface KHHPlanViewController : SuperViewController<UITableViewDelegate,UITableViewDataSource>
+#import "KHHDateUtil.h"
+#import "HZAreaPickerView.h"
+#import "KHHInputTableView.h"
+#import "KHHMemoPicker.h"
+
+@interface KHHPlanViewController : SuperViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,HZAreaPickerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,KHHInputTableViewHiddenDelegate>
 {
-    UITableView *table;
+    KHHInputTableView *table;
+    
 }
 @property (nonatomic,strong)KHHDatePicker *datePicker;
+@property (nonatomic,strong)HZAreaPickerView *areaPicker;
+@property (nonatomic,strong)KHHMemoPicker *memoPicker;
 @end

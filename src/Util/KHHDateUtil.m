@@ -9,11 +9,31 @@
 #import "KHHDateUtil.h"
 
 @implementation KHHDateUtil
+
+
 + (NSString *)nowDate
-{
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-    return [dateFormatter stringFromDate:[NSDate date]];    
+{    
+    return [self strFromDate:[NSDate date]];
 }
+
++ (NSString *)strFromDate:(NSDate *)date
+{
+    if (!dateFormatter) {
+        dateFormatter = [[NSDateFormatter alloc] init];
+    }
+    
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    return [dateFormatter stringFromDate:date];
+}
+
++ (NSString *)strTimeFromDate:(NSDate *)date
+{
+    if (!dateFormatter) {
+        dateFormatter = [[NSDateFormatter alloc] init];
+    }
+    [dateFormatter setDateFormat:@"HH:mm"];
+    return [dateFormatter stringFromDate:date];
+}
+
 
 @end
