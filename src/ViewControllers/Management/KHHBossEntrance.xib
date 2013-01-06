@@ -41,6 +41,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{30, 20}, {240, 240}}</string>
 						<reference key="NSSuperview" ref="766578638"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1039356587"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
@@ -55,6 +56,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{22, 48}, {57, 57}}</string>
 						<reference key="NSSuperview" ref="766578638"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="546848816"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -94,8 +96,9 @@
 					<object class="IBUIButton" id="215750471">
 						<reference key="NSNextResponder" ref="766578638"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{19, 155}, {57, 57}}</string>
+						<string key="NSFrame">{{20, 155}, {57, 57}}</string>
 						<reference key="NSSuperview" ref="766578638"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="276040541"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -110,11 +113,11 @@
 						<reference key="IBUINormalTitleShadowColor" ref="1014934621"/>
 						<object class="NSCustomResource" key="IBUIHighlightedBackgroundImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">crm_rili_selected@2x.png</string>
+							<string key="NSResourceName">crm_origanization_selected@2x.png</string>
 						</object>
 						<object class="NSCustomResource" key="IBUINormalBackgroundImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">crm__rili@2x.png</string>
+							<string key="NSResourceName">crm__origanization@2x.png</string>
 						</object>
 						<reference key="IBUIFontDescription" ref="514257729"/>
 						<reference key="IBUIFont" ref="403644239"/>
@@ -124,6 +127,8 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{121, 221}, {57, 57}}</string>
 						<reference key="NSSuperview" ref="766578638"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -151,6 +156,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{224, 155}, {57, 57}}</string>
 						<reference key="NSSuperview" ref="766578638"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="671361323"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -179,6 +185,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{224, 48}, {57, 57}}</string>
 						<reference key="NSSuperview" ref="766578638"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="529770660"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -207,6 +214,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{121, 101}, {57, 57}}</string>
 						<reference key="NSSuperview" ref="766578638"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="228299245"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -236,6 +244,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{121, 0}, {57, 57}}</string>
 						<reference key="NSSuperview" ref="766578638"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="215750471"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -263,6 +272,7 @@
 				</array>
 				<string key="NSFrameSize">{300, 300}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="142128797"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<object class="NSColor" key="IBUIBackgroundColor">
@@ -366,9 +376,9 @@
 							<reference ref="529770660"/>
 							<reference ref="671361323"/>
 							<reference ref="546848816"/>
-							<reference ref="215750471"/>
 							<reference ref="276040541"/>
 							<reference ref="1039356587"/>
+							<reference ref="215750471"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -426,13 +436,13 @@
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="1" key="4.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="1" key="5.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="0.0" key="5.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="1" key="6.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="1" key="7.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="1" key="8.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="0.0" key="8.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="9.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<real value="1" key="9.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 			</dictionary>
@@ -442,7 +452,76 @@
 			<nil key="sourceID"/>
 			<int key="maxID">20</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes"/>
+		<object class="IBClassDescriber" key="IBDocument.Classes">
+			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
+				<object class="IBPartialClassDescription">
+					<string key="className">KHHManagementViewController</string>
+					<string key="superclassName">SuperViewController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="calendarBtnClick:">id</string>
+						<string key="funnelBtnClick:">id</string>
+						<string key="locationBtnClick:">id</string>
+						<string key="manageEmployeesBtnClick:">id</string>
+						<string key="moreBtnClick:">id</string>
+						<string key="personBtnClick:">id</string>
+						<string key="radarBtnClick:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="calendarBtnClick:">
+							<string key="name">calendarBtnClick:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="funnelBtnClick:">
+							<string key="name">funnelBtnClick:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="locationBtnClick:">
+							<string key="name">locationBtnClick:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="manageEmployeesBtnClick:">
+							<string key="name">manageEmployeesBtnClick:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="moreBtnClick:">
+							<string key="name">moreBtnClick:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="personBtnClick:">
+							<string key="name">personBtnClick:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="radarBtnClick:">
+							<string key="name">radarBtnClick:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">guide</string>
+						<string key="NS.object.0">UIImageView</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">guide</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">guide</string>
+							<string key="candidateClassName">UIImageView</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/KHHManagementViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SuperViewController</string>
+					<string key="superclassName">UIViewController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/SuperViewController.h</string>
+					</object>
+				</object>
+			</array>
+		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
@@ -451,13 +530,13 @@
 			<string key="crm__leida@2x.png">{145, 142}</string>
 			<string key="crm__loudou@2x.png">{145, 142}</string>
 			<string key="crm__managerEm@2x.png">{145, 142}</string>
-			<string key="crm__rili@2x.png">{145, 142}</string>
+			<string key="crm__origanization@2x.png">{145, 142}</string>
 			<string key="crm__weizhi@2x.png">{145, 142}</string>
 			<string key="crm_bg@2x.png">{480, 480}</string>
 			<string key="crm_leida_selected@2x.png">{145, 142}</string>
 			<string key="crm_loudou_selected@2x.png">{145, 142}</string>
 			<string key="crm_managerEm_selected@2x.png">{145, 142}</string>
-			<string key="crm_rili_selected@2x.png">{145, 142}</string>
+			<string key="crm_origanization_selected@2x.png">{145, 142}</string>
 			<string key="crm_weizhi_selected@2x.png">{145, 142}</string>
 			<string key="exchangeNew@2x.png">{145, 142}</string>
 			<string key="exchangeNew_selected@2x.png">{145, 142}</string>

@@ -57,6 +57,8 @@ static NSString * const KHHMessageDefaultGroupAll               = @"所有";
 static NSString * const KHHMessageDefaultGroupColleague         = @"同事";
 static NSString * const KHHMessageDefaultGroupUnGroup           = @"未分组";
 static NSString * const KHHMessageDefaultGroupLocal             = @"手机";
+static NSString * const KHHMessagePersonalAccount               = @"个人账户";
+static NSString * const KHHMessageCompanyAccount                = @"公司账户";
 #endif
 
 //常量

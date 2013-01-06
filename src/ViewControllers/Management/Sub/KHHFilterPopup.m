@@ -35,6 +35,7 @@
 
 - (void)showPopUp:(NSArray *)array index:(int)index delegate:(id<KHHFilterPopupDelegate>)delegate
 {
+    isSelectGroup = YES;
     [self showPopUp:array index:index Title:@"选择分组" delegate:delegate];
 }
 
@@ -90,13 +91,21 @@
 	[alert dismissWithClickedButtonIndex: cancelButtonIndex animated: YES];
 	//NSString *selectedCellText = [popUpBoxDatasource objectAtIndex:indexPath.row];
 	if (_delegate && [_delegate respondsToSelector:@selector(selectInAlert:)]) {
-        if (indexPath.row == 0) {
-            [_delegate performSelector:@selector(selectInAlert:) withObject:nil ];
-        } else {
-            NSDictionary *dic = [[NSDictionary alloc]initWithObjectsAndKeys:[arrPro objectAtIndex:indexPath.row-1],@"obj",[NSString stringWithFormat:@"%d",indexPath.row],@"groupIndex", nil];
+        if (isSelectGroup) {
+            if (indexPath.row == 0) {
+                [_delegate performSelector:@selector(selectInAlert:) withObject:nil ];
+            } else {
+                NSDictionary *dic = [[NSDictionary alloc]initWithObjectsAndKeys:[arrPro objectAtIndex:indexPath.row-1],@"obj",[NSString stringWithFormat:@"%d",indexPath.row],@"groupIndex", nil];
+                [_delegate performSelector:@selector(selectInAlert:) withObject:dic ];
+            }
+        }else {
+            //用户传入的数组信息
+            NSDictionary *dic = [[NSDictionary alloc]initWithObjectsAndKeys:
+                                 [dataArr objectAtIndex:indexPath.row],@"selectItem",
+                                 [NSString stringWithFormat:@"%d",indexPath.row],@"index",
+                                 nil];
             [_delegate performSelector:@selector(selectInAlert:) withObject:dic ];
         }
-               
     } 
     
 	//selectContentLabel.text = selectedCellText;

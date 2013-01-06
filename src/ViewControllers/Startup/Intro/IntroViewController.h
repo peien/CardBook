@@ -9,9 +9,6 @@
 @interface IntroViewController : UIViewController <UIScrollViewDelegate>
 
 @property (nonatomic, weak) IBOutlet UIScrollView *theScrollView;
-@property (nonatomic, weak) IBOutlet UIPageControl *thePageControl;
-@property (nonatomic, weak) IBOutlet UIButton *theButton;
-
-
-- (IBAction)startNow:(id)sender;
+//是否来自启动页
+@property (nonatomic, assign) BOOL isFromStartUp;
 @end

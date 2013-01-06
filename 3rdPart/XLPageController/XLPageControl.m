@@ -24,12 +24,15 @@
 
 - (void)updateDots
 {
-    if(!_activeImg || !_unActiveImg) return;
+    if(!_activeImg || !_unActiveImg)
+        return;
     
     for(int i = 0; i < [self.subviews count]; i++){
         UIImageView *dot = [self.subviews objectAtIndex:i];
-        if (i == self.currentPage) dot.image = _activeImg;
-        else dot.image = _unActiveImg;
+        if (i == self.currentPage)
+            dot.image = _activeImg;
+        else
+            dot.image = _unActiveImg;
     }
 }
 

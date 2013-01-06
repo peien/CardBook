@@ -1,5 +1,5 @@
 //
-//  KHHHomeViewController.h
+//  KHHOrganizationViewController.h
 //  CardBook
 //
 //  Created by 孙铭 on 8/6/12.
@@ -9,9 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "SuperViewController.h"
 #import "KHHVisitRecoardVC.h"
-@interface KHHHomeViewController : SuperViewController <UITableViewDelegate, UITableViewDataSource,
-UIImagePickerControllerDelegate,UINavigationControllerDelegate>
-@property (nonatomic, weak)   IBOutlet UISearchBar      *searchBar;
+@interface KHHOrganizationViewController : SuperViewController <UITableViewDelegate, UITableViewDataSource,
+UINavigationControllerDelegate>
 @property (nonatomic, strong) NSMutableArray            *btnTitleArr;
 @property (nonatomic, strong) NSMutableDictionary       *dicBtnTttle;
 @property (nonatomic, assign) NSInteger                 lastBtnTag;
@@ -20,23 +19,12 @@ UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (nonatomic, strong) NSMutableArray            *btnArray;
 @property (assign, nonatomic) bool                      isShowData;
 @property (strong, nonatomic) UIButton                  *currentBtn;
-@property (assign, nonatomic) bool                      isAddGroup;
 @property (strong, nonatomic) UISearchDisplayController *searCtrl;
 @property (strong, nonatomic) NSIndexPath               *lastIndexPath;
-@property (assign, nonatomic) bool                      isNotHomePage;
-@property (strong, nonatomic) IBOutlet UIImageView      *imgview;
-@property (assign, nonatomic) bool                      isNormalSearchBar;
-@property (assign, nonatomic) IBOutlet UIButton         *smallBtn;
-@property (strong, nonatomic) IBOutlet UIImageView      *smalImageView;
-@property (strong, nonatomic) IBOutlet UIView           *footView;
-@property (strong, nonatomic) IBOutlet UIButton         *btnForCancel;
 @property (strong, nonatomic) UIView                    *btnBackbg;
 @property (strong, nonatomic) NSMutableDictionary       *btnDic;
-@property (assign, nonatomic) KUIActionSheetHomeType    type;
 @property (strong, nonatomic) NSArray                   *generalArray;
 @property (strong, nonatomic) NSArray                   *oWnGroupArray;
 @property (strong, nonatomic) KHHVisitRecoardVC         *visitVC;
 
-- (IBAction)addBtnClick:(id)sender;
-- (IBAction)cancelBtnClick:(id)sender;
 @end

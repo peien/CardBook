@@ -10,7 +10,6 @@
 #import "Card.h"
 #import "KHHFrameCardView.h"
 #import "KHHNotifications.h"
-#define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
 
 
 @interface KHHPreViewViewController ()

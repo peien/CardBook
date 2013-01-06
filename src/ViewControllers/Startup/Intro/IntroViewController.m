@@ -42,6 +42,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    //判断是从哪个界面过来，不是从启动页来的
+    if (!_isFromStartUp) {
+        self.navigationController.navigationBarHidden = YES;
+        //添加一个返回按钮
+        UIButton *back = [[UIButton alloc] initWithFrame:CGRectMake(8, 10, 60, 30)];
+        [back setTitle:KHHMessageBack forState:UIControlStateNormal];
+        [back setBackgroundImage:[UIImage imageNamed:@"Button_grey"] forState:UIControlStateNormal];
+        [back setBackgroundImage:[UIImage imageNamed:@"Button_red"] forState:UIControlStateHighlighted];
+        back.titleLabel.font = label.font = [UIFont systemFontOfSize:16];
+        [back addTarget:self action:@selector(back) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:back];
+    }
     //Create the views which are going to display in the scrollview.
     [self.view setBackgroundColor:[UIColor colorWithRed:241 green:238 blue:232 alpha:1.0]];
     CGFloat ww = self.theScrollView.frame.size.width;
@@ -62,25 +74,21 @@
         UIImageView *aView = [[UIImageView alloc] initWithImage:anImage];
        // aView.backgroundColor = [UIColor clearColor];
         aView.frame = CGRectMake(x, 0, ww, hh);
-        if (i == 3) {
-           
-           // [aView addSubview:but];
-        }
         [self.theScrollView addSubview:aView];
-        but =[[UIButton alloc]initWithFrame:CGRectMake(3*ww+200, 50, 100, 40)];
-        [but setTitle:@"立即体验" forState:UIControlStateNormal];
-        but.backgroundColor = [UIColor grayColor];
-        
-        [but addTarget:self action:@selector(btnUse) forControlEvents:UIControlEventTouchUpInside];      
-        [self.theScrollView addSubview:but];
-               
+        if (i == 3 && _isFromStartUp) {
+            but =[[UIButton alloc]initWithFrame:CGRectMake(i*ww+200, 50, 100, 40)];
+            [but setTitle:@"立即体验" forState:UIControlStateNormal];
+            but.backgroundColor = [UIColor grayColor];
+            [but addTarget:self action:@selector(btnUse) forControlEvents:UIControlEventTouchUpInside];
+            [self.theScrollView addSubview:but];
+        }
     }
     
     xlPage = [[XLPageControl alloc] initWithFrame:CGRectMake(65, 420, 200, 15)];
     xlPage.activeImg = [UIImage imageNamed:@"p2.png"];
     xlPage.unActiveImg = [UIImage imageNamed:@"p1.png"];
-    xlPage.currentPage = 1;
     xlPage.numberOfPages = 4;
+    xlPage.currentPage = 0;
     [self.view addSubview:xlPage];
 }
 
@@ -108,7 +116,6 @@
     
 }
 
-
 - (void)btnUse
 {
     self.defaults.firstLaunch = NO;
@@ -117,11 +124,10 @@
     [self postASAPNotificationName:name];
 }
 
-- (IBAction)startNow:(id)sender {
-    self.defaults.firstLaunch = NO;
-    NSString *name = nAppSkipIntro;
-    DLog(@"[II] 发送消息 %@", name);
-    [self postASAPNotificationName:name];
+-(void) back
+{
+    self.navigationController.navigationBarHidden = NO;
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end
