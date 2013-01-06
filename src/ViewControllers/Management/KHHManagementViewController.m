@@ -27,6 +27,7 @@
 #import "KHHOrganizationViewController.h"
 #import "KHHPopUpTable.h"
 #import "IntroViewController.h"
+#import "KHHPlanViewController.h"
 
 #define TEXT_NEW_MESSAGE_COMMING NSLocalizedString(@"您有新消息到了,可到消息界面查看新消息。",nil)
 #define TEXT_NEW_CONTACT_COMMING NSLocalizedString(@"您有新名片到了，点击确认去查看联系人...",nil)
@@ -276,7 +277,8 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
 
 - (void)selectInAlert:(id)obj
 {
-    [self.navigationController pushViewController:[[UIViewController alloc]init] animated:YES];
+    
+    [self.navigationController pushViewController:[[KHHPlanViewController alloc]init] animated:YES];
 }
 
 //交换
