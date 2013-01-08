@@ -5,7 +5,7 @@
 //  Created by CJK on 13-1-6.
 //  Copyright (c) 2013年 Kinghanhong. All rights reserved.
 //
-static float const KHH_Keyboard_Height = 216.0 + 95;
+
 
 #import "KHHInputTableView.h"
 
@@ -14,13 +14,15 @@ static float const KHH_Keyboard_Height = 216.0 + 95;
 {
     Boolean showKeyboard;
     float normalH;
+    CGPoint contentOffsetPro;
 }
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        normalH = H460-44-50;        
+        normalH = H460-44-50;
+       
     }
     return self;
 }
@@ -47,23 +49,31 @@ static float const KHH_Keyboard_Height = 216.0 + 95;
 
 - (void)showNormal
 {
+    
     showKeyboard = NO;
+  //  NSLog(@"%f",self.frame.size.width);
     [UIView animateWithDuration:0.3
                      animations:^{
                          
-                         self.frame = CGRectMake(0.0f, 0,self.frame.size.width,normalH);
+                        // self.frame = CGRectMake(0.0f, 0,320,normalH);
+                         self.contentOffset = CGPointMake(0.0,0.0);
+                         [self setContentInset:UIEdgeInsetsMake(0,0,0,0)];
                      }
                      completion:^(BOOL finished){
-                         
+                         _offset = 0;
                      }];
 }
 
 - (void)goToInsetForKeyboard:(CGRect)frame
 {
+     contentOffsetPro = CGPointMake(self.contentOffset.x, self.contentOffset.y) ;
+   // NSLog(@"%f",self.frame.size.width);
     showKeyboard = YES;
-    int offset = frame.origin.y + frame.size.height - (480 - KHH_Keyboard_Height);
-    
-    if (offset<=0&&self.frame.origin.y==0) {
+    int offset = -self.contentOffset.y+self.frame.origin.y+frame.origin.y + frame.size.height - (480 - KHH_Keyboard_Height);
+    NSLog(@"offset%d",offset);
+    NSLog(@"frame.origin.y%f",self.frame.origin.y);
+     NSLog(@"contentOffset.y%f",self.contentOffset.y);
+    if (offset<=0&&self.contentOffset.y<=0) {
         return;
     }
     
@@ -71,13 +81,18 @@ static float const KHH_Keyboard_Height = 216.0 + 95;
         offset = 0;
     }
     
-    CGRect rect = CGRectMake(0.0f, -offset,self.frame.size.width,normalH+120);
+   // CGRect rect = CGRectMake(0.0f, 0,320,normalH+120);
+    CGPoint pointPro = CGPointMake(0.0, self.contentOffset.y+offset);
     [UIView animateWithDuration:0.3
                      animations:^{
                          
-                         self.frame = rect;
+                       //  self.frame = rect;
+                         NSLog(@"showKeyboard");
+                         [self setContentInset:UIEdgeInsetsMake(0,0,160,0)];
+                         self.contentOffset = pointPro;
                      }
                      completion:^(BOOL finished){
+                         _offset = self.contentOffset.y+offset;
                          
                      }];
 }

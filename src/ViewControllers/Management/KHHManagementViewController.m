@@ -28,6 +28,7 @@
 #import "IntroViewController.h"
 #import "KHHPlanViewController.h"
 #import "KHHWhereUtil.h"
+#import "KHHBMapLocationController.h"
 
 #define TEXT_NEW_MESSAGE_COMMING NSLocalizedString(@"您有新消息到了,可到消息界面查看新消息。",nil)
 #define TEXT_NEW_CONTACT_COMMING NSLocalizedString(@"您有新名片到了，点击确认去查看联系人...",nil)
@@ -262,12 +263,6 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
 #pragma mark - local0
 
 - (IBAction)locationBtnClick:(id)sender{
-    [[KHHWhereUtil sharedInstance] getWhere:^(NSString *where) {
-        
-    } fail:^{
-        
-    }];
-    
     [[KHHFilterPopup shareUtil]showPopUp:[NSArray arrayWithObjects:NSLocalizedString(KHHMessageCreatePlan, nil),
                                           NSLocalizedString(KHHMessageDataCollect, nil),
                                           NSLocalizedString(KHHMessageCheckIn, nil),
@@ -285,18 +280,44 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
         //具休界面
         return;
     }
-    
-    //获取选择item后返回的数据
-    NSDictionary *dic = (NSDictionary *) obj;
-    if ([[dic objectForKey:@"selectItem"] isEqualToString:NSLocalizedString(KHHMessageViewCalendar, nil)]) {
-    KHHCalendarViewController *calVC = [[KHHCalendarViewController alloc] initWithNibName:nil bundle:nil];
-    calVC.card = self.myCard;
-    [self.navigationController pushViewController:calVC animated:YES];
-        return;
+
+    NSDictionary *dic = obj;
+    int index =[[dic objectForKey:@"index"] integerValue];
+    NSMutableDictionary *dicPro;
+    NSString *titlePro;
+    switch (index) {
+        case 0:
+        {
+           dicPro = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"plan" ofType:@"plist"]];
+        }
+            break;
+        case 1:
+        {
+            dicPro = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"collection" ofType:@"plist"]];
+        }
+            break;
+        case 2:
+        {
+            dicPro = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"attendance" ofType:@"plist"]];
+        }
+            break;
+        case 3:
+        {
+//          dicPro = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"attendance" ofType:@"plist"]];
+            KHHCalendarViewController *calVC = [[KHHCalendarViewController alloc] initWithNibName:nil bundle:nil];
+            calVC.card = self.myCard;
+            [self.navigationController pushViewController:calVC animated:YES];
+            return;
+        }
+            break;
+        default:
+            return;
+            break;
     }
     
-   KHHPlanViewController *viewPro = [[KHHPlanViewController alloc]init];
-    viewPro.paramDic = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"plan" ofType:@"plist"]];
+    KHHPlanViewController *viewPro = [[KHHPlanViewController alloc]init];
+    viewPro.paramDic = dicPro;
+    viewPro.title = titlePro;
     [self.navigationController pushViewController:viewPro animated:YES];
 }
 

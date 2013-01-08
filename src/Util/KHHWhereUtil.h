@@ -15,4 +15,5 @@
 
 - (void)getWhere:(void(^)(NSString *where)) done fail:(void(^)()) fail;
 
+- (UIImage *)imgForIndex:(int)index;
 @end

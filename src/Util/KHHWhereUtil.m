@@ -66,10 +66,14 @@
         if (array.count > 0) {
             CLPlacemark *placemark = [array objectAtIndex:0];
             NSLog(@"%@",placemark);
-            NSString *country = placemark.ISOcountryCode;
-            NSString *city = placemark.locality;
+           
         }
     }];
+}
+
+- (UIImage*)imgForIndex:(int)index
+{
+    return [UIImage imageNamed:[NSString stringWithFormat:@"ic_shuaxin%d",index+1]];
 }
 
 @end

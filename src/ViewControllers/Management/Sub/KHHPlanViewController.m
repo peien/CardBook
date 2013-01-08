@@ -13,7 +13,7 @@
 
 #import "KHHFullFrameController.h"
 #import "KHHUpperView.h"
-
+#import "KHHForWhereCell.h"
 
 @interface KHHPlanViewController ()
 {
@@ -32,7 +32,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        table = [[KHHInputTableView alloc]init];
+        table = [[KHHInputTableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         table.delegate = self;
         table.dataSource = self;
         table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
@@ -97,7 +97,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title =  @"新建计划";
+    //self.title =  @"新建计划";
     [self doUIRightButton];
     // NSLog(@"%f",);
     
@@ -145,6 +145,8 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
+    [self cancelLocatePicker];
+    NSLog(@"MemoryWarning");
 }
 
 #pragma mark - Table view data source
@@ -272,6 +274,22 @@
             ((KHHTargetCell *)cell).field.text = [dicTemp objectForKey:@"descript"];
         }
     }
+    
+    if (indexPath.row == [self where]) {
+        CellIdentifier = @"where";
+        cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (!cell) {
+            cell = [[KHHForWhereCell alloc]init];
+//            ((KHHForWhereCell *)cell).headStr = @"说明";
+//            ((KHHForWhereCell *)cell).placeStr = @"请输入文字记录(400字内)";
+//            ((KHHForWhereCell *)cell).field.delegate = self;
+//            ((KHHForWhereCell *)cell).field.tag = 10022;
+        }
+        if ([dicTemp objectForKey:@"where"]) {
+            ((KHHTargetCell *)cell).field.text = [dicTemp objectForKey:@"where"];
+        }
+    }
+    
     if (!cell) {
         cell = [[UITableViewCell alloc]init];
     }
@@ -403,6 +421,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+   // NSLog(@"%d",indexPath.row);
     
     if (indexPath.row == [self date]||indexPath.row == [self time]||indexPath.row == [self local0]||indexPath.row == [self memo]||indexPath.row == [self remind]) {
         rectForKey = [tableView cellForRowAtIndexPath:indexPath].frame;
@@ -474,6 +493,7 @@
         if (!self.remindPicker) {
             self.remindPicker = [[ KHHMemoPicker alloc] initWithFrame:CGRectMake(0.0,H460-200.0,320.0,200.0)];
             self.remindPicker.hidden = YES;
+            self.remindPicker.memoArr = [_paramDic valueForKeyPath:@"remind.titles"];
             self.remindPicker.tag = 10031;
             __block KHHPlanViewController *weakself = self;
             self.remindPicker.showTitle = ^(NSString *title, int tag){
@@ -575,7 +595,7 @@
         if (!self.memoPicker) {
             self.memoPicker = [[ KHHMemoPicker alloc] initWithFrame:CGRectMake(0.0,H460-200.0,320.0,200.0)];
             self.memoPicker.hidden = YES;
-            
+            self.memoPicker.memoArr = [_paramDic valueForKeyPath:@"memo.titles"];
             self.memoPicker.tag = 10030;
             __block KHHPlanViewController *weakself = self;
             self.memoPicker.showTitle = ^(NSString *title, int tag){
@@ -595,6 +615,7 @@
         [self hiddenKeyboard];
         if (!self.remindPicker) {
             self.remindPicker = [[ KHHMemoPicker alloc] initWithFrame:CGRectMake(0.0,H460-200.0,320.0,200.0)];
+            self.remindPicker.memoArr = [_paramDic valueForKeyPath:@"remind.titles"];
             self.remindPicker.hidden = YES;
             __block KHHPlanViewController *weakself = self;
             self.remindPicker.showTitle = ^(NSString *title, int tag){
@@ -690,6 +711,14 @@
 {
     if ([_paramDic valueForKeyPath:@"descript"]) {
         return [[_paramDic valueForKeyPath:@"descript"] integerValue];
+    }
+    return -1;
+}
+
+- (int)where
+{
+    if ([_paramDic valueForKeyPath:@"where"]) {
+        return [[_paramDic valueForKeyPath:@"where"] integerValue];
     }
     return -1;
 }

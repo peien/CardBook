@@ -41,6 +41,10 @@
 		310267751696D55600FBE156 /* KHHDateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267731696D55600FBE156 /* KHHDateUtil.m */; };
 		310267761696D55600FBE156 /* KHHDateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267731696D55600FBE156 /* KHHDateUtil.m */; };
 		310267771696D55600FBE156 /* KHHDateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267731696D55600FBE156 /* KHHDateUtil.m */; };
+		3104A145169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3104A144169BBCD100CC4F22 /* KHHForWhereCell.m */; };
+		3104A146169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3104A144169BBCD100CC4F22 /* KHHForWhereCell.m */; };
+		3104A147169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3104A144169BBCD100CC4F22 /* KHHForWhereCell.m */; };
+		3104A148169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3104A144169BBCD100CC4F22 /* KHHForWhereCell.m */; };
 		3104E05F1687EE6600B0B45F /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3104E05E1687EE6600B0B45F /* libsqlite3.dylib */; };
 		3104E0611687EE8100B0B45F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3104E0601687EE8100B0B45F /* libz.dylib */; };
 		3104E06C168800F200B0B45F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 3104E06B168800F100B0B45F /* Reachability.m */; };
@@ -945,10 +949,6 @@
 		314AFFFB168BEE9A00029324 /* addGroupIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62178119164BBA1D00E1CFD4 /* addGroupIcon@2x.png */; };
 		314AFFFC168BEE9A00029324 /* ic_tianjia_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 6217811B164BBA1D00E1CFD4 /* ic_tianjia_selected.png */; };
 		314AFFFF168BEE9A00029324 /* left_btn_bg_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 6217811E164BBA1D00E1CFD4 /* left_btn_bg_selected.png */; };
-		3180A5071697D15000DD9501 /* UITextField+HideKeyBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A5061697D15000DD9501 /* UITextField+HideKeyBoard.m */; };
-		3180A5081697D15000DD9501 /* UITextField+HideKeyBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A5061697D15000DD9501 /* UITextField+HideKeyBoard.m */; };
-		3180A5091697D15000DD9501 /* UITextField+HideKeyBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A5061697D15000DD9501 /* UITextField+HideKeyBoard.m */; };
-		3180A50A1697D15000DD9501 /* UITextField+HideKeyBoard.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A5061697D15000DD9501 /* UITextField+HideKeyBoard.m */; };
 		3180A50D1697FED100DD9501 /* KHHLocationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A50C1697FED100DD9501 /* KHHLocationCell.m */; };
 		3180A50E1697FED100DD9501 /* KHHLocationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A50C1697FED100DD9501 /* KHHLocationCell.m */; };
 		3180A50F1697FED100DD9501 /* KHHLocationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A50C1697FED100DD9501 /* KHHLocationCell.m */; };
@@ -977,6 +977,14 @@
 		3180A55716981E8F00DD9501 /* KHHImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A55516981E8F00DD9501 /* KHHImageCell.m */; };
 		3180A55816981E8F00DD9501 /* KHHImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A55516981E8F00DD9501 /* KHHImageCell.m */; };
 		3180A55916981E8F00DD9501 /* KHHImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A55516981E8F00DD9501 /* KHHImageCell.m */; };
+		319C29F0169C04D4005A1BFF /* attendance.plist in Resources */ = {isa = PBXBuildFile; fileRef = 319C29EF169C04D4005A1BFF /* attendance.plist */; };
+		319C29F1169C04D4005A1BFF /* attendance.plist in Resources */ = {isa = PBXBuildFile; fileRef = 319C29EF169C04D4005A1BFF /* attendance.plist */; };
+		319C29F2169C04D4005A1BFF /* attendance.plist in Resources */ = {isa = PBXBuildFile; fileRef = 319C29EF169C04D4005A1BFF /* attendance.plist */; };
+		319C29F3169C04D4005A1BFF /* attendance.plist in Resources */ = {isa = PBXBuildFile; fileRef = 319C29EF169C04D4005A1BFF /* attendance.plist */; };
+		319C29F5169C0672005A1BFF /* collection.plist in Resources */ = {isa = PBXBuildFile; fileRef = 319C29F4169C0672005A1BFF /* collection.plist */; };
+		319C29F6169C0672005A1BFF /* collection.plist in Resources */ = {isa = PBXBuildFile; fileRef = 319C29F4169C0672005A1BFF /* collection.plist */; };
+		319C29F7169C0672005A1BFF /* collection.plist in Resources */ = {isa = PBXBuildFile; fileRef = 319C29F4169C0672005A1BFF /* collection.plist */; };
+		319C29F8169C0672005A1BFF /* collection.plist in Resources */ = {isa = PBXBuildFile; fileRef = 319C29F4169C0672005A1BFF /* collection.plist */; };
 		31FCBC371682BD0A00ABFE3F /* KHHFilterPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FCBC361682BD0A00ABFE3F /* KHHFilterPopup.m */; };
 		31FCBC381682BD0A00ABFE3F /* KHHFilterPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FCBC361682BD0A00ABFE3F /* KHHFilterPopup.m */; };
 		624F8C7F1676C167006CD354 /* KHHBMapLocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 624F8C7E1676C167006CD354 /* KHHBMapLocationController.m */; };
@@ -1896,6 +1904,8 @@
 		3102676D1696D20400FBE156 /* KHHDateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHDateCell.m; sourceTree = "<group>"; };
 		310267721696D55600FBE156 /* KHHDateUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHDateUtil.h; sourceTree = "<group>"; };
 		310267731696D55600FBE156 /* KHHDateUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHDateUtil.m; sourceTree = "<group>"; };
+		3104A143169BBCD100CC4F22 /* KHHForWhereCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHForWhereCell.h; sourceTree = "<group>"; };
+		3104A144169BBCD100CC4F22 /* KHHForWhereCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHForWhereCell.m; sourceTree = "<group>"; };
 		3104E05E1687EE6600B0B45F /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		3104E0601687EE8100B0B45F /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		3104E06A168800F100B0B45F /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
@@ -1932,8 +1942,6 @@
 		314AFEFB168BEC4A00029324 /* Net.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Net.plist; path = ../ViewControllers/Message/Net.plist; sourceTree = "<group>"; };
 		314AFEFE168BECBB00029324 /* NetFromPlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetFromPlist.h; path = ../ViewControllers/Message/NetFromPlist.h; sourceTree = "<group>"; };
 		314AFEFF168BECBB00029324 /* NetFromPlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetFromPlist.m; path = ../ViewControllers/Message/NetFromPlist.m; sourceTree = "<group>"; };
-		3180A5051697D15000DD9501 /* UITextField+HideKeyBoard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+HideKeyBoard.h"; sourceTree = "<group>"; };
-		3180A5061697D15000DD9501 /* UITextField+HideKeyBoard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+HideKeyBoard.m"; sourceTree = "<group>"; };
 		3180A50B1697FED100DD9501 /* KHHLocationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHLocationCell.h; sourceTree = "<group>"; };
 		3180A50C1697FED100DD9501 /* KHHLocationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHLocationCell.m; sourceTree = "<group>"; };
 		3180A5181698029600DD9501 /* area.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = area.plist; sourceTree = "<group>"; };
@@ -1945,6 +1953,8 @@
 		3180A5241698029600DD9501 /* HZLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZLocation.m; sourceTree = "<group>"; };
 		3180A55416981E8E00DD9501 /* KHHImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHImageCell.h; sourceTree = "<group>"; };
 		3180A55516981E8F00DD9501 /* KHHImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHImageCell.m; sourceTree = "<group>"; };
+		319C29EF169C04D4005A1BFF /* attendance.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = attendance.plist; sourceTree = "<group>"; };
+		319C29F4169C0672005A1BFF /* collection.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = collection.plist; sourceTree = "<group>"; };
 		31FCBC351682BD0A00ABFE3F /* KHHFilterPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHFilterPopup.h; sourceTree = "<group>"; };
 		31FCBC361682BD0A00ABFE3F /* KHHFilterPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHFilterPopup.m; sourceTree = "<group>"; };
 		620712F01650D263000188E8 /* LoginImage_normal@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "LoginImage_normal@2x.jpg"; sourceTree = "<group>"; };
@@ -2797,6 +2807,8 @@
 				310B2EE21699461500818461 /* KHHUpperView.h */,
 				310B2EE31699461500818461 /* KHHUpperView.m */,
 				310523DA169ABC0E000B2C64 /* plan.plist */,
+				319C29EF169C04D4005A1BFF /* attendance.plist */,
+				319C29F4169C0672005A1BFF /* collection.plist */,
 			);
 			name = NewLocalGroupTable;
 			sourceTree = "<group>";
@@ -2824,6 +2836,8 @@
 				3180A55516981E8F00DD9501 /* KHHImageCell.m */,
 				310B2EDC16992FFC00818461 /* KHHMemoCell.h */,
 				310B2EDD16992FFC00818461 /* KHHMemoCell.m */,
+				3104A143169BBCD100CC4F22 /* KHHForWhereCell.h */,
+				3104A144169BBCD100CC4F22 /* KHHForWhereCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -2880,8 +2894,6 @@
 		3180A5041697D11500DD9501 /* TextFiledHide */ = {
 			isa = PBXGroup;
 			children = (
-				3180A5051697D15000DD9501 /* UITextField+HideKeyBoard.h */,
-				3180A5061697D15000DD9501 /* UITextField+HideKeyBoard.m */,
 			);
 			name = TextFiledHide;
 			sourceTree = "<group>";
@@ -4605,6 +4617,8 @@
 				845759EF16997102005A5F60 /* KHHSendRecordCell.xib in Resources */,
 				310523DE169ABC0F000B2C64 /* plan.plist in Resources */,
 				84C111E0169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png in Resources */,
+				319C29F3169C04D4005A1BFF /* attendance.plist in Resources */,
+				319C29F8169C0672005A1BFF /* collection.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4835,6 +4849,8 @@
 				845759EE16997102005A5F60 /* KHHSendRecordCell.xib in Resources */,
 				310523DD169ABC0F000B2C64 /* plan.plist in Resources */,
 				84C111DF169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png in Resources */,
+				319C29F2169C04D4005A1BFF /* attendance.plist in Resources */,
+				319C29F7169C0672005A1BFF /* collection.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5064,6 +5080,8 @@
 				845759EC16997102005A5F60 /* KHHSendRecordCell.xib in Resources */,
 				310523DB169ABC0F000B2C64 /* plan.plist in Resources */,
 				84C111DD169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png in Resources */,
+				319C29F0169C04D4005A1BFF /* attendance.plist in Resources */,
+				319C29F5169C0672005A1BFF /* collection.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5294,6 +5312,8 @@
 				845759ED16997102005A5F60 /* KHHSendRecordCell.xib in Resources */,
 				310523DC169ABC0F000B2C64 /* plan.plist in Resources */,
 				84C111DE169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png in Resources */,
+				319C29F1169C04D4005A1BFF /* attendance.plist in Resources */,
+				319C29F6169C0672005A1BFF /* collection.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5541,7 +5561,6 @@
 				3102676A1696D02000FBE156 /* KHHDatePicker.m in Sources */,
 				310267711696D20400FBE156 /* KHHDateCell.m in Sources */,
 				310267771696D55600FBE156 /* KHHDateUtil.m in Sources */,
-				3180A50A1697D15000DD9501 /* UITextField+HideKeyBoard.m in Sources */,
 				3180A5101697FED100DD9501 /* KHHLocationCell.m in Sources */,
 				3180A5431698029600DD9501 /* HZAreaPickerView.m in Sources */,
 				3180A54B1698029600DD9501 /* HZLocation.m in Sources */,
@@ -5555,6 +5574,7 @@
 				845759F6169AA0CF005A5F60 /* KHHViewAdapterUtil.m in Sources */,
 				310523D5169A9833000B2C64 /* KHHImgViewInCell.m in Sources */,
 				310523E4169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */,
+				3104A148169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5770,7 +5790,6 @@
 				310267691696D02000FBE156 /* KHHDatePicker.m in Sources */,
 				310267701696D20400FBE156 /* KHHDateCell.m in Sources */,
 				310267761696D55600FBE156 /* KHHDateUtil.m in Sources */,
-				3180A5091697D15000DD9501 /* UITextField+HideKeyBoard.m in Sources */,
 				3180A50F1697FED100DD9501 /* KHHLocationCell.m in Sources */,
 				3180A5421698029600DD9501 /* HZAreaPickerView.m in Sources */,
 				3180A54A1698029600DD9501 /* HZLocation.m in Sources */,
@@ -5784,6 +5803,7 @@
 				845759F5169AA0CF005A5F60 /* KHHViewAdapterUtil.m in Sources */,
 				310523D4169A9833000B2C64 /* KHHImgViewInCell.m in Sources */,
 				310523E3169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */,
+				3104A147169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5999,7 +6019,6 @@
 				310267671696D02000FBE156 /* KHHDatePicker.m in Sources */,
 				3102676E1696D20400FBE156 /* KHHDateCell.m in Sources */,
 				310267741696D55600FBE156 /* KHHDateUtil.m in Sources */,
-				3180A5071697D15000DD9501 /* UITextField+HideKeyBoard.m in Sources */,
 				3180A50D1697FED100DD9501 /* KHHLocationCell.m in Sources */,
 				3180A5401698029600DD9501 /* HZAreaPickerView.m in Sources */,
 				3180A5481698029600DD9501 /* HZLocation.m in Sources */,
@@ -6013,6 +6032,7 @@
 				845759F3169AA0CF005A5F60 /* KHHViewAdapterUtil.m in Sources */,
 				310523D2169A9833000B2C64 /* KHHImgViewInCell.m in Sources */,
 				310523E1169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */,
+				3104A145169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6224,7 +6244,6 @@
 				310267681696D02000FBE156 /* KHHDatePicker.m in Sources */,
 				3102676F1696D20400FBE156 /* KHHDateCell.m in Sources */,
 				310267751696D55600FBE156 /* KHHDateUtil.m in Sources */,
-				3180A5081697D15000DD9501 /* UITextField+HideKeyBoard.m in Sources */,
 				3180A50E1697FED100DD9501 /* KHHLocationCell.m in Sources */,
 				3180A5411698029600DD9501 /* HZAreaPickerView.m in Sources */,
 				3180A5491698029600DD9501 /* HZLocation.m in Sources */,
@@ -6238,6 +6257,7 @@
 				845759F4169AA0CF005A5F60 /* KHHViewAdapterUtil.m in Sources */,
 				310523D3169A9833000B2C64 /* KHHImgViewInCell.m in Sources */,
 				310523E2169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */,
+				3104A146169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

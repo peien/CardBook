@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "KHHMacros.h"
 
+
+static float const KHH_Keyboard_Height = 216.0 + 95;
+
+
 @protocol KHHInputTableViewHiddenDelegate <NSObject>
 
 @required
@@ -19,7 +23,7 @@
 @interface KHHInputTableView : UITableView
 
 @property (nonatomic,strong) id<KHHInputTableViewHiddenDelegate> hiddenDelgate;
-
+@property (nonatomic,assign)float offset;
 - (void)goToInsetForKeyboard:(CGRect)frame;
 - (void)showNormal;
 

@@ -7,7 +7,7 @@
 //
 
 #import "KHHLocationCell.h"
-#import "UITextField+HideKeyBoard.h"
+
 
 @implementation KHHLocationCell
 {
@@ -24,7 +24,7 @@
         
         label = [[UILabel alloc]init];
         label.font = font;
-        
+        label.backgroundColor = [UIColor clearColor];
         _field = [[UITextField alloc]init];
         _field.font = font;
         _field.placeholder = @"请输入地址";
@@ -58,7 +58,7 @@
     label.text = _locationStr;
     
     _field.frame = CGRectMake(r.origin.x+10+size.width+30, (r.size.height-size.height)/2+12, r.size.width - 40-40 -size.width, size.height+10);
-    [_field hideKeyBoard:self.superview];
+    
     
     self.textLabel.text = _headStr;
     [self.contentView addSubview:label];
