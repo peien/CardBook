@@ -57,7 +57,6 @@
 						<string key="NSFrame">{{260, 358}, {55, 55}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<int key="IBUIContentMode">12</int>
@@ -118,7 +117,6 @@
 				<string key="NSFrameSize">{320, 411}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<bool key="IBUIUserInteractionEnabled">NO</bool>
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -220,20 +218,16 @@
 					<string key="className">KHHManagementViewController</string>
 					<string key="superclassName">SuperViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="calendarBtnClick:">id</string>
 						<string key="funnelBtnClick:">id</string>
 						<string key="locationBtnClick:">id</string>
 						<string key="manageEmployeesBtnClick:">id</string>
 						<string key="moreBtnClick:">id</string>
+						<string key="organizationBtnClick:">id</string>
 						<string key="personBtnClick:">id</string>
 						<string key="radarBtnClick:">id</string>
 						<string key="reviewGuide:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="calendarBtnClick:">
-							<string key="name">calendarBtnClick:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="funnelBtnClick:">
 							<string key="name">funnelBtnClick:</string>
 							<string key="candidateClassName">id</string>
@@ -248,6 +242,10 @@
 						</object>
 						<object class="IBActionInfo" key="moreBtnClick:">
 							<string key="name">moreBtnClick:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="organizationBtnClick:">
+							<string key="name">organizationBtnClick:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="personBtnClick:">

@@ -17,8 +17,20 @@
 #import "KHHClasses.h"
 #import "KHHData+UI.h"
 #import "KHHData.h"
+#import "KHHFilterPopup.h"
 
-@interface KHHCalendarViewController ()<CKCalendarDelegate>
+//title 右侧按钮供选择的类型
+#define InitDataTypeArray   dataTypeArray = [[NSMutableArray alloc] initWithObjects:NSLocalizedString(KHHMessageCheckIn, nil),NSLocalizedString(KHHMessageDataCollect, nil), nil]
+
+@interface KHHCalendarViewController ()<CKCalendarDelegate, KHHFilterPopupDelegate>
+{
+    //类型选择名称
+    NSArray *dataTypeArray;
+    //类型
+    KHHCalendarViewDataType dataType;
+    //currentIndex
+    int currentIndex;
+}
 @property (strong, nonatomic) NSDate *dateSelect;
 @property (strong, nonatomic) CKCalendarView       *calView;
 @property (strong, nonatomic) NSArray              *schedus;
@@ -27,7 +39,6 @@
 
 @implementation KHHCalendarViewController
 @synthesize theTable = _theTable;
-@synthesize addBtn;
 @synthesize dateSelect;
 @synthesize calView;
 @synthesize card;
@@ -41,18 +52,29 @@
     if (self) {
         // Custom initialization
         self.title = NSLocalizedString(@"沟通拜访纪录", nil);
-        [self.rightBtn setTitle:NSLocalizedString(@"显示所有", nil) forState:UIControlStateNormal];
+        //进入程序时，默认是数组第一个
+        InitDataTypeArray;
+        currentIndex = 0;
+        [self.rightBtn setTitle:[dataTypeArray objectAtIndex:currentIndex] forState:UIControlStateNormal];
+        CGRect frame = self.rightBtn.frame;
+        frame.size.width += 20;
+        frame.origin.x -= 20;
+        self.rightBtn.frame = frame;
+        self.rightBtn.titleLabel.textAlignment = NSTextAlignmentLeft;
+        dataType = KHHCalendarViewDataTypeCheckIn;
+        UIEdgeInsets inset = UIEdgeInsetsMake(0, 10, 0, 25);
+        [self.rightBtn setBackgroundImage:[[UIImage imageNamed:@"title_btn_with_drop"] resizableImageWithCapInsets:inset] forState:UIControlStateNormal];
     }
+    
     return self;
 }
 - (void)rightBarButtonClick:(id)sender{
-    KHHAllVisitedSchedusVC *schedusVC = [[KHHAllVisitedSchedusVC alloc] initWithNibName:nil bundle:nil];
-    [self.navigationController pushViewController:schedusVC animated:YES];
-    
+    [[KHHFilterPopup shareUtil] showPopUp:dataTypeArray index:currentIndex Title:@"选择类型" delegate:self];
 }
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view from its nib.
     CKCalendarView *calendar = [[CKCalendarView alloc] initWithStartDay:startSunday card:self.card];
     self.calView = calendar;
@@ -82,8 +104,14 @@
     visitView.theTable.frame = rectTable;
     [self.view addSubview:self.visitView];
     [self.view insertSubview:self.addBtn atIndex:100];
+    [self.view insertSubview:self.allBtn atIndex:100];
     //日历默认选择当天
     [self.calView setSelectedDate:[formt dateFromString:dateS]];
+    
+    //iphone5 适配
+    [KHHViewAdapterUtil checkIsNeedAddHeightForIphone5:visitView];
+    [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_addBtn];
+    [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_allBtn];
 }
 - (void)viewWillAppear:(BOOL)animated{
     [KHHShowHideTabBar hideTabbar];
@@ -104,9 +132,8 @@
             self.changedDate = nil;
         }
         
-        [self.visitView reloadTheTable];
+        [self.visitView reloadTheTable:dataType];
     }
-        //[self.visitView reloadTheTable];
 }
 - (void)viewDidAppear:(BOOL)animated{
     [self.calView layoutSubviews];
@@ -128,6 +155,8 @@
     self.schedus = nil;
     self.visitView = nil;
 }
+
+//日期选择后，要判断是要显示何种类型的数据
 - (void)calendar:(CKCalendarView *)calendar didSelectDate:(NSDate *)date
 {
     NSDate *selectedNewDate = [date dateByAddingTimeInterval:8*60*60];//用与判断添加按钮是否隐藏
@@ -150,7 +179,7 @@
     }
     self.visitView.selectedDate = self.dateSelect;
     self.visitView.card = self.card;
-    [self.visitView reloadTheTable];
+    [self.visitView reloadTheTable:dataType];
 }
 - (void)calendarChangeFrame:(CKCalendarView *)calendar
 {
@@ -175,9 +204,37 @@
 //    [self.navigationController pushViewController:visitVC animated:YES];
 }
 
+- (IBAction)allBtnClick:(id)sender {
+    //显示所有
+    KHHAllVisitedSchedusVC *schedusVC = [[KHHAllVisitedSchedusVC alloc] initWithNibName:nil bundle:nil];
+    [self.navigationController pushViewController:schedusVC animated:YES];
+}
+
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+#pragma KHHFilterPopupDelegate
+- (void)selectInAlert:(id)obj
+{
+    if (!obj) {
+        return;
+    }
+    
+    NSDictionary *dic = (NSDictionary *) obj;
+    if ([[dic objectForKey:@"selectItem"] isEqualToString:NSLocalizedString(KHHMessageCheckIn, nil)]) {
+        dataType = KHHCalendarViewDataTypeCheckIn;
+        [self.rightBtn setTitle:NSLocalizedString(KHHMessageCheckIn, nil) forState:UIControlStateNormal];
+    }else if([[dic objectForKey:@"selectItem"] isEqualToString:NSLocalizedString(KHHMessageDataCollect, nil)]){
+        dataType = KHHCalendarViewDataTypeCollect;
+        [self.rightBtn setTitle:NSLocalizedString(KHHMessageDataCollect, nil) forState:UIControlStateNormal];    
+    }
+    
+    currentIndex = [[NSNumber numberFromString:[dic objectForKey:@"index"]] intValue];
+    
+    //刷新数据
+    [self.visitView reloadTheTable:dataType];
 }
 
 @end

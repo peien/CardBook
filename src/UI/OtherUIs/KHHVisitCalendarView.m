@@ -22,6 +22,9 @@
 {
     //标记是否初始化过了,只有第一次init时才做iphone5的适配
     BOOL isInitialized;
+    
+    //列表的数据类型
+    KHHCalendarViewDataType dataType;
 }
 @end
 
@@ -65,6 +68,7 @@
         [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_calBtn];
         isInitialized = YES;
     }
+#warning 查询(考勤、数据采集)的相应数据，根据dataType来查询,因服务器那边类型还未区分，所以客户端还无法做，这个要等网络接口实现后再改
     NSSortDescriptor *descDate = [NSSortDescriptor sortDescriptorWithKey:@"plannedDate" ascending:NO];
     if(self.isFromHomeVC){
         NSSet *set = self.card.schedules;
@@ -310,7 +314,6 @@
         detailVC.isReloadVisiteTable = YES;
     }
     if (btn.tag == 333) {
-        
         KHHVisitRecoardVC *visitRVC = [[KHHVisitRecoardVC alloc] initWithNibName:nil bundle:nil];
         visitRVC.style = KVisitRecoardVCStyleNewBuild;
         visitRVC.isNeedWarn = YES;
@@ -324,7 +327,14 @@
     }
 }
 
+//刷新数据，不传数据类型时默认是数据采集
 - (void)reloadTheTable{
+    [self reloadTheTable:KHHCalendarViewDataTypeCollect];
+}
+
+//刷新数据
+- (void)reloadTheTable:(KHHCalendarViewDataType) theDataType{
+    dataType = theDataType;
     [self initViewData];
     [_theTable reloadData];
 }

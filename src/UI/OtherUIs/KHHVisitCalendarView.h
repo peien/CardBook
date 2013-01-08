@@ -29,7 +29,9 @@
 
 - (IBAction)VisitCalendarBtnClick:(id)sender;
 - (void)initViewData;
+//不传类型的，默认是数据采集
 - (void)reloadTheTable;
+- (void)reloadTheTable:(KHHCalendarViewDataType) theDataType;
 - (void)showTodayScheuds;
 
 @end

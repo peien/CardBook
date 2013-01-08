@@ -1882,6 +1882,10 @@
 		845759F6169AA0CF005A5F60 /* KHHViewAdapterUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 845759F2169AA0CF005A5F60 /* KHHViewAdapterUtil.m */; };
 		849FBC93168AA80A00C54EE5 /* ic_photo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 849FBC91168A9ACF00C54EE5 /* ic_photo@2x.png */; };
 		849FBC94168AA80B00C54EE5 /* ic_photo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 849FBC91168A9ACF00C54EE5 /* ic_photo@2x.png */; };
+		84C111DD169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C111DC169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png */; };
+		84C111DE169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C111DC169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png */; };
+		84C111DF169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C111DC169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png */; };
+		84C111E0169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C111DC169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -2133,6 +2137,7 @@
 		845759F1169AA0CF005A5F60 /* KHHViewAdapterUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHViewAdapterUtil.h; sourceTree = "<group>"; };
 		845759F2169AA0CF005A5F60 /* KHHViewAdapterUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHViewAdapterUtil.m; sourceTree = "<group>"; };
 		849FBC91168A9ACF00C54EE5 /* ic_photo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_photo@2x.png"; sourceTree = "<group>"; };
+		84C111DC169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "title_btn_with_drop@2x.png"; sourceTree = "<group>"; };
 		9803EBA5160DA88D00402B53 /* NSObject+SM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SM.h"; sourceTree = "<group>"; };
 		9803EBA6160DA88D00402B53 /* NSObject+SM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SM.m"; sourceTree = "<group>"; };
 		981BA0F5162EB4520036A4B8 /* CustomerEvaluation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerEvaluation.h; sourceTree = "<group>"; };
@@ -2784,12 +2789,12 @@
 			children = (
 				310B2ED51699243300818461 /* MemoPicker */,
 				3180A5151698029500DD9501 /* areapicker */,
-				3180A5041697D11500DD9501 /* TextFiledHide */,
 				3102676B1696D1D200FBE156 /* Cells */,
 				310267641696D00500FBE156 /* DatePicker */,
 				310267401696AD6800FBE156 /* NewLocalGroupTable */,
 			);
 			name = NewLocalGroupCell;
+			path = ../ViewControllers/Management/Sub;
 			sourceTree = "<group>";
 		};
 		310267401696AD6800FBE156 /* NewLocalGroupTable */ = {
@@ -2886,13 +2891,6 @@
 			name = network;
 			sourceTree = "<group>";
 		};
-		3180A5041697D11500DD9501 /* TextFiledHide */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = TextFiledHide;
-			sourceTree = "<group>";
-		};
 		3180A5151698029500DD9501 /* areapicker */ = {
 			isa = PBXGroup;
 			children = (
@@ -2905,6 +2903,14 @@
 				3180A5241698029600DD9501 /* HZLocation.m */,
 			);
 			path = areapicker;
+			sourceTree = "<group>";
+		};
+		319C2A24169C13CE005A1BFF /* Input */ = {
+			isa = PBXGroup;
+			children = (
+				310267391696AC2400FBE156 /* NewLocalGroupCell */,
+			);
+			name = Input;
 			sourceTree = "<group>";
 		};
 		31C52AB216916E3F00446006 /* NetClient */ = {
@@ -3399,6 +3405,7 @@
 		98A84DA01602D24600A4A673 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				319C2A24169C13CE005A1BFF /* Input */,
 				31FCBC301682B52600ABFE3F /* Popup */,
 				626832B61675ACC700EB04BF /* OriginalMap */,
 				984FA630161028BF00344BDC /* VisualCard */,
@@ -3623,7 +3630,6 @@
 		98A84E531602D66200A4A673 /* Sub */ = {
 			isa = PBXGroup;
 			children = (
-				310267391696AC2400FBE156 /* NewLocalGroupCell */,
 				98A84E631602D66200A4A673 /* KHHCalendarViewController.h */,
 				98A84E641602D66200A4A673 /* KHHCalendarViewController.m */,
 				98A84E651602D66200A4A673 /* KHHCalendarViewController.xib */,
@@ -3895,6 +3901,7 @@
 		98A84F871602D72E00A4A673 /* img */ = {
 			isa = PBXGroup;
 			children = (
+				84C111DC169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png */,
 				8457599B169911C9005A5F60 /* logo57.png */,
 				8457599C169911C9005A5F60 /* logo114.png */,
 				98A84F891602D7B300A4A673 /* accessBtnico@2x.png */,
@@ -4610,6 +4617,7 @@
 				3180A5471698029600DD9501 /* HZAreaPickerView.xib in Resources */,
 				845759EF16997102005A5F60 /* KHHSendRecordCell.xib in Resources */,
 				310523DE169ABC0F000B2C64 /* plan.plist in Resources */,
+				84C111E0169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png in Resources */,
 				319C29F3169C04D4005A1BFF /* attendance.plist in Resources */,
 				319C29F8169C0672005A1BFF /* collection.plist in Resources */,
 			);
@@ -4841,6 +4849,7 @@
 				3180A5461698029600DD9501 /* HZAreaPickerView.xib in Resources */,
 				845759EE16997102005A5F60 /* KHHSendRecordCell.xib in Resources */,
 				310523DD169ABC0F000B2C64 /* plan.plist in Resources */,
+				84C111DF169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png in Resources */,
 				319C29F2169C04D4005A1BFF /* attendance.plist in Resources */,
 				319C29F7169C0672005A1BFF /* collection.plist in Resources */,
 			);
@@ -5071,6 +5080,7 @@
 				3180A5441698029600DD9501 /* HZAreaPickerView.xib in Resources */,
 				845759EC16997102005A5F60 /* KHHSendRecordCell.xib in Resources */,
 				310523DB169ABC0F000B2C64 /* plan.plist in Resources */,
+				84C111DD169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png in Resources */,
 				319C29F0169C04D4005A1BFF /* attendance.plist in Resources */,
 				319C29F5169C0672005A1BFF /* collection.plist in Resources */,
 			);
@@ -5302,6 +5312,7 @@
 				3180A5451698029600DD9501 /* HZAreaPickerView.xib in Resources */,
 				845759ED16997102005A5F60 /* KHHSendRecordCell.xib in Resources */,
 				310523DC169ABC0F000B2C64 /* plan.plist in Resources */,
+				84C111DE169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png in Resources */,
 				319C29F1169C04D4005A1BFF /* attendance.plist in Resources */,
 				319C29F6169C0672005A1BFF /* collection.plist in Resources */,
 			);
