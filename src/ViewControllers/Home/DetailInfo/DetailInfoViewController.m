@@ -301,9 +301,10 @@
             bottomBtn.hidden = YES;
         }
     }
-
-    //popView
-
+    
+    //适配一下iphone5
+    [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:bottomBtn];
+    [KHHViewAdapterUtil checkIsNeedAddHeightForIphone5:_visitCalView];
 }
 
 

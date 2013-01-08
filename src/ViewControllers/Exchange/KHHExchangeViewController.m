@@ -25,6 +25,7 @@
 #import "KHHNetworkAPI.h"
 #import "KHHNotifications.h"
 #import "KHHDefaults.h"
+#import "KHHSendRecordViewController.h"
 
 @interface KHHExchangeViewController ()<UIScrollViewDelegate,CLLocationManagerDelegate>
 @property (strong, nonatomic) XLPageControl *xlPage;
@@ -225,7 +226,8 @@
             break;
         case 113:
         {
-            
+            KHHSendRecordViewController *sendRecordVC = [[KHHSendRecordViewController alloc] initWithNibName:nil bundle:nil];
+            [self.navigationController pushViewController:sendRecordVC animated:YES];
             break;
         }
         default:

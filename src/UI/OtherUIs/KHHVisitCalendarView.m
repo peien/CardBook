@@ -11,7 +11,6 @@
 #import "KHHCalendarViewController.h"
 #import "KHHAllVisitedSchedusVC.h"
 #import "KHHVisitRecoardVC.h"
-//#import "MapController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "DetailInfoViewController.h"
 #import "KHHData+UI.h"
@@ -19,6 +18,12 @@
 #import "NSString+SM.h"
 #import "KHHBMapViewController.h"
 
+@interface KHHVisitCalendarView()
+{
+    //标记是否初始化过了,只有第一次init时才做iphone5的适配
+    BOOL isInitialized;
+}
+@end
 
 @implementation KHHVisitCalendarView
 @synthesize theTable = _theTable;
@@ -32,7 +37,6 @@
 @synthesize isFromCalVC;
 @synthesize isFromHomeVC;
 @synthesize selectedDate;
-@synthesize calBtn;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -53,6 +57,14 @@
 */
 - (void)initViewData{
 //    NSSortDescriptor *descFini = [NSSortDescriptor sortDescriptorWithKey:@"isFinished" ascending:YES];
+    //判断是否要做一iphone5的适配
+    if (!isInitialized) {
+        //适配一下iphone5
+        [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_footView];
+        [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_addBtn];
+        [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_calBtn];
+        isInitialized = YES;
+    }
     NSSortDescriptor *descDate = [NSSortDescriptor sortDescriptorWithKey:@"plannedDate" ascending:NO];
     if(self.isFromHomeVC){
         NSSet *set = self.card.schedules;

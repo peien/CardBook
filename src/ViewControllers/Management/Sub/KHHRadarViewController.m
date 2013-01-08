@@ -79,6 +79,18 @@ static NSInteger const KHH_PCPieChart_Tag = 1000;
     [self.btn5 setBackgroundColor:PCColorBlue];
     //显示数据
     [self refreshButtonAndChart:nil];
+    
+    //iphone 5 适配
+    [KHHViewAdapterUtil checkIsNeedMoveHalfDownForIphone5:_btn1];
+    [KHHViewAdapterUtil checkIsNeedMoveHalfDownForIphone5:_btn2];
+    [KHHViewAdapterUtil checkIsNeedMoveHalfDownForIphone5:_btn3];
+    [KHHViewAdapterUtil checkIsNeedMoveHalfDownForIphone5:_btn4];
+    [KHHViewAdapterUtil checkIsNeedMoveHalfDownForIphone5:_btn5];
+    [KHHViewAdapterUtil checkIsNeedMoveHalfDownForIphone5:_btnLatent];
+    [KHHViewAdapterUtil checkIsNeedMoveHalfDownForIphone5:_btnLackExpand];
+    [KHHViewAdapterUtil checkIsNeedMoveHalfDownForIphone5:_btnNormal];
+    [KHHViewAdapterUtil checkIsNeedMoveHalfDownForIphone5:_btnBetter];
+    [KHHViewAdapterUtil checkIsNeedMoveHalfDownForIphone5:_btnIntimate];
 }
 
 -(void) viewWillAppear:(BOOL)animated {
@@ -172,6 +184,8 @@ static NSInteger const KHH_PCPieChart_Tag = 1000;
         }
     }
     [pieChart setComponents:components];
+    //做一下iphone5 适配
+    [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:pieChart height:30];
 }
 
 - (IBAction)btnClick:(UIButton *)sender{
