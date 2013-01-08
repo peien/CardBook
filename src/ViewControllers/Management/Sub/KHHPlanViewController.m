@@ -10,16 +10,17 @@
 #import "KHHTargetCell.h"
 #import "KHHDateCell.h"
 #import "KHHLocationCell.h"
-#import "KHHImageCell.h"
 
+#import "KHHFullFrameController.h"
 #import "KHHUpperView.h"
+
 
 @interface KHHPlanViewController ()
 {
     NSDictionary *dicTemp;
     CGRect rectForKey;
     NSMutableArray *inputsForKeyboard;
-   
+    
 }
 @end
 
@@ -73,7 +74,24 @@
         }
         
     }
+    
+}
 
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    self.datePicker = nil;
+    self.memoPicker = nil;
+    self.remindPicker = nil;
+    self.areaPicker = nil;
+    self.paramDic = nil;
+    
+    dicTemp = nil;
+    if (inputsForKeyboard) {
+        [inputsForKeyboard removeAllObjects];
+        inputsForKeyboard = nil;
+    }
+    
 }
 
 - (void)viewDidLoad
@@ -83,6 +101,7 @@
     [self doUIRightButton];
     // NSLog(@"%f",);
     
+   
     table.frame =  CGRectMake(0, 0, 320, self.view.bounds.size.height-44-50);
     
     inputsForKeyboard = [[NSMutableArray alloc]initWithCapacity:10];
@@ -94,6 +113,8 @@
     //weakself = self;
     
 }
+
+
 
 - (void)doUIRightButton
 {
@@ -118,7 +139,7 @@
 {
     [dicTemp setValue:[KHHDateUtil strFromDate:[_datePicker date]] forKey:@"date"];
     [dicTemp setValue:[KHHDateUtil strTimeFromDate:[_datePicker date]] forKey:@"time"];
-    [table reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:1 inSection:0],[NSIndexPath indexPathForRow:2 inSection:0],nil]  withRowAnimation:UITableViewRowAnimationNone];
+    [table reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:[self date] inSection:0],[NSIndexPath indexPathForRow:[self time] inSection:0],nil]  withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)didReceiveMemoryWarning
@@ -131,14 +152,14 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 8;
+    return _paramDic.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *CellIdentifier;
     UITableViewCell *cell;
-    if (indexPath.row == 0) {
+    if (indexPath.row == [self target]) {
         CellIdentifier = @"Target";
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (!cell) {
@@ -151,15 +172,15 @@
         if ([dicTemp objectForKey:@"target"]) {
             ((KHHTargetCell *)cell).field.text = [dicTemp objectForKey:@"target"];
         }
-    
+        
     }
-    if (indexPath.row == 1||indexPath.row  == 2) {
+    if (indexPath.row == [self date]||indexPath.row  == [self time]) {
         CellIdentifier = @"Date";
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (!cell) {
             cell = [[KHHDateCell alloc]init];
         }
-        if (indexPath.row == 1) {
+        if (indexPath.row == [self date]) {
             ((KHHDateCell *)cell).headStr = @"日期";
             if ([dicTemp objectForKey:@"date"]) {
                 ((KHHDateCell *)cell).dateStr = [dicTemp objectForKey:@"date"];
@@ -167,7 +188,7 @@
                 ((KHHDateCell *)cell).dateStr = [KHHDateUtil nowDate];
             }
         }
-        if (indexPath.row == 2) {
+        if (indexPath.row == [self time]) {
             ((KHHDateCell *)cell).headStr = @"时间";
             if ([dicTemp objectForKey:@"time"]) {
                 ((KHHDateCell *)cell).dateStr = [dicTemp objectForKey:@"time"];
@@ -175,10 +196,10 @@
                 ((KHHDateCell *)cell).dateStr = [KHHDateUtil strTimeFromDate:[NSDate new]];
             }
         }
-       
+        
         
     }
-    if (indexPath.row == 3) {
+    if (indexPath.row == [self local0]) {
         CellIdentifier = @"Location";
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (!cell) {
@@ -192,9 +213,9 @@
         }else{
             ((KHHLocationCell *)cell).locationStr = @"请选择省市地";
         }
-
+        
     }
-    if (indexPath.row == 4) {
+    if (indexPath.row == [self img]) {
         CellIdentifier = @"Image";
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (!cell) {
@@ -202,21 +223,20 @@
         }
         ((KHHImageCell *)cell).headStr = @"图片";
         [((KHHImageCell *)cell).imageBtn addTarget:self action:@selector(addImg) forControlEvents:UIControlEventTouchUpInside];
-        //((KHHLocationCell *)cell).field.delegate = self;
-        if ([dicTemp objectForKey:@"location"]) {
-            //((KHHImageCell *)cell).locationStr = [dicTemp objectForKey:@"location"];
-        }else{
-            // ((KHHImageCell *)cell).locationStr = @"请选择省市地";
+        
+        if ([dicTemp objectForKey:@"imgArr"]) {
+            NSArray* imgArr = [dicTemp objectForKey:@"imgArr"];
+            ((KHHImageCell *)cell).imgArr = imgArr;
         }
     }
-    if (indexPath.row == 5||indexPath.row == 6) {
-        CellIdentifier = @"Date";
+    if (indexPath.row == [self memo]||indexPath.row == [self remind]) {
+        CellIdentifier = @"Memo";
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (!cell) {
             cell = [[KHHMemoCell alloc]init];
         }
-        if (indexPath.row == 5) {
-             
+        if (indexPath.row == [self memo]) {
+            
             ((KHHMemoCell *)cell).headStr = @"备注";
             ((KHHMemoCell *)cell).indexpath = indexPath;
             ((KHHMemoCell *)cell).pickerDelegate = self;
@@ -226,7 +246,7 @@
                 ((KHHMemoCell *)cell).butTitle = @"请选择";
             }
         }
-        if (indexPath.row == 6) {
+        if (indexPath.row == [self remind]) {
             ((KHHMemoCell *)cell).headStr = @"提醒";
             ((KHHMemoCell *)cell).indexpath = indexPath;
             ((KHHMemoCell *)cell).pickerDelegate = self;
@@ -235,10 +255,10 @@
             }else{
                 ((KHHMemoCell *)cell).butTitle = @"不提醒";
             }
-
+            
         }
     }
-    if (indexPath.row == 7) {
+    if (indexPath.row == [self descript]) {
         CellIdentifier = @"Target";
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (!cell) {
@@ -248,8 +268,8 @@
             ((KHHTargetCell *)cell).field.delegate = self;
             ((KHHTargetCell *)cell).field.tag = 10022;
         }
-        if ([dicTemp objectForKey:@"target"]) {
-            ((KHHTargetCell *)cell).field.text = [dicTemp objectForKey:@"target"];
+        if ([dicTemp objectForKey:@"descript"]) {
+            ((KHHTargetCell *)cell).field.text = [dicTemp objectForKey:@"descript"];
         }
     }
     if (!cell) {
@@ -265,6 +285,13 @@
 #pragma mark - buttons actions
 
 - (void)addImg{
+    [table showNormal];
+    [self hiddenKeyboard];
+    if ([dicTemp objectForKey:@"imgArr"]&&[[dicTemp objectForKey:@"imgArr"] count]>=4) {
+        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"" message:@"最多4张图片" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alert show];
+        return;
+    }
     UIActionSheet *actSheet = [[UIActionSheet alloc] initWithTitle:@""
                                                           delegate:self
                                                  cancelButtonTitle:@"取消"
@@ -272,16 +299,41 @@
                                                  otherButtonTitles:nil, nil];
     [actSheet addButtonWithTitle:@"本地相册"];
     [actSheet addButtonWithTitle:@"拍照"];
+    actSheet.tag = 10010;
     [actSheet showInView:self.view];
-    actSheet.tag = 1001;
+    
+}
+
+- (void)showLarge:(UIView *)img
+{
+    KHHFullFrameController *fullVC = [[KHHFullFrameController alloc] initWithNibName:nil bundle:nil];
+    fullVC.image = ((KHHImgViewInCell *)img).img;
+    [self.navigationController pushViewController:fullVC animated:YES];
+}
+
+- (void)doDelete:(UIView *)img
+{
+    UIActionSheet *actSheet = [[UIActionSheet alloc] initWithTitle:@""
+                                                          delegate:self
+                                                 cancelButtonTitle:@"取消"
+                                            destructiveButtonTitle:nil
+                                                 otherButtonTitles:nil, nil];
+    [actSheet setValue:img forKey:@"img"];
+    [actSheet addButtonWithTitle:@"删除图片"];
+    actSheet.tag = 10011;
+    [actSheet showInView:self.view];
 }
 
 #pragma mark - textFiled delegate
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
+    if (textField.tag == 10022) {
+        [dicTemp setValue:textField.text forKey:@"descript"];
+    }else{
+        [dicTemp setValue:textField.text forKey:@"target"];
+    }
     
-    [dicTemp setValue:textField.text forKey:@"target"];
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField{
@@ -316,7 +368,7 @@
     
     for (id obj in  inputsForKeyboard) {
         if ([obj isEqual:obj2]) {
-            return;           
+            return;
         }
     }
     [inputsForKeyboard addObject:obj2];
@@ -333,7 +385,7 @@
     self.areaPicker = nil;
     
     [self.memoPicker cancelPicker:YES];
-   
+    
     self.memoPicker = nil;
     
     [self.remindPicker cancelPicker:YES];
@@ -344,7 +396,7 @@
 - (void)pickerDidChaneStatus:(HZAreaPickerView *)picker
 {
     [dicTemp setValue:[NSString stringWithFormat:@"%@ %@ %@", picker.locate.state, picker.locate.city, picker.locate.district] forKey:@"location"];
-    [table reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:3 inSection:0]]  withRowAnimation:UITableViewRowAnimationNone];
+    [table reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self local0] inSection:0]]  withRowAnimation:UITableViewRowAnimationNone];
 }
 
 #pragma mark - Table view delegate
@@ -352,20 +404,20 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    if (indexPath.row == 1||indexPath.row == 2||indexPath.row == 3||indexPath.row == 5||indexPath.row == 6) {
+    if (indexPath.row == [self date]||indexPath.row == [self time]||indexPath.row == [self local0]||indexPath.row == [self memo]||indexPath.row == [self remind]) {
         rectForKey = [tableView cellForRowAtIndexPath:indexPath].frame;
         rectForKey = CGRectMake(rectForKey.origin.x, rectForKey.origin.y+30, rectForKey.size.width, rectForKey.size.height);
         [table goToInsetForKeyboard:rectForKey];
     }
     
-    if (indexPath.row == 4) {
+    if (indexPath.row == [self img]) {
         [self hiddenKeyboard];
         [table showNormal];
     }
-    if (indexPath.row == 1||indexPath.row == 2) {        
+    if (indexPath.row == [self date]||indexPath.row == [self time]) {
         [self hiddenKeyboard];
         if (!self.datePicker) {
-            self.datePicker = [[ KHHDatePicker alloc] initWithFrame:CGRectMake(0.0,460-200.0,320.0,200.0)];
+            self.datePicker = [[ KHHDatePicker alloc] initWithFrame:CGRectMake(0.0,H460-200.0,320.0,200.0)];
             
             [self.datePicker addTarget:self action:@selector(dateChanged) forControlEvents:UIControlEventValueChanged];
             self.datePicker.hidden = YES;
@@ -380,13 +432,10 @@
         return;
         
     }
-    if (indexPath.row == 3) {
-//        [self registResponder];
-//        if(!self.datePicker.hidden){
-//            [self.datePicker cancelPicker:NO];
-//        }
-         [self hiddenKeyboard];
-        if (!self.areaPicker) {            
+    if (indexPath.row == [self local0]) {
+        
+        [self hiddenKeyboard];
+        if (!self.areaPicker) {
             self.areaPicker = [[HZAreaPickerView alloc] initWithStyle:HZAreaPickerWithStateAndCityAndDistrict delegate:self];
             self.areaPicker.hidden = YES;
             [self addRes:_areaPicker];
@@ -399,12 +448,13 @@
         return;
     }
     
-    if (indexPath.row == 5 ) {
+    if (indexPath.row == [self memo] ) {
         [self hiddenKeyboard];
         if (!self.memoPicker) {
-            self.memoPicker = [[ KHHMemoPicker alloc] initWithFrame:CGRectMake(0.0,460-200.0,320.0,200.0)];
+            self.memoPicker = [[ KHHMemoPicker alloc] initWithFrame:CGRectMake(0.0,H460-200.0,320.0,200.0)];
             self.memoPicker.hidden = YES;
             self.memoPicker.tag = 10030;
+            self.memoPicker.memoArr = [_paramDic valueForKeyPath:@"memo.titles"];
             __block KHHPlanViewController *weakself = self;
             self.memoPicker.showTitle = ^(NSString *title, int tag){
                 [weakself showTitle:title tag:tag];
@@ -419,10 +469,10 @@
         
         return;
     }
-    if (indexPath.row == 6) {
+    if (indexPath.row == [self remind]) {
         [self hiddenKeyboard];
         if (!self.remindPicker) {
-            self.remindPicker = [[ KHHMemoPicker alloc] initWithFrame:CGRectMake(0.0,460-200.0,320.0,200.0)];
+            self.remindPicker = [[ KHHMemoPicker alloc] initWithFrame:CGRectMake(0.0,H460-200.0,320.0,200.0)];
             self.remindPicker.hidden = YES;
             self.remindPicker.tag = 10031;
             __block KHHPlanViewController *weakself = self;
@@ -441,25 +491,14 @@
     }
 }
 
-- (void)registResponder
-{
-    UITableViewCell *cell = [table cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-    if (cell) {
-        [((KHHTargetCell *)cell) registResponder];
-    }
-    UITableViewCell *cell1 = [table cellForRowAtIndexPath:[NSIndexPath indexPathForRow:3 inSection:0]];
-    if (cell) {
-        [((KHHLocationCell *)cell1) registResponder];
-    }
-    
-}
+
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == 3) {
+    if (indexPath.row == [self local0]) {
         return 60;
     }
-    if (indexPath.row == 4) {
+    if (indexPath.row == [self img]) {
         return 60;
     }
     return 45;
@@ -468,15 +507,37 @@
 #pragma mark - imagePicker delegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo
 {
+    NSMutableArray *imgArr ;
+    if ([dicTemp objectForKey:@"imgArr"]) {
+        imgArr= [dicTemp objectForKey:@"imgArr"];
+    }else{
+        imgArr = [[NSMutableArray alloc]initWithCapacity:4];
+        [dicTemp setValue:imgArr forKey:@"imgArr"];
+    }
+    KHHImgViewInCell *img = [[KHHImgViewInCell alloc]init];
+    img.img = image;
+    img.touchDelegate = self;
+    [imgArr addObject:img];
+    [table reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self img] inSection:0]]  withRowAnimation:UITableViewRowAnimationNone];
+    [self dismissModalViewControllerAnimated:YES];
     
-     [self dismissModalViewControllerAnimated:YES];
 }
 
 
 #pragma mark - actionsheet delegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == 2 ){        
+    if (actionSheet.tag == 10011) {
+        if (buttonIndex == 1 ){
+            
+            [[dicTemp objectForKey:@"imgArr"]removeObject:[actionSheet valueForKey:@"img"] ] ;
+            [table reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self img] inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+        }
+        
+        return;
+    }
+    
+    if (buttonIndex == 2 ){
         if (![UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera]) {
             UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"" message:@"不支持拍照" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
             [alert show];
@@ -504,15 +565,15 @@
 #pragma mark - memoPicker delegate
 - (void)selectPicker:(NSIndexPath *)indexPath
 {
-   
-        rectForKey = [table cellForRowAtIndexPath:indexPath].frame;
-        rectForKey = CGRectMake(rectForKey.origin.x, rectForKey.origin.y+30, rectForKey.size.width, rectForKey.size.height);
-        [table goToInsetForKeyboard:rectForKey];
-   
-    if (indexPath.row == 5 ) {
+    
+    rectForKey = [table cellForRowAtIndexPath:indexPath].frame;
+    rectForKey = CGRectMake(rectForKey.origin.x, rectForKey.origin.y+30, rectForKey.size.width, rectForKey.size.height);
+    [table goToInsetForKeyboard:rectForKey];
+    
+    if (indexPath.row == [self memo] ) {
         [self hiddenKeyboard];
         if (!self.memoPicker) {
-            self.memoPicker = [[ KHHMemoPicker alloc] initWithFrame:CGRectMake(0.0,460-200.0,320.0,200.0)];
+            self.memoPicker = [[ KHHMemoPicker alloc] initWithFrame:CGRectMake(0.0,H460-200.0,320.0,200.0)];
             self.memoPicker.hidden = YES;
             
             self.memoPicker.tag = 10030;
@@ -530,10 +591,10 @@
         
         return;
     }
-    if (indexPath.row == 6) {
+    if (indexPath.row == [self remind]) {
         [self hiddenKeyboard];
         if (!self.remindPicker) {
-            self.remindPicker = [[ KHHMemoPicker alloc] initWithFrame:CGRectMake(0.0,460-200.0,320.0,200.0)];
+            self.remindPicker = [[ KHHMemoPicker alloc] initWithFrame:CGRectMake(0.0,H460-200.0,320.0,200.0)];
             self.remindPicker.hidden = YES;
             __block KHHPlanViewController *weakself = self;
             self.remindPicker.showTitle = ^(NSString *title, int tag){
@@ -556,14 +617,83 @@
 {
     if(tag == 10030){
         [dicTemp setValue:title forKey:@"memo"];
-        [table reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:5 inSection:0]]  withRowAnimation:UITableViewRowAnimationNone];
+        [table reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self memo] inSection:0]]  withRowAnimation:UITableViewRowAnimationNone];
     }
     if(tag == 10031){
         [dicTemp setValue:title forKey:@"remind"];
-        [table reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:6 inSection:0]]  withRowAnimation:UITableViewRowAnimationNone];
+        [table reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self remind] inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
     }
     
 }
+
+
+#pragma mark - just self use
+
+- (int)target
+{
+    if ([_paramDic valueForKeyPath:@"target"]) {
+        return [[_paramDic valueForKeyPath:@"target"] integerValue];
+    }
+    return -1;
+}
+
+- (int)date
+{    
+    if ([_paramDic valueForKeyPath:@"date"]) {
+        return [[_paramDic valueForKeyPath:@"date"] integerValue];
+    }
+    return -1;
+}
+
+- (int)time
+{
+    if ([_paramDic valueForKeyPath:@"time"]) {
+        return [[_paramDic valueForKeyPath:@"time"] integerValue];
+    }
+    return -1;
+}
+
+- (int)local0
+{
+    if ([_paramDic valueForKeyPath:@"local0"]) {
+        return [[_paramDic valueForKeyPath:@"local0"] integerValue];
+    }
+    return -1;
+}
+
+
+- (int)img
+{
+    if ([_paramDic valueForKeyPath:@"img"]) {
+        return [[_paramDic valueForKeyPath:@"img"] integerValue];
+    }
+    return -1;
+}
+
+- (int)memo
+{
+    if ([_paramDic valueForKeyPath:@"memo"]) {
+        return [[_paramDic valueForKeyPath:@"memo.row"] integerValue];
+    }
+    return -1;
+}
+
+- (int)remind
+{
+    if ([_paramDic valueForKeyPath:@"remind"]) {
+        return [[_paramDic valueForKeyPath:@"remind.row"] integerValue];
+    }
+    return -1;
+}
+
+- (int)descript
+{
+    if ([_paramDic valueForKeyPath:@"descript"]) {
+        return [[_paramDic valueForKeyPath:@"descript"] integerValue];
+    }
+    return -1;
+}
+
 @end
 
 

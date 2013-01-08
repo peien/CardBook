@@ -20,7 +20,7 @@ static float const KHH_Keyboard_Height = 216.0 + 95;
 {
     self = [super initWithFrame:frame];
     if (self) {
-        normalH = 460-44-50;
+        normalH = H460-44-50;        
     }
     return self;
 }
@@ -34,12 +34,12 @@ static float const KHH_Keyboard_Height = 216.0 + 95;
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     if (showKeyboard) {
-        if ([[touches anyObject] locationInView:self].x >=200) {
-            [self showNormal];
-            if (_hiddenDelgate) {
-                [_hiddenDelgate performSelector:@selector(hiddenKeyboard)];
-            }
-        }
+//        if ([[touches anyObject] locationInView:self].x >=200) {
+//            [self showNormal];
+//            if (_hiddenDelgate) {
+//                [_hiddenDelgate performSelector:@selector(hiddenKeyboard)];
+//            }
+//        }
     }
     
     [super touchesBegan:touches withEvent:event];
@@ -50,7 +50,7 @@ static float const KHH_Keyboard_Height = 216.0 + 95;
     showKeyboard = NO;
     [UIView animateWithDuration:0.3
                      animations:^{
-                          NSLog(@"normalH2 %f",normalH);
+                         
                          self.frame = CGRectMake(0.0f, 0,self.frame.size.width,normalH);
                      }
                      completion:^(BOOL finished){
@@ -74,7 +74,7 @@ static float const KHH_Keyboard_Height = 216.0 + 95;
     CGRect rect = CGRectMake(0.0f, -offset,self.frame.size.width,normalH+120);
     [UIView animateWithDuration:0.3
                      animations:^{
-                         NSLog(@"normalH3 %f",rect.size.height);
+                         
                          self.frame = rect;
                      }
                      completion:^(BOOL finished){

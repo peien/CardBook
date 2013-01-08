@@ -46,6 +46,18 @@
 		3104E06C168800F200B0B45F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 3104E06B168800F100B0B45F /* Reachability.m */; };
 		3104E073168856CB00B0B45F /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98F0F63B16885010009BAF81 /* SDWebImage.framework */; };
 		3104E0741688571000B0B45F /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98F0F63B16885010009BAF81 /* SDWebImage.framework */; };
+		310523D2169A9833000B2C64 /* KHHImgViewInCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 310523D1169A9833000B2C64 /* KHHImgViewInCell.m */; };
+		310523D3169A9833000B2C64 /* KHHImgViewInCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 310523D1169A9833000B2C64 /* KHHImgViewInCell.m */; };
+		310523D4169A9833000B2C64 /* KHHImgViewInCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 310523D1169A9833000B2C64 /* KHHImgViewInCell.m */; };
+		310523D5169A9833000B2C64 /* KHHImgViewInCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 310523D1169A9833000B2C64 /* KHHImgViewInCell.m */; };
+		310523DB169ABC0F000B2C64 /* plan.plist in Resources */ = {isa = PBXBuildFile; fileRef = 310523DA169ABC0E000B2C64 /* plan.plist */; };
+		310523DC169ABC0F000B2C64 /* plan.plist in Resources */ = {isa = PBXBuildFile; fileRef = 310523DA169ABC0E000B2C64 /* plan.plist */; };
+		310523DD169ABC0F000B2C64 /* plan.plist in Resources */ = {isa = PBXBuildFile; fileRef = 310523DA169ABC0E000B2C64 /* plan.plist */; };
+		310523DE169ABC0F000B2C64 /* plan.plist in Resources */ = {isa = PBXBuildFile; fileRef = 310523DA169ABC0E000B2C64 /* plan.plist */; };
+		310523E1169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 310523E0169AD2A3000B2C64 /* KHHWhereUtil.m */; };
+		310523E2169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 310523E0169AD2A3000B2C64 /* KHHWhereUtil.m */; };
+		310523E3169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 310523E0169AD2A3000B2C64 /* KHHWhereUtil.m */; };
+		310523E4169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 310523E0169AD2A3000B2C64 /* KHHWhereUtil.m */; };
 		310A3F41168D3E9D009FF135 /* CardBook_test_haibo-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 310A3F3E168D3E9D009FF135 /* CardBook_test_haibo-Info.plist */; };
 		310A3F42168D3E9D009FF135 /* CardBook_test-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 310A3F3F168D3E9D009FF135 /* CardBook_test-Info.plist */; };
 		310A3F46168D677A009FF135 /* NetWorking.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A3F45168D6779009FF135 /* NetWorking.m */; };
@@ -1872,6 +1884,11 @@
 		3104E0601687EE8100B0B45F /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		3104E06A168800F100B0B45F /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		3104E06B168800F100B0B45F /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		310523D0169A9833000B2C64 /* KHHImgViewInCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHImgViewInCell.h; sourceTree = "<group>"; };
+		310523D1169A9833000B2C64 /* KHHImgViewInCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHImgViewInCell.m; sourceTree = "<group>"; };
+		310523DA169ABC0E000B2C64 /* plan.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = plan.plist; sourceTree = "<group>"; };
+		310523DF169AD2A3000B2C64 /* KHHWhereUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHWhereUtil.h; sourceTree = "<group>"; };
+		310523E0169AD2A3000B2C64 /* KHHWhereUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHWhereUtil.m; sourceTree = "<group>"; };
 		310A3F36168D2C43009FF135 /* Delegates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Delegates.h; sourceTree = "<group>"; };
 		310A3F3E168D3E9D009FF135 /* CardBook_test_haibo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CardBook_test_haibo-Info.plist"; sourceTree = SOURCE_ROOT; };
 		310A3F3F168D3E9D009FF135 /* CardBook_test-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CardBook_test-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -2756,6 +2773,7 @@
 				310B2ECF1699090B00818461 /* KHHInputTableView.m */,
 				310B2EE21699461500818461 /* KHHUpperView.h */,
 				310B2EE31699461500818461 /* KHHUpperView.m */,
+				310523DA169ABC0E000B2C64 /* plan.plist */,
 			);
 			name = NewLocalGroupTable;
 			sourceTree = "<group>";
@@ -2772,6 +2790,7 @@
 		3102676B1696D1D200FBE156 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				310523CE169A9805000B2C64 /* View for cell */,
 				3102673A1696ACA200FBE156 /* KHHTargetCell.h */,
 				3102673B1696ACA200FBE156 /* KHHTargetCell.m */,
 				3102676C1696D20300FBE156 /* KHHDateCell.h */,
@@ -2784,6 +2803,15 @@
 				310B2EDD16992FFC00818461 /* KHHMemoCell.m */,
 			);
 			name = Cells;
+			sourceTree = "<group>";
+		};
+		310523CE169A9805000B2C64 /* View for cell */ = {
+			isa = PBXGroup;
+			children = (
+				310523D0169A9833000B2C64 /* KHHImgViewInCell.h */,
+				310523D1169A9833000B2C64 /* KHHImgViewInCell.m */,
+			);
+			name = "View for cell";
 			sourceTree = "<group>";
 		};
 		310B2ED51699243300818461 /* MemoPicker */ = {
@@ -2969,6 +2997,8 @@
 				8413659116883F5000BB0400 /* KHHKeyBoardManagerUtil.m */,
 				310267721696D55600FBE156 /* KHHDateUtil.h */,
 				310267731696D55600FBE156 /* KHHDateUtil.m */,
+				310523DF169AD2A3000B2C64 /* KHHWhereUtil.h */,
+				310523E0169AD2A3000B2C64 /* KHHWhereUtil.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -4543,6 +4573,7 @@
 				3180A52F1698029600DD9501 /* area.plist in Resources */,
 				3180A5371698029600DD9501 /* city.plist in Resources */,
 				3180A5471698029600DD9501 /* HZAreaPickerView.xib in Resources */,
+				310523DE169ABC0F000B2C64 /* plan.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4771,6 +4802,7 @@
 				3180A52E1698029600DD9501 /* area.plist in Resources */,
 				3180A5361698029600DD9501 /* city.plist in Resources */,
 				3180A5461698029600DD9501 /* HZAreaPickerView.xib in Resources */,
+				310523DD169ABC0F000B2C64 /* plan.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4998,6 +5030,7 @@
 				3180A52C1698029600DD9501 /* area.plist in Resources */,
 				3180A5341698029600DD9501 /* city.plist in Resources */,
 				3180A5441698029600DD9501 /* HZAreaPickerView.xib in Resources */,
+				310523DB169ABC0F000B2C64 /* plan.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5226,6 +5259,7 @@
 				3180A52D1698029600DD9501 /* area.plist in Resources */,
 				3180A5351698029600DD9501 /* city.plist in Resources */,
 				3180A5451698029600DD9501 /* HZAreaPickerView.xib in Resources */,
+				310523DC169ABC0F000B2C64 /* plan.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5482,6 +5516,8 @@
 				310B2EDB1699247100818461 /* KHHMemoPicker.m in Sources */,
 				310B2EE116992FFC00818461 /* KHHMemoCell.m in Sources */,
 				310B2EE71699461500818461 /* KHHUpperView.m in Sources */,
+				310523D5169A9833000B2C64 /* KHHImgViewInCell.m in Sources */,
+				310523E4169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5706,6 +5742,8 @@
 				310B2EDA1699247100818461 /* KHHMemoPicker.m in Sources */,
 				310B2EE016992FFC00818461 /* KHHMemoCell.m in Sources */,
 				310B2EE61699461500818461 /* KHHUpperView.m in Sources */,
+				310523D4169A9833000B2C64 /* KHHImgViewInCell.m in Sources */,
+				310523E3169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5930,6 +5968,8 @@
 				310B2ED81699247100818461 /* KHHMemoPicker.m in Sources */,
 				310B2EDE16992FFC00818461 /* KHHMemoCell.m in Sources */,
 				310B2EE41699461500818461 /* KHHUpperView.m in Sources */,
+				310523D2169A9833000B2C64 /* KHHImgViewInCell.m in Sources */,
+				310523E1169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6150,6 +6190,8 @@
 				310B2ED91699247100818461 /* KHHMemoPicker.m in Sources */,
 				310B2EDF16992FFC00818461 /* KHHMemoCell.m in Sources */,
 				310B2EE51699461500818461 /* KHHUpperView.m in Sources */,
+				310523D3169A9833000B2C64 /* KHHImgViewInCell.m in Sources */,
+				310523E2169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

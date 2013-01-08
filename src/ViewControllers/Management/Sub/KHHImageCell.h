@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "KHHImgViewInCell.h"
 
 @interface KHHImageCell : UITableViewCell
 
 @property (nonatomic,strong)NSString *headStr;
 @property (nonatomic,strong)UIButton *imageBtn;
+@property (nonatomic,strong)NSArray *imgArr;
 @end
