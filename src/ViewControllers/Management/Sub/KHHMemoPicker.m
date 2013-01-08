@@ -18,6 +18,7 @@
     if (self) {
         self.dataSource = self;
         self.delegate = self;
+        self.showsSelectionIndicator = YES;
         memoArr = [[NSMutableArray alloc]initWithObjects:@"约会",@"聚餐", @"牵手", @"游戏", @"打台球", @"睡觉", nil];
         
     }
@@ -36,33 +37,14 @@
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    NSString *title;
-    switch (row) {
-        case 0:
-           title = @"约会";
-            break;
-        case 1:
-           title = @"聚餐";
-            break;
-        case 2:
-          title =  @"牵手";
-            break;
-        case 3:
-           title = @"游戏";
-            break;
-        case 4:
-           title = @"打台球";
-            break;            
-        default:
-            title = @"睡觉";
-            break;
-    }
-    return title;
+    return [memoArr objectAtIndex:row];
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    [_showDelegate performSelector:@selector(showTitle:) withObject:[memoArr objectAtIndex:row]];
+    if (_showTitle) {
+        _showTitle([memoArr objectAtIndex:row],pickerView.tag);
+    }
 }
 
 #pragma mark - animation

@@ -167,7 +167,6 @@
 		314A0068168BEE9A00029324 /* KHHAddImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 625BD93E1608701E00F565AD /* KHHAddImageCell.xib */; };
 		314A0069168BEE9A00029324 /* KHHFloatBarController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F441602D6C500A4A673 /* KHHFloatBarController.xib */; };
 		314A006A168BEE9A00029324 /* KHHAddImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F4A1602D6C500A4A673 /* KHHAddImageView.xib */; };
-		314A006B168BEE9A00029324 /* KHHCardTemplageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62AC98DD163A4A50009EF269 /* KHHCardTemplageVC.xib */; };
 		314A006C168BEE9A00029324 /* KHHCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F4D1602D6C500A4A673 /* KHHCardView.xib */; };
 		314A006D168BEE9A00029324 /* KHHCustomEvaluaView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F521602D6C500A4A673 /* KHHCustomEvaluaView.xib */; };
 		314A006E168BEE9A00029324 /* KHHFullFrameController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62A6C4DD160AAECE00ADA43E /* KHHFullFrameController.xib */; };
@@ -593,7 +592,6 @@
 		314A0227168BEF3800029324 /* KHHAddImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 625BD93E1608701E00F565AD /* KHHAddImageCell.xib */; };
 		314A0228168BEF3800029324 /* KHHFloatBarController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F441602D6C500A4A673 /* KHHFloatBarController.xib */; };
 		314A0229168BEF3800029324 /* KHHAddImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F4A1602D6C500A4A673 /* KHHAddImageView.xib */; };
-		314A022A168BEF3800029324 /* KHHCardTemplageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62AC98DD163A4A50009EF269 /* KHHCardTemplageVC.xib */; };
 		314A022B168BEF3800029324 /* KHHCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F4D1602D6C500A4A673 /* KHHCardView.xib */; };
 		314A022C168BEF3800029324 /* KHHCustomEvaluaView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F521602D6C500A4A673 /* KHHCustomEvaluaView.xib */; };
 		314A022D168BEF3800029324 /* KHHFullFrameController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62A6C4DD160AAECE00ADA43E /* KHHFullFrameController.xib */; };
@@ -1307,7 +1305,6 @@
 		6274C0CA165C9D1800DB5EBE /* KHHAddImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 625BD93E1608701E00F565AD /* KHHAddImageCell.xib */; };
 		6274C0CB165C9D1800DB5EBE /* KHHFloatBarController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F441602D6C500A4A673 /* KHHFloatBarController.xib */; };
 		6274C0CC165C9D1800DB5EBE /* KHHAddImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F4A1602D6C500A4A673 /* KHHAddImageView.xib */; };
-		6274C0CD165C9D1800DB5EBE /* KHHCardTemplageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62AC98DD163A4A50009EF269 /* KHHCardTemplageVC.xib */; };
 		6274C0CE165C9D1800DB5EBE /* KHHCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F4D1602D6C500A4A673 /* KHHCardView.xib */; };
 		6274C0CF165C9D1800DB5EBE /* KHHCustomEvaluaView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F521602D6C500A4A673 /* KHHCustomEvaluaView.xib */; };
 		6274C0D0165C9D1800DB5EBE /* KHHFullFrameController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62A6C4DD160AAECE00ADA43E /* KHHFullFrameController.xib */; };
@@ -1724,7 +1721,6 @@
 		62ECD9DF166DE1D000A15E24 /* KHHAddImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 625BD93E1608701E00F565AD /* KHHAddImageCell.xib */; };
 		62ECD9E0166DE1D000A15E24 /* KHHFloatBarController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F441602D6C500A4A673 /* KHHFloatBarController.xib */; };
 		62ECD9E1166DE1D000A15E24 /* KHHAddImageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F4A1602D6C500A4A673 /* KHHAddImageView.xib */; };
-		62ECD9E2166DE1D000A15E24 /* KHHCardTemplageVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62AC98DD163A4A50009EF269 /* KHHCardTemplageVC.xib */; };
 		62ECD9E3166DE1D000A15E24 /* KHHCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F4D1602D6C500A4A673 /* KHHCardView.xib */; };
 		62ECD9E4166DE1D000A15E24 /* KHHCustomEvaluaView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F521602D6C500A4A673 /* KHHCustomEvaluaView.xib */; };
 		62ECD9E5166DE1D000A15E24 /* KHHFullFrameController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 62A6C4DD160AAECE00ADA43E /* KHHFullFrameController.xib */; };
@@ -2078,7 +2074,6 @@
 		62AB2983160C07270004A3E3 /* KHHBMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHBMapViewController.xib; sourceTree = "<group>"; };
 		62AC98DB163A4A50009EF269 /* KHHCardTemplageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHCardTemplageVC.h; sourceTree = "<group>"; };
 		62AC98DC163A4A50009EF269 /* KHHCardTemplageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHCardTemplageVC.m; sourceTree = "<group>"; };
-		62AC98DD163A4A50009EF269 /* KHHCardTemplageVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHCardTemplageVC.xib; sourceTree = "<group>"; };
 		62ACD2F51623BF2800D88F57 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		62ACD2F61623BF2800D88F57 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		62BD4F75165CDB70007B948E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -3816,7 +3811,6 @@
 				62A9C99A16099AC100BF7D41 /* KHHAddressBook.m */,
 				62AC98DB163A4A50009EF269 /* KHHCardTemplageVC.h */,
 				62AC98DC163A4A50009EF269 /* KHHCardTemplageVC.m */,
-				62AC98DD163A4A50009EF269 /* KHHCardTemplageVC.xib */,
 				98A84F4B1602D6C500A4A673 /* KHHCardView.h */,
 				98A84F4C1602D6C500A4A673 /* KHHCardView.m */,
 				98A84F4D1602D6C500A4A673 /* KHHCardView.xib */,
@@ -4479,7 +4473,6 @@
 				314A0227168BEF3800029324 /* KHHAddImageCell.xib in Resources */,
 				314A0228168BEF3800029324 /* KHHFloatBarController.xib in Resources */,
 				314A0229168BEF3800029324 /* KHHAddImageView.xib in Resources */,
-				314A022A168BEF3800029324 /* KHHCardTemplageVC.xib in Resources */,
 				314A022B168BEF3800029324 /* KHHCardView.xib in Resources */,
 				314A022C168BEF3800029324 /* KHHCustomEvaluaView.xib in Resources */,
 				314A022D168BEF3800029324 /* KHHFullFrameController.xib in Resources */,
@@ -4708,7 +4701,6 @@
 				314A0068168BEE9A00029324 /* KHHAddImageCell.xib in Resources */,
 				314A0069168BEE9A00029324 /* KHHFloatBarController.xib in Resources */,
 				314A006A168BEE9A00029324 /* KHHAddImageView.xib in Resources */,
-				314A006B168BEE9A00029324 /* KHHCardTemplageVC.xib in Resources */,
 				314A006C168BEE9A00029324 /* KHHCardView.xib in Resources */,
 				314A006D168BEE9A00029324 /* KHHCustomEvaluaView.xib in Resources */,
 				314A006E168BEE9A00029324 /* KHHFullFrameController.xib in Resources */,
@@ -4937,7 +4929,6 @@
 				6274C0CA165C9D1800DB5EBE /* KHHAddImageCell.xib in Resources */,
 				6274C0CB165C9D1800DB5EBE /* KHHFloatBarController.xib in Resources */,
 				6274C0CC165C9D1800DB5EBE /* KHHAddImageView.xib in Resources */,
-				6274C0CD165C9D1800DB5EBE /* KHHCardTemplageVC.xib in Resources */,
 				6274C0CE165C9D1800DB5EBE /* KHHCardView.xib in Resources */,
 				6274C0CF165C9D1800DB5EBE /* KHHCustomEvaluaView.xib in Resources */,
 				6274C0D0165C9D1800DB5EBE /* KHHFullFrameController.xib in Resources */,
@@ -5165,7 +5156,6 @@
 				62ECD9DF166DE1D000A15E24 /* KHHAddImageCell.xib in Resources */,
 				62ECD9E0166DE1D000A15E24 /* KHHFloatBarController.xib in Resources */,
 				62ECD9E1166DE1D000A15E24 /* KHHAddImageView.xib in Resources */,
-				62ECD9E2166DE1D000A15E24 /* KHHCardTemplageVC.xib in Resources */,
 				62ECD9E3166DE1D000A15E24 /* KHHCardView.xib in Resources */,
 				62ECD9E4166DE1D000A15E24 /* KHHCustomEvaluaView.xib in Resources */,
 				62ECD9E5166DE1D000A15E24 /* KHHFullFrameController.xib in Resources */,

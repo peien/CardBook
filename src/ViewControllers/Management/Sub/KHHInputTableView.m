@@ -5,7 +5,7 @@
 //  Created by CJK on 13-1-6.
 //  Copyright (c) 2013年 Kinghanhong. All rights reserved.
 //
-static float const KHH_Keyboard_Height = 216.0 + 75;
+static float const KHH_Keyboard_Height = 216.0 + 95;
 
 #import "KHHInputTableView.h"
 

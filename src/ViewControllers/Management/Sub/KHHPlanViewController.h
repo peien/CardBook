@@ -13,8 +13,9 @@
 #import "HZAreaPickerView.h"
 #import "KHHInputTableView.h"
 #import "KHHMemoPicker.h"
+#import "KHHMemoCell.h"
 
-@interface KHHPlanViewController : SuperViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,HZAreaPickerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,KHHInputTableViewHiddenDelegate>
+@interface KHHPlanViewController : SuperViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,HZAreaPickerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,KHHInputTableViewHiddenDelegate,KHHMemoCellDelegate>
 {
     KHHInputTableView *table;
     
@@ -22,4 +23,5 @@
 @property (nonatomic,strong)KHHDatePicker *datePicker;
 @property (nonatomic,strong)HZAreaPickerView *areaPicker;
 @property (nonatomic,strong)KHHMemoPicker *memoPicker;
+@property (nonatomic,strong)KHHMemoPicker *remindPicker;
 @end
