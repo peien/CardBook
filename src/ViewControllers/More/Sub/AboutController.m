@@ -37,6 +37,8 @@
     // 更换背景
     UIImage *bgImage = [[UIImage imageNamed:@"activity_bg.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
     [self.theView setImage:bgImage];
+    //版本号
+    _versionCode.text = KHH_APP_VERSION;
 }
 
 - (void)viewDidUnload

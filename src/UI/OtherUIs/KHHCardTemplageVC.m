@@ -43,10 +43,7 @@
     self.tempArr = [[KHHData sharedData] allPublicTemplates];
     //DLog(@"tempArr is ====== %@",tempArr);
     DLog(@"tempArr num is ======%d",tempArr.count)
-    int contentViewHeight = 460;
-    if (iPhone5) {
-        contentViewHeight += 568 - 480;
-    }
+    int contentViewHeight = H460;
     UIScrollView *scrol = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, contentViewHeight)];
     scrol.backgroundColor = [UIColor lightGrayColor];
     int page = 0;
