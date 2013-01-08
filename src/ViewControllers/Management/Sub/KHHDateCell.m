@@ -27,6 +27,7 @@
         font = [UIFont systemFontOfSize:13];
         self.textLabel.font = [UIFont systemFontOfSize:12];
         label = [[UILabel alloc]init];
+        label.backgroundColor = [UIColor clearColor];
         label.font = font;
     }
     return self;

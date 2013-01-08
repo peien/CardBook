@@ -55,7 +55,7 @@
         [self.view setTransform:CGAffineTransformMakeRotation(M_PI / 2)];
         //iphone5 要做区分
         if (iPhone5) {
-            self.view.frame = CGRectMake(0, 0, 586, 320);
+            self.view.frame = CGRectMake(0, 0, 568, 320);
         }else{
             self.view.frame = CGRectMake(0, 0, 480, 320);
         }

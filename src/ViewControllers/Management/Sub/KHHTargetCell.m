@@ -7,7 +7,7 @@
 //
 
 #import "KHHTargetCell.h"
-#import "UITextField+HideKeyBoard.h"
+
 
 @implementation KHHTargetCell
 {
@@ -23,7 +23,7 @@
         font = [UIFont systemFontOfSize:13];
         self.textLabel.font = [UIFont systemFontOfSize:12];
         _field = [[UITextField alloc]init];
-        [_field hideKeyBoard:self.superview];
+       
        // field.placeholder = @"请选择拜访对象";
         _field.font = font;
     }
@@ -61,7 +61,7 @@
     if (text) {
          _field.text = text;
     }
-    [_field hideKeyBoard:self.superview];
+   
     
     self.textLabel.text = _headStr;
     

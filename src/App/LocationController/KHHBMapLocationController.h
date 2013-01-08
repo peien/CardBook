@@ -39,4 +39,6 @@
  获取用户当前位置的经纬度
  */
 -(CLLocationCoordinate2D) userLocationCoordinate2D;
+
+- (void)doGetLocation:(void(^)(NSString *locStr)) done fail:(void(^)())fail;
 @end
