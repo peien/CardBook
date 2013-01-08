@@ -42,9 +42,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    //先把scrollView,要不然就有空的部分，详细原因未找
+    [KHHViewAdapterUtil checkIsNeedAddHeightForIphone5:_theScrollView];
     //判断是从哪个界面过来，不是从启动页来的
     if (!_isFromStartUp) {
-        self.navigationController.navigationBarHidden = YES;
+        [self.navigationController setNavigationBarHidden:YES animated:YES];
         //添加一个返回按钮
         UIButton *back = [[UIButton alloc] initWithFrame:CGRectMake(8, 10, 60, 30)];
         [back setTitle:KHHMessageBack forState:UIControlStateNormal];
@@ -89,7 +91,10 @@
     xlPage.unActiveImg = [UIImage imageNamed:@"p1.png"];
     xlPage.numberOfPages = 4;
     xlPage.currentPage = 0;
+    //iphone5适配，看xlpage是否要移位置
+    [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:xlPage];
     [self.view addSubview:xlPage];
+    
 }
 
 - (void)viewDidUnload
@@ -126,7 +131,7 @@
 
 -(void) back
 {
-    self.navigationController.navigationBarHidden = NO;
+    [self.navigationController setNavigationBarHidden:NO animated:YES];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

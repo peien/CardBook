@@ -25,7 +25,6 @@
 #import "DetailInfoViewController.h"
 #import "KHHLocalNotificationUtil.h"
 #import "KHHOrganizationViewController.h"
-
 #import "IntroViewController.h"
 #import "KHHPlanViewController.h"
 #import "KHHWhereUtil.h"
@@ -167,12 +166,7 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
 {
     [super viewDidLoad];
     //判断是否是iphone5,把图标位置改一下
-    //iphone5 要做区分
-    if (iPhone5) {
-        CGRect frame = _guide.frame;
-        frame.origin.y += 586 - 480 - frame.size.height / 2;
-        _guide.frame = frame;
-    }
+    [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_guide];
     
     //判断数据是否完整
     NSArray *cards = [self.dataCtrl allMyCards];

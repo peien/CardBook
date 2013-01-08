@@ -86,6 +86,8 @@
     self.companyImageView.image = [UIImage imageNamed:KHHLogoFileName];
     self.bgImageView.image = [UIImage imageNamed:@"LoginImage_normal.jpg"];
     self.companyImageView.image = [UIImage imageNamed:@"startnew_logo.png"];
+    //iphone5的适配
+    [KHHViewAdapterUtil checkIsNeedAddHeightForIphone5:self.bgImageView];
 }
 
 #pragma mark - Notification Handlers

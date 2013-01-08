@@ -60,11 +60,23 @@
 #endif
 
 /*
+ *  KHH_APP_VERSION
+ */
+#ifndef KHH_APP_VERSION
+#define KHH_APP_VERSION [[[NSBundle mainBundle] infoDictionary] objectForKey:(NSString *)kCFBundleVersionKey]
+#endif
+
+/*
  * iphone5
  */
 #ifndef iPhone5
 #define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
 #endif
+
+#ifndef H460
+#define H460 iPhone5?(460+88):460
+#endif
+
 // URLs {
 #if KHH_RELEASE_SERVER == 1
 static NSString * const KHHServer = @"www.kinghanhong.com";

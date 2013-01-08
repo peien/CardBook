@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "KHHMacros.h"
 
-#define H460 iPhone5?(460+88):460
 
 static float const KHH_Keyboard_Height = 216.0 + 95;
+
 
 @protocol KHHInputTableViewHiddenDelegate <NSObject>
 
