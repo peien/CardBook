@@ -38,20 +38,22 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
     [self.view setBackgroundColor:[UIColor colorWithRed:241 green:238 blue:232 alpha:1.0]];
     self.tempArr = [[KHHData sharedData] allPublicTemplates];
     //DLog(@"tempArr is ====== %@",tempArr);
     DLog(@"tempArr num is ======%d",tempArr.count)
-    UIScrollView *scrol = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, 460)];
+    int contentViewHeight = H460;
+    UIScrollView *scrol = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, 320, contentViewHeight)];
     scrol.backgroundColor = [UIColor lightGrayColor];
     int page = 0;
-    int col = (self.view.frame.size.width - 2*UIIMAGE_WIDTH)/3;
-    int row = (self.view.frame.size.height-30 - 3*UIIMAGE_HEIGHT)/4;
+    int col = (self.view.frame.size.width - 2 * UIIMAGE_WIDTH) / 3;
+    int row = (contentViewHeight - 30 - 3 * UIIMAGE_HEIGHT) / 4;
+
     for (int i = 0; i< self.tempArr.count; i++) {
         UIImageView *imgView = [[UIImageView alloc] init];
         imgView.userInteractionEnabled = YES;
-        imgView.frame = CGRectMake(col + i%2*(UIIMAGE_WIDTH + col), row + i/2*(row+UIIMAGE_HEIGHT)- i/6*(row+UIIMAGE_HEIGHT)*3 + i/6*460, UIIMAGE_WIDTH, UIIMAGE_HEIGHT);
+        imgView.frame = CGRectMake(col + i % 2 * (UIIMAGE_WIDTH + col), row + i / 2 * (row + UIIMAGE_HEIGHT)- i / 6 * (row +UIIMAGE_HEIGHT) * 3 + i / 6 * contentViewHeight, UIIMAGE_WIDTH, UIIMAGE_HEIGHT);
         imgView.tag = i + 100;
         CardTemplate *cardTemp = [self.tempArr objectAtIndex:i];
         if (cardTemp.domainTypeValue == 1 && cardTemp.isFullValue) {
@@ -69,7 +71,7 @@
             page = i/6;
         }
         scrol.pagingEnabled = YES;
-        scrol.contentSize = CGSizeMake(320, page*460);
+        scrol.contentSize = CGSizeMake(320, page * contentViewHeight);
     }
     [self.view addSubview:scrol];
 }

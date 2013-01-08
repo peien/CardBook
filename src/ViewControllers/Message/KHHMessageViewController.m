@@ -101,7 +101,9 @@
     _theTable.backgroundColor = [UIColor clearColor];
     [self.view setBackgroundColor:[UIColor colorWithRed:241 green:238 blue:232 alpha:1.0]];
     self.messageArr = [self.dataCtrl allMessages];
-    
+        
+    //iphone5 适配
+    [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_editBtn];
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];

@@ -9,8 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "KHHMacros.h"
 
-#define H460 iPhone5?(460+88):460
-
 @protocol KHHInputTableViewHiddenDelegate <NSObject>
 
 @required
