@@ -10,7 +10,6 @@
 
 @interface AboutController : SuperViewController
 
-@property (retain, nonatomic) IBOutlet UIImageView *theView;
 @property (retain, nonatomic) IBOutlet UIButton *urlButton;
 @property (retain, nonatomic) IBOutlet UILabel *versionCode;
 

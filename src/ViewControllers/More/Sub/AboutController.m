@@ -16,7 +16,6 @@
 @end
 
 @implementation AboutController
-@synthesize theView = _theView;
 @synthesize urlButton = _urlButton;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -36,14 +35,13 @@
     // Do any additional setup after loading the view from its nib.
     // 更换背景
     UIImage *bgImage = [[UIImage imageNamed:@"activity_bg.png"] stretchableImageWithLeftCapWidth:0 topCapHeight:0];
-    [self.theView setImage:bgImage];
+    [(UIImageView *)self.view setImage:bgImage];
     //版本号
     _versionCode.text = KHH_APP_VERSION;
 }
 
 - (void)viewDidUnload
 {
-    [self setTheView:nil];
     [self setUrlButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.

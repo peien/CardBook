@@ -197,14 +197,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchOutletConnection" key="connection">
-						<string key="label">theView</string>
-						<reference key="source" ref="372490531"/>
-						<reference key="destination" ref="191373211"/>
-					</object>
-					<int key="connectionID">9</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">urlButton</string>
 						<reference key="source" ref="372490531"/>
 						<reference key="destination" ref="281584779"/>
@@ -323,15 +315,10 @@
 						</object>
 					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="theView">UIImageView</string>
 						<string key="urlButton">UIButton</string>
 						<string key="versionCode">UILabel</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="theView">
-							<string key="name">theView</string>
-							<string key="candidateClassName">UIImageView</string>
-						</object>
 						<object class="IBToOneOutletInfo" key="urlButton">
 							<string key="name">urlButton</string>
 							<string key="candidateClassName">UIButton</string>
