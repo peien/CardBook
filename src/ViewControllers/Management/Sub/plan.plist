@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>target</key>
+	<string>0</string>
+	<key>date</key>
+	<string>1</string>
+	<key>time</key>
+	<string>2</string>
+	<key>local0</key>
+	<string>3</string>
+	<key>img</key>
+	<string>4</string>
+	<key>memo</key>
+	<dict>
+		<key>row</key>
+		<string>5</string>
+		<key>titles</key>
+		<array>
+			<string>约会</string>
+			<string>吃饭</string>
+			<string>唱歌</string>
+			<string>旅游</string>
+			<string>游戏</string>
+		</array>
+	</dict>
+	<key>remind</key>
+	<dict>
+		<key>row</key>
+		<string>6</string>
+		<key>titles</key>
+		<array>
+			<string>不提醒</string>
+			<string>半小时</string>
+			<string>1小时</string>
+			<string>2小时</string>
+			<string>3小时</string>
+			<string>12小时</string>
+			<string>24小时</string>
+			<string>2天</string>
+			<string>3天</string>
+			<string>1周</string>
+		</array>
+	</dict>
+	<key>descript</key>
+	<string>7</string>
+</dict>
+</plist>

@@ -15,6 +15,8 @@
 
 
 @property(nonatomic,strong) void (^showTitle)(NSString *title, int tag);
+@property(nonatomic,strong) NSArray *memoArr;
+
 
 - (void)showInView:(UIView *) view;
 - (void)cancelPicker:(Boolean)remove;
