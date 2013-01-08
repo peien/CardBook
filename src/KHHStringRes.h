@@ -60,6 +60,10 @@ static NSString * const KHHMessageDefaultGroupLocal             = @"手机";
 static NSString * const KHHMessagePersonalAccount               = @"个人账户";
 static NSString * const KHHMessageCompanyAccount                = @"公司账户";
 static NSString * const KHHMessageSendRecord                    = @"手机发送记录";
+static NSString * const KHHMessageDataCollect                   = @"数据采集";
+static NSString * const KHHMessageCheckIn                       = @"考勤";
+static NSString * const KHHMessageCreatePlan                    = @"新建计划";
+static NSString * const KHHMessageViewCalendar                  = @"日历查看";
 #endif
 
 //常量

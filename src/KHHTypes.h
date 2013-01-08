@@ -120,4 +120,10 @@ typedef enum {
     KHHTableIndexClient = 101
 } KHHTableIndexType;
 
+
+//日历数据类型
+typedef  enum {
+    KHHCalendarViewDataTypeCheckIn = 10,
+    KHHCalendarViewDataTypeCollect,
+} KHHCalendarViewDataType;
 #endif

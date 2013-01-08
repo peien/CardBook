@@ -250,10 +250,7 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
 }
 
 //公司组织架构
-- (IBAction)calendarBtnClick:(id)sender{
-//    KHHCalendarViewController *calVC = [[KHHCalendarViewController alloc] initWithNibName:nil bundle:nil];
-//    calVC.card = self.myCard;
-//    [self.navigationController pushViewController:calVC animated:YES];
+- (IBAction)organizationBtnClick:(id)sender{
     KHHOrganizationViewController *orgVC = [[KHHOrganizationViewController alloc] initWithNibName:nil bundle:nil];
     [self.navigationController pushViewController:orgVC animated:YES];
 }
@@ -266,49 +263,62 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
 #pragma mark - local0
 
 - (IBAction)locationBtnClick:(id)sender{
-//       [[KHHBMapLocationController sharedController]doGetLocation:^(NSString *locStr) {
-//           
-//           NSLog(@"!!!!%@",locStr);
-//       } fail:^{
-//           
-//       }];
-    [[KHHFilterPopup shareUtil]showPopUp:[NSArray arrayWithObjects:@"新建计划",@"数据采集",@"签到",@"显示日历", nil] index:0 Title:@"选择类型" delegate:self];
-//    KHHPopUpTable *popupView = [[KHHPopUpTable alloc]initWithFrame:CGRectMake(100, 30, 60, 70)];
-//    [self.navigationController.view addSubview:popupView];
-//    LocationInfoVC *locaVC = [[LocationInfoVC alloc] initWithNibName:nil bundle:nil];
-//    [self.navigationController pushViewController:locaVC animated:YES];
+    [[KHHFilterPopup shareUtil]showPopUp:[NSArray arrayWithObjects:NSLocalizedString(KHHMessageCreatePlan, nil),
+                                          NSLocalizedString(KHHMessageDataCollect, nil),
+                                          NSLocalizedString(KHHMessageCheckIn, nil),
+                                          NSLocalizedString(KHHMessageViewCalendar, nil), nil]
+                                   index:0
+                                   Title:@"选择类型" delegate:self];
 }
 
 #pragma mark - local1
 
 - (void)selectInAlert:(id)obj
 {
+    //如果选中返回的空，默认进入新建
+    if (!obj) {
+        //具休界面
+        return;
+    }
+
     NSDictionary *dic = obj;
     int index =[[dic objectForKey:@"index"] integerValue];
     NSMutableDictionary *dicPro;
     NSString *titlePro;
     switch (index) {
         case 0:
+        {
            dicPro = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"plan" ofType:@"plist"]];
+        }
             break;
         case 1:
+        {
             dicPro = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"collection" ofType:@"plist"]];
+        }
             break;
         case 2:
+        {
             dicPro = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"attendance" ofType:@"plist"]];
+        }
             break;
         case 3:
-            dicPro = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"attendance" ofType:@"plist"]];
+        {
+//          dicPro = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"attendance" ofType:@"plist"]];
+            KHHCalendarViewController *calVC = [[KHHCalendarViewController alloc] initWithNibName:nil bundle:nil];
+            calVC.card = self.myCard;
+            [self.navigationController pushViewController:calVC animated:YES];
+            return;
+        }
             break;
         default:
             return;
             break;
     }
+    
     KHHPlanViewController *viewPro = [[KHHPlanViewController alloc]init];
     viewPro.paramDic = dicPro;
     viewPro.title = titlePro;
     [self.navigationController pushViewController:viewPro animated:YES];
-   
 }
 
 //交换
