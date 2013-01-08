@@ -11,6 +11,8 @@
 
 #define H460 iPhone5?(460+88):460
 
+static float const KHH_Keyboard_Height = 216.0 + 95;
+
 @protocol KHHInputTableViewHiddenDelegate <NSObject>
 
 @required
@@ -21,7 +23,7 @@
 @interface KHHInputTableView : UITableView
 
 @property (nonatomic,strong) id<KHHInputTableViewHiddenDelegate> hiddenDelgate;
-
+@property (nonatomic,assign)float offset;
 - (void)goToInsetForKeyboard:(CGRect)frame;
 - (void)showNormal;
 

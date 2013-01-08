@@ -29,6 +29,7 @@
 #import "IntroViewController.h"
 #import "KHHPlanViewController.h"
 #import "KHHWhereUtil.h"
+#import "KHHBMapLocationController.h"
 
 #define TEXT_NEW_MESSAGE_COMMING NSLocalizedString(@"您有新消息到了,可到消息界面查看新消息。",nil)
 #define TEXT_NEW_CONTACT_COMMING NSLocalizedString(@"您有新名片到了，点击确认去查看联系人...",nil)
@@ -271,12 +272,12 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
 #pragma mark - local0
 
 - (IBAction)locationBtnClick:(id)sender{
-    [[KHHWhereUtil sharedInstance] getWhere:^(NSString *where) {
-        
-    } fail:^{
-        
-    }];
-    
+//       [[KHHBMapLocationController sharedController]doGetLocation:^(NSString *locStr) {
+//           
+//           NSLog(@"!!!!%@",locStr);
+//       } fail:^{
+//           
+//       }];
     [[KHHFilterPopup shareUtil]showPopUp:[NSArray arrayWithObjects:@"新建计划",@"数据采集",@"签到",@"显示日历", nil] index:0 Title:@"选择类型" delegate:self];
 //    KHHPopUpTable *popupView = [[KHHPopUpTable alloc]initWithFrame:CGRectMake(100, 30, 60, 70)];
 //    [self.navigationController.view addSubview:popupView];
@@ -288,9 +289,32 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
 
 - (void)selectInAlert:(id)obj
 {
-   KHHPlanViewController *viewPro = [[KHHPlanViewController alloc]init];
-    viewPro.paramDic = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"plan" ofType:@"plist"]];
+    NSDictionary *dic = obj;
+    int index =[[dic objectForKey:@"index"] integerValue];
+    NSMutableDictionary *dicPro;
+    NSString *titlePro;
+    switch (index) {
+        case 0:
+           dicPro = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"plan" ofType:@"plist"]];
+            break;
+        case 1:
+            dicPro = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"collection" ofType:@"plist"]];
+            break;
+        case 2:
+            dicPro = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"attendance" ofType:@"plist"]];
+            break;
+        case 3:
+            dicPro = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"attendance" ofType:@"plist"]];
+            break;
+        default:
+            return;
+            break;
+    }
+    KHHPlanViewController *viewPro = [[KHHPlanViewController alloc]init];
+    viewPro.paramDic = dicPro;
+    viewPro.title = titlePro;
     [self.navigationController pushViewController:viewPro animated:YES];
+   
 }
 
 //交换

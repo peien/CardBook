@@ -34,6 +34,11 @@ const NSInteger KHH_LOCATION_REFRESH_TIMEOUT = 30; // 30 second.
 
 @implementation KHHBMapLocationController
 
+{
+    void(^_done)(NSString *locStr);
+    void(^_fail)();
+}
+
 - (id)init
 {
     self = [super init];
@@ -166,6 +171,9 @@ const NSInteger KHH_LOCATION_REFRESH_TIMEOUT = 30; // 30 second.
 -(void) BMapReverseGeocodeTimeOut:(NSTimer *)timer {
     //百度地图超时，取系统定位的数据
     DLog(@"[III_2]百度解析地址超时! %@", [NSDate date]);
+    if (_fail) {
+        _fail();
+    }
     [self stopTimer];
     //发送更新失败广播
     [self postASAPNotificationName:KHHLocationUpdateFailed];
@@ -212,6 +220,9 @@ const NSInteger KHH_LOCATION_REFRESH_TIMEOUT = 30; // 30 second.
     DLog(@"[III_1]解析地址完成,是否成功 = %d",error == 0);
 	if (error == 0) {
         _addrInfo = result;
+        if (_done) {
+            _done(_addrInfo.strAddr);
+        }
         //发送解析地址成功
         [self updateSucceeded];
         ALog(@"[III_1] 解析地址数据为地址...%@",_addrInfo.strAddr);
@@ -240,12 +251,16 @@ const NSInteger KHH_LOCATION_REFRESH_TIMEOUT = 30; // 30 second.
     //解析地址
     [self processUpdatedLocation];
 	if (userLocation != nil) {
-		DLog(@"%f %f", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);
+		DLog(@"%f %f", userLocation.location.coordinate.latitude, userLocation.location.coordinate.longitude);    
+        
 	}
 }
 
 - (void)mapView:(BMKMapView *)mapView didFailToLocateUserWithError:(NSError *)error
 {
+    if (_fail) {
+        _fail();
+    }
 	if (error != nil) {
 		DLog(@"locate failed: %@", [error localizedDescription]);
         [self updateFailedWithError:error];
@@ -261,6 +276,13 @@ const NSInteger KHH_LOCATION_REFRESH_TIMEOUT = 30; // 30 second.
 
 -(void) mapViewDidStopLocatingUser:(BMKMapView *)mapView {
     DLog(@"stop locate");
+}
+
+- (void)doGetLocation:(void(^)(NSString *locStr)) done fail:(void(^)())fail
+{
+    _done = done;
+    _fail = fail;
+    [self updateLocation];
 }
 
 @end
