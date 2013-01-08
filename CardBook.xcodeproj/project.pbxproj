@@ -1848,6 +1848,22 @@
 		845759A2169911C9005A5F60 /* logo114.png in Resources */ = {isa = PBXBuildFile; fileRef = 8457599C169911C9005A5F60 /* logo114.png */; };
 		845759A3169911C9005A5F60 /* logo114.png in Resources */ = {isa = PBXBuildFile; fileRef = 8457599C169911C9005A5F60 /* logo114.png */; };
 		845759A4169911C9005A5F60 /* logo114.png in Resources */ = {isa = PBXBuildFile; fileRef = 8457599C169911C9005A5F60 /* logo114.png */; };
+		845759E016996569005A5F60 /* KHHSendRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 845759DF16996569005A5F60 /* KHHSendRecordViewController.m */; };
+		845759E116996569005A5F60 /* KHHSendRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 845759DF16996569005A5F60 /* KHHSendRecordViewController.m */; };
+		845759E216996569005A5F60 /* KHHSendRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 845759DF16996569005A5F60 /* KHHSendRecordViewController.m */; };
+		845759E316996569005A5F60 /* KHHSendRecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 845759DF16996569005A5F60 /* KHHSendRecordViewController.m */; };
+		845759E716996F74005A5F60 /* KHHSendRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 845759E616996F73005A5F60 /* KHHSendRecordCell.m */; };
+		845759E816996F74005A5F60 /* KHHSendRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 845759E616996F73005A5F60 /* KHHSendRecordCell.m */; };
+		845759E916996F74005A5F60 /* KHHSendRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 845759E616996F73005A5F60 /* KHHSendRecordCell.m */; };
+		845759EA16996F74005A5F60 /* KHHSendRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 845759E616996F73005A5F60 /* KHHSendRecordCell.m */; };
+		845759EC16997102005A5F60 /* KHHSendRecordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845759EB16997102005A5F60 /* KHHSendRecordCell.xib */; };
+		845759ED16997102005A5F60 /* KHHSendRecordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845759EB16997102005A5F60 /* KHHSendRecordCell.xib */; };
+		845759EE16997102005A5F60 /* KHHSendRecordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845759EB16997102005A5F60 /* KHHSendRecordCell.xib */; };
+		845759EF16997102005A5F60 /* KHHSendRecordCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845759EB16997102005A5F60 /* KHHSendRecordCell.xib */; };
+		845759F3169AA0CF005A5F60 /* KHHViewAdapterUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 845759F2169AA0CF005A5F60 /* KHHViewAdapterUtil.m */; };
+		845759F4169AA0CF005A5F60 /* KHHViewAdapterUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 845759F2169AA0CF005A5F60 /* KHHViewAdapterUtil.m */; };
+		845759F5169AA0CF005A5F60 /* KHHViewAdapterUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 845759F2169AA0CF005A5F60 /* KHHViewAdapterUtil.m */; };
+		845759F6169AA0CF005A5F60 /* KHHViewAdapterUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 845759F2169AA0CF005A5F60 /* KHHViewAdapterUtil.m */; };
 		849FBC93168AA80A00C54EE5 /* ic_photo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 849FBC91168A9ACF00C54EE5 /* ic_photo@2x.png */; };
 		849FBC94168AA80B00C54EE5 /* ic_photo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 849FBC91168A9ACF00C54EE5 /* ic_photo@2x.png */; };
 /* End PBXBuildFile section */
@@ -2087,6 +2103,13 @@
 		842D57A1169909A5005C0CF4 /* ic_wenhao.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_wenhao.png; sourceTree = "<group>"; };
 		8457599B169911C9005A5F60 /* logo57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo57.png; sourceTree = "<group>"; };
 		8457599C169911C9005A5F60 /* logo114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo114.png; sourceTree = "<group>"; };
+		845759DE16996569005A5F60 /* KHHSendRecordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHSendRecordViewController.h; sourceTree = "<group>"; };
+		845759DF16996569005A5F60 /* KHHSendRecordViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHSendRecordViewController.m; sourceTree = "<group>"; };
+		845759E516996F73005A5F60 /* KHHSendRecordCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHSendRecordCell.h; sourceTree = "<group>"; };
+		845759E616996F73005A5F60 /* KHHSendRecordCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHSendRecordCell.m; sourceTree = "<group>"; };
+		845759EB16997102005A5F60 /* KHHSendRecordCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHSendRecordCell.xib; sourceTree = "<group>"; };
+		845759F1169AA0CF005A5F60 /* KHHViewAdapterUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHViewAdapterUtil.h; sourceTree = "<group>"; };
+		845759F2169AA0CF005A5F60 /* KHHViewAdapterUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHViewAdapterUtil.m; sourceTree = "<group>"; };
 		849FBC91168A9ACF00C54EE5 /* ic_photo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_photo@2x.png"; sourceTree = "<group>"; };
 		9803EBA5160DA88D00402B53 /* NSObject+SM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SM.h"; sourceTree = "<group>"; };
 		9803EBA6160DA88D00402B53 /* NSObject+SM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SM.m"; sourceTree = "<group>"; };
@@ -2969,6 +2992,8 @@
 				8413659116883F5000BB0400 /* KHHKeyBoardManagerUtil.m */,
 				310267721696D55600FBE156 /* KHHDateUtil.h */,
 				310267731696D55600FBE156 /* KHHDateUtil.m */,
+				845759F1169AA0CF005A5F60 /* KHHViewAdapterUtil.h */,
+				845759F2169AA0CF005A5F60 /* KHHViewAdapterUtil.m */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -3457,6 +3482,8 @@
 				98A84E271602D66200A4A673 /* KHHSendToViewController.h */,
 				98A84E281602D66200A4A673 /* KHHSendToViewController.m */,
 				98A84E291602D66200A4A673 /* KHHSendToViewController.xib */,
+				845759DE16996569005A5F60 /* KHHSendRecordViewController.h */,
+				845759DF16996569005A5F60 /* KHHSendRecordViewController.m */,
 			);
 			path = Exchange;
 			sourceTree = "<group>";
@@ -3760,6 +3787,9 @@
 				625BD93A16086FEF00F565AD /* KHHAddImageCell.h */,
 				625BD93B16086FEF00F565AD /* KHHAddImageCell.m */,
 				625BD93E1608701E00F565AD /* KHHAddImageCell.xib */,
+				845759E516996F73005A5F60 /* KHHSendRecordCell.h */,
+				845759E616996F73005A5F60 /* KHHSendRecordCell.m */,
+				845759EB16997102005A5F60 /* KHHSendRecordCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -4543,6 +4573,7 @@
 				3180A52F1698029600DD9501 /* area.plist in Resources */,
 				3180A5371698029600DD9501 /* city.plist in Resources */,
 				3180A5471698029600DD9501 /* HZAreaPickerView.xib in Resources */,
+				845759EF16997102005A5F60 /* KHHSendRecordCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4771,6 +4802,7 @@
 				3180A52E1698029600DD9501 /* area.plist in Resources */,
 				3180A5361698029600DD9501 /* city.plist in Resources */,
 				3180A5461698029600DD9501 /* HZAreaPickerView.xib in Resources */,
+				845759EE16997102005A5F60 /* KHHSendRecordCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4998,6 +5030,7 @@
 				3180A52C1698029600DD9501 /* area.plist in Resources */,
 				3180A5341698029600DD9501 /* city.plist in Resources */,
 				3180A5441698029600DD9501 /* HZAreaPickerView.xib in Resources */,
+				845759EC16997102005A5F60 /* KHHSendRecordCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5226,6 +5259,7 @@
 				3180A52D1698029600DD9501 /* area.plist in Resources */,
 				3180A5351698029600DD9501 /* city.plist in Resources */,
 				3180A5451698029600DD9501 /* HZAreaPickerView.xib in Resources */,
+				845759ED16997102005A5F60 /* KHHSendRecordCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5482,6 +5516,9 @@
 				310B2EDB1699247100818461 /* KHHMemoPicker.m in Sources */,
 				310B2EE116992FFC00818461 /* KHHMemoCell.m in Sources */,
 				310B2EE71699461500818461 /* KHHUpperView.m in Sources */,
+				845759E316996569005A5F60 /* KHHSendRecordViewController.m in Sources */,
+				845759EA16996F74005A5F60 /* KHHSendRecordCell.m in Sources */,
+				845759F6169AA0CF005A5F60 /* KHHViewAdapterUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5706,6 +5743,9 @@
 				310B2EDA1699247100818461 /* KHHMemoPicker.m in Sources */,
 				310B2EE016992FFC00818461 /* KHHMemoCell.m in Sources */,
 				310B2EE61699461500818461 /* KHHUpperView.m in Sources */,
+				845759E216996569005A5F60 /* KHHSendRecordViewController.m in Sources */,
+				845759E916996F74005A5F60 /* KHHSendRecordCell.m in Sources */,
+				845759F5169AA0CF005A5F60 /* KHHViewAdapterUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5930,6 +5970,9 @@
 				310B2ED81699247100818461 /* KHHMemoPicker.m in Sources */,
 				310B2EDE16992FFC00818461 /* KHHMemoCell.m in Sources */,
 				310B2EE41699461500818461 /* KHHUpperView.m in Sources */,
+				845759E016996569005A5F60 /* KHHSendRecordViewController.m in Sources */,
+				845759E716996F74005A5F60 /* KHHSendRecordCell.m in Sources */,
+				845759F3169AA0CF005A5F60 /* KHHViewAdapterUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6150,6 +6193,9 @@
 				310B2ED91699247100818461 /* KHHMemoPicker.m in Sources */,
 				310B2EDF16992FFC00818461 /* KHHMemoCell.m in Sources */,
 				310B2EE51699461500818461 /* KHHUpperView.m in Sources */,
+				845759E116996569005A5F60 /* KHHSendRecordViewController.m in Sources */,
+				845759E816996F74005A5F60 /* KHHSendRecordCell.m in Sources */,
+				845759F4169AA0CF005A5F60 /* KHHViewAdapterUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

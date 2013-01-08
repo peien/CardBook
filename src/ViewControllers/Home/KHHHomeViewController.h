@@ -24,10 +24,9 @@ UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (strong, nonatomic) UISearchDisplayController *searCtrl;
 @property (strong, nonatomic) NSIndexPath               *lastIndexPath;
 @property (assign, nonatomic) bool                      isNotHomePage;
-@property (strong, nonatomic) IBOutlet UIImageView      *imgview;
 @property (assign, nonatomic) bool                      isNormalSearchBar;
 @property (assign, nonatomic) IBOutlet UIButton         *smallBtn;
-@property (strong, nonatomic) IBOutlet UIImageView      *smalImageView;
+@property (strong, nonatomic) IBOutlet UIImageView      *smallImageView;
 @property (strong, nonatomic) IBOutlet UIView           *footView;
 @property (strong, nonatomic) IBOutlet UIButton         *btnForCancel;
 @property (strong, nonatomic) UIView                    *btnBackbg;

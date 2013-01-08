@@ -95,12 +95,11 @@
 @synthesize searCtrl = _searCtrl;
 @synthesize lastIndexPath = _lastIndexPath;
 @synthesize isNotHomePage = _isNotHomePage;
-@synthesize imgview = _imgview;
 @synthesize isNormalSearchBar = _isNormalSearchBar;
 @synthesize smallBtn = _smallBtn;
 @synthesize bigTable = _bigTable;
 @synthesize app = _app;
-@synthesize smalImageView = _smalImageView;
+@synthesize smallImageView = _smallImageView;
 @synthesize footView = _footView;
 @synthesize btnForCancel = _btnForCancel;
 @synthesize btnBackbg = _btnBackbg;
@@ -174,7 +173,7 @@
     UIImageView *bgimgView = [[UIImageView alloc] initWithImage:bgimg];
     _btnTable.separatorStyle = UITableViewCellSeparatorStyleNone;
     [_btnTable setBackgroundView:bgimgView];
-      _imgview.image = bgimg;
+    _smallImageView.image = bgimg;
     
 //    UIBarButtonItem *searchBarItem = [[UIBarButtonItem alloc] initWithCustomView:self.searchBar];
 //    UIBarButtonItem *addButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:nil];
@@ -228,16 +227,19 @@
         
         //显示下方的确定按钮 bug 1176 改成选中一个就返回了，就个view暂时不需要了
         //把原来添加分组的高度设置成0 把btnTable的高度加上原添加分组的iamgeView的高度
-        CGRect rectImageView = _smalImageView.frame;
+        CGRect rectImageView = _smallImageView.frame;
         CGRect rectGroup = _btnTable.frame;
         rectGroup.size.height = rectGroup.size.height + rectImageView.size.height;
         rectImageView.size.height = 0;
-        _smalImageView.frame = rectImageView;
+        _smallImageView.frame = rectImageView;
         _btnTable.frame = rectGroup;
 //        _footView.hidden = NO;
 //        [_btnForCancel setBackgroundImage:[[UIImage imageNamed:@"tongbu_normal.png"] stretchableImageWithLeftCapWidth:8 topCapHeight:2] forState:UIControlStateNormal];
     }
     
+    //判断是否是iphone5,把图标位置改一下
+    [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_smallBtn];
+    [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_smallImageView];
 }
 // 多选标记
 - (NSMutableArray *)mutilyFlagForSelected{
@@ -305,12 +307,11 @@
     self.dicBtnTttle = nil;
     self.keys = nil;
     self.lastIndexPath = nil;
-    self.imgview = nil;
     self.searCtrl = nil;
     self.smallBtn = nil;
     self.bigTable = nil;
     self.app = nil;
-    self.smalImageView = nil;
+    self.smallImageView = nil;
     self.footView = nil;
     self.btnForCancel = nil;
     self.btnBackbg = nil;
