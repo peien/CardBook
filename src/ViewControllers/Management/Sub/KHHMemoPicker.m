@@ -9,41 +9,37 @@
 #import "KHHMemoPicker.h"
 
 @implementation KHHMemoPicker
-{
-    NSMutableArray* memoArr;
-}
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         self.dataSource = self;
         self.delegate = self;
-        self.showsSelectionIndicator = YES;
-        memoArr = [[NSMutableArray alloc]initWithObjects:@"约会",@"聚餐", @"牵手", @"游戏", @"打台球", @"睡觉", nil];
-        
+        self.showsSelectionIndicator = YES;       
     }
     return self;
 }
 
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
-    return 1;
+    return 0;
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    return 5;
+    return _memoArr.count;
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return [memoArr objectAtIndex:row];
+    return [_memoArr objectAtIndex:row];
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
     if (_showTitle) {
-        _showTitle([memoArr objectAtIndex:row],pickerView.tag);
+        _showTitle([_memoArr objectAtIndex:row],pickerView.tag);
     }
 }
 

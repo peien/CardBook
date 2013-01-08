@@ -10,6 +10,7 @@
 
 @protocol KHHMemoCellDelegate <NSObject>
 
+@optional
 - (void)selectPicker:(NSIndexPath *)indexPath;
 
 @end
