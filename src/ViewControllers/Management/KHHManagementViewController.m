@@ -1,4 +1,4 @@
- //
+//
 //  KHHManagementViewController.m
 //  CardBook
 //
@@ -65,7 +65,7 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization CFBundleName
-//        self.title = NSLocalizedString(@"蜂巢访销", nil);
+        //        self.title = NSLocalizedString(@"蜂巢访销", nil);
         self.title = KHH_APP_NAME;
         self.dataCtrl = [KHHData sharedData];
         _entranceView = [[[NSBundle mainBundle] loadNibNamed:@"KHHBossEntrance" owner:self options:nil] objectAtIndex:0];
@@ -128,7 +128,7 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
     [self observeNotificationName:nDataSyncAllSucceeded selector:@"handleDataSyncAllSucceeded:"];
     [self observeNotificationName:nDataSyncAllFailed selector:@"handleDataSyncAllFailed:"];
     app = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
-//    [MBProgressHUD showHUDAddedTo:app.window animated:YES];
+    //    [MBProgressHUD showHUDAddedTo:app.window animated:YES];
     MBProgressHUD *progess = [MBProgressHUD showHUDAddedTo:app.window animated:YES];
     progess.labelText = NSLocalizedString(KHHMessageSyncAll, nil);
     [[KHHData sharedData] startSyncAllData];
@@ -198,7 +198,7 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
             self.signButton.hidden = NO;
         }
     }
-        //启动定时同步消息timer
+    //启动定时同步消息timer
     [self syncMessage];
     //立马同步一次消息
     [self handleSyncMessage];
@@ -240,13 +240,13 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
     
     KHHRadarViewController *radarVC = [[KHHRadarViewController alloc] initWithNibName:nil bundle:nil];
     [self.navigationController pushViewController:radarVC animated:YES];
-
+    
 }
 - (IBAction)funnelBtnClick:(id)sender{
     
     KHHFunnelViewController *funnelVC = [[KHHFunnelViewController alloc] initWithNibName:nil bundle:nil];
     [self.navigationController pushViewController:funnelVC animated:YES];
-
+    
 }
 
 //公司组织架构
@@ -280,7 +280,7 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
         //具休界面
         return;
     }
-
+    
     NSDictionary *dic = obj;
     int index =[[dic objectForKey:@"index"] integerValue];
     NSMutableDictionary *dicPro;
@@ -288,39 +288,45 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
     switch (index) {
         case 0:
         {
-           dicPro = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"plan" ofType:@"plist"]];
-        }
+            dicPro = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"plan" ofType:@"plist"]];
+            
+            titlePro = @"新建计划";
+            
             break;
         case 1:
-        {
-            dicPro = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"collection" ofType:@"plist"]];
+            {
+                dicPro = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"collection" ofType:@"plist"]];
+                
+                titlePro = @"数据采集";
+                
+                break;
+            case 2:
+                {
+                    dicPro = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"attendance" ofType:@"plist"]];
+                    titlePro = @"考勤";
+                    
+                    break;
+                }
+            case 3:
+                {
+                    //          dicPro = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"attendance" ofType:@"plist"]];
+                    KHHCalendarViewController *calVC = [[KHHCalendarViewController alloc] initWithNibName:nil bundle:nil];
+                    calVC.card = self.myCard;
+                    [self.navigationController pushViewController:calVC animated:YES];
+                    break;
+                }
+            default:
+                
+                break;
+            }
         }
-            break;
-        case 2:
-        {
-            dicPro = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"attendance" ofType:@"plist"]];
-        }
-            break;
-        case 3:
-        {
-//          dicPro = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"attendance" ofType:@"plist"]];
-            KHHCalendarViewController *calVC = [[KHHCalendarViewController alloc] initWithNibName:nil bundle:nil];
-            calVC.card = self.myCard;
-            [self.navigationController pushViewController:calVC animated:YES];
-            return;
-        }
-            break;
-        default:
-            return;
-            break;
+            
+            KHHPlanViewController *viewPro = [[KHHPlanViewController alloc]init];
+            viewPro.paramDic = dicPro;
+            viewPro.title = titlePro;
+            [self.navigationController pushViewController:viewPro animated:YES];
     }
-    
-    KHHPlanViewController *viewPro = [[KHHPlanViewController alloc]init];
-    viewPro.paramDic = dicPro;
-    viewPro.title = titlePro;
-    [self.navigationController pushViewController:viewPro animated:YES];
 }
-
 //交换
 - (IBAction)personBtnClick:(id)sender
 {
@@ -348,7 +354,7 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
     [self observeNotificationName:nUISyncMessagesSucceeded selector:@"handleSyncMessagesSucceeded:"];
     [self observeNotificationName:nUISyncMessagesFailed selector:@"handlenUISyncMessagesFailed:"];
     //设置后台handle
-   // [self setupBackgroundHandler];
+    // [self setupBackgroundHandler];
 }
 
 //解析数据
@@ -356,23 +362,23 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
 - (void)handleSyncMessagesSucceeded:(NSNotification *)noti{
     //消息解析成功，看看解析结果中有没有联系人，有联系人就弹出预览框，有新消息就push消息（现在没有push就alert出来）
     DLog(@"timer sync handleSyncMessagesSucceeded ! noti is ======%@",noti.userInfo);
-   // DLog(@"%@",noti.userInfo);
+    // DLog(@"%@",noti.userInfo);
     NSArray *messgaeList = noti.userInfo[kInfoKeyObjectList];
     //清空变量
     self.messageContactList = nil;
     self.isSingleContact = NO;
     self.messageContactList = noti.userInfo[kInfoKeyReceivedCard];
-
+    
     UIApplication *application = [UIApplication sharedApplication];
     if([application applicationState] == UIApplicationStateBackground)
     {
         //在后台运行时notify出来
         if (messgaeList && messgaeList.count > 0) {
             //显示有新消息到了
-  //          NSString *alertBody = TEXT_NEW_MESSAGE_COMMING;
+            //          NSString *alertBody = TEXT_NEW_MESSAGE_COMMING;
             //添加跳转页面
             NSDictionary *userInfo = [NSDictionary dictionaryWithObject:NSLocalizedString(@"KHHMessageViewController", nil) forKey:kLocalNotification_Target_Name];
-//            [KHHLocalNotificationUtil addLocalNotifiCation:[NSDate dateWithTimeIntervalSinceNow:10] alertBody:alertBody userinfo:userInfo];
+            //            [KHHLocalNotificationUtil addLocalNotifiCation:[NSDate dateWithTimeIntervalSinceNow:10] alertBody:alertBody userinfo:userInfo];
         }
         
         if (self.messageContactList && self.messageContactList.count > 0) {
@@ -390,22 +396,22 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
         }
     }else if([application applicationState] == UIApplicationStateActive)
     {
-//        if (messgaeList && messgaeList.count > 0) {
-//            //显示有新消息到了
-//            NSArray *viewControllers = self.navigationController.viewControllers;
-//            UITableViewController *parent = [viewControllers lastObject];
-//            //当前页不是消息界面时要弹出新消息到了的框
-//            if (parent && ![parent isKindOfClass:[KHHMessageViewController class]]) {
-//                //showalert
-//                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"新消息"
-//                                                                message:TEXT_NEW_MESSAGE_COMMING
-//                                                               delegate:self
-//                                                      cancelButtonTitle:@"确认"
-//                                                      otherButtonTitles:@"取消", nil];
-//                alert.tag = KHHAlertMessage;
-//                [alert show];
-//            }
-//        }
+        //        if (messgaeList && messgaeList.count > 0) {
+        //            //显示有新消息到了
+        //            NSArray *viewControllers = self.navigationController.viewControllers;
+        //            UITableViewController *parent = [viewControllers lastObject];
+        //            //当前页不是消息界面时要弹出新消息到了的框
+        //            if (parent && ![parent isKindOfClass:[KHHMessageViewController class]]) {
+        //                //showalert
+        //                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"新消息"
+        //                                                                message:TEXT_NEW_MESSAGE_COMMING
+        //                                                               delegate:self
+        //                                                      cancelButtonTitle:@"确认"
+        //                                                      otherButtonTitles:@"取消", nil];
+        //                alert.tag = KHHAlertMessage;
+        //                [alert show];
+        //            }
+        //        }
         
         if (self.messageContactList && self.messageContactList.count > 0) {
             //提示有新联系人到了(一个人时就直接提示名称，点击可以去详细界面，多个人时提示有新联系人)
@@ -425,7 +431,7 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
 -(void) handleSyncMessage
 {
     [NSThread detachNewThreadSelector:@selector(syncMessageWithServer) toTarget:self withObject:nil];
-//    [self performSelectorInBackground:@selector(syncMessageWithServer) withObject:nil];
+    //    [self performSelectorInBackground:@selector(syncMessageWithServer) withObject:nil];
 }
 
 -(void) syncMessageWithServer
@@ -498,7 +504,7 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
     UIDevice* device = [UIDevice currentDevice];
     BOOL backgroundSupported = NO;
     if ([device respondsToSelector:@selector(isMultitaskingSupported)])
-    backgroundSupported = device.multitaskingSupported;
+        backgroundSupported = device.multitaskingSupported;
     return backgroundSupported;
 }
 
@@ -523,7 +529,7 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
             [alert show];
         }
     }
-
+    
 }
 
 - (void)reseaveFail
@@ -582,4 +588,6 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
             break;
     }
 }
+
+
 @end

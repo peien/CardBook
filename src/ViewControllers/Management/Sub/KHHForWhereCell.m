@@ -23,7 +23,7 @@
     if (self) {
         font = [UIFont systemFontOfSize:13];
         self.textLabel.font = [UIFont systemFontOfSize:12];
-        self.textLabel.text = @"地址";
+        self.textLabel.text = @"位置";
         
        
         NSMutableArray *arrPro = [[NSMutableArray alloc]initWithCapacity:6];
