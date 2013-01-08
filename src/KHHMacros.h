@@ -15,7 +15,7 @@
  *  非1 测试服务器
  */
 #ifndef KHH_RELEASE_SERVER
-#define KHH_RELEASE_SERVER 1
+#define KHH_RELEASE_SERVER 0
 #endif
 
 /*
