@@ -14,12 +14,15 @@
 #import "KHHFullFrameController.h"
 #import "KHHUpperView.h"
 #import "KHHForWhereCell.h"
+#import "KHHBMapLocationController.h"
 
 @interface KHHPlanViewController ()
 {
     NSDictionary *dicTemp;
     CGRect rectForKey;
     NSMutableArray *inputsForKeyboard;
+    
+    UIImageView *rotaView;
     
 }
 @end
@@ -109,12 +112,16 @@
     dicTemp = [[NSMutableDictionary alloc]init];
     KHHUpperView *upView = [[KHHUpperView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height-44-50, 320, 50)];
     [self.view addSubview:upView];
-    
+    upView.upperBtn.enabled = [dicTemp objectForKey:@"where"]?YES:NO;
+    [upView.upperBtn addTarget:self action:@selector(uper) forControlEvents:UIControlEventTouchUpInside];
     //weakself = self;
     
 }
 
-
+- (void)uper
+{
+    NSLog(@"!!!!!enable");
+}
 
 - (void)doUIRightButton
 {
@@ -280,13 +287,18 @@
         cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
         if (!cell) {
             cell = [[KHHForWhereCell alloc]init];
-//            ((KHHForWhereCell *)cell).headStr = @"说明";
-//            ((KHHForWhereCell *)cell).placeStr = @"请输入文字记录(400字内)";
-//            ((KHHForWhereCell *)cell).field.delegate = self;
-//            ((KHHForWhereCell *)cell).field.tag = 10022;
+            KHHForWhereCell *cellPro = (KHHForWhereCell *)cell;
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(updateLocation:)];
+            tap.numberOfTapsRequired = 1;
+            tap.numberOfTouchesRequired = 1;
+            [cellPro.rotaView addGestureRecognizer:tap];
+            rotaView = cellPro.rotaView;
+            if (![dicTemp objectForKey:@"where"]) {
+                [self updateLocation:tap];
+            }
         }
         if ([dicTemp objectForKey:@"where"]) {
-            ((KHHTargetCell *)cell).field.text = [dicTemp objectForKey:@"where"];
+            ((KHHForWhereCell *)cell).locStrPro = [dicTemp objectForKey:@"where"];
         }
     }
     
@@ -298,7 +310,21 @@
     return cell;
 }
 
-
+- (void)updateLocation:(UITapGestureRecognizer *)sender
+{
+    [rotaView startAnimating];
+    
+    [[KHHBMapLocationController sharedController] doGetLocation:^(NSString *locStr) {
+        NSLog(@"locStr%@",locStr);
+        [dicTemp setValue:locStr forKey:@"where"];
+         [table reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self where] inSection:0]]  withRowAnimation:UITableViewRowAnimationNone];
+        [rotaView stopAnimating];
+        
+    } fail:^{
+        [rotaView startAnimating];
+       
+    }];
+}
 
 #pragma mark - buttons actions
 

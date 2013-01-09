@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface KHHUpperView : UIView
-
+@property (nonatomic,strong)UIButton *upperBtn;
 @end
