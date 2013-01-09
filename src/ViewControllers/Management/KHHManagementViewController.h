@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SuperViewController.h"
-#import "Delegates.h"
+#import "MsgDelegates.h"
 #import "KHHManagementViewController.h"
 #import "KHHFilterPopup.h"
 

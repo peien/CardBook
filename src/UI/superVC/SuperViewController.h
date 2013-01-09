@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "KHHTypes.h"
-#import "Delegates.h"
+#import "MsgDelegates.h"
 
 @interface SuperViewController : UIViewController<delegateMsgForMain>
 @property (strong, nonatomic) UIButton *leftBtn;

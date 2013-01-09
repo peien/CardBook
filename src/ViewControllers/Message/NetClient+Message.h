@@ -7,7 +7,7 @@
 //
 
 #import "NetClient.h"
-#import "Delegates.h"
+#import "MsgDelegates.h"
 
 @interface NetClient (Message)
 
