@@ -7,9 +7,12 @@
 //
 
 #import "NetClient.h"
-#import "Delegates.h"
+#import "MsgDelegates.h"
 
 @interface NetClient (Message)
+
+#pragma mark - flags
+@property (nonatomic,assign)Boolean inMsgView;
 
 - (void)doDeleteInEdit:(id<delegateMsgForRead>)delegate messages:(NSArray *)messages;
 - (void)doDelete:(id<delegateMsgForRead>) delegate messages:(NSArray *)messages;
