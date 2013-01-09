@@ -9,16 +9,6 @@
 #define KHHMacros_h
 
 /*
- *  KHH_RELEASE_SERVER
- *  1   正式服务器
- *  2   海波电脑
- *  非1 测试服务器
- */
-#ifndef KHH_RELEASE_SERVER
-#define KHH_RELEASE_SERVER 0
-#endif
-
-/*
  *  KHH_TEST_VIEWCONTROLLER
  *  1   启动后进TestViewController
  *  非1 走正式流程
@@ -73,21 +63,16 @@
 #define iPhone5 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 1136), [[UIScreen mainScreen] currentMode].size) : NO)
 #endif
 
+
+//iphone 5 或以前手机 去除最顶端状态栏高度
 #ifndef H460
 #define H460 iPhone5?(460+88):460
 #endif
 
 // URLs {
-#if KHH_RELEASE_SERVER == 1
-static NSString * const KHHServer = @"www.kinghanhong.com";
-static NSString * const KHHURLFormat = @"http://%@/cardbook/%@";
-#elif KHH_RELEASE_SERVER == 2
-static NSString * const KHHServer = @"192.168.1.70:8081"; //海波
-static NSString * const KHHURLFormat = @"http://%@/XCardServer/%@";
-#else
-static NSString * const KHHServer = @"s2.kinghanhong.com:9999";
-static NSString * const KHHURLFormat = @"http://%@/XCardServer/%@";
-#endif
+//固定服务器地址加上，指定的某个网页名 拼装格式
+static NSString * const KHHURLFormat = @"%@/%@";
+
 static NSString * const KHHURLUserGuide = @"useGuide.jsp";
 static NSString * const KHHURLContactUs = @"contactUs.jsp";
 static NSString * const KHHURLRecommendation = @"recommendFriend.html";

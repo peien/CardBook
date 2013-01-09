@@ -9,7 +9,7 @@
 #import "KHHAppDelegate.h"
 #import "KHHDataAPI.h"
 #import "KHHDefaults.h"
-#import "KHHHTTPClient.h"
+#import "NetClient.h"
 #import "KHHNetworkAPI.h"
 #import "KHHNotifications.h"
 #import "MyTabBarController.h"
@@ -205,9 +205,9 @@
     // 清除UserDefaults用户的数据
     [[KHHDefaults sharedDefaults] clearSettingsAfterLogout];
     // 停掉httpclient的operation queue
-    [[[KHHHTTPClient sharedClient] operationQueue] cancelAllOperations];
+    [[[NetClient sharedClient] operationQueue] cancelAllOperations];
     // 清除httpclient AuthorizationHeader
-    [[KHHHTTPClient sharedClient] clearAuthorizationHeader];
+    [[NetClient sharedClient] clearAuthorizationHeader];
     // 清除core data context
     [[KHHData sharedData] removeContext];
     // 切换到登陆界面

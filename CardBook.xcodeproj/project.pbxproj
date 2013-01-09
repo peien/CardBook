@@ -47,7 +47,6 @@
 		3104A148169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3104A144169BBCD100CC4F22 /* KHHForWhereCell.m */; };
 		3104E05F1687EE6600B0B45F /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3104E05E1687EE6600B0B45F /* libsqlite3.dylib */; };
 		3104E0611687EE8100B0B45F /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3104E0601687EE8100B0B45F /* libz.dylib */; };
-		3104E06C168800F200B0B45F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 3104E06B168800F100B0B45F /* Reachability.m */; };
 		3104E073168856CB00B0B45F /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98F0F63B16885010009BAF81 /* SDWebImage.framework */; };
 		3104E0741688571000B0B45F /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98F0F63B16885010009BAF81 /* SDWebImage.framework */; };
 		310523D2169A9833000B2C64 /* KHHImgViewInCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 310523D1169A9833000B2C64 /* KHHImgViewInCell.m */; };
@@ -364,12 +363,10 @@
 		314A0126168BEF3800029324 /* NSString+Networking.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E0B1602D46000A4A673 /* NSString+Networking.m */; };
 		314A0127168BEF3800029324 /* NSString+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 98838E7C160886EC00CE2353 /* NSString+SM.m */; };
 		314A0128168BEF3800029324 /* NSString+Validation.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E0F1602D46000A4A673 /* NSString+Validation.m */; };
-		314A0129168BEF3800029324 /* NSURL+KHH.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E111602D46000A4A673 /* NSURL+KHH.m */; };
 		314A012A168BEF3800029324 /* UIImage+KHH.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D2438C1627B75C00AC1C38 /* UIImage+KHH.m */; };
 		314A012B168BEF3800029324 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 98CFC96D1607201E001B9B17 /* UIImage+Resize.m */; };
 		314A012C168BEF3800029324 /* UIViewController+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACB61609ABB4002B9BAD /* UIViewController+SM.m */; };
 		314A012D168BEF3800029324 /* UIColor+HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C23C26B1610BE42006FCD8A /* UIColor+HexColor.m */; };
-		314A012E168BEF3800029324 /* KHHHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850C51602E63A00A4A673 /* KHHHTTPClient.m */; };
 		314A012F168BEF3800029324 /* KHHNetworkAPIAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850C71602E63A00A4A673 /* KHHNetworkAPIAgent.m */; };
 		314A0130168BEF3800029324 /* KHHNetworkAPIAgent+Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850C91602E63A00A4A673 /* KHHNetworkAPIAgent+Account.m */; };
 		314A0131168BEF3800029324 /* KHHNetworkAPIAgent+Card.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850CB1602E63A00A4A673 /* KHHNetworkAPIAgent+Card.m */; };
@@ -457,7 +454,6 @@
 		314A0183168BEF3800029324 /* KHHBMapLocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 624F8C7E1676C167006CD354 /* KHHBMapLocationController.m */; };
 		314A0184168BEF3800029324 /* KHHFilterPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FCBC361682BD0A00ABFE3F /* KHHFilterPopup.m */; };
 		314A0185168BEF3800029324 /* KHHKeyBoardManagerUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 8413659116883F5000BB0400 /* KHHKeyBoardManagerUtil.m */; };
-		314A0186168BEF3800029324 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 3104E06B168800F100B0B45F /* Reachability.m */; };
 		314A0187168BEF3800029324 /* NetClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 314AFEF8168BEC3700029324 /* NetClient.m */; };
 		314A0188168BEF3800029324 /* NetFromPlist.m in Sources */ = {isa = PBXBuildFile; fileRef = 314AFEFF168BECBB00029324 /* NetFromPlist.m */; };
 		314A018A168BEF3800029324 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3104E0601687EE8100B0B45F /* libz.dylib */; };
@@ -805,12 +801,10 @@
 		314AFF67168BEE9A00029324 /* NSString+Networking.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E0B1602D46000A4A673 /* NSString+Networking.m */; };
 		314AFF68168BEE9A00029324 /* NSString+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 98838E7C160886EC00CE2353 /* NSString+SM.m */; };
 		314AFF69168BEE9A00029324 /* NSString+Validation.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E0F1602D46000A4A673 /* NSString+Validation.m */; };
-		314AFF6A168BEE9A00029324 /* NSURL+KHH.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E111602D46000A4A673 /* NSURL+KHH.m */; };
 		314AFF6B168BEE9A00029324 /* UIImage+KHH.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D2438C1627B75C00AC1C38 /* UIImage+KHH.m */; };
 		314AFF6C168BEE9A00029324 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 98CFC96D1607201E001B9B17 /* UIImage+Resize.m */; };
 		314AFF6D168BEE9A00029324 /* UIViewController+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACB61609ABB4002B9BAD /* UIViewController+SM.m */; };
 		314AFF6E168BEE9A00029324 /* UIColor+HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C23C26B1610BE42006FCD8A /* UIColor+HexColor.m */; };
-		314AFF6F168BEE9A00029324 /* KHHHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850C51602E63A00A4A673 /* KHHHTTPClient.m */; };
 		314AFF70168BEE9A00029324 /* KHHNetworkAPIAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850C71602E63A00A4A673 /* KHHNetworkAPIAgent.m */; };
 		314AFF71168BEE9A00029324 /* KHHNetworkAPIAgent+Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850C91602E63A00A4A673 /* KHHNetworkAPIAgent+Account.m */; };
 		314AFF72168BEE9A00029324 /* KHHNetworkAPIAgent+Card.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850CB1602E63A00A4A673 /* KHHNetworkAPIAgent+Card.m */; };
@@ -898,7 +892,6 @@
 		314AFFC4168BEE9A00029324 /* KHHBMapLocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 624F8C7E1676C167006CD354 /* KHHBMapLocationController.m */; };
 		314AFFC5168BEE9A00029324 /* KHHFilterPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FCBC361682BD0A00ABFE3F /* KHHFilterPopup.m */; };
 		314AFFC6168BEE9A00029324 /* KHHKeyBoardManagerUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 8413659116883F5000BB0400 /* KHHKeyBoardManagerUtil.m */; };
-		314AFFC7168BEE9A00029324 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 3104E06B168800F100B0B45F /* Reachability.m */; };
 		314AFFC8168BEE9A00029324 /* NetClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 314AFEF8168BEC3700029324 /* NetClient.m */; };
 		314AFFC9168BEE9A00029324 /* NetFromPlist.m in Sources */ = {isa = PBXBuildFile; fileRef = 314AFEFF168BECBB00029324 /* NetFromPlist.m */; };
 		314AFFCB168BEE9A00029324 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3104E0601687EE8100B0B45F /* libz.dylib */; };
@@ -1099,12 +1092,10 @@
 		6274BFBE165C7C3300DB5EBE /* NSString+Networking.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E0B1602D46000A4A673 /* NSString+Networking.m */; };
 		6274BFBF165C7C3300DB5EBE /* NSString+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 98838E7C160886EC00CE2353 /* NSString+SM.m */; };
 		6274BFC0165C7C3300DB5EBE /* NSString+Validation.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E0F1602D46000A4A673 /* NSString+Validation.m */; };
-		6274BFC1165C7C3300DB5EBE /* NSURL+KHH.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E111602D46000A4A673 /* NSURL+KHH.m */; };
 		6274BFC2165C7C3300DB5EBE /* UIImage+KHH.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D2438C1627B75C00AC1C38 /* UIImage+KHH.m */; };
 		6274BFC3165C7C3300DB5EBE /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 98CFC96D1607201E001B9B17 /* UIImage+Resize.m */; };
 		6274BFC4165C7C3300DB5EBE /* UIViewController+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACB61609ABB4002B9BAD /* UIViewController+SM.m */; };
 		6274BFC5165C7C3300DB5EBE /* UIColor+HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C23C26B1610BE42006FCD8A /* UIColor+HexColor.m */; };
-		6274BFC6165C7C3300DB5EBE /* KHHHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850C51602E63A00A4A673 /* KHHHTTPClient.m */; };
 		6274BFC7165C7C3300DB5EBE /* KHHNetworkAPIAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850C71602E63A00A4A673 /* KHHNetworkAPIAgent.m */; };
 		6274BFC8165C7C3300DB5EBE /* KHHNetworkAPIAgent+Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850C91602E63A00A4A673 /* KHHNetworkAPIAgent+Account.m */; };
 		6274BFC9165C7C3300DB5EBE /* KHHNetworkAPIAgent+Card.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850CB1602E63A00A4A673 /* KHHNetworkAPIAgent+Card.m */; };
@@ -1507,12 +1498,10 @@
 		62ECD8E3166DE1D000A15E24 /* NSString+Networking.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E0B1602D46000A4A673 /* NSString+Networking.m */; };
 		62ECD8E4166DE1D000A15E24 /* NSString+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 98838E7C160886EC00CE2353 /* NSString+SM.m */; };
 		62ECD8E5166DE1D000A15E24 /* NSString+Validation.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E0F1602D46000A4A673 /* NSString+Validation.m */; };
-		62ECD8E6166DE1D000A15E24 /* NSURL+KHH.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E111602D46000A4A673 /* NSURL+KHH.m */; };
 		62ECD8E7166DE1D000A15E24 /* UIImage+KHH.m in Sources */ = {isa = PBXBuildFile; fileRef = 98D2438C1627B75C00AC1C38 /* UIImage+KHH.m */; };
 		62ECD8E8166DE1D000A15E24 /* UIImage+Resize.m in Sources */ = {isa = PBXBuildFile; fileRef = 98CFC96D1607201E001B9B17 /* UIImage+Resize.m */; };
 		62ECD8E9166DE1D000A15E24 /* UIViewController+SM.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACB61609ABB4002B9BAD /* UIViewController+SM.m */; };
 		62ECD8EA166DE1D000A15E24 /* UIColor+HexColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C23C26B1610BE42006FCD8A /* UIColor+HexColor.m */; };
-		62ECD8EB166DE1D000A15E24 /* KHHHTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850C51602E63A00A4A673 /* KHHHTTPClient.m */; };
 		62ECD8EC166DE1D000A15E24 /* KHHNetworkAPIAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850C71602E63A00A4A673 /* KHHNetworkAPIAgent.m */; };
 		62ECD8ED166DE1D000A15E24 /* KHHNetworkAPIAgent+Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850C91602E63A00A4A673 /* KHHNetworkAPIAgent+Account.m */; };
 		62ECD8EE166DE1D000A15E24 /* KHHNetworkAPIAgent+Card.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A850CB1602E63A00A4A673 /* KHHNetworkAPIAgent+Card.m */; };
@@ -1886,6 +1875,10 @@
 		84C111DE169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C111DC169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png */; };
 		84C111DF169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C111DC169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png */; };
 		84C111E0169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C111DC169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png */; };
+		84DA3F1A169D097500D222A4 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DA3F15169D097500D222A4 /* Reachability.m */; };
+		84DA3F1B169D097500D222A4 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DA3F15169D097500D222A4 /* Reachability.m */; };
+		84DA3F1C169D097500D222A4 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DA3F15169D097500D222A4 /* Reachability.m */; };
+		84DA3F1D169D097500D222A4 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DA3F15169D097500D222A4 /* Reachability.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1908,8 +1901,6 @@
 		3104A144169BBCD100CC4F22 /* KHHForWhereCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHForWhereCell.m; sourceTree = "<group>"; };
 		3104E05E1687EE6600B0B45F /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		3104E0601687EE8100B0B45F /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		3104E06A168800F100B0B45F /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
-		3104E06B168800F100B0B45F /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		310523D0169A9833000B2C64 /* KHHImgViewInCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHImgViewInCell.h; sourceTree = "<group>"; };
 		310523D1169A9833000B2C64 /* KHHImgViewInCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHImgViewInCell.m; sourceTree = "<group>"; };
 		310523DA169ABC0E000B2C64 /* plan.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = plan.plist; sourceTree = "<group>"; };
@@ -2138,6 +2129,8 @@
 		845759F2169AA0CF005A5F60 /* KHHViewAdapterUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHViewAdapterUtil.m; sourceTree = "<group>"; };
 		849FBC91168A9ACF00C54EE5 /* ic_photo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_photo@2x.png"; sourceTree = "<group>"; };
 		84C111DC169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "title_btn_with_drop@2x.png"; sourceTree = "<group>"; };
+		84DA3F14169D097500D222A4 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		84DA3F15169D097500D222A4 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		9803EBA5160DA88D00402B53 /* NSObject+SM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SM.h"; sourceTree = "<group>"; };
 		9803EBA6160DA88D00402B53 /* NSObject+SM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SM.m"; sourceTree = "<group>"; };
 		981BA0F5162EB4520036A4B8 /* CustomerEvaluation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerEvaluation.h; sourceTree = "<group>"; };
@@ -2300,8 +2293,6 @@
 		98A84E0B1602D46000A4A673 /* NSString+Networking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Networking.m"; sourceTree = "<group>"; };
 		98A84E0E1602D46000A4A673 /* NSString+Validation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Validation.h"; sourceTree = "<group>"; };
 		98A84E0F1602D46000A4A673 /* NSString+Validation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Validation.m"; sourceTree = "<group>"; };
-		98A84E101602D46000A4A673 /* NSURL+KHH.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+KHH.h"; sourceTree = "<group>"; };
-		98A84E111602D46000A4A673 /* NSURL+KHH.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+KHH.m"; sourceTree = "<group>"; };
 		98A84E241602D66200A4A673 /* KHHExchangeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHExchangeViewController.h; sourceTree = "<group>"; };
 		98A84E251602D66200A4A673 /* KHHExchangeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHExchangeViewController.m; sourceTree = "<group>"; };
 		98A84E261602D66200A4A673 /* KHHExchangeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHExchangeViewController.xib; sourceTree = "<group>"; };
@@ -2591,8 +2582,6 @@
 		98A850751602DA3F00A4A673 /* SVPlacemark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPlacemark.m; sourceTree = "<group>"; };
 		98A850771602DA3F00A4A673 /* XLPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XLPageControl.h; sourceTree = "<group>"; };
 		98A850781602DA3F00A4A673 /* XLPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XLPageControl.m; sourceTree = "<group>"; };
-		98A850C41602E63A00A4A673 /* KHHHTTPClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHHTTPClient.h; sourceTree = "<group>"; };
-		98A850C51602E63A00A4A673 /* KHHHTTPClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHHTTPClient.m; sourceTree = "<group>"; };
 		98A850C61602E63A00A4A673 /* KHHNetworkAPIAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNetworkAPIAgent.h; sourceTree = "<group>"; };
 		98A850C71602E63A00A4A673 /* KHHNetworkAPIAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHNetworkAPIAgent.m; sourceTree = "<group>"; };
 		98A850C81602E63A00A4A673 /* KHHNetworkAPIAgent+Account.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHNetworkAPIAgent+Account.h"; sourceTree = "<group>"; };
@@ -3080,6 +3069,15 @@
 			path = Organization;
 			sourceTree = "<group>";
 		};
+		84DA3F10169D090E00D222A4 /* NetWork_New */ = {
+			isa = PBXGroup;
+			children = (
+				84DA3F14169D097500D222A4 /* Reachability.h */,
+				84DA3F15169D097500D222A4 /* Reachability.m */,
+			);
+			path = NetWork_New;
+			sourceTree = "<group>";
+		};
 		980D87511637C3B20052DF9D /* Start */ = {
 			isa = PBXGroup;
 			children = (
@@ -3291,8 +3289,9 @@
 				981BA0FF162FE6410036A4B8 /* KHHTransformation.h */,
 				982AACC21609C903002B9BAD /* KHHTypes.h */,
 				98A84D9E1602D23100A4A673 /* Misc */,
-				98A84D9F1602D23A00A4A673 /* Network */,
 				31C52AB216916E3F00446006 /* NetClient */,
+				98A84D9F1602D23A00A4A673 /* Network */,
+				84DA3F10169D090E00D222A4 /* NetWork_New */,
 				98A84DA01602D24600A4A673 /* UI */,
 				629BE10E165F4A6600FB3B04 /* Util */,
 				98A84DA11602D24D00A4A673 /* ViewControllers */,
@@ -3352,8 +3351,6 @@
 				98838E7C160886EC00CE2353 /* NSString+SM.m */,
 				98A84E0E1602D46000A4A673 /* NSString+Validation.h */,
 				98A84E0F1602D46000A4A673 /* NSString+Validation.m */,
-				98A84E101602D46000A4A673 /* NSURL+KHH.h */,
-				98A84E111602D46000A4A673 /* NSURL+KHH.m */,
 				98D2438B1627B75C00AC1C38 /* UIImage+KHH.h */,
 				98D2438C1627B75C00AC1C38 /* UIImage+KHH.m */,
 				98CFC96C1607201E001B9B17 /* UIImage+Resize.h */,
@@ -3369,10 +3366,6 @@
 		98A84D9F1602D23A00A4A673 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				3104E06A168800F100B0B45F /* Reachability.h */,
-				3104E06B168800F100B0B45F /* Reachability.m */,
-				98A850C41602E63A00A4A673 /* KHHHTTPClient.h */,
-				98A850C51602E63A00A4A673 /* KHHHTTPClient.m */,
 				982AACAE16096C3D002B9BAD /* KHHNetworkAPI.h */,
 				98A850C61602E63A00A4A673 /* KHHNetworkAPIAgent.h */,
 				98A850C71602E63A00A4A673 /* KHHNetworkAPIAgent.m */,
@@ -5456,12 +5449,10 @@
 				314A0126168BEF3800029324 /* NSString+Networking.m in Sources */,
 				314A0127168BEF3800029324 /* NSString+SM.m in Sources */,
 				314A0128168BEF3800029324 /* NSString+Validation.m in Sources */,
-				314A0129168BEF3800029324 /* NSURL+KHH.m in Sources */,
 				314A012A168BEF3800029324 /* UIImage+KHH.m in Sources */,
 				314A012B168BEF3800029324 /* UIImage+Resize.m in Sources */,
 				314A012C168BEF3800029324 /* UIViewController+SM.m in Sources */,
 				314A012D168BEF3800029324 /* UIColor+HexColor.m in Sources */,
-				314A012E168BEF3800029324 /* KHHHTTPClient.m in Sources */,
 				314A012F168BEF3800029324 /* KHHNetworkAPIAgent.m in Sources */,
 				314A0130168BEF3800029324 /* KHHNetworkAPIAgent+Account.m in Sources */,
 				314A0131168BEF3800029324 /* KHHNetworkAPIAgent+Card.m in Sources */,
@@ -5549,7 +5540,6 @@
 				314A0183168BEF3800029324 /* KHHBMapLocationController.m in Sources */,
 				314A0184168BEF3800029324 /* KHHFilterPopup.m in Sources */,
 				314A0185168BEF3800029324 /* KHHKeyBoardManagerUtil.m in Sources */,
-				314A0186168BEF3800029324 /* Reachability.m in Sources */,
 				314A0187168BEF3800029324 /* NetClient.m in Sources */,
 				314A0188168BEF3800029324 /* NetFromPlist.m in Sources */,
 				314A0284168C08F100029324 /* LoginLogic.m in Sources */,
@@ -5576,6 +5566,7 @@
 				310523D5169A9833000B2C64 /* KHHImgViewInCell.m in Sources */,
 				310523E4169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */,
 				3104A148169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */,
+				84DA3F1D169D097500D222A4 /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5685,12 +5676,10 @@
 				314AFF67168BEE9A00029324 /* NSString+Networking.m in Sources */,
 				314AFF68168BEE9A00029324 /* NSString+SM.m in Sources */,
 				314AFF69168BEE9A00029324 /* NSString+Validation.m in Sources */,
-				314AFF6A168BEE9A00029324 /* NSURL+KHH.m in Sources */,
 				314AFF6B168BEE9A00029324 /* UIImage+KHH.m in Sources */,
 				314AFF6C168BEE9A00029324 /* UIImage+Resize.m in Sources */,
 				314AFF6D168BEE9A00029324 /* UIViewController+SM.m in Sources */,
 				314AFF6E168BEE9A00029324 /* UIColor+HexColor.m in Sources */,
-				314AFF6F168BEE9A00029324 /* KHHHTTPClient.m in Sources */,
 				314AFF70168BEE9A00029324 /* KHHNetworkAPIAgent.m in Sources */,
 				314AFF71168BEE9A00029324 /* KHHNetworkAPIAgent+Account.m in Sources */,
 				314AFF72168BEE9A00029324 /* KHHNetworkAPIAgent+Card.m in Sources */,
@@ -5778,7 +5767,6 @@
 				314AFFC4168BEE9A00029324 /* KHHBMapLocationController.m in Sources */,
 				314AFFC5168BEE9A00029324 /* KHHFilterPopup.m in Sources */,
 				314AFFC6168BEE9A00029324 /* KHHKeyBoardManagerUtil.m in Sources */,
-				314AFFC7168BEE9A00029324 /* Reachability.m in Sources */,
 				314AFFC8168BEE9A00029324 /* NetClient.m in Sources */,
 				314AFFC9168BEE9A00029324 /* NetFromPlist.m in Sources */,
 				314A0283168C08F100029324 /* LoginLogic.m in Sources */,
@@ -5805,6 +5793,7 @@
 				310523D4169A9833000B2C64 /* KHHImgViewInCell.m in Sources */,
 				310523E3169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */,
 				3104A147169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */,
+				84DA3F1C169D097500D222A4 /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5914,12 +5903,10 @@
 				6274BFBE165C7C3300DB5EBE /* NSString+Networking.m in Sources */,
 				6274BFBF165C7C3300DB5EBE /* NSString+SM.m in Sources */,
 				6274BFC0165C7C3300DB5EBE /* NSString+Validation.m in Sources */,
-				6274BFC1165C7C3300DB5EBE /* NSURL+KHH.m in Sources */,
 				6274BFC2165C7C3300DB5EBE /* UIImage+KHH.m in Sources */,
 				6274BFC3165C7C3300DB5EBE /* UIImage+Resize.m in Sources */,
 				6274BFC4165C7C3300DB5EBE /* UIViewController+SM.m in Sources */,
 				6274BFC5165C7C3300DB5EBE /* UIColor+HexColor.m in Sources */,
-				6274BFC6165C7C3300DB5EBE /* KHHHTTPClient.m in Sources */,
 				6274BFC7165C7C3300DB5EBE /* KHHNetworkAPIAgent.m in Sources */,
 				6274BFC8165C7C3300DB5EBE /* KHHNetworkAPIAgent+Account.m in Sources */,
 				6274BFC9165C7C3300DB5EBE /* KHHNetworkAPIAgent+Card.m in Sources */,
@@ -6007,7 +5994,6 @@
 				624F8C7F1676C167006CD354 /* KHHBMapLocationController.m in Sources */,
 				31FCBC371682BD0A00ABFE3F /* KHHFilterPopup.m in Sources */,
 				8413659216883F5000BB0400 /* KHHKeyBoardManagerUtil.m in Sources */,
-				3104E06C168800F200B0B45F /* Reachability.m in Sources */,
 				314AFEF9168BEC3700029324 /* NetClient.m in Sources */,
 				314AFF00168BECBB00029324 /* NetFromPlist.m in Sources */,
 				314A0282168C08F100029324 /* LoginLogic.m in Sources */,
@@ -6034,6 +6020,7 @@
 				310523D2169A9833000B2C64 /* KHHImgViewInCell.m in Sources */,
 				310523E1169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */,
 				3104A145169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */,
+				84DA3F1A169D097500D222A4 /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6143,12 +6130,10 @@
 				62ECD8E3166DE1D000A15E24 /* NSString+Networking.m in Sources */,
 				62ECD8E4166DE1D000A15E24 /* NSString+SM.m in Sources */,
 				62ECD8E5166DE1D000A15E24 /* NSString+Validation.m in Sources */,
-				62ECD8E6166DE1D000A15E24 /* NSURL+KHH.m in Sources */,
 				62ECD8E7166DE1D000A15E24 /* UIImage+KHH.m in Sources */,
 				62ECD8E8166DE1D000A15E24 /* UIImage+Resize.m in Sources */,
 				62ECD8E9166DE1D000A15E24 /* UIViewController+SM.m in Sources */,
 				62ECD8EA166DE1D000A15E24 /* UIColor+HexColor.m in Sources */,
-				62ECD8EB166DE1D000A15E24 /* KHHHTTPClient.m in Sources */,
 				62ECD8EC166DE1D000A15E24 /* KHHNetworkAPIAgent.m in Sources */,
 				62ECD8ED166DE1D000A15E24 /* KHHNetworkAPIAgent+Account.m in Sources */,
 				62ECD8EE166DE1D000A15E24 /* KHHNetworkAPIAgent+Card.m in Sources */,
@@ -6259,6 +6244,7 @@
 				310523D3169A9833000B2C64 /* KHHImgViewInCell.m in Sources */,
 				310523E2169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */,
 				3104A146169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */,
+				84DA3F1B169D097500D222A4 /* Reachability.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

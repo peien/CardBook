@@ -24,7 +24,7 @@
     if (0 == [fakeID length] || 0 == [password length]) {
         return NO;
     }
-    [[KHHHTTPClient sharedClient] setAuthorizationHeaderWithUsername:fakeID
+    [[NetClient sharedClient] setAuthorizationHeaderWithUsername:fakeID
                                                             password:password];
     return YES;
 }
@@ -102,7 +102,7 @@
            failure:(KHHFailureBlock)failure
              extra:(NSDictionary *)extra {
     // 创建请求
-    KHHHTTPClient *httpClient = [KHHHTTPClient sharedClient];
+    NetClient *httpClient = [NetClient sharedClient];
         
     // 处理成功的请求
     KHHSuccessBlock successBlock = success? success:

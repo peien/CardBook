@@ -15,7 +15,7 @@
 #import "KHHNotifications.h"
 #import "KHHStatusCodes.h"
 #import "KHHTypes.h"
-#import "KHHHTTPClient.h"
+#import "NetClient.h"
 #import "AppStartController.h"
 
 /**
