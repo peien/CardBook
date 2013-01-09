@@ -57,10 +57,14 @@
         currentIndex = 0;
         [self.rightBtn setTitle:[dataTypeArray objectAtIndex:currentIndex] forState:UIControlStateNormal];
         CGRect frame = self.rightBtn.frame;
-        frame.size.width += 20;
-        frame.origin.x -= 20;
+        frame.size.width += 15;
         self.rightBtn.frame = frame;
+        //设置左对齐
         self.rightBtn.titleLabel.textAlignment = NSTextAlignmentLeft;
+        //只设置上面一句没有用
+        self.rightBtn.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        //设置上面一句后文字紧贴左边，下面一句是让左边空出点距离
+        self.rightBtn.contentEdgeInsets = UIEdgeInsetsMake(0,10, 0, 0);
         dataType = KHHCalendarViewDataTypeCheckIn;
         UIEdgeInsets inset = UIEdgeInsetsMake(0, 10, 0, 25);
         [self.rightBtn setBackgroundImage:[[UIImage imageNamed:@"title_btn_with_drop"] resizableImageWithCapInsets:inset] forState:UIControlStateNormal];

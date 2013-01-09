@@ -7,6 +7,7 @@
 //
 
 #import "KHHWebView.h"
+#import "NetClient.h"
 static NSString * const KHH_HTTP = @"http";
 static NSString * const KHH_3W = @"www";
 @interface KHHWebView ()
@@ -33,13 +34,14 @@ static NSString * const KHH_3W = @"www";
 -(void) initUrl:(NSString *) url title:(NSString *) title rightBarName:(NSString*) barName rightBarBlock:(KHHDefaultBlock) callback {
     //url
     if (!url) {
-        _myRequestUrl = KHHServer;
+        //指向默认网址（fafamp.com）
+        _myRequestUrl = KHH_Recommend_URL;
     }else {
         BOOL isRealUrl = [[url lowercaseString] hasPrefix:KHH_HTTP] || [[url lowercaseString] hasPrefix:KHH_3W];
         if (isRealUrl) {
             _myRequestUrl = url;
         }else {
-            _myRequestUrl = [NSString stringWithFormat:KHHURLFormat, KHHServer, url];
+            _myRequestUrl = [NSString stringWithFormat:KHHURLFormat,[[NetClient sharedClient] currentServerUrl],url];
         }
     }
     

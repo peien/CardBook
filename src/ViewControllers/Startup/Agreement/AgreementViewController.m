@@ -8,6 +8,7 @@
 
 #import "AgreementViewController.h"
 #import "KHHMacros.h"
+#import "NetClient.h"
 
 #define textAgreement NSLocalizedString(@"隐私声明", @"")
 
@@ -30,8 +31,9 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    NSString *urlStr = [NSString stringWithFormat:KHHURLFormat, KHHServer, KHHURLDisclaimer];
-    NSURL *url = [NSURL URLWithString:urlStr];
+//    NSString *urlStr = [NSString stringWithFormat:KHHURLFormat, KHHServer, KHHURLDisclaimer];
+//    NSURL *url = [NSURL URLWithString:urlStr];
+    NSURL *url = [[NetClient sharedClient] currentServerUrl];
     NSURLRequest *req = [NSURLRequest requestWithURL:url];
     [self.theWebView loadRequest:req];
 }

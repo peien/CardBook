@@ -18,6 +18,9 @@
 
 + (NetClient *)sharedClient;
 
+#pragma server url
+-(NSURL *) currentServerUrl;
+
 #pragma mark - Utils
 - (NSString *)queryStringWithDictionary:(NSDictionary *)aDictionary;
 - (NSMutableDictionary *)JSONDictionaryWithResponse:(NSData *)responseData;
