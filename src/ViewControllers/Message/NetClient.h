@@ -13,8 +13,7 @@
 @interface NetClient : AFHTTPClient
 
 @property (nonatomic,strong) NetFromPlist *netFromPlist;
-#pragma mark - flags
-@property (nonatomic,assign)Boolean inMsgView;
+
 
 + (NetClient *)sharedClient;
 

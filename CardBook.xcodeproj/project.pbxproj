@@ -64,9 +64,6 @@
 		310523E4169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 310523E0169AD2A3000B2C64 /* KHHWhereUtil.m */; };
 		310A3F41168D3E9D009FF135 /* CardBook_test_haibo-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 310A3F3E168D3E9D009FF135 /* CardBook_test_haibo-Info.plist */; };
 		310A3F42168D3E9D009FF135 /* CardBook_test-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 310A3F3F168D3E9D009FF135 /* CardBook_test-Info.plist */; };
-		310A3F46168D677A009FF135 /* NetWorking.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A3F45168D6779009FF135 /* NetWorking.m */; };
-		310A3F47168D677A009FF135 /* NetWorking.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A3F45168D6779009FF135 /* NetWorking.m */; };
-		310A3F48168D677A009FF135 /* NetWorking.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A3F45168D6779009FF135 /* NetWorking.m */; };
 		310B2ED01699090B00818461 /* KHHInputTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 310B2ECF1699090B00818461 /* KHHInputTableView.m */; };
 		310B2ED11699090B00818461 /* KHHInputTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 310B2ECF1699090B00818461 /* KHHInputTableView.m */; };
 		310B2ED21699090B00818461 /* KHHInputTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 310B2ECF1699090B00818461 /* KHHInputTableView.m */; };
@@ -1902,8 +1899,6 @@
 		310A3F36168D2C43009FF135 /* Delegates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Delegates.h; sourceTree = "<group>"; };
 		310A3F3E168D3E9D009FF135 /* CardBook_test_haibo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CardBook_test_haibo-Info.plist"; sourceTree = SOURCE_ROOT; };
 		310A3F3F168D3E9D009FF135 /* CardBook_test-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CardBook_test-Info.plist"; sourceTree = SOURCE_ROOT; };
-		310A3F44168D6778009FF135 /* NetWorking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetWorking.h; sourceTree = "<group>"; };
-		310A3F45168D6779009FF135 /* NetWorking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetWorking.m; sourceTree = "<group>"; };
 		310B2ECE1699090B00818461 /* KHHInputTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHInputTableView.h; sourceTree = "<group>"; };
 		310B2ECF1699090B00818461 /* KHHInputTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHInputTableView.m; sourceTree = "<group>"; };
 		310B2ED61699247100818461 /* KHHMemoPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHMemoPicker.h; sourceTree = "<group>"; };
@@ -2862,8 +2857,6 @@
 				314A032A168C52D000029324 /* NetClient+Message.h */,
 				314A032B168C52D000029324 /* NetClient+Message.m */,
 				310A3F36168D2C43009FF135 /* Delegates.h */,
-				310A3F44168D6778009FF135 /* NetWorking.h */,
-				310A3F45168D6779009FF135 /* NetWorking.m */,
 			);
 			name = network;
 			sourceTree = "<group>";
@@ -5521,7 +5514,6 @@
 				314A0284168C08F100029324 /* LoginLogic.m in Sources */,
 				314A0289168C0D2700029324 /* User.m in Sources */,
 				314A032F168C52D000029324 /* NetClient+Message.m in Sources */,
-				310A3F48168D677A009FF135 /* NetWorking.m in Sources */,
 				3102673F1696ACA200FBE156 /* KHHTargetCell.m in Sources */,
 				842D57841697C939005C0CF4 /* KHHOrganizationViewController.m in Sources */,
 				310267621696B05B00FBE156 /* KHHPlanViewController.m in Sources */,
@@ -5747,7 +5739,6 @@
 				314A0283168C08F100029324 /* LoginLogic.m in Sources */,
 				314A0288168C0D2700029324 /* User.m in Sources */,
 				314A032E168C52D000029324 /* NetClient+Message.m in Sources */,
-				310A3F47168D677A009FF135 /* NetWorking.m in Sources */,
 				3102673E1696ACA200FBE156 /* KHHTargetCell.m in Sources */,
 				842D57831697C939005C0CF4 /* KHHOrganizationViewController.m in Sources */,
 				310267611696B05B00FBE156 /* KHHPlanViewController.m in Sources */,
@@ -5973,7 +5964,6 @@
 				314A0282168C08F100029324 /* LoginLogic.m in Sources */,
 				314A0287168C0D2700029324 /* User.m in Sources */,
 				314A032C168C52D000029324 /* NetClient+Message.m in Sources */,
-				310A3F46168D677A009FF135 /* NetWorking.m in Sources */,
 				3102673C1696ACA200FBE156 /* KHHTargetCell.m in Sources */,
 				842D57811697C939005C0CF4 /* KHHOrganizationViewController.m in Sources */,
 				3102675F1696B05B00FBE156 /* KHHPlanViewController.m in Sources */,

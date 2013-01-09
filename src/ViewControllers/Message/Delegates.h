@@ -19,10 +19,10 @@
 @protocol delegateMsgForRead<NSObject>
 
 @required
+
 - (void)deleDone;
 - (void)deleFail;
-- (void)inNetWorking;
-- (void)outNetWorking;
+
 @end
 
 #endif

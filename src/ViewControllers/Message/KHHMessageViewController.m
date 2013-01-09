@@ -17,7 +17,6 @@
 #import "MBProgressHUD.h"
 #import "NetClient+Message.h"
 
-#import "NetWorking.h"
 
 @interface KHHMessageViewController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 @property (strong, nonatomic) NSArray *messageArr;
@@ -215,19 +214,6 @@
 - (void)deleDone
 {
     
-}
-
-- (void)inNetWorking
-{
-//    [self.navigationController.view addSubview:[NetWorking sharedInstance]];
-//    [[NetWorking sharedInstance] start];
-//    [self.view addSubview:[NetWorking sharedInstance]];
-}
-
-- (void)outNetWorking
-{
-//    [[NetWorking sharedInstance] stop];
-//    [[NetWorking sharedInstance] removeFromSuperview];
 }
 
 @end

@@ -12,6 +12,7 @@
 #import "KHHData.h"
 
 @implementation NetClient (Message)
+@dynamic inMsgView;
 
 - (void)doDeleteInEdit:(id<delegateMsgForRead>)delegate messages:(NSArray *)messages
 {
@@ -68,11 +69,11 @@
                                                 KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
                                                 if (code == 0) {
                                                     [delegate deleDone];
-                                                    [delegate outNetWorking];
+                                                    
                                                 }else{
                                                     [self setYES:messages];
                                                     [delegate deleFail];
-                                                    [delegate outNetWorking];
+                                                    
                                                 }
                                                 
                                                 
@@ -80,12 +81,11 @@
                                             failure:^(AFHTTPRequestOperation *operation, NSError *error)
                                             {
                                                 [self setYES:messages];
-                                                [delegate deleFail];
-                                                [delegate outNetWorking];
+                                                [delegate deleFail];                                                
                                             }];
     
     // 实际发送请求
-    [delegate inNetWorking];
+   
     [self enqueueHTTPRequestOperation:reqOperation];
     
 }

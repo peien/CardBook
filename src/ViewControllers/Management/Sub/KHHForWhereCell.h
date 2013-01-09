@@ -10,6 +10,7 @@
 
 @interface KHHForWhereCell : UITableViewCell
 
-
-
+@property(nonatomic,strong)NSString *locStrPro;
+@property(nonatomic,assign)void(^justReload)();
+@property(nonatomic,strong)UIImageView *rotaView;
 @end
