@@ -7,7 +7,7 @@
 //
 
 #import "SuperViewController.h"
-#import "NetClient.h"
+#import "NetClient+Message.h"
 #import "KHHMessageViewController.h"
 
 #define TEXT_NEW_MESSAGE_COMMING NSLocalizedString(@"您有新消息到了,可到消息界面查看新消息。",nil)
