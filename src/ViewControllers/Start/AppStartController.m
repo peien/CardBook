@@ -221,7 +221,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     //注册网络状态变化接受广播(网络为unknown时就去注册，其它状态就不去注册广播了)
      r = [Reachability reachabilityWithHostname:@"www.apple.com"];
     
-    AFNetworkReachabilityStatus state = [[KHHHTTPClient sharedClient] networkReachabilityStatus];
+    AFNetworkReachabilityStatus state = [[NetClient sharedClient] networkReachabilityStatus];
     if ([r currentReachabilityStatus] == NotReachable) {
         [self observeNotificationName:AFNetworkingReachabilityDidChangeNotification selector:@"handleNetworkStatusChanged:"];
     }else {
@@ -233,7 +233,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 -(void) handleNetworkStatusChanged:(NSDictionary *) noti {
     //关闭广播接受
     [self stopObservingNotificationName:AFNetworkingReachabilityDidChangeNotification];
-    AFNetworkReachabilityStatus state = [[KHHHTTPClient sharedClient] networkReachabilityStatus];
+    AFNetworkReachabilityStatus state = [[NetClient sharedClient] networkReachabilityStatus];
     [self loginWithNetworkStatus:state];
 }
 

@@ -28,7 +28,6 @@
 
 - (id)initWithBase
 {
-    
     _netFromPlist = [[NetFromPlist alloc]init];
     self = [super initWithBaseURL:[_netFromPlist currentUrl]];
     if (self) {
@@ -42,6 +41,12 @@
         
     }
     return self;
+}
+
+#pragma server url
+-(NSURL *) currentServerUrl
+{
+    return [_netFromPlist currentUrl];
 }
 
 #pragma mark - Utils
