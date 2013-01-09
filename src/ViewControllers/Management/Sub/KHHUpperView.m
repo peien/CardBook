@@ -10,7 +10,7 @@
 
 @implementation KHHUpperView
 {
-    UIButton *upperBtn;
+    
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -19,7 +19,7 @@
     if (self) {
         // Initialization code
         self.backgroundColor = [UIColor grayColor];
-        upperBtn = [[UIButton alloc]init];
+        _upperBtn = [[UIButton alloc]init];
               
     }
     return self;
@@ -33,13 +33,13 @@
 {
     [super layoutSubviews];    
     
-    upperBtn.frame = CGRectMake(320/2-200/2, 50/2-30/2, 200, 30);
-    upperBtn.backgroundColor = [UIColor whiteColor];
-    [upperBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [upperBtn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
-     [upperBtn setTitle:@"我要上传" forState:UIControlStateNormal];
-    [upperBtn setTitle:@"我要上传" forState:UIControlStateHighlighted];
-    [self addSubview:upperBtn];
+    _upperBtn.frame = CGRectMake(320/2-200/2, 50/2-30/2, 200, 30);
+    _upperBtn.backgroundColor = [UIColor whiteColor];
+    [_upperBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_upperBtn setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+     [_upperBtn setTitle:@"我要上传" forState:UIControlStateNormal];
+    [_upperBtn setTitle:@"我要上传" forState:UIControlStateHighlighted];
+    [self addSubview:_upperBtn];
 }
 
 
