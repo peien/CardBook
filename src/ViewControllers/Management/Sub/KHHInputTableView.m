@@ -14,7 +14,10 @@
 {
     Boolean showKeyboard;
     float normalH;
-    CGPoint contentOffsetPro;
+    
+    
+        float contenProx ;
+        float contenProy ;    
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -56,7 +59,7 @@
                      animations:^{
                          
                         // self.frame = CGRectMake(0.0f, 0,320,normalH);
-                         self.contentOffset = CGPointMake(0.0,0.0);
+                         self.contentOffset = CGPointMake(contenProx,contenProy);
                          [self setContentInset:UIEdgeInsetsMake(0,0,0,0)];
                      }
                      completion:^(BOOL finished){
@@ -66,7 +69,9 @@
 
 - (void)goToInsetForKeyboard:(CGRect)frame
 {
-     contentOffsetPro = CGPointMake(self.contentOffset.x, self.contentOffset.y) ;
+    contenProx = self.contentOffset.x;
+    contenProy = self.contentOffset.y;
+     //contentOffsetPro = CGPointMake(self.contentOffset.x, self.contentOffset.y) ;
    // NSLog(@"%f",self.frame.size.width);
     showKeyboard = YES;
     int offset = -self.contentOffset.y+self.frame.origin.y+frame.origin.y + frame.size.height - (480 - KHH_Keyboard_Height);

@@ -14,8 +14,12 @@ typedef enum {
 #import "SuperViewController.h"
 #import "Card.h"
 #import "KHHClasses.h"
-@interface Edit_eCardViewController : SuperViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
-@property (strong, nonatomic) IBOutlet UITableView *theTable;
+#import "NetClient+PrivateCard.h"
+#import "HZAreaPickerView.h"
+#import "KHHInputTableView.h"
+
+@interface Edit_eCardViewController : SuperViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,delegateNewPrivateForEdit,KHHInputTableViewHiddenDelegate>
+@property (strong, nonatomic) IBOutlet KHHInputTableView *table;
 @property (strong, nonatomic)  NSArray              *fieldName;
 @property (strong, nonatomic)  NSMutableArray       *fieldValue;
 @property (strong, nonatomic)  NSMutableArray       *fieldExternOne;
@@ -33,5 +37,7 @@ typedef enum {
 @property (strong, nonatomic)  Card                 *glCard;
 @property (assign, nonatomic)  KCardViewControllerType type;
 @property (strong, nonatomic)  CardTemplate         *cardTemp;
+
+@property (nonatomic,strong) HZAreaPickerView *areaPicker;
 
 @end
