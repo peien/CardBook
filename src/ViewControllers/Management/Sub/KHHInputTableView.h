@@ -15,8 +15,8 @@ static float const KHH_Keyboard_Height = 216.0 + 95;
 
 @protocol KHHInputTableViewHiddenDelegate <NSObject>
 
-@required
-- (void)hiddenKeyboard;
+//@required
+//- (void)hiddenKeyboard;
 
 @end
 

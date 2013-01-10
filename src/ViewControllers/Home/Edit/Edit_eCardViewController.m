@@ -60,6 +60,14 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
 {
     CGRect rectForKey;
     NSMutableArray *inputsForKeyboard;
+    
+    NSMutableArray *section1AddArray;
+    NSMutableArray *section2AddArray;
+    NSMutableArray *section2HavIn;
+    NSMutableArray *section3AddArray;
+    NSMutableArray *section3HavIn;
+    
+    NSMutableDictionary *allFiledForGoto;
 }
 
 @synthesize fieldName = _fieldName;
@@ -107,8 +115,20 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
         _table.dataSource = self;
         _table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         _table.hiddenDelgate = self;
+        
+        [self initArrs];
     }
     return self;
+}
+
+- (void)initArrs
+{
+    section1AddArray = [[NSMutableArray alloc]initWithObjects:@"手机",@"电话",@"传真",@"邮箱", nil];
+    section2AddArray = [[NSMutableArray alloc]initWithObjects:@"公司邮箱",nil];
+    section2HavIn = [[NSMutableArray alloc]initWithCapacity:2];
+    section3AddArray = [[NSMutableArray alloc]initWithObjects:@"网页",@"QQ",@"MSN",@"旺旺",@"业务范围",@"银行信息",@"其它信息",nil];
+    section3HavIn = [[NSMutableArray alloc]initWithCapacity:2];
+    allFiledForGoto = [[NSMutableDictionary alloc]initWithCapacity:15];
 }
 #pragma mark -
 #pragma mark saveCardInfo
@@ -466,6 +486,17 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
     }
     return 44;
 }
+
+- (void)addFiled:(UITextField *)filed2;
+{
+    for (NSString *tag in [allFiledForGoto allKeys]){
+        if ([tag integerValue] == filed2.tag) {
+            return;            
+        }
+    }
+    [allFiledForGoto setValue:filed2 forKey:[NSString stringWithFormat:@"%d",filed2.tag]];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *cellIDZero = @"cellIDZero";
@@ -481,6 +512,8 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
             }
             cell.nameValue.tag = kBaseTag + 0;
             cell.jobValue.tag =  kBaseTag + 1;
+            [self addFiled:cell.nameValue];
+            [self addFiled:cell.jobValue];
             cell.nameValue.text = [_fieldValue objectAtIndex:0];
             cell.nameValue.delegate = self;
             cell.jobValue.text = [_fieldValue objectAtIndex:1];
@@ -524,6 +557,7 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
         if (indexPath.row < 4) {
             cell.name.text = [[_fieldName objectAtIndex:0] objectAtIndex:indexPath.row];
             cell.value.tag = indexPath.row + kBaseTag + 3;
+            [self addFiled:cell.value];
             cell.value.text = [_fieldValue objectAtIndex:3 + indexPath.row];
             cell.value.delegate = self;
             cell.value.placeholder = [[self.placeName objectAtIndex:0] objectAtIndex:indexPath.row];
@@ -538,6 +572,7 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
             cell.name.text = [[_fieldExternOne objectAtIndex:indexPath.row - 4] objectForKey:@"key"];
             cell.value.text = [[_fieldExternOne objectAtIndex:indexPath.row - 4] objectForKey:@"value"];
             cell.value.tag = indexPath.row + kBaseTag + 3;
+            [self addFiled:cell.value];
             cell.value.placeholder = [NSString stringWithFormat:@"请输入%@",cell.name.text];
             cell.value.delegate = self;
         }
@@ -553,6 +588,8 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
             if (indexPath.row < 3) {
                 cell.name.text = [[_fieldName objectAtIndex:1] objectAtIndex:indexPath.row];
                 cell.value.tag = indexPath.row + 7 + _fieldExternOne.count + kBaseTag;
+                
+                [self addFiled:cell.value];
                 cell.value.text = [_fieldValue objectAtIndex:7 + indexPath.row];
                 cell.value.placeholder = [[self.placeName objectAtIndex:1] objectAtIndex:indexPath.row];
             }else if (indexPath.row == _twoNums-1){
@@ -564,6 +601,7 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
                 cell.value.text = [[_fieldExternTwo objectAtIndex:indexPath.row - 3] objectForKey:@"value"];
                 cell.value.tag = indexPath.row + kBaseTag + 7 + _fieldExternOne.count ;
                  cell.value.placeholder = [NSString stringWithFormat:@"请输入%@",cell.name.text];
+                [self addFiled:cell.value];
             }
             return cell;
         }
@@ -582,7 +620,7 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
                 [cell.bigAdress setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
             }
             cell.detailAdress.tag = indexPath.row + 7 + _fieldExternOne.count + kBaseTag;
-            
+            [self addFiled:cell.detailAdress];
             if (self.glCard.address.other.length > 0 || self.province.length > 0) {
                 if (self.province.length > 0) {
                     NSString *p = [NSString stringByFilterNilFromString:self.province];
@@ -603,12 +641,15 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
         if (cell == nil) {
             NSArray *nib = [[NSBundle mainBundle] loadNibNamed:@"Edit_eCardViewCell" owner:self options:nil];
             cell = [nib objectAtIndex:1];
+            
         }
         if (indexPath.row >= 0 && indexPath.row < _threeNums -1) {
             cell.name.text = [[_fieldExternThree objectAtIndex:indexPath.row] objectForKey:@"key"];
             cell.value.tag = indexPath.row + kBaseTag + 10 + _fieldExternOne.count + _fieldExternTwo.count;
             cell.value.text = [[_fieldExternThree objectAtIndex:indexPath.row] objectForKey:@"value"];
              cell.value.placeholder = [NSString stringWithFormat:@"请输入%@",cell.name.text];
+            [self addFiled:cell.value];
+            
         }else if (indexPath.row == _threeNums-1){
             cell.name.text = @"添加更多";
             cell.value.tag = kBaseTag - 1;
@@ -656,12 +697,12 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
                 if (!self.section1Picker) {
                     self.section1Picker = [[KHHMemoPicker alloc]initWithFrame:CGRectMake(0.0,H460-200.0,320.0,200.0)];
                     self.section1Picker.hidden = YES;
-                    self.section1Picker.memoArr = [_paramDic valueForKeyPath:@"memo.titles"];
+//                    self.section1Picker.memoArr = [_paramDic valueForKeyPath:@"memo.titles"];
                     self.section1Picker.tag = 10030;
                     __block Edit_eCardViewController *weakself = self;
-                    self.section1Picker.showTitle = ^(NSString *title, int tag){
-                        [weakself showTitle:title tag:tag];
-                    };
+//                    self.section1Picker.showTitle = ^(NSString *title, int tag){
+//                        [weakself showTitle:title tag:tag];
+//                    };
                     [self addRes:_section1Picker];
                 }
                 break;
@@ -882,7 +923,7 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
 #pragma mark UITextfield Delegates
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    
+   // return [super textFieldShouldReturn:textField];
     //    if (textField.returnKeyType == UIReturnKeyNext) {
     //        int tag = (textField.tag + 1 == kBaseTag + 8 + _fieldExternOne.count)?(textField.tag+2):(textField.tag+1);
     //        UIView *view = [self.view viewWithTag:tag];
@@ -894,6 +935,12 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
     //        }
     //    }
     [textField resignFirstResponder];
+    
+    UITextField * filed = [allFiledForGoto objectForKey:[NSString stringWithFormat:@"%d" ,textField.tag+1]];
+    if (!filed) {
+         filed = [allFiledForGoto objectForKey:[NSString stringWithFormat:@"%d" ,textField.tag+1]];
+    }
+    [filed becomeFirstResponder];
     DLog(@"textfield.tag======%d",textField.tag);
    // [self tableAnimationDown];
     //    if (textField.returnKeyType == UIReturnKeyDone) {
@@ -901,7 +948,7 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
     //        [textField resignFirstResponder];
     //    }
     
-    return NO;
+    return YES;
 }
 
 - (void)addRes:(id)obj2
@@ -914,6 +961,10 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
     }
     [inputsForKeyboard addObject:obj2];
 }
+
+//- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+//    return YES;
+//}
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
