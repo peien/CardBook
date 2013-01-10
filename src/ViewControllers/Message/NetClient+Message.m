@@ -11,11 +11,13 @@
 #import "KHHMessage.h"
 #import "KHHData.h"
 
+
 @implementation NetClient (Message)
+
 @dynamic inMsgView;
 
 - (void)doDeleteInEdit:(id<delegateMsgForRead>)delegate messages:(NSArray *)messages
-{
+{  
     NSMutableArray *arrPro = [[NSMutableArray alloc]init];
     NSMutableArray *arrPro2 = [[NSMutableArray alloc]init];
     for (KHHMessage * msg in messages) {
@@ -41,6 +43,11 @@
 
 - (void)doDelete:(id<delegateMsgForRead>) delegate messages:(NSArray *)messages
 {
+    if ([self.r currentReachabilityStatus] == NotReachable) {
+        [self setYES:messages];
+        [delegate deleFail];
+        return;
+    }
     
     NSDictionary *queryDict = @{ @"method" : @"customFsendService.delete" };
     NSString *path = [NSString stringWithFormat:@"rest?%@",
@@ -107,7 +114,12 @@
     AFHTTPRequestOperation *reqOperation = [self
                                             HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject)
                                             {
+                                                
                                                 NSDictionary *responseDict = [self JSONDictionaryWithResponse:responseObject];
+                                                if ([responseDict objectForKey:@"errorCode"]!=0) {
+                                                    [delegate reseaveFail];
+
+                                                }
                                                 NSArray *fsendList = responseDict[@"fsendList"];
                                                 NSMutableArray *messageList = [NSMutableArray arrayWithCapacity:fsendList.count];
                                                 for (id obj in fsendList) {

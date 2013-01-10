@@ -293,39 +293,42 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
             titlePro = @"新建计划";
             
             break;
-        case 1:
-            {
-                dicPro = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"collection" ofType:@"plist"]];
-                
-                titlePro = @"数据采集";
-                
-                break;
-            case 2:
-                {
-                    dicPro = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"attendance" ofType:@"plist"]];
-                    titlePro = @"考勤";
-                    
-                    break;
-                }
-            case 3:
-                {
-                    //          dicPro = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"attendance" ofType:@"plist"]];
-                    KHHCalendarViewController *calVC = [[KHHCalendarViewController alloc] initWithNibName:nil bundle:nil];
-                    calVC.card = self.myCard;
-                    [self.navigationController pushViewController:calVC animated:YES];
-                    break;
-                }
-            default:
-                
-                break;
-            }
         }
+        case 1:
+        {
+            dicPro = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"collection" ofType:@"plist"]];
             
-            KHHPlanViewController *viewPro = [[KHHPlanViewController alloc]init];
-            viewPro.paramDic = dicPro;
-            viewPro.title = titlePro;
-            [self.navigationController pushViewController:viewPro animated:YES];
+            titlePro = @"数据采集";
+            
+            break;
+        }
+        case 2:
+        {
+            dicPro = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"attendance" ofType:@"plist"]];
+            titlePro = @"考勤";
+            
+            break;
+        }
+        case 3:
+        {
+            //          dicPro = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"attendance" ofType:@"plist"]];
+            KHHCalendarViewController *calVC = [[KHHCalendarViewController alloc] initWithNibName:nil bundle:nil];
+            calVC.card = self.myCard;
+            [self.navigationController pushViewController:calVC animated:YES];
+            break;
+            return;
+        }
+        default:
+        {
+            
+            break;
+        }
     }
+    
+    KHHPlanViewController *viewPro = [[KHHPlanViewController alloc]init];
+    viewPro.paramDic = dicPro;
+    viewPro.title = titlePro;
+    [self.navigationController pushViewController:viewPro animated:YES];
 }
 //交换
 - (IBAction)personBtnClick:(id)sender

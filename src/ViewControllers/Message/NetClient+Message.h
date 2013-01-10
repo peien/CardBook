@@ -8,6 +8,7 @@
 
 #import "NetClient.h"
 #import "MsgDelegates.h"
+#import "Reachability.h"
 
 @interface NetClient (Message)
 
