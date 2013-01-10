@@ -277,7 +277,6 @@
                 [delegate resetPasswordFailed:dict];
             }
         }
-        
     };
     
     //其它操作失败block
