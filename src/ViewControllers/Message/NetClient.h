@@ -11,10 +11,13 @@
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
 #import "KHHTypes.h"
+#import "Reachability.h"
+
 @interface NetClient : AFHTTPClient
 
 @property (nonatomic,strong) NetFromPlist *netFromPlist;
 
+@property (nonatomic,strong) Reachability *r;
 
 + (NetClient *)sharedClient;
 

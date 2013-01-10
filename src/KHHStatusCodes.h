@@ -36,4 +36,6 @@ static const NSInteger KHHErrorCodeLocalDataOperationFailed = 44001;//本地数�
 static const NSInteger KHHErrorCodeBusy = 880001;//忙！因此不能完成操作，稍后再试！
 static const NSInteger KHHErrorCodeParametersNotMeetRequirement = 880002; // 参数不符合要求
 
+static const NSInteger KHHErrorCodeNotReachable = -1000; //当前无网络
+
 #endif

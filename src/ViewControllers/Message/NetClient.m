@@ -12,6 +12,7 @@
 #import "NSString+MD5.h"
 #import "NSData+Base64.h"
 #import "KHHKeys.h"
+#import "KHHStatusCodes.h"
 
 @implementation NetClient
 
@@ -29,6 +30,7 @@
 
 - (id)initWithBase
 {
+    _r = [Reachability reachabilityWithHostname:@"www.apple.com"];
     _netFromPlist = [[NetFromPlist alloc]init];
     self = [super initWithBaseURL:[_netFromPlist currentUrl]];
     if (self) {
@@ -44,8 +46,24 @@
     return self;
 }
 
-#pragma server url
--(NSURL *) currentServerUrl
+#pragma mark - netState
+
+- (AFHTTPRequestOperation *)HTTPRequestOperationWithRequest:(NSURLRequest *)request success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
+{
+    if ([_r currentReachabilityStatus] == NotReachable) {
+        if (success) {
+            NSError *error = [[NSError alloc]initWithDomain:@"网络不可用,不能进行操作!" code:KHHErrorCodeNotReachable userInfo:nil];            
+            failure(nil,error);
+        }
+        return nil;
+        
+    }
+    return [super HTTPRequestOperationWithRequest:request success:success failure:failure];
+}
+
+
+#pragma mark - service url
+- (NSURL *) currentServerUrl
 {
     return [_netFromPlist currentUrl];
 }
