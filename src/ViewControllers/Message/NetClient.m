@@ -11,6 +11,7 @@
 #import "NSString+Networking.h"
 #import "NSString+MD5.h"
 #import "NSData+Base64.h"
+#import "KHHKeys.h"
 
 @implementation NetClient
 
@@ -113,5 +114,40 @@
     result[@"errorCode"] = [NSNumber numberWithInteger:code];
     DLog(@"[II] result class = %@, value = %@", [result class], result);
     return result;
+}
+
+
+#pragma 网络请求时默认的错误
+-(NSDictionary *) defaultFailedResponseDictionary:(NSError *)error
+{
+    DLog(@"[II] error = %@", error);
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:3];
+    dict[kInfoKeyErrorCode] = @(error.code);
+    dict[kInfoKeyErrorMessage] = error.localizedDescription;
+    
+    return dict;
+}
+
+//参数无效的返回的dictionary
+-(NSDictionary *) parametersNotMeetRequirementFailedResponseDictionary
+{
+    NSDictionary *dict = @{
+    kInfoKeyErrorCode : [NSString stringWithFormat:@"%d",KHHErrorCodeParametersNotMeetRequirement],
+    kInfoKeyErrorMessage : NSLocalizedString(@"参数不满足要求！", nil)
+    };
+    return dict;
+}
+
+//默认的请求失败block
+-(KHHFailureBlock) defaultFailedResponse:(id) delegate selector:(NSString *) selector
+{
+    KHHFailureBlock failed = ^(AFHTTPRequestOperation *operation, NSError *error){
+        NSDictionary *dict = [self defaultFailedResponseDictionary:error];
+        if (selector && delegate && [delegate respondsToSelector:NSSelectorFromString(selector)] ) {
+            [delegate performSelector:NSSelectorFromString(selector) withObject:dict];
+        }
+    };
+    
+    return failed;
 }
 @end

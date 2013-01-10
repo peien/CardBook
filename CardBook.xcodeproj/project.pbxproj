@@ -2129,6 +2129,7 @@
 		84732D97169D3AEF00C9910E /* NetClient+Account.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NetClient+Account.h"; sourceTree = "<group>"; };
 		84732D98169D3AEF00C9910E /* NetClient+Account.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NetClient+Account.m"; sourceTree = "<group>"; };
 		84732D9D169D3C8C00C9910E /* KHHNetworkAPIAgent+Account.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHNetworkAPIAgent+Account.h"; sourceTree = "<group>"; };
+		84732DB3169D434200C9910E /* KHHNetClientAccountDelegates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNetClientAccountDelegates.h; sourceTree = "<group>"; };
 		849FBC91168A9ACF00C54EE5 /* ic_photo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_photo@2x.png"; sourceTree = "<group>"; };
 		84C111DC169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "title_btn_with_drop@2x.png"; sourceTree = "<group>"; };
 		84DA3F14169D097500D222A4 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
@@ -2908,6 +2909,7 @@
 			isa = PBXGroup;
 			children = (
 				310A3F36168D2C43009FF135 /* MsgDelegates.h */,
+				84732DB3169D434200C9910E /* KHHNetClientAccountDelegates.h */,
 			);
 			name = NetDelegate;
 			sourceTree = "<group>";
