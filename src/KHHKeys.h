@@ -166,13 +166,16 @@ static NSString * const JSONDataKeyWangWang = @"wangwang";
 static NSString * const JSONDataKeyWeb = @"web";
 static NSString * const JSONDataKeyWithPerson = @"withPerson";
 static NSString * const JSONDataKeyZipcode = @"zipcode";
+static NSString * const JSONDataKeySessionID = @"sessionId";
 
 #pragma mark - kInfoKey* : Info dictionary key
+static NSString * const kInfoKeySessionID = @"sessionID";//NSString
 static NSString * const kInfoKeyAction = @"action";//NSString
 static NSString * const kInfoKeyAuthorizationID = @"authorizationID";//NSNumber
 static NSString * const kInfoKeyAutoLogin = @"autoLogin";//NSNumber(BOOL)
 static NSString * const kInfoKeyAutoReceive = @"autoReceive";//NSNumber(BOOL)
 static NSString * const kInfoKeyCompanyID = @"companyID";//NSNumber
+static NSString * const kInfoKeyCompanyName = @"companyName";//NSString
 static NSString * const kInfoKeyCompanyPromotionLinkList = @"companyPromotionLinkList";//NSArray
 static NSString * const kInfoKeyCount = @"count";//NSNumber
 static NSString * const kInfoKeyCustomerCard = @"customerCard";
