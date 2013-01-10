@@ -27,6 +27,8 @@
 #import "KHHNotifications.h"
 #import "NSString+SM.h"
 
+
+
 #define CARD_IMGVIEW_TAG 990
 #define CARDMOD_VIEW_TAG 991
 
@@ -472,10 +474,10 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
             cell.nameValue.placeholder = [[self.placeName objectAtIndex:2] objectAtIndex:0];
             cell.jobValue.placeholder = [[self.placeName objectAtIndex:2] objectAtIndex:1];
             [cell.iconImg setImageWithURL:[NSURL URLWithString:_glCard.logo.url] placeholderImage:[UIImage imageNamed:@"logopic.png"]];
-            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapIconImage:)];
-            tap.numberOfTapsRequired = 1;
-            tap.numberOfTouchesRequired = 1;
-            [cell.iconImg addGestureRecognizer:tap];
+////            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapIconImage:)];
+//            tap.numberOfTapsRequired = 1;
+//            tap.numberOfTouchesRequired = 1;
+//            [cell.iconImg addGestureRecognizer:tap];
             CGRect rect = cell.frame;
             rect.origin.x -= 100;
             cell.frame = rect;
@@ -1196,9 +1198,27 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
         self.progressHud.labelText = KHHMessageCreateCard;
         //暂时这样写 templateID不确定
         self.interCard.templateID = self.cardTemp.id;
+//        NSLog(@"..%@",self.cardTemp);
+//        NSLog(@"..%@",self.interCard);
         [self.dataCtrl createPrivateCardWithInterCard:self.interCard];
+        //[[NetClient sharedClient]CreatePrivateCard:self.interCard delegate:self];
     }
 }
+
+#pragma mark - Private delegate
+
+- (void)createDone
+{
+    self.progressHud.hidden = YES;
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)createFail:(NSString *)msg
+{
+    self.progressHud.hidden = YES;
+    [self warnAlertMessage:msg];
+}
+
 - (void)saveToDictionary:(NSString *)object key:(NSString *)key
 {
     [self.saveInfoDic setObject:object forKey:key];

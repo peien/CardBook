@@ -975,6 +975,10 @@
 		319C29F6169C0672005A1BFF /* collection.plist in Resources */ = {isa = PBXBuildFile; fileRef = 319C29F4169C0672005A1BFF /* collection.plist */; };
 		319C29F7169C0672005A1BFF /* collection.plist in Resources */ = {isa = PBXBuildFile; fileRef = 319C29F4169C0672005A1BFF /* collection.plist */; };
 		319C29F8169C0672005A1BFF /* collection.plist in Resources */ = {isa = PBXBuildFile; fileRef = 319C29F4169C0672005A1BFF /* collection.plist */; };
+		31D0E3DD169D4B4300E410CA /* NetClient+PrivateCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D0E3DC169D4B4300E410CA /* NetClient+PrivateCard.m */; };
+		31D0E3DE169D4B4300E410CA /* NetClient+PrivateCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D0E3DC169D4B4300E410CA /* NetClient+PrivateCard.m */; };
+		31D0E3DF169D4B4300E410CA /* NetClient+PrivateCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D0E3DC169D4B4300E410CA /* NetClient+PrivateCard.m */; };
+		31D0E3E0169D4B4300E410CA /* NetClient+PrivateCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D0E3DC169D4B4300E410CA /* NetClient+PrivateCard.m */; };
 		31FCBC371682BD0A00ABFE3F /* KHHFilterPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FCBC361682BD0A00ABFE3F /* KHHFilterPopup.m */; };
 		31FCBC381682BD0A00ABFE3F /* KHHFilterPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FCBC361682BD0A00ABFE3F /* KHHFilterPopup.m */; };
 		624F8C7F1676C167006CD354 /* KHHBMapLocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 624F8C7E1676C167006CD354 /* KHHBMapLocationController.m */; };
@@ -1941,6 +1945,9 @@
 		3180A55516981E8F00DD9501 /* KHHImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHImageCell.m; sourceTree = "<group>"; };
 		319C29EF169C04D4005A1BFF /* attendance.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = attendance.plist; sourceTree = "<group>"; };
 		319C29F4169C0672005A1BFF /* collection.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = collection.plist; sourceTree = "<group>"; };
+		31D0E3DB169D4B4300E410CA /* NetClient+PrivateCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NetClient+PrivateCard.h"; sourceTree = "<group>"; };
+		31D0E3DC169D4B4300E410CA /* NetClient+PrivateCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NetClient+PrivateCard.m"; sourceTree = "<group>"; };
+		31D0E3E8169D553200E410CA /* PrivateDelegates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivateDelegates.h; sourceTree = "<group>"; };
 		31FCBC351682BD0A00ABFE3F /* KHHFilterPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHFilterPopup.h; sourceTree = "<group>"; };
 		31FCBC361682BD0A00ABFE3F /* KHHFilterPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHFilterPopup.m; sourceTree = "<group>"; };
 		620712F01650D263000188E8 /* LoginImage_normal@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "LoginImage_normal@2x.jpg"; sourceTree = "<group>"; };
@@ -2906,6 +2913,16 @@
 			name = NetDelegate;
 			sourceTree = "<group>";
 		};
+		31D0E3D9169D4A5500E410CA /* network */ = {
+			isa = PBXGroup;
+			children = (
+				31D0E3DB169D4B4300E410CA /* NetClient+PrivateCard.h */,
+				31D0E3DC169D4B4300E410CA /* NetClient+PrivateCard.m */,
+				31D0E3E8169D553200E410CA /* PrivateDelegates.h */,
+			);
+			name = network;
+			sourceTree = "<group>";
+		};
 		31FCBC301682B52600ABFE3F /* Popup */ = {
 			isa = PBXGroup;
 			children = (
@@ -3558,6 +3575,7 @@
 		98A84E331602D66200A4A673 /* Edit */ = {
 			isa = PBXGroup;
 			children = (
+				31D0E3D9169D4A5500E410CA /* network */,
 				98A84E341602D66200A4A673 /* Edit_eCardViewCell.h */,
 				98A84E351602D66200A4A673 /* Edit_eCardViewCell.m */,
 				98A84E361602D66200A4A673 /* Edit_eCardViewCell.xib */,
@@ -5559,6 +5577,7 @@
 				310523E4169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */,
 				3104A148169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */,
 				84DA3F1D169D097500D222A4 /* Reachability.m in Sources */,
+				31D0E3E0169D4B4300E410CA /* NetClient+PrivateCard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5785,6 +5804,7 @@
 				310523E3169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */,
 				3104A147169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */,
 				84DA3F1C169D097500D222A4 /* Reachability.m in Sources */,
+				31D0E3DF169D4B4300E410CA /* NetClient+PrivateCard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6011,6 +6031,7 @@
 				310523E1169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */,
 				3104A145169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */,
 				84DA3F1A169D097500D222A4 /* Reachability.m in Sources */,
+				31D0E3DD169D4B4300E410CA /* NetClient+PrivateCard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6235,6 +6256,7 @@
 				310523E2169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */,
 				3104A146169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */,
 				84DA3F1B169D097500D222A4 /* Reachability.m in Sources */,
+				31D0E3DE169D4B4300E410CA /* NetClient+PrivateCard.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

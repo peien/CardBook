@@ -28,6 +28,7 @@
 
 - (id)initWithBase
 {
+    _r = [Reachability reachabilityWithHostname:@"www.apple.com"];
     _netFromPlist = [[NetFromPlist alloc]init];
     self = [super initWithBaseURL:[_netFromPlist currentUrl]];
     if (self) {

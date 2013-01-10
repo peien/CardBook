@@ -14,7 +14,9 @@ typedef enum {
 #import "SuperViewController.h"
 #import "Card.h"
 #import "KHHClasses.h"
-@interface Edit_eCardViewController : SuperViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
+#import "NetClient+PrivateCard.h"
+
+@interface Edit_eCardViewController : SuperViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,delegateNewPrivateForEdit>
 @property (strong, nonatomic) IBOutlet UITableView *theTable;
 @property (strong, nonatomic)  NSArray              *fieldName;
 @property (strong, nonatomic)  NSMutableArray       *fieldValue;
