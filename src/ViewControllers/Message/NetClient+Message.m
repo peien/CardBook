@@ -114,7 +114,12 @@
     AFHTTPRequestOperation *reqOperation = [self
                                             HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject)
                                             {
+                                                
                                                 NSDictionary *responseDict = [self JSONDictionaryWithResponse:responseObject];
+                                                if ([responseDict objectForKey:@"errorCode"]!=0) {
+                                                    [delegate reseaveFail];
+
+                                                }
                                                 NSArray *fsendList = responseDict[@"fsendList"];
                                                 NSMutableArray *messageList = [NSMutableArray arrayWithCapacity:fsendList.count];
                                                 for (id obj in fsendList) {
