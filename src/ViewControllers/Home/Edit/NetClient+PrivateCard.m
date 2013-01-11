@@ -100,28 +100,28 @@ NSMutableDictionary * ParametersToCreateCard(InterCard *iCard)
 
 - (void)CreatePrivateCard:(InterCard *)iCard delegate:(id<delegateNewPrivateForEdit>)delegate
 {
-    if ([self.r currentReachabilityStatus]== NotReachable) {
-        [delegate createFail:@"当前无网络，创建失败"];
-        return;
-    }
-   [self postPath:@"card" parameters:ParametersToCreateOrUpdateCard(iCard) success:^(AFHTTPRequestOperation *operation, id responseObject) {
-       NSDictionary *responseDict = [self JSONDictionaryWithResponse:responseObject];
-       DLog(@"[II] responseDict = %@", responseDict);
-       KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
-       if (code == 0) {
-           iCard.id = responseDict[@"id"];
-           iCard.modelType = KHHCardModelTypePrivateCard;
-           [PrivateCard processIObject:iCard];
-            [[KHHData sharedData] saveContext];
-           [delegate createDone];
-           
-       }else{
-          [delegate createFail:@"服务器忙"];
-           
-       }
-   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-       [delegate createFail:@"服务器忙"];
-   }];
+//    if ([self.r currentReachabilityStatus]== NotReachable) {
+//        [delegate createFail:@"当前无网络，创建失败"];
+//        return;
+//    }
+//   [self postPath:@"card" parameters:ParametersToCreateOrUpdateCard(iCard) success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//       NSDictionary *responseDict = [self JSONDictionaryWithResponse:responseObject];
+//       DLog(@"[II] responseDict = %@", responseDict);
+//       KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+//       if (code == 0) {
+//           iCard.id = responseDict[@"id"];
+//           iCard.modelType = KHHCardModelTypePrivateCard;
+//           [PrivateCard processIObject:iCard];
+//            [[KHHData sharedData] saveContext];
+//           [delegate createDone];
+//           
+//       }else{
+//          [delegate createFail:@"服务器忙"];
+//           
+//       }
+//   } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//       [delegate createFail:@"服务器忙"];
+//   }];
 }
 
 @end

@@ -1,27 +1,39 @@
 //
-//  NetClient+Account.m
+//  KHHNetClinetAPIAgent+Account.m
 //  CardBook
 //
 //  Created by 王定方 on 13-1-9.
 //  Copyright (c) 2013年 Kinghanhong. All rights reserved.
 //
 
-#import "NetClient+Account.h"
+#import "KHHNetClinetAPIAgent+Account.h"
 #import "Encryptor.h"
 #import "NSString+SM.h"
 #import "NSNumber+SM.h"
-#import "KHHKeys.h"
-#import "KHHTypes.h"
 
-@implementation NetClient (Account)
+@implementation KHHNetClinetAPIAgent (Account)
 /*
  * 用户登录
  * http://192.168.1.151/zentaopms/www/index.php?m=doc&f=view&docID=230
  * 方法 post
  */
-- (BOOL) login:(NSString *)user password:(NSString *)password delegate:(id<KHHNetClientAccountDelegates>) delegate
+- (BOOL) login:(NSString *)user password:(NSString *)password delegate:(id<KHHNetAgentAccountDelegates>) delegate
 {
+    //网络不可用
+    if (![self networkStateIsValid]) {
+        if ([delegate respondsToSelector:@selector(loginFailed:)]) {
+            NSDictionary *dict = [self networkUnableFailedResponseDictionary];
+            [delegate loginFailed:dict];
+        }
+        return NO;
+    }
+    
+    //参数不可用
     if (0 == [user length] || 0 == [password length]) {
+        if ([delegate respondsToSelector:@selector(loginFailed:)]) {
+            NSDictionary *dict = [self parametersNotMeetRequirementFailedResponseDictionary];
+            [delegate loginFailed:dict];
+        }
         return NO;
     }
     
@@ -108,8 +120,18 @@
  * http://192.168.1.151/zentaopms/www/index.php?m=doc&f=view&docID=231
  * 方法 post
  */
-- (void)createAccount:(NSDictionary *)accountDict delegate:(id<KHHNetClientAccountDelegates>) delegate
+- (void)createAccount:(NSDictionary *)accountDict delegate:(id<KHHNetAgentAccountDelegates>) delegate
 {
+    //网络不可用
+    if (![self networkStateIsValid]) {
+        if ([delegate respondsToSelector:@selector(createAccountFailed:)]) {
+            NSDictionary *dict = [self networkUnableFailedResponseDictionary];
+            [delegate createAccountFailed:dict];
+        }
+        
+        return;
+    }
+    
     NSString *path     = @"register";
     NSString *user     = accountDict[kAccountKeyUser];
     NSString *password = accountDict[kAccountKeyPassword];
@@ -185,8 +207,18 @@
  * 方法 put
  * 参数 passwd/{oldPassword}/{newPassword}
  */
-- (BOOL)changePassword:(NSString *)oldPassword toNewPassword:(NSString *)newPassword delegate:(id<KHHNetClientAccountDelegates>) delegate
+- (BOOL)changePassword:(NSString *)oldPassword toNewPassword:(NSString *)newPassword delegate:(id<KHHNetAgentAccountDelegates>) delegate
 {
+    //网络不可用
+    if (![self networkStateIsValid]) {
+        if ([delegate respondsToSelector:@selector(changePasswordFailed:)]) {
+            NSDictionary *dict = [self networkUnableFailedResponseDictionary];
+            [delegate changePasswordFailed:dict];
+        }
+        
+        return NO;
+    }
+
     if (0 == [oldPassword length] || 0 == [newPassword length]) {
         //无效参数
         if ([delegate respondsToSelector:@selector(changePasswordFailed:)]) {
@@ -241,8 +273,18 @@
  * http://192.168.1.151/zentaopms/www/index.php?m=doc&f=view&docID=233
  * 方法 get
  */
-- (BOOL)resetPassword:(NSString *)mobile delegate:(id<KHHNetClientAccountDelegates>) delegate
+- (BOOL)resetPassword:(NSString *)mobile delegate:(id<KHHNetAgentAccountDelegates>) delegate
 {
+    //网络不可用
+    if (![self networkStateIsValid]) {
+        if ([delegate respondsToSelector:@selector(resetPasswordFailed:)]) {
+            NSDictionary *dict = [self networkUnableFailedResponseDictionary];
+            [delegate resetPasswordFailed:dict];
+        }
+        
+        return NO;
+    }
+    //参数无效
     if (0 == mobile.length) {
         // mobile为nil或@""
         //无效参数

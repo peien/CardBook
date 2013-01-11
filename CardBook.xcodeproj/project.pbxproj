@@ -686,10 +686,10 @@
 		314A0287168C0D2700029324 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 314A0286168C0D2700029324 /* User.m */; };
 		314A0288168C0D2700029324 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 314A0286168C0D2700029324 /* User.m */; };
 		314A0289168C0D2700029324 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 314A0286168C0D2700029324 /* User.m */; };
-		314A032C168C52D000029324 /* NetClient+Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 314A032B168C52D000029324 /* NetClient+Message.m */; };
-		314A032D168C52D000029324 /* NetClient+Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 314A032B168C52D000029324 /* NetClient+Message.m */; };
-		314A032E168C52D000029324 /* NetClient+Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 314A032B168C52D000029324 /* NetClient+Message.m */; };
-		314A032F168C52D000029324 /* NetClient+Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 314A032B168C52D000029324 /* NetClient+Message.m */; };
+		314A032C168C52D000029324 /* KHHNetClinetAPIAgent+Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 314A032B168C52D000029324 /* KHHNetClinetAPIAgent+Message.m */; };
+		314A032D168C52D000029324 /* KHHNetClinetAPIAgent+Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 314A032B168C52D000029324 /* KHHNetClinetAPIAgent+Message.m */; };
+		314A032E168C52D000029324 /* KHHNetClinetAPIAgent+Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 314A032B168C52D000029324 /* KHHNetClinetAPIAgent+Message.m */; };
+		314A032F168C52D000029324 /* KHHNetClinetAPIAgent+Message.m in Sources */ = {isa = PBXBuildFile; fileRef = 314A032B168C52D000029324 /* KHHNetClinetAPIAgent+Message.m */; };
 		314AFEF9168BEC3700029324 /* NetClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 314AFEF8168BEC3700029324 /* NetClient.m */; };
 		314AFEFA168BEC3700029324 /* NetClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 314AFEF8168BEC3700029324 /* NetClient.m */; };
 		314AFEFC168BEC4A00029324 /* Net.plist in Resources */ = {isa = PBXBuildFile; fileRef = 314AFEFB168BEC4A00029324 /* Net.plist */; };
@@ -1870,14 +1870,30 @@
 		845759F4169AA0CF005A5F60 /* KHHViewAdapterUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 845759F2169AA0CF005A5F60 /* KHHViewAdapterUtil.m */; };
 		845759F5169AA0CF005A5F60 /* KHHViewAdapterUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 845759F2169AA0CF005A5F60 /* KHHViewAdapterUtil.m */; };
 		845759F6169AA0CF005A5F60 /* KHHViewAdapterUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 845759F2169AA0CF005A5F60 /* KHHViewAdapterUtil.m */; };
-		84732D99169D3AEF00C9910E /* NetClient+Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732D98169D3AEF00C9910E /* NetClient+Account.m */; };
-		84732D9A169D3AEF00C9910E /* NetClient+Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732D98169D3AEF00C9910E /* NetClient+Account.m */; };
-		84732D9B169D3AEF00C9910E /* NetClient+Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732D98169D3AEF00C9910E /* NetClient+Account.m */; };
-		84732D9C169D3AEF00C9910E /* NetClient+Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732D98169D3AEF00C9910E /* NetClient+Account.m */; };
-		84732DBD169E65BB00C9910E /* NetClient+Template.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732DBC169E65BA00C9910E /* NetClient+Template.m */; };
-		84732DBE169E65BB00C9910E /* NetClient+Template.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732DBC169E65BA00C9910E /* NetClient+Template.m */; };
-		84732DBF169E65BB00C9910E /* NetClient+Template.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732DBC169E65BA00C9910E /* NetClient+Template.m */; };
-		84732DC0169E65BB00C9910E /* NetClient+Template.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732DBC169E65BA00C9910E /* NetClient+Template.m */; };
+		84732D99169D3AEF00C9910E /* KHHNetClinetAPIAgent+Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732D98169D3AEF00C9910E /* KHHNetClinetAPIAgent+Account.m */; };
+		84732D9A169D3AEF00C9910E /* KHHNetClinetAPIAgent+Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732D98169D3AEF00C9910E /* KHHNetClinetAPIAgent+Account.m */; };
+		84732D9B169D3AEF00C9910E /* KHHNetClinetAPIAgent+Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732D98169D3AEF00C9910E /* KHHNetClinetAPIAgent+Account.m */; };
+		84732D9C169D3AEF00C9910E /* KHHNetClinetAPIAgent+Account.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732D98169D3AEF00C9910E /* KHHNetClinetAPIAgent+Account.m */; };
+		84732DBD169E65BB00C9910E /* KHHNetClinetAPIAgent+Template.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732DBC169E65BA00C9910E /* KHHNetClinetAPIAgent+Template.m */; };
+		84732DBE169E65BB00C9910E /* KHHNetClinetAPIAgent+Template.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732DBC169E65BA00C9910E /* KHHNetClinetAPIAgent+Template.m */; };
+		84732DBF169E65BB00C9910E /* KHHNetClinetAPIAgent+Template.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732DBC169E65BA00C9910E /* KHHNetClinetAPIAgent+Template.m */; };
+		84732DC0169E65BB00C9910E /* KHHNetClinetAPIAgent+Template.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732DBC169E65BA00C9910E /* KHHNetClinetAPIAgent+Template.m */; };
+		84732DD4169EA0BB00C9910E /* KHHNetClinetAPIAgent+Exchange.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732DD3169EA0BB00C9910E /* KHHNetClinetAPIAgent+Exchange.m */; };
+		84732DD5169EA0BB00C9910E /* KHHNetClinetAPIAgent+Exchange.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732DD3169EA0BB00C9910E /* KHHNetClinetAPIAgent+Exchange.m */; };
+		84732DD6169EA0BB00C9910E /* KHHNetClinetAPIAgent+Exchange.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732DD3169EA0BB00C9910E /* KHHNetClinetAPIAgent+Exchange.m */; };
+		84732DD7169EA0BB00C9910E /* KHHNetClinetAPIAgent+Exchange.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732DD3169EA0BB00C9910E /* KHHNetClinetAPIAgent+Exchange.m */; };
+		84732DDB169EAB9A00C9910E /* KHHNetClinetAPIAgent+Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732DDA169EAB9A00C9910E /* KHHNetClinetAPIAgent+Group.m */; };
+		84732DDC169EAB9A00C9910E /* KHHNetClinetAPIAgent+Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732DDA169EAB9A00C9910E /* KHHNetClinetAPIAgent+Group.m */; };
+		84732DDD169EAB9A00C9910E /* KHHNetClinetAPIAgent+Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732DDA169EAB9A00C9910E /* KHHNetClinetAPIAgent+Group.m */; };
+		84732DDE169EAB9A00C9910E /* KHHNetClinetAPIAgent+Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732DDA169EAB9A00C9910E /* KHHNetClinetAPIAgent+Group.m */; };
+		84732DE1169FAD6000C9910E /* KHHNetClinetAPIAgent+VisitSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732DE0169FAD5F00C9910E /* KHHNetClinetAPIAgent+VisitSchedule.m */; };
+		84732DE2169FAD6000C9910E /* KHHNetClinetAPIAgent+VisitSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732DE0169FAD5F00C9910E /* KHHNetClinetAPIAgent+VisitSchedule.m */; };
+		84732DE3169FAD6000C9910E /* KHHNetClinetAPIAgent+VisitSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732DE0169FAD5F00C9910E /* KHHNetClinetAPIAgent+VisitSchedule.m */; };
+		84732DE4169FAD6000C9910E /* KHHNetClinetAPIAgent+VisitSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732DE0169FAD5F00C9910E /* KHHNetClinetAPIAgent+VisitSchedule.m */; };
+		84732DE8169FB25600C9910E /* KHHNetClinetAPIAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732DE7169FB25600C9910E /* KHHNetClinetAPIAgent.m */; };
+		84732DE9169FB25600C9910E /* KHHNetClinetAPIAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732DE7169FB25600C9910E /* KHHNetClinetAPIAgent.m */; };
+		84732DEA169FB25600C9910E /* KHHNetClinetAPIAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732DE7169FB25600C9910E /* KHHNetClinetAPIAgent.m */; };
+		84732DEB169FB25600C9910E /* KHHNetClinetAPIAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732DE7169FB25600C9910E /* KHHNetClinetAPIAgent.m */; };
 		849FBC93168AA80A00C54EE5 /* ic_photo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 849FBC91168A9ACF00C54EE5 /* ic_photo@2x.png */; };
 		849FBC94168AA80B00C54EE5 /* ic_photo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 849FBC91168A9ACF00C54EE5 /* ic_photo@2x.png */; };
 		84C111DD169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C111DC169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png */; };
@@ -1933,8 +1949,8 @@
 		314A0281168C08F100029324 /* LoginLogic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginLogic.m; sourceTree = "<group>"; };
 		314A0285168C0D2700029324 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		314A0286168C0D2700029324 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
-		314A032A168C52D000029324 /* NetClient+Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NetClient+Message.h"; path = "../ViewControllers/Message/NetClient+Message.h"; sourceTree = "<group>"; };
-		314A032B168C52D000029324 /* NetClient+Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NetClient+Message.m"; path = "../ViewControllers/Message/NetClient+Message.m"; sourceTree = "<group>"; };
+		314A032A168C52D000029324 /* KHHNetClinetAPIAgent+Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "KHHNetClinetAPIAgent+Message.h"; path = "../ViewControllers/Message/KHHNetClinetAPIAgent+Message.h"; sourceTree = "<group>"; };
+		314A032B168C52D000029324 /* KHHNetClinetAPIAgent+Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "KHHNetClinetAPIAgent+Message.m"; path = "../ViewControllers/Message/KHHNetClinetAPIAgent+Message.m"; sourceTree = "<group>"; };
 		314AFEF7168BEC3700029324 /* NetClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NetClient.h; path = ../ViewControllers/Message/NetClient.h; sourceTree = "<group>"; };
 		314AFEF8168BEC3700029324 /* NetClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NetClient.m; path = ../ViewControllers/Message/NetClient.m; sourceTree = "<group>"; };
 		314AFEFB168BEC4A00029324 /* Net.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Net.plist; path = ../ViewControllers/Message/Net.plist; sourceTree = "<group>"; };
@@ -2137,12 +2153,24 @@
 		845759EB16997102005A5F60 /* KHHSendRecordCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHSendRecordCell.xib; sourceTree = "<group>"; };
 		845759F1169AA0CF005A5F60 /* KHHViewAdapterUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHViewAdapterUtil.h; sourceTree = "<group>"; };
 		845759F2169AA0CF005A5F60 /* KHHViewAdapterUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHViewAdapterUtil.m; sourceTree = "<group>"; };
-		84732D97169D3AEF00C9910E /* NetClient+Account.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NetClient+Account.h"; sourceTree = "<group>"; };
-		84732D98169D3AEF00C9910E /* NetClient+Account.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NetClient+Account.m"; sourceTree = "<group>"; };
+		84732D97169D3AEF00C9910E /* KHHNetClinetAPIAgent+Account.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHNetClinetAPIAgent+Account.h"; sourceTree = "<group>"; };
+		84732D98169D3AEF00C9910E /* KHHNetClinetAPIAgent+Account.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHNetClinetAPIAgent+Account.m"; sourceTree = "<group>"; };
 		84732D9D169D3C8C00C9910E /* KHHNetworkAPIAgent+Account.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHNetworkAPIAgent+Account.h"; sourceTree = "<group>"; };
-		84732DB3169D434200C9910E /* KHHNetClientAccountDelegates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNetClientAccountDelegates.h; sourceTree = "<group>"; };
-		84732DBB169E65BA00C9910E /* NetClient+Template.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NetClient+Template.h"; sourceTree = "<group>"; };
-		84732DBC169E65BA00C9910E /* NetClient+Template.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NetClient+Template.m"; sourceTree = "<group>"; };
+		84732DB3169D434200C9910E /* KHHNetAgentAccountDelegates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNetAgentAccountDelegates.h; sourceTree = "<group>"; };
+		84732DBB169E65BA00C9910E /* KHHNetClinetAPIAgent+Template.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHNetClinetAPIAgent+Template.h"; sourceTree = "<group>"; };
+		84732DBC169E65BA00C9910E /* KHHNetClinetAPIAgent+Template.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHNetClinetAPIAgent+Template.m"; sourceTree = "<group>"; };
+		84732DCF169E8CB700C9910E /* KHHNetAgentTemplateDelegates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNetAgentTemplateDelegates.h; sourceTree = "<group>"; };
+		84732DD1169E9E3F00C9910E /* KHHNetAgentExchangeDelegates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNetAgentExchangeDelegates.h; sourceTree = "<group>"; };
+		84732DD2169EA0BA00C9910E /* KHHNetClinetAPIAgent+Exchange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHNetClinetAPIAgent+Exchange.h"; sourceTree = "<group>"; };
+		84732DD3169EA0BB00C9910E /* KHHNetClinetAPIAgent+Exchange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHNetClinetAPIAgent+Exchange.m"; sourceTree = "<group>"; };
+		84732DD8169EA78900C9910E /* KHHNetAgentGroupDelegates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNetAgentGroupDelegates.h; sourceTree = "<group>"; };
+		84732DD9169EAB9900C9910E /* KHHNetClinetAPIAgent+Group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHNetClinetAPIAgent+Group.h"; sourceTree = "<group>"; };
+		84732DDA169EAB9A00C9910E /* KHHNetClinetAPIAgent+Group.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHNetClinetAPIAgent+Group.m"; sourceTree = "<group>"; };
+		84732DDF169FAD5F00C9910E /* KHHNetClinetAPIAgent+VisitSchedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHNetClinetAPIAgent+VisitSchedule.h"; sourceTree = "<group>"; };
+		84732DE0169FAD5F00C9910E /* KHHNetClinetAPIAgent+VisitSchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHNetClinetAPIAgent+VisitSchedule.m"; sourceTree = "<group>"; };
+		84732DE5169FADD200C9910E /* KHHNetAgentVisitScheduleDelegates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNetAgentVisitScheduleDelegates.h; sourceTree = "<group>"; };
+		84732DE6169FB25500C9910E /* KHHNetClinetAPIAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNetClinetAPIAgent.h; sourceTree = "<group>"; };
+		84732DE7169FB25600C9910E /* KHHNetClinetAPIAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHNetClinetAPIAgent.m; sourceTree = "<group>"; };
 		849FBC91168A9ACF00C54EE5 /* ic_photo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_photo@2x.png"; sourceTree = "<group>"; };
 		84C111DC169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "title_btn_with_drop@2x.png"; sourceTree = "<group>"; };
 		84DA3F14169D097500D222A4 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
@@ -2913,6 +2941,8 @@
 				314AFEFB168BEC4A00029324 /* Net.plist */,
 				314AFEFE168BECBB00029324 /* NetFromPlist.h */,
 				314AFEFF168BECBB00029324 /* NetFromPlist.m */,
+				84732DE6169FB25500C9910E /* KHHNetClinetAPIAgent.h */,
+				84732DE7169FB25600C9910E /* KHHNetClinetAPIAgent.m */,
 			);
 			name = NetClient;
 			path = Network;
@@ -2922,7 +2952,11 @@
 			isa = PBXGroup;
 			children = (
 				310A3F36168D2C43009FF135 /* MsgDelegates.h */,
-				84732DB3169D434200C9910E /* KHHNetClientAccountDelegates.h */,
+				84732DB3169D434200C9910E /* KHHNetAgentAccountDelegates.h */,
+				84732DCF169E8CB700C9910E /* KHHNetAgentTemplateDelegates.h */,
+				84732DD1169E9E3F00C9910E /* KHHNetAgentExchangeDelegates.h */,
+				84732DD8169EA78900C9910E /* KHHNetAgentGroupDelegates.h */,
+				84732DE5169FADD200C9910E /* KHHNetAgentVisitScheduleDelegates.h */,
 			);
 			name = NetDelegate;
 			sourceTree = "<group>";
@@ -3094,15 +3128,21 @@
 		84DA3F10169D090E00D222A4 /* NetWork_New */ = {
 			isa = PBXGroup;
 			children = (
-				84732D97169D3AEF00C9910E /* NetClient+Account.h */,
-				84732D98169D3AEF00C9910E /* NetClient+Account.m */,
-				314A032A168C52D000029324 /* NetClient+Message.h */,
-				314A032B168C52D000029324 /* NetClient+Message.m */,
+				84732D97169D3AEF00C9910E /* KHHNetClinetAPIAgent+Account.h */,
+				84732D98169D3AEF00C9910E /* KHHNetClinetAPIAgent+Account.m */,
+				314A032A168C52D000029324 /* KHHNetClinetAPIAgent+Message.h */,
+				314A032B168C52D000029324 /* KHHNetClinetAPIAgent+Message.m */,
 				31D0E3BC169D3B0100E410CA /* NetDelegate */,
 				84DA3F14169D097500D222A4 /* Reachability.h */,
 				84DA3F15169D097500D222A4 /* Reachability.m */,
-				84732DBB169E65BA00C9910E /* NetClient+Template.h */,
-				84732DBC169E65BA00C9910E /* NetClient+Template.m */,
+				84732DBB169E65BA00C9910E /* KHHNetClinetAPIAgent+Template.h */,
+				84732DBC169E65BA00C9910E /* KHHNetClinetAPIAgent+Template.m */,
+				84732DD2169EA0BA00C9910E /* KHHNetClinetAPIAgent+Exchange.h */,
+				84732DD3169EA0BB00C9910E /* KHHNetClinetAPIAgent+Exchange.m */,
+				84732DD9169EAB9900C9910E /* KHHNetClinetAPIAgent+Group.h */,
+				84732DDA169EAB9A00C9910E /* KHHNetClinetAPIAgent+Group.m */,
+				84732DDF169FAD5F00C9910E /* KHHNetClinetAPIAgent+VisitSchedule.h */,
+				84732DE0169FAD5F00C9910E /* KHHNetClinetAPIAgent+VisitSchedule.m */,
 			);
 			path = NetWork_New;
 			sourceTree = "<group>";
@@ -5573,7 +5613,7 @@
 				314A0188168BEF3800029324 /* NetFromPlist.m in Sources */,
 				314A0284168C08F100029324 /* LoginLogic.m in Sources */,
 				314A0289168C0D2700029324 /* User.m in Sources */,
-				314A032F168C52D000029324 /* NetClient+Message.m in Sources */,
+				314A032F168C52D000029324 /* KHHNetClinetAPIAgent+Message.m in Sources */,
 				3102673F1696ACA200FBE156 /* KHHTargetCell.m in Sources */,
 				842D57841697C939005C0CF4 /* KHHOrganizationViewController.m in Sources */,
 				310267621696B05B00FBE156 /* KHHPlanViewController.m in Sources */,
@@ -5595,9 +5635,13 @@
 				310523E4169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */,
 				3104A148169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */,
 				84DA3F1D169D097500D222A4 /* Reachability.m in Sources */,
-				84732D9C169D3AEF00C9910E /* NetClient+Account.m in Sources */,
-				84732DC0169E65BB00C9910E /* NetClient+Template.m in Sources */,
+				84732D9C169D3AEF00C9910E /* KHHNetClinetAPIAgent+Account.m in Sources */,
+				84732DC0169E65BB00C9910E /* KHHNetClinetAPIAgent+Template.m in Sources */,
 				31D0E3E0169D4B4300E410CA /* NetClient+PrivateCard.m in Sources */,
+				84732DD7169EA0BB00C9910E /* KHHNetClinetAPIAgent+Exchange.m in Sources */,
+				84732DDE169EAB9A00C9910E /* KHHNetClinetAPIAgent+Group.m in Sources */,
+				84732DE4169FAD6000C9910E /* KHHNetClinetAPIAgent+VisitSchedule.m in Sources */,
+				84732DEB169FB25600C9910E /* KHHNetClinetAPIAgent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5802,7 +5846,7 @@
 				314AFFC9168BEE9A00029324 /* NetFromPlist.m in Sources */,
 				314A0283168C08F100029324 /* LoginLogic.m in Sources */,
 				314A0288168C0D2700029324 /* User.m in Sources */,
-				314A032E168C52D000029324 /* NetClient+Message.m in Sources */,
+				314A032E168C52D000029324 /* KHHNetClinetAPIAgent+Message.m in Sources */,
 				3102673E1696ACA200FBE156 /* KHHTargetCell.m in Sources */,
 				842D57831697C939005C0CF4 /* KHHOrganizationViewController.m in Sources */,
 				310267611696B05B00FBE156 /* KHHPlanViewController.m in Sources */,
@@ -5824,9 +5868,13 @@
 				310523E3169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */,
 				3104A147169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */,
 				84DA3F1C169D097500D222A4 /* Reachability.m in Sources */,
-				84732D9B169D3AEF00C9910E /* NetClient+Account.m in Sources */,
-				84732DBF169E65BB00C9910E /* NetClient+Template.m in Sources */,
+				84732D9B169D3AEF00C9910E /* KHHNetClinetAPIAgent+Account.m in Sources */,
+				84732DBF169E65BB00C9910E /* KHHNetClinetAPIAgent+Template.m in Sources */,
 				31D0E3DF169D4B4300E410CA /* NetClient+PrivateCard.m in Sources */,
+				84732DD6169EA0BB00C9910E /* KHHNetClinetAPIAgent+Exchange.m in Sources */,
+				84732DDD169EAB9A00C9910E /* KHHNetClinetAPIAgent+Group.m in Sources */,
+				84732DE3169FAD6000C9910E /* KHHNetClinetAPIAgent+VisitSchedule.m in Sources */,
+				84732DEA169FB25600C9910E /* KHHNetClinetAPIAgent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6031,7 +6079,7 @@
 				314AFF00168BECBB00029324 /* NetFromPlist.m in Sources */,
 				314A0282168C08F100029324 /* LoginLogic.m in Sources */,
 				314A0287168C0D2700029324 /* User.m in Sources */,
-				314A032C168C52D000029324 /* NetClient+Message.m in Sources */,
+				314A032C168C52D000029324 /* KHHNetClinetAPIAgent+Message.m in Sources */,
 				3102673C1696ACA200FBE156 /* KHHTargetCell.m in Sources */,
 				842D57811697C939005C0CF4 /* KHHOrganizationViewController.m in Sources */,
 				3102675F1696B05B00FBE156 /* KHHPlanViewController.m in Sources */,
@@ -6053,9 +6101,13 @@
 				310523E1169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */,
 				3104A145169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */,
 				84DA3F1A169D097500D222A4 /* Reachability.m in Sources */,
-				84732D99169D3AEF00C9910E /* NetClient+Account.m in Sources */,
-				84732DBD169E65BB00C9910E /* NetClient+Template.m in Sources */,
+				84732D99169D3AEF00C9910E /* KHHNetClinetAPIAgent+Account.m in Sources */,
+				84732DBD169E65BB00C9910E /* KHHNetClinetAPIAgent+Template.m in Sources */,
 				31D0E3DD169D4B4300E410CA /* NetClient+PrivateCard.m in Sources */,
+				84732DD4169EA0BB00C9910E /* KHHNetClinetAPIAgent+Exchange.m in Sources */,
+				84732DDB169EAB9A00C9910E /* KHHNetClinetAPIAgent+Group.m in Sources */,
+				84732DE1169FAD6000C9910E /* KHHNetClinetAPIAgent+VisitSchedule.m in Sources */,
+				84732DE8169FB25600C9910E /* KHHNetClinetAPIAgent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6258,7 +6310,7 @@
 				8413659316883F5000BB0400 /* KHHKeyBoardManagerUtil.m in Sources */,
 				314AFEFA168BEC3700029324 /* NetClient.m in Sources */,
 				314AFF01168BECBB00029324 /* NetFromPlist.m in Sources */,
-				314A032D168C52D000029324 /* NetClient+Message.m in Sources */,
+				314A032D168C52D000029324 /* KHHNetClinetAPIAgent+Message.m in Sources */,
 				3102673D1696ACA200FBE156 /* KHHTargetCell.m in Sources */,
 				842D57821697C939005C0CF4 /* KHHOrganizationViewController.m in Sources */,
 				310267601696B05B00FBE156 /* KHHPlanViewController.m in Sources */,
@@ -6280,9 +6332,13 @@
 				310523E2169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */,
 				3104A146169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */,
 				84DA3F1B169D097500D222A4 /* Reachability.m in Sources */,
-				84732D9A169D3AEF00C9910E /* NetClient+Account.m in Sources */,
-				84732DBE169E65BB00C9910E /* NetClient+Template.m in Sources */,
+				84732D9A169D3AEF00C9910E /* KHHNetClinetAPIAgent+Account.m in Sources */,
+				84732DBE169E65BB00C9910E /* KHHNetClinetAPIAgent+Template.m in Sources */,
 				31D0E3DE169D4B4300E410CA /* NetClient+PrivateCard.m in Sources */,
+				84732DD5169EA0BB00C9910E /* KHHNetClinetAPIAgent+Exchange.m in Sources */,
+				84732DDC169EAB9A00C9910E /* KHHNetClinetAPIAgent+Group.m in Sources */,
+				84732DE2169FAD6000C9910E /* KHHNetClinetAPIAgent+VisitSchedule.m in Sources */,
+				84732DE9169FB25600C9910E /* KHHNetClinetAPIAgent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,9 +7,8 @@
 //
 
 #import "SuperViewController.h"
-#import "NetClient+Message.h"
 #import "KHHMessageViewController.h"
-
+#import "KHHEditMSGViewController.h"
 #define TEXT_NEW_MESSAGE_COMMING NSLocalizedString(@"您有新消息到了,可到消息界面查看新消息。",nil)
 
 @implementation SuperViewController
@@ -78,9 +77,9 @@
 
 {
     if (haveNewMsg) {
-       
         //当前页不是消息界面时要弹出新消息到了的框
-        if (![NetClient sharedClient].inMsgView ) {
+        if (!([self isMemberOfClass:[KHHMessageViewController class]]
+              || [self isMemberOfClass:[KHHEditMSGViewController class]])) {
             //showalert
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"新消息"
                                                             message:TEXT_NEW_MESSAGE_COMMING
