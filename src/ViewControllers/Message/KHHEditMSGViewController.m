@@ -7,13 +7,12 @@
 //
 
 #import "KHHEditMSGViewController.h"
-#import "KHHNetworkAPIAgent+Message.h"
 #import "KHHMessageCell.h"
 #import "KHHMessage.h"
 #import "MBProgressHUD.h"
 #import "KHHData+UI.h"
 #import "KHHShowHideTabBar.h"
-#import "NetClient+Message.h"
+#import "KHHNetClinetAPIAgent+Message.h"
 
 @interface KHHEditMSGViewController ()
 @property (assign, nonatomic) bool edit;
@@ -100,14 +99,12 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [KHHShowHideTabBar hideTabbar];
-    [NetClient sharedClient].inMsgView = YES;
     
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [NetClient sharedClient].inMsgView = NO;
 }
 
 - (void)viewDidUnload
@@ -192,7 +189,8 @@
             [_delMessageArr addObject:[self.messageArr objectAtIndex:i]];
         }
     }
-    [[NetClient sharedClient] doDeleteInEdit:self messages:_delMessageArr];
+    KHHNetClinetAPIAgent  *agent = [[KHHNetClinetAPIAgent alloc] init];
+    [agent doDeleteInEdit:self messages:_delMessageArr];
    // [self.dataCtrl deleteMessages:_delMessageArr];
     
 }

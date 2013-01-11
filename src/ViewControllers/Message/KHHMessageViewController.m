@@ -15,7 +15,7 @@
 #import "KHHData+UI.h"
 #import "KHHMessage.h"
 #import "MBProgressHUD.h"
-#import "NetClient+Message.h"
+#import "KHHNetClinetAPIAgent+Message.h"
 
 
 @interface KHHMessageViewController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
@@ -106,7 +106,6 @@
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [NetClient sharedClient].inMsgView = YES;
     
     [KHHShowHideTabBar showTabbar];
     if (self.isNeedReloadTable) {
@@ -115,7 +114,6 @@
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [NetClient sharedClient].inMsgView = NO;
     //[KHHShowHideTabBar hideTabbar];
     
 }
@@ -165,7 +163,8 @@
     self.isNeedReloadTable = YES;
     KHHMessage *message = [self.messageArr objectAtIndex:indexPath.row];
     message.isRead = [NSNumber numberWithBool:YES];
-    [[NetClient sharedClient] doDelete:self messages:[NSArray arrayWithObject:message]];
+    KHHNetClinetAPIAgent *agent = [[KHHNetClinetAPIAgent alloc] init];
+    [agent doDelete:self messages:[NSArray arrayWithObject:message]];
 }
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {

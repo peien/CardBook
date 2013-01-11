@@ -1,5 +1,5 @@
 //
-//  KHHNetClientAccountDelegates.h
+//  KHHNetAgentAccountDelegates.h
 //  CardBook
 //
 //  Created by 王定方 on 13-1-9.
@@ -7,9 +7,9 @@
 //
 
 
-#ifndef KHH_NetClient_Account_Delegates
-#define KHH_NetClient_Account_Delegates
-@protocol KHHNetClientAccountDelegates <NSObject>
+#ifndef KHH_NetAgent_Account_Delegates
+#define KHH_NetAgent_Account_Delegates
+@protocol KHHNetAgentAccountDelegates <NSObject>
 @optional
 //登录
 -(void) loginSuccess:           (NSDictionary *) userInfo;

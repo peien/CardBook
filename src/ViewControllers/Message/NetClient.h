@@ -10,7 +10,6 @@
 #import "NetFromPlist.h"
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
-#import "KHHTypes.h"
 #import "Reachability.h"
 
 @interface NetClient : AFHTTPClient
@@ -24,15 +23,4 @@
 #pragma server url
 -(NSURL *) currentServerUrl;
 
-#pragma mark - Utils
-- (NSString *)queryStringWithDictionary:(NSDictionary *)aDictionary;
-- (NSMutableDictionary *)JSONDictionaryWithResponse:(NSData *)responseData;
-
-#pragma 网络请求时默认的错误
-//默认失败请求返回的dict
-//-(NSDictionary *) defaultFailedResponseDictionary:(NSError *)error;
-//参数不满足时返回
--(NSDictionary *) parametersNotMeetRequirementFailedResponseDictionary;
-//默认的请求失败block
--(KHHFailureBlock) defaultFailedResponse:(id) delegate selector:(NSString *) selector;
 @end
