@@ -1,20 +1,19 @@
 //
-//  NetClient+Message.m
+//  KHHNetClinetAPIAgent+Message.m
 //  CardBook
 //
 //  Created by CJK on 12-12-27.
 //  Copyright (c) 2012年 Kinghanhong. All rights reserved.
 //
 
-#import "NetClient+Message.h"
+#import "KHHNetClinetAPIAgent+Message.h"
 #import "InMessage.h"
 #import "KHHMessage.h"
 #import "KHHData.h"
+#import "KHHNetworkAPIAgent.h"
 
 
-@implementation NetClient (Message)
-
-@dynamic inMsgView;
+@implementation KHHNetClinetAPIAgent (Message)
 
 - (void)doDeleteInEdit:(id<delegateMsgForRead>)delegate messages:(NSArray *)messages
 {  
@@ -43,15 +42,17 @@
 
 - (void)doDelete:(id<delegateMsgForRead>) delegate messages:(NSArray *)messages
 {
-    if ([self.r currentReachabilityStatus] == NotReachable) {
+    if (![self networkStateIsValid]) {
         [self setYES:messages];
         [delegate deleFail];
         return;
     }
     
     NSDictionary *queryDict = @{ @"method" : @"customFsendService.delete" };
+    //把函数从Netclient中分离，新方法中的url固定参数变化，及签名，故先用老的
+    KHHNetworkAPIAgent *agent = [[KHHNetworkAPIAgent alloc] init];
     NSString *path = [NSString stringWithFormat:@"rest?%@",
-                      [self queryStringWithDictionary:queryDict]];
+                      [agent queryStringWithDictionary:queryDict]];
     
     NSMutableArray *messageIDs = [NSMutableArray arrayWithCapacity:[messages count]];
     for (id message in messages) {
@@ -63,15 +64,15 @@
     @"ids" : [messageIDs componentsJoinedByString:KHH_COMMA]
     };
     
-    NSURLRequest *request = [self
+    NSURLRequest *request = [[NetClient sharedClient]
                              multipartFormRequestWithMethod:@"POST"
                              path:path
                              parameters:parameters
                              constructingBodyWithBlock:nil];
-    AFHTTPRequestOperation *reqOperation = [self
+    AFHTTPRequestOperation *reqOperation = [[NetClient sharedClient]
                                             HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject)
                                             {
-                                                NSDictionary *responseDict = [self JSONDictionaryWithResponse:responseObject];
+                                                NSDictionary *responseDict = [agent JSONDictionaryWithResponse:responseObject];
                                                 DLog(@"[II] responseDict = %@", responseDict);
                                                 KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
                                                 if (code == 0) {
@@ -93,7 +94,7 @@
     
     // 实际发送请求
    
-    [self enqueueHTTPRequestOperation:reqOperation];
+    [[NetClient sharedClient] enqueueHTTPRequestOperation:reqOperation];
     
 }
 
@@ -102,20 +103,22 @@
 {
     
     NSDictionary *queryDict = @{ @"method" : @"customFsendService.list" };
+    //把函数从Netclient中分离，新方法中的url固定参数变化，及签名，故先用老的
+    KHHNetworkAPIAgent *agent = [[KHHNetworkAPIAgent alloc] init];
     NSString *path = [NSString stringWithFormat:@"rest?%@",
-                      [self queryStringWithDictionary:queryDict]];
+                      [agent queryStringWithDictionary:queryDict]];
     DLog(@"path%@",path);
     
-    NSURLRequest *request = [self
+    NSURLRequest *request = [[NetClient sharedClient]
                              multipartFormRequestWithMethod:@"POST"
                              path:path
                              parameters:nil
                              constructingBodyWithBlock:nil];
-    AFHTTPRequestOperation *reqOperation = [self
+    AFHTTPRequestOperation *reqOperation = [[NetClient sharedClient]
                                             HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject)
                                             {
                                                 
-                                                NSDictionary *responseDict = [self JSONDictionaryWithResponse:responseObject];
+                                                NSDictionary *responseDict = [agent JSONDictionaryWithResponse:responseObject];
                                                 if ([responseDict objectForKey:@"errorCode"]!=0) {
                                                     [delegate reseaveFail];
 
@@ -142,7 +145,7 @@
                                             }];
     
     // 实际发送请求
-    [self enqueueHTTPRequestOperation:reqOperation];
+    [[NetClient sharedClient] enqueueHTTPRequestOperation:reqOperation];
 }
 
 

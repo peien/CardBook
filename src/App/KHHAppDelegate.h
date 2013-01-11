@@ -11,7 +11,6 @@
 #import "KHHMainUIController.h"
 #import "MyTabBarController.h"
 #import "BMapKit.h"
-#import "NetClient+Message.h"
 
 @interface KHHAppDelegate : UIResponder <UIApplicationDelegate>
 
