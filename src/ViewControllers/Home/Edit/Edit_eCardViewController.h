@@ -17,7 +17,7 @@ typedef enum {
 #import "NetClient+PrivateCard.h"
 #import "HZAreaPickerView.h"
 #import "KHHInputTableView.h"
-#import "KHHMemoPicker.h"
+
 
 @interface Edit_eCardViewController : SuperViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,delegateNewPrivateForEdit,KHHInputTableViewHiddenDelegate>
 @property (strong, nonatomic) IBOutlet KHHInputTableView *table;
@@ -40,7 +40,5 @@ typedef enum {
 @property (strong, nonatomic)  CardTemplate         *cardTemp;
 
 @property (nonatomic,strong) HZAreaPickerView *areaPicker;
-@property (nonatomic,strong) KHHMemoPicker *section1Picker;
-@property (nonatomic,strong) KHHMemoPicker *section2Picker;
-@property (nonatomic,strong) KHHMemoPicker *section3Picker;
+
 @end
