@@ -26,7 +26,7 @@
 #import "KHHDataAPI.h"
 #import "KHHNotifications.h"
 #import "NSString+SM.h"
-#import "KHHParamForEditGet.h"
+
 
 
 #define CARD_IMGVIEW_TAG 990
@@ -61,7 +61,7 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
     CGRect rectForKey;
     NSMutableArray *inputsForKeyboard;
     
-    KHHParamForEditGet *paramUtil;
+    
     
     NSMutableArray *section1AddArray;
     NSMutableArray *section2AddArray;
@@ -118,7 +118,7 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
         _table.dataSource = self;
         _table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         _table.hiddenDelgate = self;
-        paramUtil = [[KHHParamForEditGet alloc]init];
+        
         [self initArrs];
     }
     return self;
@@ -728,10 +728,12 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
         
         switch (indexPath.section ) {
             case 1:
+
                 _whichexternIndex = 0;
                 sectionPicker.PickFlag = 1;
                 sectionPicker.tempArray = section1AddArray;
                 sectionPicker.delegate = self;
+
                 break;
             case 2:
                 _whichexternIndex = 1;

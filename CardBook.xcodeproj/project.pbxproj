@@ -21,14 +21,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		3101A24D169FB52000C08769 /* KHHNewEdit_ecardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3101A24C169FB52000C08769 /* KHHNewEdit_ecardViewController.m */; };
-		3101A24E169FB52000C08769 /* KHHNewEdit_ecardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3101A24C169FB52000C08769 /* KHHNewEdit_ecardViewController.m */; };
-		3101A24F169FB52000C08769 /* KHHNewEdit_ecardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3101A24C169FB52000C08769 /* KHHNewEdit_ecardViewController.m */; };
-		3101A250169FB52000C08769 /* KHHNewEdit_ecardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3101A24C169FB52000C08769 /* KHHNewEdit_ecardViewController.m */; };
-		3101A254169FB74300C08769 /* ParamForEditecard.m in Sources */ = {isa = PBXBuildFile; fileRef = 3101A253169FB74300C08769 /* ParamForEditecard.m */; };
-		3101A255169FB74300C08769 /* ParamForEditecard.m in Sources */ = {isa = PBXBuildFile; fileRef = 3101A253169FB74300C08769 /* ParamForEditecard.m */; };
-		3101A256169FB74300C08769 /* ParamForEditecard.m in Sources */ = {isa = PBXBuildFile; fileRef = 3101A253169FB74300C08769 /* ParamForEditecard.m */; };
-		3101A257169FB74300C08769 /* ParamForEditecard.m in Sources */ = {isa = PBXBuildFile; fileRef = 3101A253169FB74300C08769 /* ParamForEditecard.m */; };
 		3102673C1696ACA200FBE156 /* KHHTargetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102673B1696ACA200FBE156 /* KHHTargetCell.m */; };
 		3102673D1696ACA200FBE156 /* KHHTargetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102673B1696ACA200FBE156 /* KHHTargetCell.m */; };
 		3102673E1696ACA200FBE156 /* KHHTargetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102673B1696ACA200FBE156 /* KHHTargetCell.m */; };
@@ -975,6 +967,14 @@
 		3180A55716981E8F00DD9501 /* KHHImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A55516981E8F00DD9501 /* KHHImageCell.m */; };
 		3180A55816981E8F00DD9501 /* KHHImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A55516981E8F00DD9501 /* KHHImageCell.m */; };
 		3180A55916981E8F00DD9501 /* KHHImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A55516981E8F00DD9501 /* KHHImageCell.m */; };
+		319B746F16A01806000E62CD /* ParamForEditecard.m in Sources */ = {isa = PBXBuildFile; fileRef = 3101A253169FB74300C08769 /* ParamForEditecard.m */; };
+		319B747016A01807000E62CD /* ParamForEditecard.m in Sources */ = {isa = PBXBuildFile; fileRef = 3101A253169FB74300C08769 /* ParamForEditecard.m */; };
+		319B747116A01807000E62CD /* ParamForEditecard.m in Sources */ = {isa = PBXBuildFile; fileRef = 3101A253169FB74300C08769 /* ParamForEditecard.m */; };
+		319B747216A01807000E62CD /* ParamForEditecard.m in Sources */ = {isa = PBXBuildFile; fileRef = 3101A253169FB74300C08769 /* ParamForEditecard.m */; };
+		319B747316A0180B000E62CD /* KHHNewEdit_ecardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3101A24C169FB52000C08769 /* KHHNewEdit_ecardViewController.m */; };
+		319B747416A0180C000E62CD /* KHHNewEdit_ecardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3101A24C169FB52000C08769 /* KHHNewEdit_ecardViewController.m */; };
+		319B747516A0180C000E62CD /* KHHNewEdit_ecardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3101A24C169FB52000C08769 /* KHHNewEdit_ecardViewController.m */; };
+		319B747616A0180C000E62CD /* KHHNewEdit_ecardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3101A24C169FB52000C08769 /* KHHNewEdit_ecardViewController.m */; };
 		319C29F0169C04D4005A1BFF /* attendance.plist in Resources */ = {isa = PBXBuildFile; fileRef = 319C29EF169C04D4005A1BFF /* attendance.plist */; };
 		319C29F1169C04D4005A1BFF /* attendance.plist in Resources */ = {isa = PBXBuildFile; fileRef = 319C29EF169C04D4005A1BFF /* attendance.plist */; };
 		319C29F2169C04D4005A1BFF /* attendance.plist in Resources */ = {isa = PBXBuildFile; fileRef = 319C29EF169C04D4005A1BFF /* attendance.plist */; };
@@ -987,10 +987,6 @@
 		31D0E3DE169D4B4300E410CA /* NetClient+PrivateCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D0E3DC169D4B4300E410CA /* NetClient+PrivateCard.m */; };
 		31D0E3DF169D4B4300E410CA /* NetClient+PrivateCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D0E3DC169D4B4300E410CA /* NetClient+PrivateCard.m */; };
 		31D0E3E0169D4B4300E410CA /* NetClient+PrivateCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D0E3DC169D4B4300E410CA /* NetClient+PrivateCard.m */; };
-		31D7C8A3169EBF47003B8DA3 /* KHHParamForEditGet.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D7C8A2169EBF47003B8DA3 /* KHHParamForEditGet.m */; };
-		31D7C8A4169EBF47003B8DA3 /* KHHParamForEditGet.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D7C8A2169EBF47003B8DA3 /* KHHParamForEditGet.m */; };
-		31D7C8A5169EBF47003B8DA3 /* KHHParamForEditGet.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D7C8A2169EBF47003B8DA3 /* KHHParamForEditGet.m */; };
-		31D7C8A6169EBF47003B8DA3 /* KHHParamForEditGet.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D7C8A2169EBF47003B8DA3 /* KHHParamForEditGet.m */; };
 		31FCBC371682BD0A00ABFE3F /* KHHFilterPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FCBC361682BD0A00ABFE3F /* KHHFilterPopup.m */; };
 		31FCBC381682BD0A00ABFE3F /* KHHFilterPopup.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FCBC361682BD0A00ABFE3F /* KHHFilterPopup.m */; };
 		624F8C7F1676C167006CD354 /* KHHBMapLocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 624F8C7E1676C167006CD354 /* KHHBMapLocationController.m */; };
@@ -1988,8 +1984,6 @@
 		31D0E3DB169D4B4300E410CA /* NetClient+PrivateCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NetClient+PrivateCard.h"; sourceTree = "<group>"; };
 		31D0E3DC169D4B4300E410CA /* NetClient+PrivateCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NetClient+PrivateCard.m"; sourceTree = "<group>"; };
 		31D0E3E8169D553200E410CA /* PrivateDelegates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivateDelegates.h; sourceTree = "<group>"; };
-		31D7C8A1169EBF47003B8DA3 /* KHHParamForEditGet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHParamForEditGet.h; sourceTree = "<group>"; };
-		31D7C8A2169EBF47003B8DA3 /* KHHParamForEditGet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHParamForEditGet.m; sourceTree = "<group>"; };
 		31FCBC351682BD0A00ABFE3F /* KHHFilterPopup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHFilterPopup.h; sourceTree = "<group>"; };
 		31FCBC361682BD0A00ABFE3F /* KHHFilterPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHFilterPopup.m; sourceTree = "<group>"; };
 		620712F01650D263000188E8 /* LoginImage_normal@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "LoginImage_normal@2x.jpg"; sourceTree = "<group>"; };
@@ -2837,6 +2831,8 @@
 		3101A258169FB74700C08769 /* ParamForCell */ = {
 			isa = PBXGroup;
 			children = (
+				3101A24B169FB52000C08769 /* KHHNewEdit_ecardViewController.h */,
+				3101A24C169FB52000C08769 /* KHHNewEdit_ecardViewController.m */,
 				3101A252169FB74300C08769 /* ParamForEditecard.h */,
 				3101A253169FB74300C08769 /* ParamForEditecard.m */,
 			);
@@ -2994,8 +2990,6 @@
 				31D0E3DB169D4B4300E410CA /* NetClient+PrivateCard.h */,
 				31D0E3DC169D4B4300E410CA /* NetClient+PrivateCard.m */,
 				31D0E3E8169D553200E410CA /* PrivateDelegates.h */,
-				31D7C8A1169EBF47003B8DA3 /* KHHParamForEditGet.h */,
-				31D7C8A2169EBF47003B8DA3 /* KHHParamForEditGet.m */,
 			);
 			name = network;
 			sourceTree = "<group>";
@@ -3666,8 +3660,6 @@
 				98A84E341602D66200A4A673 /* Edit_eCardViewCell.h */,
 				98A84E351602D66200A4A673 /* Edit_eCardViewCell.m */,
 				98A84E361602D66200A4A673 /* Edit_eCardViewCell.xib */,
-				3101A24B169FB52000C08769 /* KHHNewEdit_ecardViewController.h */,
-				3101A24C169FB52000C08769 /* KHHNewEdit_ecardViewController.m */,
 				98A84E371602D66200A4A673 /* Edit_eCardViewController.h */,
 				98A84E381602D66200A4A673 /* Edit_eCardViewController.m */,
 				3101A258169FB74700C08769 /* ParamForCell */,
@@ -5670,16 +5662,12 @@
 				84732D9C169D3AEF00C9910E /* KHHNetClinetAPIAgent+Account.m in Sources */,
 				84732DC0169E65BB00C9910E /* KHHNetClinetAPIAgent+Template.m in Sources */,
 				31D0E3E0169D4B4300E410CA /* NetClient+PrivateCard.m in Sources */,
-
 				84732DD7169EA0BB00C9910E /* KHHNetClinetAPIAgent+Exchange.m in Sources */,
 				84732DDE169EAB9A00C9910E /* KHHNetClinetAPIAgent+Group.m in Sources */,
 				84732DE4169FAD6000C9910E /* KHHNetClinetAPIAgent+VisitSchedule.m in Sources */,
 				84732DEB169FB25600C9910E /* KHHNetClinetAPIAgent.m in Sources */,
-
-				31D7C8A6169EBF47003B8DA3 /* KHHParamForEditGet.m in Sources */,
-				3101A250169FB52000C08769 /* KHHNewEdit_ecardViewController.m in Sources */,
-				3101A257169FB74300C08769 /* ParamForEditecard.m in Sources */,
->>>>>>> cjk
+				319B747216A01807000E62CD /* ParamForEditecard.m in Sources */,
+				319B747616A0180C000E62CD /* KHHNewEdit_ecardViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5909,16 +5897,12 @@
 				84732D9B169D3AEF00C9910E /* KHHNetClinetAPIAgent+Account.m in Sources */,
 				84732DBF169E65BB00C9910E /* KHHNetClinetAPIAgent+Template.m in Sources */,
 				31D0E3DF169D4B4300E410CA /* NetClient+PrivateCard.m in Sources */,
-
 				84732DD6169EA0BB00C9910E /* KHHNetClinetAPIAgent+Exchange.m in Sources */,
 				84732DDD169EAB9A00C9910E /* KHHNetClinetAPIAgent+Group.m in Sources */,
 				84732DE3169FAD6000C9910E /* KHHNetClinetAPIAgent+VisitSchedule.m in Sources */,
 				84732DEA169FB25600C9910E /* KHHNetClinetAPIAgent.m in Sources */,
-
-				31D7C8A5169EBF47003B8DA3 /* KHHParamForEditGet.m in Sources */,
-				3101A24F169FB52000C08769 /* KHHNewEdit_ecardViewController.m in Sources */,
-				3101A256169FB74300C08769 /* ParamForEditecard.m in Sources */,
-
+				319B747116A01807000E62CD /* ParamForEditecard.m in Sources */,
+				319B747516A0180C000E62CD /* KHHNewEdit_ecardViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6148,16 +6132,12 @@
 				84732D99169D3AEF00C9910E /* KHHNetClinetAPIAgent+Account.m in Sources */,
 				84732DBD169E65BB00C9910E /* KHHNetClinetAPIAgent+Template.m in Sources */,
 				31D0E3DD169D4B4300E410CA /* NetClient+PrivateCard.m in Sources */,
-
 				84732DD4169EA0BB00C9910E /* KHHNetClinetAPIAgent+Exchange.m in Sources */,
 				84732DDB169EAB9A00C9910E /* KHHNetClinetAPIAgent+Group.m in Sources */,
 				84732DE1169FAD6000C9910E /* KHHNetClinetAPIAgent+VisitSchedule.m in Sources */,
 				84732DE8169FB25600C9910E /* KHHNetClinetAPIAgent.m in Sources */,
-
-				31D7C8A3169EBF47003B8DA3 /* KHHParamForEditGet.m in Sources */,
-				3101A24D169FB52000C08769 /* KHHNewEdit_ecardViewController.m in Sources */,
-				3101A254169FB74300C08769 /* ParamForEditecard.m in Sources */,
-
+				319B746F16A01806000E62CD /* ParamForEditecard.m in Sources */,
+				319B747316A0180B000E62CD /* KHHNewEdit_ecardViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6385,16 +6365,12 @@
 				84732D9A169D3AEF00C9910E /* KHHNetClinetAPIAgent+Account.m in Sources */,
 				84732DBE169E65BB00C9910E /* KHHNetClinetAPIAgent+Template.m in Sources */,
 				31D0E3DE169D4B4300E410CA /* NetClient+PrivateCard.m in Sources */,
-
 				84732DD5169EA0BB00C9910E /* KHHNetClinetAPIAgent+Exchange.m in Sources */,
 				84732DDC169EAB9A00C9910E /* KHHNetClinetAPIAgent+Group.m in Sources */,
 				84732DE2169FAD6000C9910E /* KHHNetClinetAPIAgent+VisitSchedule.m in Sources */,
 				84732DE9169FB25600C9910E /* KHHNetClinetAPIAgent.m in Sources */,
-
-				31D7C8A4169EBF47003B8DA3 /* KHHParamForEditGet.m in Sources */,
-				3101A24E169FB52000C08769 /* KHHNewEdit_ecardViewController.m in Sources */,
-				3101A255169FB74300C08769 /* ParamForEditecard.m in Sources */,
-
+				319B747016A01807000E62CD /* ParamForEditecard.m in Sources */,
+				319B747416A0180C000E62CD /* KHHNewEdit_ecardViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
