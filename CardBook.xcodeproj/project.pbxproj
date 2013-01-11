@@ -967,6 +967,10 @@
 		3180A55716981E8F00DD9501 /* KHHImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A55516981E8F00DD9501 /* KHHImageCell.m */; };
 		3180A55816981E8F00DD9501 /* KHHImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A55516981E8F00DD9501 /* KHHImageCell.m */; };
 		3180A55916981E8F00DD9501 /* KHHImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A55516981E8F00DD9501 /* KHHImageCell.m */; };
+		319B745016A01023000E62CD /* KHHNewEdit_ecardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 319B744D16A01023000E62CD /* KHHNewEdit_ecardViewController.m */; };
+		319B745116A01023000E62CD /* KHHNewEdit_ecardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 319B744D16A01023000E62CD /* KHHNewEdit_ecardViewController.m */; };
+		319B745216A01023000E62CD /* KHHNewEdit_ecardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 319B744D16A01023000E62CD /* KHHNewEdit_ecardViewController.m */; };
+		319B745316A01023000E62CD /* KHHNewEdit_ecardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 319B744D16A01023000E62CD /* KHHNewEdit_ecardViewController.m */; };
 		319C29F0169C04D4005A1BFF /* attendance.plist in Resources */ = {isa = PBXBuildFile; fileRef = 319C29EF169C04D4005A1BFF /* attendance.plist */; };
 		319C29F1169C04D4005A1BFF /* attendance.plist in Resources */ = {isa = PBXBuildFile; fileRef = 319C29EF169C04D4005A1BFF /* attendance.plist */; };
 		319C29F2169C04D4005A1BFF /* attendance.plist in Resources */ = {isa = PBXBuildFile; fileRef = 319C29EF169C04D4005A1BFF /* attendance.plist */; };
@@ -1967,6 +1971,8 @@
 		3180A5241698029600DD9501 /* HZLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HZLocation.m; sourceTree = "<group>"; };
 		3180A55416981E8E00DD9501 /* KHHImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHImageCell.h; sourceTree = "<group>"; };
 		3180A55516981E8F00DD9501 /* KHHImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHImageCell.m; sourceTree = "<group>"; };
+		319B744C16A01023000E62CD /* KHHNewEdit_ecardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNewEdit_ecardViewController.h; sourceTree = "<group>"; };
+		319B744D16A01023000E62CD /* KHHNewEdit_ecardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHNewEdit_ecardViewController.m; sourceTree = "<group>"; };
 		319C29EF169C04D4005A1BFF /* attendance.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = attendance.plist; sourceTree = "<group>"; };
 		319C29F4169C0672005A1BFF /* collection.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = collection.plist; sourceTree = "<group>"; };
 		31D0E3DB169D4B4300E410CA /* NetClient+PrivateCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NetClient+PrivateCard.h"; sourceTree = "<group>"; };
@@ -2964,6 +2970,8 @@
 		31D0E3D9169D4A5500E410CA /* network */ = {
 			isa = PBXGroup;
 			children = (
+				319B744C16A01023000E62CD /* KHHNewEdit_ecardViewController.h */,
+				319B744D16A01023000E62CD /* KHHNewEdit_ecardViewController.m */,
 				31D0E3DB169D4B4300E410CA /* NetClient+PrivateCard.h */,
 				31D0E3DC169D4B4300E410CA /* NetClient+PrivateCard.m */,
 				31D0E3E8169D553200E410CA /* PrivateDelegates.h */,
@@ -5642,6 +5650,7 @@
 				84732DDE169EAB9A00C9910E /* KHHNetClinetAPIAgent+Group.m in Sources */,
 				84732DE4169FAD6000C9910E /* KHHNetClinetAPIAgent+VisitSchedule.m in Sources */,
 				84732DEB169FB25600C9910E /* KHHNetClinetAPIAgent.m in Sources */,
+				319B745316A01023000E62CD /* KHHNewEdit_ecardViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5875,6 +5884,7 @@
 				84732DDD169EAB9A00C9910E /* KHHNetClinetAPIAgent+Group.m in Sources */,
 				84732DE3169FAD6000C9910E /* KHHNetClinetAPIAgent+VisitSchedule.m in Sources */,
 				84732DEA169FB25600C9910E /* KHHNetClinetAPIAgent.m in Sources */,
+				319B745216A01023000E62CD /* KHHNewEdit_ecardViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6108,6 +6118,7 @@
 				84732DDB169EAB9A00C9910E /* KHHNetClinetAPIAgent+Group.m in Sources */,
 				84732DE1169FAD6000C9910E /* KHHNetClinetAPIAgent+VisitSchedule.m in Sources */,
 				84732DE8169FB25600C9910E /* KHHNetClinetAPIAgent.m in Sources */,
+				319B745016A01023000E62CD /* KHHNewEdit_ecardViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6339,6 +6350,7 @@
 				84732DDC169EAB9A00C9910E /* KHHNetClinetAPIAgent+Group.m in Sources */,
 				84732DE2169FAD6000C9910E /* KHHNetClinetAPIAgent+VisitSchedule.m in Sources */,
 				84732DE9169FB25600C9910E /* KHHNetClinetAPIAgent.m in Sources */,
+				319B745116A01023000E62CD /* KHHNewEdit_ecardViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

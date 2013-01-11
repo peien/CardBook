@@ -102,7 +102,7 @@
     self.messageArr = [self.dataCtrl allMessages];
         
     //iphone5 适配
-    [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_editBtn];
+   // [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_editBtn];
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
