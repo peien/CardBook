@@ -28,6 +28,8 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <QuartzCore/QuartzCore.h>
 
+
+#import "KHHNewEdit_ecardViewController.h"
 #import "Edit_eCardViewController.h"
 #import "KHHAddressBook.h"
 #import "KHHClientCellLNPC.h"
@@ -1003,8 +1005,9 @@
     //[actSheet showInView:self.view];
     
     self.isNeedReloadTable = YES;
-    Edit_eCardViewController *creatCardVC = [[Edit_eCardViewController alloc] initWithNibName:nil bundle:nil];
-    creatCardVC.type = KCardViewControllerTypeNewCreate;
+//    Edit_eCardViewController *creatCardVC = [[Edit_eCardViewController alloc] initWithNibName:nil bundle:nil];
+//    creatCardVC.type = KCardViewControllerTypeNewCreate;
+    KHHNewEdit_ecardViewController *creatCardVC = [[KHHNewEdit_ecardViewController alloc]init];
     [self.navigationController pushViewController:creatCardVC animated:YES];
 }
 - (void)saveImage:(UIImage *)image
