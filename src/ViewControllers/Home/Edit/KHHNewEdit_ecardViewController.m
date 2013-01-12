@@ -32,6 +32,8 @@
 
 @implementation KHHNewEdit_ecardViewController
 
+
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -45,6 +47,8 @@
     }
     return self;
 }
+
+
 
 - (void)init3Arr
 {
@@ -83,6 +87,7 @@
     paramPro2.title = @"添加";
     paramPro2.editingStyle = UITableViewCellEditingStyleInsert;
     paramPro2.toPicker = [[NSMutableArray alloc]initWithObjects:@"部门",@"公司邮箱", nil];
+    topicker2 = [[NSMutableArray alloc]initWithObjects:@"网页",@"QQ",@"MSN",@"旺旺",@"业务范围",@"银行信息",@"其它信息", nil];
     paramPro2.forPickerToDel = YES;
     [section2Arr addObject:paramPro2];
     
@@ -90,6 +95,7 @@
     paramPro3.editingStyle = UITableViewCellEditingStyleInsert;
     paramPro3.title = @"添加更多";
     paramPro3.toPicker = [[NSMutableArray alloc]initWithObjects:@"网页",@"QQ",@"MSN",@"旺旺",@"业务范围",@"银行信息",@"其它信息", nil];
+    topicker3 = [[NSMutableArray alloc]initWithObjects:@"网页",@"QQ",@"MSN",@"旺旺",@"业务范围",@"银行信息",@"其它信息", nil];
     paramPro3.forPickerToDel = YES;
     [section3Arr addObject:paramPro3];
     
@@ -308,6 +314,15 @@
             [_table deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:indexPathForEditPicker.row+1 inSection:indexPathForEditPicker.section]] withRowAnimation:UITableViewRowAnimationNone];
         }
     }
+}
+
+
+
+NSMutableArray *topicker2;
+NSMutableArray *topicker3;
+- (NSMutableArray *)sortArrToPick
+{
+    return nil;
 }
 
 @end
