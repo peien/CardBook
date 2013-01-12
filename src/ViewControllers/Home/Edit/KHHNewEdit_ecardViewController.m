@@ -10,7 +10,8 @@
 #import "ParamForEditecard.h"
 #import "Edit_eCardViewCell.h"
 #import "EditCardPersonCell.h"
-
+#import "NSString+Validation.h"
+#import "KHHMemoPicker.h"
 
 @interface KHHNewEdit_ecardViewController ()
 {
@@ -22,7 +23,7 @@
     NSMutableArray *arrAllIn;
     
     //for picker
-    PickViewController *sectionPicker;
+    KHHMemoPicker *sectionPicker;
     ParamForEditecard *editingParamPorPicker;
     NSIndexPath *indexPathForEditPicker;
     ParamForEditecard *cacheParamForPicker;
@@ -63,7 +64,7 @@
     [section0Arr addObject:paramPro00];
     ParamForEditecard *paramPro01 = [[ParamForEditecard alloc]init];
     paramPro01.placeholder = @"请输入职位";
-    paramPro00.tag = 2400+1;
+    paramPro01.tag = 2400+1;
     [section0Arr addObject:paramPro01];
     
     NSMutableArray *arrPro = [[NSMutableArray alloc]initWithObjects:@"手机",@"电话",@"传真",@"邮箱", nil];
@@ -87,7 +88,7 @@
     paramPro2.title = @"添加";
     paramPro2.editingStyle = UITableViewCellEditingStyleInsert;
     paramPro2.toPicker = [[NSMutableArray alloc]initWithObjects:@"部门",@"公司邮箱", nil];
-    topicker2 = [[NSMutableArray alloc]initWithObjects:@"网页",@"QQ",@"MSN",@"旺旺",@"业务范围",@"银行信息",@"其它信息", nil];
+    topicker2 = [[NSMutableArray alloc]initWithObjects:@"部门",@"公司邮箱", nil];
     paramPro2.forPickerToDel = YES;
     [section2Arr addObject:paramPro2];
     
@@ -214,11 +215,14 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath;
 {
     if (editingStyle == UITableViewCellEditingStyleInsert ) {
-        sectionPicker = [[PickViewController alloc]initWithNibName:nil bundle:nil];
-        ParamForEditecard *paramPro = (ParamForEditecard *)[[arrAllIn objectAtIndex:indexPath.section]objectAtIndex:indexPath.row];
-        sectionPicker.PickFlag = 1;
-        sectionPicker.tempArray = paramPro.toPicker;
-        sectionPicker.delegate = self;
+        if (!sectionPicker) {
+            sectionPicker = [[KHHMemoPicker alloc]init];
+            ParamForEditecard *paramPro = (ParamForEditecard *)[[arrAllIn objectAtIndex:indexPath.section]objectAtIndex:indexPath.row];
+            sectionPicker.PickFlag = 1;
+            sectionPicker.tempArray = [self sortArrToPick:indexPath.section];
+            sectionPicker.delegate = self;
+        }
+        
         editingParamPorPicker = paramPro;
         indexPathForEditPicker = indexPath;
         [self.navigationController pushViewController:sectionPicker animated:YES];
@@ -227,7 +231,10 @@
     }else if (editingStyle == UITableViewCellEditingStyleDelete){
         
         ParamForEditecard * paramPro = (ParamForEditecard *)[[arrAllIn objectAtIndex:indexPath.section]objectAtIndex:indexPath.row];
-        
+        if ([self utilForPickerIsInBank:paramPro.title]) {
+            [self utilForPickerDeleteBank];
+            return;
+        }
         NSMutableArray *sectionPro = [arrAllIn objectAtIndex:indexPath.section];
         
         ParamForEditecard * paramPro2;
@@ -245,11 +252,13 @@
         }else{
             paramPro2 = [sectionPro objectAtIndex:sectionPro.count-1];
             [paramPro2.toPicker addObject:paramPro.title];
+            
         }
         [sectionPro removeObject:paramPro];
         [_table deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:indexPath.row inSection:indexPath.section]] withRowAnimation:UITableViewRowAnimationNone];
         if (![sectionPro containsObject:paramPro2]) {
             [sectionPro addObject:paramPro2];
+            
             [_table insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:sectionPro.count-1 inSection:indexPath.section]] withRowAnimation:UITableViewRowAnimationNone];
         }
         
@@ -280,16 +289,86 @@
 }
 
 #pragma mark - picker delegate
+
+- (void)utilForPickerDeleteBank
+{
+    NSMutableArray *section3Pro = [arrAllIn objectAtIndex:3];
+    NSMutableArray *paramArrPro = [[NSMutableArray alloc]initWithCapacity:3];
+    [section3Pro enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        ParamForEditecard* paramPro = obj;
+        if ([self utilForPickerIsInBank:paramPro.title]) {
+            [paramArrPro addObject:paramPro];
+        }
+    }];
+    [paramArrPro enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        ParamForEditecard* paramPro = obj;
+        int i = [section3Pro indexOfObject:paramPro];
+        [section3Pro removeObject:paramPro];
+        [_table deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:i  inSection:3]] withRowAnimation:UITableViewRowAnimationNone];
+        
+    }];
+    
+    
+    for (int i=0;i<[[arrAllIn objectAtIndex:3] count];i++) {
+        ParamForEditecard* paramPro = [[arrAllIn objectAtIndex:3] objectAtIndex:i];
+        if ([self utilForPickerIsInBank:paramPro.title]) {
+            [[arrAllIn objectAtIndex:3] removeObject:paramPro];
+            i--;
+            [_table deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:i inSection:3]] withRowAnimation:UITableViewRowAnimationNone];
+        }
+    }
+    ParamForEditecard * paramPro2;
+    NSMutableArray *sectionPro = [arrAllIn objectAtIndex:3];
+    if (!((ParamForEditecard *)[sectionPro lastObject]).toPicker) {
+        
+        NSString *title = @"添加更多";
+        
+        paramPro2 = [[ParamForEditecard alloc]init];
+        paramPro2.editingStyle = UITableViewCellEditingStyleInsert;
+        paramPro2.title = title;
+        paramPro2.toPicker = [[NSMutableArray alloc]initWithObjects:@"银行信息", nil];
+        paramPro2.forPickerToDel = YES;
+    }else{
+        paramPro2 = [[arrAllIn objectAtIndex:3] lastObject];
+        [paramPro2.toPicker addObject:@"银行信息"];
+    }
+    if (![sectionPro containsObject:paramPro2]) {
+        [sectionPro addObject:paramPro2];
+        [_table insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:sectionPro.count-1 inSection:3]] withRowAnimation:UITableViewRowAnimationNone];
+    }
+}
+
+- (Boolean)utilForPickerIsInBank:(NSString *)title
+{
+    
+    NSMutableArray *arrBank = [[NSMutableArray alloc]initWithObjects:@"开户行",@"银行帐号",@"户名", nil];
+    for (NSString * str in arrBank) {
+        if ([str isEqualToString:title]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 - (void)utilForPickerParam:(NSMutableArray *)arrBank sectionArr:(NSMutableArray *)sectionArr
 {
     for (int i=0;i<arrBank.count;i++) {
         ParamForEditecard* paramPro00 = [[ParamForEditecard alloc]initWithTitle:arrBank[i] placeholder:[NSString stringWithFormat:@"请输入%@",arrBank[i]]];
         paramPro00.editingStyle = UITableViewCellEditingStyleDelete;
         paramPro00.tag = 2400 +indexPathForEditPicker.section*100 +indexPathForEditPicker.row+i;
-        [sectionArr insertObject:paramPro00 atIndex:indexPathForEditPicker.row];
-        [_table insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:indexPathForEditPicker.row inSection:indexPathForEditPicker.section]] withRowAnimation:UITableViewRowAnimationNone];
+        [sectionArr insertObject:paramPro00 atIndex:indexPathForEditPicker.row+i];
+        [_table insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:indexPathForEditPicker.row+i inSection:indexPathForEditPicker.section]] withRowAnimation:UITableViewRowAnimationNone];
     }
     
+    [((UITextField *)[self.view viewWithTag:2400 +indexPathForEditPicker.section*100 +indexPathForEditPicker.row]) becomeFirstResponder];
+    
+    if(editingParamPorPicker.forPickerToDel){
+        [editingParamPorPicker.toPicker removeObject:@"银行信息"];
+        if ([editingParamPorPicker.toPicker count] == 0) {
+            [[arrAllIn objectAtIndex:3] removeObject:editingParamPorPicker];
+            [_table deleteRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:indexPathForEditPicker.row+3 inSection:3]] withRowAnimation:UITableViewRowAnimationNone];
+        }
+    }
 }
 
 - (void)addToExternArrayFromPick:(NSString *)str
@@ -298,14 +377,16 @@
         NSMutableArray *sectionArr = [arrAllIn objectAtIndex:indexPathForEditPicker.section];
         NSMutableArray *arrBank = [[NSMutableArray alloc]initWithObjects:@"开户行",@"银行帐号",@"户名", nil];
         [self utilForPickerParam:arrBank sectionArr:sectionArr];
+        return;
     }else{
         
         ParamForEditecard* paramPro = [[ParamForEditecard alloc]initWithTitle:str placeholder:[NSString stringWithFormat:@"请输入%@",str]];
         paramPro.editingStyle = UITableViewCellEditingStyleDelete;
-        paramPro.tag = 2400 +indexPathForEditPicker.section*100 +indexPathForEditPicker.row+1;
+        paramPro.tag = 2400 +indexPathForEditPicker.section*100 +indexPathForEditPicker.row;
         [[arrAllIn objectAtIndex:indexPathForEditPicker.section] insertObject:paramPro atIndex:indexPathForEditPicker.row];
         
         [_table insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:indexPathForEditPicker.row inSection:indexPathForEditPicker.section]] withRowAnimation:UITableViewRowAnimationNone];
+        [((UITextField *)[self.view viewWithTag:paramPro.tag]) becomeFirstResponder];
     }
     if(editingParamPorPicker.forPickerToDel){
         [editingParamPorPicker.toPicker removeObject:str];
@@ -316,13 +397,157 @@
     }
 }
 
-
+#pragma mark - picker sortUtil delegate
 
 NSMutableArray *topicker2;
 NSMutableArray *topicker3;
-- (NSMutableArray *)sortArrToPick
+- (NSMutableArray *)sortArrToPick:(int)section
 {
+    ParamForEditecard *pro = (ParamForEditecard *)[[arrAllIn objectAtIndex:section]lastObject];
+    
+    if (section == 1) {
+        return pro.toPicker;
+    }
+    
+    NSMutableArray *arrPro = [[NSMutableArray alloc]initWithCapacity:8];
+    NSMutableArray *topicker;
+    
+    if (section == 2) {
+        topicker = topicker2;
+    }else{
+        topicker = topicker3;
+    }
+    [topicker enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        if ([self isIn:(NSString *)obj arr:pro.toPicker] ) {
+            [arrPro addObject:(NSString *)obj];
+        }
+    }];
+    return arrPro;
+}
+
+- (BOOL)isIn:(NSString *)str2 arr:(NSArray *)arr{
+    for (NSString * str in arr) {
+        if ([str isEqualToString:str2]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+#pragma mark - textField delegate;
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if ([self nextTag:textField.tag]!=-1) {
+        textField.returnKeyType = UIReturnKeyNext;
+    }else{
+        textField.returnKeyType = UIReturnKeyDone;
+    }
+    CGRect rectForKey = textField.superview.superview.frame;
+    rectForKey.origin.y += 30;
+    [_table goToInsetForKeyboard:rectForKey];
+}
+
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{    
+    ParamForEditecard *param =  [self paramFromTag:textField.tag];
+    param.value = textField.text;
+    [self valid:param];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    int nextTag = [self nextTag:textField.tag];
+    if (nextTag == -1){
+        return YES;
+    }
+    UITextField *view = (UITextField *)[self.view viewWithTag:nextTag];
+    [view becomeFirstResponder];
+    return YES;
+}
+
+#pragma mark - textField Util
+
+- (ParamForEditecard *)paramFromTag:(int)tag
+{
+    for (NSMutableArray *arrPro in arrAllIn) {
+        for (ParamForEditecard *paramPro in arrPro) {
+            if(paramPro.tag == tag){
+                return paramPro;
+            }
+        }
+    }
     return nil;
+}
+
+- (int)nextTag:(int)tag
+{
+    NSMutableArray *sectionPro = [arrAllIn objectAtIndex:3];
+    if ([sectionPro count]==1) {
+        sectionPro = [arrAllIn objectAtIndex:2];
+    }
+    if (!((ParamForEditecard *)[sectionPro lastObject]).toPicker) {
+        ParamForEditecard *paramPro = (ParamForEditecard *)[sectionPro objectAtIndex:[sectionPro count]-1];
+        if (tag>=paramPro.tag) {
+            return -1;
+        }
+    }else{
+        ParamForEditecard *paramPro = (ParamForEditecard *)[sectionPro objectAtIndex:[sectionPro count]-2];
+        if (tag>=paramPro.tag) {
+            return -1;
+        }
+    }
+    
+    int nextTag = tag+1;
+    UIView *view = [self.view viewWithTag:nextTag];
+    if([view isKindOfClass:[UITextField class]]){
+        return nextTag;
+    }
+    nextTag = tag-tag%100+100;
+    UIView *view2 = [self.view viewWithTag:nextTag];
+    if([view2 isKindOfClass:[UITextField class]]){
+        return nextTag;
+    }
+    return -1;
+    
+}
+
+- (void)valid:(ParamForEditecard *)param
+{
+    if ([param.title isEqualToString:@"手机"]) {
+        if (param.value.length > 0 && ![param.value isValidMobilePhoneNumber]) {
+            [self warnAlertMessage:@"手机格式错误"];
+        }
+        
+    }else if ([param.title isEqualToString:@"电话"]){
+        if (param.value.length > 0 && ![param.value isValidTelephoneNUmber]) {
+            [self warnAlertMessage:@"电话号码格式错误"];
+        }
+    }else if ([param.title isEqualToString:@"传真"]){
+        if (param.value.length > 0 && ![param.value isValidTelephoneNUmber]) {
+            [self warnAlertMessage:@"传真格式错误"];
+        }
+        
+    }else if ([param.title isEqualToString:@"邮箱"]){
+        if (param.value.length > 0 && ![param.value isValidEmail]) {
+            [self warnAlertMessage:@"邮箱格式错误"];
+        }
+        
+    }else if ([param.title isEqualToString:@"QQ"]){
+        if (param.value.length > 0 && ![param.value isValidQQ]) {
+            [self warnAlertMessage:@"QQ格式错误"];
+        }
+    }else if ([param.title isEqualToString:@"邮编"]){
+        if (param.value.length > 0 && ![param.value isValidPostalCode]) {
+            [self warnAlertMessage:@"邮编格式错误"];
+        }
+        
+    }
+}
+
+- (void)warnAlertMessage:(NSString *)message
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"错误提示" message:message delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:nil, nil];
+    [alert show];
 }
 
 @end

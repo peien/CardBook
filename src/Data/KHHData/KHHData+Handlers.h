@@ -9,5 +9,7 @@
 #import "KHHData.h"
 
 @interface KHHData (Handlers)
+
 - (void)registerHandlersForNotifications;
+
 @end

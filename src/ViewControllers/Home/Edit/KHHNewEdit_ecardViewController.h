@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "KHHInputTableView.h"
-#import "PickViewController.h"
+
 
 @interface KHHNewEdit_ecardViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,PickViewControllerDelegate>
 @property (strong, nonatomic) KHHInputTableView *table;

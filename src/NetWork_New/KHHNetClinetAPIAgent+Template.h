@@ -15,5 +15,5 @@
  * 模板增量接口
  * 方法 get
  */
-- (void)templatesAfterDate:(NSString *)lastDate delegate:(id<KHHNetAgentTemplateDelegates>) delegate;
+- (void)syncTemplatesAfterDate:(NSString *)lastDate delegate:(id<KHHNetAgentTemplateDelegates>) delegate;
 @end

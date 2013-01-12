@@ -27,6 +27,7 @@
     }
     return self;
 }
+
 - (void)dealloc
 {
     [self stopObservingAllNotifications];
@@ -35,7 +36,9 @@
     _managedObjectModel = nil;
     _agent = nil;
 }
-+ (id)sharedData {
+
++ (id)sharedData
+{
     static id _sharedObj = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -43,6 +46,7 @@
     });
     return _sharedObj;
 }
+
 #pragma mark - Core Data stack
 - (void)removeContext // 删除Context。登出或登入时使用。
 {
@@ -50,6 +54,7 @@
     _persistentStoreCoordinator = nil;
     _managedObjectModel = nil;
 }
+
 - (void)saveContext // 保存更改。
 {
     if (self.context) {
@@ -70,11 +75,14 @@
         }
     }
 }
+
 - (void)cleanContext // 清除未保存的更改。
 {
     [self.context reset];
 }
-- (NSManagedObjectContext *)context {
+
+- (NSManagedObjectContext *)context
+{
     if (_context != nil) {
         return _context;
     }
@@ -86,7 +94,9 @@
     }
     return _context;
 }
-- (NSManagedObjectModel *)managedObjectModel {
+
+- (NSManagedObjectModel *)managedObjectModel
+{
     if (_managedObjectModel != nil) {
         return _managedObjectModel;
     }
@@ -94,7 +104,9 @@
     _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return _managedObjectModel;
 }
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
+
+- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
+{
     if (_persistentStoreCoordinator != nil) {
         return _persistentStoreCoordinator;
     }
@@ -186,7 +198,8 @@
     }
 }
 // 开始批量同步所有信息
-- (void)startSyncAllData {
+- (void)startSyncAllData
+{
     // 启动调用链！
     NSMutableArray *queue = [NSMutableArray array];
     [queue addObject:@(KHHQueuedOperationSyncPartly)];
@@ -199,7 +212,8 @@
     [self startNextQueuedOperation:queue];
 }
 
-- (void)syncAllDataEnded:(BOOL)succeed userInfo:(NSDictionary *) info {
+- (void)syncAllDataEnded:(BOOL)succeed userInfo:(NSDictionary *) info
+{
     if (succeed) {
         [self postNowNotificationName:nDataSyncAllSucceeded];
     } else {
@@ -216,7 +230,8 @@
                            extra:extra];
 }
 
-- (void)syncReceivedCards:(NSMutableArray *)queue {
+- (void)syncReceivedCards:(NSMutableArray *)queue
+{
     // 同步联系人
     NSDictionary *extra = @{ kExtraKeyQueue : queue };
     SyncMark *lastTime = [SyncMark syncMarkByKey:kSyncMarkKeyReceviedCardLastTime];
@@ -227,34 +242,39 @@
                                  extra:extra];
 }
 
-- (void)syncCardGroupMaps:(NSMutableArray *)queue {
+- (void)syncCardGroupMaps:(NSMutableArray *)queue
+{
     //
     NSDictionary *extra = @{ kExtraKeyQueue : queue };
     [self.agent cardIDsInAllGroupWithExtra:extra];
 }
 
-- (void)syncTemplates:(NSMutableArray *)queue {
+- (void)syncTemplates:(NSMutableArray *)queue
+{
     NSDictionary *extra = @{ kExtraKeyQueue : queue };
     SyncMark *lastTime = [SyncMark syncMarkByKey:kSyncMarkKeyGroupsLastTime];
     [self.agent templatesAfterDate:lastTime.value
                              extra:extra];
 }
 
-- (void)syncGroups:(NSMutableArray *)queue {
+- (void)syncGroups:(NSMutableArray *)queue
+{
     NSDictionary *extra = @{ kExtraKeyQueue : queue };
     [self.agent childGroupsOfGroupID:nil
                           withCardID:nil
                                extra:extra];
 }
 
-- (void)syncCustomerEvaluations:(NSMutableArray *)queue {
+- (void)syncCustomerEvaluations:(NSMutableArray *)queue
+{
     NSDictionary *extra = @{ kExtraKeyQueue : queue };
     SyncMark *lastTime = [SyncMark syncMarkByKey:kSyncMarkKeyCustomerEvaluationLastTime];
     [self.agent customerEvaluationListAfterDate:lastTime.value
                                           extra:extra];
 }
 
-- (void)syncVisitSchedules:(NSMutableArray *)queue {
+- (void)syncVisitSchedules:(NSMutableArray *)queue
+{
     // 同步拜访计划
     NSDictionary *extra = @{ kExtraKeyQueue : queue };
     SyncMark *lastTime = [SyncMark syncMarkByKey:kSyncMarkKeyVisitScheduleLastTime];
@@ -263,7 +283,8 @@
 }
 
 
-- (void)syncMyCards:(NSMutableArray *)queue {
+- (void)syncMyCards:(NSMutableArray *)queue
+{
     // 同步我的名片
     NSDictionary *extra = @{ kExtraKeyQueue : queue };
     SyncMark *lastTime = [SyncMark syncMarkByKey:kSyncMarkKeySyncMyCardsLastTime];

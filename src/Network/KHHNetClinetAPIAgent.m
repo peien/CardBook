@@ -16,7 +16,7 @@
 
 @implementation KHHNetClinetAPIAgent
 
-#pragma 判断网络是否可用
+#pragma mark - 判断网络是否可用
 -(BOOL) networkStateIsValid
 {
     if ([[NetClient sharedClient].r currentReachabilityStatus] == NotReachable) {
@@ -95,7 +95,7 @@
 }
 
 
-#pragma 网络请求时默认的错误
+#pragma mark - 网络请求时默认的错误
 -(NSDictionary *) defaultFailedResponseDictionary:(NSError *)error
 {
     DLog(@"[II] error = %@", error);
@@ -106,7 +106,7 @@
     return dict;
 }
 
-//参数无效的返回的dictionary
+#pragma mark -参数无效的返回的dictionary
 -(NSDictionary *) parametersNotMeetRequirementFailedResponseDictionary
 {
     NSDictionary *dict = @{
@@ -116,7 +116,7 @@
     return dict;
 }
 
-//默认的请求失败block
+#pragma mark - 默认的请求失败block
 -(KHHFailureBlock) defaultFailedResponse:(id) delegate selector:(NSString *) selector
 {
     KHHFailureBlock failed = ^(AFHTTPRequestOperation *operation, NSError *error){
@@ -129,8 +129,8 @@
     return failed;
 }
 
-//无网络时返回
--(NSDictionary *) networkUnableFailedResponseDictionary
+#pragma mark - 无网络时返回
+- (NSDictionary *)networkUnableFailedResponseDictionary
 {
     NSDictionary *dict = @{
     kInfoKeyErrorCode : [NSString stringWithFormat:@"%d",KHHErrorCodeNotReachable],
@@ -140,7 +140,7 @@
 }
 
 
-#pragma mark 封装一下与服务器通讯时url要加入的固定参数
+#pragma mark - 封装一下与服务器通讯时url要加入的固定参数
 - (void)getPath:(NSString *)methodPath
      parameters:(NSDictionary *)parameters
         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
@@ -196,7 +196,7 @@
     [[NetClient sharedClient] patchPath:realpath parameters:parameters success:success failure:failure];
 }
 
-//新增时，有文件要上传时的接口
+#pragma mark - 新增时，有文件要上传时的接口
 - (void) multipartFormRequestWithPOSTPath:(NSString *)methodPath
                                  parameters:(NSDictionary *)parameters
                   constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))construction
@@ -222,7 +222,8 @@
     // 实际发送请求
     [httpClient enqueueHTTPRequestOperation:reqOperation];
 }
-//修改时，有文件要上传时的接口
+
+#pragma mark - 修改时，有文件要上传时的接口
 - (void) multipartFormRequestWithPUTPath:(NSString *)methodPath
                                 parameters:(NSDictionary *)parameters
                  constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))construction

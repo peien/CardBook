@@ -75,9 +75,7 @@
    // NSLog(@"%f",self.frame.size.width);
     showKeyboard = YES;
     int offset = -self.contentOffset.y+self.frame.origin.y+frame.origin.y + frame.size.height - (480 - KHH_Keyboard_Height);
-    NSLog(@"offset%d",offset);
-    NSLog(@"frame.origin.y%f",self.frame.origin.y);
-     NSLog(@"contentOffset.y%f",self.contentOffset.y);
+   
     if (offset<=0&&self.contentOffset.y<=0) {
         return;
     }
@@ -93,7 +91,7 @@
                          
                        //  self.frame = rect;
                          NSLog(@"showKeyboard");
-                         [self setContentInset:UIEdgeInsetsMake(0,0,160,0)];
+                         [self setContentInset:UIEdgeInsetsMake(0,0,180,0)];
                          self.contentOffset = pointPro;
                      }
                      completion:^(BOOL finished){
