@@ -16,7 +16,8 @@
     if (self) {
         self.dataSource = self;
         self.delegate = self;
-        self.showsSelectionIndicator = YES;       
+        self.showsSelectionIndicator = YES;
+        
     }
     return self;
 }
@@ -24,6 +25,15 @@
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
     return 1;
+}
+
+- (void)setMemoArr:(NSArray *)memoArr
+{
+    if (_memoArr) {
+        _memoArr = memoArr;
+        [self reloadAllComponents];
+    }
+    _memoArr = memoArr;
 }
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component

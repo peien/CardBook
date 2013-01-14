@@ -9,6 +9,22 @@
 #ifndef CardBook_Delegates_h
 #define CardBook_Delegates_h
 
+#pragma mark - for data
+@protocol delegateMsgForMainData<NSObject>
+
+@required
+- (void)reseaveDone:(Boolean)haveNewMsg;
+- (void)reseaveFail;
+@end
+
+@protocol delegateMsgForReadData<NSObject>
+
+@required
+- (void)deleDone;
+- (void)deleFail;
+@end
+
+#pragma mark - for UI
 @protocol delegateMsgForMain<NSObject>
 
 @required
@@ -19,10 +35,9 @@
 @protocol delegateMsgForRead<NSObject>
 
 @required
-
 - (void)deleDone;
 - (void)deleFail;
-
 @end
+
 
 #endif
