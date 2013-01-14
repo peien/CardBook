@@ -115,7 +115,7 @@
     //获取结点下的数据,有结点名就取此结点名下的，没有就不取
     NSDictionary *card;
     if (nodeName) {
-        card = json[@"card"];
+        card = json[nodeName];
     }else {
         card = [[NSDictionary alloc] initWithDictionary:json];
     }

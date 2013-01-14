@@ -157,6 +157,7 @@ static NSString * const JSONDataKeySynTime = @"synTime";
 static NSString * const JSONDataKeyTelephone = @"telephone";
 static NSString * const JSONDataKeyTemplateId = @"templateId";
 static NSString * const JSONDataKeyTemplateList = @"templatelist";
+static NSString * const JSONDataKeyTemplateList_Single = @"kinghhTemplateVO";
 static NSString * const JSONDataKeyTemplateStyle = @"templateStyle";
 static NSString * const JSONDataKeyTemplateType = @"templateType";
 static NSString * const JSONDataKeyUserId = @"userId";
@@ -167,6 +168,18 @@ static NSString * const JSONDataKeyWeb = @"web";
 static NSString * const JSONDataKeyWithPerson = @"withPerson";
 static NSString * const JSONDataKeyZipcode = @"zipcode";
 static NSString * const JSONDataKeySessionID = @"sessionId";
+static NSString * const JSONDataKeyUID = @"uid";
+static NSString * const JSONDataKeyCID = @"cid";
+static NSString * const JSONDataKeyDeviceToken = @"device_token";
+static NSString * const JSONDataKeyLatitude = @"latitude";
+static NSString * const JSONDataKeyLongitude = @"longitude";
+static NSString * const JSONDataKeyLeaveTime = @"leave_time";
+static NSString * const JSONDataKeyUserName = @"userName";
+static NSString * const JSONDataKeyCheckInList = @"visitHistoryList";
+static NSString * const JSONDataKeySendCardID = @"sendCardId";
+static NSString * const JSONDataKeyCompanyLogo = @"companyLogo";
+static NSString * const JSONDataKeyDepartmentName = @"orgName";
+static NSString * const JSONDataKeyEmployeeList = @"employeeList";
 
 #pragma mark - kInfoKey* : Info dictionary key
 static NSString * const kInfoKeySessionID = @"sessionID";//NSString
@@ -212,6 +225,8 @@ static NSString * const kInfoKeyToGroup = @"toGroup";
 static NSString * const kInfoKeyUser = @"user";//NSString
 static NSString * const kInfoKeyUserID = @"userID";//NSNumber
 static NSString * const kInfoKeyVisitScheduleList = @"visitScheduleList";
+static NSString * const kInfoKeyCompanyLogo = @"companyLogo";
+static NSString * const kInfoKeyDepartmentName = @"departmentName";
 
 #pragma mark - kExtraKey* : "Extra" dictionary key
 static NSString * const kExtraKeyAction = @"action";

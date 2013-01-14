@@ -18,26 +18,29 @@
 - (void)sendCard:(long) cardID version:(int) version toPhones:(NSString *) phoneNumbers delegate:(id<KHHNetAgentExchangeDelegates>) delegate
 {
     //网络状态
-    if (![self networkStateIsValid]) {
-        if ([delegate respondsToSelector:@selector(sendCardToMobileFailed:)]) {
-            NSDictionary * dict = [self networkUnableFailedResponseDictionary];
-            [delegate sendCardToMobileFailed:dict];
-        }
-        
+//    if (![self networkStateIsValid]) {
+//        if ([delegate respondsToSelector:@selector(sendCardToMobileFailed:)]) {
+//            NSDictionary * dict = [self networkUnableFailedResponseDictionary];
+//            [delegate sendCardToMobileFailed:dict];
+//        }
+//        
+//        return;
+//    }
+    if (![self networkStateIsValid:delegate selector:@"sendCardToMobileFailed:"]) {
         return;
     }
     
     //检查参数
     if (cardID <= 0 || version < 0 || 0 == phoneNumbers.length) {
-        if ([delegate respondsToSelector:@selector(sendCardToMobileFailed:)]) {
-            NSDictionary * dict = [self parametersNotMeetRequirementFailedResponseDictionary];
-            [delegate sendCardToMobileFailed:dict];
-        }
-        
+//        if ([delegate respondsToSelector:@selector(sendCardToMobileFailed:)]) {
+//            NSDictionary * dict = [self parametersNotMeetRequirementFailedResponseDictionary];
+//            [delegate sendCardToMobileFailed:dict];
+//        }
+        [self parametersNotMeetRequirementFailedResponse:delegate selector:@"sendCardToMobileFailed:"];
         return;
     }
     
-    //请求url的格式
+   //请求url的格式
     NSString *pathFormat = @"card/mobile/%ld/%d";
     NSString *path = [NSString stringWithFormat:pathFormat, cardID, version];
     
@@ -69,5 +72,77 @@
     
     //发送请求
     [self putPath:path parameters:nil success:success failure:failed];
+}
+
+
+/**
+ * 摇摇交换名片
+ * http://192.168.1.151/zentaopms/www/index.php?m=doc&f=view&docID=288
+ * 方法 POST
+ * url card/shakeInfo/{user_id} user_id表示谁摇手机是谁的user_id
+ */
+- (void)exchangeCard:(Card *)card withCoordinate:(CLLocationCoordinate2D)coordinate delegate:(id<KHHNetAgentExchangeDelegates>) delegate
+{
+    //网络状态
+    if (![self networkStateIsValid:delegate selector:@"exchangeCardFailed:"]) {
+        return;
+    }
+    
+    //检查参数
+    if (!card || card.version < 0 || card.id.longValue <= 0) {
+        [self parametersNotMeetRequirementFailedResponse:delegate selector:@"exchangeCardFailed:"];
+        return;
+    }
+    
+    //请求url的格式
+    NSString *pathFormat = @"card/shakeInfo/%@";
+    NSString *path = [NSString stringWithFormat:pathFormat, card.userID.stringValue];
+    
+    ALog(@"[II] 用于交换的名片 id = %@, version = %@", card.id, card.version);
+    NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithCapacity:6];
+    [parameters setObject:[[card valueForKey:kAttributeKeyID] stringValue]
+                   forKey:@"cardId"];
+    [parameters setObject:[[card valueForKey:kAttributeKeyVersion] stringValue]
+                   forKey:@"version"];
+    [parameters setObject:[NSString stringWithFormat:@"%f", coordinate.longitude]
+                   forKey:@"longitude"];
+    [parameters setObject:[NSString stringWithFormat:@"%f", coordinate.latitude]
+                   forKey:@"latitude"];
+    [parameters setObject:@(15*1000).stringValue
+                   forKey:@"invalidTime"];
+    [parameters setObject:@"true"
+                   forKey:@"hasGps"];
+    
+    //成功block
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        // 把返回的数据转成本地数据
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:responseObject];
+        //成功失败标记
+        KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
+        //失败code号
+        dict[kInfoKeyErrorCode] = @(code);
+        if (KHHErrorCodeSucceeded == code) {
+            //交换过来的名片id
+            dict[kInfoKeyID] = [NSNumber numberFromObject:[responseDict valueForKey:JSONDataKeySendCardID] zeroIfUnresolvable:NO];
+            //交换成功,返回数据到data层保存数据
+            if ([delegate respondsToSelector:@selector(exchangeCardSuccess:)]) {
+                [delegate exchangeCardSuccess:dict];
+            }
+        }else {
+            
+            dict[kInfoKeyErrorMessage] = [responseDict valueForKey:JSONDataKeyNote];
+            //交换失败
+            if ([delegate respondsToSelector:@selector(exchangeCardFailed:)]) {
+                [delegate sendCardToMobileFailed:dict];
+            }
+        }
+    };
+    
+    //其它失败的block
+    KHHFailureBlock failed = [self defaultFailedResponse:delegate selector:@"exchangeCardFailed:"];
+    
+    //发请求
+    [self postPath:path parameters:parameters success:success failure:failed];
 }
 @end

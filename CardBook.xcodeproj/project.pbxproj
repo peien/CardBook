@@ -1920,10 +1920,30 @@
 		84732DEB169FB25600C9910E /* KHHNetClinetAPIAgent.m in Sources */ = {isa = PBXBuildFile; fileRef = 84732DE7169FB25600C9910E /* KHHNetClinetAPIAgent.m */; };
 		849FBC93168AA80A00C54EE5 /* ic_photo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 849FBC91168A9ACF00C54EE5 /* ic_photo@2x.png */; };
 		849FBC94168AA80B00C54EE5 /* ic_photo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 849FBC91168A9ACF00C54EE5 /* ic_photo@2x.png */; };
+		84B2C93316A258D000DC2028 /* KHHNetClinetAPIAgent+CheckIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B2C93216A258CF00DC2028 /* KHHNetClinetAPIAgent+CheckIn.m */; };
+		84B2C93416A258D000DC2028 /* KHHNetClinetAPIAgent+CheckIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B2C93216A258CF00DC2028 /* KHHNetClinetAPIAgent+CheckIn.m */; };
+		84B2C93516A258D000DC2028 /* KHHNetClinetAPIAgent+CheckIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B2C93216A258CF00DC2028 /* KHHNetClinetAPIAgent+CheckIn.m */; };
+		84B2C93616A258D000DC2028 /* KHHNetClinetAPIAgent+CheckIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B2C93216A258CF00DC2028 /* KHHNetClinetAPIAgent+CheckIn.m */; };
+		84B2C93916A2711500DC2028 /* ICheckInForNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B2C93816A2711400DC2028 /* ICheckInForNetwork.m */; };
+		84B2C93A16A2711500DC2028 /* ICheckInForNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B2C93816A2711400DC2028 /* ICheckInForNetwork.m */; };
+		84B2C93B16A2711500DC2028 /* ICheckInForNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B2C93816A2711400DC2028 /* ICheckInForNetwork.m */; };
+		84B2C93C16A2711500DC2028 /* ICheckInForNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B2C93816A2711400DC2028 /* ICheckInForNetwork.m */; };
+		84B2C97916A29FD400DC2028 /* KHHNetClinetAPIAgent+Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B2C97816A29FD300DC2028 /* KHHNetClinetAPIAgent+Company.m */; };
+		84B2C97A16A29FD400DC2028 /* KHHNetClinetAPIAgent+Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B2C97816A29FD300DC2028 /* KHHNetClinetAPIAgent+Company.m */; };
+		84B2C97B16A29FD400DC2028 /* KHHNetClinetAPIAgent+Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B2C97816A29FD300DC2028 /* KHHNetClinetAPIAgent+Company.m */; };
+		84B2C97C16A29FD400DC2028 /* KHHNetClinetAPIAgent+Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B2C97816A29FD300DC2028 /* KHHNetClinetAPIAgent+Company.m */; };
+		84B2C97F16A2A9A700DC2028 /* IDepartment.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B2C97E16A2A9A600DC2028 /* IDepartment.m */; };
+		84B2C98016A2A9A700DC2028 /* IDepartment.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B2C97E16A2A9A600DC2028 /* IDepartment.m */; };
+		84B2C98116A2A9A700DC2028 /* IDepartment.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B2C97E16A2A9A600DC2028 /* IDepartment.m */; };
+		84B2C98216A2A9A700DC2028 /* IDepartment.m in Sources */ = {isa = PBXBuildFile; fileRef = 84B2C97E16A2A9A600DC2028 /* IDepartment.m */; };
 		84C111DD169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C111DC169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png */; };
 		84C111DE169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C111DC169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png */; };
 		84C111DF169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C111DC169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png */; };
 		84C111E0169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 84C111DC169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png */; };
+		84C6B7A316A10EE100A228BC /* KHHNetClinetAPIAgent+CustomerEvaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C6B7A216A10EE100A228BC /* KHHNetClinetAPIAgent+CustomerEvaluation.m */; };
+		84C6B7A416A10EE100A228BC /* KHHNetClinetAPIAgent+CustomerEvaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C6B7A216A10EE100A228BC /* KHHNetClinetAPIAgent+CustomerEvaluation.m */; };
+		84C6B7A516A10EE100A228BC /* KHHNetClinetAPIAgent+CustomerEvaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C6B7A216A10EE100A228BC /* KHHNetClinetAPIAgent+CustomerEvaluation.m */; };
+		84C6B7A616A10EE100A228BC /* KHHNetClinetAPIAgent+CustomerEvaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C6B7A216A10EE100A228BC /* KHHNetClinetAPIAgent+CustomerEvaluation.m */; };
 		84DA3F1A169D097500D222A4 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DA3F15169D097500D222A4 /* Reachability.m */; };
 		84DA3F1B169D097500D222A4 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DA3F15169D097500D222A4 /* Reachability.m */; };
 		84DA3F1C169D097500D222A4 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DA3F15169D097500D222A4 /* Reachability.m */; };
@@ -2212,7 +2232,20 @@
 		84732DE6169FB25500C9910E /* KHHNetClinetAPIAgent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNetClinetAPIAgent.h; sourceTree = "<group>"; };
 		84732DE7169FB25600C9910E /* KHHNetClinetAPIAgent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHNetClinetAPIAgent.m; sourceTree = "<group>"; };
 		849FBC91168A9ACF00C54EE5 /* ic_photo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ic_photo@2x.png"; sourceTree = "<group>"; };
+		84B2C92F16A254D500DC2028 /* KHHNetAgentCheckInDelegates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNetAgentCheckInDelegates.h; sourceTree = "<group>"; };
+		84B2C93116A258CF00DC2028 /* KHHNetClinetAPIAgent+CheckIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHNetClinetAPIAgent+CheckIn.h"; sourceTree = "<group>"; };
+		84B2C93216A258CF00DC2028 /* KHHNetClinetAPIAgent+CheckIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHNetClinetAPIAgent+CheckIn.m"; sourceTree = "<group>"; };
+		84B2C93716A2711400DC2028 /* ICheckInForNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICheckInForNetwork.h; sourceTree = "<group>"; };
+		84B2C93816A2711400DC2028 /* ICheckInForNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICheckInForNetwork.m; sourceTree = "<group>"; };
+		84B2C93D16A29A4E00DC2028 /* KHHNetAgentCompanyDelegates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNetAgentCompanyDelegates.h; sourceTree = "<group>"; };
+		84B2C97716A29FD300DC2028 /* KHHNetClinetAPIAgent+Company.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHNetClinetAPIAgent+Company.h"; sourceTree = "<group>"; };
+		84B2C97816A29FD300DC2028 /* KHHNetClinetAPIAgent+Company.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHNetClinetAPIAgent+Company.m"; sourceTree = "<group>"; };
+		84B2C97D16A2A9A500DC2028 /* IDepartment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IDepartment.h; sourceTree = "<group>"; };
+		84B2C97E16A2A9A600DC2028 /* IDepartment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IDepartment.m; sourceTree = "<group>"; };
 		84C111DC169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "title_btn_with_drop@2x.png"; sourceTree = "<group>"; };
+		84C6B79F16A109BD00A228BC /* KHHNetAgentCustomerEvaluationDelegates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNetAgentCustomerEvaluationDelegates.h; sourceTree = "<group>"; };
+		84C6B7A116A10EE100A228BC /* KHHNetClinetAPIAgent+CustomerEvaluation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHNetClinetAPIAgent+CustomerEvaluation.h"; sourceTree = "<group>"; };
+		84C6B7A216A10EE100A228BC /* KHHNetClinetAPIAgent+CustomerEvaluation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHNetClinetAPIAgent+CustomerEvaluation.m"; sourceTree = "<group>"; };
 		84DA3F14169D097500D222A4 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		84DA3F15169D097500D222A4 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		9803EBA5160DA88D00402B53 /* NSObject+SM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SM.h"; sourceTree = "<group>"; };
@@ -3010,6 +3043,9 @@
 				84732DD1169E9E3F00C9910E /* KHHNetAgentExchangeDelegates.h */,
 				84732DD8169EA78900C9910E /* KHHNetAgentGroupDelegates.h */,
 				84732DE5169FADD200C9910E /* KHHNetAgentVisitScheduleDelegates.h */,
+				84C6B79F16A109BD00A228BC /* KHHNetAgentCustomerEvaluationDelegates.h */,
+				84B2C92F16A254D500DC2028 /* KHHNetAgentCheckInDelegates.h */,
+				84B2C93D16A29A4E00DC2028 /* KHHNetAgentCompanyDelegates.h */,
 				31FA57F216A0F9FC00F65BC6 /* KHHNetAgentPrivateDelegates.h */,
 				31FA580016A10FB000F65BC6 /* KHHNetAgentCardDelegates.h */,
 			);
@@ -3207,6 +3243,12 @@
 				84732DDA169EAB9A00C9910E /* KHHNetClinetAPIAgent+Group.m */,
 				84732DDF169FAD5F00C9910E /* KHHNetClinetAPIAgent+VisitSchedule.h */,
 				84732DE0169FAD5F00C9910E /* KHHNetClinetAPIAgent+VisitSchedule.m */,
+				84C6B7A116A10EE100A228BC /* KHHNetClinetAPIAgent+CustomerEvaluation.h */,
+				84C6B7A216A10EE100A228BC /* KHHNetClinetAPIAgent+CustomerEvaluation.m */,
+				84B2C93116A258CF00DC2028 /* KHHNetClinetAPIAgent+CheckIn.h */,
+				84B2C93216A258CF00DC2028 /* KHHNetClinetAPIAgent+CheckIn.m */,
+				84B2C97716A29FD300DC2028 /* KHHNetClinetAPIAgent+Company.h */,
+				84B2C97816A29FD300DC2028 /* KHHNetClinetAPIAgent+Company.m */,
 				31FA580516A12C8100F65BC6 /* KHHNetClinetAPIAgent+Card.h */,
 				31FA580616A12C8100F65BC6 /* KHHNetClinetAPIAgent+Card.m */,
 			);
@@ -3248,6 +3290,10 @@
 				98E6F4011623CEB700AE81D3 /* ISchedule.m */,
 				984ABA00163662ED0047AFB2 /* OSchedule.h */,
 				984ABA01163662ED0047AFB2 /* OSchedule.m */,
+				84B2C93716A2711400DC2028 /* ICheckInForNetwork.h */,
+				84B2C93816A2711400DC2028 /* ICheckInForNetwork.m */,
+				84B2C97D16A2A9A500DC2028 /* IDepartment.h */,
+				84B2C97E16A2A9A600DC2028 /* IDepartment.m */,
 			);
 			path = InterClasses;
 			sourceTree = "<group>";
@@ -5714,6 +5760,11 @@
 				84732DDE169EAB9A00C9910E /* KHHNetClinetAPIAgent+Group.m in Sources */,
 				84732DE4169FAD6000C9910E /* KHHNetClinetAPIAgent+VisitSchedule.m in Sources */,
 				84732DEB169FB25600C9910E /* KHHNetClinetAPIAgent.m in Sources */,
+				84C6B7A616A10EE100A228BC /* KHHNetClinetAPIAgent+CustomerEvaluation.m in Sources */,
+				84B2C93616A258D000DC2028 /* KHHNetClinetAPIAgent+CheckIn.m in Sources */,
+				84B2C93C16A2711500DC2028 /* ICheckInForNetwork.m in Sources */,
+				84B2C97C16A29FD400DC2028 /* KHHNetClinetAPIAgent+Company.m in Sources */,
+				84B2C98216A2A9A700DC2028 /* IDepartment.m in Sources */,
 				319B747216A01807000E62CD /* ParamForEditecard.m in Sources */,
 				319B747616A0180C000E62CD /* KHHNewEdit_ecardViewController.m in Sources */,
 				31FA57F816A10CB000F65BC6 /* KHHData+Message.m in Sources */,
@@ -5953,6 +6004,11 @@
 				84732DDD169EAB9A00C9910E /* KHHNetClinetAPIAgent+Group.m in Sources */,
 				84732DE3169FAD6000C9910E /* KHHNetClinetAPIAgent+VisitSchedule.m in Sources */,
 				84732DEA169FB25600C9910E /* KHHNetClinetAPIAgent.m in Sources */,
+				84C6B7A516A10EE100A228BC /* KHHNetClinetAPIAgent+CustomerEvaluation.m in Sources */,
+				84B2C93516A258D000DC2028 /* KHHNetClinetAPIAgent+CheckIn.m in Sources */,
+				84B2C93B16A2711500DC2028 /* ICheckInForNetwork.m in Sources */,
+				84B2C97B16A29FD400DC2028 /* KHHNetClinetAPIAgent+Company.m in Sources */,
+				84B2C98116A2A9A700DC2028 /* IDepartment.m in Sources */,
 				319B747116A01807000E62CD /* ParamForEditecard.m in Sources */,
 				319B747516A0180C000E62CD /* KHHNewEdit_ecardViewController.m in Sources */,
 				31FA57F716A10CB000F65BC6 /* KHHData+Message.m in Sources */,
@@ -6192,6 +6248,11 @@
 				84732DDB169EAB9A00C9910E /* KHHNetClinetAPIAgent+Group.m in Sources */,
 				84732DE1169FAD6000C9910E /* KHHNetClinetAPIAgent+VisitSchedule.m in Sources */,
 				84732DE8169FB25600C9910E /* KHHNetClinetAPIAgent.m in Sources */,
+				84C6B7A316A10EE100A228BC /* KHHNetClinetAPIAgent+CustomerEvaluation.m in Sources */,
+				84B2C93316A258D000DC2028 /* KHHNetClinetAPIAgent+CheckIn.m in Sources */,
+				84B2C93916A2711500DC2028 /* ICheckInForNetwork.m in Sources */,
+				84B2C97916A29FD400DC2028 /* KHHNetClinetAPIAgent+Company.m in Sources */,
+				84B2C97F16A2A9A700DC2028 /* IDepartment.m in Sources */,
 				319B746F16A01806000E62CD /* ParamForEditecard.m in Sources */,
 				319B747316A0180B000E62CD /* KHHNewEdit_ecardViewController.m in Sources */,
 				31FA57F516A10CB000F65BC6 /* KHHData+Message.m in Sources */,
@@ -6429,6 +6490,11 @@
 				84732DDC169EAB9A00C9910E /* KHHNetClinetAPIAgent+Group.m in Sources */,
 				84732DE2169FAD6000C9910E /* KHHNetClinetAPIAgent+VisitSchedule.m in Sources */,
 				84732DE9169FB25600C9910E /* KHHNetClinetAPIAgent.m in Sources */,
+				84C6B7A416A10EE100A228BC /* KHHNetClinetAPIAgent+CustomerEvaluation.m in Sources */,
+				84B2C93416A258D000DC2028 /* KHHNetClinetAPIAgent+CheckIn.m in Sources */,
+				84B2C93A16A2711500DC2028 /* ICheckInForNetwork.m in Sources */,
+				84B2C97A16A29FD400DC2028 /* KHHNetClinetAPIAgent+Company.m in Sources */,
+				84B2C98016A2A9A700DC2028 /* IDepartment.m in Sources */,
 				319B747016A01807000E62CD /* ParamForEditecard.m in Sources */,
 				319B747416A0180C000E62CD /* KHHNewEdit_ecardViewController.m in Sources */,
 				31FA57F616A10CB000F65BC6 /* KHHData+Message.m in Sources */,

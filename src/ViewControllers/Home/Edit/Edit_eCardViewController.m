@@ -728,12 +728,10 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
         
         switch (indexPath.section ) {
             case 1:
-
                 _whichexternIndex = 0;
                 sectionPicker.PickFlag = 1;
                 sectionPicker.tempArray = section1AddArray;
                 sectionPicker.delegate = self;
-
                 break;
             case 2:
                 _whichexternIndex = 1;
