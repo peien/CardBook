@@ -12,7 +12,6 @@
 #import "NSString+MD5.h"
 #import "NSData+Base64.h"
 #import "KHHStatusCodes.h"
-#import "NetClient.h"
 
 @implementation KHHNetClinetAPIAgent
 
@@ -25,6 +24,23 @@
     
     return YES;
 }
+
+//网络是否可用，不可用时执行某delegate下的某函数，并返回网络是否可用
+-(BOOL) networkStateIsValid:(id) delegate selector:(NSString *) selector
+{
+    if (![self networkStateIsValid]) {
+        //网络不可用
+        NSDictionary *dict = [self networkUnableFailedResponseDictionary];
+        if (selector && delegate && [delegate respondsToSelector:NSSelectorFromString(selector)] ) {
+            [delegate performSelector:NSSelectorFromString(selector) withObject:dict];
+        }
+        
+        return NO;
+    }
+    
+    return YES;
+}
+
 #pragma mark - netState
 
 - (AFHTTPRequestOperation *)HTTPRequestOperationWithRequest:(NSURLRequest *)request success:(void (^)(AFHTTPRequestOperation *, id))success failure:(void (^)(AFHTTPRequestOperation *, NSError *))failure
@@ -127,6 +143,15 @@
     };
     
     return failed;
+}
+
+//参数是否可用，不可用时执行某delegate下的某函数，并返回网络是否可用
+-(void) parametersNotMeetRequirementFailedResponse:(id) delegate selector:(NSString *) selector
+{
+    if (selector && delegate && [delegate respondsToSelector:NSSelectorFromString(selector)] ) {
+        NSDictionary *dict = [self parametersNotMeetRequirementFailedResponseDictionary];
+        [delegate performSelector:NSSelectorFromString(selector) withObject:dict];
+    }
 }
 
 //无网络时返回

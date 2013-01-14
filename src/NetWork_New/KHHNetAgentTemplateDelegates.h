@@ -10,7 +10,17 @@
 #define KHH_NetAgent_Template_Delegates
 @protocol KHHNetAgentTemplateDelegates <NSObject>
 @optional
--(void) syncTemplateSuccess:(NSDictionary *) dict;
--(void) syncTemplateFailed:(NSDictionary *) dict;
+//同步所有模板
+-(void)syncTemplateSuccess:(NSDictionary *) dict;
+-(void)syncTemplateFailed:(NSDictionary *) dict;
+
+//根据模板id与版本号获取模板
+-(void)syncTemplateWithIDAndVersionSuccess:(NSDictionary *) dict;
+-(void)syncTemplateWithIDAndVersionFailed:(NSDictionary *) dict;
+
+//根据模板id获取模板的详细信息
+-(void)syncTemplateItemsWithTemplateIDSuccess:(NSDictionary *) dict;
+-(void)syncTemplateItemsWithTemplateIDFailed:(NSDictionary *) dict;
+
 @end
 #endif

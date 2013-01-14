@@ -8,13 +8,24 @@
 
 #import "KHHNetClinetAPIAgent.h"
 #import "KHHNetAgentExchangeDelegates.h"
+#import "Card.h"
+#import <CoreLocation/CoreLocation.h>
 @interface KHHNetClinetAPIAgent (Exchange)
 
 /**
- * 发送名片到手机 sendCardService.sendCard
+ * 发送名片到手机 
  * http://192.168.1.151/zentaopms/www/index.php?m=doc&f=view&docID=235
  * 方法 put
- * 多介手机号时用";"隔开
+ * 多个手机号时用";"隔开
  */
 - (void)sendCard:(long) cardID version:(int) version toPhones:(NSString *) phoneNumbers delegate:(id<KHHNetAgentExchangeDelegates>) delegate;
+
+
+/**
+ * 摇摇交换名片
+ * http://192.168.1.151/zentaopms/www/index.php?m=doc&f=view&docID=288
+ * 方法 POST
+ * url card/shakeInfo/{user_id} user_id表示谁摇手机是谁的user_id
+ */
+- (void)exchangeCard:(Card *)card withCoordinate:(CLLocationCoordinate2D)coordinate delegate:(id<KHHNetAgentExchangeDelegates>) delegate;
 @end

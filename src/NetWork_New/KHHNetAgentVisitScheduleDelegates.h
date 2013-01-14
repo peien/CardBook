@@ -15,12 +15,18 @@
 -(void) syncVisitScheduleFailed:(NSDictionary *) dict;
 //新增拜访计划
 -(void) addVisitScheduleSuccess:(NSDictionary *) dict;
--(void) addcVisitScheduleFailed:(NSDictionary *) dict;
+-(void) addVisitScheduleFailed:(NSDictionary *) dict;
 //更新拜访计划
 -(void) updateVisitScheduleSuccess;
 -(void) updateVisitScheduleFailed:(NSDictionary *) dict;
 //删除拜访计划
 -(void) deleteVisitScheduleSuccess;
 -(void) deleteVisitScheduleFailed:(NSDictionary *) dict;
+//上传拜访计划图片
+-(void) uploadVisitScheduleImageSuccess;
+-(void) uploadVisitScheduleImageFailed:(NSDictionary *) dict;
+//删除拜访计划图片
+-(void) deleteVisitScheduleImageSuccess;
+-(void) deleteVisitScheduleImageFailed:(NSDictionary *) dict;
 @end
 #endif

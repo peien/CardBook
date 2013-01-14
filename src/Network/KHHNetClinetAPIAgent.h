@@ -11,11 +11,16 @@
 #import "KHHTypes.h"
 #import "Reachability.h"
 #import "KHHKeys.h"
+#import "NSNumber+SM.h"
+#import "NetClient.h"
 
 @interface KHHNetClinetAPIAgent : NSObject
 
 #pragma 判断网络是否可用
 -(BOOL) networkStateIsValid;
+
+//网络是否可用，不可用时执行某delegate下的某函数，并返回网络是否可用
+-(BOOL) networkStateIsValid:(id) delegate selector:(NSString *) selector;
 #pragma mark - Utils
 /**
  登录成功后，一定要调用这个设置authentication。
@@ -33,6 +38,8 @@
 -(NSDictionary *) networkUnableFailedResponseDictionary;
 //默认的请求失败block
 -(KHHFailureBlock) defaultFailedResponse:(id) delegate selector:(NSString *) selector;
+//参数是否可用，不可用时执行某delegate下的某函数，并返回网络是否可用
+-(void) parametersNotMeetRequirementFailedResponse:(id) delegate selector:(NSString *) selector;
 
 #pragma mark 封装一下与服务器通讯时url要加入的固定参数
 - (void)getPath:(NSString *)methodPath

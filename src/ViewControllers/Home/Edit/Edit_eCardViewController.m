@@ -653,17 +653,17 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
     if (editingStyle == UITableViewCellEditingStyleInsert ) {
         switch (indexPath.section ) {
             case 1:
-                if (!self.section1Picker) {
-                    self.section1Picker = [[KHHMemoPicker alloc]initWithFrame:CGRectMake(0.0,H460-200.0,320.0,200.0)];
-                    self.section1Picker.hidden = YES;
-                    self.section1Picker.memoArr = [_paramDic valueForKeyPath:@"memo.titles"];
-                    self.section1Picker.tag = 10030;
-                    __block Edit_eCardViewController *weakself = self;
-                    self.section1Picker.showTitle = ^(NSString *title, int tag){
-                        [weakself showTitle:title tag:tag];
-                    };
-                    [self addRes:_section1Picker];
-                }
+//                if (!self.section1Picker) {
+//                    self.section1Picker = [[KHHMemoPicker alloc]initWithFrame:CGRectMake(0.0,H460-200.0,320.0,200.0)];
+//                    self.section1Picker.hidden = YES;
+//                    self.section1Picker.memoArr = [_paramDic valueForKeyPath:@"memo.titles"];
+//                    self.section1Picker.tag = 10030;
+//                    __block Edit_eCardViewController *weakself = self;
+//                    self.section1Picker.showTitle = ^(NSString *title, int tag){
+//                        [weakself showTitle:title tag:tag];
+//                    };
+//                    [self addRes:_section1Picker];
+//                }
                 break;
             case 2:
                 
