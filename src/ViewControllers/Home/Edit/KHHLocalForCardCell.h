@@ -1,19 +1,18 @@
 //
-//  KHHLocationCell.h
+//  KHHLocalForCardCell.h
 //  CardBook
 //
-//  Created by CJK on 13-1-5.
+//  Created by CJK on 13-1-13.
 //  Copyright (c) 2013年 Kinghanhong. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface KHHLocationCell : UITableViewCell
+@interface KHHLocalForCardCell : UITableViewCell
 
 @property (nonatomic,strong)NSString *headStr;
 @property (nonatomic,strong)NSString *locationStr;
 @property (nonatomic,strong)UITextField *field;
 @property (nonatomic,strong)UIButton *button;
-
 
 @end

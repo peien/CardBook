@@ -14,7 +14,8 @@
 //#import "ContactCard.h"
 
 // 过滤掉意外的名片：比如cardid＝＝0
-NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
+NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray)
+{
     NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:oldArray.count];
     for (Card *card in oldArray) {
         if (card.idValue && card.isFullValue) {
@@ -26,25 +27,31 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
 
 @implementation KHHData (UI_Card)
 // 交换名片后取最新一张名片
-- (void)pullLatestReceivedCard {
+- (void)pullLatestReceivedCard
+{
     [self.agent latestReceivedCard];
 }
 /*!
  MyCard: 我的名片
  */
 // 所有 我自己的名片 MyCard 的数组
-- (NSArray *)allMyCards {
+- (NSArray *)allMyCards
+{
     NSArray *array;
     array = [MyCard objectArrayByPredicate:nil
                            sortDescriptors:@[[Card nameSortDescriptor],[Card companyCardSortDescriptor]]];
     return array;
 }
-- (MyCard *)myCardByID:(NSNumber *)cardID {
+
+- (MyCard *)myCardByID:(NSNumber *)cardID
+{
     MyCard *aCard;
     aCard = [MyCard objectByID:cardID createIfNone:NO];
     return aCard;
 }
-- (void)modifyMyCardWithInterCard:(InterCard *)iCard {
+
+- (void)modifyMyCardWithInterCard:(InterCard *)iCard
+{
     if (![self.agent updateCard:iCard
                          ofType:KHHCardModelTypeMyCard])
     {
@@ -56,18 +63,23 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
 /*!
  PrivateCard: 我自己创建的联系人, 即 PrivateCard 私有联系人
  */
-- (NSArray *)allPrivateCards {
+- (NSArray *)allPrivateCards
+{
     NSArray *array;
     array = [PrivateCard objectArrayByPredicate:nil
                                 sortDescriptors:@[[Card nameSortDescriptor]]];
     return array;
 }
-- (PrivateCard *)privateCardByID:(NSNumber *)cardID {
+
+- (PrivateCard *)privateCardByID:(NSNumber *)cardID
+{
     PrivateCard *aCard = [PrivateCard objectByID:cardID
                                     createIfNone:NO];
     return aCard;
 }
-- (void)createPrivateCardWithInterCard:(InterCard *)iCard {
+
+- (void)createPrivateCardWithInterCard:(InterCard *)iCard
+{
     if (![self.agent createCard:iCard
                          ofType:KHHCardModelTypePrivateCard])
     {
@@ -75,7 +87,9 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
         DLog(@"[II] createCardOfType:withInterCard: 参数有误，未发送请求。");
     }
 }
-- (void)modifyPrivateCardWithInterCard:(InterCard *)iCard {
+
+- (void)modifyPrivateCardWithInterCard:(InterCard *)iCard
+{
     if (![self.agent updateCard:iCard
                          ofType:KHHCardModelTypePrivateCard])
     {
@@ -83,7 +97,9 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
         DLog(@"[II] modifyCardOfType:withInterCard: 参数有误，未发送请求。");
     }
 }
-- (void)deletePrivateCardByID:(NSNumber *)cardID {
+
+- (void)deletePrivateCardByID:(NSNumber *)cardID
+{
     if (![self.agent deleteCardByID:cardID
                              ofType:KHHCardModelTypePrivateCard])
     {
@@ -95,7 +111,8 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
 /*!
  ReceivedCard: 收到的联系人, 即通常所说的“联系人”
  */
-- (NSArray *)allReceivedCards {
+- (NSArray *)allReceivedCards
+{
     NSArray *array;
     NSNumber *myComID = [KHHDefaults sharedDefaults].currentCompanyID;
     NSPredicate *predicate = nil;
@@ -108,23 +125,30 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
                                  sortDescriptors:[Card defaultSortDescriptors]];
     return array;
 }
-- (ReceivedCard *)receivedCardByID:(NSNumber *)cardID {
+
+- (ReceivedCard *)receivedCardByID:(NSNumber *)cardID
+{
     ReceivedCard *aCard = [ReceivedCard objectByID:cardID
                                       createIfNone:NO];
     return aCard;
 }
-- (void)deleteReceivedCard:(ReceivedCard *)receivedCard; {
+
+- (void)deleteReceivedCard:(ReceivedCard *)receivedCard;
+{
     NSArray *cardList = @[receivedCard];
     [self.agent deleteReceivedCards:cardList];
 }
-- (void)markIsRead:(ReceivedCard *)aCard {
+
+- (void)markIsRead:(ReceivedCard *)aCard
+{
     [self.agent markReadReceivedCard:aCard];
 }
 
 @end
 @implementation KHHData (UI_Group)
 // 所有 顶级分组（即父分组 id 为 0）
-- (NSArray *)allTopLevelGroups {
+- (NSArray *)allTopLevelGroups
+{
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"parent.id = %@", @(0)];
     NSArray *array = [Group objectArrayByPredicate:predicate
                                    sortDescriptors:@[[Group nameSortDescriptor]]];
@@ -148,7 +172,8 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
     return result;
 }
 // new（即isRead为no，过滤掉同事）
-- (NSArray *)cardsOfNew {
+- (NSArray *)cardsOfNew
+{
     NSNumber *myComID = [KHHDefaults sharedDefaults].currentCompanyID;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isRead <> YES"];
     if (myComID.integerValue) {
@@ -162,8 +187,10 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
     NSMutableArray *result = FilterUnexpectedCardsFromArray(fetched);
     return result;
 }
+
 // 同事（companyid与自己相同）
-- (NSArray *)cardsOfColleague {
+- (NSArray *)cardsOfColleague
+{
     NSNumber *myComID = [KHHDefaults sharedDefaults].currentCompanyID;
     NSMutableArray *result = [NSMutableArray array];
     if (myComID.integerValue) {
@@ -177,8 +204,10 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
     }
     return result;
 }
+
 // 拜访 (先把所有的拜访记录的客户ID,再从联系人与自建联系人中查询id在拜访列表中的数据):
-- (NSArray *)cardsOfVisited {
+- (NSArray *)cardsOfVisited
+{
     NSArray *oldArray = [self cardsOfAll];
     NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:oldArray.count];
     for (Card *card in oldArray) {
@@ -188,8 +217,10 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
     }
     return newArray;
 }
+
 // 重点 (客户评估在3星以上的，先从5星查5星有数据就返回此星下的客户，没数据就查4星，以此类推。)
-- (NSArray *)cardsOfVIP {
+- (NSArray *)cardsOfVIP
+{
     NSMutableArray *result;
     NSArray *fetched;
     NSPredicate *predicate =  [NSPredicate predicateWithFormat:@"evaluation.value >= 3.0"];
@@ -201,7 +232,8 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
 }
 
 // 通过几颗星筛选评估价值
-- (NSArray *)cardsofStarts:(float)starts{
+- (NSArray *)cardsofStarts:(float)starts
+{
     NSMutableArray *result;
     NSArray *fetched;
     NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"evaluation.value == %f",starts]];
@@ -212,7 +244,8 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
 }
 
 // 通过几颗星筛选评估价值（分组）
-- (NSArray *)cardsofStarts:(float)starts groupId:(NSNumber *)groupId{
+- (NSArray *)cardsofStarts:(float)starts groupId:(NSNumber *)groupId
+{
     if (!groupId) {
         return [self cardsofStarts:starts];
     } 
@@ -226,7 +259,8 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
 }
 
 // 通过几颗星筛选关系
-- (NSArray *)cardsOfstartsForRelation:(float)starts groupID: (long) groupID{
+- (NSArray *)cardsOfstartsForRelation:(float)starts groupID: (long) groupID
+{
     NSMutableArray *result;
     NSArray *fetched;
     NSPredicate *predicate;
@@ -255,7 +289,8 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
 }
 
 // 未分组（不在其它分组的，过滤掉同事）
-- (NSArray *)cardsOfUngrouped {
+- (NSArray *)cardsOfUngrouped
+{
     NSNumber *myComID = [KHHDefaults sharedDefaults].currentCompanyID;
     NSPredicate *predicate = nil;
     if (myComID.integerValue) {
@@ -275,28 +310,34 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
     NSMutableArray *result = FilterUnexpectedCardsFromArray(filtered);
     return result;
 }
+
 // 分组增删改
 - (void)createGroup:(IGroup *)iGroup
-         withMyCard:(MyCard *)myCard {
+         withMyCard:(MyCard *)myCard
+{
     NSString *myCardID = myCard.id.stringValue;
     if (![self.agent createGroup:iGroup
                       userCardID:myCardID]) {
         ALog(@"[EE] ERROR!!参数错误！");
     }
 }
-- (void)updateGroup:(IGroup *)iGroup {
+
+- (void)updateGroup:(IGroup *)iGroup
+{
     if (![self.agent updateGroup:iGroup]) {
         ALog(@"[EE] ERROR!!参数错误！");
     }
 }
-- (void)deleteGroup:(Group *)group {
+
+- (void)deleteGroup:(Group *)group
+{
     if (![self.agent deleteGroup:group]) {
         ALog(@"[EE] ERROR!!参数错误！");
     }
 }
-- (void)moveCards:(NSArray *)cards
-        fromGroup:(Group *)fromGroup
-          toGroup:(Group *)toGroup {
+
+- (void)moveCards:(NSArray *)cards fromGroup:(Group *)fromGroup toGroup:(Group *)toGroup
+{
     if (![self.agent moveCards:cards
                      fromGroup:fromGroup
                        toGroup:toGroup]) {
@@ -306,26 +347,33 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray) {
 @end
 
 @implementation KHHData (UI_CustomerEvaluation)
+
 - (void)saveEvaluation:(ICustomerEvaluation *)icv //
          aboutCustomer:(Card *)aCard              // 客户的名片
-            withMyCard:(MyCard *)myCard {
+            withMyCard:(MyCard *)myCard
+{
     [self.agent createOrUpdateEvaluation:icv
                            aboutCustomer:aCard
                               withMyCard:myCard];
 }
+
 @end
 
 @implementation KHHData (UI_Schedule)
 
 - (void)createSchedule:(OSchedule *)oSchedule
-            withMyCard:(MyCard *)myCard {
+            withMyCard:(MyCard *)myCard
+{
     [self.agent createVisitSchedule:oSchedule
                          withMyCard:myCard];
 }
-- (void)updateSchedule:(OSchedule *)oSchedule {
+
+- (void)updateSchedule:(OSchedule *)oSchedule
+{
     [self.agent updateVisitSchedule:oSchedule];
 }
-- (void)deleteSchedule:(Schedule *)schedule {
+- (void)deleteSchedule:(Schedule *)schedule
+{
     [self.agent deleteVisitSchedule:schedule];
 }
 - (void)uploadImage:(UIImage *)image forSchedule:(Schedule *)schedule {

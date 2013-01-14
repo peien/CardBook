@@ -63,7 +63,7 @@
                 dict[kInfoKeyGroupList] = newList;
             }
             
-            //同步成功,返回数据到data层保存数据
+            //todo 同步成功,返回数据到data层保存数据
             if ([delegate respondsToSelector:@selector(syncGroupSuccess:)]) {
                 [delegate syncGroupSuccess:dict];
             }

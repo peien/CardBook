@@ -16,7 +16,7 @@
 
 @interface KHHNetClinetAPIAgent : NSObject
 
-#pragma 判断网络是否可用
+#pragma mark - 判断网络是否可用
 -(BOOL) networkStateIsValid;
 
 //网络是否可用，不可用时执行某delegate下的某函数，并返回网络是否可用
@@ -29,7 +29,7 @@
 - (NSString *)queryStringWithMethod:(NSString *) method;
 - (NSMutableDictionary *)JSONDictionaryWithResponse:(NSData *)responseData;
 
-#pragma 网络请求时默认的错误
+#pragma mark - 网络请求时默认的错误
 //默认失败请求返回的dict
 //-(NSDictionary *) defaultFailedResponseDictionary:(NSError *)error;
 //参数不满足时返回
@@ -41,7 +41,7 @@
 //参数是否可用，不可用时执行某delegate下的某函数，并返回网络是否可用
 -(void) parametersNotMeetRequirementFailedResponse:(id) delegate selector:(NSString *) selector;
 
-#pragma mark 封装一下与服务器通讯时url要加入的固定参数
+#pragma mark - 封装一下与服务器通讯时url要加入的固定参数
 - (void)getPath:(NSString *)methodPath
      parameters:(NSDictionary *)parameters
         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
@@ -64,13 +64,13 @@
           success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
           failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
-//新增时，有文件要上传时的接口
+#pragma mark - 新增时，有文件要上传时的接口
 - (void) multipartFormRequestWithPOSTPath:(NSString *)methodPath
                                              parameters:(NSDictionary *)parameters
                               constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))construction
                                                 success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
                                                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
-//修改时，有文件要上传时的接口
+#pragma mark - 修改时，有文件要上传时的接口
 - (void) multipartFormRequestWithPUTPath:(NSString *)methodPath
                                  parameters:(NSDictionary *)parameters
                   constructingBodyWithBlock:(void (^)(id <AFMultipartFormData> formData))construction
