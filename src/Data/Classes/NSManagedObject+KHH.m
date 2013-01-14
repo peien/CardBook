@@ -11,8 +11,8 @@
 
 @implementation NSManagedObject (KHH)
 + (NSManagedObjectContext *)currentContext {
-    KHHData *data = [KHHData sharedData];
-    return data.context;
+    
+    return [[KHHDataNew sharedData] context];
 }
 
 // 在context里创建一个新的object;

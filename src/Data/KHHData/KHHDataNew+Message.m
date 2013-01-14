@@ -6,9 +6,9 @@
 //  Copyright (c) 2013年 Kinghanhong. All rights reserved.
 //
 
-#import "KHHData+Message.h"
+#import "KHHDataNew+Message.h"
 
-@implementation KHHData (Message)
+@implementation KHHDataNew (Message)
 
 
 
