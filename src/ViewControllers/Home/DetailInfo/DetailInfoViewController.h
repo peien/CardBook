@@ -12,6 +12,8 @@
 #import "KHHCustomEvaluaView.h"
 #import "Card.h"
 #import "KHHCardMode.h"
+#import "KHHViewAdapterUtil.h"
+
 @class eCardViewController;
 
 @interface DetailInfoViewController : SuperViewController <UIAlertViewDelegate>{

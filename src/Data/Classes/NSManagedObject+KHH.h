@@ -9,6 +9,7 @@
 #import <CoreData/CoreData.h>
 #import "KHHLog.h"
 #import "KHHTransformation.h"
+#import "KHHDataNew.h"
 
 @interface NSManagedObject (KHH)
 // 当前应用的NSManagedObjectContext

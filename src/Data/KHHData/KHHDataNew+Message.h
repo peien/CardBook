@@ -6,8 +6,9 @@
 //  Copyright (c) 2013年 Kinghanhong. All rights reserved.
 //
 
-#import "KHHData.h"
+#import "KHHDataNew.h"
 #import "MsgDelegates.h"
-@interface KHHData (Message)<delegateMsgForMain>
+
+@interface KHHDataNew (Message)<delegateMsgForMain>
 
 @end

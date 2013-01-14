@@ -6,8 +6,8 @@
 //  Copyright (c) 2013年 Kinghanhong. All rights reserved.
 //
 
-#import "KHHData.h"
+#import "KHHDataNew.h"
 
-@interface KHHData (Card)
+@interface KHHDataNew (Card)
 
 @end
