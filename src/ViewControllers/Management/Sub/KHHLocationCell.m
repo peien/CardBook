@@ -12,7 +12,7 @@
 @implementation KHHLocationCell
 {
     UIFont *font;
-    UILabel *label;
+   
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -22,9 +22,9 @@
         font = [UIFont systemFontOfSize:13];
         self.textLabel.font = [UIFont systemFontOfSize:12];
         
-        label = [[UILabel alloc]init];
-        label.font = font;
-        label.backgroundColor = [UIColor clearColor];
+        _button = [UIButton buttonWithType:UIButtonTypeCustom];
+        _button.titleLabel.font = font;        
+        //_button.backgroundColor = [UIColor clearColor];
         _field = [[UITextField alloc]init];
         _field.font = font;
         _field.placeholder = @"请输入地址";
@@ -54,14 +54,16 @@
     [super layoutSubviews];
     CGRect r = self.bounds;
     CGSize size = [self.textLabel.text sizeWithFont:font];
-    label.frame = CGRectMake(r.origin.x+10+size.width+30, (r.size.height-size.height)/2-15, r.size.width - 40-40 -size.width, size.height);
-    label.text = _locationStr;
+    _button.frame = CGRectMake(r.origin.x+10+size.width+30, (r.size.height-size.height)/2-15, r.size.width - 40-40 -size.width, size.height);
+    //_button.titleLabel.text = _locationStr;
+   // [_button set:_locationStr forState:UIControlStateNormal];
+    [_button setTitle:_locationStr forState:UIControlStateHighlighted];
     
     _field.frame = CGRectMake(r.origin.x+10+size.width+30, (r.size.height-size.height)/2+12, r.size.width - 40-40 -size.width, size.height+10);
     
     
     self.textLabel.text = _headStr;
-    [self.contentView addSubview:label];
+    [self.contentView addSubview:_button];
     [self.contentView addSubview:_field];
     self.textLabel.font = [UIFont systemFontOfSize:12];
 }

@@ -12,6 +12,8 @@
 #import "EditCardPersonCell.h"
 #import "NSString+Validation.h"
 #import "KHHMemoPicker.h"
+#import "KHHLocalForCardCell.h"
+
 
 @interface KHHNewEdit_ecardViewController ()
 {
@@ -26,7 +28,11 @@
     KHHMemoPicker *sectionPicker;
     ParamForEditecard *editingParamPorPicker;
     NSIndexPath *indexPathForEditPicker;
-    ParamForEditecard *cacheParamForPicker;
+    
+    
+    //for location
+    NSString *locationStr;
+    HZAreaPickerView *areaPicker;
 }
 
 @end
@@ -166,6 +172,7 @@
 {
     static NSString *cellIDZero = @"cellIDZero";
     static NSString *cellIDOne = @"cellIDOne";
+    static NSString *cellLocal = @"cellLocal";
     if (indexPath.section == 0) {
         EditCardPersonCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIDZero];
         if (cell == nil) {
@@ -183,6 +190,22 @@
         cell.jobValue.delegate = self;
         cell.jobValue.placeholder = ((ParamForEditecard *)[section0Arr objectAtIndex:1]).placeholder;
         cell.jobValue.keyboardType = ((ParamForEditecard *)[section0Arr objectAtIndex:1]).boardType;
+        return cell;
+    }
+    if (indexPath.section == 2 && indexPath.row == 1) {
+        KHHLocalForCardCell *cell = [tableView dequeueReusableCellWithIdentifier:cellLocal];
+        if (!cell) {
+            cell = [[KHHLocalForCardCell alloc]init];
+        }
+        ((KHHLocalForCardCell *)cell).headStr = @"地址";
+        ((KHHLocalForCardCell *)cell).field.delegate = self;
+        ((KHHLocalForCardCell *)cell).field.tag = ((ParamForEditecard *)[section1Arr objectAtIndex:1]).tag;
+
+        if (locationStr) {
+            ((KHHLocalForCardCell *)cell).locationStr = locationStr;
+        }else{
+            ((KHHLocalForCardCell *)cell).locationStr = @"请选择省市地";
+        }
         return cell;
     }
     Edit_eCardViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIDOne];
@@ -214,21 +237,38 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath;
 {
+    
     if (editingStyle == UITableViewCellEditingStyleInsert ) {
+        [self hiddenKeyboard];
         if (!sectionPicker) {
-            sectionPicker = [[KHHMemoPicker alloc]init];
-            ParamForEditecard *paramPro = (ParamForEditecard *)[[arrAllIn objectAtIndex:indexPath.section]objectAtIndex:indexPath.row];
-            sectionPicker.PickFlag = 1;
-            sectionPicker.tempArray = [self sortArrToPick:indexPath.section];
-            sectionPicker.delegate = self;
+            sectionPicker = [[ KHHMemoPicker alloc] initWithFrame:CGRectMake(0.0,H460-200.0,320.0,200.0)];
+            sectionPicker.hidden = YES;            
+            
+           
+            __block KHHNewEdit_ecardViewController *weakself = self;
+            sectionPicker.showTitle = ^(NSString *title, int tag){
+                [weakself addToExternArrayFromPick:title];
+            };
+
         }
+        sectionPicker.memoArr = [self sortArrToPick:indexPath.section];
+        if (sectionPicker.hidden) {
+            CGRect rectForKey = [tableView cellForRowAtIndexPath:indexPath].frame;
+            rectForKey = CGRectMake(rectForKey.origin.x, rectForKey.origin.y+30, rectForKey.size.width, rectForKey.size.height);
+            [_table goToInsetForKeyboard:rectForKey];
+            [sectionPicker showInView:self.navigationController.view ];
+        }
+        ParamForEditecard *paramPro = (ParamForEditecard *)[[arrAllIn objectAtIndex:indexPath.section]objectAtIndex:indexPath.row];
         
         editingParamPorPicker = paramPro;
         indexPathForEditPicker = indexPath;
-        [self.navigationController pushViewController:sectionPicker animated:YES];
+       // [self.navigationController pushViewController:sectionPicker animated:YES];
         
         
     }else if (editingStyle == UITableViewCellEditingStyleDelete){
+        
+        [self hiddenKeyboard];
+        [_table showNormal];
         
         ParamForEditecard * paramPro = (ParamForEditecard *)[[arrAllIn objectAtIndex:indexPath.section]objectAtIndex:indexPath.row];
         if ([self utilForPickerIsInBank:paramPro.title]) {
@@ -286,6 +326,30 @@
     ParamForEditecard *paramPro = (ParamForEditecard *)[[arrAllIn objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
     
     return paramPro.editingStyle;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (indexPath.section == 2&&indexPath.row == 1) {
+        [self hiddenKeyboard];
+        if (!areaPicker) {            
+            areaPicker = [[HZAreaPickerView alloc] initWithStyle:HZAreaPickerWithStateAndCityAndDistrict delegate:self];      
+            
+            areaPicker.hidden = YES;
+            
+        }
+        if (areaPicker.hidden) {
+            [areaPicker showInView:self.navigationController.view ];
+        }else{
+            [_table showNormal];
+        }
+    }
+}
+
+- (void)pickerDidChaneStatus:(HZAreaPickerView *)picker
+{
+    [[[arrAllIn objectAtIndex:2]objectAtIndex:1] setValue:[NSString stringWithFormat:@"%@ %@ %@", picker.locate.state, picker.locate.city, picker.locate.district] forKey:@"location"];
+    [_table reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:2]]  withRowAnimation:UITableViewRowAnimationNone];
 }
 
 #pragma mark - picker delegate
@@ -373,6 +437,8 @@
 
 - (void)addToExternArrayFromPick:(NSString *)str
 {
+    
+    
     if ([str isEqualToString:@"银行信息"]) {
         NSMutableArray *sectionArr = [arrAllIn objectAtIndex:indexPathForEditPicker.section];
         NSMutableArray *arrBank = [[NSMutableArray alloc]initWithObjects:@"开户行",@"银行帐号",@"户名", nil];
@@ -386,6 +452,7 @@
         [[arrAllIn objectAtIndex:indexPathForEditPicker.section] insertObject:paramPro atIndex:indexPathForEditPicker.row];
         
         [_table insertRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:indexPathForEditPicker.row inSection:indexPathForEditPicker.section]] withRowAnimation:UITableViewRowAnimationNone];
+        [self hiddenKeyboard];
         [((UITextField *)[self.view viewWithTag:paramPro.tag]) becomeFirstResponder];
     }
     if(editingParamPorPicker.forPickerToDel){
@@ -437,6 +504,9 @@ NSMutableArray *topicker3;
 #pragma mark - textField delegate;
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
+    if (!sectionPicker.hidden) {
+        [sectionPicker cancelPicker:NO];
+    }
     if ([self nextTag:textField.tag]!=-1) {
         textField.returnKeyType = UIReturnKeyNext;
     }else{
@@ -458,6 +528,8 @@ NSMutableArray *topicker3;
 {
     int nextTag = [self nextTag:textField.tag];
     if (nextTag == -1){
+        [textField resignFirstResponder];
+        [_table showNormal];
         return YES;
     }
     UITextField *view = (UITextField *)[self.view viewWithTag:nextTag];
@@ -550,4 +622,24 @@ NSMutableArray *topicker3;
     [alert show];
 }
 
+#pragma mark - hiddenKeyboard
+
+- (void)hiddenKeyboard
+{
+    for (NSMutableArray *arrPro in arrAllIn) {
+        for( ParamForEditecard *paraPro in arrPro){
+            UIView *viewPro = [self.view viewWithTag:paraPro.tag];
+            if ([viewPro isKindOfClass:[UITextField class]]) {
+                if ([viewPro isFirstResponder]) {
+                    [viewPro resignFirstResponder];
+                    return;
+                }
+            
+            }
+        }
+    }
+    if (!sectionPicker.hidden) {
+        [sectionPicker cancelPicker:NO];
+    }
+}
 @end

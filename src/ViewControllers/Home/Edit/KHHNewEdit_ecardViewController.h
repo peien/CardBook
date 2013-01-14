@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "KHHInputTableView.h"
+#import "HZAreaPickerView.h"
 
-
-@interface KHHNewEdit_ecardViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,PickViewControllerDelegate>
+@interface KHHNewEdit_ecardViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,HZAreaPickerDelegate>
 @property (strong, nonatomic) KHHInputTableView *table;
 
 @end
