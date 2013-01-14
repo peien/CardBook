@@ -29,6 +29,9 @@
 - (void)updateCardSuccess;
 - (void)updateCardFailed:(NSDictionary *)dict;
 
+//设置联系人新名片标记
+- (void)updateCardNewCardStateSuccess;
+- (void)updateCardNewCardStateFailed:(NSDictionary *)dict;
 @end
 
 #endif

@@ -20,6 +20,10 @@
 @property (nonatomic, strong) NSNumber *userID;
 @property (nonatomic, strong) NSNumber *version;
 @property (nonatomic, strong) NSNumber *templateID;
+//取值如下： 个人名片、公司名片、客服名片
+@property (nonatomic, strong) NSString *cardType;
+//名片来源：共有下面几种来源，即取值如下：导入名片、客户端自建名片、服务端自建名片、个人用户创建名片
+@property (nonatomic, strong) NSString *cardSource;
 
 // 个人重要信息
 @property (nonatomic, strong) NSString *name;
