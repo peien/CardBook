@@ -7,7 +7,7 @@
 //
 
 #import "KHHDataNew.h"
-
-@interface KHHDataNew (Card)
+#import "KHHDataCardDelegate.h"
+@interface KHHDataNew (Card) <KHHDataCardDelegate>
 
 @end
