@@ -12,6 +12,6 @@
 
 @interface KHHDataNew (Register)<KHHNetAgentRegisterDelegate>
 
-- (void)doRegister:(NSString *)username password:(NSString *)password delegate:(id<KHHNetAgentRegisterDelegate>) delegate;
+- (void)doRegister:(NSDictionary*) info delegate:(id<KHHDataRegisterDelegate>) delegate;
 
 @end
