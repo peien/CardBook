@@ -12,6 +12,7 @@
 #import "NSString+MD5.h"
 #import "NSData+Base64.h"
 #import "KHHStatusCodes.h"
+#import "KHHUser.h"
 
 @implementation KHHNetClinetAPIAgent
 
@@ -75,9 +76,12 @@
 //serverurl/ cellvisiting/mobile/{sessionId}/{companyId}/method
 - (NSString *)queryStringWithMethod:(NSString *) method
 {
+    if ([method isEqualToString:@"login"]) {
+        return @"cellvisiting/mobile/login";
+    }
     NSString * urlFormat = @"cellvisiting/mobile/%@/%@/%@";
-#warning sessionID，companyID 要等服务做好反登录后回给客户端
-    return [NSString stringWithFormat:urlFormat,@"110",@"52",method];
+
+    return [NSString stringWithFormat:urlFormat,[KHHUser shareInstance].sessionId ,[KHHUser shareInstance].companyId,method];
 }
 
 //解析返回结果
@@ -88,7 +92,7 @@
                                                 length:[responseData length]
                                               encoding:NSASCIIStringEncoding];
     NSData *decodedData = [NSData dataWithBase64EncodedString:base64];
-    NSMutableDictionary *dict = [NSJSONSerialization JSONObjectWithData:decodedData
+    NSMutableDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseData
                                                                 options:NSJSONReadingMutableContainers
                                                                   error:nil];
     NSMutableDictionary *result = dict[@"jsonData"];
@@ -103,6 +107,7 @@
     } else {
         // 确保返回的 result 不是nil
         result = [NSMutableDictionary dictionaryWithCapacity:2];
+        result[JSONDataKeyNote] = @"服务器忙，请稍后再试";
     }
     // 根据状态，插入errorCode
     result[@"errorCode"] = [NSNumber numberWithInteger:code];

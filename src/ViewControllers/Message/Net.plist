@@ -7,7 +7,7 @@
 	<key>base2Official</key>
 	<string>cardbook</string>
 	<key>base1Test</key>
-	<string>s2.kinghanhong.com:9999</string>
+	<string>192.168.1.150:8080</string>
 	<key>base1Official</key>
 	<string>www.kinghanhong.com</string>
 	<key>base1Haibo</key>

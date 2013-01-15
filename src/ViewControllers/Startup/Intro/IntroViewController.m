@@ -8,6 +8,7 @@
 #import "KHHDefaults.h"
 #import "NSObject+SM.h"
 #import "XLPageControl.h"
+#import "KHHViewAdapterUtil.h"
 
 @interface IntroViewController ()
 @property (nonatomic, strong) KHHDefaults *defaults;

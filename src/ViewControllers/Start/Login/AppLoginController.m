@@ -16,6 +16,7 @@
 #import "UIViewController+SM.h"
 #import "RegViewController.h"
 #import "ResetPasswordViewController.h"
+#import "KHHUser.h"
 
 #define Tag_ImageView_CellTop    20001
 #define Tag_ImageView_CellBottom 20002
@@ -82,7 +83,7 @@
                                               capInsets:buttonBgInsets]
                            forState:UIControlStateNormal];
     // textField
-    self.userField.text = self.defaults.lastUser;
+    self.userField.text = [KHHUser shareInstance].username;
 }
 
 - (void)didReceiveMemoryWarning
@@ -103,11 +104,11 @@
 }
 - (IBAction)login:(id)sender {
     // get user & password
-    NSString *user     = self.userField.text;
+    NSString *username     = self.userField.text;
     NSString *password = self.passwordField.text;
-    DLog(@"[II] user=%@, password=%@", user, password);
+    DLog(@"[II] user=%@, password=%@", username, password);
     
-    if (0 == user.length || 0 == password.length) {
+    if (0 == username.length || 0 == password.length) {
         DLog(@"[II] 密码或帐号为空");
         [[[UIAlertView alloc]
           initWithTitle:nil
@@ -117,14 +118,16 @@
           otherButtonTitles:nil] show];
     } else {
         DLog(@"[II] 用户名密码看起来ok，开始登录！");
-        if ([user isEqualToString:self.defaults.lastUser]) {
-            self.defaults.showCompanyLogo = YES;
-        }
-        
-        // 把user和password保存到UserDefaults，并通过Notification发出去
-        self.defaults.currentUser = user;
-        self.defaults.currentPassword = password;
-        [self postASAPNotificationName:nAppLogMeIn];
+//        if ([user isEqualToString:self.defaults.lastUser]) {
+//            self.defaults.showCompanyLogo = YES;
+//        }
+//        
+//        // 把user和password保存到UserDefaults，并通过Notification发出去
+//        self.defaults.currentUser = user;
+//        self.defaults.currentPassword = password;
+//        [self postASAPNotificationName:nAppLogMeIn];
+        NSLog(@"%@,%@",username,password);
+        [[KHHDataNew sharedData]doLogin:username password:password delegate:self];
     }
 }
 //直接体验
@@ -186,4 +189,16 @@
 }
 
 #pragma mark - Misc
+
+
+- (void)loginForUISuccess:(NSDictionary *)dict
+{
+    [KHHUser shareInstance].username = dict[@"username"];
+}
+
+- (void)LoginForUIFailed:(NSDictionary *)dict
+{
+  //  [KHHUser shareInstance].password = dict[@"password"];
+    [self alertWithTitle:@"登录失败" message:dict[kInfoKeyErrorMessage]];
+}
 @end

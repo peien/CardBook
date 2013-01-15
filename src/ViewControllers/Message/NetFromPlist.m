@@ -21,29 +21,33 @@
 
 #ifdef TEST
 - (NSURL *)currentUrl{    
-    NSString *trPro =[self strForUrl:[_dic objectForKey:@"base1Test"] restStr:[_dic objectForKey:@"base2Test"]];
+    NSString *trPro =[self strForUrl:[_dic objectForKey:@"base1Test"] ];
     return  [NSURL URLWithString: trPro];
 }
 #endif
 
 #ifdef HAIBO
 - (NSURL *)currentUrl{
-    NSString *trPro =[self strForUrl:[_dic objectForKey:@"base1Haibo"] restStr:[_dic objectForKey:@"base2Test"]];
+    NSString *trPro =[self strForUrl:[_dic objectForKey:@"base1Haibo"] ];
     return  [NSURL URLWithString: trPro];
 }
 #endif
 
 #ifdef OFFIC
 - (NSURL *)currentUrl{
-    NSString *trPro =[self strForUrl:[_dic objectForKey:@"base1Official"] restStr:[_dic objectForKey:@"base2Official"]];
+    NSString *trPro =[self strForUrl:[_dic objectForKey:@"base1Official"] ];
     return  [NSURL URLWithString: trPro];
 }
 #endif
 
-- (NSString *)strForUrl:(NSString *)ipStr restStr:(NSString *)restStr{
-    
-    return [NSString stringWithFormat:@"http://%@/%@/",ipStr,restStr];
+- (NSString *)strForUrl:(NSString *)ipStr
+{
+    return [NSString stringWithFormat:@"http://%@/",ipStr];
 }
+//- (NSString *)strForUrl:(NSString *)ipStr restStr:(NSString *)restStr{
+//    
+//    return [NSString stringWithFormat:@"http://%@/%@/",ipStr,restStr];
+//}
 
 
 - (NSDictionary *)fromPlist{

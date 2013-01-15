@@ -21,11 +21,12 @@
 
 - (void)loginSuccess:(NSDictionary *)dict
 {
+    
     [(id<KHHDataLoginDelegate>)self.delegate loginForUISuccess:dict];
 }
 
-- (void)LoginFailed:(NSDictionary *)dict
+- (void)loginFailed:(NSDictionary *)dict
 {
-    [(id<KHHDataLoginDelegate>)self.delegate LoginForUIFailed:dict];
+    [(id<KHHDataLoginDelegate>)self.delegate loginForUIFailed:dict];
 }
 @end

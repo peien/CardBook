@@ -324,4 +324,14 @@ enum Tag_TextField {
     }
 }
 
+- (void)registerForUISuccess:(NSDictionary *)dict
+{
+
+}
+
+- (void)registerForUIFailed:(NSDictionary *)dict
+{
+
+}
+
 @end
