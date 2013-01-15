@@ -11,7 +11,8 @@
 
 @implementation KHHNetClinetAPIAgent (Register)
     
-- (void)register:(NSString *)username password:(NSString *)password delegate:(id<KHHNetAgentRegisterDelegate>)delegate
+
+- (void)regist:(NSString *)phone username:(NSString *)username  password:(NSString *)password companyName:(NSString *)companyName  delegate:(id<KHHNetAgentRegisterDelegate>)delegate
 {
     if (0 == [username length] || 0 == [password length]) {
         return;
@@ -21,7 +22,7 @@
     }
     
     //url
-    NSString *path = @"login";
+    NSString *path = @"register";
     
     //服务器有返回值
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -33,7 +34,7 @@
         // errorCode
         dict[kInfoKeyErrorCode] = @(code);
         if (KHHErrorCodeSucceeded == code) {
-            [[KHHUser shareInstance]fromJsonData:dict];
+            [[KHHUser shareInstance] fromJsonData:dict];
             [delegate registerSuccess:dict];
             
         }else {
@@ -49,9 +50,16 @@
     
     //其他错误返回
     KHHFailureBlock failed = [self defaultFailedResponse:delegate selector:@"registerFailed:"];
-    
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc]initWithCapacity:4];
+    dic[@"username"] = phone;
+    dic[@"password"] = password;
+    dic[@"trueName"] = username;
+    if (companyName) {
+        dic[@"companyName"] = companyName;
+    }
+        
     //调接口
-    [self postPath:path parameters:nil success:success failure:failed];
+    [self postPath:path parameters:dic success:success failure:failed];
 
 }
 

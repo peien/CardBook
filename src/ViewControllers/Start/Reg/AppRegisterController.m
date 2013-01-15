@@ -16,6 +16,7 @@
 #import "UIImage+KHH.h"
 #import "UIViewController+SM.h"
 #import "AgreementViewController.h"
+#import "KHHDataNew+Register.h"
 
 enum Tag_ImageView_Cell {
     Tag_ImageView_Cell_Top = 20001,
@@ -242,8 +243,9 @@ enum Tag_TextField {
     info[kAccountKeyUser]     = user;
     info[kAccountKeyPassword] = password;
     if(companyText.text.length) info[kAccountKeyCompany] = companyText.text;
-    [self postASAPNotificationName:nAppCreateThisAccount
-                              info:info];
+    [[KHHDataNew sharedData] doRegister:info delegate:self];
+//    [self postASAPNotificationName:nAppCreateThisAccount
+//                              info:info];
 }
 - (IBAction)showAgreement:(id)sender {
     [self pushViewControllerClass:[AgreementViewController class]
@@ -331,7 +333,7 @@ enum Tag_TextField {
 
 - (void)registerForUIFailed:(NSDictionary *)dict
 {
-
+    [self alertWithTitle:@"注册失败" message:dict[kInfoKeyErrorMessage]];
 }
 
 @end

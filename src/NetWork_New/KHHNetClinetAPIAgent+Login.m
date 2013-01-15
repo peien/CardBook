@@ -50,6 +50,14 @@
     //其他错误返回
     KHHFailureBlock failed = [self defaultFailedResponse:delegate selector:@"loginFailed:"];
     
+    NSMutableDictionary *dic = [[NSMutableDictionary alloc]initWithCapacity:4];
+    dic[@"username"] = username;
+    dic[@"password"] = password;
+    dic[@"trueName"] = username;
+    if (companyName) {
+        dic[@"companyName"] = companyName;
+    }
+
     //调接口
     [self postPath:path parameters:nil success:success failure:failed];
   

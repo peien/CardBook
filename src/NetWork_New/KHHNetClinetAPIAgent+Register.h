@@ -11,6 +11,6 @@
 
 @interface KHHNetClinetAPIAgent (Register)
 
-- (void)regist:(NSString *)username password:(NSString *)password delegate:(id<KHHNetAgentRegisterDelegate>)delegate;
+- (void)regist:(NSString *)phone username:(NSString *)username  password:(NSString *)password companyName:(NSString *)companyName  delegate:(id<KHHNetAgentRegisterDelegate>)delegate;
 
 @end

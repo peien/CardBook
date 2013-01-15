@@ -11,10 +11,14 @@
 
 @implementation KHHDataNew (Register)
 
-- (void)doRegister:(NSString *)username password:(NSString *)password delegate:(id<KHHDataRegisterDelegate>) delegate
+- (void)doRegister:(NSDictionary*) info delegate:(id<KHHDataRegisterDelegate>) delegate
 {
+//    info[kAccountKeyName]     = name;
+//    info[kAccountKeyUser]     = user;
+//    info[kAccountKeyPassword] = password;
+//    if(companyText.text.length) info[kAccountKeyCompany]
     self.delegate = delegate;
-    [self.agent regist:username password:password delegate:self];
+    [self.agent regist:info[kAccountKeyUser] username:info[kAccountKeyName]   password:info[kAccountKeyPassword] companyName:info[kAccountKeyCompany]  delegate:self];
 }
 
 #pragma mark - delegate
