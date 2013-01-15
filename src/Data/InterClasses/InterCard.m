@@ -24,6 +24,10 @@
     iCard.userID = [NSNumber numberFromObject:json[JSONDataKeyUserId] zeroIfUnresolvable:NO];// 解不出为nil
     iCard.version = [NSNumber numberFromObject:json[JSONDataKeyVersion] defaultValue:1 defaultIfUnresolvable:YES];// 默认1
     iCard.templateID = [NSNumber numberFromObject:json[JSONDataKeyTemplateId] zeroIfUnresolvable:NO];// 解不出为nil
+    //名片类型
+    iCard.cardType = [NSString stringFromObject:[json valueForKey:JSONDataKeyCardType]];
+    //名片来源
+    iCard.cardSource = [NSString stringFromObject:[json valueForKey:JSONDataKeyCardSource]];
     
     // 个人重要信息
     iCard.name = [NSString stringFromObject:json[JSONDataKeyName]];

@@ -180,6 +180,7 @@ static NSString * const JSONDataKeySendCardID = @"sendCardId";
 static NSString * const JSONDataKeyCompanyLogo = @"companyLogo";
 static NSString * const JSONDataKeyDepartmentName = @"orgName";
 static NSString * const JSONDataKeyEmployeeList = @"employeeList";
+static NSString * const JSONDataKeyCardSource = @"cardSource";
 
 #pragma mark - kInfoKey* : Info dictionary key
 static NSString * const kInfoKeySessionID = @"sessionID";//NSString
@@ -270,5 +271,16 @@ static NSString * const  kPERMISSION_BOSS = @"company_boss";
 
 #pragma mark - localNotification userInfo targetViewController Name
 static NSString * const kLocalNotification_Target_Name = @"target_ViewController_Name";
+
+#pragma mark - 客户类型
+static NSString * const  kCardType_Person = @"个人名片";
+static NSString * const  kCardType_Company = @"公司名片";
+static NSString * const  kCardType_Customer_Service = @"客服名片";
+
+#pragma mark - 客户来源
+static NSString * const  kCardSource_Input = @"导入名片";
+static NSString * const  kCardSource_Client_SelfBuild = @"客户端自建名片";
+static NSString * const  kCardSource_Server_SelfBuild = @"服务端自建名片";
+static NSString * const  kCardSource_Person = @"个人用户创建名片";
 
 #endif

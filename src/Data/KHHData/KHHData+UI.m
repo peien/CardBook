@@ -529,9 +529,9 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray)
     
     DLog(@"reply card, the receiver mobilePhone = %@", receiverCard.mobilePhone);
     //判断是不是收到的联系人
-    if ([receiverCard isKindOfClass: [ReceivedCard class]]) {
-        [self.agent sendCard:myReplyCard toUser:[[NSString alloc] initWithFormat:@"%@",receiverCard.userID]];
-    }else if ([receiverCard isKindOfClass: [PrivateCard class]]) {
+//    if ([receiverCard isKindOfClass: [ReceivedCard class]]) {
+//        [self.agent sendCard:myReplyCard toUser:[[NSString alloc] initWithFormat:@"%@",receiverCard.userID]];
+//    }else if ([receiverCard isKindOfClass: [PrivateCard class]]) {
         //取用户的手机号
         NSArray *mobiles = [receiverCard.mobilePhone componentsSeparatedByString:KHH_SEPARATOR];
         if (!mobiles || mobiles.count <= 0) {
@@ -543,7 +543,7 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray)
         
         DLog(@"reply card, the receiver mobilePhone at index 0 = %@", mobiles);
         [self.agent sendCard:myReplyCard toPhones:newMobiles];
-    }
+//    }
 }
 
 @end
