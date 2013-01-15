@@ -1375,19 +1375,31 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
     self.interCard.userID = _glCard.userID;
     self.interCard.templateID = _glCard.template.id;
     
+#warning 20130114因项目时间紧，本地数据库未改动，添加的名片类型、名片来源需要在这里赋值
     //20121225
     //头像字段没考虑，所以保存后要及时同步一下
-    
     // 保存到数据库或调用网络接口
     //为了避免保存失败，先给这个临时card给值 InterCard
     self.progressHud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     if ([_glCard isKindOfClass:[MyCard class]]) {
+        //设置名片类型及名片来源
+        self.interCard.cardType = kCardType_Person;
+        self.interCard.cardSource = kCardSource_Person;
+        
         self.progressHud.labelText = KHHMessageModifyCard;
         [self.dataCtrl modifyMyCardWithInterCard:self.interCard];
     }else if ([_glCard isKindOfClass:[PrivateCard class]]){
+        //设置名片类型及名片来源
+        self.interCard.cardType = kCardType_Person;
+        self.interCard.cardSource = kCardSource_Client_SelfBuild;
+        
         self.progressHud.labelText = KHHMessageModifyCard;
         [self.dataCtrl modifyPrivateCardWithInterCard:self.interCard];
     }else if (self.type == KCardViewControllerTypeNewCreate){
+        //设置名片类型及名片来源
+        self.interCard.cardType = kCardType_Person;
+        self.interCard.cardSource = kCardSource_Client_SelfBuild;
+        
         //修改
         self.progressHud.labelText = KHHMessageCreateCard;
         //暂时这样写 templateID不确定

@@ -10,7 +10,7 @@
 #import <CoreData/CoreData.h>
 #import "KHHNetClinetAPIAgent.h"
 #import "KHHApp.h"
-#import "KHHDefaults.h"
+
 
 @interface KHHDataNew : NSObject
 @property (readonly, strong, nonatomic) NSManagedObjectContext *context;

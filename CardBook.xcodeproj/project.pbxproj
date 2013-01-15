@@ -32,6 +32,23 @@
 		310164E016A3A264003D4527 /* KHHDataNew.m in Sources */ = {isa = PBXBuildFile; fileRef = 310164DE16A3A264003D4527 /* KHHDataNew.m */; };
 		310164E116A3A264003D4527 /* KHHDataNew.m in Sources */ = {isa = PBXBuildFile; fileRef = 310164DE16A3A264003D4527 /* KHHDataNew.m */; };
 		310164E216A3A264003D4527 /* KHHDataNew.m in Sources */ = {isa = PBXBuildFile; fileRef = 310164DE16A3A264003D4527 /* KHHDataNew.m */; };
+		310164E716A3F6E5003D4527 /* KHHUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 310164E616A3F6E5003D4527 /* KHHUser.m */; };
+		310164E816A3F6E5003D4527 /* KHHUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 310164E616A3F6E5003D4527 /* KHHUser.m */; };
+		310164E916A3F6E5003D4527 /* KHHUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 310164E616A3F6E5003D4527 /* KHHUser.m */; };
+		310164EA16A3F6E5003D4527 /* KHHUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 310164E616A3F6E5003D4527 /* KHHUser.m */; };
+		310164EC16A3FB7E003D4527 /* File in Resources */ = {isa = PBXBuildFile; fileRef = 310164EB16A3FB7E003D4527 /* File */; };
+		310164ED16A3FB7E003D4527 /* File in Resources */ = {isa = PBXBuildFile; fileRef = 310164EB16A3FB7E003D4527 /* File */; };
+		310164EE16A3FB7E003D4527 /* File in Resources */ = {isa = PBXBuildFile; fileRef = 310164EB16A3FB7E003D4527 /* File */; };
+		310164EF16A3FB7E003D4527 /* File in Resources */ = {isa = PBXBuildFile; fileRef = 310164EB16A3FB7E003D4527 /* File */; };
+		310164F016A40913003D4527 /* KHHDataNew.m in Sources */ = {isa = PBXBuildFile; fileRef = 310164DE16A3A264003D4527 /* KHHDataNew.m */; };
+		3101B31516A4E58D0070D5FF /* KHHDataNew+Register.m in Sources */ = {isa = PBXBuildFile; fileRef = 3101B31416A4E58D0070D5FF /* KHHDataNew+Register.m */; };
+		3101B31616A4E58D0070D5FF /* KHHDataNew+Register.m in Sources */ = {isa = PBXBuildFile; fileRef = 3101B31416A4E58D0070D5FF /* KHHDataNew+Register.m */; };
+		3101B31716A4E58D0070D5FF /* KHHDataNew+Register.m in Sources */ = {isa = PBXBuildFile; fileRef = 3101B31416A4E58D0070D5FF /* KHHDataNew+Register.m */; };
+		3101B31816A4E58D0070D5FF /* KHHDataNew+Register.m in Sources */ = {isa = PBXBuildFile; fileRef = 3101B31416A4E58D0070D5FF /* KHHDataNew+Register.m */; };
+		3101B31E16A4E7A50070D5FF /* KHHNetClinetAPIAgent+Register.m in Sources */ = {isa = PBXBuildFile; fileRef = 3101B31D16A4E7A50070D5FF /* KHHNetClinetAPIAgent+Register.m */; };
+		3101B31F16A4E7A50070D5FF /* KHHNetClinetAPIAgent+Register.m in Sources */ = {isa = PBXBuildFile; fileRef = 3101B31D16A4E7A50070D5FF /* KHHNetClinetAPIAgent+Register.m */; };
+		3101B32016A4E7A50070D5FF /* KHHNetClinetAPIAgent+Register.m in Sources */ = {isa = PBXBuildFile; fileRef = 3101B31D16A4E7A50070D5FF /* KHHNetClinetAPIAgent+Register.m */; };
+		3101B32116A4E7A50070D5FF /* KHHNetClinetAPIAgent+Register.m in Sources */ = {isa = PBXBuildFile; fileRef = 3101B31D16A4E7A50070D5FF /* KHHNetClinetAPIAgent+Register.m */; };
 		3102673C1696ACA200FBE156 /* KHHTargetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102673B1696ACA200FBE156 /* KHHTargetCell.m */; };
 		3102673D1696ACA200FBE156 /* KHHTargetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102673B1696ACA200FBE156 /* KHHTargetCell.m */; };
 		3102673E1696ACA200FBE156 /* KHHTargetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3102673B1696ACA200FBE156 /* KHHTargetCell.m */; };
@@ -1959,6 +1976,34 @@
 		84DA3F1B169D097500D222A4 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DA3F15169D097500D222A4 /* Reachability.m */; };
 		84DA3F1C169D097500D222A4 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DA3F15169D097500D222A4 /* Reachability.m */; };
 		84DA3F1D169D097500D222A4 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DA3F15169D097500D222A4 /* Reachability.m */; };
+		84DB11EB16A4F955001B0FAC /* KHHDataNew+Template.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB11EA16A4F953001B0FAC /* KHHDataNew+Template.m */; };
+		84DB11EC16A4F955001B0FAC /* KHHDataNew+Template.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB11EA16A4F953001B0FAC /* KHHDataNew+Template.m */; };
+		84DB11ED16A4F955001B0FAC /* KHHDataNew+Template.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB11EA16A4F953001B0FAC /* KHHDataNew+Template.m */; };
+		84DB11EE16A4F955001B0FAC /* KHHDataNew+Template.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB11EA16A4F953001B0FAC /* KHHDataNew+Template.m */; };
+		84DB11F116A4F96F001B0FAC /* KHHDataNew+Exchange.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB11F016A4F96C001B0FAC /* KHHDataNew+Exchange.m */; };
+		84DB11F216A4F96F001B0FAC /* KHHDataNew+Exchange.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB11F016A4F96C001B0FAC /* KHHDataNew+Exchange.m */; };
+		84DB11F316A4F96F001B0FAC /* KHHDataNew+Exchange.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB11F016A4F96C001B0FAC /* KHHDataNew+Exchange.m */; };
+		84DB11F416A4F96F001B0FAC /* KHHDataNew+Exchange.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB11F016A4F96C001B0FAC /* KHHDataNew+Exchange.m */; };
+		84DB11F716A4F981001B0FAC /* KHHDataNew+Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB11F616A4F97D001B0FAC /* KHHDataNew+Group.m */; };
+		84DB11F816A4F981001B0FAC /* KHHDataNew+Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB11F616A4F97D001B0FAC /* KHHDataNew+Group.m */; };
+		84DB11F916A4F981001B0FAC /* KHHDataNew+Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB11F616A4F97D001B0FAC /* KHHDataNew+Group.m */; };
+		84DB11FA16A4F981001B0FAC /* KHHDataNew+Group.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB11F616A4F97D001B0FAC /* KHHDataNew+Group.m */; };
+		84DB11FD16A4F99B001B0FAC /* KHHDataNew+VisitSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB11FC16A4F997001B0FAC /* KHHDataNew+VisitSchedule.m */; };
+		84DB11FE16A4F99B001B0FAC /* KHHDataNew+VisitSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB11FC16A4F997001B0FAC /* KHHDataNew+VisitSchedule.m */; };
+		84DB11FF16A4F99B001B0FAC /* KHHDataNew+VisitSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB11FC16A4F997001B0FAC /* KHHDataNew+VisitSchedule.m */; };
+		84DB120016A4F99B001B0FAC /* KHHDataNew+VisitSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB11FC16A4F997001B0FAC /* KHHDataNew+VisitSchedule.m */; };
+		84DB120316A4F9B7001B0FAC /* KHHDataNew+CustomerEvaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB120216A4F9B2001B0FAC /* KHHDataNew+CustomerEvaluation.m */; };
+		84DB120416A4F9B7001B0FAC /* KHHDataNew+CustomerEvaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB120216A4F9B2001B0FAC /* KHHDataNew+CustomerEvaluation.m */; };
+		84DB120516A4F9B7001B0FAC /* KHHDataNew+CustomerEvaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB120216A4F9B2001B0FAC /* KHHDataNew+CustomerEvaluation.m */; };
+		84DB120616A4F9B7001B0FAC /* KHHDataNew+CustomerEvaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB120216A4F9B2001B0FAC /* KHHDataNew+CustomerEvaluation.m */; };
+		84DB120916A4F9CB001B0FAC /* KHHDataNew+CheckIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB120816A4F9C7001B0FAC /* KHHDataNew+CheckIn.m */; };
+		84DB120A16A4F9CB001B0FAC /* KHHDataNew+CheckIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB120816A4F9C7001B0FAC /* KHHDataNew+CheckIn.m */; };
+		84DB120B16A4F9CB001B0FAC /* KHHDataNew+CheckIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB120816A4F9C7001B0FAC /* KHHDataNew+CheckIn.m */; };
+		84DB120C16A4F9CB001B0FAC /* KHHDataNew+CheckIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB120816A4F9C7001B0FAC /* KHHDataNew+CheckIn.m */; };
+		84DB120F16A4F9E0001B0FAC /* KHHDataNew+Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB120E16A4F9DB001B0FAC /* KHHDataNew+Company.m */; };
+		84DB121016A4F9E0001B0FAC /* KHHDataNew+Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB120E16A4F9DB001B0FAC /* KHHDataNew+Company.m */; };
+		84DB121116A4F9E0001B0FAC /* KHHDataNew+Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB120E16A4F9DB001B0FAC /* KHHDataNew+Company.m */; };
+		84DB121216A4F9E0001B0FAC /* KHHDataNew+Company.m in Sources */ = {isa = PBXBuildFile; fileRef = 84DB120E16A4F9DB001B0FAC /* KHHDataNew+Company.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -1975,10 +2020,19 @@
 		310164D816A39E17003D4527 /* KHHDataNew+Login.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHDataNew+Login.m"; sourceTree = "<group>"; };
 		310164DD16A3A263003D4527 /* KHHDataNew.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHDataNew.h; sourceTree = "<group>"; };
 		310164DE16A3A264003D4527 /* KHHDataNew.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHDataNew.m; sourceTree = "<group>"; };
+		310164E516A3F6E5003D4527 /* KHHUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHUser.h; sourceTree = "<group>"; };
+		310164E616A3F6E5003D4527 /* KHHUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHUser.m; sourceTree = "<group>"; };
+		310164EB16A3FB7E003D4527 /* File */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = File; sourceTree = "<group>"; };
 		3101A24B169FB52000C08769 /* KHHNewEdit_ecardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNewEdit_ecardViewController.h; sourceTree = "<group>"; };
 		3101A24C169FB52000C08769 /* KHHNewEdit_ecardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHNewEdit_ecardViewController.m; sourceTree = "<group>"; };
 		3101A252169FB74300C08769 /* ParamForEditecard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParamForEditecard.h; sourceTree = "<group>"; };
 		3101A253169FB74300C08769 /* ParamForEditecard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParamForEditecard.m; sourceTree = "<group>"; };
+		3101B31316A4E58D0070D5FF /* KHHDataNew+Register.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHDataNew+Register.h"; sourceTree = "<group>"; };
+		3101B31416A4E58D0070D5FF /* KHHDataNew+Register.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHDataNew+Register.m"; sourceTree = "<group>"; };
+		3101B31A16A4E5DB0070D5FF /* KHHDataRegisterDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHDataRegisterDelegate.h; sourceTree = "<group>"; };
+		3101B31B16A4E6580070D5FF /* KHHNetAgentRegisterDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNetAgentRegisterDelegate.h; sourceTree = "<group>"; };
+		3101B31C16A4E7A50070D5FF /* KHHNetClinetAPIAgent+Register.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHNetClinetAPIAgent+Register.h"; sourceTree = "<group>"; };
+		3101B31D16A4E7A50070D5FF /* KHHNetClinetAPIAgent+Register.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHNetClinetAPIAgent+Register.m"; sourceTree = "<group>"; };
 		3102673A1696ACA200FBE156 /* KHHTargetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHTargetCell.h; sourceTree = "<group>"; };
 		3102673B1696ACA200FBE156 /* KHHTargetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHTargetCell.m; sourceTree = "<group>"; };
 		3102675D1696B05B00FBE156 /* KHHPlanViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHPlanViewController.h; sourceTree = "<group>"; };
@@ -2267,6 +2321,29 @@
 		84C6B7A216A10EE100A228BC /* KHHNetClinetAPIAgent+CustomerEvaluation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHNetClinetAPIAgent+CustomerEvaluation.m"; sourceTree = "<group>"; };
 		84DA3F14169D097500D222A4 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		84DA3F15169D097500D222A4 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		84DB11DA16A4ED99001B0FAC /* KHHNetClientAPIAgentHeaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNetClientAPIAgentHeaders.h; sourceTree = "<group>"; };
+		84DB11DB16A4F3AB001B0FAC /* KHHDataTemplateDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHDataTemplateDelegate.h; sourceTree = "<group>"; };
+		84DB11DC16A4F502001B0FAC /* KHHDataExchangeDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHDataExchangeDelegate.h; sourceTree = "<group>"; };
+		84DB11DD16A4F51F001B0FAC /* KHHDataGroupDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHDataGroupDelegate.h; sourceTree = "<group>"; };
+		84DB11DE16A4F538001B0FAC /* KHHDataVisitScheduleDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHDataVisitScheduleDelegate.h; sourceTree = "<group>"; };
+		84DB11DF16A4F566001B0FAC /* KHHDataCustomerEvaluationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHDataCustomerEvaluationDelegate.h; sourceTree = "<group>"; };
+		84DB11E016A4F57F001B0FAC /* KHHDataCheckInDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHDataCheckInDelegate.h; sourceTree = "<group>"; };
+		84DB11E116A4F59D001B0FAC /* KHHDataCompanyDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHDataCompanyDelegate.h; sourceTree = "<group>"; };
+		84DB11E216A4F5E4001B0FAC /* KHHDataAccountDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHDataAccountDelegate.h; sourceTree = "<group>"; };
+		84DB11E916A4F950001B0FAC /* KHHDataNew+Template.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHDataNew+Template.h"; sourceTree = "<group>"; };
+		84DB11EA16A4F953001B0FAC /* KHHDataNew+Template.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHDataNew+Template.m"; sourceTree = "<group>"; };
+		84DB11EF16A4F96A001B0FAC /* KHHDataNew+Exchange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHDataNew+Exchange.h"; sourceTree = "<group>"; };
+		84DB11F016A4F96C001B0FAC /* KHHDataNew+Exchange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHDataNew+Exchange.m"; sourceTree = "<group>"; };
+		84DB11F516A4F97A001B0FAC /* KHHDataNew+Group.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHDataNew+Group.h"; sourceTree = "<group>"; };
+		84DB11F616A4F97D001B0FAC /* KHHDataNew+Group.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHDataNew+Group.m"; sourceTree = "<group>"; };
+		84DB11FB16A4F994001B0FAC /* KHHDataNew+VisitSchedule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHDataNew+VisitSchedule.h"; sourceTree = "<group>"; };
+		84DB11FC16A4F997001B0FAC /* KHHDataNew+VisitSchedule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHDataNew+VisitSchedule.m"; sourceTree = "<group>"; };
+		84DB120116A4F9AF001B0FAC /* KHHDataNew+CustomerEvaluation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHDataNew+CustomerEvaluation.h"; sourceTree = "<group>"; };
+		84DB120216A4F9B2001B0FAC /* KHHDataNew+CustomerEvaluation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHDataNew+CustomerEvaluation.m"; sourceTree = "<group>"; };
+		84DB120716A4F9C4001B0FAC /* KHHDataNew+CheckIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHDataNew+CheckIn.h"; sourceTree = "<group>"; };
+		84DB120816A4F9C7001B0FAC /* KHHDataNew+CheckIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHDataNew+CheckIn.m"; sourceTree = "<group>"; };
+		84DB120D16A4F9D8001B0FAC /* KHHDataNew+Company.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHDataNew+Company.h"; sourceTree = "<group>"; };
+		84DB120E16A4F9DB001B0FAC /* KHHDataNew+Company.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHDataNew+Company.m"; sourceTree = "<group>"; };
 		9803EBA5160DA88D00402B53 /* NSObject+SM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SM.h"; sourceTree = "<group>"; };
 		9803EBA6160DA88D00402B53 /* NSObject+SM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SM.m"; sourceTree = "<group>"; };
 		981BA0F5162EB4520036A4B8 /* CustomerEvaluation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomerEvaluation.h; sourceTree = "<group>"; };
@@ -2911,6 +2988,7 @@
 		310164E316A3A29C003D4527 /* KHHData_New */ = {
 			isa = PBXGroup;
 			children = (
+				31FA580116A116A800F65BC6 /* DataDelegate impl in UI */,
 				310164DD16A3A263003D4527 /* KHHDataNew.h */,
 				310164DE16A3A264003D4527 /* KHHDataNew.m */,
 				31FA57F316A10CB000F65BC6 /* KHHDataNew+Message.h */,
@@ -2919,9 +2997,35 @@
 				31FA57FA16A10CC800F65BC6 /* KHHDataNew+Card.m */,
 				310164D716A39E17003D4527 /* KHHDataNew+Login.h */,
 				310164D816A39E17003D4527 /* KHHDataNew+Login.m */,
+				3101B31316A4E58D0070D5FF /* KHHDataNew+Register.h */,
+				3101B31416A4E58D0070D5FF /* KHHDataNew+Register.m */,
+				84DB11E916A4F950001B0FAC /* KHHDataNew+Template.h */,
+				84DB11EA16A4F953001B0FAC /* KHHDataNew+Template.m */,
+				84DB11EF16A4F96A001B0FAC /* KHHDataNew+Exchange.h */,
+				84DB11F016A4F96C001B0FAC /* KHHDataNew+Exchange.m */,
+				84DB11F516A4F97A001B0FAC /* KHHDataNew+Group.h */,
+				84DB11F616A4F97D001B0FAC /* KHHDataNew+Group.m */,
+				84DB11FB16A4F994001B0FAC /* KHHDataNew+VisitSchedule.h */,
+				84DB11FC16A4F997001B0FAC /* KHHDataNew+VisitSchedule.m */,
+				84DB120116A4F9AF001B0FAC /* KHHDataNew+CustomerEvaluation.h */,
+				84DB120216A4F9B2001B0FAC /* KHHDataNew+CustomerEvaluation.m */,
+				84DB120716A4F9C4001B0FAC /* KHHDataNew+CheckIn.h */,
+				84DB120816A4F9C7001B0FAC /* KHHDataNew+CheckIn.m */,
+				84DB120D16A4F9D8001B0FAC /* KHHDataNew+Company.h */,
+				84DB120E16A4F9DB001B0FAC /* KHHDataNew+Company.m */,
 			);
 			name = KHHData_New;
 			path = KHHData;
+			sourceTree = "<group>";
+		};
+		310164E416A3F678003D4527 /* UserSet */ = {
+			isa = PBXGroup;
+			children = (
+				310164E516A3F6E5003D4527 /* KHHUser.h */,
+				310164E616A3F6E5003D4527 /* KHHUser.m */,
+				310164EB16A3FB7E003D4527 /* File */,
+			);
+			name = UserSet;
 			sourceTree = "<group>";
 		};
 		3101A258169FB74700C08769 /* ParamForCell */ = {
@@ -3072,18 +3176,19 @@
 		31D0E3BC169D3B0100E410CA /* NetDelegate impl in data */ = {
 			isa = PBXGroup;
 			children = (
-				310A3F36168D2C43009FF135 /* MsgDelegates.h */,
 				84732DB3169D434200C9910E /* KHHNetAgentAccountDelegates.h */,
-				84732DCF169E8CB700C9910E /* KHHNetAgentTemplateDelegates.h */,
-				84732DD1169E9E3F00C9910E /* KHHNetAgentExchangeDelegates.h */,
-				84732DD8169EA78900C9910E /* KHHNetAgentGroupDelegates.h */,
-				84732DE5169FADD200C9910E /* KHHNetAgentVisitScheduleDelegates.h */,
-				84C6B79F16A109BD00A228BC /* KHHNetAgentCustomerEvaluationDelegates.h */,
+				31FA580016A10FB000F65BC6 /* KHHNetAgentCardDelegates.h */,
 				84B2C92F16A254D500DC2028 /* KHHNetAgentCheckInDelegates.h */,
 				84B2C93D16A29A4E00DC2028 /* KHHNetAgentCompanyDelegates.h */,
-				31FA57F216A0F9FC00F65BC6 /* KHHNetAgentPrivateDelegates.h */,
-				31FA580016A10FB000F65BC6 /* KHHNetAgentCardDelegates.h */,
+				84C6B79F16A109BD00A228BC /* KHHNetAgentCustomerEvaluationDelegates.h */,
+				84732DD1169E9E3F00C9910E /* KHHNetAgentExchangeDelegates.h */,
+				84732DD8169EA78900C9910E /* KHHNetAgentGroupDelegates.h */,
 				310164D516A39D18003D4527 /* KHHNetAgentLoginDelegate.h */,
+				31FA57F216A0F9FC00F65BC6 /* KHHNetAgentPrivateDelegates.h */,
+				3101B31B16A4E6580070D5FF /* KHHNetAgentRegisterDelegate.h */,
+				84732DCF169E8CB700C9910E /* KHHNetAgentTemplateDelegates.h */,
+				84732DE5169FADD200C9910E /* KHHNetAgentVisitScheduleDelegates.h */,
+				310A3F36168D2C43009FF135 /* MsgDelegates.h */,
 			);
 			name = "NetDelegate impl in data";
 			sourceTree = "<group>";
@@ -3101,9 +3206,18 @@
 		31FA580116A116A800F65BC6 /* DataDelegate impl in UI */ = {
 			isa = PBXGroup;
 			children = (
-				31FA580316A12B0D00F65BC6 /* KHHDataMessageDelegate.h */,
+				84DB11E216A4F5E4001B0FAC /* KHHDataAccountDelegate.h */,
 				31FA580416A12B2600F65BC6 /* KHHDataCardDelegate.h */,
+				84DB11E016A4F57F001B0FAC /* KHHDataCheckInDelegate.h */,
+				84DB11E116A4F59D001B0FAC /* KHHDataCompanyDelegate.h */,
+				84DB11DF16A4F566001B0FAC /* KHHDataCustomerEvaluationDelegate.h */,
+				84DB11DC16A4F502001B0FAC /* KHHDataExchangeDelegate.h */,
+				84DB11DD16A4F51F001B0FAC /* KHHDataGroupDelegate.h */,
 				310164D616A39DB7003D4527 /* KHHDataLoginDelegate.h */,
+				31FA580316A12B0D00F65BC6 /* KHHDataMessageDelegate.h */,
+				3101B31A16A4E5DB0070D5FF /* KHHDataRegisterDelegate.h */,
+				84DB11DB16A4F3AB001B0FAC /* KHHDataTemplateDelegate.h */,
+				84DB11DE16A4F538001B0FAC /* KHHDataVisitScheduleDelegate.h */,
 			);
 			name = "DataDelegate impl in UI";
 			sourceTree = "<group>";
@@ -3265,6 +3379,7 @@
 		84DA3F10169D090E00D222A4 /* NetWork_New */ = {
 			isa = PBXGroup;
 			children = (
+				310164E416A3F678003D4527 /* UserSet */,
 				84732D97169D3AEF00C9910E /* KHHNetClinetAPIAgent+Account.h */,
 				84732D98169D3AEF00C9910E /* KHHNetClinetAPIAgent+Account.m */,
 				314A032A168C52D000029324 /* KHHNetClinetAPIAgent+Message.h */,
@@ -3290,8 +3405,12 @@
 				31FA580616A12C8100F65BC6 /* KHHNetClinetAPIAgent+Card.m */,
 				310164CE16A39CAF003D4527 /* KHHNetClinetAPIAgent+Login.h */,
 				310164CF16A39CAF003D4527 /* KHHNetClinetAPIAgent+Login.m */,
+				3101B31C16A4E7A50070D5FF /* KHHNetClinetAPIAgent+Register.h */,
+				3101B31D16A4E7A50070D5FF /* KHHNetClinetAPIAgent+Register.m */,
+				84DB11DA16A4ED99001B0FAC /* KHHNetClientAPIAgentHeaders.h */,
 			);
-			path = NetWork_New;
+			name = NetWork_New;
+			path = ../NetWork_New;
 			sourceTree = "<group>";
 		};
 		980D87511637C3B20052DF9D /* Start */ = {
@@ -3511,7 +3630,6 @@
 				98A84D9E1602D23100A4A673 /* Misc */,
 				31C52AB216916E3F00446006 /* NetClient */,
 				98A84D9F1602D23A00A4A673 /* Network */,
-				84DA3F10169D090E00D222A4 /* NetWork_New */,
 				98A84DA01602D24600A4A673 /* UI */,
 				629BE10E165F4A6600FB3B04 /* Util */,
 				98A84DA11602D24D00A4A673 /* ViewControllers */,
@@ -3540,6 +3658,7 @@
 				98A84DC71602D3A300A4A673 /* Classes */,
 				98A84DAA1602D3A300A4A673 /* _Classes */,
 				98326D02162405F000B5038E /* InterClasses */,
+				84DA3F10169D090E00D222A4 /* NetWork_New */,
 				310164E316A3A29C003D4527 /* KHHData_New */,
 				98F83BE416073D0B0036A516 /* KHHData */,
 			);
@@ -4492,7 +4611,6 @@
 		98F83BE416073D0B0036A516 /* KHHData */ = {
 			isa = PBXGroup;
 			children = (
-				31FA580116A116A800F65BC6 /* DataDelegate impl in UI */,
 				98F83BE016073C790036A516 /* KHHData.h */,
 				98F83BE116073C790036A516 /* KHHData.m */,
 				982AACBD1609BE6B002B9BAD /* KHHData+UI.h */,
@@ -4836,6 +4954,7 @@
 				84C111E0169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png in Resources */,
 				319C29F3169C04D4005A1BFF /* attendance.plist in Resources */,
 				319C29F8169C0672005A1BFF /* collection.plist in Resources */,
+				310164EF16A3FB7E003D4527 /* File in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5068,6 +5187,7 @@
 				84C111DF169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png in Resources */,
 				319C29F2169C04D4005A1BFF /* attendance.plist in Resources */,
 				319C29F7169C0672005A1BFF /* collection.plist in Resources */,
+				310164EE16A3FB7E003D4527 /* File in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5299,6 +5419,7 @@
 				84C111DD169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png in Resources */,
 				319C29F0169C04D4005A1BFF /* attendance.plist in Resources */,
 				319C29F5169C0672005A1BFF /* collection.plist in Resources */,
+				310164EC16A3FB7E003D4527 /* File in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5531,6 +5652,7 @@
 				84C111DE169C0ACF00EDE3D4 /* title_btn_with_drop@2x.png in Resources */,
 				319C29F1169C04D4005A1BFF /* attendance.plist in Resources */,
 				319C29F6169C0672005A1BFF /* collection.plist in Resources */,
+				310164ED16A3FB7E003D4527 /* File in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5810,6 +5932,16 @@
 				310164D316A39CAF003D4527 /* KHHNetClinetAPIAgent+Login.m in Sources */,
 				310164DC16A39E17003D4527 /* KHHDataNew+Login.m in Sources */,
 				310164E216A3A264003D4527 /* KHHDataNew.m in Sources */,
+				310164EA16A3F6E5003D4527 /* KHHUser.m in Sources */,
+				3101B31816A4E58D0070D5FF /* KHHDataNew+Register.m in Sources */,
+				3101B32116A4E7A50070D5FF /* KHHNetClinetAPIAgent+Register.m in Sources */,
+				84DB11EE16A4F955001B0FAC /* KHHDataNew+Template.m in Sources */,
+				84DB11F416A4F96F001B0FAC /* KHHDataNew+Exchange.m in Sources */,
+				84DB11FA16A4F981001B0FAC /* KHHDataNew+Group.m in Sources */,
+				84DB120016A4F99B001B0FAC /* KHHDataNew+VisitSchedule.m in Sources */,
+				84DB120616A4F9B7001B0FAC /* KHHDataNew+CustomerEvaluation.m in Sources */,
+				84DB120C16A4F9CB001B0FAC /* KHHDataNew+CheckIn.m in Sources */,
+				84DB121216A4F9E0001B0FAC /* KHHDataNew+Company.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6057,6 +6189,16 @@
 				310164D216A39CAF003D4527 /* KHHNetClinetAPIAgent+Login.m in Sources */,
 				310164DB16A39E17003D4527 /* KHHDataNew+Login.m in Sources */,
 				310164E116A3A264003D4527 /* KHHDataNew.m in Sources */,
+				310164E916A3F6E5003D4527 /* KHHUser.m in Sources */,
+				3101B31716A4E58D0070D5FF /* KHHDataNew+Register.m in Sources */,
+				3101B32016A4E7A50070D5FF /* KHHNetClinetAPIAgent+Register.m in Sources */,
+				84DB11ED16A4F955001B0FAC /* KHHDataNew+Template.m in Sources */,
+				84DB11F316A4F96F001B0FAC /* KHHDataNew+Exchange.m in Sources */,
+				84DB11F916A4F981001B0FAC /* KHHDataNew+Group.m in Sources */,
+				84DB11FF16A4F99B001B0FAC /* KHHDataNew+VisitSchedule.m in Sources */,
+				84DB120516A4F9B7001B0FAC /* KHHDataNew+CustomerEvaluation.m in Sources */,
+				84DB120B16A4F9CB001B0FAC /* KHHDataNew+CheckIn.m in Sources */,
+				84DB121116A4F9E0001B0FAC /* KHHDataNew+Company.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6303,6 +6445,17 @@
 				31FCDBC016A298BE0049BDCA /* KHHLocalForCardCell.m in Sources */,
 				310164D016A39CAF003D4527 /* KHHNetClinetAPIAgent+Login.m in Sources */,
 				310164D916A39E17003D4527 /* KHHDataNew+Login.m in Sources */,
+				310164E716A3F6E5003D4527 /* KHHUser.m in Sources */,
+				310164F016A40913003D4527 /* KHHDataNew.m in Sources */,
+				3101B31516A4E58D0070D5FF /* KHHDataNew+Register.m in Sources */,
+				3101B31E16A4E7A50070D5FF /* KHHNetClinetAPIAgent+Register.m in Sources */,
+				84DB11EB16A4F955001B0FAC /* KHHDataNew+Template.m in Sources */,
+				84DB11F116A4F96F001B0FAC /* KHHDataNew+Exchange.m in Sources */,
+				84DB11F716A4F981001B0FAC /* KHHDataNew+Group.m in Sources */,
+				84DB11FD16A4F99B001B0FAC /* KHHDataNew+VisitSchedule.m in Sources */,
+				84DB120316A4F9B7001B0FAC /* KHHDataNew+CustomerEvaluation.m in Sources */,
+				84DB120916A4F9CB001B0FAC /* KHHDataNew+CheckIn.m in Sources */,
+				84DB120F16A4F9E0001B0FAC /* KHHDataNew+Company.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6548,6 +6701,16 @@
 				310164D116A39CAF003D4527 /* KHHNetClinetAPIAgent+Login.m in Sources */,
 				310164DA16A39E17003D4527 /* KHHDataNew+Login.m in Sources */,
 				310164E016A3A264003D4527 /* KHHDataNew.m in Sources */,
+				310164E816A3F6E5003D4527 /* KHHUser.m in Sources */,
+				3101B31616A4E58D0070D5FF /* KHHDataNew+Register.m in Sources */,
+				3101B31F16A4E7A50070D5FF /* KHHNetClinetAPIAgent+Register.m in Sources */,
+				84DB11EC16A4F955001B0FAC /* KHHDataNew+Template.m in Sources */,
+				84DB11F216A4F96F001B0FAC /* KHHDataNew+Exchange.m in Sources */,
+				84DB11F816A4F981001B0FAC /* KHHDataNew+Group.m in Sources */,
+				84DB11FE16A4F99B001B0FAC /* KHHDataNew+VisitSchedule.m in Sources */,
+				84DB120416A4F9B7001B0FAC /* KHHDataNew+CustomerEvaluation.m in Sources */,
+				84DB120A16A4F9CB001B0FAC /* KHHDataNew+CheckIn.m in Sources */,
+				84DB121016A4F9E0001B0FAC /* KHHDataNew+Company.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

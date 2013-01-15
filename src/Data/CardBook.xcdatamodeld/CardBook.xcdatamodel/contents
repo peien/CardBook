@@ -21,15 +21,12 @@
     <entity name="Card" representedClassName="Card" syncable="YES">
         <attribute name="aliWangWang" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="businessScope" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="cardSource" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="cardType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="department" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="fax" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 64" syncable="YES"/>
         <attribute name="isFull" optional="YES" attributeType="Boolean" defaultValueString="NO" syncable="YES"/>
         <attribute name="isRead" optional="YES" attributeType="Boolean" defaultValueString="YES" syncable="YES"/>
-        <attribute name="memo" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="microblog" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mobilePhone" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="modelType" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -149,7 +146,7 @@
     <elements>
         <element name="Address" positionX="0" positionY="0" width="128" height="180"/>
         <element name="BankAccount" positionX="0" positionY="0" width="128" height="120"/>
-        <element name="Card" positionX="0" positionY="0" width="128" height="555"/>
+        <element name="Card" positionX="0" positionY="0" width="128" height="510"/>
         <element name="CardTemplate" positionX="0" positionY="0" width="128" height="195"/>
         <element name="CardTemplateItem" positionX="0" positionY="0" width="128" height="210"/>
         <element name="Company" positionX="0" positionY="0" width="128" height="120"/>
