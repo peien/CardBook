@@ -174,13 +174,13 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
         self.myCard = [cards objectAtIndex:0];
     }else {
         //提示用户数据没有同步下来，先同步一下数据
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:KhhMessageDataErrorTitle
-                                                        message:KhhMessageDataError
-                                                       delegate:self
-                                              cancelButtonTitle:KHHMessageSure
-                                              otherButtonTitles:KHHMessageCancle, nil];
-        alert.tag = KHHAlertSync;
-        [alert show];
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:KhhMessageDataErrorTitle
+//                                                        message:KhhMessageDataError
+//                                                       delegate:self
+//                                              cancelButtonTitle:KHHMessageSure
+//                                              otherButtonTitles:KHHMessageCancle, nil];
+//        alert.tag = KHHAlertSync;
+//        [alert show];
     }
     
     // Do any additional setup after loading the view from its nib.
@@ -199,14 +199,14 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
         }
     }
     //启动定时同步消息timer
-    [self syncMessage];
+   // [self syncMessage];
     //立马同步一次消息
-    [self handleSyncMessage];
+  //  [self handleSyncMessage];
 }
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [KHHShowHideTabBar showTabbar];
-    [self showMessageNums];
+   // [self showMessageNums];
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];

@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "SuperViewController.h"
-#import "KHHDataLoginDelegate.h"
+#import "KHHDataNew+Account.h"
 
-@interface AppLoginController : SuperViewController<KHHDataLoginDelegate>
+@interface AppLoginController : SuperViewController<KHHDataAccountDelegate>
 
 @end

@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "KHHDataNew+Login.h"
-#import "KHHDataLoginDelegate.h"
+#import "AppRegisterController.h"
+#import "KHHDataNew+Account.h"
 
 @protocol AppStartData <NSObject>
 @required
@@ -35,7 +35,10 @@
 - (NSArray *) historyUserList;
 @end
 
-@interface AppStartController : UIViewController<KHHDataLoginDelegate>
+
+
+
+@interface AppStartController : UIViewController<KHHDataAccountDelegate,changeViewDelegate>
 @property (nonatomic, strong) id<AppStartNetworkAgent> agent;
 @property (nonatomic, strong) id<AppStartData>         data;
 @property (nonatomic, strong) id<AppStartUserDefaults> defaults;

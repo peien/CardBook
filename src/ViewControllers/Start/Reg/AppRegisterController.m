@@ -16,7 +16,7 @@
 #import "UIImage+KHH.h"
 #import "UIViewController+SM.h"
 #import "AgreementViewController.h"
-#import "KHHDataNew+Register.h"
+#import "KHHDataNew+Account.h"
 
 enum Tag_ImageView_Cell {
     Tag_ImageView_Cell_Top = 20001,
@@ -166,7 +166,8 @@ enum Tag_TextField {
 
 #pragma mark - Actions
 - (void)goBack:(id)sender {
-    [self postASAPNotificationName:nAppShowPreviousView];
+    [_delegate showPreviousView];
+   // [self postASAPNotificationName:nAppShowPreviousView];
 }
 
 - (IBAction)createAccount:(id)sender {
@@ -243,7 +244,8 @@ enum Tag_TextField {
     info[kAccountKeyUser]     = user;
     info[kAccountKeyPassword] = password;
     if(companyText.text.length) info[kAccountKeyCompany] = companyText.text;
-    [[KHHDataNew sharedData] doRegister:info delegate:self];
+    [_delegate changeToActionView];
+    [[KHHDataNew sharedData] doRegister:info delegate:self];    
 //    [self postASAPNotificationName:nAppCreateThisAccount
 //                              info:info];
 }
@@ -326,13 +328,14 @@ enum Tag_TextField {
     }
 }
 
-- (void)registerForUISuccess:(NSDictionary *)dict
+- (void)createAccountForUISuccess:(NSDictionary *)userInfo
 {
-
+    [_delegate changeToManageView];
 }
 
-- (void)registerForUIFailed:(NSDictionary *)dict
+- (void)createAccountForUIFailed:(NSDictionary *)dict
 {
+    [_delegate changeToCreateAccountView];
     [self alertWithTitle:@"注册失败" message:dict[kInfoKeyErrorMessage]];
 }
 

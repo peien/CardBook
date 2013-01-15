@@ -127,7 +127,7 @@
 //        self.defaults.currentPassword = password;
 //        [self postASAPNotificationName:nAppLogMeIn];
         NSLog(@"%@,%@",username,password);
-        [[KHHDataNew sharedData]doLogin:username password:password delegate:self];
+        [[KHHDataNew sharedData] doLogin:username password:password companyId:@"10" delegate:self];
     }
 }
 //直接体验

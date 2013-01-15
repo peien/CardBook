@@ -15,13 +15,15 @@
 #import "IntroViewController.h"
 #import "LaunchImageViewController.h"
 #import "AppLoginController.h"
-#import "AppRegisterController.h"
+
 #import "LoginActionViewController.h"
 #import "KHHDefaults.h"
 #import "KHHNetworkAPIAgent+Statistics.h"
 #import "Reachability.h"
 #import "KHHFilterPopup.h"
 #import "KHHUser.h"
+#import "KHHManagementViewController.h"
+
 
 #define titleCreateAccountSucceeded NSLocalizedString(@"用户注册成功", nil)
 #define titleCreateAccountFailed    NSLocalizedString(@"用户注册失败", nil)
@@ -61,7 +63,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 - (void)showIntroView;
 - (void)showLaunchImage;
 - (void)showLoginView;
-- (void)showPreviousView;
+
 @end
 
 @implementation AppStartController {
@@ -70,15 +72,20 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 @synthesize OfflineLoginUserInfoDict = _OfflineLoginUserInfoDict;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
+    
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        
         self.actionController = [[LoginActionViewController alloc]
                                  initWithNibName:nil
                                  bundle:nil];
+        AppRegisterController *registView = [[AppRegisterController alloc]
+                                             initWithNibName:nil
+                                             bundle:nil];
+        registView.delegate = self;
         self.createAccountController = [[UINavigationController alloc]
-                                        initWithRootViewController:[[AppRegisterController alloc]
-                                                                    initWithNibName:nil
-                                                                    bundle:nil]];
+                                        initWithRootViewController:registView];
+        
         self.loginController = [[UINavigationController alloc]
                                 initWithRootViewController:[[AppLoginController alloc]
                                                             initWithNibName:nil
@@ -139,8 +146,9 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     [super viewDidLoad];
     DLog(@"[II] viewDidLoad...");
     
+    
     // 先显示 Launch Image。
-  //  [self showLaunchImage];
+    //  [self showLaunchImage];
     
     // 判断是否是首次启动。首次启动显示引导页。
     if ([self.defaults isFirstLaunch]) {
@@ -157,16 +165,16 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
         [self showLoginView];
     }
     
-//    if ([self.defaults isAutoLogin]   // 是否允许自动登录
-//        && [self.defaults isLoggedIn] // 是否已登录
-//        && self.defaults.currentUser.length
-//        && self.defaults.currentPassword.length) {
-//        // 自动登录
-//        [self login];
-//    } else {
-//        // 手动登录
-//        [self showLoginView];
-//    }
+    //    if ([self.defaults isAutoLogin]   // 是否允许自动登录
+    //        && [self.defaults isLoggedIn] // 是否已登录
+    //        && self.defaults.currentUser.length
+    //        && self.defaults.currentPassword.length) {
+    //        // 自动登录
+    //        [self login];
+    //    } else {
+    //        // 手动登录
+    //        [self showLoginView];
+    //    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -193,13 +201,97 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     if ([title isEqualToString:titleCreateAccountSucceeded]) {
         [self login];//注册成功, 直接登录。
     } else if ([title isEqualToString:titleCreateAccountFailed]
-        || [title isEqualToString:titleResetPasswordFailed]
-        || [title isEqualToString:titleResetPasswordSucceeded]) {
+               || [title isEqualToString:titleResetPasswordFailed]
+               || [title isEqualToString:titleResetPasswordSucceeded]) {
         [self showPreviousView];
     } else if ([title isEqualToString:titleLoginFailed]) {
         [self showLoginView];
     }
 }
+
+
+- (void)transitionToViewController:(UIViewController *)toViewController
+                           options:(UIViewAnimationOptions)options {
+    DLog(@"[II] 切换前：\n \
+         child controllers = %@\n \
+         subviews = %@", self.childViewControllers, self.view.subviews);
+    
+    if (self.childViewControllers.count) {
+        UIViewController *fromVC = self.childViewControllers.lastObject;
+        [self addChildViewController:toViewController];
+        [self transitionFromViewController:fromVC
+                          toViewController:toViewController
+                                  duration:AppStart_TransitionDuration
+                                   options:options
+                                animations:nil
+                                completion:^(BOOL finished) {
+                                    if (finished) {
+                                        [fromVC.view removeFromSuperview];
+                                        [fromVC removeFromParentViewController];
+                                        self.previousController = fromVC;
+                                    }
+                                }];
+        
+    } else {
+        [self addChildViewController:toViewController];
+        [self.view addSubview:toViewController.view];
+    }
+    
+    DLog(@"[II] 切换后：\n \
+         child controllers = %@\n \
+         subviews = %@", self.childViewControllers, self.view.subviews);
+    
+}
+
+- (void)showPreviousView {
+    UIViewController *currentController = self.childViewControllers.lastObject;
+    UIViewAnimationOptions options = AppStart_AnimationOptions;
+    if (currentController == self.createAccountController) {
+        options = UIViewAnimationOptionTransitionFlipFromRight;
+    } else if (currentController == self.actionController) {
+        options = UIViewAnimationOptionTransitionFlipFromLeft;
+    }
+    
+    [self transitionToViewController:self.previousController
+                             options:options];
+}
+
+- (void)changeToActionView
+{
+    //    LoginActionViewController *control = (LoginActionViewController *) self.actionController;
+    UIViewAnimationOptions options = UIViewAnimationOptionTransitionFlipFromLeft;
+    [self transitionToViewController:self.actionController
+                             options:options];
+}
+
+- (void)changeToCreateAccountView
+{
+    UIViewAnimationOptions options = UIViewAnimationOptionTransitionFlipFromLeft;
+    [self transitionToViewController:self.createAccountController
+                             options:options];
+}
+
+- (void)changeToManageView
+{
+    KHHManagementViewController *manPro = [[KHHManagementViewController alloc]initWithNibName:@"KHHManagementViewController" bundle:nil];  UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:manPro];
+    nav.view.alpha = 0.0;
+    [self addChildViewController:nav];
+    [self.view addSubview:nav.view];
+    UIViewController *fromVC = self.actionController;
+    
+    [UIView animateWithDuration: 0.5
+                     animations:^{
+                         fromVC.view.alpha = 0.0;
+                         nav.view.alpha = 1.0;
+                         
+                     }
+                     completion:^(BOOL finished) {
+                         [fromVC.view removeFromSuperview];
+                         [fromVC removeFromParentViewController];
+                     }];
+    
+}
+
 @end
 
 #pragma mark - 动作
@@ -222,22 +314,22 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     DLog(@"[II] 开始登录！");
     
     // 切换到 ActionView
-   // [self showActionView];
+    // [self showActionView];
     
-    [[KHHDataNew sharedData]doLogin: [KHHUser shareInstance].username password:[KHHUser shareInstance].password delegate:self];
+    [[KHHDataNew sharedData]doLogin: [KHHUser shareInstance].username password:[KHHUser shareInstance].password companyId:@"" delegate:self];
     // 发“校验网络”消息
     //[self postASAPNotificationName:nAppCheckNetwork];
     
     //注册网络状态变化接受广播(网络为unknown时就去注册，其它状态就不去注册广播了)
-//     r = [Reachability reachabilityWithHostname:@"www.apple.com"];
-//    
-//    AFNetworkReachabilityStatus state = [[NetClient sharedClient] networkReachabilityStatus];
-//    if ([r currentReachabilityStatus] == NotReachable) {
-//        [self observeNotificationName:AFNetworkingReachabilityDidChangeNotification selector:@"handleNetworkStatusChanged:"];
-//    }else {
-//        //登录 
-//        [self loginWithNetworkStatus:state];
-//    }
+    //     r = [Reachability reachabilityWithHostname:@"www.apple.com"];
+    //
+    //    AFNetworkReachabilityStatus state = [[NetClient sharedClient] networkReachabilityStatus];
+    //    if ([r currentReachabilityStatus] == NotReachable) {
+    //        [self observeNotificationName:AFNetworkingReachabilityDidChangeNotification selector:@"handleNetworkStatusChanged:"];
+    //    }else {
+    //        //登录
+    //        [self loginWithNetworkStatus:state];
+    //    }
 }
 
 -(void) handleNetworkStatusChanged:(NSDictionary *) noti {
@@ -254,19 +346,19 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     NSString *user = self.defaults.currentUser;
     NSString *password = self.defaults.currentPassword;
     //添加离线登录
-    [[KHHDataNew sharedData]doLogin: user password:password delegate:self];
-//    if ([r currentReachabilityStatus] == NotReachable) {
-//        //离线登录
-//        // 发“离线登录”消息
-//        [self postASAPNotificationName:nAppOfflineLoggingIn];
-//        [self offlineLogin:user password:password];
-//    }else {
-//        //在线登录
-//        // 发“校验网络”消息
-//        [self postASAPNotificationName:nAppLoggingIn];
-//        [self.agent login:user
-//                 password:password];
-//    }
+    [[KHHDataNew sharedData]doLogin: user password:password companyId:@"" delegate:self];
+    //    if ([r currentReachabilityStatus] == NotReachable) {
+    //        //离线登录
+    //        // 发“离线登录”消息
+    //        [self postASAPNotificationName:nAppOfflineLoggingIn];
+    //        [self offlineLogin:user password:password];
+    //    }else {
+    //        //在线登录
+    //        // 发“校验网络”消息
+    //        [self postASAPNotificationName:nAppLoggingIn];
+    //        [self.agent login:user
+    //                 password:password];
+    //    }
 }
 
 - (void)resetPassword:(NSNotification *)noti {
@@ -318,10 +410,10 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     if (isFirstLogin) {
         //提示要同步数据
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:nil
-                                   message:textWillSync
-                                  delegate:self 
-                         cancelButtonTitle:KHHMessageSure
-                         otherButtonTitles:KHHMessageCancle,nil];
+                                                        message:textWillSync
+                                                       delegate:self
+                                              cancelButtonTitle:KHHMessageSure
+                                              otherButtonTitles:KHHMessageCancle,nil];
         alert.tag = KHHAlertSync;
         [alert show];
     }else {
@@ -337,7 +429,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     if (KHHErrorCodeConnectionOffline == code) {
         // 无网络接着离线登录
         [self loginWithNetworkStatus:AFNetworkReachabilityStatusNotReachable];
-//        [self postASAPNotificationName:nAppShowMainView];
+        //        [self postASAPNotificationName:nAppShowMainView];
     }else {
         [self.defaults setLoggedIn:NO];
         [self alertWithTitle:titleLoginFailed
@@ -470,38 +562,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 
 #pragma mark - 界面切换
 @implementation AppStartController (ShowViews)
-- (void)transitionToViewController:(UIViewController *)toViewController
-                           options:(UIViewAnimationOptions)options {
-    DLog(@"[II] 切换前：\n \
-         child controllers = %@\n \
-         subviews = %@", self.childViewControllers, self.view.subviews);
-    
-    if (self.childViewControllers.count) {
-        UIViewController *fromVC = self.childViewControllers.lastObject;
-        [self addChildViewController:toViewController];
-        [self transitionFromViewController:fromVC
-                          toViewController:toViewController
-                                  duration:AppStart_TransitionDuration
-                                   options:options
-                                animations:nil
-                                completion:^(BOOL finished) {
-                                    if (finished) {
-                                        [fromVC.view removeFromSuperview];
-                                        [fromVC removeFromParentViewController];
-                                        self.previousController = fromVC;
-                                    } 
-                                }];
-        
-    } else {
-        [self addChildViewController:toViewController];
-        [self.view addSubview:toViewController.view];
-    }
-    
-    DLog(@"[II] 切换后：\n \
-         child controllers = %@\n \
-         subviews = %@", self.childViewControllers, self.view.subviews);
-    
-}
+
 
 - (void)showActionView {
     UIViewController *currentController = self.childViewControllers.lastObject;
@@ -515,24 +576,24 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 - (void)showCreateAccountView {
     //弹出选择框，供用户选择是注册什么账号（个人、公司）
     NSArray *array = [[NSArray alloc] initWithObjects:KHHMessagePersonalAccount, KHHMessageCompanyAccount, nil];
-   [[KHHFilterPopup shareUtil] showPopUp:array index:0 Title:@"选择注册类型" delegate:self];
+    [[KHHFilterPopup shareUtil] showPopUp:array index:0 Title:@"选择注册类型" delegate:self];
 }
 - (void)showIntroView {
     IntroViewController *toVC = [[IntroViewController alloc] init];
     toVC.isFromStartUp = YES;
     self.introController = toVC;  //  [self addChildViewController:self.introController];
     [self.view addSubview:self.introController.view];
-//    [UIView animateWithDuration: 0.5
-//                     animations:^{
-//                         self.loginController.view.alpha = 1.0;
-//                        // self.launchController.view.alpha = 0.0;
-//                     }
-//                     completion:^(BOOL finished) {
-//                         [self.launchController.view removeFromSuperview];
-//                        // [self.launchController removeFromParentViewController];
-//                     }];
-//    [self transitionToViewController:toVC
-//                             options:AppStart_AnimationOptions];
+    //    [UIView animateWithDuration: 0.5
+    //                     animations:^{
+    //                         self.loginController.view.alpha = 1.0;
+    //                        // self.launchController.view.alpha = 0.0;
+    //                     }
+    //                     completion:^(BOOL finished) {
+    //                         [self.launchController.view removeFromSuperview];
+    //                        // [self.launchController removeFromParentViewController];
+    //                     }];
+    //    [self transitionToViewController:toVC
+    //                             options:AppStart_AnimationOptions];
 }
 - (void)showLaunchImage {
     UIViewController *toVC = [[LaunchImageViewController alloc]
@@ -544,45 +605,34 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 }
 - (void)showLoginView {
     self.loginController.view.alpha = 0.0;
-   
+    
     if (self.introController) {
-       
-        self.loginController.view.alpha = 0.0; 
+        
+        self.loginController.view.alpha = 0.0;
     } else {
-       
+        
         self.loginController.view.alpha = 1.0;
     }
     
     [self addChildViewController:self.loginController];
     [self.view addSubview:self.loginController.view];
-     if (self.introController) {
+    if (self.introController) {
         [UIView animateWithDuration: 0.5
                          animations:^{
                              self.loginController.view.alpha = 1.0;
-                             self.introController.view.alpha = 0.0;                             
+                             self.introController.view.alpha = 0.0;
                          }
                          completion:^(BOOL finished) {
                              [self.introController.view removeFromSuperview];
-                             [self.introController removeFromParentViewController];                           
+                             [self.introController removeFromParentViewController];
                          }];
-    
-     }
-//    UIViewAnimationOptions options = UIViewAnimationOptionTransitionCrossDissolve;
-//    [self transitionToViewController:self.loginController
-//                             options:options];
-}
-- (void)showPreviousView {
-    UIViewController *currentController = self.childViewControllers.lastObject;
-    UIViewAnimationOptions options = AppStart_AnimationOptions;
-    if (currentController == self.createAccountController) {
-        options = UIViewAnimationOptionTransitionFlipFromRight;
-    } else if (currentController == self.actionController) {
-        options = UIViewAnimationOptionTransitionFlipFromLeft;
+        
     }
-    
-    [self transitionToViewController:self.previousController
-                             options:options];
+    //    UIViewAnimationOptions options = UIViewAnimationOptionTransitionCrossDissolve;
+    //    [self transitionToViewController:self.loginController
+    //                             options:options];
 }
+
 
 #pragma mark - KHHFilterPopup delegate
 - (void)selectInAlert:(id) obj
@@ -597,7 +647,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
             control.isCompany = YES;
         }else {
             control.isCompany = NO;
-        }   
+        }
     }
     UIViewAnimationOptions options = UIViewAnimationOptionTransitionFlipFromLeft;
     [self transitionToViewController:self.createAccountController
@@ -606,11 +656,50 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 
 - (void)loginForUISuccess:(NSDictionary *)dict
 {
-
+    
 }
 - (void)LoginForUIFailed:(NSDictionary *)dict
 {
     [self alertWithTitle:@"登陆失败" message:dict[kInfoKeyErrorMessage]];
 }
+
+
+
+- (void)setChildHidden
+{
+    if (self.introController) {
+        self.introController.view.alpha = 0.0;
+    }
+    if (self.createAccountController) {
+        self.createAccountController.view.alpha = 0.0;
+    }
+    if (self.loginController) {
+        self.loginController.view.alpha = 0.0;
+    }
+    if (self.actionController) {
+        self.actionController.view.alpha = 0.0;
+    }
+}
+
+- (void)setChildRemove
+{
+    if (self.introController) {
+        [self.introController.view removeFromSuperview];
+        [self.introController removeFromParentViewController];
+    }
+    if (self.createAccountController) {
+        [self.createAccountController.view removeFromSuperview];
+        [self.createAccountController removeFromParentViewController];
+    }
+    if (self.loginController) {
+        [self.loginController.view removeFromSuperview];
+        [self.loginController removeFromParentViewController];
+    }
+    if (self.actionController) {
+        [self.actionController.view removeFromSuperview];
+        [self.actionController removeFromParentViewController];
+    }
+}
+
 @end
 

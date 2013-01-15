@@ -7,10 +7,21 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "KHHDataRegisterDelegate.h"
+#import "KHHDataNew+Account.h"
 
-@interface AppRegisterController : UIViewController<KHHDataRegisterDelegate>
+@protocol changeViewDelegate <NSObject>
+@required
+- (void)changeToActionView;
+- (void)changeToCreateAccountView;
+- (void)changeToManageView;
+
+- (void)showPreviousView;
+
+@end
+
+@interface AppRegisterController : UIViewController<KHHDataAccountDelegate>
 
 @property (nonatomic, assign) BOOL isCompany;
+@property (nonatomic,strong) id<changeViewDelegate> delegate;
 
 @end
