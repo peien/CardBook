@@ -7,13 +7,14 @@
 //
 
 #import "KHHDataNew+Register.h"
+#import "KHHNetClinetAPIAgent+Register.h"
 
 @implementation KHHDataNew (Register)
 
-- (void)doRegister:(NSString *)username password:(NSString *)password delegate:(id<KHHDataLoginDelegate>) delegate
+- (void)doRegister:(NSString *)username password:(NSString *)password delegate:(id<KHHDataRegisterDelegate>) delegate
 {
     self.delegate = delegate;
-    [self.agent :username password:password delegate:self];
+    [self.agent regist:username password:password delegate:self];
 }
 
 #pragma mark - delegate

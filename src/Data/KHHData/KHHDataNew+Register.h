@@ -8,6 +8,7 @@
 
 #import "KHHDataNew.h"
 #import "KHHNetAgentRegisterDelegate.h"
+#import "KHHDataRegisterDelegate.h"
 
 @interface KHHDataNew (Register)<KHHNetAgentRegisterDelegate>
 
