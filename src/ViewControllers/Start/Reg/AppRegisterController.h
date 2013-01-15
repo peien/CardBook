@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "KHHDataRegisterDelegate.h"
+
 @interface AppRegisterController : UIViewController<KHHDataRegisterDelegate>
 
 @property (nonatomic, assign) BOOL isCompany;
