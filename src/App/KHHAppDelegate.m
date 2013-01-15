@@ -18,6 +18,7 @@
 #import "KHHNetClinetAPIAgent+Message.h"
 #import "NSString+Base64.h"
 #import "KHHTypes.h"
+#import "NetClient.h"
 
 @implementation KHHAppDelegate
 
@@ -27,6 +28,11 @@
     // 设置window默认背景
     self.window.backgroundColor = [UIColor blackColor];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reachabilityChanged:)
+                                                 name: kReachabilityChangedNotification
+                                               object: nil];
+    [[NetClient sharedClient].r startNotifier];
 
      [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
     // 设置界面元素的公共属性
@@ -69,6 +75,19 @@
     }
     
     return YES;
+}
+
+-(void)reachabilityChanged:(NSNotification *)note
+{
+    Reachability *currReach = [note object];
+    NSParameterAssert([currReach isKindOfClass:[Reachability class]]);  
+
+    if([currReach currentReachabilityStatus] == NotReachable)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"正在使用离线模式" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];        
+       
+    }
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

@@ -21,6 +21,7 @@
 #import "KHHNetworkAPIAgent+Statistics.h"
 #import "Reachability.h"
 #import "KHHFilterPopup.h"
+#import "KHHUser.h"
 
 #define titleCreateAccountSucceeded NSLocalizedString(@"用户注册成功", nil)
 #define titleCreateAccountFailed    NSLocalizedString(@"用户注册失败", nil)
@@ -129,6 +130,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 }
 
 - (void)dealloc {
+    
     [self stopObservingAllNotifications];
 }//dealloc
 #pragma mark - 从这里开始
@@ -148,16 +150,23 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     
     // 不是首次启动
     // 如果满足条件则自动登录，否则手动登录。
-    if ([self.defaults isAutoLogin]   // 是否允许自动登录
-        && [self.defaults isLoggedIn] // 是否已登录
-        && self.defaults.currentUser.length
-        && self.defaults.currentPassword.length) {
-        // 自动登录
+    
+    if ([KHHUser shareInstance].username&&[KHHUser shareInstance].password) {
         [self login];
-    } else {
-        // 手动登录
+    }else{
         [self showLoginView];
     }
+    
+//    if ([self.defaults isAutoLogin]   // 是否允许自动登录
+//        && [self.defaults isLoggedIn] // 是否已登录
+//        && self.defaults.currentUser.length
+//        && self.defaults.currentPassword.length) {
+//        // 自动登录
+//        [self login];
+//    } else {
+//        // 手动登录
+//        [self showLoginView];
+//    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -213,21 +222,22 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     DLog(@"[II] 开始登录！");
     
     // 切换到 ActionView
-    [self showActionView];
+   // [self showActionView];
     
+    [[KHHDataNew sharedData]doLogin: [KHHUser shareInstance].username password:[KHHUser shareInstance].password delegate:self];
     // 发“校验网络”消息
-    [self postASAPNotificationName:nAppCheckNetwork];
+    //[self postASAPNotificationName:nAppCheckNetwork];
     
     //注册网络状态变化接受广播(网络为unknown时就去注册，其它状态就不去注册广播了)
-     r = [Reachability reachabilityWithHostname:@"www.apple.com"];
-    
-    AFNetworkReachabilityStatus state = [[NetClient sharedClient] networkReachabilityStatus];
-    if ([r currentReachabilityStatus] == NotReachable) {
-        [self observeNotificationName:AFNetworkingReachabilityDidChangeNotification selector:@"handleNetworkStatusChanged:"];
-    }else {
-        //登录 
-        [self loginWithNetworkStatus:state];
-    }
+//     r = [Reachability reachabilityWithHostname:@"www.apple.com"];
+//    
+//    AFNetworkReachabilityStatus state = [[NetClient sharedClient] networkReachabilityStatus];
+//    if ([r currentReachabilityStatus] == NotReachable) {
+//        [self observeNotificationName:AFNetworkingReachabilityDidChangeNotification selector:@"handleNetworkStatusChanged:"];
+//    }else {
+//        //登录 
+//        [self loginWithNetworkStatus:state];
+//    }
 }
 
 -(void) handleNetworkStatusChanged:(NSDictionary *) noti {
@@ -244,19 +254,19 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     NSString *user = self.defaults.currentUser;
     NSString *password = self.defaults.currentPassword;
     //添加离线登录
-    
-    if ([r currentReachabilityStatus] == NotReachable) {
-        //离线登录
-        // 发“离线登录”消息
-        [self postASAPNotificationName:nAppOfflineLoggingIn];
-        [self offlineLogin:user password:password];
-    }else {
-        //在线登录
-        // 发“校验网络”消息
-        [self postASAPNotificationName:nAppLoggingIn];
-        [self.agent login:user
-                 password:password];
-    }
+    [[KHHDataNew sharedData]doLogin: user password:password delegate:self];
+//    if ([r currentReachabilityStatus] == NotReachable) {
+//        //离线登录
+//        // 发“离线登录”消息
+//        [self postASAPNotificationName:nAppOfflineLoggingIn];
+//        [self offlineLogin:user password:password];
+//    }else {
+//        //在线登录
+//        // 发“校验网络”消息
+//        [self postASAPNotificationName:nAppLoggingIn];
+//        [self.agent login:user
+//                 password:password];
+//    }
 }
 
 - (void)resetPassword:(NSNotification *)noti {
@@ -574,7 +584,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
                              options:options];
 }
 
-//KHHFilterPopupDelegate
+#pragma mark - KHHFilterPopup delegate
 - (void)selectInAlert:(id) obj
 {
     DLog(@"selected object = %@", obj);
@@ -592,6 +602,15 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     UIViewAnimationOptions options = UIViewAnimationOptionTransitionFlipFromLeft;
     [self transitionToViewController:self.createAccountController
                              options:options];
+}
+
+- (void)loginForUISuccess:(NSDictionary *)dict
+{
+
+}
+- (void)LoginForUIFailed:(NSDictionary *)dict
+{
+    [self alertWithTitle:@"登陆失败" message:dict[kInfoKeyErrorMessage]];
 }
 @end
 

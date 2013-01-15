@@ -1,25 +1,25 @@
 //
-//  KHHNetClinetAPIAgent+Login.m
+//  KHHNetClinetAPIAgent+Register.m
 //  CardBook
 //
-//  Created by CJK on 13-1-14.
+//  Created by CJK on 13-1-15.
 //  Copyright (c) 2013年 Kinghanhong. All rights reserved.
 //
 
-#import "KHHNetClinetAPIAgent+Login.h"
+#import "KHHNetClinetAPIAgent+Register.h"
 #import "KHHUser.h"
 
-@implementation KHHNetClinetAPIAgent (Login)
-
-- (void)login:(NSString *)username password:(NSString *)password delegate:(id<KHHNetAgentLoginDelegate>)delegate
+@implementation KHHNetClinetAPIAgent (Register)
+    
+- (void)register:(NSString *)username password:(NSString *)password delegate:(id<KHHNetAgentRegisterDelegate>)delegate
 {
     if (0 == [username length] || 0 == [password length]) {
         return;
     }
-    if (![self networkStateIsValid:delegate selector:@"loginFailed:"]) {
+    if (![self networkStateIsValid:delegate selector:@"registerFailed:"]) {
         return;
     }
-       
+    
     //url
     NSString *path = @"login";
     
@@ -34,25 +34,25 @@
         dict[kInfoKeyErrorCode] = @(code);
         if (KHHErrorCodeSucceeded == code) {
             [[KHHUser shareInstance]fromJsonData:dict];
-                [delegate loginSuccess:dict];
+            [delegate registerSuccess:dict];
             
         }else {
             //错误信息
-           
+            
             dict[kInfoKeyErrorMessage] = [responseDict valueForKey:JSONDataKeyNote];
             //同步失败，返回失败信息
-            if ([delegate respondsToSelector:@selector(loginFailed:)]) {
-                [delegate loginFailed:dict];
+            if ([delegate respondsToSelector:@selector(registerFailed:)]) {
+                [delegate registerFailed:dict];
             }
         }
     };
     
     //其他错误返回
-    KHHFailureBlock failed = [self defaultFailedResponse:delegate selector:@"loginFailed:"];
+    KHHFailureBlock failed = [self defaultFailedResponse:delegate selector:@"registerFailed:"];
     
     //调接口
     [self postPath:path parameters:nil success:success failure:failed];
-  
+
 }
 
 @end

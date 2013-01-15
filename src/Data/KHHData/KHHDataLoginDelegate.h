@@ -13,7 +13,7 @@
 @optional
 
 - (void)loginForUISuccess:(NSDictionary *) dict;
-- (void)LoginForUIFailed:(NSDictionary *) dict;
+- (void)loginForUIFailed:(NSDictionary *) dict;
 
 @end
 

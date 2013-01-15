@@ -14,6 +14,7 @@
 #import "KHHNotifications.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "UIViewController+SM.h"
+#import "KHHViewAdapterUtil.h"
 
 //#define textStartAutoLogin NSLocalizedString(@"正在自动登录...", nil)
 #define textCreatingAccount   NSLocalizedString(@"正在注册帐户...", nil)
@@ -116,5 +117,7 @@
     self.actionLabel.text = textStartPostLoginSync;
 }
 #pragma mark - Utilities
+
+
 
 @end

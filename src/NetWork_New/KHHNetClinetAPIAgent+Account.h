@@ -15,7 +15,7 @@
  * http://192.168.1.151/zentaopms/www/index.php?m=doc&f=view&docID=230
  * 方法 post
  */
-- (BOOL)login:(NSString *)user password:(NSString *)password delegate:(id<KHHNetAgentAccountDelegates>) delegate;
+//- (BOOL)login:(NSString *)user password:(NSString *)password delegate:(id<KHHNetAgentAccountDelegates>) delegate;
 
 /*
  * 用户注册
