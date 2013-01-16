@@ -58,9 +58,11 @@
     NSString *user = self.theTextField.text;
     if (user.isValidMobilePhoneNumber) {
         // ok
-        NSDictionary *dict = @{ kInfoKeyUser : user };
-        [self postASAPNotificationName:nAppResetMyPassword
-                                  info:dict];
+        //NSDictionary *dict = @{ kInfoKeyUser : user };
+        [_delegate doReset:user];
+        
+//        [self postASAPNotificationName:nAppResetMyPassword
+//                                  info:dict];
     } else {
         // invalid phone
         [[[UIAlertView alloc]
@@ -75,4 +77,7 @@
 {
     [self.theTextField becomeFirstResponder];
 }
+
+
+
 @end

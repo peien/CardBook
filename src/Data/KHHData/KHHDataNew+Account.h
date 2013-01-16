@@ -14,6 +14,10 @@
 
 - (void)doRegister:(NSDictionary*) info delegate:(id<KHHDataAccountDelegate>) delegate;
 
-- (void)doLogin:(NSString *)username password:(NSString *)password companyId:(NSString *)companyId delegate:(id<KHHDataAccountDelegate>) delegate;
+- (void)doLogin:(NSString *)username password:(NSString *)password delegate:(id<KHHDataAccountDelegate>) delegate;
+
+- (void)doResetPassword:(NSString *)mobile  delegate:(id<KHHDataAccountDelegate>) delegate;
+
+- (void)doLoginStep2:(NSString *)username password:(NSString *)password sessionId:(NSString *)sessionId companyId:(NSString *)companyId delegate:(id<KHHDataAccountDelegate>)delegate;
 
 @end

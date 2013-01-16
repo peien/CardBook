@@ -82,6 +82,9 @@
     if ([method isEqualToString:@"login"]) {
         return @"cellvisiting/account/login";
     }
+    if ([method rangeOfString:@"resetPwd"].location == 0) {
+        return [NSString stringWithFormat:@"cellvisiting/account/%@",method];
+    }
     NSString * urlFormat = @"cellvisiting/mobile/%@/%@/%@";
 
     return [NSString stringWithFormat:urlFormat,[KHHUser shareInstance].sessionId ,[KHHUser shareInstance].companyId,method];

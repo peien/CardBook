@@ -94,7 +94,7 @@
         }
         
     }
-    DLog(@"[II] card = %@", card);
+    
     return card;
 }
 - (id)updateWithIObject:(InterCard *)iCard {

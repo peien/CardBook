@@ -18,6 +18,10 @@
 - (BOOL)login:(NSString *)user password:(NSString *)password delegate:(id<KHHNetAgentAccountDelegates>) delegate;
 
 /*
+ *
+ */
+- (void)loginStep2:(NSString *)user password:(NSString *)password sessionId:(NSString *)sessionId companyId:(NSString *)companyId delegate:(id<KHHNetAgentAccountDelegates>) delegate;
+/*
  * 用户注册
  * http://192.168.1.151/zentaopms/www/index.php?m=doc&f=view&docID=231
  * 方法 post

@@ -12,17 +12,21 @@
 @protocol KHHNetAgentAccountDelegates <NSObject>
 @optional
 //登录
--(void) loginSuccess:           (NSDictionary *) userInfo;
--(void) loginFailed:            (NSDictionary *) userInfo;
+- (void)loginSuccess:           (NSDictionary *) userInfo;
+- (void)loginFailed:            (NSDictionary *) userInfo;
+
+//选择公司登录
+- (void)loginSuccessStep2:           (NSDictionary *) userInfo;
+- (void)loginFailedStep2:            (NSDictionary *) userInfo;
 //注册
--(void) createAccountSuccess:   (NSDictionary *) userInfo;
--(void) createAccountFailed:    (NSDictionary *) userInfo;
+- (void)createAccountSuccess:   (NSDictionary *) userInfo;
+- (void)createAccountFailed:    (NSDictionary *) userInfo;
 //修改密码
--(void) changePasswordSuccess;
--(void) changePasswordFailed:    (NSDictionary *) userInfo;
+- (void)changePasswordSuccess;
+- (void)changePasswordFailed:    (NSDictionary *) userInfo;
 //重置密码
--(void) resetPasswordSuccess;
--(void) resetPasswordFailed:    (NSDictionary *) userInfo;
+- (void)resetPasswordSuccess;
+- (void)resetPasswordFailed:    (NSDictionary *) userInfo;
 
 @end
 

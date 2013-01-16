@@ -56,7 +56,7 @@
         }
     }
     
-    DLog(@"[II] tmpl = %@", self);
+   
     return self;
 }
 @end

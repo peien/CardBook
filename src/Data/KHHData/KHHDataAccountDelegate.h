@@ -11,8 +11,11 @@
 @protocol KHHDataAccountDelegate <NSObject>
 @optional
 //登录
--(void) loginForUISuccess:           (NSDictionary *) userInfo;
--(void) loginForUIFailed:            (NSDictionary *) userInfo;
+- (void)loginForUISuccess:           (NSDictionary *) userInfo;
+- (void)loginForUIFailed:            (NSDictionary *) userInfo;
+//选择公司登录
+- (void)loginForUISuccessStep2:(NSDictionary *)userInfo;
+- (void)loginForUIFailedStep2:(NSDictionary *)userInfo;
 //注册
 -(void) createAccountForUISuccess:   (NSDictionary *) userInfo;
 -(void) createAccountForUIFailed:    (NSDictionary *) userInfo;

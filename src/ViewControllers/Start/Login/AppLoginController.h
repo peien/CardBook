@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "SuperViewController.h"
 #import "KHHDataNew+Account.h"
+#import "ResetPasswordViewController.h"
+#import "AppRegisterController.h"
 
-@interface AppLoginController : SuperViewController<KHHDataAccountDelegate>
-
+@interface AppLoginController : SuperViewController<KHHDataAccountDelegate,ResetPasswordDelegate>
+@property (nonatomic,strong) id<changeViewDelegate> delegate;
 @end

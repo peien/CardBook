@@ -15,6 +15,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "UIViewController+SM.h"
 #import "KHHViewAdapterUtil.h"
+#import "KHHUser.h"
 
 //#define textStartAutoLogin NSLocalizedString(@"正在自动登录...", nil)
 #define textCreatingAccount   NSLocalizedString(@"正在注册帐户...", nil)
@@ -33,13 +34,16 @@
 //#define alertTitleSyncFailed NSLocalizedString(@"同步数据出错", nil)
 //#define textNotAllDataAvailable NSLocalizedString(@"部分数据可能暂时无法使用。", nil)
 
-@interface LoginActionViewController ()
+@interface LoginActionViewController ()<KHHFilterPopupDelegate>
 @property (nonatomic, strong) KHHData *data;
 @property (nonatomic, strong) KHHDefaults *defaults;
 @property (nonatomic, strong) KHHNetworkAPIAgent *agent;
 @end
 
 @implementation LoginActionViewController
+{
+    NSArray *_arrCompnis;
+}
 
 #pragma mark - init && dealloc
 - (void)dealloc
@@ -89,6 +93,30 @@
     self.companyImageView.image = [UIImage imageNamed:@"startnew_logo.png"];
     //iphone5的适配
     [KHHViewAdapterUtil checkIsNeedAddHeightForIphone5:self.bgImageView];
+}
+
+- (void)changeToTitle:(NSString *)title
+{
+    self.actionLabel.text = title;
+}
+
+- (void)showAlert:(NSArray *)arrCompnis
+{
+    self.actionLabel.text = @"选择公司...";
+    _arrCompnis = arrCompnis;
+    NSMutableArray *arrStrPro = [[NSMutableArray alloc]initWithCapacity:5];
+    for (NSDictionary *dicPro in arrCompnis) {
+        [arrStrPro addObject:dicPro[@"name"]];
+    }
+    
+    [[KHHFilterPopup shareUtil]showPopUp:arrStrPro index:0 Title:@"选择公司" delegate:self];
+    
+}
+
+- (void)selectInAlert:(id)obj
+{
+    
+    [[KHHDataNew sharedData]doLoginStep2:[KHHUser shareInstance].username password:[KHHUser shareInstance].password sessionId:[KHHUser shareInstance].sessionId companyId:_arrCompnis[[((NSDictionary *)obj)[@"index"] integerValue]] delegate:(AppStartController *)self.parentViewController];
 }
 
 #pragma mark - Notification Handlers

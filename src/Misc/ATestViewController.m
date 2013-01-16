@@ -30,7 +30,7 @@
         }
         NSNumber *aNumber = nil;
         NSString *aString = [aNumber stringValue];
-        DLog(@"[II] aString = %@", aString);
+        
     }
     return self;
 }
@@ -128,7 +128,7 @@
 - (void)testMessages {
     [self showLabelWithText:@"试验Message"];
     [self.data syncMessages];
-    DLog(@"%@", [self.data allMessages]);
+    
 }
 - (void)handleLocationUpdateSucceeded:(NSNotification *)noti {
     static int num = 0;

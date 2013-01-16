@@ -166,7 +166,7 @@ enum Tag_TextField {
 
 #pragma mark - Actions
 - (void)goBack:(id)sender {
-    [_delegate showPreviousView];
+    [_delegate changeFrom:1 to:2 leftDown:NO];
    // [self postASAPNotificationName:nAppShowPreviousView];
 }
 
@@ -235,7 +235,7 @@ enum Tag_TextField {
         return;
     }
 
-    DLog(@"[II] 用户名密码等数据看起来ok，开始注册！");
+    
     // 把user和password保存到UserDefaults，其他通过Notification发出去
     self.defaults.currentUser     = user;
     self.defaults.currentPassword = password;
@@ -244,10 +244,16 @@ enum Tag_TextField {
     info[kAccountKeyUser]     = user;
     info[kAccountKeyPassword] = password;
     if(companyText.text.length) info[kAccountKeyCompany] = companyText.text;
-    [_delegate changeToActionView];
-    [[KHHDataNew sharedData] doRegister:info delegate:self];    
-//    [self postASAPNotificationName:nAppCreateThisAccount
-//                              info:info];
+    [_delegate changeToActionView:1 title:@"正在注册账户..." leftDown:NO ];
+    
+    dispatch_queue_t myQueue = dispatch_queue_create("com.myQueue.register1", NULL);
+    dispatch_async(myQueue, ^{
+       [[KHHDataNew sharedData] doRegister:info delegate:self];
+    });
+    
+   
+    
+
 }
 - (IBAction)showAgreement:(id)sender {
     [self pushViewControllerClass:[AgreementViewController class]
@@ -276,21 +282,7 @@ enum Tag_TextField {
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
     textField.backgroundColor = [UIColor clearColor];
 }
-//- (void)textFieldDidEndEditing:(UITextField *)textField {
-//    // 检查用户名和密码
-//    if (textField == self.userField) {
-//        NSString *text = textField.text;
-//        if (text.length && (![text isValidMobilePhoneNumber])) {
-//            textField.backgroundColor = [UIColor redColor];
-//        }
-//        return;
-//    }
-//    if (textField == self.passwordField) {
-//        //
-//        return;
-//    }
-//}
-// called when 'return' key pressed. return NO to ignore.
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     NSInteger theTag = textField.tag;
     if (textField.returnKeyType == UIReturnKeyDone) {
@@ -309,6 +301,7 @@ enum Tag_TextField {
         return (newLength > 12) ? NO : YES;
     return YES;
 }
+
 #pragma mark - keyboard notification handlers
 - (void)keyboardShow:(NSNotification *)noti {
     DLog(@"[II] noti = %@", noti);
@@ -319,6 +312,7 @@ enum Tag_TextField {
     newFrame.size.height = self.view.frame.size.height - kbHeight;
     scroll.frame = newFrame;
 }
+
 - (void)keyboardHide:(NSNotification *)noti {
     UIScrollView *scroll = (UIScrollView *)[self.view viewWithTag:Tag_Scroll_Container];
     if (scroll.frame.size.height < self.view.frame.size.height) {
