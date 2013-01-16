@@ -2321,7 +2321,6 @@
 		84C6B7A216A10EE100A228BC /* KHHNetClinetAPIAgent+CustomerEvaluation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHNetClinetAPIAgent+CustomerEvaluation.m"; sourceTree = "<group>"; };
 		84DA3F14169D097500D222A4 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		84DA3F15169D097500D222A4 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
-		84DB11DA16A4ED99001B0FAC /* KHHNetClientAPIAgentHeaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNetClientAPIAgentHeaders.h; sourceTree = "<group>"; };
 		84DB11DB16A4F3AB001B0FAC /* KHHDataTemplateDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHDataTemplateDelegate.h; sourceTree = "<group>"; };
 		84DB11DC16A4F502001B0FAC /* KHHDataExchangeDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHDataExchangeDelegate.h; sourceTree = "<group>"; };
 		84DB11DD16A4F51F001B0FAC /* KHHDataGroupDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHDataGroupDelegate.h; sourceTree = "<group>"; };
@@ -3407,7 +3406,6 @@
 				310164CF16A39CAF003D4527 /* KHHNetClinetAPIAgent+Login.m */,
 				3101B31C16A4E7A50070D5FF /* KHHNetClinetAPIAgent+Register.h */,
 				3101B31D16A4E7A50070D5FF /* KHHNetClinetAPIAgent+Register.m */,
-				84DB11DA16A4ED99001B0FAC /* KHHNetClientAPIAgentHeaders.h */,
 			);
 			name = NetWork_New;
 			path = ../NetWork_New;

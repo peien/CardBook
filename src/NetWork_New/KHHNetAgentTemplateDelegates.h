@@ -14,13 +14,17 @@
 -(void)syncTemplateSuccess:(NSDictionary *) dict;
 -(void)syncTemplateFailed:(NSDictionary *) dict;
 
-//根据模板id与版本号获取模板
--(void)syncTemplateWithIDAndVersionSuccess:(NSDictionary *) dict;
--(void)syncTemplateWithIDAndVersionFailed:(NSDictionary *) dict;
+////根据模板id与版本号获取模板
+//-(void)syncTemplateWithIDAndVersionSuccess:(NSDictionary *) dict;
+//-(void)syncTemplateWithIDAndVersionFailed:(NSDictionary *) dict;
 
 //根据模板id获取模板的详细信息
 -(void)syncTemplateItemsWithTemplateIDSuccess:(NSDictionary *) dict;
 -(void)syncTemplateItemsWithTemplateIDFailed:(NSDictionary *) dict;
+
+//根据模板ids获取多个模板的详细信息
+-(void)syncTemplateItemsWithTemplateIDsSuccess:(NSDictionary *) dict;
+-(void)syncTemplateItemsWithTemplateIDsFailed:(NSDictionary *) dict;
 
 @end
 #endif

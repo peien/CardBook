@@ -27,7 +27,7 @@
 - (void)syncMySelfCheckInRecordWithDate:(NSString *) lastDate cardID:(long) cardID delegate:(id<KHHNetAgentCheckInDelegates>) delegate;
 
 /*
- * http://192.168.1.151/zentaopms/www/index.php?m=doc&f=view&docID=278
+ * http://192.168.1.151/zentaopms/www/index.php?m=doc&f=view&docID=279
  * 增量获取员工签到记录
  * url checkIn/history/{cardId}/{startPage}/{ pageSize}/{lastUpdateDateStr}
  * 方法 get

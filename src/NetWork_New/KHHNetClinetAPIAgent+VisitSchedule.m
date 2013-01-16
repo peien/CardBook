@@ -15,7 +15,7 @@
 @implementation KHHNetClinetAPIAgent (VisitSchedule)
 /*
  * http://192.168.1.151/zentaopms/www/index.php?m=doc&f=view&docID=252
- * url  visitPlan/sync 查询所有
+ * url  visitPlan/sync[/] 查询所有
  *      visitPlan/sync/{timestamp} 查询某个时间点后面的数据
  * 方法  get
  */
@@ -364,6 +364,7 @@
  * url visitPlan/{visitPlan_id}
  * 方法 put
  */
+//- (void)uploadImage:(NSArray *)imgs forVisitSchedule:(long) scheduleID delegate:(id<KHHNetAgentVisitScheduleDelegates>) delegate {
 - (void)uploadImage:(UIImage *)img forVisitSchedule:(long) scheduleID delegate:(id<KHHNetAgentVisitScheduleDelegates>) delegate {
     //判断网络
     if ([self networkStateIsValid:delegate selector:@"uploadVisitScheduleImageFailed:"]) {
@@ -371,11 +372,8 @@
     }
     
     //检查参数
+//    if (nil == imgs || imgs.count <= 0 || scheduleID <= 0) {
     if (nil == img || scheduleID <= 0) {
-//        if ([delegate respondsToSelector:@selector(uploadVisitScheduleImageFailed:)]) {
-//            NSDictionary *dict = [self parametersNotMeetRequirementFailedResponseDictionary];
-//            [delegate uploadVisitScheduleImageFailed:dict];
-//        }
         [self parametersNotMeetRequirementFailedResponse:delegate selector:@"uploadVisitScheduleImageFailed:"];
         return;
     }
@@ -386,11 +384,18 @@
     
     //更新的文件
     KHHConstructionBlock construction = ^(id <AFMultipartFormData> formData) {
+//        for (UIImage img in imgs) {
+//            NSData *imageData = [img resizedImageDataForKHHUpload];
+//            [formData appendPartWithFileData:imageData
+//                                        name:@"imgs"
+//                                    fileName:@"imgs"
+//                                    mimeType:@"image/jpeg"];
+//        }
         NSData *imageData = [img resizedImageDataForKHHUpload];
-        [formData appendPartWithFileData:imageData
-                                    name:@"imgs"
-                                fileName:@"imgs"
-                                mimeType:@"image/jpeg"];
+            [formData appendPartWithFileData:imageData
+                                        name:@"imgs"
+                                    fileName:@"imgs"
+                                    mimeType:@"image/jpeg"];
     };
     
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {

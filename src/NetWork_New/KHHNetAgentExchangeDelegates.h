@@ -19,5 +19,9 @@
 //发送到手机
 -(void) sendCardToMobileSuccess;
 -(void) sendCardToMobileFailed:(NSDictionary *) dict;
+
+//回赠
+-(void) sendCardToUserSuccess;
+-(void) sendCardToUserFailed:(NSDictionary *) dict;
 @end
 #endif

@@ -10,6 +10,8 @@
 #import <CoreData/CoreData.h>
 #import "KHHNetClinetAPIAgent.h"
 #import "KHHApp.h"
+#import "SyncMark.h"
+#import "NSManagedObject+KHH.h"
 
 
 @interface KHHDataNew : NSObject
@@ -19,6 +21,9 @@
 @property (readonly, strong, nonatomic) KHHNetClinetAPIAgent *agent;
 // create OR obtain the singleton instance
 @property (strong,nonatomic) id delegate;
+
+//标记，用来标记多网络接口时标记是否有失败的
+@property (assign,nonatomic) BOOL hasFailed;
 + (id)sharedData;
 //
 - (void)saveContext;   // 保存更改。

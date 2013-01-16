@@ -28,4 +28,12 @@
  * url card/shakeInfo/{user_id} user_id表示谁摇手机是谁的user_id
  */
 - (void)exchangeCard:(Card *)card withCoordinate:(CLLocationCoordinate2D)coordinate delegate:(id<KHHNetAgentExchangeDelegates>) delegate;
+
+/**
+ * 回赠名片
+ * http://192.168.1.151/zentaopms/www/index.php?m=doc&f=view&docID=281
+ * 方法 Put
+ * url card/return/{receiverId}/{cardId}/{version}
+ */
+- (void)sendCard:(long) cardID version:(int) version toUser:(NSString *)userID delegate:(id<KHHNetAgentExchangeDelegates>) delegate;
 @end

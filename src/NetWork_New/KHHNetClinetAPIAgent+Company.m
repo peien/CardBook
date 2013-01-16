@@ -62,7 +62,7 @@
 
 
 /*
- * http://192.168.1.151/zentaopms/www/index.php?m=doc&f=view&docID=297
+ * http://192.168.1.151/zentaopms/www/index.php?m=doc&f=view&docID=284
  * 获取公司部门
  * url department/departments
  * 方法 get
@@ -75,7 +75,7 @@
     }
     
     //url
-    NSString *path = @"company/logo";
+    NSString *path = @"department/departments";
     
     //服务器有返回值
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {

@@ -8,6 +8,23 @@
 
 #import "KHHDataNew.h"
 #import "KHHDataGroupDelegate.h"
-@interface KHHDataNew (Group) <KHHDataGroupDelegate>
+#import "KHHNetClinetAPIAgent+Group.h"
+@interface KHHDataNew (Group) <KHHNetAgentGroupDelegates>
+#pragma mark - 同步分组
+- (void) syncGroup:(id<KHHDataGroupDelegate>) delegate;
+#pragma mark - 增加分组
+- (void) addGroup:(IGroup *)iGroup userCardID:(long)cardID delegate:(id<KHHDataGroupDelegate>) delegate;
 
+#pragma mark - 修改分组
+- (void) updateGroupName:(IGroup *)iGroup delegate:(id<KHHDataGroupDelegate>) delegate;
+
+#pragma mark - 删除分组
+- (void) deleteGroup:(long) groupID delegate:(id<KHHDataGroupDelegate>) delegate;
+
+#pragma mark - 取分组下的名片
+- (void) getGroupMembers:(id<KHHDataGroupDelegate>) delegate;
+- (void) getGroupMembers:(long) groupID delegate:(id<KHHDataGroupDelegate>) delegate;
+
+#pragma mark - 添加、删除、移动客户名片到分组
+- (void)moveCards:(NSArray *)cards fromGroup:(Group *)fromGroup toGroup:(Group *) toGroup delegate:(id<KHHDataGroupDelegate>) delegate;
 @end

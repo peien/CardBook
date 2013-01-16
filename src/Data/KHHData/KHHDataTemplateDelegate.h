@@ -22,5 +22,9 @@
 //根据模板id获取模板的详细信息
 -(void)syncTemplateItemsWithTemplateIDForUISuccess;
 -(void)syncTemplateItemsWithTemplateIDForUIFailed:(NSDictionary *) dict;
+
+//根据模板id获取模板的详细信息
+-(void)syncTemplateItemsWithTemplateIDsForUISuccess;
+-(void)syncTemplateItemsWithTemplateIDsForUIFailed:(NSDictionary *) dict;
 @end
 #endif

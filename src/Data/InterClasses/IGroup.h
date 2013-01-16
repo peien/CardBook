@@ -13,4 +13,5 @@
 @property (nonatomic, strong) NSNumber *id;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSNumber *parentID;
+@property (nonatomic, strong) NSNumber *cardID;
 @end

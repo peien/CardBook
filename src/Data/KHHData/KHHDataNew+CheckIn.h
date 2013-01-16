@@ -8,6 +8,7 @@
 
 #import "KHHDataNew.h"
 #import "KHHDataCheckInDelegate.h"
-@interface KHHDataNew (CheckIn) <KHHDataCheckInDelegate>
+#import "KHHNetClinetAPIAgent+CheckIn.h"
+@interface KHHDataNew (CheckIn) <KHHNetAgentCheckInDelegates>
 
 @end

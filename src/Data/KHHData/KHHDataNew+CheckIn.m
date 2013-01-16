@@ -7,7 +7,6 @@
 //
 
 #import "KHHDataNew+CheckIn.h"
-
 @implementation KHHDataNew (CheckIn)
 
 @end

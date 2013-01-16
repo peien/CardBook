@@ -22,12 +22,6 @@
 //删除拜访计划
 -(void) deleteVisitScheduleForUISuccess;
 -(void) deleteVisitScheduleForUIFailed:(NSDictionary *) dict;
-//上传拜访计划图片
--(void) uploadVisitScheduleImageForUISuccess;
--(void) uploadVisitScheduleImageForUIFailed:(NSDictionary *) dict;
-//删除拜访计划图片
--(void) deleteVisitScheduleImageForUISuccess;
--(void) deleteVisitScheduleImageForUIFailed:(NSDictionary *) dict;
 @end
 
 

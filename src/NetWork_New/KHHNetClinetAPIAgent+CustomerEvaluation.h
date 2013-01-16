@@ -75,7 +75,7 @@
  * 查询单个客户评估信息
  * http://192.168.1.151/zentaopms/www/index.php?m=doc&f=view&docID=274
  * 方法 get
- * utl customerRelations/{id}
+ * utl customerRelations/{user_id}/{customerUser_id}
  */
--(void)syncSingleCustomerEvaluationWithID:(long)userID delegate:(id<KHHNetAgentCustomerEvaluationDelegates>)delegate;
+-(void)syncSingleCustomerEvaluationWithID:(long)cutomerUserID myUserID:(long) myUserID delegate:(id<KHHNetAgentCustomerEvaluationDelegates>)delegate;
 @end

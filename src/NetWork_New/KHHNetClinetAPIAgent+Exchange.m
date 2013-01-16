@@ -56,7 +56,7 @@
                 [delegate sendCardToMobileSuccess];
             }
         }else {
-            NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
+            NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
             //失败code号
             dict[kInfoKeyErrorCode] = @(code);    
             dict[kInfoKeyErrorMessage] = [responseDict valueForKey:JSONDataKeyNote];
@@ -119,7 +119,7 @@
         NSDictionary *responseDict = [self JSONDictionaryWithResponse:responseObject];
         //成功失败标记
         KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
-        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
         //失败code号
         dict[kInfoKeyErrorCode] = @(code);
         if (KHHErrorCodeSucceeded == code) {
@@ -144,5 +144,59 @@
     
     //发请求
     [self postPath:path parameters:parameters success:success failure:failed];
+}
+
+
+/**
+ * 回赠名片
+ * http://192.168.1.151/zentaopms/www/index.php?m=doc&f=view&docID=281
+ * 方法 Put
+ * url card/return/{receiverId}/{cardId}/{version}
+ */
+- (void)sendCard:(long) cardID version:(int) version toUser:(NSString *)userID delegate:(id<KHHNetAgentExchangeDelegates>) delegate
+{
+    //网络状态
+    if (![self networkStateIsValid:delegate selector:@"sendCardToUserFailed:"]) {
+        return;
+    }
+    
+    //检查参数
+    if (cardID <= 0 || version < 0 || 0 == userID.length) {
+        [self parametersNotMeetRequirementFailedResponse:delegate selector:@"sendCardToUserFailed:"];
+        return;
+    }
+    
+    //请求url的格式
+    NSString *pathFormat = @"card/return/%ld/%d/%@";
+    NSString *path = [NSString stringWithFormat:pathFormat, cardID, version, userID];
+    
+    //成功block
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
+        // 把返回的数据转成本地数据
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:responseObject];
+        //成功失败标记
+        KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        if (KHHErrorCodeSucceeded == code) {
+            //同步成功,返回数据到data层保存数据
+            if ([delegate respondsToSelector:@selector(sendCardToUserSuccess)]) {
+                [delegate sendCardToUserSuccess];
+            }
+        }else {
+            NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
+            //失败code号
+            dict[kInfoKeyErrorCode] = @(code);
+            dict[kInfoKeyErrorMessage] = [responseDict valueForKey:JSONDataKeyNote];
+            //同步失败
+            if ([delegate respondsToSelector:@selector(sendCardToUserFailed:)]) {
+                [delegate sendCardToUserFailed:dict];
+            }
+        }
+    };
+    
+    //其它失败的block
+    KHHFailureBlock failed = [self defaultFailedResponse:delegate selector:@"sendCardToUserFailed:"];
+    
+    //发送请求
+    [self putPath:path parameters:nil success:success failure:failed];
 }
 @end

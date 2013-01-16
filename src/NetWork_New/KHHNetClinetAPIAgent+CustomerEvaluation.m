@@ -162,7 +162,6 @@
             }
             icv.customerCardModelType = aCard.modelTypeValue;
             dict[kInfoKeyObject] = icv;
-            
             //添加成功, 返回到data层进行同步
             if ([delegate respondsToSelector:@selector(addCustomerEvaluationSuccess:)]) {
                 [delegate addCustomerEvaluationSuccess:dict];
@@ -222,33 +221,33 @@
     // 参数
     NSMutableDictionary *parameters;
     parameters = [NSMutableDictionary dictionaryWithDictionary:@{
-                  @"customerAppraise.id"             : icv.id.stringValue,
-                  @"customerAppraise.cardId"         : (myCard.id      ? myCard.id.stringValue      : @""),
-                  @"customerAppraise.version"        : (myCard.version ? myCard.version.stringValue : @""),
-                  @"customerAppraise.customCardId"   : (aCard.id       ? aCard.id.stringValue       : @""),
-                  @"customerAppraise.customType"     : (aCard          ? [aCard nameForServer]      : @""),
+                  @"id"             : icv.id.stringValue,
+                  @"cardId"         : (myCard.id      ? myCard.id.stringValue      : @""),
+                  @"version"        : (myCard.version ? myCard.version.stringValue : @""),
+                  @"customCardId"   : (aCard.id       ? aCard.id.stringValue       : @""),
+                  @"customType"     : (aCard          ? [aCard nameForServer]      : @""),
                   }];
-    //    @"customerAppraise.customPosition" : @"",
-    //    @"customerAppraise.col1"           : @"",
-    //    @"customerAppraise.col2"           : @"",
+    //    @"customPosition" : @"",
+    //    @"col1"           : @"",
+    //    @"col2"           : @"",
     //关系深度
     if (icv.degree) {
-        parameters[@"customerAppraise.relateDepth" ] = icv.degree.stringValue;
+        parameters[@"relateDepth" ] = icv.degree.stringValue;
     }
     //客户价值
     if (icv.value) {
-        parameters[@"customerAppraise.customCost"] = icv.value.stringValue;
+        parameters[@"customCost"] = icv.value.stringValue;
     }
     //备注
     if (icv.remarks) {
-        parameters[@"customerAppraise.col1"] = icv.remarks; //备注？
+        parameters[@"col1"] = icv.remarks; //备注？
     }
     
     if (icv.firstMeetDate) {
         parameters[@"knowTimeTemp" ] = icv.firstMeetDate;
     }
     if (icv.firstMeetAddress) {
-        parameters[@"customerAppraise.knowAddress"] = icv.firstMeetAddress;
+        parameters[@"knowAddress"] = icv.firstMeetAddress;
     }
     
     //服务器有返回值
@@ -334,16 +333,16 @@
     KHHFailureBlock failed = [self defaultFailedResponse:delegate selector:@"deleteCustomerEvaluationFailed:"];
     
     //调接口
-    [self deletePath:pathFormat parameters:nil success:success failure:failed];
+    [self deletePath:path parameters:nil success:success failure:failed];
 }
 
 /*
  * 查询单个客户评估信息
  * http://192.168.1.151/zentaopms/www/index.php?m=doc&f=view&docID=274
  * 方法 get
- * utl customerRelations/{id}
+ * utl customerRelations/{user_id}/{customerUser_id}
  */
--(void)syncSingleCustomerEvaluationWithID:(long)userID delegate:(id<KHHNetAgentCustomerEvaluationDelegates>)delegate
+-(void)syncSingleCustomerEvaluationWithID:(long)cutomerUserID myUserID:(long) myUserID delegate:(id<KHHNetAgentCustomerEvaluationDelegates>)delegate
 {
     //网络状态
     if ([self networkStateIsValid:delegate selector:@"syncSingleCustomerEvaluationFailed:"]) {
@@ -351,13 +350,13 @@
     }
     
     // 检查参数
-    if (userID <= 0) {
+    if (cutomerUserID <= 0 || myUserID <= 0) {
         [self parametersNotMeetRequirementFailedResponse:delegate selector:@"syncSingleCustomerEvaluationFailed:"];
         return;
     }
     
-    NSString *pathFormat = @"customerRelations/%@";
-    NSString *path = [NSString stringWithFormat:pathFormat, userID];
+    NSString *pathFormat = @"customerRelations/%ld/%ld";
+    NSString *path = [NSString stringWithFormat:pathFormat, myUserID, cutomerUserID];
     
     //服务器有返回值
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {

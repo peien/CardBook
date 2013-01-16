@@ -7,7 +7,6 @@
 //
 
 #import "KHHDataNew+Company.h"
-
 @implementation KHHDataNew (Company)
 
 @end

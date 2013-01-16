@@ -8,6 +8,7 @@
 
 #import "KHHDataNew.h"
 #import "KHHDataCompanyDelegate.h"
-@interface KHHDataNew (Company) <KHHDataCompanyDelegate>
+#import "KHHNetClinetAPIAgent+Company.h"
+@interface KHHDataNew (Company) <KHHNetAgentCompanyDelegates>
 
 @end

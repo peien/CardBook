@@ -45,6 +45,7 @@
  * url visitPlan/{visitPlan_id}
  * 方法  put
  */
+//- (void)uploadImage:(NSArray *)imgs forVisitSchedule:(long) scheduleID delegate:(id<KHHNetAgentVisitScheduleDelegates>) delegate;
 - (void)uploadImage:(UIImage *)img forVisitSchedule:(long) scheduleID delegate:(id<KHHNetAgentVisitScheduleDelegates>) delegate;
 
 /*

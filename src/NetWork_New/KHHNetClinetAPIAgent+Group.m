@@ -34,7 +34,7 @@
     }
    
     //url
-    NSString *path = @"cardGroup";
+    NSString *path = @"cardGroup/groups";
     
     //成功block
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -57,6 +57,7 @@
                 igrp.id = grp[JSONDataKeyID];
                 igrp.name = grp[JSONDataKeyGroupName];
                 igrp.parentID = grp[JSONDataKeyParentID];
+                igrp.cardID = grp[JSONDataKeyCardId];
                 [newList addObject:igrp];
             }
             if (newList) {
@@ -120,14 +121,14 @@
     //参数
     NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:3];
     //分组名
-    parameters[@"group.groupName"]  = igroup.name;
+    parameters[@"name"]  = igroup.name;
     //cardID
     if (cardID > 0) {
-        parameters[@"group.cardId"]     = [NSNumber numberWithLong:cardID];
+        parameters[@"card"] = [NSNumber numberWithLong:cardID];
     }
     //parentID
     if (!igroup.parentID && [igroup.parentID longValue] > 0) {
-        parameters[@"group.parentId"] = igroup.parentID;
+        parameters[@"parent"] = igroup.parentID;
     }
     
     //其它的col1 - col5目前没用到，就不写了
@@ -200,12 +201,16 @@
     NSString *path = @"cardGroup";
     
     //参数
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:3];
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:4];
+    //id
+    parameters[@"id"]  = igroup.id;
     //分组名
-    parameters[@"group.groupName"]  = igroup.name;
+    parameters[@"name"]  = igroup.name;
+    //cardid （区分多公司的）
+    parameters[@"card"] = igroup.cardID;
     //parentID
     if (!igroup.parentID && [igroup.parentID longValue] > 0) {
-        parameters[@"group.parentId"] = igroup.parentID;
+        parameters[@"parent"] = igroup.parentID;
     }
     
     //其它的col1 - col5目前没用到，就不写了

@@ -1149,6 +1149,8 @@
                         Group *group = [self.oWnGroupArray objectAtIndex:self.currentIndexPath.row - self.baseNum];
                         self.interGroup.id = group.id;
                         self.interGroup.name = tf.text;
+                        MyCard *card = [self.myCardArray objectAtIndex:0];
+                        self.interGroup.cardID = card.id;
                         [self.dataControl updateGroup:self.interGroup];
                     }
                 }

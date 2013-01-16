@@ -229,13 +229,17 @@
     }
     
     //密码加密
-    NSString *encOld = [Encryptor encryptBase64String:oldPassword
-                                            keyString:KHHHttpEncryptorKey];
-    NSString *encNew = [Encryptor encryptBase64String:newPassword
-                                            keyString:KHHHttpEncryptorKey];
+//    NSString *encOld = [Encryptor encryptBase64String:oldPassword
+//                                            keyString:KHHHttpEncryptorKey];
+//    NSString *encNew = [Encryptor encryptBase64String:newPassword
+//                                            keyString:KHHHttpEncryptorKey];
     //url拼装格式
-    NSString *urlFormat = @"passwd/%@/%@";
-    NSString *path = [NSString stringWithFormat:urlFormat,encOld,encNew];
+    NSString *path = @"user/passwd";
+    
+    //不加密？？？？？（文档未要求）
+    NSDictionary *parameters = @{@"oldPassword" : oldPassword,@"newPassword" : newPassword
+    };
+    
     // 处理返回数据的block
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
         NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
@@ -264,7 +268,7 @@
     KHHFailureBlock failed = [self defaultFailedResponse:delegate selector:@"changePasswordFailed:"];
     
     //联网操作
-    [self putPath:path parameters:nil success:success failure:failed];
+    [self putPath:path parameters:parameters success:success failure:failed];
     return YES;
 }
 
@@ -296,7 +300,7 @@
     }
     
     //重置密码的url格式
-    NSString *pathFormat = @"passwd/reset/%@";
+    NSString *pathFormat = @"account/resetPwd/%@";
     NSString *path = [NSString stringWithFormat:pathFormat, mobile];
     // 处理返回数据的block
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
@@ -324,7 +328,7 @@
     //其它操作失败block
     KHHFailureBlock failed = [self defaultFailedResponse:delegate selector:@"resetPasswordFailed:"];
     
-    [self getPath:path parameters:nil success:success failure:failed];
+    [self putPath:path parameters:nil success:success failure:failed];
     return YES;
 }
 @end

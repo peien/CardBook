@@ -8,6 +8,18 @@
 
 #import "KHHDataNew.h"
 #import "KHHDataTemplateDelegate.h"
-@interface KHHDataNew (Template) <KHHDataTemplateDelegate>
+#import "KHHNetClinetAPIAgent+Template.h"
+@interface KHHDataNew (Template) <KHHNetAgentTemplateDelegates>
 
+#pragma mark - 模板增量接口
+- (void)syncTemplatesWithDate:(NSString *)lastDate delegate:(id<KHHDataTemplateDelegate>) delegate;
+
+//#pragma mark - 根据模板id和版本获取联系人模板
+//- (void)syncTemplatesWithTemplateIDAndVersion:(NSString *) idAndVersions delegate:(id<KHHDataTemplateDelegate>)delegate;
+
+#pragma mark - 根据模板id获取模板详细信息
+- (void)syncTemplateItemsWithTemplateID:(long) templateID delegate:(id<KHHDataTemplateDelegate>)delegate;
+
+#pragma mark - 一次获取多个模板的详细信息
+- (void)syncTemplateItemsWithTemplateIDs:(NSString *) templateIDs delegate:(id<KHHDataTemplateDelegate>)delegate;
 @end
