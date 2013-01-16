@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "KHHDataNew+Login.h"
-#import "KHHDataLoginDelegate.h"
+#import "AppRegisterController.h"
+#import "KHHDataNew+Account.h"
 
 @protocol AppStartData <NSObject>
 @required
@@ -35,10 +35,21 @@
 - (NSArray *) historyUserList;
 @end
 
-@interface AppStartController : UIViewController<KHHDataLoginDelegate>
+
+@protocol LoginActionChangeTitleDelegate <NSObject>
+
+- (void)changeToTitle:(NSString *)title;
+
+- (void)showAlert:(NSArray *)arrCompnis;
+
+@end
+
+
+@interface AppStartController : UIViewController<KHHDataAccountDelegate,changeViewDelegate>
 @property (nonatomic, strong) id<AppStartNetworkAgent> agent;
 @property (nonatomic, strong) id<AppStartData>         data;
 @property (nonatomic, strong) id<AppStartUserDefaults> defaults;
+@property (nonatomic, strong) id<LoginActionChangeTitleDelegate> changeActionTitleDelegate;
 
 #pragma mark - Init
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;

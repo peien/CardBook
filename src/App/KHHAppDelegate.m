@@ -19,6 +19,7 @@
 #import "NSString+Base64.h"
 #import "KHHTypes.h"
 #import "NetClient.h"
+#import "KHHManagementViewController.h"
 
 @implementation KHHAppDelegate
 
@@ -28,11 +29,11 @@
     // 设置window默认背景
     self.window.backgroundColor = [UIColor blackColor];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(reachabilityChanged:)
-                                                 name: kReachabilityChangedNotification
-                                               object: nil];
-    [[NetClient sharedClient].r startNotifier];
+//    [[NSNotificationCenter defaultCenter] addObserver:self
+//                                             selector:@selector(reachabilityChanged:)
+//                                                 name: kReachabilityChangedNotification
+//                                               object: nil];
+//    [[NetClient sharedClient].r startNotifier];
 
      [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
     // 设置界面元素的公共属性
@@ -49,13 +50,15 @@
     [self observeNotificationName:nAppShowMainView  selector:@"handleShowMainUI:"]; // 显示主界面消息
     [self observeNotificationName:KHHAppLogout     selector:@"handleLogout:"];// 登出    
    
-        AppStartController *startVC = [[AppStartController alloc] initWithNibName:nil bundle:nil];
+    AppStartController *startVC = [[AppStartController alloc] initWithNibName:nil bundle:nil] ;
+                                                                                          //initWithNibName:@"KHHManagementViewController" bundle:nil];
         startVC.agent    = [[KHHNetworkAPIAgent alloc] init];
         startVC.data     = [KHHData sharedData];
         startVC.defaults = [KHHDefaults sharedDefaults];
         self.window.rootViewController = startVC;
-    
-    
+//    KHHManagementViewController *manViewCon  = [[KHHManagementViewController alloc]initWithNibName:nil bundle:nil];
+//    self.window.rootViewController = manViewCon;
+    //[[UINavigationController alloc]initWithRootViewController:manViewCon];
     // 显示启动界面
    
     

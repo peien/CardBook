@@ -10,6 +10,7 @@
 #import "Encryptor.h"
 #import "NSString+SM.h"
 #import "NSNumber+SM.h"
+#import "KHHUser.h"
 
 @implementation KHHNetClinetAPIAgent (Account)
 /*
@@ -17,103 +18,194 @@
  * http://192.168.1.151/zentaopms/www/index.php?m=doc&f=view&docID=230
  * 方法 post
  */
-//- (BOOL) login:(NSString *)user password:(NSString *)password delegate:(id<KHHNetAgentAccountDelegates>) delegate
-//{
-//    //网络不可用
-//    if (![self networkStateIsValid]) {
-//        if ([delegate respondsToSelector:@selector(loginFailed:)]) {
-//            NSDictionary *dict = [self networkUnableFailedResponseDictionary];
-//            [delegate loginFailed:dict];
-//        }
-//        return NO;
-//    }
-//    
-//    //参数不可用
-//    if (0 == [user length] || 0 == [password length]) {
-//        if ([delegate respondsToSelector:@selector(loginFailed:)]) {
-//            NSDictionary *dict = [self parametersNotMeetRequirementFailedResponseDictionary];
-//            [delegate loginFailed:dict];
-//        }
-//        return NO;
-//    }
-//    
-//    NSString *path = @"login";
-//    NSString *encPass = [Encryptor encryptBase64String:password
+- (BOOL) login:(NSString *)user password:(NSString *)password delegate:(id<KHHNetAgentAccountDelegates>) delegate
+{
+    //网络不可用
+    if (![self networkStateIsValid]) {
+        if ([delegate respondsToSelector:@selector(loginFailed:)]) {
+            NSDictionary *dict = [self networkUnableFailedResponseDictionary];
+            [delegate loginFailed:dict];
+        }
+        return NO;
+    }
+    
+    //参数不可用
+    if (0 == [user length] || 0 == [password length]) {
+        if ([delegate respondsToSelector:@selector(loginFailed:)]) {
+            NSDictionary *dict = [self parametersNotMeetRequirementFailedResponseDictionary];
+            [delegate loginFailed:dict];
+        }
+        return NO;
+    }
+    
+    NSString *path = @"login";
+    NSString *encPass = password;
+//    [Encryptor encryptBase64String:password
 //                                             keyString:KHHHttpEncryptorKey];
-//    NSDictionary *parameters = @{
-//        @"username" : user,
-//        @"password" : encPass
-//    };
-//    
-//    KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
-//        //解析json
-//        NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
-//        
-//        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:8];
-//        // 把 responseDict 的数据转成本地可用的数据
-//        KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
-//        //error code
-//        dict[kInfoKeyErrorCode] = @(code);
-//        if (KHHErrorCodeSucceeded == code) {
-//            // 登录成功 把要保存的保存到某个地方
-//            id obj = nil;
-//            // AuthorizationID number
-//            obj = [responseDict valueForKeyPath:JSONDataKeyID]; // string
-//            NSNumber *authorizationID = [NSNumber numberFromObject:obj zeroIfUnresolvable:YES];
-//            dict[kInfoKeyAuthorizationID] = authorizationID;
-//            // AutoReceive number
-//            obj = [responseDict valueForKeyPath:JSONDataKeyIsAutoReceive]; // string
-//            NSNumber *autoReceive = [NSNumber numberFromObject:obj defaultValue:1 defaultIfUnresolvable:YES];
-//            dict[kInfoKeyAutoReceive] = autoReceive;
-//            // CompanyID number
-//            obj = [responseDict valueForKeyPath:JSONDataKeyCompanyId];
-//            NSNumber *companyID = [NSNumber numberFromObject:obj zeroIfUnresolvable:YES];
-//            dict[kInfoKeyCompanyID] = companyID;
-//            //companyName
-//            obj = [responseDict valueForKeyPath:JSONDataKeyCompanyName];
-//            NSString *companyName = [NSString stringFromObject:obj];
-//            dict[kInfoKeyCompanyName] = companyName;
-//            
-//            // DepartmentID number
-//            obj = [responseDict valueForKeyPath:JSONDataKeyOrgId];
-//            NSNumber *departmentID = [NSNumber numberFromObject:obj zeroIfUnresolvable:YES];
-//            dict[kInfoKeyDepartmentID] = departmentID;
-//            // Permission string
-//            obj = [responseDict valueForKeyPath:JSONDataKeyPermissionName];
-//            NSString *permission = [NSString stringFromObject:obj];
-//            dict[kInfoKeyPermission] = permission;
-//            
-//            //session id
-//            obj = [responseDict valueForKeyPath:JSONDataKeySessionID];
-//            NSString *sessionID = [NSString stringFromObject:obj];
-//            dict[kInfoKeySessionID] = sessionID;
-//            
-//            //登录成功
-//            if ([delegate respondsToSelector:@selector(loginSuccess:)]) {
-//                [delegate loginSuccess:dict];
-//            }
-//        }else{
-//            //不为0时表示失败，返回失败信息
-//            dict[kInfoKeyErrorMessage] = [responseDict valueForKey:JSONDataKeyNote];
-//            if ([delegate respondsToSelector:@selector(loginFailed:)]) {
-//                [delegate loginFailed:dict];
-//            }
+    NSDictionary *parameters = @{
+        @"username" : user,
+        @"password" : encPass
+    };
+    
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
+        //解析json
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
+        
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:8];
+        // 把 responseDict 的数据转成本地可用的数据
+        KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        //error code
+        dict[kInfoKeyErrorCode] = @(code);
+        if (KHHErrorCodeSucceeded == code) {
+            // 登录成功 把要保存的保存到某个地方
+            id obj = nil;
+            // AuthorizationID number
+            obj = [responseDict valueForKeyPath:JSONDataKeyID]; // string
+            [KHHUser shareInstance].sessionId = responseDict[@"sessionId"];
+            [KHHUser shareInstance].username = user;
+            [KHHUser shareInstance].password = password;
+            if (obj){
+                 [KHHUser shareInstance].userId = [NSString stringWithFormat:@"%@",responseDict[@"id"]];
+                [KHHUser shareInstance].isAutoReceive =[NSString stringWithFormat:@"%@",responseDict[@"isAutoReceive"]];
+                [KHHUser shareInstance].permissionName = responseDict[@"permissionName"];               
+                [KHHUser shareInstance].companyId = responseDict[@"companyId"]?responseDict[@"companyId"]:@"0";
+                [delegate loginSuccess:responseDict];
+            }else{
+                [delegate loginSuccessStep2:responseDict];
+            }
+            
+            
+            //多个公司
+                    
+           
+        }else{
+            //不为0时表示失败，返回失败信息
+            dict[kInfoKeyErrorMessage] = [responseDict valueForKey:JSONDataKeyNote];
+            if ([delegate respondsToSelector:@selector(loginFailed:)]) {
+                [delegate loginFailed:dict];
+            }
+        }
+    };
+    
+    //请求失败
+//    KHHFailureBlock failed = ^(AFHTTPRequestOperation *operation, NSError *error) {
+//        NSDictionary *dict = [self defaultFailedResponseDictionary:error];
+//        //登录失败
+//        if ([delegate respondsToSelector:@selector(loginFailed:)]) {
+//            [delegate loginSuccess:dict];
 //        }
 //    };
-//    
-//    //请求失败
-////    KHHFailureBlock failed = ^(AFHTTPRequestOperation *operation, NSError *error) {
-////        NSDictionary *dict = [self defaultFailedResponseDictionary:error];
-////        //登录失败
-////        if ([delegate respondsToSelector:@selector(loginFailed:)]) {
-////            [delegate loginSuccess:dict];
-////        }
-////    };
-//    KHHFailureBlock failed = [self defaultFailedResponse:delegate selector:@"loginFailed:"];
-//    //发送网络请求
-//    [self postPath:path parameters:parameters success:success failure:failed];
-//    return YES;
-//}
+    KHHFailureBlock failed = [self defaultFailedResponse:delegate selector:@"loginFailed:"];
+    //发送网络请求
+    [self postPath:path parameters:parameters success:success failure:failed];
+    return YES;
+}
+
+/*
+ * 用户登录
+ * http://192.168.1.151/zentaopms/www/index.php?m=doc&f=view&docID=230
+ * 方法 post
+ */
+
+- (void)loginStep2:(NSString *)user password:(NSString *)password sessionId:(NSString *)sessionId companyId:(NSString *)companyId delegate:(id<KHHNetAgentAccountDelegates>)delegate
+{
+    //网络不可用
+    if (![self networkStateIsValid]) {
+        if ([delegate respondsToSelector:@selector(loginFailedStep2:)]) {
+            NSDictionary *dict = [self networkUnableFailedResponseDictionary];
+            [delegate loginFailedStep2:dict];
+        }
+        return;
+    }
+    
+    //参数不可用
+    if (0 == [user length] || 0 == [password length]) {
+        if ([delegate respondsToSelector:@selector(loginFailedStep2:)]) {
+            NSDictionary *dict = [self parametersNotMeetRequirementFailedResponseDictionary];
+            [delegate loginFailedStep2:dict];
+        }
+        return;
+    }
+    
+    NSString *path = [NSString stringWithFormat:@"user/login",sessionId,companyId];
+    NSString *encPass = password;
+    //    [Encryptor encryptBase64String:password
+    //                                             keyString:KHHHttpEncryptorKey];
+    NSDictionary *parameters = @{
+    @"username" : user,
+    @"password" : encPass
+    };
+    
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
+        //解析json
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
+        
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:8];
+        // 把 responseDict 的数据转成本地可用的数据
+        KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        //error code
+        dict[kInfoKeyErrorCode] = @(code);
+        if (KHHErrorCodeSucceeded == code) {
+            // 登录成功 把要保存的保存到某个地方
+            id obj = nil;
+            // AuthorizationID number
+            obj = [responseDict valueForKeyPath:JSONDataKeyID]; // string
+            NSNumber *authorizationID = [NSNumber numberFromObject:obj zeroIfUnresolvable:YES];
+            dict[kInfoKeyAuthorizationID] = authorizationID;
+            // AutoReceive number
+            obj = [responseDict valueForKeyPath:JSONDataKeyIsAutoReceive]; // string
+            NSNumber *autoReceive = [NSNumber numberFromObject:obj defaultValue:1 defaultIfUnresolvable:YES];
+            dict[kInfoKeyAutoReceive] = autoReceive;
+            // CompanyID number
+            obj = [responseDict valueForKeyPath:JSONDataKeyCompanyId];
+            NSNumber *companyID = [NSNumber numberFromObject:obj zeroIfUnresolvable:YES];
+            dict[kInfoKeyCompanyID] = companyID;
+            //companyName
+            obj = [responseDict valueForKeyPath:JSONDataKeyCompanyName];
+            NSString *companyName = [NSString stringFromObject:obj];
+            dict[kInfoKeyCompanyName] = companyName;
+            
+            // DepartmentID number
+            obj = [responseDict valueForKeyPath:JSONDataKeyOrgId];
+            NSNumber *departmentID = [NSNumber numberFromObject:obj zeroIfUnresolvable:YES];
+            dict[kInfoKeyDepartmentID] = departmentID;
+            // Permission string
+            obj = [responseDict valueForKeyPath:JSONDataKeyPermissionName];
+            NSString *permission = [NSString stringFromObject:obj];
+            dict[kInfoKeyPermission] = permission;
+            
+            //session id
+            obj = [responseDict valueForKeyPath:JSONDataKeySessionID];
+            NSString *sessionID = [NSString stringFromObject:obj];
+            dict[kInfoKeySessionID] = sessionID;
+            
+            //登录成功
+            if ([delegate respondsToSelector:@selector(loginSuccess:)]) {
+                [delegate loginSuccess:dict];
+            }
+        }else{
+            //不为0时表示失败，返回失败信息
+            dict[kInfoKeyErrorMessage] = [responseDict valueForKey:JSONDataKeyNote];
+            if ([delegate respondsToSelector:@selector(loginFailed:)]) {
+                [delegate loginFailed:dict];
+            }
+        }
+    };
+    
+    //请求失败
+    //    KHHFailureBlock failed = ^(AFHTTPRequestOperation *operation, NSError *error) {
+    //        NSDictionary *dict = [self defaultFailedResponseDictionary:error];
+    //        //登录失败
+    //        if ([delegate respondsToSelector:@selector(loginFailed:)]) {
+    //            [delegate loginSuccess:dict];
+    //        }
+    //    };
+    KHHFailureBlock failed = [self defaultFailedResponse:delegate selector:@"loginFailedStep2:"];
+    //发送网络请求
+    [self postPath:path parameters:parameters success:success failure:failed];
+    return;
+
+}
 
 /*
  * 用户注册
@@ -146,8 +238,9 @@
     }
     
     //密码加密
-    NSString *encPass = [Encryptor encryptBase64String:password
-                                             keyString:KHHHttpEncryptorKey];
+//    NSString *encPass = [Encryptor encryptBase64String:password
+//                                             keyString:KHHHttpEncryptorKey];
+    NSString *encPass = password;
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:@{
                                        @"username" : user,
                                        @"password" : encPass,

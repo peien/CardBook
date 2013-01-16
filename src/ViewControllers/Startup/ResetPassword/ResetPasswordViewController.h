@@ -7,13 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "KHHDataNew+Account.h"
 
-@interface ResetPasswordViewController : UIViewController
+@protocol ResetPasswordDelegate <NSObject>
+
+- (void)doReset:(NSString *)phone;
+
+@end
+
+@interface ResetPasswordViewController : UIViewController<KHHDataAccountDelegate>
 
 @property (nonatomic, weak) IBOutlet UIImageView *theView;
 @property (nonatomic, weak) IBOutlet UITextField *theTextField;
 @property (nonatomic, weak) IBOutlet UIButton *theOKButton;
-
+@property (nonatomic, strong) id<ResetPasswordDelegate> delegate;
 - (IBAction)actionButtonPressed:(id)sender;
 
 @end

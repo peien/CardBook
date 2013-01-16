@@ -94,22 +94,26 @@
 
 #pragma mark - Actions
 - (IBAction)resetPassword:(id)sender {
-    [self pushViewControllerClass:[ResetPasswordViewController class]
-                         animated:YES];
+    ResetPasswordViewController *resetPro = [[ResetPasswordViewController alloc]init];
+    resetPro.delegate = self;
+    [self.navigationController pushViewController:resetPro animated:YES];
+//    [self pushViewControllerClass:[ResetPasswordViewController class]
+//                         animated:YES];
 }
 - (IBAction)createAccount:(id)sender {
 //    [self pushViewControllerClass:[RegViewController class]
 //                         animated:YES];
-    [self postASAPNotificationName:nAppShowCreateAccount];
+    [_delegate changeFrom:2 to:1 leftDown:YES];
+   // [self postASAPNotificationName:nAppShowCreateAccount];
 }
 - (IBAction)login:(id)sender {
     // get user & password
     NSString *username     = self.userField.text;
     NSString *password = self.passwordField.text;
-    DLog(@"[II] user=%@, password=%@", username, password);
+    
     
     if (0 == username.length || 0 == password.length) {
-        DLog(@"[II] 密码或帐号为空");
+       
         [[[UIAlertView alloc]
           initWithTitle:nil
           message:NSLocalizedString(@"账号和密码不能为空。", nil)
@@ -117,7 +121,7 @@
           cancelButtonTitle:NSLocalizedString(@"OK", nil)
           otherButtonTitles:nil] show];
     } else {
-        DLog(@"[II] 用户名密码看起来ok，开始登录！");
+       
 //        if ([user isEqualToString:self.defaults.lastUser]) {
 //            self.defaults.showCompanyLogo = YES;
 //        }
@@ -127,7 +131,19 @@
 //        self.defaults.currentPassword = password;
 //        [self postASAPNotificationName:nAppLogMeIn];
         NSLog(@"%@,%@",username,password);
-        [[KHHDataNew sharedData]doLogin:username password:password delegate:self];
+        [_delegate changeToActionView:2 title:@"正在登录..." leftDown:NO];
+       
+        dispatch_queue_t myQueue = dispatch_queue_create("com.myQueue.login1", NULL);
+        dispatch_async(myQueue, ^{
+            [[KHHDataNew sharedData] doLogin:username password:password delegate:self];
+        });
+//        dispatch_async(myQueue, ^{
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                dispatch_release(myQueue);
+//            });
+//        });
+        
+        
     }
 }
 //直接体验
@@ -188,17 +204,51 @@
     return YES;
 }
 
-#pragma mark - Misc
+#pragma mark - delegate account login
 
 
 - (void)loginForUISuccess:(NSDictionary *)dict
 {
+    [_delegate changeToManageView];
     [KHHUser shareInstance].username = dict[@"username"];
 }
 
-- (void)LoginForUIFailed:(NSDictionary *)dict
+- (void)loginForUIFailed:(NSDictionary *)dict
 {
   //  [KHHUser shareInstance].password = dict[@"password"];
+    [_delegate changeFrom:0 to:2 leftDown:NO];
     [self alertWithTitle:@"登录失败" message:dict[kInfoKeyErrorMessage]];
 }
+
+- (void)loginForUISuccessStep2:(NSDictionary *)userInfo
+{
+    [_delegate alertInAction:userInfo];
+}
+
+#pragma mark - delegate account reset
+
+- (void)resetPasswordForUISuccess
+{
+    [_delegate changeFrom:0 to:2 leftDown:NO];
+    [self.navigationController popViewControllerAnimated:YES];
+    [self alertWithTitle:@"重置成功" message:KHHMessageResetRequestIsSended];
+}
+
+- (void)resetPasswordForUIFailed:(NSDictionary *)userInfo
+{
+    [_delegate changeFrom:0 to:2 leftDown:NO];
+    [self alertWithTitle:@"重置失败" message:userInfo[kInfoKeyErrorMessage]];
+}
+
+- (void)doReset:(NSString *)phone
+{
+    [_delegate changeToActionView:2 title:@"正在发送重置密码..." leftDown:NO];
+    dispatch_queue_t myQueue = dispatch_queue_create("com.myQueue.reset", NULL);
+    dispatch_async(myQueue, ^{
+         [[KHHDataNew sharedData] doResetPassword:phone delegate:self];
+    });
+   
+    
+}
+
 @end

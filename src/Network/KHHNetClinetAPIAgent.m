@@ -76,8 +76,14 @@
 //serverurl/ cellvisiting/mobile/{sessionId}/{companyId}/method
 - (NSString *)queryStringWithMethod:(NSString *) method
 {
+    if ([method isEqualToString:@"register"]) {
+        return @"cellvisiting/account/register";
+    }
     if ([method isEqualToString:@"login"]) {
-        return @"cellvisiting/mobile/login";
+        return @"cellvisiting/account/login";
+    }
+    if ([method rangeOfString:@"resetPwd"].location == 0) {
+        return [NSString stringWithFormat:@"cellvisiting/account/%@",method];
     }
     NSString * urlFormat = @"cellvisiting/mobile/%@/%@/%@";
 
@@ -95,6 +101,7 @@
     NSMutableDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseData
                                                                 options:NSJSONReadingMutableContainers
                                                                   error:nil];
+    NSLog(@"%@",responseData);
     NSMutableDictionary *result = dict[@"jsonData"];
     NSNumber *state = result[@"state"];
     NSInteger code = KHHErrorCodeUnresolvableData;

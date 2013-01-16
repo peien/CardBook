@@ -9,9 +9,12 @@
 
 // Login Notifications
 // 注意设置userInfo: 包含的keys @"user" @"password"
+#import "AppStartController.h"
+#import "KHHFilterPopup.h"
 
-@interface LoginActionViewController : UIViewController <UIAlertViewDelegate>
+@interface LoginActionViewController : UIViewController <UIAlertViewDelegate,LoginActionChangeTitleDelegate>
 @property (nonatomic, weak) IBOutlet UIImageView *bgImageView;
 @property (nonatomic, weak) IBOutlet UILabel *actionLabel;
 @property (nonatomic, weak) IBOutlet UIImageView *companyImageView;
+
 @end
