@@ -15,6 +15,12 @@
     [self.agent sendCard:cardID version:version toPhones:phoneNumbers delegate:self];
 }
 
+#pragma mark - 发送名片到指定用户
+- (void)sendCard:(long) cardID version:(int) version toUser:(NSString *)userID delegate:(id<KHHNetAgentExchangeDelegates>) delegate
+{
+    self.delegate = delegate;
+    [self.agent sendCard:cardID version:version toUser:userID delegate:self];
+}
 
 #pragma mark - 摇摇交换名片
 - (void)exchangeCard:(Card *)card withCoordinate:(CLLocationCoordinate2D)coordinate delegate:(id<KHHDataExchangeDelegate>) delegate
@@ -28,7 +34,8 @@
 -(void) exchangeCardSuccess:(NSDictionary *) dict
 {
     DLog(@"exchangeCardSuccess! dict = %@", dict);
-    //交换成，返回的数据有cardID(不返回version？？？？)
+    //交换成，返回的数据有cardID
+    //获取最后一张名片，如果本地存在就提示名片存在，如果是新名片保存本地并提示新名片
     //判断cardId在本地有没有，是否是新名片
     if ([self.delegate respondsToSelector:@selector(exchangeCardForUISuccess:)])
     {
@@ -48,8 +55,6 @@
 -(void) sendCardToMobileSuccess
 {
     DLog(@"sendCardToMobileSuccess!");
-    //交换成，返回的数据有cardID(不返回version？？？？)
-    //判断cardId在本地有没有，是否是新名片
     if ([self.delegate respondsToSelector:@selector(sendCardToMobileForUISuccess)])
     {
         [self.delegate sendCardToMobileForUISuccess];
@@ -61,6 +66,23 @@
     if ([self.delegate respondsToSelector:@selector(sendCardToMobileForUIFailed:)])
     {
         [self.delegate sendCardToMobileForUIFailed: dict];
+    }
+}
+
+-(void) sendCardToUserSuccess
+{
+    DLog(@"sendCardToUserForUISuccess!");
+    if ([self.delegate respondsToSelector:@selector(sendCardToUserForUISuccess)])
+    {
+        [self.delegate sendCardToMobileForUISuccess];
+    }
+}
+-(void) sendCardToUserFailed:(NSDictionary *) dict
+{
+    DLog(@"sendCardToUserForUIFailed! dict = %@", dict);
+    if ([self.delegate respondsToSelector:@selector(sendCardToUserForUIFailed:)])
+    {
+        [self.delegate sendCardToUserForUIFailed: dict];
     }
 }
 @end

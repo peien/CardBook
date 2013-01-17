@@ -12,8 +12,13 @@
 
 @interface KHHNetClinetAPIAgent (Card)
 
-//名片查询---同步;
+#warning 同步接口服务还没写好，文档也没定义好，这里只写了函数空壳
+//名片查询---同步(我的名片私有联系人);
 - (void)syncCard:(NSString *)lastDate delegate:(id<KHHNetAgentCardDelegate>) delegate;
+
+//联系人查询---同步;
+- (void)syncCustomerCard:(NSString *) startPage pageSize:(NSString *) pageSize lastDate:(NSString *)lastDate delegate:(id<KHHNetAgentCardDelegate>) delegate;
+//#end warning==================================
 
 //名片新增
 - (void)addCard:(InterCard *)iCard delegate:(id<KHHNetAgentCardDelegate>) delegate;

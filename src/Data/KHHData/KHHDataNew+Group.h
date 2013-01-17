@@ -9,7 +9,19 @@
 #import "KHHDataNew.h"
 #import "KHHDataGroupDelegate.h"
 #import "KHHNetClinetAPIAgent+Group.h"
+
+//同步类型
+typedef enum {
+    KHHGroupSyncTypeAdd = 1,
+    KHHGroupSyncTypeUpdate,
+    KHHGroupSyncTypeDelete,
+    KHHGroupSyncTypeSync,
+    KHHGroupSyncTypeSyncGroupMenbers,
+    KHHGroupSyncTypeSyncGroupMenbersMove,
+}   KHHGroupSyncType;
+
 @interface KHHDataNew (Group) <KHHNetAgentGroupDelegates>
+@property (assign, nonatomic) KHHGroupSyncType syncType;
 #pragma mark - 同步分组
 - (void) syncGroup:(id<KHHDataGroupDelegate>) delegate;
 #pragma mark - 增加分组

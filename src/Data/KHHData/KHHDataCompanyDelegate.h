@@ -19,7 +19,7 @@
 - (void)getColleagueByDepartmentForUIFailed:(NSDictionary *) dict;
 
 //获取公司部门列表
-- (void)getCompanyDepartmentsForUISuccess;
+- (void)getCompanyDepartmentsForUISuccess:(NSDictionary *) dict;
 - (void)getCompanyDepartmentsForUIFailed:(NSDictionary *) dict;
 @end
 

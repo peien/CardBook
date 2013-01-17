@@ -12,9 +12,13 @@
 #pragma mark - for data
 @protocol KHHNetAgentCardDelegate<NSObject>
 
-//名片查询---同步;
+//名片查询---同步(私有联系人与我的名片);
 - (void)syncCardSuccess:(NSDictionary *) dict;
 - (void)syncCardFailed:(NSDictionary *) dict;
+
+//联系人查询---同步(私有联系人与我的名片);
+- (void)syncCustomerCardSuccess:(NSDictionary *) dict;
+- (void)syncCustomerCardFailed:(NSDictionary *) dict;
 
 
 //名片新增

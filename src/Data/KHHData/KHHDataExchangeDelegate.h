@@ -17,6 +17,10 @@
 //发送到手机
 -(void) sendCardToMobileForUISuccess;
 -(void) sendCardToMobileForUIFailed:(NSDictionary *) dict;
+
+//发送给用户
+-(void) sendCardToUserForUISuccess;
+-(void) sendCardToUserForUIFailed:(NSDictionary *) dict;
 @end
 
 

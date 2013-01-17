@@ -13,29 +13,17 @@
  * 发送名片到手机 sendCardService.sendCard
  * http://192.168.1.151/zentaopms/www/index.php?m=doc&f=view&docID=235
  * 方法 put
- * 多介手机号时用";"隔开
+ * 多个手机号时用";"隔开
  */
 - (void)sendCard:(long) cardID version:(int) version toPhones:(NSString *) phoneNumbers delegate:(id<KHHNetAgentExchangeDelegates>) delegate
 {
     //网络状态
-//    if (![self networkStateIsValid]) {
-//        if ([delegate respondsToSelector:@selector(sendCardToMobileFailed:)]) {
-//            NSDictionary * dict = [self networkUnableFailedResponseDictionary];
-//            [delegate sendCardToMobileFailed:dict];
-//        }
-//        
-//        return;
-//    }
     if (![self networkStateIsValid:delegate selector:@"sendCardToMobileFailed:"]) {
         return;
     }
     
     //检查参数
     if (cardID <= 0 || version < 0 || 0 == phoneNumbers.length) {
-//        if ([delegate respondsToSelector:@selector(sendCardToMobileFailed:)]) {
-//            NSDictionary * dict = [self parametersNotMeetRequirementFailedResponseDictionary];
-//            [delegate sendCardToMobileFailed:dict];
-//        }
         [self parametersNotMeetRequirementFailedResponse:delegate selector:@"sendCardToMobileFailed:"];
         return;
     }
@@ -43,6 +31,9 @@
    //请求url的格式
     NSString *pathFormat = @"card/mobile/%ld/%d";
     NSString *path = [NSString stringWithFormat:pathFormat, cardID, version];
+    
+    //参数
+    NSDictionary *parameters = @{@"mobiles" : phoneNumbers};
     
     //成功block
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -71,7 +62,7 @@
     KHHFailureBlock failed = [self defaultFailedResponse:delegate selector:@"sendCardToMobileFailed:"];
     
     //发送请求
-    [self putPath:path parameters:nil success:success failure:failed];
+    [self postPath:path parameters:parameters success:success failure:failed];
 }
 
 
