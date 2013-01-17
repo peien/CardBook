@@ -20,6 +20,7 @@
 #import "KHHTypes.h"
 #import "NetClient.h"
 #import "KHHManagementViewController.h"
+#import "KHHUser.h"
 
 @implementation KHHAppDelegate
 
@@ -227,12 +228,13 @@
 - (void)handleLogout:(NSNotification *)noti {
     // 清除UserDefaults用户的数据
     [[KHHDefaults sharedDefaults] clearSettingsAfterLogout];
+    [[KHHUser shareInstance] clear];
     // 停掉httpclient的operation queue
     [[[NetClient sharedClient] operationQueue] cancelAllOperations];
     // 清除httpclient AuthorizationHeader
     [[NetClient sharedClient] clearAuthorizationHeader];
     // 清除core data context
-    [[KHHData sharedData] removeContext];
+    [[KHHDataNew sharedData] removeContext];
     // 切换到登陆界面
     [self postASAPNotificationName:KHHUIShowStartup];
 }

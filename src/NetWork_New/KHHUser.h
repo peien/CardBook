@@ -26,4 +26,6 @@
 + (KHHUser *)shareInstance;
 - (void)fromJsonData:(NSDictionary *)dic;
 
+- (void)clear;
+
 @end

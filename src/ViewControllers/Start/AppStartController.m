@@ -42,7 +42,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 @interface AppStartController () <KHHFilterPopupDelegate>
 @property (nonatomic, strong) UIViewController *actionController;
 @property (nonatomic, strong) UIViewController *createAccountController;
-@property (nonatomic, strong) UIViewController *loginController;
+
 @property (nonatomic, strong) UIViewController *previousController;
 @property (nonatomic, strong) UIViewController *introController;
 @property (nonatomic, strong) UIViewController *launchController;
@@ -200,7 +200,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 //    }else{
 //        [self showLoginView];
 //    }
-    if (![KHHUser shareInstance].sessionId) {
+    if (![KHHUser shareInstance].sessionId||[@"" isEqualToString:[KHHUser shareInstance].sessionId]) {
         [self showLoginView];
     }else{
         [self changeToManageView];
@@ -354,9 +354,8 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 
 - (void)changeToCreateAccountView
 {
-    UIViewAnimationOptions options = UIViewAnimationOptionTransitionFlipFromLeft;
-    [self transitionToViewController:self.createAccountController
-                             options:options];
+   
+    [self changeFrom:0 to:1 leftDown:NO];
 }
 
 - (void)changeToManageView
@@ -382,6 +381,11 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     
 }
 
+
+- (void)changeTitle:(NSString *)title
+{
+    [_changeActionTitleDelegate changeToTitle:title];
+}
 
 - (void)setChildHidden
 {
@@ -783,14 +787,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
                              options:options];
 }
 
-- (void)loginForUISuccess:(NSDictionary *)dict
-{
-    
-}
-- (void)LoginForUIFailed:(NSDictionary *)dict
-{
-    [self alertWithTitle:@"登陆失败" message:dict[kInfoKeyErrorMessage]];
-}
+
 
 
 

@@ -197,6 +197,7 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
         }else {
             self.signButton.hidden = NO;
         }
+         self.signButton.hidden = NO;
     }
     //启动定时同步消息timer
    // [self syncMessage];

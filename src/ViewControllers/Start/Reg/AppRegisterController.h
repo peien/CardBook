@@ -17,6 +17,8 @@
 - (void)changeFrom:(int)from to:(int)to leftDown:(Boolean)leftDown;
 - (void)changeToLoginView:(Boolean)isRightDown;
 
+- (void)changeTitle:(NSString *)title;
+
 //for action view
 - (void)alertInAction:(NSDictionary *)dic;
 @end

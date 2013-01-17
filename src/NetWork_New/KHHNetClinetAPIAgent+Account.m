@@ -127,7 +127,7 @@
         return;
     }
     
-    NSString *path = [NSString stringWithFormat:@"user/login",sessionId,companyId];
+    NSString *path = @"user/login";
     NSString *encPass = password;
     //    [Encryptor encryptBase64String:password
     //                                             keyString:KHHHttpEncryptorKey];
@@ -262,6 +262,8 @@
         if (KHHErrorCodeSucceeded == code) {
             // 注册成功
             // AuthorizationID
+            dict[@"username"] = user;
+            dict[@"password"] = password;
             NSNumber *authorizationID = [NSNumber numberFromObject:responseDict[JSONDataKeyID]
                                                 zeroIfUnresolvable:YES];
             dict[kInfoKeyAuthorizationID] = authorizationID;
@@ -393,7 +395,7 @@
     }
     
     //重置密码的url格式
-    NSString *pathFormat = @"account/resetPwd/%@";
+    NSString *pathFormat = @"resetPwd/%@";
     NSString *path = [NSString stringWithFormat:pathFormat, mobile];
     // 处理返回数据的block
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {

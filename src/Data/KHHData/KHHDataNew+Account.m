@@ -28,7 +28,7 @@
 - (void)doLoginStep2:(NSString *)username password:(NSString *)password sessionId:(NSString *)sessionId companyId:(NSString *)companyId delegate:(id<KHHDataAccountDelegate>)delegate
 {
     self.delegate = delegate;
-   // [self.agent loginStep2:username password:password  sessionId:sessionId companyId:companyId delegate:self];
+    [self.agent loginStep2:username password:password  sessionId:sessionId companyId:companyId delegate:self];
     
 }
 
@@ -36,6 +36,13 @@
 {
     self.delegate = delegate;
     [self.agent resetPassword:mobile delegate:self];
+}
+
+
+- (void)doChangePassword:(NSString *)oldPassword newPassword:(NSString *)newPassword delegate:(id<KHHDataAccountDelegate>) delegate
+{
+    self.delegate = delegate;
+    [self.agent changePassword:oldPassword toNewPassword:newPassword delegate:self];
 }
 
 #pragma mark - delegate - createAccount
@@ -61,6 +68,7 @@
 
 - (void)loginFailedStep2:(NSDictionary *)userInfo
 {
+     [(id<KHHDataAccountDelegate>)self.delegate loginForUIFailed:userInfo];
 }
 
 - (void)loginSuccessStep2:(NSDictionary *)userInfo
@@ -86,6 +94,26 @@
     [(id<KHHDataAccountDelegate>)self.delegate resetPasswordForUIFailed:userInfo];
 }
 
+#pragma mark - delegate - changePassword
 
+-(void) changePasswordForUISuccess
+{
+    [(id<KHHDataAccountDelegate>)self.delegate changePasswordForUISuccess];
+}
+-(void) changePasswordForUIFailed:    (NSDictionary *) userInfo
+{
+    [(id<KHHDataAccountDelegate>)self.delegate changePasswordForUIFailed:userInfo];
+}
+
+#pragma mark - delegate - changePassword
+
+-(void) changePasswordSuccess
+{
+    [(id<KHHDataAccountDelegate>)self.delegate changePasswordForUISuccess];
+}
+-(void) changePasswordFailed:    (NSDictionary *) userInfo
+{
+    [(id<KHHDataAccountDelegate>)self.delegate changePasswordForUIFailed:userInfo];
+}
 
 @end

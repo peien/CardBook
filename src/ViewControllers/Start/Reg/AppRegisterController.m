@@ -17,6 +17,7 @@
 #import "UIViewController+SM.h"
 #import "AgreementViewController.h"
 #import "KHHDataNew+Account.h"
+#import "KHHUser.h"
 
 enum Tag_ImageView_Cell {
     Tag_ImageView_Cell_Top = 20001,
@@ -237,8 +238,8 @@ enum Tag_TextField {
 
     
     // 把user和password保存到UserDefaults，其他通过Notification发出去
-    self.defaults.currentUser     = user;
-    self.defaults.currentPassword = password;
+//    self.defaults.currentUser     = user;
+//    self.defaults.currentPassword = password;
     NSMutableDictionary *info = [NSMutableDictionary dictionaryWithCapacity:3];
     info[kAccountKeyName]     = name;
     info[kAccountKeyUser]     = user;
@@ -324,7 +325,12 @@ enum Tag_TextField {
 
 - (void)createAccountForUISuccess:(NSDictionary *)userInfo
 {
-    [_delegate changeToManageView];
+   
+    [KHHUser shareInstance].username = userInfo[@"username"];
+    [KHHUser shareInstance].password = userInfo[@"password"];
+    [_delegate changeTitle:@"正在登录..."];
+    [[KHHDataNew sharedData]doLogin:[KHHUser shareInstance].username password:[KHHUser shareInstance].password delegate:((id<KHHDataAccountDelegate>)((UINavigationController *)self.parentViewController.parentViewController.childViewControllers[2]).viewControllers[0])];
+    //[_delegate changeToManageView];
 }
 
 - (void)createAccountForUIFailed:(NSDictionary *)dict

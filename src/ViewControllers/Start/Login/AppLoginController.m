@@ -84,6 +84,7 @@
                            forState:UIControlStateNormal];
     // textField
     self.userField.text = [KHHUser shareInstance].username;
+    
 }
 
 - (void)didReceiveMemoryWarning
@@ -210,7 +211,7 @@
 - (void)loginForUISuccess:(NSDictionary *)dict
 {
     [_delegate changeToManageView];
-    [KHHUser shareInstance].username = dict[@"username"];
+   // [KHHUser shareInstance].username = dict[@"username"];
 }
 
 - (void)loginForUIFailed:(NSDictionary *)dict
@@ -222,6 +223,7 @@
 
 - (void)loginForUISuccessStep2:(NSDictionary *)userInfo
 {
+    
     [_delegate alertInAction:userInfo];
 }
 

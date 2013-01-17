@@ -20,4 +20,7 @@
 
 - (void)doLoginStep2:(NSString *)username password:(NSString *)password sessionId:(NSString *)sessionId companyId:(NSString *)companyId delegate:(id<KHHDataAccountDelegate>)delegate;
 
+- (void)doChangePassword:(NSString *)oldPassword newPassword:(NSString *)newPassword delegate:(id<KHHDataAccountDelegate>) delegate;
+
+
 @end

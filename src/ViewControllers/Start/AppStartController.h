@@ -46,6 +46,8 @@
 
 
 @interface AppStartController : UIViewController<KHHDataAccountDelegate,changeViewDelegate>
+
+@property (nonatomic, strong) UIViewController *loginController;
 @property (nonatomic, strong) id<AppStartNetworkAgent> agent;
 @property (nonatomic, strong) id<AppStartData>         data;
 @property (nonatomic, strong) id<AppStartUserDefaults> defaults;

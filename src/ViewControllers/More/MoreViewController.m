@@ -352,6 +352,7 @@
 {
     if ([alertView.title isEqualToString:NSLocalizedString(@"登出", nil)]
         && buttonIndex == 1) {
+        
         [self postASAPNotificationName:KHHAppLogout];
     }
 }

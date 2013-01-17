@@ -213,4 +213,16 @@
     }
 }
 
+- (void)clear
+{
+    self.sessionId = @"";
+    self.companyId = @"";
+    self.companyName = @"";
+    self.userId = @"";
+    self.isAutoReceive = @"";
+    self.orgId = @"";
+    self.permissionName = @"";
+   
+}
+
 @end
