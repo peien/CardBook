@@ -8,11 +8,23 @@
 
 #import "KHHDataNew+Card.h"
 @implementation KHHDataNew (Card)
+@dynamic syncType;
 #pragma mark - 名片查询---同步;
-- (void)syncCard:(NSString *)lastDate delegate:(id<KHHDataCardDelegate>) delegate
+- (void)syncCard:(id<KHHDataCardDelegate>) delegate
 {
     self.delegate = delegate;
-    [self.agent syncCard:lastDate delegate:self];
+    //获取时间
+    SyncMark *syncMark = [SyncMark syncMarkByKey:kSyncMarkKeySyncCardLastTime];
+    [self.agent syncCard:syncMark.value delegate:self];
+}
+
+#pragma mark - 联系人查询---同步;
+- (void)syncCustomerCard:(NSString *) startPage pageSize:(NSString *) pageSize delegate:(id<KHHDataCardDelegate>) delegate
+{
+    self.delegate = delegate;
+    //获取时间
+    SyncMark *syncMark = [SyncMark syncMarkByKey:kSyncMarkKeySyncCustomerCardLastTime];
+    [self.agent syncCustomerCard:startPage pageSize:pageSize lastDate:syncMark.value delegate:self];
 }
 
 #pragma mark - 名片新增
@@ -147,5 +159,15 @@
     if ([self.delegate respondsToSelector:@selector(updateCardne:)]) {
         [self.delegate updateCardForUIFailed:dict];
     }
+}
+
+//联系人查询---同步(私有联系人与我的名片);
+- (void)syncCustomerCardSuccess:(NSDictionary *) dict
+{
+
+}
+- (void)syncCustomerCardFailed:(NSDictionary *) dict
+{
+
 }
 @end

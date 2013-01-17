@@ -9,11 +9,25 @@
 #import "KHHDataNew.h"
 #import "KHHDataCardDelegate.h"
 #import "KHHNetClinetAPIAgent+Card.h"
-@interface KHHDataNew (Card) <KHHNetAgentCardDelegate>
-#pragma mark - 名片查询---同步;
-- (void)syncCard:(NSString *)lastDate delegate:(id<KHHDataCardDelegate>) delegate;
 
-#pragma mark - 名片新增
+//同步类型
+typedef enum {
+    KHHCardSyncTypeAdd = 1,
+    KHHCardSyncTypeUpdate,
+    KHHCardSyncTypeDelete,
+    KHHCardSyncTypeSyncCard, //同步我的名片及自建名片
+    KHHCardSyncTypeSyncCustomerCard,//同步联系人
+}   KHHCardSyncType;
+
+@interface KHHDataNew (Card) <KHHNetAgentCardDelegate>
+@property (assign, nonatomic) KHHCardSyncType syncType;
+#pragma mark - 名片查询---同步;
+- (void)syncCard:(id<KHHDataCardDelegate>) delegate;
+
+#pragma mark - 联系人查询---同步;
+- (void)syncCustomerCard:(NSString *) startPage pageSize:(NSString *) pageSize delegate:(id<KHHDataCardDelegate>) delegate;
+
+#pragma mark - 名片新增(新增)
 - (void)addCard:(InterCard *)iCard delegate:(id<KHHDataCardDelegate>) delegate;
 - (void)addCard:(InterCard *)iCard logoImage:(UIImage *) logoImage cardLinks:(NSArray *) cardLinks delegate:(id<KHHDataCardDelegate>) delegate;
 

@@ -98,20 +98,20 @@ NSMutableDictionary * parametersToCreateOrUpdateCard(InterCard *iCard) {
     return result;
 }
 
-#pragma mark - 名片查询---同步;
+#pragma mark - 名片查询---同步(私有与自己的名片);
 - (void)syncCard:(NSString *)lastDate delegate:(id<KHHNetAgentCardDelegate>) delegate
 {
     
     if (![self networkStateIsValid]) {
-        if ([delegate respondsToSelector:@selector(syncVisitScheduleFailed:)]) {
+        if ([delegate respondsToSelector:@selector(syncCardFailed:)]) {
             NSDictionary * dict = [self networkUnableFailedResponseDictionary];
             [delegate syncCardFailed:dict];
         }
         return;
     }
     //url format
-    NSString *path = @"";
-    if (path.length > 0) {
+    NSString *path = @"card/sync";
+    if (lastDate.length > 0) {
         //以前同步过
         path = [NSString stringWithFormat:@"%@/%@", path, lastDate];
     }
@@ -126,39 +126,73 @@ NSMutableDictionary * parametersToCreateOrUpdateCard(InterCard *iCard) {
         // errorCode
         dict[kInfoKeyErrorCode] = @(code);
         if (KHHErrorCodeSucceeded == code) {
-            // count
-            dict[kInfoKeyCount] = responseDict[JSONDataKeyCount];
-            
-            // synTime -> syncTime
-            NSString *syncTime = responseDict[JSONDataKeySynTime];
-            dict[kInfoKeySyncTime] = syncTime? syncTime: @"";
-            
-            // planList -> visitScheduleList
-            NSArray *planList = responseDict[JSONDataKeyPlanList];
-            NSMutableArray *newList = [NSMutableArray arrayWithCapacity:planList.count];
-            for (id obj in planList) {
-                Card *iSchedule = [[[Card alloc] init] updateWithJSON:obj];
-                DLog(@"[II] iSchedule = %@", iSchedule);
-                [newList addObject:iSchedule];
-            }
-            dict[kInfoKeyObjectList] = newList;
+#warning 服务器那边返回数据还未定义好
             
             //同步成功,把解析后的数据传出，上层去保存数据
-            if ([delegate respondsToSelector:@selector(syncVisitScheduleSuccess:)]) {
+            if ([delegate respondsToSelector:@selector(syncCardSuccess:)]) {
                 [delegate syncCardSuccess:dict];
             }
         }else {
             //错误码
             dict[kInfoKeyErrorMessage] = [responseDict valueForKey:JSONDataKeyNote];
             //同步失败，返回错误信息
-            if ([delegate respondsToSelector:@selector(syncVisitScheduleFailed:)]) {
+            if ([delegate respondsToSelector:@selector(syncCardFailed:)]) {
                 [delegate syncCardFailed:dict];
             }
         }
     };
     
     //其它失败的block
-    KHHFailureBlock failed = [self defaultFailedResponse:delegate selector:@"syncVisitScheduleFailed:"];
+    KHHFailureBlock failed = [self defaultFailedResponse:delegate selector:@"syncCardFailed:"];
+    
+    //发送请求
+    [self getPath:path parameters:nil success:success failure:failed];
+    
+}
+
+#pragma mark - 联系人查询---同步;
+- (void)syncCustomerCard:(NSString *) startPage pageSize:(NSString *) pageSize lastDate:(NSString *)lastDate delegate:(id<KHHNetAgentCardDelegate>) delegate
+{
+    if (![self networkStateIsValid:delegate selector:@"syncCustomerCardFailed:"])
+    {
+        return;
+    }
+    //url format
+#warning 服务器还未定义
+    NSString *path = @"";
+    if (lastDate.length > 0) {
+        //以前同步过
+        path = [NSString stringWithFormat:@"%@/%@", path, lastDate];
+    }
+    
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
+        
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
+        
+        // 把返回的数据转成本地数据
+        KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        // errorCode
+        dict[kInfoKeyErrorCode] = @(code);
+        if (KHHErrorCodeSucceeded == code) {
+#warning 服务器那边返回数据还未定义好
+            
+            //同步成功,把解析后的数据传出，上层去保存数据
+            if ([delegate respondsToSelector:@selector(syncCustomerCardSuccess:)]) {
+                [delegate syncCustomerCardSuccess:dict];
+            }
+        }else {
+            //错误码
+            dict[kInfoKeyErrorMessage] = [responseDict valueForKey:JSONDataKeyNote];
+            //同步失败，返回错误信息
+            if ([delegate respondsToSelector:@selector(syncCustomerCardFailed:)]) {
+                [delegate syncCustomerCardFailed:dict];
+            }
+        }
+    };
+    
+    //其它失败的block
+    KHHFailureBlock failed = [self defaultFailedResponse:delegate selector:@"syncCustomerCardFailed:"];
     
     //发送请求
     [self getPath:path parameters:nil success:success failure:failed];

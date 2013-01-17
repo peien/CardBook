@@ -13,7 +13,9 @@
 #pragma mark - 发送名片到手机
 - (void)sendCard:(long) cardID version:(int) version toPhones:(NSString *) phoneNumbers delegate:(id<KHHDataExchangeDelegate>) delegate;
 
-
 #pragma mark - 摇摇交换名片
 - (void)exchangeCard:(Card *)card withCoordinate:(CLLocationCoordinate2D)coordinate delegate:(id<KHHDataExchangeDelegate>) delegate;
+
+#pragma mark - 发送名片到指定用户
+- (void)sendCard:(long) cardID version:(int) version toUser:(NSString *)userID delegate:(id<KHHDataExchangeDelegate>) delegate;
 @end
