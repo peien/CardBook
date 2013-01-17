@@ -21,7 +21,10 @@ typedef enum {
 }   KHHGroupSyncType;
 
 @interface KHHDataNew (Group) <KHHNetAgentGroupDelegates>
-@property (assign, nonatomic) KHHGroupSyncType syncType;
+
+#pragma mark - 所有顶级用户自定义分组（即父分组 id 为 0）
+- (NSArray *)allTopLevelGroups;// 结果为Group组成的数组
+
 #pragma mark - 同步分组
 - (void) syncGroup:(id<KHHDataGroupDelegate>) delegate;
 #pragma mark - 增加分组

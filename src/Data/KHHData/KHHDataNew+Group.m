@@ -9,7 +9,14 @@
 #import "KHHDataNew+Group.h"
 #import "Group.h"
 @implementation KHHDataNew (Group)
-@dynamic syncType;
+#pragma mark - 所有顶级用户自定义分组（即父分组 id 为 0）
+- (NSArray *)allTopLevelGroups      // 结果为Group组成的数组
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"parent.id = %@", @(0)];
+    NSArray *array = [Group objectArrayByPredicate:predicate
+                                   sortDescriptors:@[[Group nameSortDescriptor]]];
+    return array;
+}
 #pragma mark - 同步分组
 - (void) syncGroup:(id<KHHDataGroupDelegate>) delegate
 {

@@ -11,6 +11,18 @@
 #import "CardTemplateItem.h"
 
 @implementation KHHDataNew (Template)
+#pragma mark - 获取本地所有公有模板
+- (NSArray *) allPublicTemplates  // 公共模板
+{
+    NSNumber *domainType = @(KHHTemplateDomainTypePublic);
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"domainType == %@", domainType];
+    NSArray *fetched;
+    fetched = [CardTemplate objectArrayByPredicate:predicate
+                                   sortDescriptors:nil];
+    NSArray *result = fetched;
+    return result;
+}
+
 #pragma mark - 模板增量接口
 - (void)syncTemplatesWithDate:(NSString *)lastDate delegate:(id<KHHDataTemplateDelegate>) delegate
 {

@@ -8,8 +8,9 @@
 
 #import "KHHDataNew.h"
 #import "KHHDataExchangeDelegate.h"
+#import "KHHDataCardDelegate.h"
 #import "KHHNetClinetAPIAgent+Exchange.h"
-@interface KHHDataNew (Exchange) <KHHNetAgentExchangeDelegates>
+@interface KHHDataNew (Exchange) <KHHNetAgentExchangeDelegates,KHHDataCardDelegate>
 #pragma mark - 发送名片到手机
 - (void)sendCard:(long) cardID version:(int) version toPhones:(NSString *) phoneNumbers delegate:(id<KHHDataExchangeDelegate>) delegate;
 

@@ -10,6 +10,8 @@
 #import "KHHDataTemplateDelegate.h"
 #import "KHHNetClinetAPIAgent+Template.h"
 @interface KHHDataNew (Template) <KHHNetAgentTemplateDelegates>
+#pragma mark - 获取本地所有公有模板
+- (NSArray *) allPublicTemplates;// 公共模板
 
 #pragma mark - 模板增量接口
 - (void)syncTemplatesWithDate:(NSString *)lastDate delegate:(id<KHHDataTemplateDelegate>) delegate;

@@ -44,4 +44,12 @@
  * 方法 put
  */
 - (void)updateCardReadState:(Card *)card myUserID:(long) userID delegate:(id<KHHNetAgentCardDelegate>) delegate;
+
+/*
+ * http://192.168.1.151/zentaopms/www/index.php?m=doc&f=view&docID=282
+ * 按照认识时间排序的最后一个联系人
+ * url customer/last
+ * 方法 put
+ */
+- (void)latestCustomerCard:(id<KHHNetAgentCardDelegate>) delegate;
 @end
