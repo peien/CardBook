@@ -55,7 +55,7 @@
             for (NSDictionary *grp in oldList) {
                 IGroup *igrp = [[IGroup alloc] init];
                 igrp.id = grp[JSONDataKeyID];
-                igrp.name = grp[JSONDataKeyGroupName];
+                igrp.name = grp[@"name"];
                 igrp.parentID = grp[JSONDataKeyParentID];
                 igrp.cardID = grp[JSONDataKeyCardId];
                 [newList addObject:igrp];
@@ -106,7 +106,7 @@
     }
     
     //检查参数
-    if (cardID <= 0 || 0 == igroup.name.length) {
+    if ( 0 == igroup.name.length) {
         if ([delegate respondsToSelector:@selector(addGroupFailed:)]) {
             NSDictionary * dict = [self parametersNotMeetRequirementFailedResponseDictionary];
             [delegate addGroupFailed:dict];
@@ -144,7 +144,7 @@
         dict[kInfoKeyErrorCode] = @(code);
         if (KHHErrorCodeSucceeded == code) {
             //获取groupID
-            dict[kInfoKeyID] = [responseDict valueForKey:JSONDataKeyID];
+            dict[kInfoKeyID] = [responseDict valueForKey:@"id"];
             //添加成功,返回到data层保存数据或与服务器进行一次同步
             if ([delegate respondsToSelector:@selector(addGroupSuccess:)]) {
                 [delegate addGroupSuccess:dict];
@@ -207,7 +207,10 @@
     //分组名
     parameters[@"name"]  = igroup.name;
     //cardid （区分多公司的）
-    parameters[@"card"] = igroup.cardID;
+    if (!igroup.parentID && [igroup.parentID longValue] > 0) {
+         parameters[@"card"] = igroup.cardID;
+    }
+   
     //parentID
     if (!igroup.parentID && [igroup.parentID longValue] > 0) {
         parameters[@"parent"] = igroup.parentID;

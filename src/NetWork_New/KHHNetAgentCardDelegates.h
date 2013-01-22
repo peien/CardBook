@@ -23,6 +23,7 @@
 
 //名片新增
 - (void)addCardSuccess;
+- (void)addCardSuccess:(NSDictionary *) dict;
 - (void)addCardFailed:(NSDictionary *) dict;
 
 //名片删除

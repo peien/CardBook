@@ -11,6 +11,7 @@
 #import "NSString+SM.h"
 #import "NSNumber+SM.h"
 #import "KHHUser.h"
+#include <sys/sysctl.h>
 
 @implementation KHHNetClinetAPIAgent (Account)
 /*
@@ -146,43 +147,53 @@
         //error code
         dict[kInfoKeyErrorCode] = @(code);
         if (KHHErrorCodeSucceeded == code) {
-            // 登录成功 把要保存的保存到某个地方
-            id obj = nil;
-            // AuthorizationID number
-            obj = [responseDict valueForKeyPath:JSONDataKeyID]; // string
-            NSNumber *authorizationID = [NSNumber numberFromObject:obj zeroIfUnresolvable:YES];
-            dict[kInfoKeyAuthorizationID] = authorizationID;
-            // AutoReceive number
-            obj = [responseDict valueForKeyPath:JSONDataKeyIsAutoReceive]; // string
-            NSNumber *autoReceive = [NSNumber numberFromObject:obj defaultValue:1 defaultIfUnresolvable:YES];
-            dict[kInfoKeyAutoReceive] = autoReceive;
-            // CompanyID number
-            obj = [responseDict valueForKeyPath:JSONDataKeyCompanyId];
-            NSNumber *companyID = [NSNumber numberFromObject:obj zeroIfUnresolvable:YES];
-            dict[kInfoKeyCompanyID] = companyID;
-            //companyName
-            obj = [responseDict valueForKeyPath:JSONDataKeyCompanyName];
-            NSString *companyName = [NSString stringFromObject:obj];
-            dict[kInfoKeyCompanyName] = companyName;
             
-            // DepartmentID number
-            obj = [responseDict valueForKeyPath:JSONDataKeyOrgId];
-            NSNumber *departmentID = [NSNumber numberFromObject:obj zeroIfUnresolvable:YES];
-            dict[kInfoKeyDepartmentID] = departmentID;
-            // Permission string
-            obj = [responseDict valueForKeyPath:JSONDataKeyPermissionName];
-            NSString *permission = [NSString stringFromObject:obj];
-            dict[kInfoKeyPermission] = permission;
-            
-            //session id
-            obj = [responseDict valueForKeyPath:JSONDataKeySessionID];
-            NSString *sessionID = [NSString stringFromObject:obj];
-            dict[kInfoKeySessionID] = sessionID;
+            [KHHUser shareInstance].sessionId = responseDict[@"sessionId"];
+            [KHHUser shareInstance].username = user;
+            [KHHUser shareInstance].password = password;
+            [KHHUser shareInstance].userId = [NSString stringWithFormat:@"%@",responseDict[@"id"]];
+            [KHHUser shareInstance].isAutoReceive =[NSString stringWithFormat:@"%@",responseDict[@"isAutoReceive"]];
+            [KHHUser shareInstance].permissionName = responseDict[@"permissionName"];
+            [KHHUser shareInstance].companyId = responseDict[@"companyId"]?responseDict[@"companyId"]:@"0";
+            [delegate loginSuccess:responseDict];
+//
+//            // 登录成功 把要保存的保存到某个地方
+//            id obj = nil;
+//            // AuthorizationID number
+//            obj = [responseDict valueForKeyPath:JSONDataKeyID]; // string
+//            NSNumber *authorizationID = [NSNumber numberFromObject:obj zeroIfUnresolvable:YES];
+//            dict[kInfoKeyAuthorizationID] = authorizationID;
+//            // AutoReceive number
+//            obj = [responseDict valueForKeyPath:JSONDataKeyIsAutoReceive]; // string
+//            NSNumber *autoReceive = [NSNumber numberFromObject:obj defaultValue:1 defaultIfUnresolvable:YES];
+//            dict[kInfoKeyAutoReceive] = autoReceive;
+//            // CompanyID number
+//            obj = [responseDict valueForKeyPath:JSONDataKeyCompanyId];
+//            NSNumber *companyID = [NSNumber numberFromObject:obj zeroIfUnresolvable:YES];
+//            dict[kInfoKeyCompanyID] = companyID;
+//            //companyName
+//            obj = [responseDict valueForKeyPath:JSONDataKeyCompanyName];
+//            NSString *companyName = [NSString stringFromObject:obj];
+//            dict[kInfoKeyCompanyName] = companyName;
+//            
+//            // DepartmentID number
+//            obj = [responseDict valueForKeyPath:JSONDataKeyOrgId];
+//            NSNumber *departmentID = [NSNumber numberFromObject:obj zeroIfUnresolvable:YES];
+//            dict[kInfoKeyDepartmentID] = departmentID;
+//            // Permission string
+//            obj = [responseDict valueForKeyPath:JSONDataKeyPermissionName];
+//            NSString *permission = [NSString stringFromObject:obj];
+//            dict[kInfoKeyPermission] = permission;
+//            
+//            //session id
+//            obj = [responseDict valueForKeyPath:JSONDataKeySessionID];
+//            NSString *sessionID = [NSString stringFromObject:obj];
+//            dict[kInfoKeySessionID] = sessionID;
             
             //登录成功
-            if ([delegate respondsToSelector:@selector(loginSuccess:)]) {
-                [delegate loginSuccess:dict];
-            }
+//            if ([delegate respondsToSelector:@selector(loginSuccess:)]) {
+//                [delegate loginSuccess:dict];
+//            }
         }else{
             //不为0时表示失败，返回失败信息
             dict[kInfoKeyErrorMessage] = [responseDict valueForKey:JSONDataKeyNote];
@@ -425,5 +436,74 @@
     
     [self putPath:path parameters:nil success:success failure:failed];
     return YES;
+}
+
+#pragma mark - save token
+- (void)saveToken{
+    if (![KHHUser shareInstance].deviceToken ) {
+        return;
+    }
+    NSMutableDictionary *param = [[NSMutableDictionary alloc]init];
+    [param setValue:[self typeNet]  forKey:@"netType"];
+    [param setValue:[self platformString]  forKey:@"device.phoneType"];
+    [param setValue:[KHHUser shareInstance].deviceToken forKey:@"device.deviceToken"];
+    [param setValue:@"IOS" forKey:@"device.opsType"];
+    [param setValue:[[UIDevice currentDevice] systemVersion]  forKey:@"device.opsVersion"];
+    [param setValue:@"Apple" forKey:@"device.phoneBrand"];
+    
+    
+}
+
+- (NSString*)getDeviceVersion
+{
+    size_t size;
+    sysctlbyname("hw.machine", NULL, &size, NULL, 0);
+    char *machine = (char*)malloc(size);
+    sysctlbyname("hw.machine", machine, &size, NULL, 0);
+    NSString *platform = [NSString stringWithCString:machine encoding:NSUTF8StringEncoding];
+    //NSString *platform = [NSStringstringWithUTF8String:machine];二者等效
+    free(machine);
+    return platform;
+}
+
+- (NSString *)platformString{
+    NSString *platform = [self getDeviceVersion];
+    if ([platform isEqualToString:@"iPhone1,1"])   return@"iPhone 1G";
+    if ([platform isEqualToString:@"iPhone1,2"])   return@"iPhone 3G";
+    if ([platform isEqualToString:@"iPhone2,1"])   return@"iPhone 3GS";
+    if ([platform isEqualToString:@"iPhone3,1"])   return@"iPhone 4";
+    if ([platform isEqualToString:@"iPhone3,2"])   return @"Verizon iPhone 4";
+    if ([platform isEqualToString:@"iPod1,1"])     return@"iPod Touch 1G";
+    if ([platform isEqualToString:@"iPod2,1"])     return@"iPod Touch 2G";
+    if ([platform isEqualToString:@"iPod3,1"])     return@"iPod Touch 3G";
+    if ([platform isEqualToString:@"iPod4,1"])     return@"iPod Touch 4G";
+    if ([platform isEqualToString:@"iPad1,1"])     return@"iPad";
+    if ([platform isEqualToString:@"iPad2,1"])     return@"iPad 2 (WiFi)";
+    if ([platform isEqualToString:@"iPad2,2"])     return@"iPad 2 (GSM)";
+    if ([platform isEqualToString:@"iPad2,3"])     return@"iPad 2 (CDMA)";
+    if ([platform isEqualToString:@"i386"])        return@"Simulator";
+    
+    return platform;
+}
+
+- (NSString *)typeNet{
+    NSString *typeNet;
+   
+    
+    switch ([[NetClient sharedClient].r currentReachabilityStatus]) {
+        case NotReachable:
+            // 没有网络连接
+            typeNet = @"NotReachable";
+            break;
+        case ReachableViaWWAN:
+            // 使用3G网络
+            typeNet = @"ReachableViaWWAN";
+            break;
+        case ReachableViaWiFi:
+            // 使用WiFi网络
+            typeNet = @"ReachableViaWiFi";
+            break;
+    }
+    return typeNet;
 }
 @end

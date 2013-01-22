@@ -19,14 +19,20 @@
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (readonly, strong, nonatomic) KHHNetClinetAPIAgent *agent;
-// create OR obtain the singleton instance
+
 @property (strong,nonatomic) id delegate;
 
 //标记，用来标记多网络接口时标记是否有失败的
 @property (assign,nonatomic) BOOL hasFailed;
+
+@property (assign,nonatomic) int syncType;
+// create OR obtain the singleton instance
 + (id)sharedData;
 //
 - (void)saveContext;   // 保存更改。
 - (void)cleanContext;  // 清除未保存的更改。
 - (void)removeContext; // 删除Context。登出或登入时使用。
+
+#pragma mark - format Util
+- (NSString *)interval:(NSString *)timeStr;
 @end

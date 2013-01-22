@@ -12,10 +12,11 @@
 
 @implementation KHHDataNew (Template)
 #pragma mark - 模板增量接口
-- (void)syncTemplatesWithDate:(NSString *)lastDate delegate:(id<KHHDataTemplateDelegate>) delegate
+- (void)doSyncTemplatesWithDate:(NSString *)lastDate delegate:(id<KHHDataTemplateDelegate>) delegate
 {
     self.delegate = delegate;
-    [self.agent syncTemplatesWithDate:lastDate delegate:self];
+   
+    [self.agent syncTemplatesWithDate: lastDate delegate:self];
 }
 
 //#pragma mark - 根据模板id和版本获取联系人模板
@@ -130,13 +131,28 @@
     // }
     //2.syncTime {
     NSString *lastDate = dict[kInfoKeySyncTime];
-    if (lastDate.length > 0) {
+    if (!lastDate&&lastDate.length > 0) {
         [SyncMark UpdateKey:kSyncMarkKeyTemplatesLastTime
-                      value:dict[kInfoKeySyncTime]];
+                      value:[self interval:dict[kInfoKeySyncTime]]];
+        
     }
     
     // }
     // 3.保存
     [self saveContext];
 }
+
+#pragma mark - use in UI Grouped
+
+- (NSArray *)allPublicTemplates {
+    NSNumber *domainType = @(KHHTemplateDomainTypePublic);
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"domainType == %@", domainType];
+    NSArray *fetched;
+    fetched = [CardTemplate objectArrayByPredicate:predicate
+                                   sortDescriptors:nil];
+    NSArray *result = fetched;
+    return result;
+}
+
+
 @end

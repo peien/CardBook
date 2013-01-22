@@ -18,6 +18,7 @@
 #import "ResetPasswordViewController.h"
 #import "KHHUser.h"
 
+
 #define Tag_ImageView_CellTop    20001
 #define Tag_ImageView_CellBottom 20002
 #define Tag_ImageView_UserIcon   20003
@@ -205,14 +206,53 @@
     return YES;
 }
 
+#pragma mark - delegate group
+
+- (void)syncGroupForUISuccess
+{
+    [_delegate changeTitle:@"正在同步模板..."];
+    dispatch_queue_t myQueue = dispatch_queue_create("com.myQueue.login.template", NULL);
+    dispatch_async(myQueue, ^{
+        [[KHHDataNew sharedData] doSyncTemplatesWithDate:[SyncMark syncMarkByKey:kSyncMarkKeyTemplatesLastTime].value  delegate:self];
+    });
+    //[_delegate changeToManageView];
+}
+
+- (void)syncGroupForUIFailed:(NSDictionary *)dict
+{
+    [_delegate changeFrom:0 to:2 leftDown:NO];
+    [self alertWithTitle:@"同步分组失败" message:dict[kInfoKeyErrorMessage]];
+}
+
+#pragma mark - delegate template
+
+- (void)syncTemplateForUISuccess
+{
+    [[KHHDataNew sharedData] doInsertMyCard];
+    [_delegate changeToManageView];
+}
+
+- (void)syncTemplateForUIFailed:(NSDictionary *)dict
+{
+    [_delegate changeFrom:0 to:2 leftDown:NO];
+    [self alertWithTitle:@"同步模板失败" message:dict[kInfoKeyErrorMessage]];
+}
+
 #pragma mark - delegate account login
 
 
 - (void)loginForUISuccess:(NSDictionary *)dict
 {
-    [_delegate changeToManageView];
-   // [KHHUser shareInstance].username = dict[@"username"];
+    [_delegate changeTitle:@"正在同步分组..."];
+    dispatch_queue_t myQueue = dispatch_queue_create("com.myQueue.login.group", NULL);
+    dispatch_async(myQueue, ^{
+        [[KHHDataNew sharedData] doSyncGroup:self];
+    });
+    
+  //  [_delegate changeToManageView];
+   
 }
+
 
 - (void)loginForUIFailed:(NSDictionary *)dict
 {

@@ -146,7 +146,7 @@
 {
     if (_isAdd) {
         //获取添加组员界面数据，调用数据库接口（获取非本组下的客户名片列表）
-        self.handleArray = [self.dataCtrl cardsOfUngrouped];
+        self.handleArray = [[KHHDataNew sharedData] cardsOfUngrouped];
     }else{
         //获取删除组员界面数据，获取本组下的客户名片列表
     }

@@ -132,8 +132,18 @@
 
 -(void) back
 {
-    [self.navigationController setNavigationBarHidden:NO animated:YES];
-    [self.navigationController popViewControllerAnimated:YES];
+    [UIView animateWithDuration: 0.5
+                     animations:^{
+                         self.view.alpha = 0.0;
+                         
+                     }
+                     completion:^(BOOL finished) {
+                         [self.view removeFromSuperview];
+                         [self removeFromParentViewController];
+                     }];
+     
+//    [self.navigationController setNavigationBarHidden:NO animated:YES];
+//    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

@@ -11,4 +11,6 @@
 
 @interface KHHDataNew (Message)<delegateMsgForMain>
 
+- (NSUInteger)countOfUnreadMessages;
+
 @end

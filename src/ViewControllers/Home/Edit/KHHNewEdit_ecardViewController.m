@@ -13,9 +13,15 @@
 #import "NSString+Validation.h"
 #import "KHHMemoPicker.h"
 #import "KHHLocalForCardCell.h"
+#import "CardTemplate.h"
+#import "NSManagedObject+KHH.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import "Image.h"
+#import "InterCard.h"
+#import "KHHCardTemplageVC.h"
+#import "KHHFrameCardView.h"
 
-
-@interface KHHNewEdit_ecardViewController ()
+@interface KHHNewEdit_ecardViewController  ()
 {
     NSMutableArray *section0Arr;
     NSMutableArray *section1Arr;
@@ -33,6 +39,13 @@
     //for location
     NSString *locationStr;
     HZAreaPickerView *areaPicker;
+    
+    //for save card;
+    InterCard *icard;
+    
+    //for Template;
+    CardTemplate *_cardTemplate;
+    UIImageView *tempImgview;
 }
 
 @end
@@ -51,6 +64,7 @@
         _table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         _table.editing = YES;
         [self init3Arr];
+        [self.rightBtn setTitle:@"保存" forState:UIControlStateNormal];
     }
     return self;
 }
@@ -125,6 +139,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = @"新建名片";
     self.view.backgroundColor = [UIColor colorWithRed:241 green:238 blue:232 alpha:1.0];
     
     _table.frame =  CGRectMake(0, 0, 320, self.view.bounds.size.height-44);
@@ -132,20 +147,54 @@
     [self addImg];
 }
 
-- (void)addImg
+- (void)viewWillDisappear:(BOOL)animated
 {
-    UIView *viewf = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 220)];
-    UIImageView *imgview = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 300, 180)];
-    imgview.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tapp = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gotoTemplagesVC:)];
-    tapp.numberOfTapsRequired = 1;
-    tapp.numberOfTouchesRequired = 1;
-    [imgview addGestureRecognizer:tapp];
-    // [imgview setImageWithURL:[NSURL URLWithString:self.cardTemp.bgImage.url] placeholderImage:nil];
-    [viewf addSubview:imgview];
-    _table.tableHeaderView = viewf;
+    [super viewWillDisappear:animated];
+    [_table showNormal];
+    if (!sectionPicker) {
+        [sectionPicker cancelPicker:YES];
+    }
+    if (!areaPicker) {
+        [areaPicker cancelPicker:YES];
+    }
 }
 
+- (void)addImg
+{
+    if (!self.toEditCard) {
+        
+        
+        UIView *viewf = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 220)];
+        tempImgview = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, 300, 180)];
+        tempImgview.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tapp = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gotoTemplagesVC:)];
+        tapp.numberOfTapsRequired = 1;
+        tapp.numberOfTouchesRequired = 1;
+        [tempImgview addGestureRecognizer:tapp];
+        CardTemplate * cardTempLatePro = [CardTemplate objectByID:@(10) createIfNone:NO];
+        [tempImgview setImageWithURL:[NSURL URLWithString:cardTempLatePro.bgImage.url] placeholderImage:nil];
+        [viewf addSubview:tempImgview];
+        _table.tableHeaderView = viewf;
+        
+    }else{
+        
+        //[KHHShowHideTabBar hideTabbar];
+        KHHFrameCardView *cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(0, 0, 320, 220) delegate:self isVer:NO callbackAction:nil];
+        cardView.isOnePage = YES;
+        cardView.card = self.toEditCard;
+        [cardView showView];
+        _table.tableHeaderView = cardView;
+    }
+}
+
+- (void)gotoTemplagesVC:(UITapGestureRecognizer *)sender{
+    KHHCardTemplageVC *temVC = [[KHHCardTemplageVC alloc] initWithNibName:nil bundle:nil];
+    temVC.selectTemplate = ^(CardTemplate *cardTemplate){
+        _cardTemplate = cardTemplate;
+        [tempImgview setImageWithURL:[NSURL URLWithString:_cardTemplate.bgImage.url] placeholderImage:nil];
+    };
+    [self.navigationController pushViewController:temVC animated:YES];
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -196,11 +245,12 @@
         KHHLocalForCardCell *cell = [tableView dequeueReusableCellWithIdentifier:cellLocal];
         if (!cell) {
             cell = [[KHHLocalForCardCell alloc]init];
+            cell.localTip = ^(){[self showLocalPicker:indexPath];};
         }
         ((KHHLocalForCardCell *)cell).headStr = @"地址";
         ((KHHLocalForCardCell *)cell).field.delegate = self;
-        ((KHHLocalForCardCell *)cell).field.tag = ((ParamForEditecard *)[section1Arr objectAtIndex:1]).tag;
-
+        ((KHHLocalForCardCell *)cell).field.tag = ((ParamForEditecard *)[section2Arr objectAtIndex:1]).tag;
+        NSLog(@"tag%d",cell.field.tag);
         if (locationStr) {
             ((KHHLocalForCardCell *)cell).locationStr = locationStr;
         }else{
@@ -242,27 +292,27 @@
         [self hiddenKeyboard];
         if (!sectionPicker) {
             sectionPicker = [[ KHHMemoPicker alloc] initWithFrame:CGRectMake(0.0,H460-200.0,320.0,200.0)];
-            sectionPicker.hidden = YES;            
+            sectionPicker.hidden = YES;
             
-           
+            
             __block KHHNewEdit_ecardViewController *weakself = self;
             sectionPicker.showTitle = ^(NSString *title, int tag){
                 [weakself addToExternArrayFromPick:title];
             };
-
+            
         }
         sectionPicker.memoArr = [self sortArrToPick:indexPath.section];
         if (sectionPicker.hidden) {
             CGRect rectForKey = [tableView cellForRowAtIndexPath:indexPath].frame;
             rectForKey = CGRectMake(rectForKey.origin.x, rectForKey.origin.y+30, rectForKey.size.width, rectForKey.size.height);
             [_table goToInsetForKeyboard:rectForKey];
-            [sectionPicker showInView:self.navigationController.view ];
+            [sectionPicker showInView:self.view ];
         }
         ParamForEditecard *paramPro = (ParamForEditecard *)[[arrAllIn objectAtIndex:indexPath.section]objectAtIndex:indexPath.row];
         
         editingParamPorPicker = paramPro;
         indexPathForEditPicker = indexPath;
-       // [self.navigationController pushViewController:sectionPicker animated:YES];
+        // [self.navigationController pushViewController:sectionPicker animated:YES];
         
         
     }else if (editingStyle == UITableViewCellEditingStyleDelete){
@@ -328,29 +378,25 @@
     return paramPro.editingStyle;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (indexPath.section == 2&&indexPath.row == 1) {
-        [self hiddenKeyboard];
-        if (!areaPicker) {            
-            areaPicker = [[HZAreaPickerView alloc] initWithStyle:HZAreaPickerWithStateAndCityAndDistrict delegate:self];      
-            
-            areaPicker.hidden = YES;
-            
-        }
-        if (areaPicker.hidden) {
-            [areaPicker showInView:self.navigationController.view ];
-        }else{
-            [_table showNormal];
-        }
-    }
-}
+//-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if (indexPath.section == 2&&indexPath.row == 1) {
+//        [self hiddenKeyboard];
+//        if (!areaPicker) {
+//            areaPicker = [[HZAreaPickerView alloc] initWithStyle:HZAreaPickerWithStateAndCityAndDistrict delegate:self];
+//
+//            areaPicker.hidden = YES;
+//
+//        }
+//        if (areaPicker.hidden) {
+//            [areaPicker showInView:self.navigationController.view ];
+//        }else{
+//            [_table showNormal];
+//        }
+//    }
+//}
 
-- (void)pickerDidChaneStatus:(HZAreaPickerView *)picker
-{
-    [[[arrAllIn objectAtIndex:2]objectAtIndex:1] setValue:[NSString stringWithFormat:@"%@ %@ %@", picker.locate.state, picker.locate.city, picker.locate.district] forKey:@"location"];
-    [_table reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:2]]  withRowAnimation:UITableViewRowAnimationNone];
-}
+
 
 #pragma mark - picker delegate
 
@@ -507,6 +553,9 @@ NSMutableArray *topicker3;
     if (!sectionPicker.hidden) {
         [sectionPicker cancelPicker:NO];
     }
+    if (!areaPicker.hidden) {
+        [areaPicker cancelPicker:NO];
+    }
     if ([self nextTag:textField.tag]!=-1) {
         textField.returnKeyType = UIReturnKeyNext;
     }else{
@@ -518,7 +567,7 @@ NSMutableArray *topicker3;
 }
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
-{    
+{
     ParamForEditecard *param =  [self paramFromTag:textField.tag];
     param.value = textField.text;
     [self valid:param];
@@ -634,12 +683,367 @@ NSMutableArray *topicker3;
                     [viewPro resignFirstResponder];
                     return;
                 }
-            
+                
             }
         }
     }
     if (!sectionPicker.hidden) {
         [sectionPicker cancelPicker:NO];
     }
+    if (!areaPicker.hidden) {
+        [areaPicker cancelPicker:NO];
+    }
 }
+
+#pragma mark - local picker
+- (void)showLocalPicker:(NSIndexPath *)indexPath
+{
+    CGRect rectForKey = [_table cellForRowAtIndexPath:indexPath].frame;
+    rectForKey = CGRectMake(rectForKey.origin.x, rectForKey.origin.y+30, rectForKey.size.width, rectForKey.size.height);
+    [_table goToInsetForKeyboard:rectForKey];
+    
+    [self hiddenKeyboard];
+    if (!areaPicker) {
+        areaPicker = [[HZAreaPickerView alloc] initWithStyle:HZAreaPickerWithStateAndCityAndDistrict delegate:self];
+        
+        areaPicker.hidden = YES;
+        
+    }
+    if (areaPicker.hidden) {
+        [areaPicker showInView:self.view ];
+    }else{
+        [_table showNormal];
+    }
+}
+
+
+- (void)pickerDidChaneStatus:(HZAreaPickerView *)picker
+{
+    locationStr = [NSString stringWithFormat:@"%@ %@ %@", picker.locate.state, picker.locate.city, picker.locate.district];
+    
+    [_table reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:1 inSection:2]]  withRowAnimation:UITableViewRowAnimationNone];
+}
+
+
+#pragma mark - save card
+
+- (NSString *)mobiles
+{
+    NSMutableString *mobiles = [[NSMutableString alloc]initWithCapacity:[section1Arr count]];
+    for (ParamForEditecard *paramPro in section1Arr) {
+        if (paramPro.value && [paramPro.title isEqualToString:@"手机"]) {
+            [mobiles appendFormat:@"%@%@", KHH_SEPARATOR, paramPro.value];
+        }
+    }
+    if([mobiles hasPrefix:[NSString stringWithFormat:@"%@", KHH_SEPARATOR]]){
+        [mobiles deleteCharactersInRange:NSMakeRange(0, 1)];
+    }
+    return mobiles;
+}
+
+- (NSString *)phones
+{
+    NSMutableString *phones = [[NSMutableString alloc]initWithCapacity:[section1Arr count]];
+    for (ParamForEditecard *paramPro in section1Arr) {
+        if (paramPro.value && [paramPro.title isEqualToString:@"电话"]) {
+            [phones appendFormat:@"%@%@", KHH_SEPARATOR, paramPro.value];
+        }
+    }
+    if([phones hasPrefix:[NSString stringWithFormat:@"%@", KHH_SEPARATOR]]){
+        [phones deleteCharactersInRange:NSMakeRange(0, 1)];
+    }
+    return phones;
+}
+
+- (NSString *)faxs
+{
+    NSMutableString *faxs = [[NSMutableString alloc]initWithCapacity:[section1Arr count]];
+    for (ParamForEditecard *paramPro in section1Arr) {
+        if (paramPro.value && [paramPro.title isEqualToString:@"传真"]) {
+            [faxs appendFormat:@"%@%@", KHH_SEPARATOR, paramPro.value];
+        }
+    }
+    if([faxs hasPrefix:[NSString stringWithFormat:@"%@", KHH_SEPARATOR]]){
+        [faxs deleteCharactersInRange:NSMakeRange(0, 1)];
+    }
+    return faxs;
+}
+
+- (NSString *)mails
+{
+    NSMutableString *mails = [[NSMutableString alloc]initWithCapacity:[section1Arr count]];
+    for (ParamForEditecard *paramPro in section1Arr) {
+        if (paramPro.value && [paramPro.title isEqualToString:@"邮箱"]) {
+            [mails appendFormat:@"%@%@", KHH_SEPARATOR, paramPro.value];
+        }
+    }
+    if([mails hasPrefix:[NSString stringWithFormat:@"%@", KHH_SEPARATOR]]){
+        [mails deleteCharactersInRange:NSMakeRange(0, 1)];
+    }
+    return mails;
+    
+}
+
+#pragma mark - value section2
+
+- (NSString *)company
+{
+    for (ParamForEditecard *paramPro in section2Arr) {
+        if (paramPro.value && [paramPro.title isEqualToString:@"公司"]) {
+            return  paramPro.value;
+        }
+    }
+    return @"";
+}
+
+- (NSString *)address
+{
+    NSString *strPro = locationStr?locationStr:@"";
+    for (ParamForEditecard *paramPro in section2Arr) {
+        if (paramPro.value && [paramPro.title isEqualToString:@"地址"]) {
+            return  [NSString stringWithFormat:@"%@ %@",strPro,paramPro.value];
+        }
+    }
+    return strPro;
+}
+
+- (NSString *)zipCode
+{
+    for (ParamForEditecard *paramPro in section2Arr) {
+        if (paramPro.value && [paramPro.title isEqualToString:@"邮编"]) {
+            return  paramPro.value;
+        }
+    }
+    return @"";
+}
+
+- (void)toAddressCard
+{
+    if (!locationStr) {
+        if ([locationStr rangeOfString:@"国外"].location == 0) {
+            NSArray *splitArr = [locationStr componentsSeparatedByString:@" "];
+            icard.addressCountry = splitArr[1];
+        }else{
+            icard.addressCountry = @"中国";
+            NSArray *splitArr = [locationStr componentsSeparatedByString:@" "];
+            icard.addressProvince = splitArr[0];
+            if ([splitArr count] == 2) {
+                icard.addressCity = splitArr[0];
+                icard.addressDistrict  = splitArr[1];
+            }else{
+                icard.addressCity = splitArr[1];
+                icard.addressDistrict  = splitArr[2];
+            }
+        }
+    }
+    NSString *strPro = ((ParamForEditecard *)section2Arr[2]).value;
+    icard.addressOther = strPro?strPro:@"";
+    icard.addressZip = [self zipCode];
+}
+
+- (NSString *)companyEmail
+{
+    for (ParamForEditecard *paramPro in section2Arr) {
+        if (paramPro.value && [paramPro.title isEqualToString:@"公司邮箱"]) {
+            return  paramPro.value;
+        }
+    }
+    return @"";
+}
+
+#pragma mark - value section3
+
+- (NSString *)itemSection3:(NSString *)item
+{
+    for (ParamForEditecard *paramPro in section3Arr) {
+        if (paramPro.value && [paramPro.title isEqualToString:item]) {
+            return  paramPro.value;
+        }
+    }
+    return @"";
+}
+
+- (void)toIcardSection3
+{
+    
+    icard.web = [self itemSection3:@"网页"];
+    icard.qq = [self itemSection3:@"QQ"];
+    icard.msn = [self itemSection3:@"MSN"];
+    icard.aliWangWang = [self itemSection3:@"旺旺"];
+    icard.businessScope = [self itemSection3:@"业务范围"];
+    icard.bankAccountBank = [self itemSection3:@"开户行"];
+    icard.bankAccountNumber = [self itemSection3:@"银行帐号"];
+    icard.bankAccountName = [self itemSection3:@"户名"];
+    icard.moreInfo = [self itemSection3:@"其它信息"];
+    
+}
+#pragma mark - validate
+
+- (Boolean)validate:(NSString *)name mobiles:(NSString *)mobiles phones:(NSString *)phones  faxs:(NSString *)faxs mails:(NSString *)mails company:(NSString *)company address:(NSString *)address
+{
+    //姓名检查
+    if (name.length <= 0) {
+        [self warnAlertMessage:@"名片上的姓名为空!"];
+        return NO;
+    }
+    
+    // 对是否为空或格式进行判断，然后把手机，电话，传真，邮箱保存起来
+    if (mobiles.length==0 && phones.length==0) {
+        //[self showMessage:@"名片上的电话未空!请至少填写一个手机号码或者电话号码!" withTitile:nil];
+        [self warnAlertMessage:@"名片上的电话未空!请至少填写一个手机号码或者电话号码!"];
+        return NO;
+    }
+    
+    if(company.length==0 && (address.length == 0 || [address isEqualToString:KhhMessageAddressEditNotice]) ){
+        //[self showMessage:@"名片上的公司信息为空!请至少填写公司或地址中的一项!" withTitile:nil];
+        [self warnAlertMessage:@"名片上的公司信息为空!请至少填写公司或地址中的一项!"];
+        return NO;
+    }
+    
+    //    //////////////////////validate//////////////////////
+    //validate mobile
+    for(NSString *str in [mobiles componentsSeparatedByString:KHH_SEPARATOR]){
+        if(str.length>0 && ![str isValidMobilePhoneNumber]){
+            //[self showMessage:@"手机格式错误!" withTitile:nil];
+            [self warnAlertMessage:@"手机格式错误!!"];
+            return NO;
+        }
+    }
+    
+    //    //validate phone
+    for(NSString *str in [phones componentsSeparatedByString:KHH_SEPARATOR]){
+        if(str.length>0 && ![str isValidTelephoneNUmber]){
+            //[self showMessage:@"电话格式错误!" withTitile:nil];
+            [self warnAlertMessage:@"电话格式错误!"];
+            return NO;
+        }
+    }
+    
+    //validate fax
+    for(NSString *str in [faxs componentsSeparatedByString:KHH_SEPARATOR]){
+        if(str.length>0 && ![str isValidTelephoneNUmber]){
+            //[self showMessage:@"传真格式错误!" withTitile:nil];
+            [self warnAlertMessage:@"传真格式错误!"];
+            return NO;
+        }
+    }
+    
+    //validate email
+    for(NSString *str in [mails componentsSeparatedByString:KHH_SEPARATOR]){
+        if(str.length>0 && ![str isValidEmail]){
+            //[self showMessage:@"邮箱格式错误!" withTitile:nil];
+            [self warnAlertMessage:@"邮箱格式错误!"];
+            return NO;
+        }
+    }
+    return YES;
+}
+
+- (void)rightBarButtonClick:(id)sender
+{
+    [self saveCardInfo];
+}
+
+- (void)saveCardInfo
+{
+    
+    [self hiddenKeyboard];
+    [_table showNormal];
+    NSString *name = ((ParamForEditecard *)section0Arr[0]).value;
+    name = name?name:@"";
+    name = [name stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    NSString *mobiles = [self mobiles];
+    NSString *phones = [self phones];
+    NSString *faxs = [self faxs];
+    NSString *mails = [self mails];
+    
+    NSString *company = [self company];
+    NSString *address = [self address];
+    
+    if (![self validate:name mobiles:mobiles phones:phones faxs:faxs mails:mails company:company address:address]) {
+        return;
+    }
+    //姓名去除前后空格
+    
+    NSString *job = ((ParamForEditecard *)section0Arr[1]).value;;
+    
+    // NSString *group = [_fieldValue objectAtIndex:2];
+    icard = [[InterCard alloc]init];
+    icard.name = name;
+    icard.title = job?job:@"";
+    [self toAddressCard];
+    
+    icard.companyEmail = [self companyEmail];
+    icard.companyName = company;
+    
+    [self toIcardSection3];
+    icard.cardType = kCardType_Person;
+    icard.cardSource = kCardSource_Client_SelfBuild;
+    icard.templateID = [NSNumber numberWithInt:1];
+    icard.modelType = KHHCardModelTypePrivateCard;
+    // id，version，userid,templateID付给InterCard，否则不能通过
+    //    self.interCard.id = _glCard.id;
+    //    self.interCard.version = _glCard.version;
+    //    self.interCard.userID = _glCard.userID;
+    //    self.interCard.templateID = _glCard.template.id;
+    
+#warning 20130114因项目时间紧，本地数据库未改动，添加的名片类型、名片来源需要在这里赋值
+    //20121225
+    //头像字段没考虑，所以保存后要及时同步一下
+    // 保存到数据库或调用网络接口
+    //为了避免保存失败，先给这个临时card给值 InterCard
+    _hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    _hud.labelText = @"创建名片...";
+    //    if ([_glCard isKindOfClass:[MyCard class]]) {
+    //        //设置名片类型及名片来源
+    //        self.interCard.cardType = kCardType_Person;
+    //        self.interCard.cardSource = kCardSource_Person;
+    //
+    //        self.progressHud.labelText = KHHMessageModifyCard;
+    //        [self.dataCtrl modifyMyCardWithInterCard:self.interCard];
+    //    }else if ([_glCard isKindOfClass:[PrivateCard class]]){
+    //        //设置名片类型及名片来源
+    //        self.interCard.cardType = kCardType_Person;
+    //        self.interCard.cardSource = kCardSource_Client_SelfBuild;
+    //
+    //        self.progressHud.labelText = KHHMessageModifyCard;
+    //        [self.dataCtrl modifyPrivateCardWithInterCard:self.interCard];
+    //    }else if (self.type == KCardViewControllerTypeNewCreate){
+    //        //设置名片类型及名片来源
+    //        self.interCard.cardType = kCardType_Person;
+    //        self.interCard.cardSource = kCardSource_Client_SelfBuild;
+    //
+    //        //修改
+    //        self.progressHud.labelText = KHHMessageCreateCard;
+    //        //暂时这样写 templateID不确定
+    //        self.interCard.templateID = self.cardTemp.id;
+    //        //        NSLog(@"..%@",self.cardTemp);
+    //        //        NSLog(@"..%@",self.interCard);
+    //        [self.dataCtrl createPrivateCardWithInterCard:self.interCard];
+    //        //[[NetClient sharedClient]CreatePrivateCard:self.interCard delegate:self];
+    //    }
+    [[KHHDataNew sharedData] doAddCard:icard delegate:self];
+    
+}
+
+#pragma mark - add delegate
+
+- (void)addCardForUISuccess:(NSDictionary *)dict
+{
+    [_hud hide:YES];
+    icard.id =  dict[@"id"];
+    [PrivateCard processIObject:icard];
+    [[KHHDataNew sharedData] saveContext];
+    if (_addCardSuccess) {
+        _addCardSuccess();
+    }
+}
+
+- (void)addCardForUIFailed:(NSDictionary *)dict
+{
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"创建失败" message:dict[kInfoKeyErrorMessage] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alert show];
+    [_hud hide:YES];
+}
+
 @end

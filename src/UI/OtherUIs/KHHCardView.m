@@ -18,12 +18,16 @@
 #import "KHHDefaults.h"
 #import <QuartzCore/QuartzCore.h>
 
+
 #define CARD_IMGVIEW_TAG 333
 #define CARDMOD_VIEW_TAG 444
 #define LABEL_CELL_TAG 111
 #define TEXTFIELD_CELL_TAG 222
 
 @implementation KHHCardView
+{
+    MBProgressHUD *hud;
+}
 @synthesize theTable = _theTable;
 @synthesize data = _data;
 @synthesize dataArray = _dataArray;
@@ -32,7 +36,7 @@
 @synthesize myDetailVC;
 @synthesize itemArray;
 @synthesize dataCtrl;
-@synthesize progressHud;
+
 @synthesize cardView;
 
 - (id)initWithFrame:(CGRect)frame
@@ -46,13 +50,13 @@
 }
 
 /*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
+ // Only override drawRect: if you perform custom drawing.
+ // An empty implementation adversely affects performance during animation.
+ - (void)drawRect:(CGRect)rect
+ {
+ // Drawing code
+ }
+ */
 - (void)initView
 {
     self.dataCtrl = [KHHData sharedData];
@@ -143,13 +147,13 @@
     if (_myCard.businessScope.length > 0) {
         [self.itemArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:_myCard.businessScope,@"value",@"业务范围",@"key", nil]];
     }
-
+    
 }
 // 刷新表
 - (void)reloadTable{
     if ([_myCard isKindOfClass:[PrivateCard class]]) {
         Card *card = [self.dataCtrl privateCardByID:_myCard.id];
-        self.cardView.card = card;  
+        self.cardView.card = card;
         self.myCard = card;
         self.detailVC.card = card;
     }else if ([_myCard isKindOfClass:[MyCard class]]){
@@ -164,11 +168,11 @@
 //跳转到全屏
 - (void)gotoFullFrame:(id)sender
 {
-
+    
 }
 - (void)pageCtrlClick:(id)sender
 {
-
+    
 }
 
 #pragma mark - UITableViewDataSource
@@ -222,7 +226,7 @@
         label.numberOfLines = 0;
         label.lineBreakMode = UILineBreakModeWordWrap;
         label.contentMode = UIViewContentModeScaleAspectFit;
-//        label.textAlignment = UITextAlignmentCenter;
+        //        label.textAlignment = UITextAlignmentCenter;
         label.tag = LABEL_CELL_TAG;
         [cell.contentView addSubview:label];
         UITextField *textfield = [[UITextField alloc] initWithFrame:CGRectMake(80.0f, 10.0f, 200.0f, 40.0f)];
@@ -353,29 +357,50 @@
 - (void)delCardBtnClick:(id)sender
 {
     //注册删除卡片的消息
-    [self observeNotificationName:KHHUIDeleteCardSucceeded selector:@"handleDeleteCardSucceeded:"];
-    [self observeNotificationName:KHHUIDeleteCardFailed selector:@"handleDeleteCardFailed"];
+    //    [self observeNotificationName:KHHUIDeleteCardSucceeded selector:@"handleDeleteCardSucceeded:"];
+    //    [self observeNotificationName:KHHUIDeleteCardFailed selector:@"handleDeleteCardFailed"];
     //KHHAppDelegate *app = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
-    self.progressHud = [MBProgressHUD showHUDAddedTo:self.detailVC.view animated:YES];
-    self.progressHud.labelText = KhhMessageDeleteContact;
-    if ([self.myCard isKindOfClass:[PrivateCard class]]) {
-        [self.dataCtrl deletePrivateCardByID:self.myCard.id];
-    }else if ([self.myCard isKindOfClass:[ReceivedCard class]]){
-        [self.dataCtrl deleteReceivedCard:(ReceivedCard *)self.myCard];
-    }
+    hud = [MBProgressHUD showHUDAddedTo:self.detailVC.navigationController.view animated:YES];
+    hud.labelText = KhhMessageDeleteContact;
+//    if ([self.myCard isKindOfClass:[PrivateCard class]]) {
+//        [[KHHDataNew sharedData] doDeleteCard:self.myCard delegate:self];
+//        //[self.dataCtrl deletePrivateCardByID:self.myCard.id];
+//    }else if ([self.myCard isKindOfClass:[ReceivedCard class]]){
+//        [[KHHDataNew sharedData] doDeleteCard:self.myCard delegate:self];
+//        // [self.dataCtrl deleteReceivedCard:(ReceivedCard *)self.myCard];
+//    }
+    
+    [[KHHDataNew sharedData] doDeleteCard:self.myCard delegate:self];
 }
-#pragma mark - 
+
+#pragma mark - network dele delegate
+
+- (void)deleteCardForUISuccess
+{
+    [hud hide:YES];
+    [[[KHHDataNew sharedData] context] deleteObject:self.myCard];
+    [self.detailVC.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)deleteCardForUIFailed:(NSDictionary *)dict
+{
+    [hud hide:YES];
+    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"删除失败" message:dict[kInfoKeyErrorMessage] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alertView show];
+}
+
+#pragma mark -
 - (void)handleDeleteCardSucceeded:(NSNotification *)info{
     DLog(@"DeleteCardSucceeded:");
     [self stopObservingNotificationName:KHHUIDeleteCardSucceeded];
     [self stopObservingNotificationName:KHHUIDeleteCardFailed];
-    [self.progressHud hide:YES];
+    //[self.progressHud hide:YES];
     [self.detailVC.navigationController popViewControllerAnimated:YES];
 }
 - (void)handleDeleteCardFailed:(NSNotification *)info{
     DLog(@"DeleteCardFailed:");
-    self.progressHud.labelText = NSLocalizedString(@"删除失败", nil);
-    [self.progressHud hide:YES];
+    //    self.progressHud.labelText = NSLocalizedString(@"删除失败", nil);
+    //    [self.progressHud hide:YES];
     [self stopObservingNotificationName:KHHUIDeleteCardSucceeded];
     [self stopObservingNotificationName:KHHUIDeleteCardFailed];
 }

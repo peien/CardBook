@@ -16,6 +16,8 @@
 #import "UIViewController+SM.h"
 #import "KHHViewAdapterUtil.h"
 #import "KHHUser.h"
+#import "AppLoginController.h"
+
 
 //#define textStartAutoLogin NSLocalizedString(@"正在自动登录...", nil)
 #define textCreatingAccount   NSLocalizedString(@"正在注册帐户...", nil)
@@ -62,23 +64,23 @@
         _agent = [[KHHNetworkAPIAgent alloc] init];
         //需要捕获的消息
         //Login
-        [self observeNotificationName:nAppLoggingIn
-                             selector:@"handleLoggingIn:"];
-        //Sign up
-        [self observeNotificationName:nAppCreatingAccount
-                             selector:@"handleCreatingAccount:"];
-        //Reset password
-        [self observeNotificationName:nAppResettingPassword
-                             selector:@"handleResettingPassword:"];
-        //offline login
-        [self observeNotificationName:nAppOfflineLoggingIn
-                             selector:@"handleOfflineLoggingIn:"];
-        //check network
-        [self observeNotificationName:nAppCheckNetwork
-                             selector:@"handleCheckNetwork:"];
-        //同步数据
-        [self observeNotificationName:nAppSyncing
-                             selector:@"handleSyncingWithServer:"];
+//        [self observeNotificationName:nAppLoggingIn
+//                             selector:@"handleLoggingIn:"];
+//        //Sign up
+//        [self observeNotificationName:nAppCreatingAccount
+//                             selector:@"handleCreatingAccount:"];
+//        //Reset password
+//        [self observeNotificationName:nAppResettingPassword
+//                             selector:@"handleResettingPassword:"];
+//        //offline login
+//        [self observeNotificationName:nAppOfflineLoggingIn
+//                             selector:@"handleOfflineLoggingIn:"];
+//        //check network
+//        [self observeNotificationName:nAppCheckNetwork
+//                             selector:@"handleCheckNetwork:"];
+//        //同步数据
+//        [self observeNotificationName:nAppSyncing
+//                             selector:@"handleSyncingWithServer:"];
     }
     return self;
 }
@@ -115,8 +117,8 @@
 
 - (void)selectInAlert:(id)obj
 {
-    
-    [[KHHDataNew sharedData]doLoginStep2:[KHHUser shareInstance].username password:[KHHUser shareInstance].password sessionId:[KHHUser shareInstance].sessionId companyId:_arrCompnis[[((NSDictionary *)obj)[@"index"] integerValue]] delegate:(AppStartController *)self.parentViewController];
+        
+    [[KHHDataNew sharedData]doLoginStep2:[KHHUser shareInstance].username password:[KHHUser shareInstance].password sessionId:[KHHUser shareInstance].sessionId companyId:_arrCompnis[[((NSDictionary *)obj)[@"index"] integerValue]] delegate:(id<KHHDataAccountDelegate>)((UINavigationController *)self.parentViewController.childViewControllers[2]).viewControllers[0]];
 }
 
 #pragma mark - Notification Handlers

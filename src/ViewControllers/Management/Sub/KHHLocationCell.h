@@ -13,7 +13,7 @@
 @property (nonatomic,strong)NSString *headStr;
 @property (nonatomic,strong)NSString *locationStr;
 @property (nonatomic,strong)UITextField *field;
-@property (nonatomic,strong)UIButton *button;
+@property (nonatomic,strong)UILabel *label;
 
 
 @end

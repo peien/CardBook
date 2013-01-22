@@ -21,17 +21,18 @@ typedef enum {
 }   KHHGroupSyncType;
 
 @interface KHHDataNew (Group) <KHHNetAgentGroupDelegates>
-@property (assign, nonatomic) KHHGroupSyncType syncType;
+
 #pragma mark - 同步分组
-- (void) syncGroup:(id<KHHDataGroupDelegate>) delegate;
+- (void) doSyncGroup:(id<KHHDataGroupDelegate>) delegate;
+
 #pragma mark - 增加分组
-- (void) addGroup:(IGroup *)iGroup userCardID:(long)cardID delegate:(id<KHHDataGroupDelegate>) delegate;
+- (void) doAddGroup:(IGroup *)iGroup userCardID:(long)cardID delegate:(id<KHHDataGroupDelegate>) delegate;
 
 #pragma mark - 修改分组
-- (void) updateGroupName:(IGroup *)iGroup delegate:(id<KHHDataGroupDelegate>) delegate;
+- (void) doUpdateGroupName:(IGroup *)iGroup delegate:(id<KHHDataGroupDelegate>) delegate;
 
 #pragma mark - 删除分组
-- (void) deleteGroup:(long) groupID delegate:(id<KHHDataGroupDelegate>) delegate;
+- (void) doDeleteGroup:(long) groupID delegate:(id<KHHDataGroupDelegate>) delegate;
 
 #pragma mark - 取分组下的名片
 - (void) getGroupMembers:(id<KHHDataGroupDelegate>) delegate;
@@ -39,4 +40,9 @@ typedef enum {
 
 #pragma mark - 添加、删除、移动客户名片到分组
 - (void)moveCards:(NSArray *)cards fromGroup:(Group *)fromGroup toGroup:(Group *) toGroup delegate:(id<KHHDataGroupDelegate>) delegate;
+
+#pragma mark - data from manageContext
+
+- (NSArray *)allTopLevelGroups;
+
 @end

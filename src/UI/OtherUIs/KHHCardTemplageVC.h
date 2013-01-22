@@ -13,5 +13,6 @@
 @interface KHHCardTemplageVC : SuperViewController
 @property (strong, nonatomic) Edit_eCardViewController *editCardVC;
 @property (strong, nonatomic) Card                     *card;
+@property (strong, nonatomic) void(^selectTemplate)(CardTemplate *cardTemplate);
 
 @end

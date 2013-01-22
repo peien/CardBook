@@ -26,6 +26,7 @@
 #import "KHHMyAlertViewWithSubView.h"
 #import "KHHDefaults.h"
 #import <QuartzCore/QuartzCore.h>
+#import "KHHDataNew+Card.h"
 
 #define POPDismiss [self.popover dismissPopoverAnimated:YES];
 #define LABEL_NAME_TAG    98980
@@ -41,7 +42,7 @@
 @property (nonatomic, strong) KHHCustomEvaluaView  *customView;
 @property (nonatomic, strong) UIActionSheet        *actSheet;
 @property (nonatomic, assign) int                  style;
-@property (nonatomic, strong) KHHData              *dataCtrl;
+@property (nonatomic, strong) KHHDataNew           *dataCtrl;
 @property (assign, nonatomic) bool                 isReloadCardTable;
 @property (assign, nonatomic) bool                 isReloadCustomValTable;
 @end
@@ -82,12 +83,12 @@
             [self.rightBtn setTitle:NSLocalizedString(@"回赠", nil) forState:UIControlStateNormal];
         }
         self.tabBarController.tabBar.hidden = YES;
-        self.dataCtrl = [KHHData sharedData];
+       
         //回赠名片跟回赠按钮一起初始化
-        NSArray *cards = [self.dataCtrl allMyCards];
-        if (cards) {
-            _myDefaultReplyCard = [cards objectAtIndex:0];
-        }
+//        NSArray *cards = [[KHHDataNew sharedData] allMyCards];
+//        if (cards) {
+//            _myDefaultReplyCard = [cards objectAtIndex:0];
+//        }
     }
     return self;
 }
@@ -138,9 +139,9 @@
     }
     if (self.isReloadCustomValTable){
         if ([self.card isKindOfClass:[ReceivedCard class]]) {
-            self.card = [self.dataCtrl receivedCardByID:self.card.id];
+            self.card = [[KHHDataNew sharedData] receivedCardByID:self.card.id];
         }else if ([self.card isKindOfClass:[PrivateCard class]]){
-            self.card = [self.dataCtrl privateCardByID:self.card.id];
+            self.card = [[KHHDataNew sharedData] privateCardByID:self.card.id];
         }
         _customView.card = self.card;
         [_customView reloadTable];
@@ -148,9 +149,9 @@
     }
     if (self.isReloadVisiteTable){
         if ([self.card isKindOfClass:[ReceivedCard class]]) {
-            self.card = [self.dataCtrl receivedCardByID:self.card.id];
+            self.card = [[KHHDataNew sharedData] receivedCardByID:self.card.id];
         }else if ([self.card isKindOfClass:[PrivateCard class]]){
-            self.card = [self.dataCtrl privateCardByID:self.card.id];
+            self.card = [[KHHDataNew sharedData] privateCardByID:self.card.id];
         }
         _visitCalView.card = self.card;
         [_visitCalView reloadTheTable];
@@ -464,7 +465,7 @@
             [self observeNotificationName:KHHUIReplyCardFailed selector:@"handleReplyCardFailed:"];
             MBProgressHUD *progess = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
             progess.labelText = NSLocalizedString(@"正在回赠名片，请稍后", nil);
-            [self.dataCtrl replyCard:self.card myDefaultReplyCard:self.myDefaultReplyCard];
+            [[KHHDataNew sharedData] replyCard:self.card myDefaultReplyCard:self.myDefaultReplyCard];
             break;
         }
         default:

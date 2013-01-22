@@ -57,6 +57,10 @@
 		310267751696D55600FBE156 /* KHHDateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267731696D55600FBE156 /* KHHDateUtil.m */; };
 		310267761696D55600FBE156 /* KHHDateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267731696D55600FBE156 /* KHHDateUtil.m */; };
 		310267771696D55600FBE156 /* KHHDateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267731696D55600FBE156 /* KHHDateUtil.m */; };
+		3103C40716A90ECB00240570 /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 3103C40516A90ECB00240570 /* CustomBadge.m */; };
+		3103C40816A90ECB00240570 /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 3103C40516A90ECB00240570 /* CustomBadge.m */; };
+		3103C40916A90ECB00240570 /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 3103C40516A90ECB00240570 /* CustomBadge.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		3103C40A16A90ECB00240570 /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 3103C40516A90ECB00240570 /* CustomBadge.m */; };
 		3104A145169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3104A144169BBCD100CC4F22 /* KHHForWhereCell.m */; };
 		3104A146169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3104A144169BBCD100CC4F22 /* KHHForWhereCell.m */; };
 		3104A147169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3104A144169BBCD100CC4F22 /* KHHForWhereCell.m */; };
@@ -77,6 +81,30 @@
 		310523E2169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 310523E0169AD2A3000B2C64 /* KHHWhereUtil.m */; };
 		310523E3169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 310523E0169AD2A3000B2C64 /* KHHWhereUtil.m */; };
 		310523E4169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 310523E0169AD2A3000B2C64 /* KHHWhereUtil.m */; };
+		310A067816AD0765007460F4 /* template.plist in Resources */ = {isa = PBXBuildFile; fileRef = 310A067716AD0764007460F4 /* template.plist */; };
+		310A067916AD0765007460F4 /* template.plist in Resources */ = {isa = PBXBuildFile; fileRef = 310A067716AD0764007460F4 /* template.plist */; };
+		310A067A16AD0765007460F4 /* template.plist in Resources */ = {isa = PBXBuildFile; fileRef = 310A067716AD0764007460F4 /* template.plist */; };
+		310A067B16AD0765007460F4 /* template.plist in Resources */ = {isa = PBXBuildFile; fileRef = 310A067716AD0764007460F4 /* template.plist */; };
+		310A067F16AD319D007460F4 /* KHHTemplatePayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A067E16AD319D007460F4 /* KHHTemplatePayViewController.m */; };
+		310A068016AD319E007460F4 /* KHHTemplatePayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A067E16AD319D007460F4 /* KHHTemplatePayViewController.m */; };
+		310A068116AD319E007460F4 /* KHHTemplatePayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A067E16AD319D007460F4 /* KHHTemplatePayViewController.m */; };
+		310A068216AD319E007460F4 /* KHHTemplatePayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A067E16AD319D007460F4 /* KHHTemplatePayViewController.m */; };
+		310A068516AD3500007460F4 /* KHHDataNew+SignForPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A068416AD34FF007460F4 /* KHHDataNew+SignForPlan.m */; };
+		310A068616AD3500007460F4 /* KHHDataNew+SignForPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A068416AD34FF007460F4 /* KHHDataNew+SignForPlan.m */; };
+		310A068716AD3500007460F4 /* KHHDataNew+SignForPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A068416AD34FF007460F4 /* KHHDataNew+SignForPlan.m */; };
+		310A068816AD3500007460F4 /* KHHDataNew+SignForPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A068416AD34FF007460F4 /* KHHDataNew+SignForPlan.m */; };
+		310A068E16AD36CE007460F4 /* InterSign.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A068D16AD36CE007460F4 /* InterSign.m */; };
+		310A068F16AD36CE007460F4 /* InterSign.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A068D16AD36CE007460F4 /* InterSign.m */; };
+		310A069016AD36CE007460F4 /* InterSign.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A068D16AD36CE007460F4 /* InterSign.m */; };
+		310A069116AD36CE007460F4 /* InterSign.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A068D16AD36CE007460F4 /* InterSign.m */; };
+		310A069416AD36DF007460F4 /* InterPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A069316AD36DF007460F4 /* InterPlan.m */; };
+		310A069516AD36DF007460F4 /* InterPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A069316AD36DF007460F4 /* InterPlan.m */; };
+		310A069616AD36DF007460F4 /* InterPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A069316AD36DF007460F4 /* InterPlan.m */; };
+		310A069716AD36DF007460F4 /* InterPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A069316AD36DF007460F4 /* InterPlan.m */; };
+		310A069A16AD36F0007460F4 /* InterCollect.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A069916AD36F0007460F4 /* InterCollect.m */; };
+		310A069B16AD36F0007460F4 /* InterCollect.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A069916AD36F0007460F4 /* InterCollect.m */; };
+		310A069C16AD36F0007460F4 /* InterCollect.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A069916AD36F0007460F4 /* InterCollect.m */; };
+		310A069D16AD36F0007460F4 /* InterCollect.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A069916AD36F0007460F4 /* InterCollect.m */; };
 		310A3F41168D3E9D009FF135 /* CardBook_test_haibo-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 310A3F3E168D3E9D009FF135 /* CardBook_test_haibo-Info.plist */; };
 		310A3F42168D3E9D009FF135 /* CardBook_test-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 310A3F3F168D3E9D009FF135 /* CardBook_test-Info.plist */; };
 		310B2ED01699090B00818461 /* KHHInputTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 310B2ECF1699090B00818461 /* KHHInputTableView.m */; };
@@ -2021,6 +2049,8 @@
 		3102676D1696D20400FBE156 /* KHHDateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHDateCell.m; sourceTree = "<group>"; };
 		310267721696D55600FBE156 /* KHHDateUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHDateUtil.h; sourceTree = "<group>"; };
 		310267731696D55600FBE156 /* KHHDateUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHDateUtil.m; sourceTree = "<group>"; };
+		3103C40516A90ECB00240570 /* CustomBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomBadge.m; sourceTree = "<group>"; };
+		3103C40616A90ECB00240570 /* CustomBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomBadge.h; sourceTree = "<group>"; };
 		3104A143169BBCD100CC4F22 /* KHHForWhereCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHForWhereCell.h; sourceTree = "<group>"; };
 		3104A144169BBCD100CC4F22 /* KHHForWhereCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHForWhereCell.m; sourceTree = "<group>"; };
 		3104E05E1687EE6600B0B45F /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -2030,6 +2060,17 @@
 		310523DA169ABC0E000B2C64 /* plan.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = plan.plist; sourceTree = "<group>"; };
 		310523DF169AD2A3000B2C64 /* KHHWhereUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHWhereUtil.h; sourceTree = "<group>"; };
 		310523E0169AD2A3000B2C64 /* KHHWhereUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHWhereUtil.m; sourceTree = "<group>"; };
+		310A067716AD0764007460F4 /* template.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = template.plist; sourceTree = "<group>"; };
+		310A067D16AD319C007460F4 /* KHHTemplatePayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHTemplatePayViewController.h; sourceTree = "<group>"; };
+		310A067E16AD319D007460F4 /* KHHTemplatePayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHTemplatePayViewController.m; sourceTree = "<group>"; };
+		310A068316AD34FE007460F4 /* KHHDataNew+SignForPlan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHDataNew+SignForPlan.h"; sourceTree = "<group>"; };
+		310A068416AD34FF007460F4 /* KHHDataNew+SignForPlan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHDataNew+SignForPlan.m"; sourceTree = "<group>"; };
+		310A068C16AD36CE007460F4 /* InterSign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterSign.h; sourceTree = "<group>"; };
+		310A068D16AD36CE007460F4 /* InterSign.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InterSign.m; sourceTree = "<group>"; };
+		310A069216AD36DE007460F4 /* InterPlan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterPlan.h; sourceTree = "<group>"; };
+		310A069316AD36DF007460F4 /* InterPlan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InterPlan.m; sourceTree = "<group>"; };
+		310A069816AD36EF007460F4 /* InterCollect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterCollect.h; sourceTree = "<group>"; };
+		310A069916AD36F0007460F4 /* InterCollect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InterCollect.m; sourceTree = "<group>"; };
 		310A3F36168D2C43009FF135 /* MsgDelegates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MsgDelegates.h; path = ../ViewControllers/Message/MsgDelegates.h; sourceTree = "<group>"; };
 		310A3F3E168D3E9D009FF135 /* CardBook_test_haibo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CardBook_test_haibo-Info.plist"; sourceTree = SOURCE_ROOT; };
 		310A3F3F168D3E9D009FF135 /* CardBook_test-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CardBook_test-Info.plist"; sourceTree = SOURCE_ROOT; };
@@ -2965,6 +3006,7 @@
 		310164E316A3A29C003D4527 /* KHHData_New */ = {
 			isa = PBXGroup;
 			children = (
+				310A068B16AD3697007460F4 /* ForNetParam */,
 				31FA580116A116A800F65BC6 /* DataDelegate impl in UI */,
 				310164DD16A3A263003D4527 /* KHHDataNew.h */,
 				310164DE16A3A264003D4527 /* KHHDataNew.m */,
@@ -2988,6 +3030,8 @@
 				84DB120E16A4F9DB001B0FAC /* KHHDataNew+Company.m */,
 				3101B33716A4FEF50070D5FF /* KHHDataNew+Account.h */,
 				3101B33816A4FEF50070D5FF /* KHHDataNew+Account.m */,
+				310A068316AD34FE007460F4 /* KHHDataNew+SignForPlan.h */,
+				310A068416AD34FF007460F4 /* KHHDataNew+SignForPlan.m */,
 			);
 			name = KHHData_New;
 			path = KHHData;
@@ -3077,10 +3121,26 @@
 		310523CE169A9805000B2C64 /* View for cell */ = {
 			isa = PBXGroup;
 			children = (
+				3103C40516A90ECB00240570 /* CustomBadge.m */,
+				3103C40616A90ECB00240570 /* CustomBadge.h */,
 				310523D0169A9833000B2C64 /* KHHImgViewInCell.h */,
 				310523D1169A9833000B2C64 /* KHHImgViewInCell.m */,
 			);
 			name = "View for cell";
+			sourceTree = "<group>";
+		};
+		310A068B16AD3697007460F4 /* ForNetParam */ = {
+			isa = PBXGroup;
+			children = (
+				310A067716AD0764007460F4 /* template.plist */,
+				310A068C16AD36CE007460F4 /* InterSign.h */,
+				310A068D16AD36CE007460F4 /* InterSign.m */,
+				310A069216AD36DE007460F4 /* InterPlan.h */,
+				310A069316AD36DF007460F4 /* InterPlan.m */,
+				310A069816AD36EF007460F4 /* InterCollect.h */,
+				310A069916AD36F0007460F4 /* InterCollect.m */,
+			);
+			name = ForNetParam;
 			sourceTree = "<group>";
 		};
 		310B2ED51699243300818461 /* MemoPicker */ = {
@@ -4184,6 +4244,8 @@
 				6292FCA5166892D800D170A3 /* KHHWebView.h */,
 				6292FCA6166892D900D170A3 /* KHHWebView.m */,
 				6292FCA7166892D900D170A3 /* KHHWebView.xib */,
+				310A067D16AD319C007460F4 /* KHHTemplatePayViewController.h */,
+				310A067E16AD319D007460F4 /* KHHTemplatePayViewController.m */,
 			);
 			path = OtherUIs;
 			sourceTree = "<group>";
@@ -4921,6 +4983,7 @@
 				319C29F3169C04D4005A1BFF /* attendance.plist in Resources */,
 				319C29F8169C0672005A1BFF /* collection.plist in Resources */,
 				310164EF16A3FB7E003D4527 /* File in Resources */,
+				310A067B16AD0765007460F4 /* template.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5154,6 +5217,7 @@
 				319C29F2169C04D4005A1BFF /* attendance.plist in Resources */,
 				319C29F7169C0672005A1BFF /* collection.plist in Resources */,
 				310164EE16A3FB7E003D4527 /* File in Resources */,
+				310A067A16AD0765007460F4 /* template.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5386,6 +5450,7 @@
 				319C29F0169C04D4005A1BFF /* attendance.plist in Resources */,
 				319C29F5169C0672005A1BFF /* collection.plist in Resources */,
 				310164EC16A3FB7E003D4527 /* File in Resources */,
+				310A067816AD0765007460F4 /* template.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5619,6 +5684,7 @@
 				319C29F1169C04D4005A1BFF /* attendance.plist in Resources */,
 				319C29F6169C0672005A1BFF /* collection.plist in Resources */,
 				310164ED16A3FB7E003D4527 /* File in Resources */,
+				310A067916AD0765007460F4 /* template.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5905,6 +5971,12 @@
 				84DB120C16A4F9CB001B0FAC /* KHHDataNew+CheckIn.m in Sources */,
 				84DB121216A4F9E0001B0FAC /* KHHDataNew+Company.m in Sources */,
 				3101B33C16A4FEF50070D5FF /* KHHDataNew+Account.m in Sources */,
+				3103C40A16A90ECB00240570 /* CustomBadge.m in Sources */,
+				310A068216AD319E007460F4 /* KHHTemplatePayViewController.m in Sources */,
+				310A068816AD3500007460F4 /* KHHDataNew+SignForPlan.m in Sources */,
+				310A069116AD36CE007460F4 /* InterSign.m in Sources */,
+				310A069716AD36DF007460F4 /* InterPlan.m in Sources */,
+				310A069D16AD36F0007460F4 /* InterCollect.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6159,6 +6231,12 @@
 				84DB120B16A4F9CB001B0FAC /* KHHDataNew+CheckIn.m in Sources */,
 				84DB121116A4F9E0001B0FAC /* KHHDataNew+Company.m in Sources */,
 				3101B33B16A4FEF50070D5FF /* KHHDataNew+Account.m in Sources */,
+				3103C40916A90ECB00240570 /* CustomBadge.m in Sources */,
+				310A068116AD319E007460F4 /* KHHTemplatePayViewController.m in Sources */,
+				310A068716AD3500007460F4 /* KHHDataNew+SignForPlan.m in Sources */,
+				310A069016AD36CE007460F4 /* InterSign.m in Sources */,
+				310A069616AD36DF007460F4 /* InterPlan.m in Sources */,
+				310A069C16AD36F0007460F4 /* InterCollect.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6413,6 +6491,12 @@
 				84DB120916A4F9CB001B0FAC /* KHHDataNew+CheckIn.m in Sources */,
 				84DB120F16A4F9E0001B0FAC /* KHHDataNew+Company.m in Sources */,
 				3101B33916A4FEF50070D5FF /* KHHDataNew+Account.m in Sources */,
+				3103C40716A90ECB00240570 /* CustomBadge.m in Sources */,
+				310A067F16AD319D007460F4 /* KHHTemplatePayViewController.m in Sources */,
+				310A068516AD3500007460F4 /* KHHDataNew+SignForPlan.m in Sources */,
+				310A068E16AD36CE007460F4 /* InterSign.m in Sources */,
+				310A069416AD36DF007460F4 /* InterPlan.m in Sources */,
+				310A069A16AD36F0007460F4 /* InterCollect.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6665,6 +6749,12 @@
 				84DB120A16A4F9CB001B0FAC /* KHHDataNew+CheckIn.m in Sources */,
 				84DB121016A4F9E0001B0FAC /* KHHDataNew+Company.m in Sources */,
 				3101B33A16A4FEF50070D5FF /* KHHDataNew+Account.m in Sources */,
+				3103C40816A90ECB00240570 /* CustomBadge.m in Sources */,
+				310A068016AD319E007460F4 /* KHHTemplatePayViewController.m in Sources */,
+				310A068616AD3500007460F4 /* KHHDataNew+SignForPlan.m in Sources */,
+				310A068F16AD36CE007460F4 /* InterSign.m in Sources */,
+				310A069516AD36DF007460F4 /* InterPlan.m in Sources */,
+				310A069B16AD36F0007460F4 /* InterCollect.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

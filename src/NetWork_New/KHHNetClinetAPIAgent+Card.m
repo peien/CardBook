@@ -257,8 +257,8 @@ NSMutableDictionary * parametersToCreateOrUpdateCard(InterCard *iCard) {
         KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
         if (KHHErrorCodeSucceeded == code) {
             //添加成功, 返回到data层进行同步
-            if ([delegate respondsToSelector:@selector(addCardSuccess)]) {
-                [delegate addCardSuccess];
+            if ([delegate respondsToSelector:@selector(addCardSuccess:)]) {
+                [delegate addCardSuccess:responseDict];
             }
         }else {
             NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:2];
@@ -471,6 +471,12 @@ NSMutableDictionary * parametersToCreateOrUpdateCard(InterCard *iCard) {
     
     //调接口
     [self putPath:path parameters:nil success:success failure:failed];
+}
+
+#pragma mark - 发送名片
+- (void)sendCard:(Card *)myReplyCard toPhones:(NSArray *)newMobiles delegate:(id<KHHNetAgentCardDelegate>) delegate
+{
+    
 }
 
 @end

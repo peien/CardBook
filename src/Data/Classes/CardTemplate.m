@@ -17,7 +17,7 @@
     if (json) {
         // id
         self.id      = [NSNumber numberFromObject:json[JSONDataKeyID]
-                          zeroIfUnresolvable:NO];
+                               zeroIfUnresolvable:NO];
         // version
         self.version = [NSNumber numberFromObject:json[JSONDataKeyVersion]
                                zeroIfUnresolvable:NO];
@@ -30,7 +30,9 @@
                               lowercaseString];
         if ([dtString isEqualToString:@"public"]) {
             self.domainType = [NSNumber numberWithInteger:KHHTemplateDomainTypePublic];
-        } else {
+        } else if([dtString isEqualToString:@"pay"]){
+            self.domainType = [NSNumber numberWithInteger:KHHTemplateDomainTypePay];
+        }else{
             self.domainType = [NSNumber numberWithInteger:KHHTemplateDomainTypePrivate];
         }
         
@@ -41,9 +43,14 @@
         self.style = [NSString stringFromObject:json[JSONDataKeyTemplateStyle]];
         
         // imageUrl => bgImage->url {
-        self.bgImage = [Image objectByKey:@"url"
-                                    value:json[JSONDataKeyImageUrl]
-                             createIfNone:YES];
+        NSLog(@"%@",json[JSONDataKeyImageUrl]);
+        if ([json[JSONDataKeyImageUrl] isKindOfClass:[NSString class]]&&[json[JSONDataKeyImageUrl] length]>0) {
+            self.bgImage = [Image objectByKey:@"url"
+                                        value:json[JSONDataKeyImageUrl]
+                                 createIfNone:YES];
+        }
+       
+        
         // }
         
         // item列表 {
@@ -56,7 +63,7 @@
         }
     }
     
-   
+    
     return self;
 }
 @end

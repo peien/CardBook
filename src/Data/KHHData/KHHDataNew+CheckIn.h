@@ -11,7 +11,7 @@
 #import "KHHNetClinetAPIAgent+CheckIn.h"
 @interface KHHDataNew (CheckIn) <KHHNetAgentCheckInDelegates>
 #pragma mark - 员工签到
-- (void)checkIn:(ICheckIn *)iCheckIn delegate:(id<KHHDataCheckInDelegate>) delegate;
+- (void)doCheckIn:(ICheckIn *)iCheckIn delegate:(id<KHHDataCheckInDelegate>) delegate;
 
 #pragma mark - 增量获取员工签到记录
 - (void)syncMySelfCheckInRecordWithCardID:(long) cardID delegate:(id<KHHDataCheckInDelegate>) delegate;

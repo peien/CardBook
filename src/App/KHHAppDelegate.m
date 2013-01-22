@@ -30,11 +30,11 @@
     // 设置window默认背景
     self.window.backgroundColor = [UIColor blackColor];
     
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(reachabilityChanged:)
-//                                                 name: kReachabilityChangedNotification
-//                                               object: nil];
-//    [[NetClient sharedClient].r startNotifier];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reachabilityChanged:)
+                                                 name: kReachabilityChangedNotification
+                                               object: nil];
+    [[NetClient sharedClient].r startNotifier];
 
      [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
     // 设置界面元素的公共属性
@@ -126,7 +126,9 @@
     _deviceToken = [_deviceToken stringByReplacingOccurrencesOfString:@" " withString:@""];
     //NSString *str = [[NSString alloc] initWithData:deviceToken encoding:NSUTF16StringEncoding];
     DLog(@"%@",_deviceToken);
-    [KHHDefaults sharedDefaults].token = _deviceToken;
+    [KHHUser shareInstance].deviceToken = _deviceToken;
+    
+   // [KHHDefaults sharedDefaults].token = _deviceToken;
 //    [PFPush storeDeviceToken:deviceToken];
 //    [PFPush subscribeToChannelInBackground:@"" block:^(BOOL succeeded, NSError *error) {
 //        if (succeeded)

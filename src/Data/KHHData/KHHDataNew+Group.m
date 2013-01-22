@@ -9,9 +9,9 @@
 #import "KHHDataNew+Group.h"
 #import "Group.h"
 @implementation KHHDataNew (Group)
-@dynamic syncType;
+
 #pragma mark - 同步分组
-- (void) syncGroup:(id<KHHDataGroupDelegate>) delegate
+- (void) doSyncGroup:(id<KHHDataGroupDelegate>) delegate
 {
     [self syncGroup:delegate syncType:KHHGroupSyncTypeSync];
 }
@@ -22,21 +22,21 @@
     [self.agent syncGroup:self];
 }
 #pragma mark - 增加分组
-- (void) addGroup:(IGroup *)iGroup userCardID:(long)cardID delegate:(id<KHHDataGroupDelegate>) delegate
+- (void) doAddGroup:(IGroup *)iGroup userCardID:(long)cardID delegate:(id<KHHDataGroupDelegate>) delegate
 {
     self.delegate = delegate;
     [self.agent addGroup:iGroup userCardID:cardID delegate:self];
 }
 
 #pragma mark - 修改分组
-- (void) updateGroupName:(IGroup *)iGroup delegate:(id<KHHDataGroupDelegate>) delegate
+- (void) doUpdateGroupName:(IGroup *)iGroup delegate:(id<KHHDataGroupDelegate>) delegate
 {
     self.delegate = delegate;
     [self.agent updateGroupName:iGroup delegate:self];
 }
 
 #pragma mark - 删除分组
-- (void) deleteGroup:(long) groupID delegate:(id<KHHDataGroupDelegate>) delegate
+- (void) doDeleteGroup:(long) groupID delegate:(id<KHHDataGroupDelegate>) delegate
 {
     self.delegate = delegate;
     [self.agent deleteGroup:groupID delegate:self];
@@ -74,6 +74,7 @@
 //同步分组
 -(void) syncGroupSuccess:(NSDictionary *) dict
 {
+    NSLog(@"%@",dict);
     DLog(@"syncGroupSuccess! dict = %@", dict);
     //同步分组成功，把返回的分组存到数据库中
     //先删除本地所有分组
@@ -158,7 +159,7 @@
 //添加分组
 -(void) addGroupSuccess:(NSDictionary *) dict
 {
-    DLog(@"syncGroupSuccess! dict = %@", dict);
+    DLog(@"syncGroupSuccess! dict = %@", dict);    
     //同步分组成功，把返回的分组存到数据库中
     [self syncGroup:self.delegate syncType:KHHGroupSyncTypeAdd];
 }
@@ -273,4 +274,15 @@
     
     
 }
+
+#pragma mark - data from manageContext
+
+- (NSArray *)allTopLevelGroups
+{
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"parent.id = %@", @(0)];
+    NSArray *array = [Group objectArrayByPredicate:predicate
+                                   sortDescriptors:@[[Group nameSortDescriptor]]];
+    return array;
+}
+
 @end

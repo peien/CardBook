@@ -10,7 +10,10 @@
 #import "KHHDefaults.h"
 
 @implementation KHHDataNew
+{
+    NSDateFormatter *_dateFormatter;
 
+}
 @synthesize context = _context;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize managedObjectModel = _managedObjectModel;
@@ -120,6 +123,16 @@
         _persistentStoreCoordinator = nil;
     }
     return self.persistentStoreCoordinator;
+}
+
+- (NSString *)interval:(NSString *)timeStr
+{
+    if (!_dateFormatter) {
+       _dateFormatter = [[NSDateFormatter alloc]init];
+        [_dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    }
+   NSDate *date = [_dateFormatter dateFromString:timeStr];
+    return [NSString stringWithFormat:@"%f", [[_dateFormatter dateFromString:timeStr] timeIntervalSince1970]];
 }
 
 @end

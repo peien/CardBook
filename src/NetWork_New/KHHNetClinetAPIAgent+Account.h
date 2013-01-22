@@ -41,4 +41,7 @@
  * 方法 get
  */
 - (BOOL)resetPassword:(NSString *)mobile  delegate:(id<KHHNetAgentAccountDelegates>) delegate;
+
+#pragma mark - save token
+- (void)saveToken;
 @end

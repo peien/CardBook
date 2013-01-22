@@ -40,7 +40,7 @@
 +(void)processDeleteAllLocalGroups {
     KHHData *dataCtrl = [KHHData sharedData];
     NSArray * array = [dataCtrl allTopLevelGroups];
-    NSManagedObjectContext* context = [[KHHData sharedData] context];
+    NSManagedObjectContext* context = [[KHHDataNew sharedData] context];
     for (Group* group in array) {
         [context deleteObject:group];
     }

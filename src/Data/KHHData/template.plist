@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>count</key>
+	<integer>1</integer>
+	<key>state</key>
+	<integer>1</integer>
+	<key>note</key>
+	<string>成功</string>
+	<key>templatelist</key>
+	<array>
+		<dict>
+			<key>description</key>
+			<string>000</string>
+			<key>gmtCreateTime</key>
+			<string>2012-03-21 16:00:00</string>
+			<key>gmtModTime</key>
+			<string>gmtModTime</string>
+			<key>id</key>
+			<integer>10</integer>
+			<key>imageUrl</key>
+			<string>http://img.hb.aicdn.com/9b969880e076095029a4170df8149506bf8fd87411090-BozUhh_fw554</string>
+			<key>imageType</key>
+			<string>png</string>
+			<key>version</key>
+			<integer>1</integer>
+			<key>templateType</key>
+			<string>public</string>
+			<key>templatesTyle</key>
+			<string>cross</string>
+			<key>details</key>
+			<array>
+				<dict>
+					<key>id</key>
+					<integer>10</integer>
+					<key>item</key>
+					<string>name</string>
+					<key>style</key>
+					<string>top: 144 px; left: 205 px; font-size: 14 px; color: #3333cc; fontWeight: bold</string>
+					<key>templateId</key>
+					<string>10</string>
+				</dict>
+				<dict>
+					<key>style</key>
+					<string>top: 90 px; left: 108 px; font-size: 14 px; color: #ff0000; fontWeight: bold</string>
+					<key>id</key>
+					<integer>11</integer>
+					<key>templateId</key>
+					<string>10</string>
+					<key>item</key>
+					<string>title</string>
+				</dict>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>

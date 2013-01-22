@@ -7,13 +7,14 @@
 //
 
 #import "KHHTargetCell.h"
-
+#import "CustomBadge.h"
 
 @implementation KHHTargetCell
 {
        
     UIFont *font;
     NSString *text;
+    Boolean _selected;
 }
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -23,7 +24,7 @@
         font = [UIFont systemFontOfSize:13];
         self.textLabel.font = [UIFont systemFontOfSize:12];
         _field = [[UITextField alloc]init];
-       
+        _field.returnKeyType = UIReturnKeyDone;
        // field.placeholder = @"请选择拜访对象";
         _field.font = font;
     }
@@ -32,6 +33,7 @@
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
+    _selected = selected;
     if (![_field isFirstResponder]&&selected) {
          [_field becomeFirstResponder];
     }
@@ -52,10 +54,11 @@
 - (void)layoutSubviews
 {
     [super layoutSubviews];
+    
     CGRect r = self.bounds;    
     CGSize size = [self.textLabel.text sizeWithFont:font]; 
   
-    _field.frame = CGRectMake(r.origin.x+10+size.width+30, (r.size.height-size.height)/2, r.size.width - 40-40 -size.width, size.height);
+    _field.frame = CGRectMake(r.origin.x+10+size.width+30, (r.size.height-size.height)/2, r.size.width - 40-60 -size.width, size.height);
     _field.placeholder = _placeStr;
     
     if (text) {

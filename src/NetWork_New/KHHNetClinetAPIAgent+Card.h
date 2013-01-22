@@ -29,6 +29,8 @@
 - (void)updateCard:(InterCard *)iCard delegate:(id<KHHNetAgentCardDelegate>) delegate;
 - (void)updateCard:(InterCard *)iCard logoImage:(UIImage *) logoImage cardLinks:(NSArray *) cardLinks delegate:(id<KHHNetAgentCardDelegate>) delegate;
 
+//名片发送
+- (void)sendCard:(Card *)myReplyCard toPhones:(NSArray *)newMobiles delegate:(id<KHHNetAgentCardDelegate>) delegate;
 /*
  * http://192.168.1.151/zentaopms/www/index.php?m=doc&f=view&docID=259
  * 名片删除

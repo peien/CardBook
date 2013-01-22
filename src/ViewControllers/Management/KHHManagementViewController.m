@@ -20,7 +20,7 @@
 #import "KHHFunnelViewController.h"
 #import "KHHMessageViewController.h"
 #import "KHHShowHideTabBar.h"
-#import "KHHData+UI.h"
+
 #import "Card.h"
 #import "DetailInfoViewController.h"
 #import "KHHLocalNotificationUtil.h"
@@ -29,6 +29,8 @@
 #import "KHHPlanViewController.h"
 #import "KHHWhereUtil.h"
 #import "KHHBMapLocationController.h"
+#import "KHHDataNew+Card.h"
+#import "KHHDataNew+Message.h"
 
 #define TEXT_NEW_MESSAGE_COMMING NSLocalizedString(@"您有新消息到了,可到消息界面查看新消息。",nil)
 #define TEXT_NEW_CONTACT_COMMING NSLocalizedString(@"您有新名片到了，点击确认去查看联系人...",nil)
@@ -37,7 +39,7 @@
 static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新联系人
 
 @interface KHHManagementViewController ()
-@property (strong, nonatomic) KHHData        *dataCtrl;
+
 @property (strong, nonatomic) Card           *myCard;
 @property (strong, nonatomic) KHHAppDelegate *app;
 @property (strong, nonatomic) UIImageView    *messageImageView;
@@ -49,10 +51,13 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
 @end
 
 @implementation KHHManagementViewController
+{
+    IntroViewController *introVC;
+}
 @synthesize guide = _guide;
 @synthesize signButton = _signButton;
 @synthesize entranceView = _entranceView;
-@synthesize dataCtrl;
+
 @synthesize app;
 @synthesize messageImageView;
 @synthesize numLab2;
@@ -67,7 +72,7 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
         // Custom initialization CFBundleName
         //        self.title = NSLocalizedString(@"蜂巢访销", nil);
         self.title = KHH_APP_NAME;
-        self.dataCtrl = [KHHData sharedData];
+       // self.dataCtrl = [KHHData sharedData];
         _entranceView = [[[NSBundle mainBundle] loadNibNamed:@"KHHBossEntrance" owner:self options:nil] objectAtIndex:0];
         
         [self.leftBtn setTitle:NSLocalizedString(@"消息", nil) forState:UIControlStateNormal];
@@ -115,10 +120,10 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
         [self.leftBtn addSubview:self.messageImageView];
     }
     
-    if ([[KHHData sharedData] countOfUnreadMessages] > 0) {
+    if ([[KHHDataNew sharedData] countOfUnreadMessages] > 0) {
         self.messageImageView.hidden = NO;
-        numLab2.text = [NSString stringWithFormat:@"%d",[[KHHData sharedData] countOfUnreadMessages]];
-    }else if([[KHHData sharedData] countOfUnreadMessages] == 0){
+        numLab2.text = [NSString stringWithFormat:@"%d",[[KHHDataNew sharedData] countOfUnreadMessages]];
+    }else if([[KHHDataNew sharedData] countOfUnreadMessages] == 0){
         self.messageImageView.hidden = YES;
     }
 }
@@ -131,7 +136,7 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
     //    [MBProgressHUD showHUDAddedTo:app.window animated:YES];
     MBProgressHUD *progess = [MBProgressHUD showHUDAddedTo:app.window animated:YES];
     progess.labelText = NSLocalizedString(KHHMessageSyncAll, nil);
-    [[KHHData sharedData] startSyncAllData];
+   // [[KHHData sharedData] startSyncAllData];
 }
 - (void)handleDataSyncAllSucceeded:(NSNotification *)noti{
     [self stopObservingStartSynAllData];
@@ -169,7 +174,7 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
     [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_guide];
     
     //判断数据是否完整
-    NSArray *cards = [self.dataCtrl allMyCards];
+    NSArray *cards = [[KHHDataNew sharedData] allMyCards];
     if (cards && cards.count > 0) {
         self.myCard = [cards objectAtIndex:0];
     }else {
@@ -222,7 +227,7 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-    self.dataCtrl = nil;
+   // self.dataCtrl = nil;
     self.myCard = nil;
     self.app = nil;
     self.messageImageView = nil;
@@ -230,11 +235,25 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
     [self.syncMessageTimer invalidate];
 }
 
-//去看引导页
--(void) reviewGuide:(id) sender {
+#pragma mark - show reviewGuide
+- (void)reviewGuide:(id) sender {
     DLog(@"review guide pages!");
-    IntroViewController *introVC = [[IntroViewController alloc] initWithNibName:nil bundle:nil];
-    [self.navigationController pushViewController:introVC animated:YES];
+    if (!introVC) {
+        introVC = [[IntroViewController alloc] initWithNibName:nil bundle:nil];
+        introVC.view.alpha = 0.0;
+    }
+    UIViewController *contPro = self.parentViewController.parentViewController;
+    [contPro addChildViewController:introVC];
+    [contPro.view addSubview:introVC.view];
+    [UIView animateWithDuration: 0.5
+                     animations:^{
+                         introVC.view.alpha = 1.0;
+                        
+                     }
+                     completion:^(BOOL finished) {
+                         
+                     }];
+  //  [self.navigationController pushViewController:introVC animated:YES];
 }
 
 - (IBAction)radarBtnClick:(id)sender{
@@ -316,8 +335,9 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
             KHHCalendarViewController *calVC = [[KHHCalendarViewController alloc] initWithNibName:nil bundle:nil];
             calVC.card = self.myCard;
             [self.navigationController pushViewController:calVC animated:YES];
-            break;
             return;
+            break;
+            
         }
         default:
         {
@@ -441,7 +461,7 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
 -(void) syncMessageWithServer
 {
     DLog(@"sync time: %@",[NSDate new]);
-    [[KHHData sharedData]syncMessages];
+  //  [[KHHData sharedData]syncMessages];
 }
 
 - (void)showNewCardInfo{

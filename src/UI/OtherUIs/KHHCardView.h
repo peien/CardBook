@@ -15,9 +15,11 @@
 #import "KHHData+UI.h"
 #import "MBProgressHUD.h"
 #import "KHHFrameCardView.h"
+#import "KHHDataNew+Card.h"
+
 @class XLPageControl;
 
-@interface KHHCardView : UIView<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate>
+@interface KHHCardView : UIView<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,KHHDataCardDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *theTable;
 @property (nonatomic, strong) UIView *card;
 @property (strong, nonatomic) UIButton *saveToContactBtn;
@@ -29,7 +31,7 @@
 @property (strong, nonatomic) DetailInfoViewController *detailVC;
 @property (strong, nonatomic) NSMutableArray           *itemArray;
 @property (strong, nonatomic) KHHData                  *dataCtrl;
-@property (strong, nonatomic) MBProgressHUD            *progressHud;
+
 @property (strong, nonatomic) KHHFrameCardView         *cardView;
 @property (assign, nonatomic) BOOL                     isColleague;
 - (void)initView;

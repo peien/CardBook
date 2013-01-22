@@ -218,6 +218,20 @@
 
 - (void)showInView:(UIView *) view
 {
+    if (iPhone5) {
+        if (!self.superview) {
+            self.frame = CGRectMake(0, 490, 320, 200);
+            [view addSubview:self];
+            self.hidden = NO;
+        }else{
+            self.hidden = NO;
+        }
+        
+        [UIView animateWithDuration:0.3 animations:^{
+            self.frame = CGRectMake(0, 290, 320,200);
+        }];
+        return;
+    }
     if (!self.superview) {
         self.frame = CGRectMake(0, view.frame.size.height, self.frame.size.width, self.frame.size.height);
         [view addSubview:self];
@@ -234,6 +248,22 @@
 
 - (void)cancelPicker:(Boolean)remove
 {
+    if (iPhone5) {
+        [UIView animateWithDuration:0.3
+                         animations:^{
+                             self.frame = CGRectMake(0, 490, 320, 200);
+                         }
+                         completion:^(BOOL finished){
+                             if (remove) {
+                                 [self removeFromSuperview];
+                             }else{
+                                 self.hidden = YES;
+                             }
+                             
+                             
+                         }];
+        return;
+    }
     
     [UIView animateWithDuration:0.3
                      animations:^{

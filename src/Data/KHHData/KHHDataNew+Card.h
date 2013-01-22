@@ -9,6 +9,8 @@
 #import "KHHDataNew.h"
 #import "KHHDataCardDelegate.h"
 #import "KHHNetClinetAPIAgent+Card.h"
+#import "MyCard.h"
+#import "PrivateCard.h"
 
 //同步类型
 typedef enum {
@@ -28,7 +30,7 @@ typedef enum {
 - (void)syncCustomerCard:(NSString *) startPage pageSize:(NSString *) pageSize delegate:(id<KHHDataCardDelegate>) delegate;
 
 #pragma mark - 名片新增(新增)
-- (void)addCard:(InterCard *)iCard delegate:(id<KHHDataCardDelegate>) delegate;
+- (void)doAddCard:(InterCard *)iCard delegate:(id<KHHDataCardDelegate>) delegate;
 - (void)addCard:(InterCard *)iCard logoImage:(UIImage *) logoImage cardLinks:(NSArray *) cardLinks delegate:(id<KHHDataCardDelegate>) delegate;
 
 
@@ -38,9 +40,19 @@ typedef enum {
 
 
 #pragma mark - 名片删除
-- (void)deleteCard:(Card *)card delegate:(id<KHHDataCardDelegate>) delegate;
+- (void)doDeleteCard:(Card *)card delegate:(id<KHHDataCardDelegate>) delegate;
 
 
 #pragma mark - 设置联系人的状态为已查看
 - (void)updateCardReadState:(Card *)card myUserID:(long) userID delegate:(id<KHHDataCardDelegate>) delegate;
+
+
+#pragma mark - data from manageContext
+- (NSArray *)allMyCards;
+
+- (MyCard *)myCardByID:(NSNumber *)cardID;
+
+#pragma mark - for do later
+- (void)doInsertMyCard;
+
 @end

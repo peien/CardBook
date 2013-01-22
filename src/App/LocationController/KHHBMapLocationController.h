@@ -40,5 +40,5 @@
  */
 -(CLLocationCoordinate2D) userLocationCoordinate2D;
 
-- (void)doGetLocation:(void(^)(NSString *locStr)) done fail:(void(^)())fail;
+- (void)doGetLocation:(void(^)(BMKAddrInfo *_addrInfo)) done fail:(void(^)())fail;
 @end

@@ -43,6 +43,8 @@
 #import <MessageUI/MessageUI.h>
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
+#import "KHHDataNew+Card.h"
+
 
 //同事移到组织架构里去
 #define POPDismiss [self.popover dismissPopoverAnimated:YES];
@@ -50,7 +52,7 @@
 #define BaseBtnTitleArrayVisited        _btnTitleArr = [[NSMutableArray alloc] initWithObjects:KHHMessageDefaultGroupAll,KHHMessageDefaultGroupUnGroup, nil];
 
 @interface KHHHomeViewController ()<UIActionSheetDelegate,UIAlertViewDelegate,
-                                   UITextFieldDelegate,UISearchBarDelegate,UISearchDisplayDelegate
+                                   UITextFieldDelegate,UISearchBarDelegate,UISearchDisplayDelegate,KHHDataGroupDelegate
                                    >
 @property (nonatomic, strong)  WEPopoverController    *popover;
 @property (strong, nonatomic)  NSArray                *keys;
@@ -125,7 +127,7 @@
 @synthesize currentIndexPath;
 @synthesize interGroup;
 @synthesize groupTf;
-@synthesize hud;
+
 @synthesize groupTitleArr;
 @synthesize visitVC;
 @synthesize isNewContactsClick;
@@ -283,9 +285,9 @@
         
     }else{
         [KHHShowHideTabBar showTabbar];
-        if (self.isNeedReloadTable) {
-            [self reloadTable];
-        }
+//        if (self.isNeedReloadTable) {
+//            [self reloadTable];
+//        }
     }
 }
 - (void)viewDidAppear:(BOOL)animated{
@@ -350,20 +352,20 @@
 {
     //调用数据库接口，获取各个分组的array
     //所有
-    self.generalArray = [self.dataControl cardsOfAll];
+    self.generalArray = [[KHHDataNew sharedData] cardsOfAll];
     //我的卡片
-    self.myCardArray = [self.dataControl allMyCards];
-    if (!self.myCardArray || self.myCardArray.count <= 0) {
-        //提示数据未同步完成
-        //提示用户数据没有同步下来，先同步一下数据
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:KhhMessageDataErrorTitle
-                                                        message:KhhMessageDataError
-                                                       delegate:self
-                                              cancelButtonTitle:KHHMessageSure
-                                              otherButtonTitles:KHHMessageCancle, nil];
-        alert.tag = KHHAlertSync;
-        [alert show];
-    }
+//    self.myCardArray = [self.dataControl allMyCards];
+//    if (!self.myCardArray || self.myCardArray.count <= 0) {
+//        //提示数据未同步完成
+//        //提示用户数据没有同步下来，先同步一下数据
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:KhhMessageDataErrorTitle
+//                                                        message:KhhMessageDataError
+//                                                       delegate:self
+//                                              cancelButtonTitle:KHHMessageSure
+//                                              otherButtonTitles:KHHMessageCancle, nil];
+//        alert.tag = KHHAlertSync;
+//        [alert show];
+//    }
 }
 //获取分组
 - (NSArray *)getAllGroups{
@@ -392,9 +394,10 @@
         }
     }
     
-    self.oWnGroupArray = [self.dataControl allTopLevelGroups];
+    self.oWnGroupArray = [[KHHDataNew sharedData] allTopLevelGroups];
     for (int i = 0; i < self.oWnGroupArray.count; i++) {
         Group *group = [self.oWnGroupArray objectAtIndex:i];
+        NSLog(@"%lld,%@",group.idValue,group.name);
         [_btnTitleArr addObject:group.name];
     }
     NSArray *groupArr = _btnTitleArr;
@@ -419,9 +422,9 @@
     }else {
         NSString *btnName = _currentBtn.titleLabel.text;
         if ([btnName isEqualToString:KHHMessageDefaultGroupUnGroup]) {
-            self.generalArray = [self.dataControl cardsOfUngrouped];
+            self.generalArray = [[KHHDataNew sharedData] cardsOfUngrouped];
         }else if ([btnName isEqualToString:KHHMessageDefaultGroupAll]){
-            self.generalArray = [self.dataControl cardsOfAll];
+            self.generalArray = [[KHHDataNew sharedData] cardsOfAll];
         }
     }
     
@@ -517,7 +520,7 @@
                     [cell.button setBackgroundImage:[[UIImage imageNamed:@"left_btn_bg.png"] resizableImageWithCapInsets:insets] forState:UIControlStateNormal];
                     [cell.button setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
                 }
-                int num = [[self.dataControl cardsOfNew] count];
+                int num = [[[KHHDataNew sharedData] cardsOfNew] count];
                 if (indexPath.row == 0 && num > 0) {
                     [cell.button addSubview:self.messageImageView];
                 }
@@ -641,11 +644,19 @@
 //                [_bigTable deselectRowAtIndexPath:indexPath animated:NO];
                 
                 //选中某一个对象并返回
+              
                 if (!self.visitVC.objectNameArr) {
                     self.visitVC.objectNameArr = [[NSMutableArray alloc] initWithCapacity:0];
                 }
+                if (_appendCardName) {
+                    _appendCardName ([self.generalArray objectAtIndex:indexPath.row]);
+                }
+//                if(_cardsArr){
+//                    _cardsArr = [[NSMutableArray alloc] initWithCapacity:0];
+//                }
+//                [_cardsArr addObject:[self.generalArray objectAtIndex:indexPath.row]];
                 
-                [self.visitVC.objectNameArr addObject:[self.generalArray objectAtIndex:indexPath.row]];
+                //[self.visitVC.objectNameArr addObject:[self.generalArray objectAtIndex:indexPath.row]];
                 [self.navigationController popViewControllerAnimated:YES];
             }else{
                 if (self.isAddressBookData) {
@@ -691,6 +702,9 @@
                     [self.navigationController pushViewController:detailVC animated:YES];
                     
                 }else{
+                    if (_appendCardName) {
+                        _appendCardName ([self.generalArray objectAtIndex:indexPath.row]);
+                    }
                     self.visitVC.searchCard = card;
                     [self.navigationController popViewControllerAnimated:YES];
                 }
@@ -823,9 +837,9 @@
         }else {
             //刷新表
             if ([btnName isEqualToString:KHHMessageDefaultGroupAll] || [btnName isEqualToString:[NSString string]]) {
-                self.generalArray = [self.dataControl cardsOfAll];
+                self.generalArray = [[KHHDataNew sharedData] cardsOfAll];
             }else if([btnName isEqualToString:KHHMessageDefaultGroupUnGroup]){
-                self.generalArray = [self.dataControl cardsOfUngrouped];
+                self.generalArray = [[KHHDataNew sharedData] cardsOfUngrouped];
             }else if([btnName isEqualToString:KHHMessageDefaultGroupLocal]){
                 if ([self.myDefaults isAddMobPhoneGroup]) {
                     self.isAddressBookData = YES;
@@ -874,7 +888,7 @@
     }
     
     int index = self.currentIndexPath.row - self.baseNum;
-    self.oWnGroupArray = [self.dataControl allTopLevelGroups];
+    self.oWnGroupArray = [[KHHDataNew sharedData] allTopLevelGroups];
     if (!self.oWnGroupArray) {
         //默认选择所有
         [self performSelector:@selector(defaultSelectBtn) withObject:nil afterDelay:0.3];
@@ -924,7 +938,7 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (_type == KUIActionSheetStyleEditGroupMember) {
-        self.oWnGroupArray = [self.dataControl allTopLevelGroups];
+        self.oWnGroupArray = [[KHHDataNew sharedData] allTopLevelGroups];
         Group *group = [self.oWnGroupArray objectAtIndex:self.currentTag - 100 - self.baseNum];
         KHHAddGroupMemberVC *addMemVC = [[KHHAddGroupMemberVC alloc] initWithNibName:@"KHHAddGroupMemberVC" bundle:nil];
         addMemVC.group = group;
@@ -1008,6 +1022,11 @@
 //    Edit_eCardViewController *creatCardVC = [[Edit_eCardViewController alloc] initWithNibName:nil bundle:nil];
 //    creatCardVC.type = KCardViewControllerTypeNewCreate;
     KHHNewEdit_ecardViewController *creatCardVC = [[KHHNewEdit_ecardViewController alloc]init];
+    creatCardVC.addCardSuccess = ^(){
+       // generalArray = [[KHHDataNew sharedData] cardsOfUngrouped];
+        generalArray = [[KHHDataNew sharedData] cardsOfAll];
+        [_bigTable reloadData];
+    };
     [self.navigationController pushViewController:creatCardVC animated:YES];
 }
 - (void)saveImage:(UIImage *)image
@@ -1093,16 +1112,16 @@
                     UITextField *tf = (UITextField *)view;
                     if (tf.text.length > 0 && _isAddGroup) {
                         //[_btnTitleArr addObject:tf.text];
-                        if (!self.myCardArray || self.myCardArray.count <= 0) {
-                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:KhhMessageDataErrorTitle
-                                                                            message:KhhMessageDataError
-                                                                           delegate:self
-                                                                  cancelButtonTitle:KHHMessageSure
-                                                                  otherButtonTitles:KHHMessageCancle, nil];
-                            alert.tag = KHHAlertSync;
-                            [alert show];
-                            return;
-                        }
+//                        if (!self.myCardArray || self.myCardArray.count <= 0) {
+//                            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:KhhMessageDataErrorTitle
+//                                                                            message:KhhMessageDataError
+//                                                                           delegate:self
+//                                                                  cancelButtonTitle:KHHMessageSure
+//                                                                  otherButtonTitles:KHHMessageCancle, nil];
+//                            alert.tag = KHHAlertSync;
+//                            [alert show];
+//                            return;
+//                        }
                         if ([self isInGroupNameDefault:tf.text]||[Group objectByKey:@"name" value:tf.text createIfNone:NO]) {
                             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"不能创建同名分组"
                                                                             message:nil
@@ -1112,15 +1131,18 @@
                              [alert show];
                             return;
                         }
-                        //注册新建分组消息
-                        [self observeNotificationName:KHHUICreateGroupSucceeded selector:@"handleCreateGroupSucceeded:"];
-                        [self observeNotificationName:KHHUICreateGroupFailed selector:@"handleCreateGroupFailed:"];
+//                        //注册新建分组消息
+//                        [self observeNotificationName:KHHUICreateGroupSucceeded selector:@"handleCreateGroupSucceeded:"];
+//                        [self observeNotificationName:KHHUICreateGroupFailed selector:@"handleCreateGroupFailed:"];
                         
                         //同步，从新调用自定义的所有分组，然后再刷新表
                         [self showHudForNetWorkWarn:KHHMessageCreatingGroup];
-                        self.groupTf = tf;
-                        self.interGroup.name = tf.text;
-                        [self.dataControl createGroup:interGroup withMyCard:[self.myCardArray objectAtIndex:0]];
+//                        self.groupTf = tf;
+//                        self.interGroup.name = tf.text;
+                        IGroup *groupPro = [[IGroup alloc]init];
+                        groupPro.name = tf.text;
+                        //todo cardId;
+                        [[KHHDataNew sharedData] doAddGroup:groupPro userCardID:0 delegate:self];
                         //[_btnTable reloadData];
                         //[_btnTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_btnTitleArr count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
                         
@@ -1141,17 +1163,30 @@
                         }
 
                         // 注册修改分组名消息
-                        [self observeNotificationName:KHHUIUpdateGroupSucceeded selector:@"handleUpdateGroupSucceeded:"];
-                        [self observeNotificationName:KHHUIUpdateGroupFailed selector:@"handleUpdateGroupFailed:"];            
+//                        [self observeNotificationName:KHHUIUpdateGroupSucceeded selector:@"handleUpdateGroupSucceeded:"];
+//                        [self observeNotificationName:KHHUIUpdateGroupFailed selector:@"handleUpdateGroupFailed:"];            
 
                         [self showHudForNetWorkWarn:KHHMessageModifingGroup];
-                        self.groupTf = tf;
-                        Group *group = [self.oWnGroupArray objectAtIndex:self.currentIndexPath.row - self.baseNum];
-                        self.interGroup.id = group.id;
-                        self.interGroup.name = tf.text;
-                        MyCard *card = [self.myCardArray objectAtIndex:0];
-                        self.interGroup.cardID = card.id;
-                        [self.dataControl updateGroup:self.interGroup];
+                        Group *groupPro = [self.oWnGroupArray objectAtIndex:self.currentIndexPath.row - self.baseNum];
+                        //groupPro.name = tf.text;
+                        IGroup *group = [[IGroup alloc]init];
+                        group.id = groupPro.id;
+                        NSLog(@"%@",group.id);
+                        group.name = tf.text;
+                        if ([groupPro.cardsSet count]>0) {
+                            group.cardID = ((Card *)[[groupPro.cardsSet allObjects]objectAtIndex:0]).id;
+                        }
+                        if (groupPro.parent) {
+                            group.parentID = groupPro.parent.id;
+                        }
+                        [[KHHDataNew sharedData]doUpdateGroupName:group delegate:self];
+//                        self.groupTf = tf;
+//                        Group *group = ;
+//                        self.interGroup.id = group.id;
+//                        self.interGroup.name = tf.text;
+//                        MyCard *card = [self.myCardArray objectAtIndex:0];
+//                        self.interGroup.cardID = card.id;
+//                       [self.dataControl updateGroup:self.interGroup];
                     }
                 }
             }
@@ -1163,12 +1198,14 @@
                 return;
             }
             //注册删除分组的消息
-            [self observeNotificationName:KHHUIDeleteGroupSucceeded selector:@"handleDeleteGroupSucceeded:"];
-            [self observeNotificationName:KHHUIDeleteGroupFailed selector:@"handleDeleteGroupFailed:"];
-            [self showHudForNetWorkWarn:KHHMessageDeletingGroup];
-            self.oWnGroupArray = [self.dataControl allTopLevelGroups];
+//            [self observeNotificationName:KHHUIDeleteGroupSucceeded selector:@"handleDeleteGroupSucceeded:"];
+//            [self observeNotificationName:KHHUIDeleteGroupFailed selector:@"handleDeleteGroupFailed:"];
+//            [self showHudForNetWorkWarn:KHHMessageDeletingGroup];
+           // self.oWnGroupArray = [self.dataControl allTopLevelGroups];
             Group *group = [self.oWnGroupArray objectAtIndex:currentIndexPath.row - self.baseNum];
-            [self.dataControl deleteGroup:group];
+            [self showHudForNetWorkWarn:KHHMessageDeletingGroup];
+            [[KHHDataNew sharedData] doDeleteGroup:group.idValue delegate:self];
+           // [self.dataControl deleteGroup:group];
             //[_btnTitleArr removeObjectAtIndex:_currentBtn.tag - 100];
             //[_btnTable reloadData];
         }
@@ -1275,4 +1312,63 @@
     DLog(@"[II] testAction");
     [self.navigationController pushViewController:[[KHHMyDetailController alloc] init] animated:YES];
 }
+
+#pragma mark - delegate group
+
+- (void)addGroupForUISuccess
+{
+    groupTitleArr = [self getAllGroups];
+    [_hud hide:YES];
+    [_btnTable reloadData];
+    [_btnTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.groupTitleArr count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    
+}
+
+- (void)addGroupForUIFailed:(NSDictionary *) dict
+{
+    [_hud hide:YES];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"创建分组失败"
+                                                    message:dict[kInfoKeyErrorMessage]
+                                                   delegate:self
+                                          cancelButtonTitle:@"确定"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
+- (void)deleteGroupForUISuccess
+{
+    groupTitleArr = [self getAllGroups];
+    [_hud hide:YES];
+    [_btnTable reloadData];
+}
+
+- (void)deleteGroupForUIFailed:(NSDictionary *)dict
+{
+    [_hud hide:YES];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"删除分组失败"
+                                                    message:dict[kInfoKeyErrorMessage]
+                                                   delegate:self
+                                          cancelButtonTitle:@"确定"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
+- (void)updateGroupNameForUISuccess
+{
+    groupTitleArr = [self getAllGroups];
+    [_hud hide:YES];
+    [_btnTable reloadData];
+}
+
+- (void)updateGroupNameForUIFailed:(NSDictionary *)dict
+{
+    [_hud hide:YES];
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"修改组名失败"
+                                                    message:dict[kInfoKeyErrorMessage]
+                                                   delegate:self
+                                          cancelButtonTitle:@"确定"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
 @end

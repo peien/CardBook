@@ -140,7 +140,7 @@
     }
 }
 - (void)viewDidAppear:(BOOL)animated{
-    [self.calView layoutSubviews];
+  //  [self.calView layoutSubviews];
 
 }
 - (void)viewWillDisappear:(BOOL)animated{

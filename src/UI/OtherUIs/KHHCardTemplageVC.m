@@ -9,7 +9,7 @@
 #import "KHHData+UI.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "KHHClasses.h"
-
+#import "KHHDataNew+Template.h"
 #define UIIMAGE_WIDTH  140
 #define UIIMAGE_HEIGHT 100
 @interface KHHCardTemplageVC ()
@@ -40,7 +40,7 @@
     [super viewDidLoad];
     
     [self.view setBackgroundColor:[UIColor colorWithRed:241 green:238 blue:232 alpha:1.0]];
-    self.tempArr = [[KHHData sharedData] allPublicTemplates];
+    self.tempArr = [[KHHDataNew sharedData] allPublicTemplates];
     //DLog(@"tempArr is ====== %@",tempArr);
     DLog(@"tempArr num is ======%d",tempArr.count)
     int contentViewHeight = H460;
@@ -74,11 +74,18 @@
         scrol.contentSize = CGSizeMake(320, page * contentViewHeight);
     }
     [self.view addSubview:scrol];
+    CGRect rect = self.view.frame;
+    UIButton *payBtn = [[UIButton alloc]initWithFrame:CGRectMake(rect.size.width/2-100/2, rect.size.height-100, 100, 30)];
+    [payBtn setBackgroundImage:[UIImage imageNamed:@"addIco"] forState:UIControlStateNormal];
+    [self.view addSubview: payBtn];
 }
 
 - (void)selectedOneTemplate:(UITapGestureRecognizer *)sender{
     UIImageView *imgView = (UIImageView *)[sender view];
     CardTemplate *tem = [self.tempArr objectAtIndex:imgView.tag - 100];
+    if (_selectTemplate) {
+        _selectTemplate(tem);
+    }
     self.editCardVC.glCard.template = tem;
     self.editCardVC.cardTemp = tem;
     [self.navigationController popViewControllerAnimated:YES];

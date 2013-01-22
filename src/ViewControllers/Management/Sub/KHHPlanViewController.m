@@ -15,15 +15,22 @@
 #import "KHHUpperView.h"
 #import "KHHForWhereCell.h"
 #import "KHHBMapLocationController.h"
+#import "KHHHomeViewController.h"
+#import "CustomBadge.h"
+#import "KHHCalendarViewController.h"
+#import "KHHDataNew+Card.h"
 
 @interface KHHPlanViewController ()
 {
-    NSDictionary *dicTemp;
+    NSMutableDictionary *dicTemp;
     CGRect rectForKey;
     NSMutableArray *inputsForKeyboard;
     
     UIImageView *rotaView;
+    UIButton *objectBtn;
+    NSMutableArray *cardsArr;
     
+    BMKAddrInfo *_addrInfo;
 }
 @end
 
@@ -100,11 +107,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+//    self.view.frame = CGRectMake(0, 20, self.view.frame.size.width, self.view.frame.size.height-100);
     //self.title =  @"新建计划";
     [self doUIRightButton];
     // NSLog(@"%f",);
     
-   
+    NSLog(@"%f,%f,%f,%f,%f,%f",self.navigationController.view.frame.size.height,self.view.frame.size.height,self.navigationController.view.frame.origin.y,self.view.frame.origin.y,self.navigationController.navigationBar.frame.size.height,self.navigationController.navigationBar.frame.origin.y);
     table.frame =  CGRectMake(0, 0, 320, self.view.bounds.size.height-44-50);
     
     inputsForKeyboard = [[NSMutableArray alloc]initWithCapacity:10];
@@ -118,8 +126,13 @@
     
 }
 
+
+
 - (void)uper
 {
+    
+//    [[KHHDataNew sharedData] doCheckIn:nil delegate:self];
+//    [KHHDataNew sharedData] do
     NSLog(@"!!!!!enable");
 }
 
@@ -131,7 +144,9 @@
 
 - (void)rightBarButtonClick:(id)sender
 {
-    [self.navigationController pushViewController:[[UIViewController alloc]init] animated:YES];
+     KHHCalendarViewController *calVC = [[KHHCalendarViewController alloc] initWithNibName:nil bundle:nil];
+    calVC.card = [[KHHDataNew sharedData]allMyCards][0];
+    [self.navigationController pushViewController:calVC animated:YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -177,10 +192,20 @@
             ((KHHTargetCell *)cell).placeStr = @"请选择拜访对象";
             ((KHHTargetCell *)cell).field.delegate = self;
             ((KHHTargetCell *)cell).field.tag = 10020;
+           
+            
         }
         if ([dicTemp objectForKey:@"target"]) {
             ((KHHTargetCell *)cell).field.text = [dicTemp objectForKey:@"target"];
         }
+        {
+            objectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+            objectBtn.frame = CGRectMake(265, 5, 35, 35);
+            [objectBtn addTarget:self action:@selector(objectBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+            [objectBtn setBackgroundImage:[UIImage imageNamed:@"contact_select.png"] forState:UIControlStateNormal];
+            [cell addSubview:objectBtn];
+        }
+        
         
     }
     if (indexPath.row == [self date]||indexPath.row  == [self time]) {
@@ -314,9 +339,10 @@
 {
     [rotaView startAnimating];
     
-    [[KHHBMapLocationController sharedController] doGetLocation:^(NSString *locStr) {
-        NSLog(@"locStr%@",locStr);
-        [dicTemp setValue:locStr forKey:@"where"];
+    [[KHHBMapLocationController sharedController] doGetLocation:^(BMKAddrInfo *addrInfo) {
+       // NSLog(@"locStr%@",_addrInfo.strAddr);
+        _addrInfo = addrInfo;
+        [dicTemp setValue:addrInfo.strAddr forKey:@"where"];
          [table reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self where] inSection:0]]  withRowAnimation:UITableViewRowAnimationNone];
         [rotaView stopAnimating];
         
@@ -369,9 +395,27 @@
 }
 
 #pragma mark - textFiled delegate
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    if (textField.tag == 10020) {
+        if ([string isEqualToString:@""]) {
+            textField.text = @"";
+            [cardsArr removeAllObjects];
+        }
+    }
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    [table showNormal];
+    return YES;
+}
 
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
+    
     if (textField.tag == 10022) {
         [dicTemp setValue:textField.text forKey:@"descript"];
     }else{
@@ -462,14 +506,14 @@
     if (indexPath.row == [self date]||indexPath.row == [self time]) {
         [self hiddenKeyboard];
         if (!self.datePicker) {
-            self.datePicker = [[ KHHDatePicker alloc] initWithFrame:CGRectMake(0.0,H460-200.0,320.0,200.0)];
+            self.datePicker = [[ KHHDatePicker alloc] initWithFrame:CGRectMake(0.0,300-200.0,320.0,200.0)];
             
             [self.datePicker addTarget:self action:@selector(dateChanged) forControlEvents:UIControlEventValueChanged];
             self.datePicker.hidden = YES;
             [self addRes:_datePicker];
         }
         if (self.datePicker.hidden) {
-            [self.datePicker showInView:self.navigationController.view ];
+            [self.datePicker showInView:self.view ];
         }else{
             [table showNormal];
         }
@@ -486,7 +530,7 @@
             [self addRes:_areaPicker];
         }
         if (self.areaPicker.hidden) {
-            [self.areaPicker showInView:self.navigationController.view ];
+            [self.areaPicker showInView:self.view ];
         }else{
             [table showNormal];
         }
@@ -496,7 +540,7 @@
     if (indexPath.row == [self memo] ) {
         [self hiddenKeyboard];
         if (!self.memoPicker) {
-            self.memoPicker = [[ KHHMemoPicker alloc] initWithFrame:CGRectMake(0.0,H460-200.0,320.0,200.0)];
+            self.memoPicker = [[ KHHMemoPicker alloc] initWithFrame:CGRectMake(0.0,460-200.0,320.0,200.0)];
             self.memoPicker.hidden = YES;
             self.memoPicker.tag = 10030;
             self.memoPicker.memoArr = [_paramDic valueForKeyPath:@"memo.titles"];
@@ -507,7 +551,7 @@
             [self addRes:_memoPicker];
         }
         if (self.memoPicker.hidden) {
-            [self.memoPicker showInView:self.navigationController.view ];
+            [self.memoPicker showInView:self.view ];
         }else{
             [table showNormal];
         }
@@ -517,7 +561,7 @@
     if (indexPath.row == [self remind]) {
         [self hiddenKeyboard];
         if (!self.remindPicker) {
-            self.remindPicker = [[ KHHMemoPicker alloc] initWithFrame:CGRectMake(0.0,H460-200.0,320.0,200.0)];
+            self.remindPicker = [[ KHHMemoPicker alloc] initWithFrame:CGRectMake(0.0,460-200.0,320.0,200.0)];
             self.remindPicker.hidden = YES;
             self.remindPicker.memoArr = [_paramDic valueForKeyPath:@"remind.titles"];
             self.remindPicker.tag = 10031;
@@ -528,7 +572,7 @@
             [self addRes:_remindPicker];
         }
         if (self.remindPicker.hidden) {
-            [self.remindPicker showInView:self.navigationController.view ];
+            [self.remindPicker showInView:self.view ];
         }else{
             [table showNormal];
         }
@@ -630,7 +674,7 @@
             [self addRes:_memoPicker];
         }
         if (self.memoPicker.hidden) {
-            [self.memoPicker showInView:self.navigationController.view ];
+            [self.memoPicker showInView:self.view ];
         }else{
             [table showNormal];
         }
@@ -651,7 +695,7 @@
             [self addRes:_remindPicker];
         }
         if (self.remindPicker.hidden) {
-            [self.remindPicker showInView:self.navigationController.view ];
+            [self.remindPicker showInView:self.view ];
         }else{
             [table showNormal];
         }
@@ -673,6 +717,70 @@
     
 }
 
+#pragma mark - to select person
+- (void)objectBtnClick:(id)sender
+{
+    KHHHomeViewController *homeVC = [[KHHHomeViewController alloc] initWithNibName:nil bundle:nil];
+    homeVC.isNormalSearchBar = YES;
+    
+    homeVC.appendCardName = ^(Card *card){
+        if (!cardsArr) {
+            cardsArr = [[NSMutableArray alloc]init];
+        }
+        if ([cardsArr containsObject:card]) {
+            return;
+        }
+        
+        [cardsArr addObject:card];
+        NSString *strPro2;
+        if ([dicTemp objectForKey:@"target"]&&![[dicTemp objectForKey:@"target"] isEqualToString:@""]) {
+            strPro2 = [dicTemp objectForKey:@"target"];
+            if (![strPro2 isEqualToString:@""]&&![strPro2 hasSuffix:@";"]) {
+                strPro2 = [NSString stringWithFormat:@"%@;",strPro2];
+            }
+            
+        }
+
+        
+        NSMutableString *strPro = [[NSMutableString alloc]init];
+        NSString *name = [NSString stringByFilterNilFromString:card.name];
+        if (name.length) {
+            [strPro appendString:[NSString stringWithFormat:@"%@",name]];
+        }else {
+            //名称为空时添加一个空格作为标识
+            [strPro appendString:@" "];
+        }
+        if (card.company && card.company.name && card.company.name.length > 0) {
+            NSString *company = [NSString stringByFilterNilFromString:card.company.name];
+            if (company.length > 0) {
+                [strPro appendString:[NSString stringWithFormat:@"(%@);",company]];
+            }
+        }
+
+        [dicTemp setValue:[NSString stringWithFormat:@"%@%@",strPro2?strPro2:@"",strPro] forKey:@"target"];
+        
+        [table reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:[self target] inSection:0],nil]  withRowAnimation:UITableViewRowAnimationNone];
+    };
+   // homeVC.visitVC = self;
+    [self.navigationController pushViewController:homeVC animated:YES];
+}
+
+- (void)setDicTempTarget
+{
+   
+    for (Card *card in cardsArr) {
+        
+        
+        //公司
+           }
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+}
 
 #pragma mark - just self use
 

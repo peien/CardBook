@@ -7,10 +7,16 @@
 //
 
 #import "KHHDataNew+Message.h"
+#import "KHHMessage.h"
 
 @implementation KHHDataNew (Message)
 
-
+- (NSUInteger)countOfUnreadMessages {
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isRead == %@", @(NO)];
+    NSArray *fetched = [KHHMessage objectArrayByPredicate:predicate
+                                          sortDescriptors:nil];
+    return fetched.count;
+}
 
 #pragma mark - delegates
 - (void)reseaveDone:(Boolean)haveNewMsg

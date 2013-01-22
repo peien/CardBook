@@ -789,7 +789,11 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 
 
 
+- (void)loginForUISuccess:(NSDictionary *)userInfo
+{
+    
 
+}
 
 @end
 

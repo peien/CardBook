@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "SuperViewController.h"
 #import "KHHVisitRecoardVC.h"
+#import "KHHDataNew+Group.h"
+
+
 @interface KHHHomeViewController : SuperViewController <UITableViewDelegate, UITableViewDataSource,
 UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (nonatomic, weak)   IBOutlet UISearchBar      *searchBar;
@@ -36,6 +39,9 @@ UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (strong, nonatomic) NSArray                   *oWnGroupArray;
 @property (strong, nonatomic) KHHVisitRecoardVC         *visitVC;
 
+//for select person
+
+@property (strong, nonatomic) void(^appendCardName)(Card *card);
 - (IBAction)addBtnClick:(id)sender;
 - (IBAction)cancelBtnClick:(id)sender;
 @end

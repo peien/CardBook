@@ -27,7 +27,7 @@
     }
     
     //lastDate为空时表示拿全部数据，这里就没有无效参数判断
-    NSString *pathFormat = @"temlate/sync/%@";
+    NSString *pathFormat = @"template/sync/%@";
     NSString *path = [NSString stringWithFormat:pathFormat,lastDate ? lastDate : @""];
     
     //成功block

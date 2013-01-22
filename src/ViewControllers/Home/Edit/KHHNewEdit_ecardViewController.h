@@ -9,8 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "KHHInputTableView.h"
 #import "HZAreaPickerView.h"
+#import "SuperViewController.h"
+#import "MBProgressHUD.h"
+#import "KHHDataNew+Card.h"
 
-@interface KHHNewEdit_ecardViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,HZAreaPickerDelegate>
+@interface KHHNewEdit_ecardViewController : SuperViewController<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,HZAreaPickerDelegate,KHHDataCardDelegate>
 @property (strong, nonatomic) KHHInputTableView *table;
+@property (strong, nonatomic) MBProgressHUD *hud;
+@property (strong, nonatomic) void(^addCardSuccess)();
 
+//for edit view
+@property (strong, nonatomic) Card *toEditCard;
 @end

@@ -20,7 +20,7 @@
 @property (nonatomic,strong) NSString *companyName;
 @property (nonatomic,assign) NSString *orgId;
 @property (nonatomic,strong) NSString *permissionName;
-
+@property (nonatomic,strong) NSString *deviceToken;
 //settings
 
 + (KHHUser *)shareInstance;

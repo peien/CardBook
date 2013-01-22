@@ -35,7 +35,7 @@ const NSInteger KHH_LOCATION_REFRESH_TIMEOUT = 30; // 30 second.
 @implementation KHHBMapLocationController
 
 {
-    void(^_done)(NSString *locStr);
+    void(^_done)(BMKAddrInfo *addrInfo);
     void(^_fail)();
 }
 
@@ -221,7 +221,7 @@ const NSInteger KHH_LOCATION_REFRESH_TIMEOUT = 30; // 30 second.
 	if (error == 0) {
         _addrInfo = result;
         if (_done) {
-            _done(_addrInfo.strAddr);
+            _done(_addrInfo);
         }
         //发送解析地址成功
         [self updateSucceeded];
@@ -278,7 +278,7 @@ const NSInteger KHH_LOCATION_REFRESH_TIMEOUT = 30; // 30 second.
     DLog(@"stop locate");
 }
 
-- (void)doGetLocation:(void(^)(NSString *locStr)) done fail:(void(^)())fail
+- (void)doGetLocation:(void(^)(BMKAddrInfo *addrInfo)) done fail:(void(^)())fail
 {
     _done = done;
     _fail = fail;

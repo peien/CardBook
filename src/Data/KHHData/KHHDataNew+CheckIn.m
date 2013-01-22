@@ -10,7 +10,7 @@
 #import "ICheckInForNetwork.h"
 @implementation KHHDataNew (CheckIn)
 #pragma mark - 员工签到
-- (void)checkIn:(ICheckIn *)iCheckIn delegate:(id<KHHDataCheckInDelegate>) delegate
+- (void)doCheckIn:(ICheckIn *)iCheckIn delegate:(id<KHHDataCheckInDelegate>) delegate
 {
     self.delegate = delegate;
     [self.agent checkIn:iCheckIn delegate:self];

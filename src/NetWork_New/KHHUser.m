@@ -18,6 +18,7 @@
 @synthesize companyName = _companyName;
 @synthesize orgId = _orgId;
 @synthesize permissionName = _permissionName;
+@synthesize deviceToken = _deviceToken;
 
 + (KHHUser *)shareInstance
 {
@@ -210,6 +211,24 @@
         [[NSUserDefaults standardUserDefaults] setValue:permissionName forKey:@"kPermissionName"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         _permissionName = permissionName;
+    }
+}
+
+- (NSString *)deviceToken
+{
+    if (!_deviceToken) {
+        _deviceToken = [[NSUserDefaults standardUserDefaults]valueForKey:@"kDeviceToken"];
+        
+    }
+    return _deviceToken;
+}
+
+- (void)setDeviceToken:(NSString *)deviceToken
+{
+    if (![_deviceToken isEqualToString:deviceToken]) {
+        [[NSUserDefaults standardUserDefaults] setValue:deviceToken forKey:@"kDeviceToken"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        _permissionName = deviceToken;
     }
 }
 

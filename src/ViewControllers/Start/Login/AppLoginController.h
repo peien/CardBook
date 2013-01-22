@@ -11,7 +11,10 @@
 #import "KHHDataNew+Account.h"
 #import "ResetPasswordViewController.h"
 #import "AppRegisterController.h"
+#import "KHHDataNew+Group.h"
+#import "KHHDataNew+Template.h"
+#import "KHHDataNew+Card.h"
 
-@interface AppLoginController : SuperViewController<KHHDataAccountDelegate,ResetPasswordDelegate>
+@interface AppLoginController : SuperViewController<KHHDataAccountDelegate,ResetPasswordDelegate,KHHDataGroupDelegate,KHHDataTemplateDelegate>
 @property (nonatomic,strong) id<changeViewDelegate> delegate;
 @end

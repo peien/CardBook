@@ -17,6 +17,7 @@
 
 //名片新增
 - (void)addCardForUISuccess;
+- (void)addCardForUISuccess:(NSDictionary *) dict;
 - (void)addCardForUIFailed:(NSDictionary *) dict;
 
 //名片删除

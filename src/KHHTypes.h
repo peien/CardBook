@@ -62,7 +62,8 @@ typedef enum  {
 // KHHTemplateDomainType 模板共有私有
 typedef enum {
     KHHTemplateDomainTypePublic   = 1,
-    KHHTemplateDomainTypePrivate  = 2,
+    KHHTemplateDomainTypePay,
+    KHHTemplateDomainTypePrivate,
 } KHHTemplateDomainType;
 
 // KHHQueuedOperationSyncType

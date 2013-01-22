@@ -75,6 +75,9 @@
    // NSLog(@"%f",self.frame.size.width);
     showKeyboard = YES;
     int offset = -self.contentOffset.y+self.frame.origin.y+frame.origin.y + frame.size.height - (480 - KHH_Keyboard_Height);
+    if (iPhone5) {
+        offset = -self.contentOffset.y+self.frame.origin.y+frame.origin.y + frame.size.height - (568 - KHH_Keyboard_Height);
+    }
    
     if (offset<=0&&self.contentOffset.y<=0) {
         return;

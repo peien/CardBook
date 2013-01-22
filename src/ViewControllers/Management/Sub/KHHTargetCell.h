@@ -13,7 +13,7 @@
 @property (nonatomic,strong)NSString *headStr;
 @property (nonatomic,strong)NSString *placeStr;
 @property (nonatomic,strong)UITextField *field;
-
+@property (nonatomic,strong)NSArray *persons;
 - (void)registResponder;
 
 @end
