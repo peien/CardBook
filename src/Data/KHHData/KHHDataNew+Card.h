@@ -35,12 +35,14 @@ typedef enum {
 
 
 #pragma mark - 名片编辑
-- (void)updateCard:(InterCard *)iCard delegate:(id<KHHDataCardDelegate>) delegate;
+- (void)doUpdateCard:(InterCard *)iCard delegate:(id<KHHDataCardDelegate>) delegate;
 - (void)updateCard:(InterCard *)iCard logoImage:(UIImage *) logoImage cardLinks:(NSArray *) cardLinks delegate:(id<KHHDataCardDelegate>) delegate;
 
 
 #pragma mark - 名片删除
 - (void)doDeleteCard:(Card *)card delegate:(id<KHHDataCardDelegate>) delegate;
+
+#pragma mark - 名片交换
 
 
 #pragma mark - 设置联系人的状态为已查看

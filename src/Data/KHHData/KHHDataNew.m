@@ -8,7 +8,7 @@
 
 #import "KHHDataNew.h"
 #import "KHHDefaults.h"
-
+#import "KHHUser.h"
 @implementation KHHDataNew
 {
     NSDateFormatter *_dateFormatter;
@@ -72,6 +72,7 @@
 - (void)cleanContext // 清除未保存的更改。
 {
     [self.context reset];
+    _persistentStoreCoordinator = nil;
 }
 
 - (NSManagedObjectContext *)context
@@ -106,9 +107,10 @@
     
     // 登陆成功后以 “user_companyID.sqlite” 为文件名创建数据库文件。user取不到时使用默认的“CardBook.sqlite”。
     NSString *fileName = @"CardBook.sqlite";
-    NSString *userID = [[KHHDefaults sharedDefaults] currentUser];
+    NSString *userID = [KHHUser shareInstance].userId;
+    NSLog(@"userId%@",userID);
     if (userID.length) {
-        NSNumber *companyID = [[KHHDefaults sharedDefaults] currentCompanyID];
+        NSNumber *companyID = [NSNumber numberFromString:[KHHUser shareInstance].companyId];
         fileName = [NSString stringWithFormat:@"%@_%@.sqlite",userID, companyID];
     }
     NSURL *storeURL = [[KHHApp applicationDocumentsDirectory] URLByAppendingPathComponent:fileName];
@@ -131,8 +133,11 @@
        _dateFormatter = [[NSDateFormatter alloc]init];
         [_dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     }
-   NSDate *date = [_dateFormatter dateFromString:timeStr];
-    return [NSString stringWithFormat:@"%f", [[_dateFormatter dateFromString:timeStr] timeIntervalSince1970]];
+   
+    
+    return [NSString stringWithFormat:@"%lld", (long long int)[[_dateFormatter dateFromString:timeStr] timeIntervalSince1970]*1000];
+   
+    
 }
 
 @end

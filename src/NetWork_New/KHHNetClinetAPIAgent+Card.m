@@ -354,7 +354,7 @@ NSMutableDictionary * parametersToCreateOrUpdateCard(InterCard *iCard) {
     }
     
     //url
-    NSString *path = @"card";
+    NSString *path = @"card/update";
     //准备参数
     NSMutableDictionary *parameters = parametersToCreateOrUpdateCard(iCard);
     

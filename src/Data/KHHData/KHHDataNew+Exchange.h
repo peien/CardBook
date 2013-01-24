@@ -18,4 +18,7 @@
 
 #pragma mark - 发送名片到指定用户
 - (void)sendCard:(long) cardID version:(int) version toUser:(NSString *)userID delegate:(id<KHHDataExchangeDelegate>) delegate;
+
+#pragma mark - 获取最后获取的名片
+- (void)pullLatestReceivedCard;
 @end

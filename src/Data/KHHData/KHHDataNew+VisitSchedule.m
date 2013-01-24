@@ -152,7 +152,7 @@
 {
     DLog(@"addVisitScheduleSuccess ! dict = %@", dict);
     //添加成功成功，把返回的拜访计划（插入）到本地数据库，建议与服务器进行一次同步
-    [self syncVisitSchedule:self.delegate syncType: KHHVisitScheduleSyncTypeAdd];
+   // [self syncVisitSchedule:self.delegate syncType: KHHVisitScheduleSyncTypeAdd];
 }
 -(void) addVisitScheduleFailed:(NSDictionary *) dict
 {

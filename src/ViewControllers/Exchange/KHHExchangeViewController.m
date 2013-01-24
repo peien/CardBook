@@ -26,13 +26,16 @@
 #import "KHHNotifications.h"
 #import "KHHDefaults.h"
 #import "KHHSendRecordViewController.h"
+#import "KHHDataNew+Card.h"
+#import "KHHNewEdit_ecardViewController.h"
+
+#import "KHHUser.h"
 
 @interface KHHExchangeViewController ()<UIScrollViewDelegate,CLLocationManagerDelegate>
 @property (strong, nonatomic) XLPageControl *xlPage;
 @property (strong, nonatomic) CLLocation *currentLocation;
 @property (strong, nonatomic) CLLocationManager *localM;
-@property (strong, nonatomic) KHHNetworkAPIAgent *httpAgent;
-@property (strong, nonatomic) KHHData            *dataCtrl;
+
 @property (strong, nonatomic) Card               *card;
 @property (strong, nonatomic) MBProgressHUD      *mbHUD;
 @property (strong, nonatomic) NSTimer            *timer;
@@ -42,7 +45,7 @@
 @property (strong, nonatomic) KHHFrameCardView   *cardView;
 @property (strong, nonatomic) KHHAppDelegate     *app;
 @property (assign, nonatomic) bool               isHandleReceive;
-@property (strong, nonatomic) KHHDefaults  *   myDefault;
+
 @end
 
 @implementation KHHExchangeViewController
@@ -51,8 +54,7 @@
 @synthesize xlPage;
 @synthesize currentLocation = _currentLocation;
 @synthesize localM = _localM;
-@synthesize httpAgent = _httpAgent;
-@synthesize dataCtrl;
+
 @synthesize card;
 @synthesize mbHUD;
 @synthesize timer;
@@ -62,7 +64,7 @@
 @synthesize cardView;
 @synthesize app;
 @synthesize isHandleReceive;
-@synthesize myDefault;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -70,25 +72,26 @@
     if (self) {
         // Custom initialization
         self.title = NSLocalizedString(@"交换名片", nil);
-        //[self.leftBtn setTitle:NSLocalizedString(@"切换名片", nil) forState:UIControlStateNormal];
-        self.httpAgent = [[KHHNetworkAPIAgent alloc] init];
-        self.dataCtrl = [KHHData sharedData];
+        //[self.leftBtn setTitle:NSLocalizedString(@"切换名片", nil) forState:UIControlStateNormal];        
         self.app  = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
-        self.myDefault = [KHHDefaults sharedDefaults];
+        
     }
     return self;
 }
 - (void)rightBarButtonClick:(id)sender{
     
-    Edit_eCardViewController *editeCardVC = [[Edit_eCardViewController alloc] initWithNibName:@"Edit_eCardViewController" bundle:nil];
-    editeCardVC.type = KCardViewControllerTypeShowInfo;
-    editeCardVC.glCard = self.card;
+//    Edit_eCardViewController *editeCardVC = [[Edit_eCardViewController alloc] initWithNibName:@"Edit_eCardViewController" bundle:nil];
+//    editeCardVC.type = KCardViewControllerTypeShowInfo;
+//    
+//    editeCardVC.glCard = self.card;
+    KHHNewEdit_ecardViewController *editeCardVC = [[KHHNewEdit_ecardViewController alloc]init];
+    editeCardVC.toEditCard = self.card;
     [self.navigationController pushViewController:editeCardVC animated:YES];
 }
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSArray *cards = [self.dataCtrl allMyCards];
+    NSArray *cards = [[KHHDataNew sharedData] allMyCards];
     if (cards && cards.count > 0) {
         self.card = [cards objectAtIndex:0];
     }
@@ -170,7 +173,7 @@
     // e.g. self.myOutlet = nil;
     _scrView = nil;
     xlPage = nil;
-    self.dataCtrl = nil;
+   
     self.card = nil;
     self.mbHUD = nil;
     self.timer = nil;
@@ -188,12 +191,12 @@
  */
 -(BOOL) inShowEditButton
 {
-    if (!self.myDefault) {
-        return NO;
-    }
+//    if (!self.myDefault) {
+//        return NO;
+//    }
     
-    NSString *permission = self.myDefault.currentPermission;
-    NSNumber *companyID = self.myDefault.currentCompanyID;
+    NSString *permission = [KHHUser shareInstance].permissionName;
+    NSNumber *companyID = [NSNumber numberFromString:[KHHUser shareInstance].companyId];
     if (![self.card isKindOfClass:[MyCard class]]) {
         return NO;
     }
@@ -237,7 +240,7 @@
 }
 // 刷新卡片信息
 - (void)updateCardTempInfo{
-    NSArray *cards = [self.dataCtrl allMyCards];
+    NSArray *cards = [[KHHDataNew sharedData] allMyCards];
     if (cards && cards.count > 0) {
         self.card = [cards objectAtIndex:0];
     }
@@ -319,7 +322,8 @@
     }
     self.mbHUD = [MBProgressHUD showHUDAddedTo:self.app.window animated:YES];
     self.mbHUD.labelText = @"请稍后,正在交换名片...";
-    [self.httpAgent exchangeCard:self.card withCoordinate:self.currentLocation.coordinate];
+    [[KHHDataNew sharedData] exchangeCard:self.card withCoordinate:self.currentLocation.coordinate delegate:self];
+//    [self.httpAgent exchangeCard:self.card withCoordinate:self.currentLocation.coordinate];
     self.exchangeStartTime = CFAbsoluteTimeGetCurrent();
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
     self.countDownNum = 16;
@@ -340,7 +344,8 @@
 //    [self.mbHUD hide:YES];
     //交换成功后在收取名片中间的空隙添加文字提示
     self.mbHUD.labelText = @"名片交换成功，正在为您收取名片";
-    [self.dataCtrl pullLatestReceivedCard];
+   
+    [[KHHDataNew sharedData] pullLatestReceivedCard];
 }
 //交换失败
 - (void)handleExchangeCardFailed:(NSNotification *)info{
@@ -489,6 +494,18 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+#pragma mark - exchange delegate
+
+- (void)exchangeCardForUISuccess:(NSDictionary *)dict
+{
+
+}
+
+- (void)exchangeCardForUIFailed:(NSDictionary *)dict
+{
+
 }
 
 @end

@@ -22,6 +22,8 @@
 @property (assign, nonatomic) int                               pages;
 @property (strong, nonatomic) NSString                      *   myActionName;
 
+@property (strong, nonatomic) void(^tapCallBack)();
+
 - (id)initWithFrame:(CGRect)frame delegate:(id) delegate isVer:(BOOL)ver callbackAction:(NSString *) actionName;
 - (void)showView;
 -(void) showPreView;

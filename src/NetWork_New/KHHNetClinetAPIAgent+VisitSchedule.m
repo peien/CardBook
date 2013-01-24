@@ -91,7 +91,7 @@
  * url visitPlan
  * 方法  post
  */
--(void)addVisitSchedule:(OSchedule *) oSchedule cardID:(long) cardID delegate:(id<KHHNetAgentVisitScheduleDelegates>) delegate
+-(void)addVisitSchedule:(OSchedule *) oSchedule  delegate:(id<KHHNetAgentVisitScheduleDelegates>) delegate
 {
     //网络状态
 //    if (![self networkStateIsValid]) {
@@ -107,7 +107,7 @@
     }
     
     // 检查参数
-    if (cardID < 0 || !oSchedule) {
+    if (!oSchedule) {
 //        if ([delegate respondsToSelector:@selector(addVisitScheduleFailed:)]) {
 //            //参数错误
 //            NSDictionary * dict = [self parametersNotMeetRequirementFailedResponseDictionary];
@@ -121,7 +121,7 @@
     
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithCapacity:10];
     //创建人公司名片id
-    parameters[@"cardId"]           = [NSString stringWithFormat:@"%ld", cardID];
+   // parameters[@"cardId"]           = [NSString stringWithFormat:@"%ld", cardID];
     
     if (oSchedule.customer.length)
         parameters[@"customName"]   = oSchedule.customer;

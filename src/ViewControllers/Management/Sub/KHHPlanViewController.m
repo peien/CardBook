@@ -18,6 +18,8 @@
 #import "KHHHomeViewController.h"
 #import "CustomBadge.h"
 #import "KHHCalendarViewController.h"
+#import "MBProgressHUD.h"
+
 #import "KHHDataNew+Card.h"
 
 @interface KHHPlanViewController ()
@@ -31,6 +33,8 @@
     NSMutableArray *cardsArr;
     
     BMKAddrInfo *_addrInfo;
+    
+    MBProgressHUD *_hud;
 }
 @end
 
@@ -120,21 +124,12 @@
     dicTemp = [[NSMutableDictionary alloc]init];
     KHHUpperView *upView = [[KHHUpperView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height-44-50, 320, 50)];
     [self.view addSubview:upView];
-    upView.upperBtn.enabled = [dicTemp objectForKey:@"where"]?YES:NO;
+    upView.upperBtn.enabled =  [self where] == -1||[dicTemp objectForKey:@"where"]?YES:NO;
     [upView.upperBtn addTarget:self action:@selector(uper) forControlEvents:UIControlEventTouchUpInside];
     //weakself = self;
     
 }
 
-
-
-- (void)uper
-{
-    
-//    [[KHHDataNew sharedData] doCheckIn:nil delegate:self];
-//    [KHHDataNew sharedData] do
-    NSLog(@"!!!!!enable");
-}
 
 - (void)doUIRightButton
 {
@@ -247,6 +242,9 @@
         }else{
             ((KHHLocationCell *)cell).locationStr = @"请选择省市地";
         }
+        if ([dicTemp objectForKey:@"street"]) {
+            ((KHHLocationCell *)cell).street = [dicTemp objectForKey:@"street"];
+        }
         
     }
     if (indexPath.row == [self img]) {
@@ -347,7 +345,7 @@
         [rotaView stopAnimating];
         
     } fail:^{
-        [rotaView startAnimating];
+        [rotaView stopAnimating];
        
     }];
 }
@@ -416,10 +414,13 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     
+    
     if (textField.tag == 10022) {
         [dicTemp setValue:textField.text forKey:@"descript"];
-    }else{
+    }else if(textField.tag == 10020){
         [dicTemp setValue:textField.text forKey:@"target"];
+    }else{
+        [dicTemp setValue:textField.text forKey:@"street"];
     }
     
 }
@@ -483,7 +484,12 @@
 
 - (void)pickerDidChaneStatus:(HZAreaPickerView *)picker
 {
-    [dicTemp setValue:[NSString stringWithFormat:@"%@ %@ %@", picker.locate.state, picker.locate.city, picker.locate.district] forKey:@"location"];
+    if (picker.locate.district) {
+        [dicTemp setValue:[NSString stringWithFormat:@"%@ %@ %@", picker.locate.state, picker.locate.city, picker.locate.district] forKey:@"location"];
+    }else{
+        [dicTemp setValue:[NSString stringWithFormat:@"%@ %@", picker.locate.state, picker.locate.city] forKey:@"location"];
+    }
+    
     [table reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self local0] inSection:0]]  withRowAnimation:UITableViewRowAnimationNone];
 }
 
@@ -855,6 +861,49 @@
         return [[_paramDic valueForKeyPath:@"where"] integerValue];
     }
     return -1;
+}
+
+
+#pragma mark - for uper delegate
+
+- (void)uper
+{
+    if ([self target]!=-1&&![[dicTemp objectForKey:@"target"] length]) {
+        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"上传失败" message:@"客户不能为空" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alert show];
+        return;
+    }
+    if ([self descript]!=-1&&![[dicTemp objectForKey:@"descript"] length]) {
+        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"上传失败" message:@"说明不能为空" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alert show];
+        return;
+    }
+    InterPlan *iplan = [[InterPlan alloc]init];
+    iplan.cardsArr = cardsArr;
+    iplan.customerName = [dicTemp objectForKey:@"target"];
+    iplan.content = [dicTemp objectForKey:@"descript"];
+    iplan.imgViews = [dicTemp objectForKey:@"imgArr"];
+    iplan.remindDate = [dicTemp objectForKey:@"remind"];
+    iplan.localStr = [dicTemp objectForKey:@"location"];
+    iplan.address = [dicTemp objectForKey:@"street"];
+    _hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+    _hud.labelText = @"正在上传...";
+    [[KHHDataNew sharedData] doAddPlan:iplan  delegate:self];
+    
+    NSLog(@"!!!!!enable");
+}
+
+- (void)addPlanForUISuccess
+{
+    [_hud hide:YES];
+    NSLog(@"success");
+}
+- (void)addPlanForUIFailed:(NSDictionary *)dict
+{
+    [_hud hide:YES];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"上传失败" message:dict[kInfoKeyErrorMessage] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alert show];
+    NSLog(@"Failed");
 }
 
 @end

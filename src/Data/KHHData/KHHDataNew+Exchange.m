@@ -29,6 +29,12 @@
     [self.agent exchangeCard:card withCoordinate:coordinate delegate:self];
 }
 
+#pragma mark - 获取最后获取的名片
+- (void)pullLatestReceivedCard
+{
+
+}
+
 #pragma mark - KHHNetAgentExchangeDelegates
 //交换名片
 -(void) exchangeCardSuccess:(NSDictionary *) dict

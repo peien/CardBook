@@ -14,6 +14,6 @@
 @property (nonatomic,strong)NSString *locationStr;
 @property (nonatomic,strong)UITextField *field;
 @property (nonatomic,strong)UILabel *label;
-
+@property (nonatomic,strong)NSString *street;
 
 @end

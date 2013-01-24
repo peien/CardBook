@@ -24,7 +24,7 @@ typedef enum {
 -(void)syncVisitSchedule:(id<KHHDataVisitScheduleDelegate>) delegate;
 
 #pragma mark - 添加拜访计划
--(void)addVisitSchedule:(OSchedule *) oSchedule cardID:(long) cardID delegate:(id<KHHDataVisitScheduleDelegate>) delegate;
+-(void)addVisitSchedule:(OSchedule *) oSchedule delegate:(id<KHHDataVisitScheduleDelegate>) delegate;
 
 #pragma mark - 更新拜访计划
 //-(void)updateVisitSchedule:(OSchedule *) oSchedule delegate:(id<KHHDataVisitScheduleDelegate>) delegate;

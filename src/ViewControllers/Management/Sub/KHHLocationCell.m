@@ -60,8 +60,9 @@
    // [_button set:_locationStr forState:UIControlStateNormal];
     //[_button setTitle:_locationStr forState:UIControlStateHighlighted];
     _label.text = _locationStr;
-    _field.frame = CGRectMake(r.origin.x+10+size.width+30, (r.size.height-size.height)/2+12, r.size.width - 40-40 -size.width, size.height+10);
     
+    _field.frame = CGRectMake(r.origin.x+10+size.width+30, (r.size.height-size.height)/2+12, r.size.width - 40-40 -size.width, size.height+10);
+    _field.text = _street;
     
     self.textLabel.text = _headStr;
     [self.contentView addSubview:_label];

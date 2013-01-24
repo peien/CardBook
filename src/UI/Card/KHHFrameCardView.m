@@ -182,6 +182,10 @@
         return;
     }
     
+    if (_tapCallBack) {
+        _tapCallBack();
+        return;
+    }
     if (!self.myDelegate) {
         return;
     }

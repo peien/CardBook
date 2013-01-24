@@ -7,9 +7,18 @@
 //
 
 #import "KHHDataNew.h"
+#import "KHHDataSignPlanDelegate.h"
+#import "InterPlan.h"
+#import "KHHNetClinetAPIAgent+SignPlan.h"
+typedef enum {
+    KHHVisitScheduleSyncTypeAdd = 1,
+    KHHVisitScheduleSyncTypeUpdate,
+    KHHVisitScheduleSyncTypeDelete,
+    KHHVisitScheduleSyncTypeSync,
+}   KHHVisitScheduleSyncType;
 
-@interface KHHDataNew (SignForPlan)
+@interface KHHDataNew (SignForPlan)<KHHNetAgentSignPlanDelegate>
 - (void)doSign;
-- (void)doPlan;
-- (void)doCollect;
+- (void)doAddPlan:(InterPlan *)iPlan delegate:(id<KHHDataSignPlanDelegate>) delegate;
+- (void)doSyncPlan:(KHHVisitScheduleSyncType)syncType;
 @end

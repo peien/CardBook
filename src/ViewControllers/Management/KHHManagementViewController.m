@@ -77,7 +77,7 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
         
         [self.leftBtn setTitle:NSLocalizedString(@"消息", nil) forState:UIControlStateNormal];
         [self.rightBtn setTitle:NSLocalizedString(@"同步", nil) forState:UIControlStateNormal];
-        [self showMessageNums];
+        
     }
     return self;
 }
@@ -167,6 +167,12 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
     [MBProgressHUD hideHUDForView:app.window animated:YES];
 }
 
+- (void)doInitWithUser
+{
+    [self showMessageNums];
+    self.myCard = [[[KHHDataNew sharedData] allMyCards] objectAtIndex:0];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -174,10 +180,7 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
     [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_guide];
     
     //判断数据是否完整
-    NSArray *cards = [[KHHDataNew sharedData] allMyCards];
-    if (cards && cards.count > 0) {
-        self.myCard = [cards objectAtIndex:0];
-    }else {
+     {
         //提示用户数据没有同步下来，先同步一下数据
 //        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:KhhMessageDataErrorTitle
 //                                                        message:KhhMessageDataError

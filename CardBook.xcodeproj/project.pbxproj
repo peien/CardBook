@@ -57,6 +57,10 @@
 		310267751696D55600FBE156 /* KHHDateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267731696D55600FBE156 /* KHHDateUtil.m */; };
 		310267761696D55600FBE156 /* KHHDateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267731696D55600FBE156 /* KHHDateUtil.m */; };
 		310267771696D55600FBE156 /* KHHDateUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 310267731696D55600FBE156 /* KHHDateUtil.m */; };
+		31027B6F16AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 31027B6E16AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.m */; };
+		31027B7016AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 31027B6E16AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.m */; };
+		31027B7116AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 31027B6E16AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.m */; };
+		31027B7216AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.m in Sources */ = {isa = PBXBuildFile; fileRef = 31027B6E16AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.m */; };
 		3103C40716A90ECB00240570 /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 3103C40516A90ECB00240570 /* CustomBadge.m */; };
 		3103C40816A90ECB00240570 /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 3103C40516A90ECB00240570 /* CustomBadge.m */; };
 		3103C40916A90ECB00240570 /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 3103C40516A90ECB00240570 /* CustomBadge.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -2049,6 +2053,10 @@
 		3102676D1696D20400FBE156 /* KHHDateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHDateCell.m; sourceTree = "<group>"; };
 		310267721696D55600FBE156 /* KHHDateUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHDateUtil.h; sourceTree = "<group>"; };
 		310267731696D55600FBE156 /* KHHDateUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHDateUtil.m; sourceTree = "<group>"; };
+		31027B6A16AF87F0003CA44A /* KHHDataSignPlanDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHDataSignPlanDelegate.h; sourceTree = "<group>"; };
+		31027B6C16AF8836003CA44A /* KHHNetAgentSignPlanDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNetAgentSignPlanDelegate.h; sourceTree = "<group>"; };
+		31027B6D16AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHNetClinetAPIAgent+SignPlan.h"; sourceTree = "<group>"; };
+		31027B6E16AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHNetClinetAPIAgent+SignPlan.m"; sourceTree = "<group>"; };
 		3103C40516A90ECB00240570 /* CustomBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomBadge.m; sourceTree = "<group>"; };
 		3103C40616A90ECB00240570 /* CustomBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomBadge.h; sourceTree = "<group>"; };
 		3104A143169BBCD100CC4F22 /* KHHForWhereCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHForWhereCell.h; sourceTree = "<group>"; };
@@ -3222,6 +3230,7 @@
 				84732DCF169E8CB700C9910E /* KHHNetAgentTemplateDelegates.h */,
 				84732DE5169FADD200C9910E /* KHHNetAgentVisitScheduleDelegates.h */,
 				310A3F36168D2C43009FF135 /* MsgDelegates.h */,
+				31027B6C16AF8836003CA44A /* KHHNetAgentSignPlanDelegate.h */,
 			);
 			name = "NetDelegate impl in data";
 			sourceTree = "<group>";
@@ -3249,6 +3258,7 @@
 				31FA580316A12B0D00F65BC6 /* KHHDataMessageDelegate.h */,
 				84DB11DB16A4F3AB001B0FAC /* KHHDataTemplateDelegate.h */,
 				84DB11DE16A4F538001B0FAC /* KHHDataVisitScheduleDelegate.h */,
+				31027B6A16AF87F0003CA44A /* KHHDataSignPlanDelegate.h */,
 			);
 			name = "DataDelegate impl in UI";
 			sourceTree = "<group>";
@@ -3434,6 +3444,8 @@
 				84B2C97816A29FD300DC2028 /* KHHNetClinetAPIAgent+Company.m */,
 				31FA580516A12C8100F65BC6 /* KHHNetClinetAPIAgent+Card.h */,
 				31FA580616A12C8100F65BC6 /* KHHNetClinetAPIAgent+Card.m */,
+				31027B6D16AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.h */,
+				31027B6E16AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.m */,
 			);
 			name = NetWork_New;
 			path = ../NetWork_New;
@@ -5977,6 +5989,7 @@
 				310A069116AD36CE007460F4 /* InterSign.m in Sources */,
 				310A069716AD36DF007460F4 /* InterPlan.m in Sources */,
 				310A069D16AD36F0007460F4 /* InterCollect.m in Sources */,
+				31027B7216AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6237,6 +6250,7 @@
 				310A069016AD36CE007460F4 /* InterSign.m in Sources */,
 				310A069616AD36DF007460F4 /* InterPlan.m in Sources */,
 				310A069C16AD36F0007460F4 /* InterCollect.m in Sources */,
+				31027B7116AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6497,6 +6511,7 @@
 				310A068E16AD36CE007460F4 /* InterSign.m in Sources */,
 				310A069416AD36DF007460F4 /* InterPlan.m in Sources */,
 				310A069A16AD36F0007460F4 /* InterCollect.m in Sources */,
+				31027B6F16AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6755,6 +6770,7 @@
 				310A068F16AD36CE007460F4 /* InterSign.m in Sources */,
 				310A069516AD36DF007460F4 /* InterPlan.m in Sources */,
 				310A069B16AD36F0007460F4 /* InterCollect.m in Sources */,
+				31027B7016AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -210,6 +210,7 @@
 
 - (void)syncGroupForUISuccess
 {
+    [[KHHDataNew sharedData] removeContext];
     [_delegate changeTitle:@"正在同步模板..."];
     dispatch_queue_t myQueue = dispatch_queue_create("com.myQueue.login.template", NULL);
     dispatch_async(myQueue, ^{
@@ -243,6 +244,8 @@
 
 - (void)loginForUISuccess:(NSDictionary *)dict
 {
+   // dispatch_async(dispatch_get_main_queue(), ^{[[KHHDataNew sharedData]removeContext];});
+    
     [_delegate changeTitle:@"正在同步分组..."];
     dispatch_queue_t myQueue = dispatch_queue_create("com.myQueue.login.group", NULL);
     dispatch_async(myQueue, ^{

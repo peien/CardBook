@@ -15,9 +15,10 @@
 #import "KHHMemoPicker.h"
 #import "KHHMemoCell.h"
 #import "KHHImageCell.h"
+#import "KHHDataNew+SignForPlan.h"
 
 
-@interface KHHPlanViewController : SuperViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,HZAreaPickerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,KHHInputTableViewHiddenDelegate,KHHMemoCellDelegate,KHHImgViewInCellDelegate>
+@interface KHHPlanViewController : SuperViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,HZAreaPickerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,KHHInputTableViewHiddenDelegate,KHHMemoCellDelegate,KHHImgViewInCellDelegate,KHHDataSignPlanDelegate>
 {
     KHHInputTableView *table;
     

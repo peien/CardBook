@@ -11,6 +11,7 @@
 @implementation KHHLocalForCardCell
 {
     UIFont *font;
+    UILabel *headLabel;
     
 }
 
@@ -23,12 +24,20 @@
             font = [UIFont systemFontOfSize:13];
             self.textLabel.font = [UIFont systemFontOfSize:12];
             
-            _label = [[UILabel alloc]init];
+            _label = [[UILabel alloc]init];           
             _label.font = font;
             _label.textAlignment = NSTextAlignmentLeft;
             [_label setUserInteractionEnabled:YES];
             [_label addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self                 action:@selector(singleTapAction)]];
             _label.backgroundColor = [UIColor clearColor];
+            
+            headLabel = [[UILabel alloc]init];
+            headLabel.font = font;
+            headLabel.textAlignment = NSTextAlignmentLeft;
+           
+            headLabel.backgroundColor = [UIColor clearColor];
+            
+            
             _field = [[UITextField alloc]init];
             _field.font = font;
             _field.placeholder = @"请输入地址";
@@ -43,8 +52,8 @@
 {
     [super layoutSubviews];
     CGRect r = self.bounds;
-    CGSize size = [self.textLabel.text sizeWithFont:font];
-    _label.frame = CGRectMake(r.origin.x+10+size.width+30, (r.size.height-size.height)/2-15, r.size.width - 40-40 -size.width, size.height);
+  //  CGSize size = [self.textLabel.text sizeWithFont:font];
+    _label.frame = CGRectMake(70, 10, r.size.width - 40-40 , 20);
     _label.text = _locationStr;
 //    //_button.titleLabel.text = _locationStr;
 //   // _button.titleLabel.textColor = [UIColor blackColor];
@@ -54,10 +63,12 @@
 //    [_button setTitle:_locationStr forState:UIControlStateHighlighted];
 //    [_button setTitleColor:[UIColor blackColor] forState:UIControlStateHighlighted ];
     
-    _field.frame = CGRectMake(r.origin.x+10+size.width+30, (r.size.height-size.height)/2+12, r.size.width - 40-40 -size.width, size.height+10);
-    
-    
-    self.textLabel.text = _headStr;
+    _field.frame = CGRectMake(70, 40, r.size.width - 40-40, 20);
+    headLabel.frame = CGRectMake(19,27,30, 20);
+    headLabel.text = _headStr;
+    [self.contentView addSubview:headLabel];
+   // self.textLabel.textAlignment = NSTextAlignmentRight;
+   // self.textLabel.text = @" ";
     [self.contentView addSubview:_label];
     [self.contentView addSubview:_field];
     self.textLabel.font = [UIFont systemFontOfSize:12];

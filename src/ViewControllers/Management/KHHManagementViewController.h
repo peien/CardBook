@@ -24,4 +24,6 @@
 - (IBAction)personBtnClick:(id)sender;
 - (IBAction)moreBtnClick:(id)sender;
 - (IBAction)reviewGuide:(id)sender;
+
+- (void)doInitWithUser;
 @end

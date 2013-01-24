@@ -47,7 +47,7 @@
 
 
 #pragma mark - 名片编辑
-- (void)updateCard:(InterCard *)iCard delegate:(id<KHHDataCardDelegate>) delegate
+- (void)doUpdateCard:(InterCard *)iCard delegate:(id<KHHDataCardDelegate>) delegate
 {
     self.delegate = delegate;
     [self.agent updateCard:iCard delegate:self];
@@ -230,7 +230,7 @@
         predicate = [NSPredicate predicateWithFormat:@"company.id <> %@", myComID];
     }
     NSArray *fetched;
-    fetched = [Card objectArrayByPredicate:nil
+    fetched = [ContactCard objectArrayByPredicate:nil
                                   sortDescriptors:[Card defaultSortDescriptors]];
     // 过滤掉意外情况
     NSMutableArray *result = [self filterUnexpectedCardsFromArray:fetched];
@@ -280,6 +280,7 @@
 
 - (void)doInsertMyCard
 {
+    
     InterCard *icardPro = [[InterCard alloc]init];
     icardPro.id = @(10);
     icardPro.userID = [NSNumber numberFromString:[KHHUser shareInstance].userId];

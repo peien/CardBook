@@ -27,6 +27,7 @@
 #import "KHHDefaults.h"
 #import <QuartzCore/QuartzCore.h>
 #import "KHHDataNew+Card.h"
+#import "KHHNewEdit_ecardViewController.h"
 
 #define POPDismiss [self.popover dismissPopoverAnimated:YES];
 #define LABEL_NAME_TAG    98980
@@ -340,10 +341,12 @@
 {
     if (_isToeCardVC) {
         self.isReloadCardTable = YES;
-        Edit_eCardViewController *editeCardVC = [[Edit_eCardViewController alloc] initWithNibName:@"Edit_eCardViewController" bundle:nil];
-        editeCardVC.type = KCardViewControllerTypeShowInfo;
-        editeCardVC.glCard = self.card;
-        [self.navigationController pushViewController:editeCardVC animated:YES];
+//        Edit_eCardViewController *editeCardVC = [[Edit_eCardViewController alloc] initWithNibName:@"Edit_eCardViewController" bundle:nil];
+//        editeCardVC.type = KCardViewControllerTypeShowInfo;
+//        editeCardVC.glCard = self.card;
+        KHHNewEdit_ecardViewController *newEditCardVC = [[KHHNewEdit_ecardViewController alloc]init];
+        newEditCardVC.toEditCard = self.card;
+        [self.navigationController pushViewController:newEditCardVC animated:YES];
         
     }else{
         

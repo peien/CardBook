@@ -211,9 +211,9 @@
     self.mainUI = nil;
     // 显示启动界面
     AppStartController *startVC = [[AppStartController alloc] initWithNibName:nil bundle:nil];
-    startVC.agent    = [[KHHNetworkAPIAgent alloc] init];
-    startVC.data     = [KHHData sharedData];
-    startVC.defaults = [KHHDefaults sharedDefaults];
+//    startVC.agent    = [[KHHNetworkAPIAgent alloc] init];
+//    startVC.data     = [KHHData sharedData];
+//    startVC.defaults = [KHHDefaults sharedDefaults];
     self.window.rootViewController = startVC;
 }
 

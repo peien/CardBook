@@ -374,7 +374,11 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
                          [self setChildHidden];
                      }
                      completion:^(BOOL finished) {
-                         [self setChildRemove];
+                         if (finished) {
+                             [self setChildRemove];
+                             [((KHHManagementViewController *)((UINavigationController *)self.manageController).childViewControllers[0]) doInitWithUser];
+                         }
+                        
 //                         [fromVC.view removeFromSuperview];
 //                         [fromVC removeFromParentViewController];
                      }];
