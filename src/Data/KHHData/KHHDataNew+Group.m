@@ -10,6 +10,8 @@
 #import "Group.h"
 @implementation KHHDataNew (Group)
 
+
+
 #pragma mark - 同步分组
 - (void) doSyncGroup:(id<KHHDataGroupDelegate>) delegate
 {

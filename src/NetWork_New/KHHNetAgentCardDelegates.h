@@ -11,7 +11,7 @@
 
 #pragma mark - for data
 @protocol KHHNetAgentCardDelegate<NSObject>
-
+@optional
 //名片查询---同步(私有联系人与我的名片);
 - (void)syncCardSuccess:(NSDictionary *) dict;
 - (void)syncCardFailed:(NSDictionary *) dict;
@@ -37,6 +37,10 @@
 //设置联系人新名片标记
 - (void)updateCardNewCardStateSuccess;
 - (void)updateCardNewCardStateFailed:(NSDictionary *)dict;
+
+//获取最后一个联系人名片
+- (void)getLatestCustomerCardSuccess:(NSDictionary *)dict;
+- (void)getLatestCustomerCardFailed:(NSDictionary *)dict;
 @end
 
 #endif

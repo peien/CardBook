@@ -473,10 +473,62 @@ NSMutableDictionary * parametersToCreateOrUpdateCard(InterCard *iCard) {
     [self putPath:path parameters:nil success:success failure:failed];
 }
 
+
 #pragma mark - 发送名片
 - (void)sendCard:(Card *)myReplyCard toPhones:(NSArray *)newMobiles delegate:(id<KHHNetAgentCardDelegate>) delegate
 {
+}
+
+
+/*
+ * http://192.168.1.151/zentaopms/www/index.php?m=doc&f=view&docID=282
+ * 按照认识时间排序的最后一个联系人
+ * url customer/last
+ * 方法 put
+ */
+- (void)latestCustomerCard:(id<KHHNetAgentCardDelegate>) delegate
+{
+    //检查网络
+    if (![self networkStateIsValid:delegate selector:@"getLatestCustomerCardFailed:"]) {
+        return;
+    }
+    //url format
+    NSString *path = @"customer/last";
     
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
+        
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
+        
+        // 把返回的数据转成本地数据
+        KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        // errorCode
+        dict[kInfoKeyErrorCode] = @(code);
+        if (KHHErrorCodeSucceeded == code) {
+            // cardBookVO -> InterCard
+            InterCard *iCard = [InterCard interCardWithReceivedCardJSON:responseDict[JSONDataKeyCardBookVO]];
+            dict[kInfoKeyInterCard] = iCard;
+            
+            //同步成功,把解析后的数据传出，上层去保存数据
+            if ([delegate respondsToSelector:@selector(getLatestCustomerCardSuccess:)]) {
+                [delegate getLatestCustomerCardSuccess:dict];
+            }
+        }else {
+            //错误码
+            dict[kInfoKeyErrorMessage] = [responseDict valueForKey:JSONDataKeyNote];
+            //同步失败，返回错误信息
+            if ([delegate respondsToSelector:@selector(getLatestCustomerCardFailed:)]) {
+                [delegate getLatestCustomerCardFailed:dict];
+            }
+        }
+    };
+    
+    //其它失败的block
+    KHHFailureBlock failed = [self defaultFailedResponse:delegate selector:@"getLatestCustomerCardFailed:"];
+    
+    //发送请求
+    [self getPath:path parameters:nil success:success failure:failed];
+
 }
 
 @end

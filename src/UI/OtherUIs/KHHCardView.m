@@ -152,7 +152,7 @@
 // 刷新表
 - (void)reloadTable{
     if ([_myCard isKindOfClass:[PrivateCard class]]) {
-        Card *card = [self.dataCtrl privateCardByID:_myCard.id];
+        Card *card = [[KHHDataNew sharedData] privateCardByID:_myCard.id];
         self.cardView.card = card;
         self.myCard = card;
         self.detailVC.card = card;

@@ -395,7 +395,6 @@
 		314A0119168BEF3800029324 /* ISchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E6F4011623CEB700AE81D3 /* ISchedule.m */; };
 		314A011A168BEF3800029324 /* OSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 984ABA01163662ED0047AFB2 /* OSchedule.m */; };
 		314A011B168BEF3800029324 /* KHHData.m in Sources */ = {isa = PBXBuildFile; fileRef = 98F83BE116073C790036A516 /* KHHData.m */; };
-		314A011C168BEF3800029324 /* KHHData+UI.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACBE1609BE6B002B9BAD /* KHHData+UI.m */; };
 		314A011D168BEF3800029324 /* KHHData+Handlers.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACB91609BD08002B9BAD /* KHHData+Handlers.m */; };
 		314A011E168BEF3800029324 /* ATestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 984FA63816104AF000344BDC /* ATestViewController.m */; };
 		314A011F168BEF3800029324 /* SMObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 984B7FE41625642700E8BDC0 /* SMObject.m */; };
@@ -833,7 +832,6 @@
 		314AFF5A168BEE9A00029324 /* ISchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E6F4011623CEB700AE81D3 /* ISchedule.m */; };
 		314AFF5B168BEE9A00029324 /* OSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 984ABA01163662ED0047AFB2 /* OSchedule.m */; };
 		314AFF5C168BEE9A00029324 /* KHHData.m in Sources */ = {isa = PBXBuildFile; fileRef = 98F83BE116073C790036A516 /* KHHData.m */; };
-		314AFF5D168BEE9A00029324 /* KHHData+UI.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACBE1609BE6B002B9BAD /* KHHData+UI.m */; };
 		314AFF5E168BEE9A00029324 /* KHHData+Handlers.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACB91609BD08002B9BAD /* KHHData+Handlers.m */; };
 		314AFF5F168BEE9A00029324 /* ATestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 984FA63816104AF000344BDC /* ATestViewController.m */; };
 		314AFF60168BEE9A00029324 /* SMObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 984B7FE41625642700E8BDC0 /* SMObject.m */; };
@@ -1152,7 +1150,6 @@
 		6274BFB1165C7C3300DB5EBE /* ISchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E6F4011623CEB700AE81D3 /* ISchedule.m */; };
 		6274BFB2165C7C3300DB5EBE /* OSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 984ABA01163662ED0047AFB2 /* OSchedule.m */; };
 		6274BFB3165C7C3300DB5EBE /* KHHData.m in Sources */ = {isa = PBXBuildFile; fileRef = 98F83BE116073C790036A516 /* KHHData.m */; };
-		6274BFB4165C7C3300DB5EBE /* KHHData+UI.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACBE1609BE6B002B9BAD /* KHHData+UI.m */; };
 		6274BFB5165C7C3300DB5EBE /* KHHData+Handlers.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACB91609BD08002B9BAD /* KHHData+Handlers.m */; };
 		6274BFB6165C7C3300DB5EBE /* ATestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 984FA63816104AF000344BDC /* ATestViewController.m */; };
 		6274BFB7165C7C3300DB5EBE /* SMObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 984B7FE41625642700E8BDC0 /* SMObject.m */; };
@@ -1558,7 +1555,6 @@
 		62ECD8D6166DE1D000A15E24 /* ISchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E6F4011623CEB700AE81D3 /* ISchedule.m */; };
 		62ECD8D7166DE1D000A15E24 /* OSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 984ABA01163662ED0047AFB2 /* OSchedule.m */; };
 		62ECD8D8166DE1D000A15E24 /* KHHData.m in Sources */ = {isa = PBXBuildFile; fileRef = 98F83BE116073C790036A516 /* KHHData.m */; };
-		62ECD8D9166DE1D000A15E24 /* KHHData+UI.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACBE1609BE6B002B9BAD /* KHHData+UI.m */; };
 		62ECD8DA166DE1D000A15E24 /* KHHData+Handlers.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACB91609BD08002B9BAD /* KHHData+Handlers.m */; };
 		62ECD8DB166DE1D000A15E24 /* ATestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 984FA63816104AF000344BDC /* ATestViewController.m */; };
 		62ECD8DC166DE1D000A15E24 /* SMObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 984B7FE41625642700E8BDC0 /* SMObject.m */; };
@@ -5825,7 +5821,6 @@
 				314A0119168BEF3800029324 /* ISchedule.m in Sources */,
 				314A011A168BEF3800029324 /* OSchedule.m in Sources */,
 				314A011B168BEF3800029324 /* KHHData.m in Sources */,
-				314A011C168BEF3800029324 /* KHHData+UI.m in Sources */,
 				314A011D168BEF3800029324 /* KHHData+Handlers.m in Sources */,
 				314A011E168BEF3800029324 /* ATestViewController.m in Sources */,
 				314A011F168BEF3800029324 /* SMObject.m in Sources */,
@@ -6086,7 +6081,6 @@
 				314AFF5A168BEE9A00029324 /* ISchedule.m in Sources */,
 				314AFF5B168BEE9A00029324 /* OSchedule.m in Sources */,
 				314AFF5C168BEE9A00029324 /* KHHData.m in Sources */,
-				314AFF5D168BEE9A00029324 /* KHHData+UI.m in Sources */,
 				314AFF5E168BEE9A00029324 /* KHHData+Handlers.m in Sources */,
 				314AFF5F168BEE9A00029324 /* ATestViewController.m in Sources */,
 				314AFF60168BEE9A00029324 /* SMObject.m in Sources */,
@@ -6347,7 +6341,6 @@
 				6274BFB1165C7C3300DB5EBE /* ISchedule.m in Sources */,
 				6274BFB2165C7C3300DB5EBE /* OSchedule.m in Sources */,
 				6274BFB3165C7C3300DB5EBE /* KHHData.m in Sources */,
-				6274BFB4165C7C3300DB5EBE /* KHHData+UI.m in Sources */,
 				6274BFB5165C7C3300DB5EBE /* KHHData+Handlers.m in Sources */,
 				6274BFB6165C7C3300DB5EBE /* ATestViewController.m in Sources */,
 				6274BFB7165C7C3300DB5EBE /* SMObject.m in Sources */,
@@ -6608,7 +6601,6 @@
 				62ECD8D6166DE1D000A15E24 /* ISchedule.m in Sources */,
 				62ECD8D7166DE1D000A15E24 /* OSchedule.m in Sources */,
 				62ECD8D8166DE1D000A15E24 /* KHHData.m in Sources */,
-				62ECD8D9166DE1D000A15E24 /* KHHData+UI.m in Sources */,
 				62ECD8DA166DE1D000A15E24 /* KHHData+Handlers.m in Sources */,
 				62ECD8DB166DE1D000A15E24 /* ATestViewController.m in Sources */,
 				62ECD8DC166DE1D000A15E24 /* SMObject.m in Sources */,

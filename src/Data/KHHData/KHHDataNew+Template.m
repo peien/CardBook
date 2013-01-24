@@ -11,6 +11,8 @@
 #import "CardTemplateItem.h"
 
 @implementation KHHDataNew (Template)
+
+
 #pragma mark - 模板增量接口
 - (void)doSyncTemplatesWithDate:(NSString *)lastDate delegate:(id<KHHDataTemplateDelegate>) delegate
 {

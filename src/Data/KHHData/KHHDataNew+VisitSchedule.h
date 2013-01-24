@@ -18,7 +18,19 @@ typedef enum {
 }   KHHVisitScheduleSyncType;
 
 @interface KHHDataNew (VisitSchedule) <KHHNetAgentVisitScheduleDelegates>
-@property (assign, nonatomic) KHHVisitScheduleSyncType syncType;
+
+#pragma mark - 从本地取满足条件的拜访计划
+- (NSArray *)allSchedules;
+- (NSArray *)executingSchedules;
+- (NSArray *)overdueSchedules;
+- (NSArray *)finishedSchedules;
+- (NSArray *)schedulesOnCard:(Card *)aCard day:(NSString *)aDay;// 结果是从day开始一天内的所有schedule。
+- (NSArray *)schedulesOnCard:(Card *)aCard date:(NSDate *)aDate;// 结果是从day开始一天内的所有schedule。
+
+// -1表示没有shcedule，0表示都完成了，大于0的数表示未完成的具体数量。
+- (NSInteger)countOfUnfinishedSchedulesOnCard:(Card *)aCard day:(NSString *)aDay;
+// -1表示没有shcedule，0表示都完成了，大于0的数表示未完成的具体数量。
+- (NSInteger)countOfUnfinishedSchedulesOnCard:(Card *)aCard date:(NSDate *)aDate;
 
 #pragma mark - 同步拜访计划
 -(void)syncVisitSchedule:(id<KHHDataVisitScheduleDelegate>) delegate;

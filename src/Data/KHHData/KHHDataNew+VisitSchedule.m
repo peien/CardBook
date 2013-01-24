@@ -7,8 +7,103 @@
 //
 
 #import "KHHDataNew+VisitSchedule.h"
+#import "NSObject+SM.h"
+#import "Card.h"
+
 @implementation KHHDataNew (VisitSchedule)
-@dynamic syncType;
+
+#pragma mark - 从本地取满足条件的拜访计划
+- (NSArray *)allSchedules {
+    NSPredicate *predicate = nil;
+    //    predicate = [NSPredicate predicateWithFormat:@"company.id <> %@", myComID];
+    
+    NSSortDescriptor *sortDes = [NSSortDescriptor sortDescriptorWithKey:@"isFinished"
+                                                              ascending:YES];
+    NSSortDescriptor *timeSort = [NSSortDescriptor sortDescriptorWithKey:@"plannedDate"
+                                                               ascending:NO];
+    NSArray *result = [Schedule objectArrayByPredicate:predicate
+                                       sortDescriptors:@[sortDes,timeSort]];
+    return result;
+}
+
+//正在执行
+- (NSArray *)executingSchedules
+{
+    NSPredicate *predicate = nil;
+    predicate = [NSPredicate predicateWithFormat:@"isFinished = no AND plannedDate >= %@", [NSDate new]];
+    
+    NSSortDescriptor *timeSort = [NSSortDescriptor sortDescriptorWithKey:@"plannedDate"
+                                                               ascending:NO];
+    NSArray *result = [Schedule objectArrayByPredicate:predicate
+                                       sortDescriptors:@[timeSort]];
+    return result;
+}
+
+//过期的拜访记录
+- (NSArray *)overdueSchedules
+{
+    NSPredicate *predicate = nil;
+    predicate = [NSPredicate predicateWithFormat:@"isFinished = no AND plannedDate < %@", [NSDate new]];
+    
+    NSSortDescriptor *timeSort = [NSSortDescriptor sortDescriptorWithKey:@"plannedDate"
+                                                               ascending:NO];
+    NSArray *result = [Schedule objectArrayByPredicate:predicate
+                                       sortDescriptors:@[timeSort]];
+    return result;
+}
+
+//完成的
+- (NSArray *)finishedSchedules
+{
+    NSPredicate *predicate = nil;
+    predicate = [NSPredicate predicateWithFormat:@"isFinished <> no"];
+    
+    NSSortDescriptor *sortDes = [NSSortDescriptor sortDescriptorWithKey:@"isFinished"
+                                                              ascending:YES];
+    NSSortDescriptor *timeSort = [NSSortDescriptor sortDescriptorWithKey:@"plannedDate"
+                                                               ascending:NO];
+    NSArray *result = [Schedule objectArrayByPredicate:predicate
+                                       sortDescriptors:@[sortDes,timeSort]];
+    return result;
+}
+
+- (NSArray *)schedulesOnCard:(Card *)aCard day:(NSString *)aDay {
+    NSDate *date = DateFromKHHDateString([aDay stringByAppendingString:@" 00:00:00"]);
+    return [self schedulesOnCard:aCard date:date];
+}
+- (NSArray *)schedulesOnCard:(Card *)aCard date:(NSDate *)aDate {
+    NSDate *start = aDate;
+    NSTimeInterval oneDay = 60 * 60 * 24;
+    NSDate *end = [start dateByAddingTimeInterval:oneDay];
+    NSPredicate *predicate;
+    if (aCard) {
+        predicate = [NSPredicate predicateWithFormat:@"plannedDate >= %@ && plannedDate < %@ && SOME targets.id == %@", start, end, aCard.id];
+    } else {
+        predicate = [NSPredicate predicateWithFormat:@"plannedDate >= %@ && plannedDate < %@", start, end];
+    }
+    NSSortDescriptor *sortDes = [NSSortDescriptor sortDescriptorWithKey:@"id"
+                                                              ascending:NO];
+    NSArray *result = [Schedule objectArrayByPredicate:predicate
+                                       sortDescriptors:@[sortDes]];
+    return result;
+}
+- (NSInteger)countOfUnfinishedSchedulesOnCard:(Card *)aCard day:(NSString *)aDay; {
+    NSDate *start = DateFromKHHDateString([aDay stringByAppendingString:@" 00:00:00"]);
+    return [self countOfUnfinishedSchedulesOnCard:aCard date:start];
+}
+- (NSInteger)countOfUnfinishedSchedulesOnCard:(Card *)aCard date:(NSDate *)aDate {
+    NSArray *list = [self schedulesOnCard:aCard date:aDate];
+    if (0 == list.count) {
+        return -1;
+    }
+    NSMutableArray *result = [NSMutableArray arrayWithCapacity:list.count];
+    for (Schedule *schdl in list) {
+        if(schdl.isFinishedValue) continue;
+        [result addObject:schdl];
+    }
+    return result.count;
+}
+
 #pragma mark - 同步拜访计划
 -(void)syncVisitSchedule:(id<KHHDataVisitScheduleDelegate>) delegate
 {

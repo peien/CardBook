@@ -9,11 +9,14 @@
 #ifndef CardBook_KHHDataCardDelegate_h
 #define CardBook_KHHDataCardDelegate_h
 @protocol KHHDataCardDelegate<NSObject>
-
+@optional
 //名片查询---同步;
 - (void)syncCardForUISuccess;
 - (void)syncCardForUIFailed:(NSDictionary *) dict;
 
+//联系人查询---同步;
+- (void)syncCustomerCardForUISuccess;
+- (void)syncCustomerCardForUIFailed:(NSDictionary *) dict;
 
 //名片新增
 - (void)addCardForUISuccess;
@@ -31,6 +34,10 @@
 //设置联系人新名片标记
 - (void)updateCardNewCardStateForUISuccess;
 - (void)updateCardNewCardStateForUIFailed:(NSDictionary *)dict;
+
+//获取最后一个联系人名片
+- (void)getLatestCustomerCardForUISuccess:(NSDictionary *)dict;
+- (void)getLatestCustomerCardForUIFailed:(NSDictionary *)dict;
 @end
 
 

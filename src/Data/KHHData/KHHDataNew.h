@@ -22,10 +22,12 @@
 
 @property (strong,nonatomic) id delegate;
 
+//类别的同步类型
+@property (assign,nonatomic) int syncType;
+
 //标记，用来标记多网络接口时标记是否有失败的
 @property (assign,nonatomic) BOOL hasFailed;
 
-@property (assign,nonatomic) int syncType;
 // create OR obtain the singleton instance
 + (id)sharedData;
 //

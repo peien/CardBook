@@ -9,7 +9,6 @@
 #import "KHHDataNew+CustomerEvaluation.h"
 #import "CustomerEvaluation.h"
 @implementation KHHDataNew (CustomerEvaluation)
-@dynamic syncType;
 #pragma mark -  客户评估信息增量接口
 - (void)syncCustomerEvaluation:(id<KHHDataCustomerEvaluationDelegate>) delegate
 {

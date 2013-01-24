@@ -19,7 +19,6 @@ typedef enum {
 }   KHHCustomerEvaluationSyncType;
 
 @interface KHHDataNew (CustomerEvaluation) <KHHNetAgentCustomerEvaluationDelegates>
-@property (assign, nonatomic) KHHCustomerEvaluationSyncType syncType;
 #pragma mark -  客户评估信息增量接口
 - (void)syncCustomerEvaluation:(id<KHHDataCustomerEvaluationDelegate>) delegate;
 

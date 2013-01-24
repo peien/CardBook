@@ -449,7 +449,7 @@
         [self.messageImageView addSubview:numLab2];
         [cell.button addSubview:self.messageImageView];
     }
-    int num = [self.dataControl cardsOfNew].count;
+    int num = [[KHHDataNew sharedData] cardsOfNew].count;
     if (num > 0) {
         self.messageImageView.hidden = NO;
         numLab2.text = [NSString stringWithFormat:@"%d",num];
