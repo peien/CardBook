@@ -31,6 +31,8 @@
 @property (strong, nonatomic) DetailInfoViewController *detailVC;
 @property (strong, nonatomic) NSMutableArray           *itemArray;
 //@property (strong, nonatomic) KHHData                  *dataCtrl;
+@property (weak, nonatomic) IBOutlet UIButton *btnEditCard;
+- (IBAction)btnEditCard:(id)sender;
 
 @property (strong, nonatomic) KHHFrameCardView         *cardView;
 @property (assign, nonatomic) BOOL                     isColleague;

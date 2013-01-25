@@ -62,15 +62,15 @@
 - (void)initViewData{
 //    NSSortDescriptor *descFini = [NSSortDescriptor sortDescriptorWithKey:@"isFinished" ascending:YES];
     //判断是否要做一iphone5的适配
-    if (!isInitialized) {
-        //适配一下iphone5
-        [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_footView];
-        [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_addBtn];
-//        [_addBtn addTarget:self action:@selector(visitCalendarBtnClick) forControlEvents:UIControlEventTouchUpInside];
-//        _addBtn.enabled = YES;
-        [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_calBtn];
-        isInitialized = YES;
-    }
+//    if (!isInitialized) {
+//        //适配一下iphone5
+//        [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_footView];
+//        [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_addBtn];
+////        [_addBtn addTarget:self action:@selector(visitCalendarBtnClick) forControlEvents:UIControlEventTouchUpInside];
+////        _addBtn.enabled = YES;
+//        [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_calBtn];
+//        isInitialized = YES;
+//    }
 #warning 查询(考勤、数据采集)的相应数据，根据dataType来查询,因服务器那边类型还未区分，所以客户端还无法做，这个要等网络接口实现后再改
     NSSortDescriptor *descDate = [NSSortDescriptor sortDescriptorWithKey:@"plannedDate" ascending:NO];
     if(self.isFromHomeVC){
@@ -121,12 +121,12 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    Schedule *sched = [self.dataArray objectAtIndex:indexPath.row];
-//    if ([sched.images allObjects].count > 0) {
-//        return 140;
-//    }else{
+    Schedule *sched = [self.dataArray objectAtIndex:indexPath.row];
+    if ([sched.images allObjects].count > 0) {
+        return 140;
+    }else{
         return 85;
-//    }
+    }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {

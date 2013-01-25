@@ -1020,7 +1020,7 @@ NSMutableArray *topicker3;
     icard.telephone = phones;
     icard.fax = faxs;
     icard.email = mails;
-    icard.templateID = @(1);
+    icard.templateID = @(2);
     [self toAddressCard];
     
     icard.companyEmail = [self companyEmail];
@@ -1030,7 +1030,7 @@ NSMutableArray *topicker3;
     [self toIcardSection3];
     icard.cardType = kCardType_Person;
     icard.cardSource = kCardSource_Client_SelfBuild;
-    icard.templateID = [NSNumber numberWithInt:1];
+    icard.templateID = [NSNumber numberWithInt:2];
     icard.modelType = KHHCardModelTypePrivateCard;
     // id，version，userid,templateID付给InterCard，否则不能通过
     //    self.interCard.id = _glCard.id;

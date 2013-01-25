@@ -163,8 +163,8 @@
 
 //判断是否是同事
 -(BOOL) isCompanyColleagues {
-    KHHDefaults *myDefault = [KHHDefaults sharedDefaults];
-    NSNumber *companyID = [myDefault currentCompanyID];
+    
+    NSNumber *companyID = [NSNumber numberFromString:[KHHUser shareInstance].companyId] ;
     if(self.card.company && self.card.company.id.longValue == companyID.longValue && companyID.longValue > 0){
         return YES;
     }
@@ -288,26 +288,28 @@
         }
         [self.containView addSubview:_customView];
     }
-        
+    
+    
     //接收到的卡片不能修改
-    UIButton *bottomBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    bottomBtn.tag = 323;
-    [bottomBtn addTarget:self action:@selector(bottomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    bottomBtn.frame = CGRectMake(260, 360, 50, 50);
-    [bottomBtn setBackgroundImage:[UIImage imageNamed:@"edit_Btn_Red.png"] forState:UIControlStateNormal];
-    [self.view insertSubview:bottomBtn atIndex:100];
-    if (self.card.modelTypeValue !=2) {
-        if (self.card.roleTypeValue != 1 || [self.card isKindOfClass:[ReceivedCard class]]) {
-            bottomBtn.hidden = YES;
-        }
-    }
+//    UIButton *bottomBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+//    bottomBtn.tag = 323;
+//    [bottomBtn addTarget:self action:@selector(bottomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+//    bottomBtn.frame = CGRectMake(260, 360, 50, 50);
+//    [bottomBtn setBackgroundImage:[UIImage imageNamed:@"edit_Btn_Red.png"] forState:UIControlStateNormal];
+//    [self.view insertSubview:bottomBtn atIndex:100];
+   
     
     //适配一下iphone5
-    [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:bottomBtn];
-    [KHHViewAdapterUtil checkIsNeedAddHeightForIphone5:_visitCalView];
+//    [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:bottomBtn];
+//    [KHHViewAdapterUtil checkIsNeedAddHeightForIphone5:_visitCalView];
 }
 
+#pragma mark - action
 
+- (IBAction)btnEditCard:(id)sender {
+    NSLog(@"xx");
+    
+}
 
 - (void)updateViewData:(Card *)temCard{
     UILabel *nameLab = (UILabel *)[self.view viewWithTag:LABEL_NAME_TAG];
@@ -368,7 +370,7 @@
 - (void)headBtnClick:(id)sender
 {
 
-    UIButton *bottomBtn = (UIButton *)[self.view viewWithTag:323];
+    //UIButton *bottomBtn = (UIButton *)[self.view viewWithTag:323];
     UIButton *btn = (UIButton *)sender;
     
     if (_lastBtn != btn.tag && _lastBtn != 0) {
@@ -390,12 +392,13 @@
     
     if (btn.tag == 999) {
         [self.containView bringSubviewToFront:_cardView];
-        bottomBtn.hidden = NO;
+        [_containView bringSubviewToFront:[_containView viewWithTag:10001]];
+        [_containView viewWithTag:10001].hidden = NO;
         if (self.card.modelTypeValue != 2) {
             if (self.card.roleTypeValue != 1 || [self.card isKindOfClass:[ReceivedCard class]]) {
-                bottomBtn.hidden = YES;
+                [_containView viewWithTag:10001].hidden = YES;
             }else{
-                bottomBtn.hidden = NO;
+                [_containView viewWithTag:10001].hidden = NO;
             }
         }
         _isToeCardVC  = YES;
@@ -409,12 +412,12 @@
 //        _visitCalView.footView.frame = rectfoot;
 //        _visitCalView.theTable.frame = rect;
         [self.containView bringSubviewToFront:_visitCalView];
-        bottomBtn.hidden = YES;
+        [_containView viewWithTag:10001].hidden = YES;
     
     }else if (btn.tag == 1001){
         [self.containView bringSubviewToFront:_customView];
         _isToeCardVC = NO;
-        bottomBtn.hidden = NO;
+        [_containView viewWithTag:10001].hidden = NO;
     }
 }
 

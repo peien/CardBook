@@ -17,6 +17,7 @@
 #import "KHHAppDelegate.h"
 #import "KHHDefaults.h"
 #import <QuartzCore/QuartzCore.h>
+#import "KHHNewEdit_ecardViewController.h"
 
 
 #define CARD_IMGVIEW_TAG 333
@@ -59,6 +60,12 @@
  */
 - (void)initView
 {
+    if (self.myCard.modelTypeValue !=2) {
+        if (self.myCard.roleTypeValue != 1 || [self.myCard isKindOfClass:[ReceivedCard class]]) {
+            _btnEditCard.hidden = YES;
+        }
+    }
+    
     //self.dataCtrl = [KHHDataNew sharedData];
     self.backgroundColor = [UIColor colorWithRed:241 green:238 blue:232 alpha:1.0];
     self.cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(0, 0, 320, 225) delegate:self.detailVC isVer:NO callbackAction:nil];
@@ -78,8 +85,8 @@
     [footView addSubview:btnFooter];
     
     //是同事、我的名片的时候不添加
-    KHHDefaults *khhDefault = [KHHDefaults sharedDefaults];
-    NSNumber *companyID = [khhDefault currentCompanyID];
+    
+    NSNumber *companyID = [NSNumber numberFromString:[KHHUser shareInstance].companyId];
     if (self.myCard.company && self.myCard.company.id.longValue == companyID.longValue && companyID.longValue > 0) {
         self.isColleague = YES;
     }
@@ -405,4 +412,15 @@
     [self stopObservingNotificationName:KHHUIDeleteCardFailed];
 }
 
+- (IBAction)btnEditCard:(id)sender {
+    KHHNewEdit_ecardViewController *newEditCardVC = [[KHHNewEdit_ecardViewController alloc]init];
+    newEditCardVC.toEditCard = self.myCard;
+    newEditCardVC.updateCardSuccess = ^(){
+        [self reloadTable];
+        [self initView];
+        [self.detailVC updateViewData:self.myCard];
+    };
+    [self.detailVC.navigationController pushViewController:newEditCardVC animated:YES];
+    
+}
 @end

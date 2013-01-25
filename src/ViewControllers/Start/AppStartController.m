@@ -440,7 +440,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
     [self showActionView];
     
     //发送正在注册消息
-    [self postASAPNotificationName:nAppCreatingAccount];
+   // [self postASAPNotificationName:nAppCreatingAccount];
     
     // 调接口
     NSDictionary *dict = noti.userInfo;
@@ -771,25 +771,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 }
 
 
-#pragma mark - KHHFilterPopup delegate
-- (void)selectInAlert:(id) obj
-{
-    
-    //默认是个人，如果选择是公司就把公司标记置上
-    if (obj && [[self.createAccountController childViewControllers] count] > 0) {
-        NSDictionary *dic = (NSDictionary *) obj;
-        
-        AppRegisterController * control = (AppRegisterController *) [[self.createAccountController childViewControllers] objectAtIndex:0];
-        if([[dic objectForKey:@"selectItem"] isEqualToString:KHHMessageCompanyAccount]) {
-            control.isCompany = YES;
-        }else {
-            control.isCompany = NO;
-        }
-    }
-    UIViewAnimationOptions options = UIViewAnimationOptionTransitionFlipFromLeft;
-    [self transitionToViewController:self.createAccountController
-                             options:options];
-}
+
 
 
 

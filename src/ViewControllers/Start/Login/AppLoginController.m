@@ -17,7 +17,7 @@
 #import "RegViewController.h"
 #import "ResetPasswordViewController.h"
 #import "KHHUser.h"
-
+#import "KHHFilterPopup.h"
 
 #define Tag_ImageView_CellTop    20001
 #define Tag_ImageView_CellBottom 20002
@@ -105,15 +105,20 @@
 - (IBAction)createAccount:(id)sender {
 //    [self pushViewControllerClass:[RegViewController class]
 //                         animated:YES];
-    [_delegate changeFrom:2 to:1 leftDown:YES];
+    NSArray *array = [[NSArray alloc] initWithObjects:KHHMessagePersonalAccount, KHHMessageCompanyAccount, nil];
+    [[KHHFilterPopup shareUtil] showPopUp:array index:0 Title:@"选择注册类型" delegate:self];
+    
+   
    // [self postASAPNotificationName:nAppShowCreateAccount];
 }
+
+
+
 - (IBAction)login:(id)sender {
     // get user & password
     NSString *username     = self.userField.text;
     NSString *password = self.passwordField.text;
-    
-    
+
     if (0 == username.length || 0 == password.length) {
        
         [[[UIAlertView alloc]
@@ -148,6 +153,24 @@
         
     }
 }
+
+
+#pragma mark - KHHFilterPopup delegate
+- (void)selectInAlert:(id) obj
+{
+    
+    //默认是个人，如果选择是公司就把公司标记置上
+    Boolean isCompanyPro;
+        if([[(NSDictionary *)obj objectForKey:@"selectItem"] isEqualToString:KHHMessageCompanyAccount]) {
+            isCompanyPro = YES;
+        } 
+      
+    
+    ((AppRegisterController *)((UINavigationController *)self.parentViewController.parentViewController.childViewControllers[1]).childViewControllers[0]).isCompany = isCompanyPro;
+    
+    [_delegate changeFrom:2 to:1 leftDown:YES];
+}
+
 //直接体验
 - (void)directLogin{
     

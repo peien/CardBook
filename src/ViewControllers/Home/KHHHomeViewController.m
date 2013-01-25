@@ -48,8 +48,7 @@
 
 //同事移到组织架构里去
 #define POPDismiss [self.popover dismissPopoverAnimated:YES];
-#define BaseBtnTitleArrayMobiGrop       _btnTitleArr = [[NSMutableArray alloc] initWithObjects:KHHMessageDefaultGroupLocal, nil];
-#define BaseBtnTitleArrayVisited        _btnTitleArr = [[NSMutableArray alloc]init] 
+
 
 @interface KHHHomeViewController ()<UIActionSheetDelegate,UIAlertViewDelegate,
                                    UITextFieldDelegate,UISearchBarDelegate,UISearchDisplayDelegate,KHHDataGroupDelegate
@@ -76,7 +75,7 @@
 @property (strong, nonatomic)  IGroup                 *interGroup;
 @property (strong, nonatomic)  UITextField            *groupTf;
 @property (strong, nonatomic)  MBProgressHUD          *hud;
-@property (strong, nonatomic)  NSArray                *groupTitleArr;
+
 @property (assign, nonatomic)  bool                   isNewContactsClick;
 @property (assign, nonatomic)  int                    baseNum;
 @property (strong, nonatomic)  UIImageView            *messageImageView;
@@ -128,7 +127,7 @@
 @synthesize interGroup;
 @synthesize groupTf;
 
-@synthesize groupTitleArr;
+
 @synthesize visitVC;
 @synthesize isNewContactsClick;
 @synthesize baseNum;
@@ -186,7 +185,7 @@
     //cell是nil;
     [self performSelector:@selector(defaultSelectBtn) withObject:nil afterDelay:0.3];
     //获取分组
-    self.groupTitleArr = [self getAllGroups];
+     [self refreshAllGroups];
    
     _btnArray = [[NSMutableArray alloc] initWithCapacity:0];
     _isShowData = YES;
@@ -336,7 +335,7 @@
     self.interGroup = nil;
     self.groupTf = nil;
     self.hud = nil;
-    self.groupTitleArr = nil;
+    
     self.visitVC = nil;
     self.messageImageView = nil;
     self.numLab2 = nil;
@@ -368,30 +367,14 @@
 //    }
 }
 //获取分组
-- (NSArray *)getAllGroups{
+- (void)refreshAllGroups{
     //初始化分组，如果是选择人的话就默认只有两个固定分组
     //默认只有2个分组（所有、未分组）如果用户设置显示手机就分组数 +1 ,如果是同事 +1
-    self.baseNum = 0;
-    if (self.isNormalSearchBar) {
-        BaseBtnTitleArrayVisited;
-    }else {
-        //是否显示手机通讯录
-        BOOL isHaveMobilePhoneGroup = [KHHUser shareInstance].isAddMobPhoneGroup;
-        if (isHaveMobilePhoneGroup) {
-            self.baseNum += 1;
-        }
-        
-        //根据固定分组数来初始化固定分组
-        switch (self.baseNum) {
-            case 1:
-                BaseBtnTitleArrayMobiGrop;
-                break;
-            case 0:
-                BaseBtnTitleArrayVisited;
-                break;
-            default:
-                break;
-        }
+    
+    if (!_btnTitleArr) {
+         _btnTitleArr = [[NSMutableArray alloc] init];
+    }else{
+        [_btnTitleArr removeAllObjects];
     }
     
     self.oWnGroupArray = [[KHHDataNew sharedData] allTopLevelGroups];
@@ -400,8 +383,11 @@
         NSLog(@"%lld,%@",group.idValue,group.name);
         [_btnTitleArr addObject:group.name];
     }
-    NSArray *groupArr = _btnTitleArr;
-    return groupArr;
+    if ([KHHUser shareInstance].isAddMobPhoneGroup) {
+        [_btnTitleArr addObject:@"手机"];
+    }
+    
+    
 
 }
 - (void)reloadTable
@@ -464,7 +450,7 @@
         return [_resultArray count];
     }else{
         NSInteger tableTag = tableView.tag;
-        return (tableTag == KHHTableIndexGroup?self.groupTitleArr.count:(tableTag == KHHTableIndexClient)?[self.generalArray count]:0);
+        return (tableTag == KHHTableIndexGroup?_btnTitleArr.count:(tableTag == KHHTableIndexClient)?[self.generalArray count]:0);
     }
 }
 
@@ -510,7 +496,7 @@
                 cell.button.tag = indexPath.row + 100;
                 cell.button.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
                 cell.button.titleLabel.numberOfLines = 2;
-                [cell.button setTitle:NSLocalizedString([self.groupTitleArr objectAtIndex:indexPath.row], nil) forState:UIControlStateNormal];
+                [cell.button setTitle:NSLocalizedString([_btnTitleArr objectAtIndex:indexPath.row], nil) forState:UIControlStateNormal];
                 [cell.button addTarget:self action:@selector(cellBtnClick:) forControlEvents:UIControlEventTouchUpInside];
                 UIEdgeInsets insets = {0, 0, 45, 25};
                 if (indexPath.row != _lastIndexPath.row) {
@@ -795,6 +781,12 @@
     [self.popover presentPopoverFromRect:rect inView:self.view permittedArrowDirections:arrowDirection animated:YES];    
 }
 #pragma mark-
+
+- (Boolean)isOWnGroupSelected:(NSIndexPath *)indexPath
+{
+    return indexPath.row > 2 && !([KHHUser shareInstance].isAddMobPhoneGroup && indexPath.row == [_btnTitleArr count]-1);
+}
+
 #pragma mark groupBtn Click
 - (void)cellBtnClick:(id)sender
 {
@@ -822,15 +814,15 @@
     _lastIndexPath = indexPath;
     _currentBtn = btn;
     
-    if (indexPath.row <= self.baseNum - 1) {
-        self.isOwnGroup = NO;
-    }else{
-        self.isOwnGroup = YES;
-    }
+//    if (indexPath.row <= self.baseNum - 1) {
+//        self.isOwnGroup = NO;
+//    }else{
+//        self.isOwnGroup = YES;
+//    }
     if (_isShowData) {
         //DLog(@"刷新表");
         //当是自定义分组时，把btn的tag用groupid进行设置，再根据tag进行读取各个分组的成员//(每个分组有cards属性)
-        if (self.isOwnGroup) {
+        if ([self isOWnGroupSelected:indexPath]) {
             //调用接口，获得self.ownGroupArray
             self.currentTag = btn.tag;
             [self updateOwnGroupArray];
@@ -841,7 +833,7 @@
             }else if([btnName isEqualToString:KHHMessageDefaultGroupUnGroup]){
                 self.generalArray = [[KHHDataNew sharedData] cardsOfUngrouped];
             }else if([btnName isEqualToString:KHHMessageDefaultGroupLocal]){
-                if ([self.myDefaults isAddMobPhoneGroup]) {
+                if ([KHHUser shareInstance].isAddMobPhoneGroup) {
                     self.isAddressBookData = YES;
                     self.floatBarVC.isContactCellClick = YES;
                     NSArray *addressArr = [KHHAddressBook getAddressBookData];
@@ -865,7 +857,8 @@
     }else if(!_isNormalSearchBar){
         //不是选择拜访客户时才显示
         _type = KUIActionSheetStyleEditGroupMember;
-        if (indexPath.row > self.baseNum - 1) {
+        
+        if ([self isOWnGroupSelected:indexPath]) {
             UIActionSheet *actSheet = [[UIActionSheet alloc] initWithTitle:nil
                                                                   delegate:self
                                                          cancelButtonTitle:NSLocalizedString(KHHMessageCancle,nil)
@@ -883,27 +876,8 @@
 
 //返回是否要刷新 _bigTable
 - (BOOL)updateOwnGroupArray{
-    if (self.currentIndexPath.row - self.baseNum < 0) {
-        return NO;
-    }
     
-    int index = self.currentIndexPath.row - self.baseNum;
-    self.oWnGroupArray = [[KHHDataNew sharedData] allTopLevelGroups];
-    if (!self.oWnGroupArray) {
-        //默认选择所有
-        [self performSelector:@selector(defaultSelectBtn) withObject:nil afterDelay:0.3];
-        return NO;
-    }
-    
-    //如果当前index 大于等于
-    if (index >= self.oWnGroupArray.count) {
-        index = self.oWnGroupArray.count - 1;
-        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index + self.baseNum inSection:0];
-        KHHButtonCell *cell = (KHHButtonCell *)[_btnTable cellForRowAtIndexPath:indexPath];
-        [self performSelector:@selector(cellBtnClick:) withObject:cell.button afterDelay:0.1];
-        return NO;
-    }
-    Group *group = [self.oWnGroupArray objectAtIndex:index];
+    Group *group = [self.oWnGroupArray objectAtIndex:self.currentIndexPath.row];
     self.generalArray = [group.cards sortedArrayUsingDescriptors:[Card defaultSortDescriptors]];    
     return YES;
 }
@@ -1233,9 +1207,9 @@
     DLog(@"handleCreateGroupSucceeded! info is ====== %@",info);
     [self stopObservingForCreatGroup];
     //[_btnTitleArr addObject:self.groupTf.text];
-    self.groupTitleArr = [self getAllGroups];
+    [self refreshAllGroups];
     [_btnTable reloadData];
-    [_btnTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.groupTitleArr count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    [_btnTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_btnTitleArr count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
     [self netWorkWarnForHandleGroup:[NSString stringWithFormat:@"%@%@",KHHMessageCreateGroup,KHHMessageSucceed]];
     
 }
@@ -1317,11 +1291,12 @@
 
 - (void)addGroupForUISuccess
 {
-    groupTitleArr = [self getAllGroups];
+    [self refreshAllGroups];
     [_hud hide:YES];
     [_btnTable reloadData];
-    [_btnTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[self.groupTitleArr count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-    
+   // [_btnTable scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:[_btnTitleArr count]-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    NSLog(@"%d",[_btnTitleArr count] );
+    [self cellBtnClick:((KHHButtonCell *)[_btnTable cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[_btnTitleArr count] - ([KHHUser shareInstance].isAddMobPhoneGroup?2:1) inSection:0]]).button];
 }
 
 - (void)addGroupForUIFailed:(NSDictionary *) dict
@@ -1337,9 +1312,10 @@
 
 - (void)deleteGroupForUISuccess
 {
-    groupTitleArr = [self getAllGroups];
+    [self refreshAllGroups];
     [_hud hide:YES];
     [_btnTable reloadData];
+    [self cellBtnClick:((KHHButtonCell *)[_btnTable cellForRowAtIndexPath:[NSIndexPath indexPathForRow:currentIndexPath.row-1 inSection:0]]).button];
 }
 
 - (void)deleteGroupForUIFailed:(NSDictionary *)dict
@@ -1355,7 +1331,7 @@
 
 - (void)updateGroupNameForUISuccess
 {
-    groupTitleArr = [self getAllGroups];
+    [self refreshAllGroups];
     [_hud hide:YES];
     [_btnTable reloadData];
 }

@@ -64,7 +64,7 @@
 		3103C40716A90ECB00240570 /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 3103C40516A90ECB00240570 /* CustomBadge.m */; };
 		3103C40816A90ECB00240570 /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 3103C40516A90ECB00240570 /* CustomBadge.m */; };
 		3103C40916A90ECB00240570 /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 3103C40516A90ECB00240570 /* CustomBadge.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3103C40A16A90ECB00240570 /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 3103C40516A90ECB00240570 /* CustomBadge.m */; };
+		3103C40A16A90ECB00240570 /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 3103C40516A90ECB00240570 /* CustomBadge.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3104A145169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3104A144169BBCD100CC4F22 /* KHHForWhereCell.m */; };
 		3104A146169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3104A144169BBCD100CC4F22 /* KHHForWhereCell.m */; };
 		3104A147169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3104A144169BBCD100CC4F22 /* KHHForWhereCell.m */; };
@@ -1002,7 +1002,7 @@
 		3180A5401698029600DD9501 /* HZAreaPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A5211698029600DD9501 /* HZAreaPickerView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3180A5411698029600DD9501 /* HZAreaPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A5211698029600DD9501 /* HZAreaPickerView.m */; };
 		3180A5421698029600DD9501 /* HZAreaPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A5211698029600DD9501 /* HZAreaPickerView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		3180A5431698029600DD9501 /* HZAreaPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A5211698029600DD9501 /* HZAreaPickerView.m */; };
+		3180A5431698029600DD9501 /* HZAreaPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3180A5211698029600DD9501 /* HZAreaPickerView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3180A5441698029600DD9501 /* HZAreaPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3180A5221698029600DD9501 /* HZAreaPickerView.xib */; };
 		3180A5451698029600DD9501 /* HZAreaPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3180A5221698029600DD9501 /* HZAreaPickerView.xib */; };
 		3180A5461698029600DD9501 /* HZAreaPickerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3180A5221698029600DD9501 /* HZAreaPickerView.xib */; };
