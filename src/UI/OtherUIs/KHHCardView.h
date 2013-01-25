@@ -7,12 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "KHHData+UI.h"
+//#import "KHHData+UI.h"
 #import "MyCard.h"
 #import "Card.h"
 #import "KHHMyDetailController.h"
 #import "DetailInfoViewController.h"
-#import "KHHData+UI.h"
+//#import "KHHData+UI.h"
 #import "MBProgressHUD.h"
 #import "KHHFrameCardView.h"
 #import "KHHDataNew+Card.h"
@@ -24,13 +24,13 @@
 @property (nonatomic, strong) UIView *card;
 @property (strong, nonatomic) UIButton *saveToContactBtn;
 @property (strong, nonatomic) UIButton *delContactBtn;
-@property (strong, nonatomic) KHHData *data;
+//@property (strong, nonatomic) KHHData *data;
 @property (strong, nonatomic) NSArray *dataArray;
 @property (strong, nonatomic) Card    *myCard;
 @property (strong, nonatomic) KHHMyDetailController    *myDetailVC;
 @property (strong, nonatomic) DetailInfoViewController *detailVC;
 @property (strong, nonatomic) NSMutableArray           *itemArray;
-@property (strong, nonatomic) KHHData                  *dataCtrl;
+//@property (strong, nonatomic) KHHData                  *dataCtrl;
 
 @property (strong, nonatomic) KHHFrameCardView         *cardView;
 @property (assign, nonatomic) BOOL                     isColleague;

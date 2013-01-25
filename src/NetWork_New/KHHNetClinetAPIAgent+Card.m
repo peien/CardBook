@@ -18,12 +18,13 @@ NSMutableDictionary * parametersToCreateOrUpdateCard(InterCard *iCard) {
     // template
     [result setObject:(iCard.templateID? iCard.templateID.stringValue: @"")
                forKey:@"template"];
-    //  cardType 名片类型 取值如下： 个人名片、公司名片、客服名片
+    /*  cardType 名片类型 取值如下： 个人名片、公司名片、客服名片
     [result setObject: iCard.cardType ? iCard.cardType : @""
                    forKey:@"cardType"];
     //  cardSource 名片来源 取值如下：导入名片、客户端自建名片、服务端自建名片、个人用户创建名片
     [result setObject:iCard.cardSource ? iCard.cardSource : @""
                    forKey:@"cardSource"];
+     */
     // detail.trueName
     [result setObject:(iCard.name? iCard.name:  @"")
                forKey:@"detail.trueName"];
@@ -88,10 +89,10 @@ NSMutableDictionary * parametersToCreateOrUpdateCard(InterCard *iCard) {
                forKey:@"detail.businessScope"];
     // detail.openBank 开户行
     [result setObject:(iCard.bankAccountBranch? iCard.bankAccountBranch: @"")
-               forKey:@"detail.openBank"];
+               forKey:@"bankCardNo.name"];
     // detail.bankNO 银行账号
     [result setObject:(iCard.bankAccountNumber? iCard.bankAccountNumber: @"")
-               forKey:@"detail.bankNO"];
+               forKey:@"bankCardNo.name"];
     //    // detail.moreInfo 其他
     //    [result setObject:(iCard.moreInfo? iCard.moreInfo: @"")
     //               forKey:@"detail.moreInfo"];
@@ -415,7 +416,7 @@ NSMutableDictionary * parametersToCreateOrUpdateCard(InterCard *iCard) {
     KHHFailureBlock failed = [self defaultFailedResponse:delegate selector:@"updateCardFailed:"];
     
     //调接口
-    [self multipartFormRequestWithPUTPath:path parameters:parameters constructingBodyWithBlock:construction success:success failure:failed];
+    [self multipartFormRequestWithPOSTPath:path parameters:parameters constructingBodyWithBlock:construction success:success failure:failed];
 }
 
 #pragma mark - 联系人新名片状态标记

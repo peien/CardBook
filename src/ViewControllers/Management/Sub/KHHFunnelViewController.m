@@ -8,8 +8,9 @@
 
 #import "KHHFunnelViewController.h"
 #import "KHHValueViewController.h"
-#import "KHHData+UI.h"
+//#import "KHHData+UI.h"
 #import "KHHClasses.h"
+#import "KHHDataNew+Card.h"
 
 @interface KHHFunnelViewController (){
     NSNumber *_groupId;
@@ -17,7 +18,7 @@
     NSString *_rightTitle;
     BOOL isNeedReloadTable;
 }
-@property (strong, nonatomic) KHHData *dataCtrl;
+@property (strong, nonatomic) KHHDataNew *dataCtrl;
 @property (strong, nonatomic) NSMutableDictionary *allDic;
 
 @end
@@ -35,7 +36,7 @@
         //self.rightBtn.hidden = YES;
         [self.rightBtn setTitle:@"所有" forState:UIControlStateNormal];
         self.title = @"价值漏斗";
-        self.dataCtrl = [KHHData sharedData];
+        self.dataCtrl = [KHHDataNew sharedData];
     }
     return self;
 }
@@ -72,11 +73,11 @@
         [self.rightBtn setTitle:_rightTitle forState:UIControlStateNormal];
     }
     
-    NSArray *oneStarsArr = [self.dataCtrl cardsofStarts:1.0 groupId:groupId];
-    NSArray *twoStarsArr = [self.dataCtrl cardsofStarts:2.0 groupId:groupId];
-    NSArray *threeStarsArr = [self.dataCtrl cardsofStarts:3.0 groupId:groupId];
-    NSArray *fourStarsArr = [self.dataCtrl cardsofStarts:4.0 groupId:groupId];
-    NSArray *fiveStarsArr = [self.dataCtrl cardsofStarts:5.0 groupId:groupId];
+    NSArray *oneStarsArr = [[KHHDataNew sharedData] cardsofStarts:1.0 groupId:groupId];
+    NSArray *twoStarsArr = [[KHHDataNew sharedData] cardsofStarts:2.0 groupId:groupId];
+    NSArray *threeStarsArr = [[KHHDataNew sharedData] cardsofStarts:3.0 groupId:groupId];
+    NSArray *fourStarsArr = [[KHHDataNew sharedData] cardsofStarts:4.0 groupId:groupId];
+    NSArray *fiveStarsArr = [[KHHDataNew sharedData] cardsofStarts:5.0 groupId:groupId];
     [self.allDic setObject:oneStarsArr forKey:@"oneStar"];
     [self.allDic setObject:twoStarsArr forKey:@"twoStar"];
     [self.allDic setObject:threeStarsArr forKey:@"threeStar"];

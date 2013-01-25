@@ -18,12 +18,14 @@
 #import "KHHClasses.h"
 #import "KHHDataAPI.h"
 #import "KHHNotifications.h"
+#import "KHHDataNew+Group.h"
+#import "KHHDataNew+Card.h"
 
 @interface KHHAddGroupMemberVC ()<UISearchBarDelegate,UISearchDisplayDelegate,
                                  UITableViewDataSource,UITableViewDelegate,SMCheckboxDelegate>
 
 //@property (strong, nonatomic) SMCheckbox *box;
-@property (strong, nonatomic) KHHData    *dataCtrl;
+//@property (strong, nonatomic) KHHData    *dataCtrl;
 @property (strong, nonatomic) MBProgressHUD *hud;
 
 @end
@@ -43,7 +45,7 @@
 @synthesize searchArray = _searchArray;
 @synthesize handleArray;
 @synthesize homeVC;
-@synthesize dataCtrl;
+//@synthesize dataCtrl;
 @synthesize group;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -52,7 +54,7 @@
     if (self) {
         // Custom initialization
         self.navigationItem.rightBarButtonItem = nil;
-        self.dataCtrl = [KHHData sharedData];
+        //self.dataCtrl = [KHHData sharedData];
         //注册移动卡片消息
         [self observeNotificationName:KHHUIMoveCardsSucceeded selector:@"handleMoveCardsSucceeded:"];
         [self observeNotificationName:KHHUIMoveCardsFailed selector:@"handleMoveCardsFailed:"];
@@ -135,7 +137,7 @@
     _selectedItemArray = nil;
     self.handleArray = nil;
     self.homeVC = nil;
-    self.dataCtrl = nil;
+    //self.dataCtrl = nil;
     self.group = nil;
     self.hud = nil;
 }
@@ -284,12 +286,12 @@ int num = 0;
     if (_isAdd) {
         self.hud.labelText = KHHMessageAddingGroupMember;
        //调用添加组员接口,
-        [self.dataCtrl moveCards:_addOrDelGroupArray fromGroup:nil toGroup:self.group];
+        [[KHHDataNew sharedData] doMoveCards:_addOrDelGroupArray fromGroup:nil toGroup:self.group delegate:self];
 
     }else{
         self.hud.labelText = KHHMessageDeletingGroupMember;
        //调用移出组员接口
-        [self.dataCtrl moveCards:_addOrDelGroupArray fromGroup:self.group toGroup:nil];
+        [[KHHDataNew sharedData] doMoveCards:_addOrDelGroupArray fromGroup:self.group toGroup:nil delegate:self];
     }
      num = 0;
     

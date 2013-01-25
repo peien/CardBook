@@ -11,11 +11,11 @@
 #import "KHHCardView.h"
 #import "KHHShowHideTabBar.h"
 #import "Edit_eCardViewController.h"
-#import "KHHData+UI.h"
+//#import "KHHData+UI.h"
 
 @interface KHHMyDetailController ()
 @property (assign, nonatomic) bool    isNeedReloadTable;
-@property (strong, nonatomic) KHHData *dataCtrl;
+//@property (strong, nonatomic) KHHData *dataCtrl;
 
 
 @end
@@ -28,7 +28,7 @@
 @synthesize lastBtn = _lastBtn;
 @synthesize card;
 @synthesize isNeedReloadTable;
-@synthesize dataCtrl;
+//@synthesize dataCtrl;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -38,7 +38,7 @@
         //self.hidesBottomBarWhenPushed = YES;
         self.navigationItem.title = @"我的详情";
         self.navigationItem.rightBarButtonItem = nil;
-        self.dataCtrl = [KHHData sharedData];
+       // self.dataCtrl = [KHHData sharedData];
     }
     return self;
 }
@@ -131,7 +131,7 @@
     _cardView = nil;
     _containView = nil;
     self.card = nil;
-    self.dataCtrl = nil;
+   // self.dataCtrl = nil;
 }
 - (void)headBtnClick:(id)sender
 {

@@ -10,13 +10,14 @@
 #import "KHHValueViewController.h"
 #import "PCPieChart.h"
 #import "KHHClasses.h"
-#import "KHHData+UI.h"
+#import "KHHDataNew+Card.h"
+
 #import "KHHFilterPopup.h"
 
 static NSInteger const KHH_PCPieChart_Tag = 1000;
 
 @interface KHHRadarViewController ()<KHHFilterPopupDelegate>
-@property (strong, nonatomic) KHHData *dataCtrl;
+//@property (strong, nonatomic) KHHData *dataCtrl;
 @property (strong, nonatomic) NSMutableArray    *valueItems;
 @property (assign, nonatomic) BOOL              isNeedReloadTable;
 @property (strong, nonatomic) Group             *currentGroup;
@@ -27,7 +28,7 @@ static NSInteger const KHH_PCPieChart_Tag = 1000;
 @end
 
 @implementation KHHRadarViewController
-@synthesize dataCtrl;
+//@synthesize dataCtrl;
 @synthesize valueItems;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -38,7 +39,7 @@ static NSInteger const KHH_PCPieChart_Tag = 1000;
         //先隐藏
 //        self.rightBtn.hidden = YES;
        [self.rightBtn setTitle:@"所有" forState:UIControlStateNormal];
-        self.dataCtrl = [KHHData sharedData];
+     //   self.dataCtrl = [KHHData sharedData];
         self.title = @"关系拓展";
     }
     return self;
@@ -114,11 +115,11 @@ static NSInteger const KHH_PCPieChart_Tag = 1000;
     
     //根据分组查该分组下的relation分布
     //查询某值下的数据
-    NSArray *arr1 = [self.dataCtrl cardsOfstartsForRelation:1.0 groupID:groupID];
-    NSArray *arr2 = [self.dataCtrl cardsOfstartsForRelation:2.0 groupID:groupID];
-    NSArray *arr3 = [self.dataCtrl cardsOfstartsForRelation:3.0 groupID:groupID];
-    NSArray *arr4 = [self.dataCtrl cardsOfstartsForRelation:4.0 groupID:groupID];
-    NSArray *arr5 = [self.dataCtrl cardsOfstartsForRelation:5.0 groupID:groupID];
+    NSArray *arr1 = [[KHHDataNew sharedData] cardsOfstartsForRelation:1.0 groupID:groupID];
+    NSArray *arr2 = [[KHHDataNew sharedData] cardsOfstartsForRelation:2.0 groupID:groupID];
+    NSArray *arr3 = [[KHHDataNew sharedData] cardsOfstartsForRelation:3.0 groupID:groupID];
+    NSArray *arr4 = [[KHHDataNew sharedData] cardsOfstartsForRelation:4.0 groupID:groupID];
+    NSArray *arr5 = [[KHHDataNew sharedData] cardsOfstartsForRelation:5.0 groupID:groupID];
     //记录下所有名片的个数
     _totalCount = arr1.count + arr2.count + arr3.count + arr4.count + arr5.count;
     [valueItems addObject:arr1];

@@ -15,9 +15,10 @@
 #import "KHHShowHideTabBar.h"
 #import "KHHAppDelegate.h"
 #import "KHHClasses.h"
-#import "KHHData+UI.h"
-#import "KHHData.h"
+//#import "KHHData+UI.h"
+//#import "KHHData.h"
 #import "KHHFilterPopup.h"
+#import "KHHDataNew+Card.h"
 
 //title 右侧按钮供选择的类型
 #define InitDataTypeArray   dataTypeArray = [[NSMutableArray alloc] initWithObjects:NSLocalizedString(KHHMessageCheckIn, nil),NSLocalizedString(KHHMessageDataCollect, nil), nil]
@@ -121,9 +122,9 @@
     [KHHShowHideTabBar hideTabbar];
     if (self.isneedReloadeVisitTable) {
         if ([self.card isKindOfClass:[ReceivedCard class]]) {
-            self.card = [[KHHData sharedData]receivedCardByID:self.card.id];
+            self.card = [[KHHDataNew sharedData]receivedCardByID:self.card.id];
         }else if ([self.card isKindOfClass:[PrivateCard class]]){
-            self.card = [[KHHData sharedData] privateCardByID:self.card.id];
+            self.card = [[KHHDataNew sharedData] privateCardByID:self.card.id];
         }
         self.visitView.card = self.card;
         //如果某条拜访计划的日期发生变化后，要定位到相应的日期

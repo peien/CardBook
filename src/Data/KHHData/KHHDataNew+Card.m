@@ -495,12 +495,13 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray)
     InterCard *icardPro = [[InterCard alloc]init];
     icardPro.id = @(10);
     icardPro.userID = [NSNumber numberFromString:[KHHUser shareInstance].userId];
-    icardPro.telephone = [KHHUser shareInstance].username;
+    icardPro.mobilePhone = [KHHUser shareInstance].username;
    
     
     [CardTemplate processJSON:[[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"template" ofType:@"plist"]][@"templatelist"][0]];
-    Company *company = [Company objectByID:@(10) createIfNone:YES];
-    company.name = @"000";
+   // Company *company = [Company objectByID:@(10) createIfNone:YES];
+//    icardPro.companyName = @"000";
+//    icardPro.companyID = @"";
     
     icardPro.templateID = @(10);
     
@@ -606,5 +607,79 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray)
    // [self.agent markReadReceivedCard:aCard];
 }
 
+
+// 通过几颗星筛选关系
+- (NSArray *)cardsOfstartsForRelation:(float)starts groupID: (long) groupID
+{
+    NSMutableArray *result;
+    NSArray *fetched;
+    NSPredicate *predicate;
+    
+    NSMutableString *pre = [[NSMutableString alloc] initWithCapacity:40];
+    
+    //关系条件
+    if (starts == -1) {
+        [pre appendString:[NSString stringWithFormat:@"evaluation.degree >= 1"]];
+    }else {
+        [pre appendString:[NSString stringWithFormat:@"evaluation.degree == %f",starts]];
+    }
+    
+    //分组的条件
+    if (groupID > 0) {
+        [pre appendString:[NSString stringWithFormat:@"%@%ld",@" && SOME groups.id == ",groupID]];
+    }
+    
+    predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"%@", pre]];
+    
+    fetched = [ContactCard objectArrayByPredicate:predicate
+                                  sortDescriptors:[Card defaultSortDescriptors]];
+    result = FilterUnexpectedCardsFromArray(fetched);
+    return result;
+    
+}
+
+- (NSArray *)cardsofStarts:(float)starts
+{
+    NSMutableArray *result;
+    NSArray *fetched;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"evaluation.value == %f",starts]];
+    fetched = [ContactCard objectArrayByPredicate:predicate
+                                  sortDescriptors:[Card defaultSortDescriptors]];
+    result = FilterUnexpectedCardsFromArray(fetched);
+    return result;
+}
+
+- (NSArray *)cardsofStarts:(float)starts groupId:(NSNumber *)groupId
+{
+    if (!groupId) {
+        return [self cardsofStarts:starts];
+    }
+    NSMutableArray *result;
+    NSArray *fetched;
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:[NSString stringWithFormat:@"(evaluation.value == %f) AND (ANY groups.id = %d)",starts,[groupId intValue]]];
+    fetched = [ContactCard objectArrayByPredicate:predicate
+                                  sortDescriptors:[Card defaultSortDescriptors]];
+    result = FilterUnexpectedCardsFromArray(fetched);
+    return result;
+}
+
+
+#pragma mark - 同事（companyid与自己相同）
+
+- (NSArray *)cardsOfColleague
+{
+    NSNumber *myComID = [NSNumber numberFromString:[KHHUser shareInstance].companyId] ;
+    NSMutableArray *result = [NSMutableArray array];
+    if (myComID.integerValue) {
+        // 自己属于某公司
+        NSPredicate *predicate =  [NSPredicate predicateWithFormat:@"company.id == %@", myComID];
+        NSArray *fetched;
+        fetched = [ContactCard objectArrayByPredicate:predicate
+                                      sortDescriptors:[Card defaultSortDescriptors]];
+        // 过滤掉意外情况
+        result = FilterUnexpectedCardsFromArray(fetched);
+    }
+    return result;
+}
 
 @end

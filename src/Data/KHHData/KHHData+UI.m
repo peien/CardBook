@@ -6,7 +6,7 @@
 //  Copyright (c) 2012年 Kinghanhong. All rights reserved.
 //
 
-#import "KHHData+UI.h"
+//#import "KHHData+UI.h"
 //#import "KHHClasses.h"
 #import "KHHTypes.h"
 #import "KHHDefaults.h"
@@ -459,7 +459,7 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray)
                                        sortDescriptors:@[sortDes]];
     return result;
 }
-- (NSInteger)countOfUnfinishedSchedulesOnCard:(Card *)aCard day:(NSString *)aDay; {
+- (NSInteger)countOfUnfinishedSchedulesOnCard:(Card *)aCard day:(NSString *)aDay{
     NSDate *start = DateFromKHHDateString([aDay stringByAppendingString:@" 00:00:00"]);
     return [self countOfUnfinishedSchedulesOnCard:aCard date:start];
 }

@@ -9,7 +9,7 @@
 #import "KHHNetClinetAPIAgent+Message.h"
 #import "InMessage.h"
 #import "KHHMessage.h"
-#import "KHHData.h"
+//#import "KHHData.h"
 #import "KHHNetworkAPIAgent.h"
 
 
@@ -28,9 +28,9 @@
     }
     if ([arrPro2 count]>0) {
         for (KHHMessage *msg in messages) {
-            [[[KHHData sharedData] context] deleteObject:msg];
+            [[[KHHDataNew sharedData] context] deleteObject:msg];
         }
-        [[KHHData sharedData] saveContext];
+        [[KHHDataNew sharedData] saveContext];
         
     }
     if ([arrPro count]>0) {
@@ -130,7 +130,7 @@
                                                     [messageList addObject:im];
                                                     [KHHMessage processIObject:im];
                                                 }
-                                                [[KHHData sharedData] saveContext];
+                                                [[KHHDataNew sharedData] saveContext];
                                                 if (messageList && messageList.count > 0) {
                                                     [delegate reseaveDone:YES];
                                                 }else{

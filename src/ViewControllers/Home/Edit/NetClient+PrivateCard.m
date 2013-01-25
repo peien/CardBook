@@ -8,7 +8,7 @@
 
 #import "InterCard.h"
 #import "PrivateCard.h"
-#import "KHHData.h"
+//#import "KHHData.h"
 
 
 #pragma mark - Paramtrance

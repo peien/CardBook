@@ -13,10 +13,11 @@
 #import "KHHVisitRecoardVC.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "DetailInfoViewController.h"
-#import "KHHData+UI.h"
-#import "KHHData.h"
+//#import "KHHData+UI.h"
+//#import "KHHData.h"
 #import "NSString+SM.h"
 #import "KHHBMapViewController.h"
+#import "KHHDataNew+VisitSchedule.h"
 
 @interface KHHVisitCalendarView()
 {
@@ -65,6 +66,8 @@
         //适配一下iphone5
         [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_footView];
         [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_addBtn];
+//        [_addBtn addTarget:self action:@selector(visitCalendarBtnClick) forControlEvents:UIControlEventTouchUpInside];
+//        _addBtn.enabled = YES;
         [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_calBtn];
         isInitialized = YES;
     }
@@ -77,32 +80,32 @@
         if ([self.card isKindOfClass:[MyCard class]]) {
             self.card = nil;
         }
-        self.dataArray = [[[KHHData sharedData] schedulesOnCard:self.card date:self.selectedDate] sortedArrayUsingDescriptors:@[descDate]];
+        self.dataArray = [[[KHHDataNew sharedData] schedulesOnCard:self.card date:self.selectedDate] sortedArrayUsingDescriptors:@[descDate]];
     }else {
-        KHHData *data = [KHHData sharedData];
+      //  KHHDataNew *data = [KHHDataNew sharedData];
         switch (self.visitType) {
             case KHHVisitPlanExecuting:
             {
                 //正在执行（当前时间以后的）
-                self.dataArray  = [data executingSchedules];
+                self.dataArray  = [[KHHDataNew sharedData] executingSchedules];
             }
                 break;
             case KHHVisitPlanOverdue:
             {
                 //过期(当前时间以前的并且没有finish的)
-                self.dataArray  = [data overdueSchedules];
+                self.dataArray  = [[KHHDataNew sharedData] overdueSchedules];
             }
                 break;
             case KHHVisitPlanFinished:
             {
                 //已完成(finish标记为yes)
-                self.dataArray  = [data finishedSchedules];
+                self.dataArray  = [[KHHDataNew sharedData] finishedSchedules];
             }
                 break;
             case KHHVisitPlanAll:
             {
                 //所有
-                self.dataArray  = [data allSchedules];
+                self.dataArray  = [[KHHDataNew sharedData] allSchedules];
             }
                 break;
             default:
@@ -327,6 +330,15 @@
     }
 }
 
+- (void)visitCalendarBtnClick
+{
+    KHHVisitRecoardVC *visitRVC = [[KHHVisitRecoardVC alloc] initWithNibName:nil bundle:nil];
+    visitRVC.style = KVisitRecoardVCStyleNewBuild;
+    visitRVC.isNeedWarn = YES;
+    visitRVC.visitInfoCard = self.card;
+    [self.viewCtrl.navigationController pushViewController:visitRVC animated:YES];
+}
+
 //刷新数据，不传数据类型时默认是数据采集
 - (void)reloadTheTable{
     [self reloadTheTable:KHHCalendarViewDataTypeCollect];
@@ -345,6 +357,6 @@
     if ([self.card isKindOfClass:[MyCard class]]) {
         self.card = nil;
     }
-    self.dataArray = [[KHHData sharedData] schedulesOnCard:self.card day:dateS];
+    self.dataArray = [[KHHDataNew sharedData] schedulesOnCard:self.card day:dateS];
 }
 @end

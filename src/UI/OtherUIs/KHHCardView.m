@@ -29,13 +29,13 @@
     MBProgressHUD *hud;
 }
 @synthesize theTable = _theTable;
-@synthesize data = _data;
+//@synthesize data = _data;
 @synthesize dataArray = _dataArray;
 @synthesize myCard = _myCard;
 @synthesize detailVC;
 @synthesize myDetailVC;
 @synthesize itemArray;
-@synthesize dataCtrl;
+//@synthesize dataCtrl;
 
 @synthesize cardView;
 
@@ -59,7 +59,7 @@
  */
 - (void)initView
 {
-    self.dataCtrl = [KHHData sharedData];
+    //self.dataCtrl = [KHHDataNew sharedData];
     self.backgroundColor = [UIColor colorWithRed:241 green:238 blue:232 alpha:1.0];
     self.cardView = [[KHHFrameCardView alloc] initWithFrame:CGRectMake(0, 0, 320, 225) delegate:self.detailVC isVer:NO callbackAction:nil];
     self.cardView.card = self.myCard;
@@ -157,7 +157,7 @@
         self.myCard = card;
         self.detailVC.card = card;
     }else if ([_myCard isKindOfClass:[MyCard class]]){
-        Card *card = [self.dataCtrl myCardByID:_myCard.id];
+        Card *card = [[KHHDataNew sharedData] myCardByID:_myCard.id];
         self.cardView.card = card;
         self.myCard = card;
     }

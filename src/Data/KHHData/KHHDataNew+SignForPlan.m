@@ -8,6 +8,8 @@
 
 #import "KHHDataNew+SignForPlan.h"
 #import "Schedule.h"
+#import "NSObject+SM.h"
+
 
 @implementation KHHDataNew (SignForPlan)
 
@@ -68,4 +70,40 @@
 {}
 
 
+#pragma mark - for ui
+
+- (NSInteger)countOfUnfinishedSchedulesOnCard:(Card *)aCard day:(NSString *)aDay{
+    NSDate *start = DateFromKHHDateString([aDay stringByAppendingString:@" 00:00:00"]);
+    return [self countOfUnfinishedSchedulesOnCard:aCard date:start];
+}
+- (NSInteger)countOfUnfinishedSchedulesOnCard:(Card *)aCard date:(NSDate *)aDate {
+    NSArray *list = [self schedulesOnCard:aCard date:aDate];
+    if (0 == list.count) {
+        return -1;
+    }
+    NSMutableArray *result = [NSMutableArray arrayWithCapacity:list.count];
+    for (Schedule *schdl in list) {
+        if(schdl.isFinishedValue) continue;
+        [result addObject:schdl];
+    }
+    return result.count;
+}
+
+- (NSArray *)schedulesOnCard:(Card *)aCard date:(NSDate *)aDate {
+    NSDate *start = aDate;
+    NSTimeInterval oneDay = 60 * 60 * 24;
+    NSDate *end = [start dateByAddingTimeInterval:oneDay];
+    NSPredicate *predicate;
+    
+    if (aCard) {
+        predicate = [NSPredicate predicateWithFormat:@"plannedDate >= %@ && plannedDate < %@ && SOME targets.id == %@", start, end, aCard.id];
+    } else {
+        predicate = [NSPredicate predicateWithFormat:@"plannedDate >= %@ && plannedDate < %@", start, end];
+    }
+    NSSortDescriptor *sortDes = [NSSortDescriptor sortDescriptorWithKey:@"id"
+                                                              ascending:NO];
+    NSArray *result = [Schedule objectArrayByPredicate:predicate
+                                       sortDescriptors:@[sortDes]];
+    return result;
+}
 @end

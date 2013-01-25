@@ -15,7 +15,7 @@
 #import "KHHDefaults.h"
 #import "KHHNotifications.h"
 #import "KHHWebView.h"
-
+#import "KHHUser.h"
 
 @interface MoreViewController ()<UIActionSheetDelegate,UIAlertViewDelegate>
 @end
@@ -46,13 +46,13 @@
     [self.view setBackgroundColor:[UIColor colorWithRed:241 green:238 blue:232 alpha:1.0]];
 }
 - (void)viewWillAppear:(BOOL)animated{
-      [super viewWillAppear:animated];
-      [KHHShowHideTabBar showTabbar];
+    [super viewWillAppear:animated];
+    [KHHShowHideTabBar showTabbar];
     
 }
 - (void)viewWillDisappear:(BOOL)animated{
-      [super viewWillDisappear:animated];
-//    [KHHShowHideTabBar hideTabbar];
+    [super viewWillDisappear:animated];
+    //    [KHHShowHideTabBar hideTabbar];
     
 }
 
@@ -85,10 +85,10 @@
         case 0:
             return 3;
             break;
-//        //检测更新
-//        case 1:
-//            return 1;
-//            break;
+            //        //检测更新
+            //        case 1:
+            //            return 1;
+            //            break;
         case 1:
             return 4;
             break;
@@ -116,7 +116,7 @@
                         cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     }
                     cell.textLabel.text = NSLocalizedString(@"修改密码", nil);
-
+                    
                 }
                     break;
                 case 1:{
@@ -135,11 +135,9 @@
                     cell = [tableView dequeueReusableCellWithIdentifier:cellid];
                     if (cell == nil) {
                         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
-                        if ([[KHHDefaults sharedDefaults] isAddMobPhoneGroup]) {
-                            _groupMobilePhoneSwi.on = YES;
-                        }else{
-                            _groupMobilePhoneSwi.on = NO;
-                        }
+                        
+                        _groupMobilePhoneSwi.on = [KHHUser shareInstance].isAddMobPhoneGroup;
+                        
                         cell.accessoryView = _groupMobilePhoneSwi;
                         cell.selectionStyle = UITableViewCellSelectionStyleNone;
                     }
@@ -150,119 +148,119 @@
                     break;
             }
             break;
-    
-//       case 1:
-//        switch (indexPath.row) {
-//        case 0:{
-//            cellid = @"genxin";
-//            cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-//            if (cell == nil) {
-//                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
-//                cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-//                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//            }
-//            cell.textLabel.text = NSLocalizedString(@"检查更新", nil);
-//        }
-//            
-//            break;
-//            
-//        case 1:{
-//            cellid = @"genxin style";
-//            cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-//            if (cell == nil) {
-//                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
-//                cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-//                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-//            }
-//            cell.textLabel.text = @"软件更新方式设置";
-//            _updateStyle.frame = CGRectMake(25, 36, 260, 20);
-//            [cell addSubview:_updateStyle];
-//        }
-//        default:
-//            break;
-//    }
-//    break;
-    
-    case 1:
-    switch (indexPath.row) {
-        case 0:{
-            cellid = @"use guide";
-            cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-            if (cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
-                cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+            //       case 1:
+            //        switch (indexPath.row) {
+            //        case 0:{
+            //            cellid = @"genxin";
+            //            cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+            //            if (cell == nil) {
+            //                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
+            //                cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+            //                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            //            }
+            //            cell.textLabel.text = NSLocalizedString(@"检查更新", nil);
+            //        }
+            //
+            //            break;
+            //
+            //        case 1:{
+            //            cellid = @"genxin style";
+            //            cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+            //            if (cell == nil) {
+            //                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
+            //                cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+            //                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            //            }
+            //            cell.textLabel.text = @"软件更新方式设置";
+            //            _updateStyle.frame = CGRectMake(25, 36, 260, 20);
+            //            [cell addSubview:_updateStyle];
+            //        }
+            //        default:
+            //            break;
+            //    }
+            //    break;
+            
+        case 1:
+            switch (indexPath.row) {
+                case 0:{
+                    cellid = @"use guide";
+                    cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+                    if (cell == nil) {
+                        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
+                        cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    }
+                    cell.textLabel.text = NSLocalizedString(@"使用指南", nil);
+                }
+                    
+                    break;
+                case 1:{
+                    cellid = @"recommend";
+                    cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+                    if (cell == nil) {
+                        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
+                        cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    }
+                    cell.textLabel.text = NSLocalizedString(@"推荐给好友", nil);
+                }
+                    break;
+                case 2:{
+                    cellid = @"contact us";
+                    cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+                    if (cell == nil) {
+                        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
+                        cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    }
+                    cell.textLabel.text = NSLocalizedString(@"客户反馈", nil);
+                    
+                }
+                    break;
+                case 3:{
+                    cellid = @"about";
+                    cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+                    if (cell == nil) {
+                        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
+                        cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    }
+                    cell.textLabel.text = NSLocalizedString(@"关于蜂巢", nil);
+                }
+                    break;
+                    
+                default:
+                    break;
             }
-            cell.textLabel.text = NSLocalizedString(@"使用指南", nil);
-        }
             
             break;
-        case 1:{
-            cellid = @"recommend";
-            cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-            if (cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
-                cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            
+        case 2:
+            switch (indexPath.row) {
+                    
+                case 0:{
+                    cellid = @"auto";
+                    cell = [tableView dequeueReusableCellWithIdentifier:cellid];
+                    if (cell == nil) {
+                        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
+                        cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+                        cell.accessoryView = _autoReturn;
+                        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+                    }
+                    cell.textLabel.text = NSLocalizedString(@"自动回赠名片", nil);
+                    
+                }
+                    break;
+                default:
+                    break;
             }
-            cell.textLabel.text = NSLocalizedString(@"推荐给好友", nil);
-        }
-            break;
-        case 2:{
-            cellid = @"contact us";
-            cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-            if (cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
-                cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            }
-            cell.textLabel.text = NSLocalizedString(@"客户反馈", nil);
-        
-        }
-            break;
-        case 3:{
-            cellid = @"about";
-            cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-            if (cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
-                cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            }
-            cell.textLabel.text = NSLocalizedString(@"关于蜂巢", nil);
-        }
-            break;
             
         default:
             break;
     }
     
-    break;
-    
-    case 2:
-    switch (indexPath.row) {
-            
-        case 0:{
-            cellid = @"auto";
-            cell = [tableView dequeueReusableCellWithIdentifier:cellid];
-            if (cell == nil) {
-                cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellid];
-                cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
-                cell.accessoryView = _autoReturn;
-                cell.selectionStyle = UITableViewCellSelectionStyleNone;
-            }
-            cell.textLabel.text = NSLocalizedString(@"自动回赠名片", nil);
-            
-        }
-            break;
-        default:
-            break;
-    }
-            
-        default:
-            break;
-    }
-
- return cell;
+    return cell;
     
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -283,7 +281,7 @@
                                                   cancelButtonTitle:KHHMessageCancle
                                                   otherButtonTitles:KHHMessageSure, nil];
             [alert show];
-
+            
         }
     }else if (indexPath.section == 1) {
         if (indexPath.row == 0) {
@@ -304,16 +302,16 @@
         }
         
     }/*else if (indexPath.section == 1){
-        if (indexPath.row == 1) {
-            _titleStr = @"软件更新方式";
-            [self showActionSheet];
-        }
-    }else if (indexPath.section == 3){
-        if (indexPath.row == 0) {
-            _titleStr = @"默认页面设置";
-            [self showActionSheet];
-        }
-    }*/
+      if (indexPath.row == 1) {
+      _titleStr = @"软件更新方式";
+      [self showActionSheet];
+      }
+      }else if (indexPath.section == 3){
+      if (indexPath.row == 0) {
+      _titleStr = @"默认页面设置";
+      [self showActionSheet];
+      }
+      }*/
 }
 
 - (void)showActionSheet
@@ -325,7 +323,7 @@
         [actSheet addButtonWithTitle:@"手动更新"];
     }
     [actSheet showInView:self.view];
-
+    
 }
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
@@ -340,13 +338,13 @@
 }
 //是否添加手机分组
 - (IBAction)addMobileGroupSwitchValueChange:(UISwitch *)sender{
-    KHHDefaults *defaut = [KHHDefaults sharedDefaults];
+    
     if (sender.on) {
-        defaut.isAddMobPhoneGroup = YES;
+        [KHHUser shareInstance].isAddMobPhoneGroup = YES;
     }else{
-        defaut.isAddMobPhoneGroup = NO;
+        [KHHUser shareInstance].isAddMobPhoneGroup = NO;
     }
-
+    
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {

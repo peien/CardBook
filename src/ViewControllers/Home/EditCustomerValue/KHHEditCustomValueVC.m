@@ -11,10 +11,11 @@
 #import "KHHClasses.h"
 #import "MBProgressHUD.h"
 #import "KHHDataAPI.h"
+#import "KHHDataNew+Card.h"
 
 @interface KHHEditCustomValueVC ()<KHHCustomEvaluaViewDelegate>
 @property (strong, nonatomic) ICustomerEvaluation *icustomerEva;
-@property (strong, nonatomic) KHHData             *dataCtrl;
+//@property (strong, nonatomic) KHHData             *dataCtrl;
 @property (strong, nonatomic) MBProgressHUD       *hud;
 
 @end
@@ -27,7 +28,7 @@
 @synthesize cusView = _cusView;
 @synthesize card;
 @synthesize icustomerEva;
-@synthesize dataCtrl;
+//@synthesize dataCtrl;
 @synthesize hud;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -37,7 +38,7 @@
         // Custom initialization
         [self.rightBtn setTitle:@"保存" forState:UIControlStateNormal];
         self.icustomerEva = [[ICustomerEvaluation alloc] init];
-        self.dataCtrl = [KHHData sharedData];
+       // self.dataCtrl = [KHHData sharedData];
     }
     return self;
 }
@@ -50,7 +51,7 @@
     
 }
 - (void)saveCustomValue{
-    NSArray *cards = [self.dataCtrl allMyCards];
+    NSArray *cards = [[KHHDataNew sharedData] allMyCards];
     if (!cards || cards.count <= 0) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:KhhMessageDataErrorTitle
                                                         message:KhhMessageDataErrorNotice
@@ -81,7 +82,7 @@
     self.hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     self.hud.labelText = KHHMessageCreateCustomValue;
     MyCard *myCard = [cards objectAtIndex:0];
-    [self.dataCtrl saveEvaluation:self.icustomerEva aboutCustomer:self.card withMyCard:myCard];
+   // [[KHHDataNew sharedData] saveEvaluation:self.icustomerEva aboutCustomer:self.card withMyCard:myCard];
 }
 //处理网络返回结果
 - (void)handleSaveEvaluationSucceeded:(NSNotification *)info{

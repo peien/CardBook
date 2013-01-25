@@ -111,6 +111,14 @@
 		310A069D16AD36F0007460F4 /* InterCollect.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A069916AD36F0007460F4 /* InterCollect.m */; };
 		310A3F41168D3E9D009FF135 /* CardBook_test_haibo-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 310A3F3E168D3E9D009FF135 /* CardBook_test_haibo-Info.plist */; };
 		310A3F42168D3E9D009FF135 /* CardBook_test-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 310A3F3F168D3E9D009FF135 /* CardBook_test-Info.plist */; };
+		310A59B316B11F3F00834305 /* KHHDataNew+Evaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A59B216B11F3E00834305 /* KHHDataNew+Evaluation.m */; };
+		310A59B416B11F3F00834305 /* KHHDataNew+Evaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A59B216B11F3E00834305 /* KHHDataNew+Evaluation.m */; };
+		310A59B516B11F3F00834305 /* KHHDataNew+Evaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A59B216B11F3E00834305 /* KHHDataNew+Evaluation.m */; };
+		310A59B616B11F3F00834305 /* KHHDataNew+Evaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A59B216B11F3E00834305 /* KHHDataNew+Evaluation.m */; };
+		310A59B916B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A59B816B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.m */; };
+		310A59BA16B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A59B816B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.m */; };
+		310A59BB16B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A59B816B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.m */; };
+		310A59BC16B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A59B816B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.m */; };
 		310B2ED01699090B00818461 /* KHHInputTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 310B2ECF1699090B00818461 /* KHHInputTableView.m */; };
 		310B2ED11699090B00818461 /* KHHInputTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 310B2ECF1699090B00818461 /* KHHInputTableView.m */; };
 		310B2ED21699090B00818461 /* KHHInputTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 310B2ECF1699090B00818461 /* KHHInputTableView.m */; };
@@ -394,9 +402,6 @@
 		314A0118168BEF3800029324 /* InMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 98BEF3BC16424ED4003EDF33 /* InMessage.m */; };
 		314A0119168BEF3800029324 /* ISchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E6F4011623CEB700AE81D3 /* ISchedule.m */; };
 		314A011A168BEF3800029324 /* OSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 984ABA01163662ED0047AFB2 /* OSchedule.m */; };
-		314A011B168BEF3800029324 /* KHHData.m in Sources */ = {isa = PBXBuildFile; fileRef = 98F83BE116073C790036A516 /* KHHData.m */; };
-		314A011D168BEF3800029324 /* KHHData+Handlers.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACB91609BD08002B9BAD /* KHHData+Handlers.m */; };
-		314A011E168BEF3800029324 /* ATestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 984FA63816104AF000344BDC /* ATestViewController.m */; };
 		314A011F168BEF3800029324 /* SMObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 984B7FE41625642700E8BDC0 /* SMObject.m */; };
 		314A0120168BEF3800029324 /* Encryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DFE1602D46000A4A673 /* Encryptor.m */; };
 		314A0121168BEF3800029324 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E011602D46000A4A673 /* NSData+Base64.m */; };
@@ -831,9 +836,6 @@
 		314AFF59168BEE9A00029324 /* InMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 98BEF3BC16424ED4003EDF33 /* InMessage.m */; };
 		314AFF5A168BEE9A00029324 /* ISchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E6F4011623CEB700AE81D3 /* ISchedule.m */; };
 		314AFF5B168BEE9A00029324 /* OSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 984ABA01163662ED0047AFB2 /* OSchedule.m */; };
-		314AFF5C168BEE9A00029324 /* KHHData.m in Sources */ = {isa = PBXBuildFile; fileRef = 98F83BE116073C790036A516 /* KHHData.m */; };
-		314AFF5E168BEE9A00029324 /* KHHData+Handlers.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACB91609BD08002B9BAD /* KHHData+Handlers.m */; };
-		314AFF5F168BEE9A00029324 /* ATestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 984FA63816104AF000344BDC /* ATestViewController.m */; };
 		314AFF60168BEE9A00029324 /* SMObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 984B7FE41625642700E8BDC0 /* SMObject.m */; };
 		314AFF61168BEE9A00029324 /* Encryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DFE1602D46000A4A673 /* Encryptor.m */; };
 		314AFF62168BEE9A00029324 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E011602D46000A4A673 /* NSData+Base64.m */; };
@@ -1149,9 +1151,6 @@
 		6274BFB0165C7C3300DB5EBE /* InMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 98BEF3BC16424ED4003EDF33 /* InMessage.m */; };
 		6274BFB1165C7C3300DB5EBE /* ISchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E6F4011623CEB700AE81D3 /* ISchedule.m */; };
 		6274BFB2165C7C3300DB5EBE /* OSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 984ABA01163662ED0047AFB2 /* OSchedule.m */; };
-		6274BFB3165C7C3300DB5EBE /* KHHData.m in Sources */ = {isa = PBXBuildFile; fileRef = 98F83BE116073C790036A516 /* KHHData.m */; };
-		6274BFB5165C7C3300DB5EBE /* KHHData+Handlers.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACB91609BD08002B9BAD /* KHHData+Handlers.m */; };
-		6274BFB6165C7C3300DB5EBE /* ATestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 984FA63816104AF000344BDC /* ATestViewController.m */; };
 		6274BFB7165C7C3300DB5EBE /* SMObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 984B7FE41625642700E8BDC0 /* SMObject.m */; };
 		6274BFB8165C7C3300DB5EBE /* Encryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DFE1602D46000A4A673 /* Encryptor.m */; };
 		6274BFB9165C7C3300DB5EBE /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E011602D46000A4A673 /* NSData+Base64.m */; };
@@ -1554,9 +1553,6 @@
 		62ECD8D5166DE1D000A15E24 /* InMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = 98BEF3BC16424ED4003EDF33 /* InMessage.m */; };
 		62ECD8D6166DE1D000A15E24 /* ISchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 98E6F4011623CEB700AE81D3 /* ISchedule.m */; };
 		62ECD8D7166DE1D000A15E24 /* OSchedule.m in Sources */ = {isa = PBXBuildFile; fileRef = 984ABA01163662ED0047AFB2 /* OSchedule.m */; };
-		62ECD8D8166DE1D000A15E24 /* KHHData.m in Sources */ = {isa = PBXBuildFile; fileRef = 98F83BE116073C790036A516 /* KHHData.m */; };
-		62ECD8DA166DE1D000A15E24 /* KHHData+Handlers.m in Sources */ = {isa = PBXBuildFile; fileRef = 982AACB91609BD08002B9BAD /* KHHData+Handlers.m */; };
-		62ECD8DB166DE1D000A15E24 /* ATestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 984FA63816104AF000344BDC /* ATestViewController.m */; };
 		62ECD8DC166DE1D000A15E24 /* SMObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 984B7FE41625642700E8BDC0 /* SMObject.m */; };
 		62ECD8DD166DE1D000A15E24 /* Encryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84DFE1602D46000A4A673 /* Encryptor.m */; };
 		62ECD8DE166DE1D000A15E24 /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84E011602D46000A4A673 /* NSData+Base64.m */; };
@@ -2078,6 +2074,10 @@
 		310A3F36168D2C43009FF135 /* MsgDelegates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MsgDelegates.h; path = ../ViewControllers/Message/MsgDelegates.h; sourceTree = "<group>"; };
 		310A3F3E168D3E9D009FF135 /* CardBook_test_haibo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CardBook_test_haibo-Info.plist"; sourceTree = SOURCE_ROOT; };
 		310A3F3F168D3E9D009FF135 /* CardBook_test-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CardBook_test-Info.plist"; sourceTree = SOURCE_ROOT; };
+		310A59B116B11F3D00834305 /* KHHDataNew+Evaluation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHDataNew+Evaluation.h"; sourceTree = "<group>"; };
+		310A59B216B11F3E00834305 /* KHHDataNew+Evaluation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHDataNew+Evaluation.m"; sourceTree = "<group>"; };
+		310A59B716B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHNetClinetAPIAgent+CustomerEvelent.h"; sourceTree = "<group>"; };
+		310A59B816B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHNetClinetAPIAgent+CustomerEvelent.m"; sourceTree = "<group>"; };
 		310B2ECE1699090B00818461 /* KHHInputTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHInputTableView.h; sourceTree = "<group>"; };
 		310B2ECF1699090B00818461 /* KHHInputTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHInputTableView.m; sourceTree = "<group>"; };
 		310B2ED61699247100818461 /* KHHMemoPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHMemoPicker.h; sourceTree = "<group>"; };
@@ -3036,6 +3036,8 @@
 				3101B33816A4FEF50070D5FF /* KHHDataNew+Account.m */,
 				310A068316AD34FE007460F4 /* KHHDataNew+SignForPlan.h */,
 				310A068416AD34FF007460F4 /* KHHDataNew+SignForPlan.m */,
+				310A59B116B11F3D00834305 /* KHHDataNew+Evaluation.h */,
+				310A59B216B11F3E00834305 /* KHHDataNew+Evaluation.m */,
 			);
 			name = KHHData_New;
 			path = KHHData;
@@ -3442,6 +3444,8 @@
 				31FA580616A12C8100F65BC6 /* KHHNetClinetAPIAgent+Card.m */,
 				31027B6D16AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.h */,
 				31027B6E16AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.m */,
+				310A59B716B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.h */,
+				310A59B816B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.m */,
 			);
 			name = NetWork_New;
 			path = ../NetWork_New;
@@ -5820,9 +5824,6 @@
 				314A0118168BEF3800029324 /* InMessage.m in Sources */,
 				314A0119168BEF3800029324 /* ISchedule.m in Sources */,
 				314A011A168BEF3800029324 /* OSchedule.m in Sources */,
-				314A011B168BEF3800029324 /* KHHData.m in Sources */,
-				314A011D168BEF3800029324 /* KHHData+Handlers.m in Sources */,
-				314A011E168BEF3800029324 /* ATestViewController.m in Sources */,
 				314A011F168BEF3800029324 /* SMObject.m in Sources */,
 				314A0120168BEF3800029324 /* Encryptor.m in Sources */,
 				314A0121168BEF3800029324 /* NSData+Base64.m in Sources */,
@@ -5985,6 +5986,8 @@
 				310A069716AD36DF007460F4 /* InterPlan.m in Sources */,
 				310A069D16AD36F0007460F4 /* InterCollect.m in Sources */,
 				31027B7216AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.m in Sources */,
+				310A59B616B11F3F00834305 /* KHHDataNew+Evaluation.m in Sources */,
+				310A59BC16B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6080,9 +6083,6 @@
 				314AFF59168BEE9A00029324 /* InMessage.m in Sources */,
 				314AFF5A168BEE9A00029324 /* ISchedule.m in Sources */,
 				314AFF5B168BEE9A00029324 /* OSchedule.m in Sources */,
-				314AFF5C168BEE9A00029324 /* KHHData.m in Sources */,
-				314AFF5E168BEE9A00029324 /* KHHData+Handlers.m in Sources */,
-				314AFF5F168BEE9A00029324 /* ATestViewController.m in Sources */,
 				314AFF60168BEE9A00029324 /* SMObject.m in Sources */,
 				314AFF61168BEE9A00029324 /* Encryptor.m in Sources */,
 				314AFF62168BEE9A00029324 /* NSData+Base64.m in Sources */,
@@ -6245,6 +6245,8 @@
 				310A069616AD36DF007460F4 /* InterPlan.m in Sources */,
 				310A069C16AD36F0007460F4 /* InterCollect.m in Sources */,
 				31027B7116AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.m in Sources */,
+				310A59B516B11F3F00834305 /* KHHDataNew+Evaluation.m in Sources */,
+				310A59BB16B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6340,9 +6342,6 @@
 				6274BFB0165C7C3300DB5EBE /* InMessage.m in Sources */,
 				6274BFB1165C7C3300DB5EBE /* ISchedule.m in Sources */,
 				6274BFB2165C7C3300DB5EBE /* OSchedule.m in Sources */,
-				6274BFB3165C7C3300DB5EBE /* KHHData.m in Sources */,
-				6274BFB5165C7C3300DB5EBE /* KHHData+Handlers.m in Sources */,
-				6274BFB6165C7C3300DB5EBE /* ATestViewController.m in Sources */,
 				6274BFB7165C7C3300DB5EBE /* SMObject.m in Sources */,
 				6274BFB8165C7C3300DB5EBE /* Encryptor.m in Sources */,
 				6274BFB9165C7C3300DB5EBE /* NSData+Base64.m in Sources */,
@@ -6505,6 +6504,8 @@
 				310A069416AD36DF007460F4 /* InterPlan.m in Sources */,
 				310A069A16AD36F0007460F4 /* InterCollect.m in Sources */,
 				31027B6F16AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.m in Sources */,
+				310A59B316B11F3F00834305 /* KHHDataNew+Evaluation.m in Sources */,
+				310A59B916B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6600,9 +6601,6 @@
 				62ECD8D5166DE1D000A15E24 /* InMessage.m in Sources */,
 				62ECD8D6166DE1D000A15E24 /* ISchedule.m in Sources */,
 				62ECD8D7166DE1D000A15E24 /* OSchedule.m in Sources */,
-				62ECD8D8166DE1D000A15E24 /* KHHData.m in Sources */,
-				62ECD8DA166DE1D000A15E24 /* KHHData+Handlers.m in Sources */,
-				62ECD8DB166DE1D000A15E24 /* ATestViewController.m in Sources */,
 				62ECD8DC166DE1D000A15E24 /* SMObject.m in Sources */,
 				62ECD8DD166DE1D000A15E24 /* Encryptor.m in Sources */,
 				62ECD8DE166DE1D000A15E24 /* NSData+Base64.m in Sources */,
@@ -6763,6 +6761,8 @@
 				310A069516AD36DF007460F4 /* InterPlan.m in Sources */,
 				310A069B16AD36F0007460F4 /* InterCollect.m in Sources */,
 				31027B7016AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.m in Sources */,
+				310A59B416B11F3F00834305 /* KHHDataNew+Evaluation.m in Sources */,
+				310A59BA16B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

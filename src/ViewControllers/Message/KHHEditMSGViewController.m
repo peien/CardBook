@@ -10,7 +10,7 @@
 #import "KHHMessageCell.h"
 #import "KHHMessage.h"
 #import "MBProgressHUD.h"
-#import "KHHData+UI.h"
+//#import "KHHData+UI.h"
 #import "KHHShowHideTabBar.h"
 #import "KHHNetClinetAPIAgent+Message.h"
 
@@ -18,7 +18,7 @@
 @property (assign, nonatomic) bool edit;
 @property (strong, nonatomic) NSMutableArray *selectItemArray;
 @property (strong, nonatomic) NSMutableArray *delMessageArr;
-@property (strong, nonatomic) KHHData        *dataCtrl;
+//@property (strong, nonatomic) KHHData        *dataCtrl;
 @property (strong, nonatomic) MBProgressHUD  *progressBar;
 @end
 
@@ -28,7 +28,7 @@
 @synthesize selectItemArray = _selectItemArray;
 @synthesize delMessageArr = _delMessageArr;
 @synthesize messageArr;
-@synthesize dataCtrl;
+//@synthesize dataCtrl;
 @synthesize progressBar;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -38,7 +38,7 @@
         // Custom initialization
         self.title = KHHMessageEditMessage;
         [self.rightBtn setTitle:@"删除" forState:UIControlStateNormal];
-        self.dataCtrl = [KHHData sharedData];
+        //self.dataCtrl = [KHHData sharedData];
         
     }
     return self;
@@ -78,8 +78,8 @@
     
 }
 - (void)stopObservingForDelMessage{
-    [self stopObservingNotificationName:nUIDeleteMessagesSucceeded];
-    [self stopObservingNotificationName:nUIDeleteMessagesFailed];
+   // [self stopObservingNotificationName:nUIDeleteMessagesSucceeded];
+  //  [self stopObservingNotificationName:nUIDeleteMessagesFailed];
     if (progressBar) {
         [progressBar hide:YES];
     }
@@ -116,7 +116,7 @@
     _selectItemArray = nil;
     _delMessageArr = nil;
     self.messageArr = nil;
-    self.dataCtrl = nil;
+   // self.dataCtrl = nil;
 }
 #pragma mark -
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -210,7 +210,7 @@
 - (void)deleFail
 {
     
-    self.messageArr = [self.dataCtrl allMessages];   
+  //  self.messageArr = [self.dataCtrl allMessages];
     [_theTable reloadData];
 }
 

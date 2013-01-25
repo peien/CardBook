@@ -7,7 +7,9 @@
 //
 
 #import "KHHFilterPopup.h"
-#import "KHHData+UI.h"
+#import "KHHDataNew+Group.h"
+#import "Group.h"
+//#import "KHHData+UI.h"
 @implementation KHHFilterPopup
 
 
@@ -23,7 +25,7 @@
 
 - (void)showPopUpGroup:(int)index delegate:(id<KHHFilterPopupDelegate>)delegate
 {
-    arrPro = [[KHHData sharedData]allTopLevelGroups];
+    arrPro = [[KHHDataNew sharedData]allTopLevelGroups];
     NSMutableArray *arr = [[NSMutableArray alloc]init];
     [arr addObject:@"所有"];
     [arrPro enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {

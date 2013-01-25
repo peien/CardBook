@@ -36,6 +36,7 @@
 #import <MessageUI/MessageUI.h>
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
+#import "KHHDataNew+Card.h"
 
 @interface KHHOrganizationViewController ()<UITextFieldDelegate,UISearchBarDelegate,UISearchDisplayDelegate>
 @property (nonatomic, strong)  WEPopoverController    *popover;
@@ -44,7 +45,7 @@
 @property (strong, nonatomic)  NSString               *titleStr;
 @property (strong, nonatomic)  NSArray                *resultArray;
 @property (strong, nonatomic)  NSArray                *searchArray;
-@property (strong, nonatomic)  KHHData                *dataControl;
+@property (strong, nonatomic)  KHHDataNew                *dataControl;
 @property (strong, nonatomic)  NSArray                *ReceNewArray;
 @property (strong, nonatomic)  NSArray                *myCardArray;
 @property (strong, nonatomic)  KHHFloatBarController  *floatBarVC;
@@ -103,7 +104,7 @@
     if (self) {
         //分组数据是根据当前登录的人的权限获取其同级和下属部门
         self.interGroup = [[IGroup alloc] init];
-        self.dataControl = [KHHData sharedData];
+        self.dataControl = [KHHDataNew sharedData];
         self.myDefaults = [KHHDefaults sharedDefaults];
         self.rightBtn.hidden = YES;
     }
@@ -243,7 +244,7 @@
 {
     //调用数据库接口，获取各个分组的array
 #warning 取所有同事（按公司组织分）
-    self.generalArray = [self.dataControl cardsOfColleague];
+    self.generalArray = [[KHHDataNew sharedData] cardsOfColleague];
     //我的卡片
     self.myCardArray = [self.dataControl allMyCards];
     if (!self.myCardArray || self.myCardArray.count <= 0) {
@@ -446,7 +447,7 @@
             if ([card isKindOfClass:[ReceivedCard class]]){
                 ReceivedCard *receCard = (ReceivedCard *)card;
                 if (!receCard.isReadValue) {
-                    [self.dataControl markIsRead:receCard];
+                    [[KHHDataNew sharedData] markIsRead:receCard];
                 }
             }
             [self.navigationController pushViewController:detailVC animated:YES];

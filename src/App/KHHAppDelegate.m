@@ -54,7 +54,7 @@
     AppStartController *startVC = [[AppStartController alloc] initWithNibName:nil bundle:nil] ;
                                                                                           //initWithNibName:@"KHHManagementViewController" bundle:nil];
         startVC.agent    = [[KHHNetworkAPIAgent alloc] init];
-        startVC.data     = [KHHData sharedData];
+        startVC.data     = [KHHDataNew sharedData];
         startVC.defaults = [KHHDefaults sharedDefaults];
         self.window.rootViewController = startVC;
 //    KHHManagementViewController *manViewCon  = [[KHHManagementViewController alloc]initWithNibName:nil bundle:nil];
@@ -161,7 +161,7 @@
         
        // [[KHHData sharedData] syncMessages];
     }else{
-        [[KHHData sharedData]syncReceivedCards:[NSArray arrayWithObject:@(KHHQueuedOperationSyncReceivedCards)]];
+        //[[KHHDataNew sharedData]syncReceivedCards:[NSArray arrayWithObject:@(KHHQueuedOperationSyncReceivedCards)]];
     }
     
     [self updateApplicationIconNumber:application];

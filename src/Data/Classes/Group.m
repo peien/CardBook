@@ -1,5 +1,6 @@
 #import "KHHClasses.h"
 #import "KHHDataAPI.h"
+#import "KHHDataNew+Group.h"
 
 @implementation Group
 @end
@@ -38,8 +39,8 @@
 }
 //删除本地所有分组
 +(void)processDeleteAllLocalGroups {
-    KHHData *dataCtrl = [KHHData sharedData];
-    NSArray * array = [dataCtrl allTopLevelGroups];
+    
+    NSArray * array = [[KHHDataNew sharedData] allTopLevelGroups];
     NSManagedObjectContext* context = [[KHHDataNew sharedData] context];
     for (Group* group in array) {
         [context deleteObject:group];
@@ -47,8 +48,8 @@
 }
 //删除本地所有分组下的card(其实分组要是删除过，该组下的名片其实已全空)
 +(void)processDeleteAllCardGroupMaps {
-    KHHData *dataCtrl = [KHHData sharedData];
-    NSArray * array = [dataCtrl allTopLevelGroups];
+    
+    NSArray * array = [[KHHDataNew sharedData] allTopLevelGroups];
     for (Group* group in array) {
         if (group && group.cards && group.cards.count > 0) {
            [group removeCards:group.cards];

@@ -48,8 +48,8 @@
 
 //同事移到组织架构里去
 #define POPDismiss [self.popover dismissPopoverAnimated:YES];
-#define BaseBtnTitleArrayMobiGrop       _btnTitleArr = [[NSMutableArray alloc] initWithObjects:KHHMessageDefaultGroupAll,KHHMessageDefaultGroupUnGroup,KHHMessageDefaultGroupLocal, nil];
-#define BaseBtnTitleArrayVisited        _btnTitleArr = [[NSMutableArray alloc] initWithObjects:KHHMessageDefaultGroupAll,KHHMessageDefaultGroupUnGroup, nil];
+#define BaseBtnTitleArrayMobiGrop       _btnTitleArr = [[NSMutableArray alloc] initWithObjects:KHHMessageDefaultGroupLocal, nil];
+#define BaseBtnTitleArrayVisited        _btnTitleArr = [[NSMutableArray alloc]init] 
 
 @interface KHHHomeViewController ()<UIActionSheetDelegate,UIAlertViewDelegate,
                                    UITextFieldDelegate,UISearchBarDelegate,UISearchDisplayDelegate,KHHDataGroupDelegate
@@ -61,7 +61,7 @@
 @property (strong, nonatomic)  NSString               *titleStr;
 @property (strong, nonatomic)  NSArray                *resultArray;
 @property (strong, nonatomic)  NSArray                *searchArray;
-@property (strong, nonatomic)  KHHData                *dataControl;
+//@property (strong, nonatomic)  KHHData                *dataControl;
 //@property (strong, nonatomic)  NSArray                *allArray;
 @property (strong, nonatomic)  NSArray                *ReceNewArray;
 @property (strong, nonatomic)  NSArray                *myCardArray;
@@ -113,7 +113,7 @@
 @synthesize resultArray = _resultArray;
 @synthesize searchArray = _searchArray;
 @synthesize type = _type;
-@synthesize dataControl;
+//@synthesize dataControl;
 //@synthesize allArray;
 @synthesize generalArray;
 @synthesize ReceNewArray;
@@ -145,8 +145,8 @@
         //self.leftBtn.hidden = YES;
         //*****************
         self.interGroup = [[IGroup alloc] init];
-        self.dataControl = [KHHData sharedData];
-        self.myDefaults = [KHHDefaults sharedDefaults];
+        //self.dataControl = [KHHData sharedData];
+       // self.myDefaults = [KHHDefaults sharedDefaults];
         //[self.rightBtn setTitle:NSLocalizedString(@"我的名片", nil) forState:UIControlStateNormal];
         self.rightBtn.hidden = YES;
     }
@@ -324,7 +324,7 @@
     self.titleStr = nil;
     self.resultArray = nil;
     self.searchArray = nil;
-    self.dataControl = nil;
+   // self.dataControl = nil;
 //    self.allArray = nil;
     self.generalArray = nil;
     self.ReceNewArray = nil;
@@ -371,22 +371,22 @@
 - (NSArray *)getAllGroups{
     //初始化分组，如果是选择人的话就默认只有两个固定分组
     //默认只有2个分组（所有、未分组）如果用户设置显示手机就分组数 +1 ,如果是同事 +1
-    self.baseNum = 2;
+    self.baseNum = 0;
     if (self.isNormalSearchBar) {
         BaseBtnTitleArrayVisited;
     }else {
         //是否显示手机通讯录
-        BOOL isHaveMobilePhoneGroup = [self.myDefaults isAddMobPhoneGroup];
+        BOOL isHaveMobilePhoneGroup = [KHHUser shareInstance].isAddMobPhoneGroup;
         if (isHaveMobilePhoneGroup) {
             self.baseNum += 1;
         }
         
         //根据固定分组数来初始化固定分组
         switch (self.baseNum) {
-            case 3:
+            case 1:
                 BaseBtnTitleArrayMobiGrop;
                 break;
-            case 2:
+            case 0:
                 BaseBtnTitleArrayVisited;
                 break;
             default:
@@ -678,7 +678,7 @@
                     if ([card isKindOfClass:[ReceivedCard class]]){
                         ReceivedCard *receCard = (ReceivedCard *)card;
                         if (!receCard.isReadValue) {
-                           [self.dataControl markIsRead:receCard];
+                           [[KHHDataNew sharedData] markIsRead:receCard];
                         }
                     }
                     [self.navigationController pushViewController:detailVC animated:YES];
@@ -917,7 +917,7 @@
     KHHAppDelegate *app = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
     MBProgressHUD *hudp = [MBProgressHUD showHUDAddedTo:app.window animated:YES];
     hudp.labelText = KHHMessageSyncAll;
-    [self.dataControl startSyncAllData];
+    //[self.dataControl startSyncAllData];
 }
 - (void)handleDataSyncAllSucceeded:(NSNotification *)noti{
     [self stopObservingStartSynAllData];

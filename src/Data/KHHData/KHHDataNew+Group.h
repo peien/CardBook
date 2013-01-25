@@ -44,7 +44,7 @@ typedef enum {
 - (void) getGroupMembers:(long) groupID delegate:(id<KHHDataGroupDelegate>) delegate;
 
 #pragma mark - 添加、删除、移动客户名片到分组
-- (void)moveCards:(NSArray *)cards fromGroup:(Group *)fromGroup toGroup:(Group *) toGroup delegate:(id<KHHDataGroupDelegate>) delegate;
+- (void)doMoveCards:(NSArray *)cards fromGroup:(Group *)fromGroup toGroup:(Group *) toGroup delegate:(id<KHHDataGroupDelegate>) delegate;
 
 #pragma mark - data from manageContext
 

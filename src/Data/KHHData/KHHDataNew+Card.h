@@ -48,7 +48,7 @@ typedef enum {
 
 #pragma mark - 名片交换
 
-
+- (void)modifyMyCardWithInterCard:(InterCard *)iCard;
 
 #pragma mark - 设置联系人的状态为已查看
 - (void)updateCardReadState:(Card *)card myUserID:(long) userID delegate:(id<KHHDataCardDelegate>) delegate;
@@ -78,6 +78,16 @@ typedef enum {
 #pragma mark - 获取本地最后一个联系人
 - (void)latestCustomerCard:(id<KHHDataCardDelegate>) delegate;
 
+#pragma mark - for UI
+- (NSArray *)cardsOfstartsForRelation:(float)starts  groupID: (long) groupID;
+- (NSArray *)cardsofStarts:(float)starts;
+- (NSArray *)cardsofStarts:(float)starts groupId:(NSNumber *)groupId;
+
+- (NSArray *)cardsOfColleague;
+- (NSArray *)cardsOfUngrouped;
+- (NSArray *)cardsOfNew;
+- (NSArray *)cardsOfAll;
+- (void)markIsRead:(ReceivedCard *)aCard;
 
 - (void)doInsertMyCard;
 

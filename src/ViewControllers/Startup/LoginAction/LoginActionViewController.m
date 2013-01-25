@@ -37,7 +37,7 @@
 //#define textNotAllDataAvailable NSLocalizedString(@"部分数据可能暂时无法使用。", nil)
 
 @interface LoginActionViewController ()<KHHFilterPopupDelegate>
-@property (nonatomic, strong) KHHData *data;
+@property (nonatomic, strong) KHHDataNew *data;
 @property (nonatomic, strong) KHHDefaults *defaults;
 @property (nonatomic, strong) KHHNetworkAPIAgent *agent;
 @end
@@ -59,7 +59,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        _data = [KHHData sharedData];
+        _data = [KHHDataNew sharedData];
         _defaults = [KHHDefaults sharedDefaults];
         _agent = [[KHHNetworkAPIAgent alloc] init];
         //需要捕获的消息

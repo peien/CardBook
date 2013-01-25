@@ -20,6 +20,7 @@
 #import <AddressBook/AddressBook.h>
 #import <AddressBookUI/AddressBookUI.h>
 #import "KHHBMapLocationController.h"
+#import "KHHDataNew+Card.h"
 
 #define UPDATE_LOCATION_BTN_TAG     4401
 #define TEXTFIELD_DATE_TAG          5501
@@ -38,7 +39,7 @@
 @property (strong, nonatomic) UIImageView       *tapImgview;
 @property (strong, nonatomic) NSString          *date;
 @property (strong, nonatomic) NSString          *time;
-@property (strong, nonatomic) KHHData           *dataCtrl;
+//@property (strong, nonatomic) KHHData           *dataCtrl;
 @property (strong, nonatomic) Card              *card;
 @property (strong, nonatomic) ICheckIn          *checkIn;
 //@property (strong, nonatomic) NSNumber          *locationLatitude;
@@ -61,7 +62,7 @@
 @synthesize tapImgview;
 @synthesize date;
 @synthesize time;
-@synthesize dataCtrl;
+//@synthesize dataCtrl;
 @synthesize card;
 @synthesize checkIn;
 //@synthesize locationLatitude;
@@ -79,8 +80,8 @@
         self.title = NSLocalizedString(@"签到", nil);
         
         self.rightBtn.hidden = YES;
-        self.dataCtrl = [KHHData sharedData];
-        NSArray *cards = [self.dataCtrl allMyCards];
+        //self.dataCtrl = ;
+        NSArray *cards = [[KHHDataNew sharedData] allMyCards];
         if (cards && cards.count > 0) {
             self.card = [cards objectAtIndex:0];
         }
@@ -137,7 +138,7 @@
     self.tapImgview = nil;
     self.date = nil;
     self.time = nil;
-    self.dataCtrl = nil;
+   // self.dataCtrl = nil;
     self.card = nil;
 //    self.locationLatitude = nil;
 //    self.locationLongitude = nil;

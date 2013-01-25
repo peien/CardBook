@@ -38,14 +38,14 @@
 
 @interface ModifyViewController ()<UITextFieldDelegate, UIAlertViewDelegate,KHHDataAccountDelegate>
 @property (strong, nonatomic) KHHDefaults *defaults;
-@property (strong, nonatomic) KHHData  *dataCtr;
+//@property (strong, nonatomic) KHHData  *dataCtr;
 @property (strong, nonatomic) MBProgressHUD *hud;
 @end
 
 @implementation ModifyViewController
 @synthesize theTable = _theTable;
 @synthesize defaults = _defaults;
-@synthesize dataCtr = _dataCtr;
+//@synthesize dataCtr = _dataCtr;
 @synthesize hud = _hud;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -56,7 +56,7 @@
         [self.rightBtn setTitle:@"完成" forState:UIControlStateNormal];
         self.title = textAlertTitle;
         _defaults = [KHHDefaults sharedDefaults];
-        _dataCtr = [KHHData sharedData];
+       // _dataCtr = [KHHData sharedData];
     }
     return self;
 }
@@ -255,8 +255,8 @@
 
 //修改密码成功
 -(void) handleUIChangePasswordSucceeded:(NSNotification *) info {
-    [self stopObservingNotificationName:KHHUIChangePasswordSucceeded];
-    [self stopObservingNotificationName:KHHUIChangePasswordFailed];
+   // [self stopObservingNotificationName:KHHUIChangePasswordSucceeded];
+    //[self stopObservingNotificationName:KHHUIChangePasswordFailed];
     DLog(@"handleUIChangePasswordSucceeded! ====== info is %@",info.userInfo);
     [_hud hide:YES];
     //提示密码修改成功
@@ -265,8 +265,8 @@
 }
 
 -(void) handleUIChangePasswordFailed:(NSNotification *) info {
-    [self stopObservingNotificationName:KHHUIChangePasswordSucceeded];
-    [self stopObservingNotificationName:KHHUIChangePasswordFailed];
+  //  [self stopObservingNotificationName:KHHUIChangePasswordSucceeded];
+  //  [self stopObservingNotificationName:KHHUIChangePasswordFailed];
     [_hud hide:YES];
     DLog(@"handleUIChangePasswordFailed! ====== info is %@",info.userInfo);
     //设置消息
@@ -284,7 +284,7 @@
     switch (buttonIndex) {
         case 0:
             //密码修改成功,要登出
-          [self postASAPNotificationName:KHHAppLogout];
+       //   [self postASAPNotificationName:KHHAppLogout];
             break;
         default:
             break;

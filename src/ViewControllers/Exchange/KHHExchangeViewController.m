@@ -322,7 +322,7 @@
     }
     self.mbHUD = [MBProgressHUD showHUDAddedTo:self.app.window animated:YES];
     self.mbHUD.labelText = @"请稍后,正在交换名片...";
-    [[KHHDataNew sharedData] exchangeCard:self.card withCoordinate:self.currentLocation.coordinate delegate:self];
+  //  [[KHHDataNew sharedData] exchangeCard:self.card withCoordinate:self.currentLocation.coordinate delegate:self];
 //    [self.httpAgent exchangeCard:self.card withCoordinate:self.currentLocation.coordinate];
     self.exchangeStartTime = CFAbsoluteTimeGetCurrent();
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);

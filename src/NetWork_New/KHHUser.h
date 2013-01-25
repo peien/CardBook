@@ -22,7 +22,8 @@
 @property (nonatomic,strong) NSString *permissionName;
 @property (nonatomic,strong) NSString *deviceToken;
 //settings
-
+@property (nonatomic,assign) Boolean isAddMobPhoneGroup;
+@property (nonatomic,assign) Boolean isFirstLaunch;
 + (KHHUser *)shareInstance;
 - (void)fromJsonData:(NSDictionary *)dic;
 

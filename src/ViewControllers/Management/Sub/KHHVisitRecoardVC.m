@@ -17,7 +17,7 @@
 #import "KHHVisitedPickVC.h"
 #import "MBProgressHUD.h"
 #import "KHHClasses.h"
-#import "KHHData+UI.h"
+//#import "KHHData+UI.h"
 #import "MBProgressHUD.h"
 #import "KHHAppDelegate.h"
 #import "NSString+SM.h"
@@ -31,6 +31,7 @@
 #import "KHHBMapViewController.h"
 #import "KHHCalendarViewController.h"
 #import "KHHKeyBoardManagerUtil.h"
+#import "KHHDataNew+Card.h"
 
 #define TEXTFIELD_OBJECT_TAG  5550
 #define TEXTFIELD_DATE_TAG    5551
@@ -54,7 +55,7 @@
 //@property (strong, nonatomic) CLPlacemark     *placeMark;
 @property (strong, nonatomic) NSString        *address;
 @property (strong, nonatomic) OSchedule       *oSched;
-@property (strong, nonatomic) KHHData         *dataCtrl;
+//@property (strong, nonatomic) KHHData         *dataCtrl;
 @property (strong, nonatomic) MBProgressHUD   *hud;
 @property (assign, nonatomic) int             warnMinus;
 @property (assign, nonatomic) bool            isDateSelected;
@@ -102,7 +103,7 @@
 @synthesize visitInfoCard;
 @synthesize schedu;
 @synthesize oSched;
-@synthesize dataCtrl;
+//@synthesize dataCtrl;
 @synthesize hud;
 @synthesize warnMinus;
 @synthesize isDateSelected;
@@ -124,7 +125,7 @@
         // Custom initialization
         [self.rightBtn setTitle:@"保存" forState:UIControlStateNormal];
         self.oSched = [[OSchedule alloc] init];
-        self.dataCtrl = [KHHData sharedData];
+        //self.dataCtrl = [KHHData sharedData];
     }
     return self;
 }
@@ -450,15 +451,15 @@
     
     if (_style == KVisitRecoardVCStyleNewBuild) {
         self.hud.labelText = KHHMessageCreateVisitPlant;
-        NSArray *cards = [self.dataCtrl allMyCards];
+        NSArray *cards = [[KHHDataNew sharedData] allMyCards];
         if (cards) {
             MyCard *mycard = [cards objectAtIndex:0];
-            [self.dataCtrl createSchedule:self.oSched withMyCard:mycard];
+          //  [[KHHDataNew sharedData] createSchedule:self.oSched withMyCard:mycard];
         }
         
     }else if (_style == KVisitRecoardVCStyleShowInfo){
         self.hud.labelText = KHHMessageModifyVisitPlant;
-        [self.dataCtrl updateSchedule:self.oSched];
+       // [[KHHDataNew sharedData] updateSchedule:self.oSched];
     }
 }
 //将来过去的五分钟之内，拜访完成
@@ -1124,7 +1125,7 @@
                 [self netWorkWarnShow];
                 NSArray *images = [self.schedu.images allObjects];
                 Image *img = [images objectAtIndex:_currentTag - 100];
-                [self.dataCtrl deleteImage:img fromSchedule:self.schedu];
+                //[[KHHDataNew sharedData] deleteImage:img fromSchedule:self.schedu];
             }else if (_style == KVisitRecoardVCStyleNewBuild){
                 [_imgArray removeObjectAtIndex:_currentTag - 100];
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:7 inSection:0];
@@ -1142,7 +1143,7 @@
         [self observeNotificationName:KHHUIUploadImageForVisitScheduleSucceeded selector:@"handleUploadImageForVisitScheduleSucceeded:"];
         [self observeNotificationName:KHHUIUploadImageForVisitScheduleFailed selector:@"handleKHHUIUploadImageForVisitScheduleFailed:"];
         [self netWorkWarnShow];
-        [self.dataCtrl uploadImage:image forSchedule:self.schedu];
+       // [[KHHDataNew sharedData] uploadImage:image forSchedule:self.schedu];
     }else if (_style == KVisitRecoardVCStyleNewBuild){
         [_imgArray addObject:image];
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:7 inSection:0];

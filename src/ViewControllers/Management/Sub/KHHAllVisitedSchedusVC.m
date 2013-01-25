@@ -9,7 +9,8 @@
 #import "KHHAllVisitedSchedusVC.h"
 #import "KHHVisitCalendarView.h"
 #import "KHHClasses.h"
-#import "KHHData+UI.h"
+//#import "KHHData+UI.h"
+#import "KHHDataNew+Card.h"
 
 @interface KHHAllVisitedSchedusVC ()
 {
@@ -66,7 +67,7 @@
     }
     
     //[self.view removeFromSuperview];
-    Card *card = [[[KHHData sharedData] allMyCards] objectAtIndex:0];
+    Card *card = [[[KHHDataNew sharedData] allMyCards] objectAtIndex:0];
     _visitView = [[[NSBundle mainBundle] loadNibNamed:@"KHHVisitCalendarView" owner:self options:nil] objectAtIndex:0];
     _visitView.card = card;
     _visitView.visitType = KHHVisitPlanAll;

@@ -12,7 +12,7 @@
 #import "KHHDetailMessageVC.h"
 #import "KHHEditMSGViewController.h"
 #import "KHHClasses.h"
-#import "KHHData+UI.h"
+//#import "KHHData+UI.h"
 #import "KHHMessage.h"
 #import "MBProgressHUD.h"
 #import "KHHNetClinetAPIAgent+Message.h"
@@ -20,14 +20,14 @@
 
 @interface KHHMessageViewController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
 @property (strong, nonatomic) NSArray *messageArr;
-@property (strong, nonatomic) KHHData *dataCtrl;
+//@property (strong, nonatomic) KHHData *dataCtrl;
 @property (assign, nonatomic) bool    isNeedReloadTable;
 @end
 
 @implementation KHHMessageViewController
 @synthesize theTable = _theTable;
 @synthesize messageArr;
-@synthesize dataCtrl;
+//@synthesize dataCtrl;
 @synthesize isNeedReloadTable;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -38,7 +38,7 @@
         self.title = NSLocalizedString(@"消息", nil);
         //[self.leftBtn setTitle: NSLocalizedString(@"编辑", nil) forState:UIControlStateNormal];
         [self.rightBtn setTitle: NSLocalizedString(@"刷新", nil) forState:UIControlStateNormal];
-        self.dataCtrl = [KHHData sharedData];
+        //self.dataCtrl = [KHHData sharedData];
     }
     return self;
 }
@@ -62,7 +62,7 @@
     [self observeNotificationName:nUISyncMessagesFailed selector:@"handlenUISyncMessagesFailed:"];
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     hud.labelText = KHHMessageSyncMessage;
-    [self.dataCtrl syncMessages];
+   // [self.dataCtrl syncMessages];
 }
 #pragma mark -
 - (void)handleSyncMessagesSucceeded:(NSNotification *)noti{
@@ -73,7 +73,7 @@
 }
 
 - (void) refreshTable {
-    self.messageArr = [self.dataCtrl allMessages];
+  //  self.messageArr = [self.dataCtrl allMessages];
     [_theTable reloadData];
 }
 
@@ -99,7 +99,7 @@
     // Do any additional setup after loading the view from its nib.
     _theTable.backgroundColor = [UIColor clearColor];
     [self.view setBackgroundColor:[UIColor colorWithRed:241 green:238 blue:232 alpha:1.0]];
-    self.messageArr = [self.dataCtrl allMessages];
+   // self.messageArr = [[KHHDataNew sharedData] allMessages];
         
     //iphone5 适配
    // [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_editBtn];
@@ -124,7 +124,7 @@
     // e.g. self.myOutlet = nil;
     _theTable = nil;
     self.messageArr = nil;
-    self.dataCtrl = nil;
+   // self.dataCtrl = nil;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{

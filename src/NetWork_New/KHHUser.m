@@ -241,7 +241,32 @@
     self.isAutoReceive = @"";
     self.orgId = @"";
     self.permissionName = @"";
+    self.isAddMobPhoneGroup = NO;
    
+}
+
+#pragma mark - settings
+
+- (void)setIsAddMobPhoneGroup:(Boolean)isAddMobPhoneGroup
+{
+    [[NSUserDefaults standardUserDefaults] setBool:isAddMobPhoneGroup forKey:@"KIsAddMob"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (Boolean)isAddMobPhoneGroup
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"KIsAddMob"];
+}
+
+- (void)setIsFirstLaunch:(Boolean)isFirstLaunch
+{
+    [[NSUserDefaults standardUserDefaults] setBool:isFirstLaunch forKey:@"KIsFirst"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (Boolean)isFirstLaunch
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"KIsFirst"];
 }
 
 @end

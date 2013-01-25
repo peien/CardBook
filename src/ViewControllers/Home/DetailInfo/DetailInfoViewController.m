@@ -134,9 +134,7 @@
 //        //刷新拜访纪录
 //    }
     if (self.isReloadCardTable) {
-        [_cardView reloadTable];
-        [_cardView initView];
-        [self updateViewData:self.card];
+        
     }
     if (self.isReloadCustomValTable){
         if ([self.card isKindOfClass:[ReceivedCard class]]) {
@@ -346,6 +344,11 @@
 //        editeCardVC.glCard = self.card;
         KHHNewEdit_ecardViewController *newEditCardVC = [[KHHNewEdit_ecardViewController alloc]init];
         newEditCardVC.toEditCard = self.card;
+        newEditCardVC.updateCardSuccess = ^(){
+            [_cardView reloadTable];
+            [_cardView initView];
+            [self updateViewData:self.card];
+        };
         [self.navigationController pushViewController:newEditCardVC animated:YES];
         
     }else{
@@ -435,7 +438,7 @@
 {
     KHHFloatBarController *floatBarVC = [[KHHFloatBarController alloc] initWithNibName:nil bundle:nil];
     floatBarVC.viewController = self;
-    NSNumber *companyID = [[KHHDefaults sharedDefaults] currentCompanyID];
+    NSNumber *companyID = [NSNumber numberFromString:[KHHUser shareInstance].companyId];
     if(companyID.longValue > 0 && card.company.id.longValue == companyID.longValue) {
         floatBarVC.isJustNormalComunication = YES;
     }else {
@@ -468,7 +471,7 @@
             [self observeNotificationName:KHHUIReplyCardFailed selector:@"handleReplyCardFailed:"];
             MBProgressHUD *progess = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
             progess.labelText = NSLocalizedString(@"正在回赠名片，请稍后", nil);
-            [[KHHDataNew sharedData] replyCard:self.card myDefaultReplyCard:self.myDefaultReplyCard];
+          //  [[KHHDataNew sharedData] replyCard:self.card myDefaultReplyCard:self.myDefaultReplyCard];
             break;
         }
         default:

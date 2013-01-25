@@ -48,7 +48,7 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
 @property (strong, nonatomic) NSString      *pc;
 @property (strong, nonatomic) NSArray       *placeName;
 @property (strong, nonatomic) InterCard     *interCard;
-@property (strong, nonatomic) KHHData       *dataCtrl;
+//@property (strong, nonatomic) KHHData       *dataCtrl;
 @property (strong, nonatomic) MBProgressHUD *progressHud;
 @property (strong, nonatomic) NSString      *province;
 @property (strong, nonatomic) NSString      *city;
@@ -99,7 +99,7 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
 @synthesize pc;
 @synthesize placeName;
 @synthesize interCard;
-@synthesize dataCtrl;
+//@synthesize dataCtrl;
 @synthesize progressHud;
 @synthesize cardTemp;
 @synthesize province;
@@ -112,7 +112,7 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
         // Custom initialization
         [self.rightBtn setTitle:NSLocalizedString(KHHMessageSave, nil) forState:UIControlStateNormal];
         self.interCard = [[InterCard alloc] init];
-        self.dataCtrl = [KHHData sharedData];
+       // self.dataCtrl = [KHHData sharedData];
         _table = [[KHHInputTableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         _table.delegate = self;
         _table.dataSource = self;
@@ -452,7 +452,7 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
     self.strStreet = nil;
     self.placeName = nil;
     self.interCard = nil;
-    self.dataCtrl = nil;
+   // self.dataCtrl = nil;
     self.progressHud = nil;
     self.cardTemp = nil;
 }
@@ -1387,14 +1387,14 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
         self.interCard.cardSource = kCardSource_Person;
         
         self.progressHud.labelText = KHHMessageModifyCard;
-        [self.dataCtrl modifyMyCardWithInterCard:self.interCard];
+       // [[KHHDataNew sharedData] modifyMyCardWithInterCard:self.interCard delegate:self];
     }else if ([_glCard isKindOfClass:[PrivateCard class]]){
         //设置名片类型及名片来源
         self.interCard.cardType = kCardType_Person;
         self.interCard.cardSource = kCardSource_Client_SelfBuild;
         
         self.progressHud.labelText = KHHMessageModifyCard;
-        [self.dataCtrl modifyPrivateCardWithInterCard:self.interCard];
+       // [[KHHDataNew sharedData] modifyPrivateCardWithInterCard:self.interCard];
     }else if (self.type == KCardViewControllerTypeNewCreate){
         //设置名片类型及名片来源
         self.interCard.cardType = kCardType_Person;
@@ -1406,7 +1406,7 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
         self.interCard.templateID = self.cardTemp.id;
         //        NSLog(@"..%@",self.cardTemp);
         //        NSLog(@"..%@",self.interCard);
-        [self.dataCtrl createPrivateCardWithInterCard:self.interCard];
+       // [[KHHDataNew sharedData] createPrivateCardWithInterCard:self.interCard];
         //[[NetClient sharedClient]CreatePrivateCard:self.interCard delegate:self];
     }
 }

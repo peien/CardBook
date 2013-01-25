@@ -81,7 +81,7 @@
     ((ParamForEditecard *)section1Arr[1]).value = _toEditCard.telephone;
     ((ParamForEditecard *)section1Arr[2]).value = _toEditCard.fax;
     ((ParamForEditecard *)section1Arr[3]).value = _toEditCard.email;
-    
+   
     ((ParamForEditecard *)section2Arr[0]).value = _toEditCard.company.name;
     if (_toEditCard.address.province) {
          locationStr =[NSString stringWithFormat:@"%@,%@,%@", _toEditCard.address.province,_toEditCard.address.city ,_toEditCard.address.district];
@@ -1095,6 +1095,7 @@ NSMutableArray *topicker3;
     if (_addCardSuccess) {
         _addCardSuccess();
     }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)addCardForUIFailed:(NSDictionary *)dict
@@ -1111,9 +1112,10 @@ NSMutableArray *topicker3;
     
     [PrivateCard processIObject:icard];
     [[KHHDataNew sharedData] saveContext];
-    if (_addCardSuccess) {
-        _addCardSuccess();
+    if (_updateCardSuccess) {
+        _updateCardSuccess();
     }
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)updateCardForUIFailed:(NSDictionary *)dict

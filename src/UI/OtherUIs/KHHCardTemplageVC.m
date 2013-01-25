@@ -6,7 +6,7 @@
 //  Copyright (c) 2012年 Kinghanhong. All rights reserved.
 
 #import "KHHCardTemplageVC.h"
-#import "KHHData+UI.h"
+//#import "KHHData+UI.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "KHHClasses.h"
 #import "KHHDataNew+Template.h"

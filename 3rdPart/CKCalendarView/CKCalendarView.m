@@ -21,8 +21,7 @@
 #import "CKCalendarView.h"
 #import "Schedule.h"
 #import "Card.h"
-#import "KHHData.h"
-#import "KHHData+UI.h"
+#import "KHHDataNew+SignForPlan.h"
 
 #define BUTTON_MARGIN 4
 #define CALENDAR_MARGIN 5
@@ -318,7 +317,7 @@
         if ([self.card isKindOfClass:[MyCard class]]) {
             self.card = nil;
         }
-        NSInteger num = [[KHHData sharedData] countOfUnfinishedSchedulesOnCard:self.card day:dateS];
+        NSInteger num = [[KHHDataNew sharedData] countOfUnfinishedSchedulesOnCard:self.card day:dateS];
         switch (num) {
             case -1:
                 break;

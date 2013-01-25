@@ -67,7 +67,7 @@
 }
 
 #pragma mark - 添加、删除、移动客户名片到分组
-- (void)moveCards:(NSArray *)cards fromGroup:(Group *)fromGroup toGroup:(Group *) toGroup delegate:(id<KHHDataGroupDelegate>) delegate
+- (void)doMoveCards:(NSArray *)cards fromGroup:(Group *)fromGroup toGroup:(Group *) toGroup delegate:(id<KHHDataGroupDelegate>) delegate
 {
     self.delegate = delegate;
     [self.agent moveCards:cards fromGroup:fromGroup toGroup:toGroup delegate:self];
@@ -281,9 +281,11 @@
 
 - (NSArray *)allTopLevelGroups
 {
+    
+    
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"parent.id = %@", @(0)];
     NSArray *array = [Group objectArrayByPredicate:predicate
-                                   sortDescriptors:@[[Group nameSortDescriptor]]];
+                                   sortDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"id" ascending:YES selector:@selector(compare:)]]];
     return array;
 }
 

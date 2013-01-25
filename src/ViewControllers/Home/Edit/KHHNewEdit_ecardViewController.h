@@ -18,6 +18,8 @@
 @property (strong, nonatomic) MBProgressHUD *hud;
 @property (strong, nonatomic) void(^addCardSuccess)();
 
+@property (strong, nonatomic) void(^updateCardSuccess)();
+
 //for edit view
 @property (strong, nonatomic) Card *toEditCard;
 @end

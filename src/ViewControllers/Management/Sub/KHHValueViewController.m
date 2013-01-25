@@ -16,6 +16,7 @@
 #import "KHHFloatBarController.h"
 #import "WEPopoverController.h"
 #import "KHHDataAPI.h"
+#import "KHHDataNew+Card.h"
 
 @interface KHHValueViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate,UISearchDisplayDelegate>
 @property (strong, nonatomic)   NSArray                     *resultArray;
@@ -23,7 +24,7 @@
 @property (strong, nonatomic)   KHHFloatBarController       *floatBarVC;
 @property (strong, nonatomic)   WEPopoverController         *popover;
 @property (assign, nonatomic)   BOOL                        isNeedReloadTable;
-@property (strong, nonatomic)   KHHData                     *dataCtrl;
+//@property (strong, nonatomic)   KHHData                     *dataCtrl;
 @end
 
 @implementation KHHValueViewController
@@ -40,7 +41,7 @@
     if (self) {
         // Custom initialization
         self.rightBtn.hidden = YES;
-        self.dataCtrl = [KHHData sharedData];
+       // self.dataCtrl = [KHHData sharedData];
     }
     return self;
 }
@@ -80,16 +81,16 @@
         case KHHCustomerVauleFunnel:
         {
             if (_groupID <= 0) {
-                self.generArr = [self.dataCtrl cardsofStarts:_value];
+                self.generArr = [[KHHDataNew sharedData] cardsofStarts:_value];
             }else {
-                self.generArr = [self.dataCtrl cardsofStarts:_value groupId:[NSNumber numberWithLong:_groupID]];
+                self.generArr = [[KHHDataNew sharedData] cardsofStarts:_value groupId:[NSNumber numberWithLong:_groupID]];
             }
             
         }
             break;
         case KHHCustomerVauleRadar:
         {
-            self.generArr = [self.dataCtrl cardsOfstartsForRelation:_value groupID:_groupID];
+            self.generArr = [[KHHDataNew sharedData] cardsOfstartsForRelation:_value groupID:_groupID];
         }
             break;
         default:
