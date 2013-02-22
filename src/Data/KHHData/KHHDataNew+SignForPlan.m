@@ -17,7 +17,7 @@
 - (void)doSign
 {}
 
-#pragma mark - do plan
+#pragma mark - do add plan
 - (void)doAddPlan:(InterPlan *)iPlan delegate:(id<KHHDataSignPlanDelegate>) delegate
 {
     self.delegate = delegate;
@@ -26,7 +26,7 @@
 
 - (void)addPlanSuccess:(NSDictionary *)dict
 {
-    [self doSyncPlan:KHHVisitScheduleSyncTypeAdd];
+    [self doSyncPlan:KHHPlanSyncTypeAdd];
    
 }
 
@@ -35,7 +35,7 @@
     [self.delegate addPlanForUIFailed:dict];
 }
 
-- (void)doSyncPlan:(KHHVisitScheduleSyncType)syncType
+- (void)doSyncPlan:(KHHPlanSyncType)syncType
 {
     self.syncType = syncType;
     SyncMark *syncMark = [SyncMark syncMarkByKey:kSyncMarkKeySyncPlanLastTime];
@@ -43,26 +43,105 @@
     [self.agent syncPlan:syncMark.value delegate:self];
 }
 
+#pragma mark - do update plan
+- (void)doUpdatePlan:(InterPlan *)iPlan delegate:(id<KHHDataSignPlanDelegate>) delegate
+{
+    self.delegate = delegate;
+    [self.agent updatePlan:iPlan delegate:self];
+}
+
+- (void)updatePlanSuccess
+{
+    [self doSyncPlan:KHHPlanSyncTypeUpdate];
+    
+}
+
+- (void)updatePlanFailed:(NSDictionary *)dict
+{
+    [self.delegate updatePlanForUIFailed:dict];
+}
+
+
+#pragma mark - sync
+
 - (void)syncPlanSuccess:(NSDictionary *)dict
 {
     NSArray *list = dict[kInfoKeyObjectList];
     [Schedule processIObjectList:list];
     // 2.Timestamp
     [SyncMark UpdateKey:kSyncMarkKeySyncPlanLastTime
-                  value:[self interval:dict[kInfoKeySyncTime]]];
+                  value:[NSString stringWithFormat:@"%@",dict[kInfoKeySyncTime]]];
     // 3.保存
     [self saveContext];
     
-    if (self.syncType == KHHVisitScheduleSyncTypeAdd) {
+    if (self.syncType == KHHPlanSyncTypeAdd) {
          [self.delegate addPlanForUISuccess];
+    }
+    if (self.syncType == KHHPlanSyncTypeUpdate) {
+        [self.delegate updatePlanForUISuccess];
+    }
+    if (self.syncType == KHHPlanSyncTypeDeleteImg) {
+        [self.delegate deletePlanImgForUISuccess];
+    }
+    if (self.syncType == KHHPlanSyncTypeAddImg) {
+        [self.delegate addPlanImgForUISuccess];
+    }
+    if (self.syncType == KHHPlanSyncTypeSync) {
+        [self.delegate syncPlanForUISuccess];
     }
 }
 
 - (void)syncPlanFailed:(NSDictionary *)dict
 {
-    if (self.syncType == KHHVisitScheduleSyncTypeAdd) {
+    if (self.syncType == KHHPlanSyncTypeAdd) {
         [self.delegate addPlanForUIFailed:dict];
     }
+    
+    if (self.syncType == KHHPlanSyncTypeSync) {
+        [self.delegate syncPlanForUIFailed:dict];
+    }
+}
+
+#pragma mark - do img
+- (void)doDeleteImg:(NSString *)planId attachmentId:(NSString *)attachmentId delegate:(id<KHHDataSignPlanDelegate>) delegate
+{
+    self.delegate = delegate;
+    [self.agent deleteImg:planId attachmentId:attachmentId delegate:self];
+}
+
+- (void)deletePlanImgSuccess
+{
+    [self doSyncPlan:KHHPlanSyncTypeDeleteImg];
+}
+
+- (void)deletePlanImgFailed:(NSDictionary *)dict
+{
+    [self.delegate deletePlanImgForUIFailed:dict];
+}
+
+- (void)doAddImg:(NSString *)planId image:(UIImage *)image  delegate:(id<KHHDataSignPlanDelegate>) delegate
+{
+    self.delegate = delegate;
+    [self.agent addImg:planId image:image delegate:self];
+}
+
+- (void)addPlanImgSuccess
+{
+    [self doSyncPlan:KHHPlanSyncTypeAddImg];
+    
+}
+
+- (void)addPlanImgFailed:(NSDictionary *)dict
+{
+    [self.delegate addPlanForUIFailed:dict];
+}
+
+#pragma mark - sync in managePage
+
+- (void)syncPlan:(id<KHHDataSignPlanDelegate>)delegate
+{
+    self.delegate = delegate;
+    [self doSyncPlan:KHHPlanSyncTypeSync];
 }
 
 #pragma mark - do Collect

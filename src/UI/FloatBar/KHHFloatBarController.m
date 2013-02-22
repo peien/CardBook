@@ -15,6 +15,9 @@
 #import "NSString+Validation.h"
 #import <MessageUI/MessageUI.h>
 
+#import "KHHPlanViewController.h"
+
+
 @interface KHHFloatBarController ()<UIImagePickerControllerDelegate, UIActionSheetDelegate,
                                     UINavigationControllerDelegate,MFMessageComposeViewControllerDelegate,MFMailComposeViewControllerDelegate>
 @property UIActionSheet *actSheet;
@@ -282,11 +285,15 @@
 //新建拜访纪录
 - (void)newVisitRecoard
 {
-    KHHVisitRecoardVC *newVisVC = [[KHHVisitRecoardVC alloc] initWithNibName:nil bundle:nil];
-    newVisVC.style = KVisitRecoardVCStyleNewBuild;
-    newVisVC.isNeedWarn = YES;
-    newVisVC.visitInfoCard = self.card;
-    [self.viewController.navigationController pushViewController:newVisVC animated:YES];
+//    KHHVisitRecoardVC *newVisVC = [[KHHVisitRecoardVC alloc] initWithNibName:nil bundle:nil];
+//    newVisVC.style = KVisitRecoardVCStyleNewBuild;
+//    newVisVC.isNeedWarn = YES;
+//    newVisVC.visitInfoCard = self.card;
+    KHHPlanViewController *planPro = [[KHHPlanViewController alloc]init];
+    planPro.paramDic = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"plan" ofType:@"plist"]];
+    [planPro set_dicTempTarget:self.card];
+    planPro.title = @"新建计划";
+    [self.viewController.navigationController pushViewController:planPro animated:YES];
     [self.popover dismissPopoverAnimated:YES];
 
 }

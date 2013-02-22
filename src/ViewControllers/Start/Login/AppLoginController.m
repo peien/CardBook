@@ -19,6 +19,7 @@
 #import "KHHUser.h"
 #import "KHHFilterPopup.h"
 
+
 #define Tag_ImageView_CellTop    20001
 #define Tag_ImageView_CellBottom 20002
 #define Tag_ImageView_UserIcon   20003
@@ -233,34 +234,72 @@
 
 - (void)syncGroupForUISuccess
 {
-    [[KHHDataNew sharedData] removeContext];
-    [_delegate changeTitle:@"正在同步模板..."];
-    dispatch_queue_t myQueue = dispatch_queue_create("com.myQueue.login.template", NULL);
+   
+//    [_delegate changeTitle:@"正在同步个人配置..."];
+//    dispatch_queue_t myQueue = dispatch_queue_create("com.myQueue.login.default", NULL);
+//    dispatch_async(myQueue, ^{
+//        [[KHHDataNew sharedData] doSyncDefault:self];
+//    });
+    [_delegate changeTitle:@"正在获取我的名片..."];
+    dispatch_queue_t myQueue = dispatch_queue_create("com.myQueue.login.mycard", NULL);
     dispatch_async(myQueue, ^{
-        [[KHHDataNew sharedData] doSyncTemplatesWithDate:[SyncMark syncMarkByKey:kSyncMarkKeyTemplatesLastTime].value  delegate:self];
+        [[KHHDataNew sharedData] doSyncMycard:self];
     });
     //[_delegate changeToManageView];
 }
 
 - (void)syncGroupForUIFailed:(NSDictionary *)dict
 {
+    [KHHUser shareInstance].sessionId = nil;
     [_delegate changeFrom:0 to:2 leftDown:NO];
     [self alertWithTitle:@"同步分组失败" message:dict[kInfoKeyErrorMessage]];
 }
 
-#pragma mark - delegate template
+#pragma mark - delegate syncDefault
 
-- (void)syncTemplateForUISuccess
+- (void)syncDefaultForUISuccess
 {
-    [[KHHDataNew sharedData] doInsertMyCard];
+    [[KHHDataNew sharedData] saveToken];
+    [KHHUser shareInstance].isFinishLogin = YES;
     [_delegate changeToManageView];
 }
 
-- (void)syncTemplateForUIFailed:(NSDictionary *)dict
+- (void)syncDefaultForUIFailed:(NSDictionary *)dict
 {
+    [KHHUser shareInstance].sessionId = nil;
     [_delegate changeFrom:0 to:2 leftDown:NO];
-    [self alertWithTitle:@"同步模板失败" message:dict[kInfoKeyErrorMessage]];
+    [self alertWithTitle:@"同步个人配置失败" message:dict[kInfoKeyErrorMessage]];
 }
+
+#pragma mark - delegate syncMycard
+
+- (void)syncMycardForUISuccess
+{
+    [[KHHDataNew sharedData] saveToken];
+    [KHHUser shareInstance].isFinishLogin = YES;
+    [_delegate changeToManageView];
+
+}
+
+- (void)syncMycardForUIFailed:(NSDictionary *)dict
+{
+    [KHHUser shareInstance].sessionId = nil;
+    [_delegate changeFrom:0 to:2 leftDown:NO];
+    [self alertWithTitle:@"获取我的名片失败" message:dict[kInfoKeyErrorMessage]];
+}
+
+//
+//- (void)syncTemplateForUISuccess
+//{
+//    [[KHHDataNew sharedData] doInsertMyCard];
+//    [_delegate changeToManageView];
+//}
+//
+//- (void)syncTemplateForUIFailed:(NSDictionary *)dict
+//{
+//    [_delegate changeFrom:0 to:2 leftDown:NO];
+//    [self alertWithTitle:@"同步模板失败" message:dict[kInfoKeyErrorMessage]];
+//}
 
 #pragma mark - delegate account login
 
@@ -268,7 +307,7 @@
 - (void)loginForUISuccess:(NSDictionary *)dict
 {
    // dispatch_async(dispatch_get_main_queue(), ^{[[KHHDataNew sharedData]removeContext];});
-    
+    [[KHHDataNew sharedData] removeContext];
     [_delegate changeTitle:@"正在同步分组..."];
     dispatch_queue_t myQueue = dispatch_queue_create("com.myQueue.login.group", NULL);
     dispatch_async(myQueue, ^{

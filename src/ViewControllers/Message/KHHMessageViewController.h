@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SuperViewController.h"
-@interface KHHMessageViewController : SuperViewController<delegateMsgForRead>;
+@interface KHHMessageViewController : SuperViewController<KHHDataMessageDelegate>;
 @property (strong, nonatomic) IBOutlet UITableView *theTable;
 @property (strong, nonatomic) IBOutlet UIButton *editBtn;
 - (IBAction)editMessageBtnClick:(id)sender;

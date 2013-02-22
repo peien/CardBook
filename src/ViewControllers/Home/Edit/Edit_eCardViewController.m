@@ -274,7 +274,7 @@ NSString *const kECardSelectTemplateActionName = @"KHHUISelectTeplateAction";
 }
 - (void)gotoTemplagesVC:(UITapGestureRecognizer *)sender{
     KHHCardTemplageVC *temVC = [[KHHCardTemplageVC alloc] initWithNibName:nil bundle:nil];
-    temVC.editCardVC = self;
+  //  temVC.editCardVC = self;
     [self.navigationController pushViewController:temVC animated:YES];
 }
 

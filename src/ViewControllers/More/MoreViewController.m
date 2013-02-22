@@ -16,6 +16,7 @@
 #import "KHHNotifications.h"
 #import "KHHWebView.h"
 #import "KHHUser.h"
+#import <AddressBook/AddressBook.h>
 
 @interface MoreViewController ()<UIActionSheetDelegate,UIAlertViewDelegate>
 @end
@@ -339,8 +340,32 @@
 //是否添加手机分组
 - (IBAction)addMobileGroupSwitchValueChange:(UISwitch *)sender{
     
+    
+
     if (sender.on) {
-        [KHHUser shareInstance].isAddMobPhoneGroup = YES;
+        ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
+        if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined) {
+            ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
+                // First time access has been granted, add the contact
+                if (!granted) {
+                   sender.on = NO;
+                }
+                
+            });
+            
+        }
+        else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
+            // The user has previously given access, add the contact           
+            [KHHUser shareInstance].isAddMobPhoneGroup = YES;
+        }
+        else {
+            // The user has previously denied access
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"该功能需设置通讯录访问权限" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+            [alert show];
+            sender.on = NO;
+            return;
+        }
+        
     }else{
         [KHHUser shareInstance].isAddMobPhoneGroup = NO;
     }
@@ -348,6 +373,12 @@
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    [super alertView:alertView clickedButtonAtIndex:buttonIndex];
+    if (alertView.tag == KHHAlertMessage||alertView.tag == KHHAlertContact) {
+        return;
+    }
+    
+    NSLog(@"%@",alertView.title); 
     if ([alertView.title isEqualToString:NSLocalizedString(@"登出", nil)]
         && buttonIndex == 1) {
         

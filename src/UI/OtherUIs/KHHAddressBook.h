@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "Card.h"
 @interface KHHAddressBook : NSObject
-+ (BOOL)saveToCantactWithCard:(Card *)card;
+
++ (Boolean)saveToCantactWithCard:(Card *)card;
 + (NSArray *)getAddressBookData;
+
 @end

@@ -10,6 +10,8 @@
 #import "SuperViewController.h"
 #import "JSTokenField.h"
 #import "Card.h"
+#import "KHHDataNew+TransCard.h"
+
 @interface CardReceiver : NSObject
 @property (retain, nonatomic) NSString *name;
 @property (retain, nonatomic) NSString *mobile;
@@ -17,7 +19,7 @@
 - (CardReceiver *)initWithName:(NSString *)name andMobile:(NSString *)mobile;
 @end
 
-@interface KHHSendToViewController : SuperViewController
+@interface KHHSendToViewController : SuperViewController<KHHDataTransCardDelegate>
 {
     CGFloat theBgView_y;
     CGFloat theScroll_y;

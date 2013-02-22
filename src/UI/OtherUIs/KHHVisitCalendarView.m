@@ -18,6 +18,8 @@
 #import "NSString+SM.h"
 #import "KHHBMapViewController.h"
 #import "KHHDataNew+VisitSchedule.h"
+#import "KHHPlanViewController.h"
+#import "KHHDataNew+Card.h"
 
 @interface KHHVisitCalendarView()
 {
@@ -52,25 +54,28 @@
 }
 
 /*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
+ // Only override drawRect: if you perform custom drawing.
+ // An empty implementation adversely affects performance during animation.
+ - (void)drawRect:(CGRect)rect
+ {
+ // Drawing code
+ }
+ */
+
+
+
 - (void)initViewData{
-//    NSSortDescriptor *descFini = [NSSortDescriptor sortDescriptorWithKey:@"isFinished" ascending:YES];
+    //    NSSortDescriptor *descFini = [NSSortDescriptor sortDescriptorWithKey:@"isFinished" ascending:YES];
     //判断是否要做一iphone5的适配
-//    if (!isInitialized) {
-//        //适配一下iphone5
-//        [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_footView];
-//        [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_addBtn];
-////        [_addBtn addTarget:self action:@selector(visitCalendarBtnClick) forControlEvents:UIControlEventTouchUpInside];
-////        _addBtn.enabled = YES;
-//        [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_calBtn];
-//        isInitialized = YES;
-//    }
+    //    if (!isInitialized) {
+    //        //适配一下iphone5
+    //        [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_footView];
+    //        [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_addBtn];
+    ////        [_addBtn addTarget:self action:@selector(visitCalendarBtnClick) forControlEvents:UIControlEventTouchUpInside];
+    ////        _addBtn.enabled = YES;
+    //        [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_calBtn];
+    //        isInitialized = YES;
+    //    }
 #warning 查询(考勤、数据采集)的相应数据，根据dataType来查询,因服务器那边类型还未区分，所以客户端还无法做，这个要等网络接口实现后再改
     NSSortDescriptor *descDate = [NSSortDescriptor sortDescriptorWithKey:@"plannedDate" ascending:NO];
     if(self.isFromHomeVC){
@@ -82,7 +87,7 @@
         }
         self.dataArray = [[[KHHDataNew sharedData] schedulesOnCard:self.card date:self.selectedDate] sortedArrayUsingDescriptors:@[descDate]];
     }else {
-      //  KHHDataNew *data = [KHHDataNew sharedData];
+        //  KHHDataNew *data = [KHHDataNew sharedData];
         switch (self.visitType) {
             case KHHVisitPlanExecuting:
             {
@@ -141,7 +146,7 @@
     UIImage *imgBtn = [[UIImage imageNamed:@"tongbu_normal.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 8, 0, 8)];
     [cell.finishBtn setBackgroundImage:imgBtn forState:UIControlStateNormal];
     Schedule *sched = [self.dataArray objectAtIndex:indexPath.row];
-   
+    
     //是否有图片
     if ([sched.images allObjects].count > 0) {
         //显示有图的图标
@@ -163,34 +168,34 @@
         }
         
         //循环添加联系人
-        if (sched.targets) {
-            NSArray *objects = [sched.targets allObjects];
-            for (int i = 0; i < objects.count; i++) {
-                Card *cardObj = [objects objectAtIndex:i];
-                //用分号与前一个分开
-                if (names.length > 0) {
-                    [names appendString:KHH_SEMICOLON];
-                }
-                
-                //姓名
-                NSString *name = [NSString stringByFilterNilFromString:cardObj.name];
-                if (name.length) {
-                    [names appendString:[NSString stringWithFormat:@"%@",name]];
-                }else {
-                    //名称为空时添加一个空格作为标识
-                    [names appendString:@" "];
-                }
-                
-                //公司
-                if (cardObj.company && cardObj.company.name && cardObj.company.name.length > 0) {
-                    NSString *company = [NSString stringByFilterNilFromString:cardObj.company.name];
-                    if (company.length) {
-                        [names appendString:[NSString stringWithFormat:@"(%@)",company]];
-                    }
-                }
-            }
-        }
-        
+        //        if (sched.targets) {
+        //            NSArray *objects = [sched.targets allObjects];
+        //            for (int i = 0; i < objects.count; i++) {
+        //                Card *cardObj = [objects objectAtIndex:i];
+        //                //用分号与前一个分开
+        //                if (names.length > 0) {
+        //                    [names appendString:KHH_SEMICOLON];
+        //                }
+        //
+        //                //姓名
+        //                NSString *name = [NSString stringByFilterNilFromString:cardObj.name];
+        //                if (name.length) {
+        //                    [names appendString:[NSString stringWithFormat:@"%@",name]];
+        //                }else {
+        //                    //名称为空时添加一个空格作为标识
+        //                    [names appendString:@" "];
+        //                }
+        //
+        //                //公司
+        //                if (cardObj.company && cardObj.company.name && cardObj.company.name.length > 0) {
+        //                    NSString *company = [NSString stringByFilterNilFromString:cardObj.company.name];
+        //                    if (company.length) {
+        //                        [names appendString:[NSString stringWithFormat:@"(%@)",company]];
+        //                    }
+        //                }
+        //            }
+        //        }
+        //
         
         cell.objValueLab.text = names;
     }
@@ -236,6 +241,30 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (self.isDetailVC) {
+        
+        Schedule *scheduPro = [self.dataArray objectAtIndex:indexPath.row];
+        
+        KHHPlanViewController *viewPro = [[KHHPlanViewController alloc]init];
+        viewPro.paramDic = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"plan" ofType:@"plist"]];;
+        viewPro.title = @"编辑详情";
+        viewPro.uperSuccess = ^(){
+            if ([self.card isKindOfClass:[ReceivedCard class]]) {
+                self.card = [[KHHDataNew sharedData] receivedCardByID:self.card.id];
+            }else if ([self.card isKindOfClass:[PrivateCard class]]){
+                self.card = [[KHHDataNew sharedData] privateCardByID:self.card.id];
+            }
+            
+            [self reloadTheTable:KHHCalendarViewDataTypeCheckIn];
+        };
+        
+        
+        // [viewPro setTargetStr:scheduPro.customer cardsArr:[scheduPro.targets allObjects]];
+        [viewPro setSchedule:scheduPro type:plan];
+        [self.viewCtrl.navigationController pushViewController:viewPro animated:YES];
+        return;
+    }
+    
     KHHVisitRecoardVC *visitVC = [[KHHVisitRecoardVC alloc] initWithNibName:nil bundle:nil];
     //有没有图片
     visitVC.style = KVisitRecoardVCStyleShowInfo;
@@ -269,29 +298,39 @@
     if (btn.tag == 222) {
         //铃铛提示
     }else if (btn.tag == 223){
-        //完成
+        
         KHHVisitCalendarCell *cell = (KHHVisitCalendarCell *)[[btn superview] superview];
-        NSIndexPath *index = [_theTable indexPathForCell:cell];
-        KHHVisitRecoardVC *finishVC = [[KHHVisitRecoardVC alloc] initWithNibName:nil bundle:nil];
-        finishVC.isNeedWarn = YES;
-        finishVC.isFinishTask = YES;
-        finishVC.schedu = [self.dataArray objectAtIndex:index.row];
-        finishVC.style = KVisitRecoardVCStyleShowInfo;
-        if ([self.viewCtrl isKindOfClass:[KHHCalendarViewController class]]) {
-            KHHCalendarViewController *calVC = (KHHCalendarViewController *)self.viewCtrl;
-            calVC.isneedReloadeVisitTable = YES;
-            finishVC.viewCtl = self.viewCtrl;
-        }
-        [self.viewCtrl.navigationController pushViewController:finishVC animated:YES];
+        NSIndexPath *indexPath = [_theTable indexPathForCell:cell];
+        
+        KHHPlanViewController *planPro = [[KHHPlanViewController alloc]init];
+        planPro.paramDic = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"collection" ofType:@"plist"]];
+        // [planPro set_dicTempTarget:self.card];
+        [planPro setSchedule:[self.dataArray objectAtIndex:indexPath.row] type:collect];
+        planPro.title = @"数据采集";
+        
+        //完成
+        //        KHHVisitCalendarCell *cell = (KHHVisitCalendarCell *)[[btn superview] superview];
+        //        NSIndexPath *index = [_theTable indexPathForCell:cell];
+        //        KHHVisitRecoardVC *finishVC = [[KHHVisitRecoardVC alloc] initWithNibName:nil bundle:nil];
+        //        finishVC.isNeedWarn = YES;
+        //        finishVC.isFinishTask = YES;
+        //        finishVC.schedu = [self.dataArray objectAtIndex:index.row];
+        //        finishVC.style = KVisitRecoardVCStyleShowInfo;
+        //        if ([self.viewCtrl isKindOfClass:[KHHCalendarViewController class]]) {
+        //            KHHCalendarViewController *calVC = (KHHCalendarViewController *)self.viewCtrl;
+        //            calVC.isneedReloadeVisitTable = YES;
+        //            finishVC.viewCtl = self.viewCtrl;
+        //        }
+        [self.viewCtrl.navigationController pushViewController:planPro animated:YES];
     }
 }
 //地图
 - (void)showLocaButtonClick:(id)sender{
     DLog(@"showMap");
-//    //默认的地图
-//    MapController *mapVC = [[MapController alloc] initWithNibName:nil bundle:nil];
-//    mapVC.companyName = @"";
-//    mapVC.companyAddr = self.mapAddress;
+    //    //默认的地图
+    //    MapController *mapVC = [[MapController alloc] initWithNibName:nil bundle:nil];
+    //    mapVC.companyName = @"";
+    //    mapVC.companyAddr = self.mapAddress;
     //先获取点击的哪个cell的index
     //[[sender superview] superview] ---> KHHVisitCalendarCell
     if (sender) {

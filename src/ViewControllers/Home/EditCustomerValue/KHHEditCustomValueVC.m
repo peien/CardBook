@@ -13,6 +13,7 @@
 #import "KHHDataAPI.h"
 #import "KHHDataNew+Card.h"
 
+
 @interface KHHEditCustomValueVC ()<KHHCustomEvaluaViewDelegate>
 @property (strong, nonatomic) ICustomerEvaluation *icustomerEva;
 //@property (strong, nonatomic) KHHData             *dataCtrl;
@@ -29,7 +30,7 @@
 @synthesize card;
 @synthesize icustomerEva;
 //@synthesize dataCtrl;
-@synthesize hud;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -63,13 +64,13 @@
     }
     
     //注册评估消息
-    [self observeNotificationName:KHHUISaveEvaluationSucceeded selector:@"handleSaveEvaluationSucceeded:"];
-    [self observeNotificationName:KHHUISaveEvaluationFailed selector:@"handleSaveEvaluationFailed:"];
+//    [self observeNotificationName:KHHUISaveEvaluationSucceeded selector:@"handleSaveEvaluationSucceeded:"];
+//    [self observeNotificationName:KHHUISaveEvaluationFailed selector:@"handleSaveEvaluationFailed:"];
     if (!_tf.text) {
         DLog(@"直接保存重要标记");
-        self.icustomerEva.remarks = _importFlag;
+        self.icustomerEva.remarks = @"";
     }else{
-        _importFlag = _tf.text;
+        _importFlag = _tf.text?_tf.text:@"";
         self.icustomerEva.remarks = _tf.text;
     }
     
@@ -81,34 +82,59 @@
     DLog(@"self.icustomerEva ====== %@",self.icustomerEva);
     self.hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     self.hud.labelText = KHHMessageCreateCustomValue;
-    MyCard *myCard = [cards objectAtIndex:0];
-   // [[KHHDataNew sharedData] saveEvaluation:self.icustomerEva aboutCustomer:self.card withMyCard:myCard];
+   
+    InterCustomer *iCustomer = [[InterCustomer alloc]init];
+    if (self.card.evaluation) {
+        iCustomer.id = [NSString stringWithFormat:@"%lld",self.card.evaluation.idValue];
+    }
+    iCustomer.customerCard = [NSString stringWithFormat:@"%lld",self.card.idValue];
+    iCustomer.depth = [NSString stringWithFormat:@"%d" ,(int)_relationEx];
+    iCustomer.cost = [NSString stringWithFormat:@"%d" ,(int)_customValue];   
+    iCustomer.remarks = _importFlag;
+    [[KHHDataNew sharedData] doAddUpdateCustomer:iCustomer delegate:self];
 }
-//处理网络返回结果
-- (void)handleSaveEvaluationSucceeded:(NSNotification *)info{
-    [self stopObservingForEvaluation];
-    [self.hud hide:YES];
+
+- (void)addUpdateCustomerForUISuccess
+{
+    [_hud hide:YES];
+    if (_addUpdateCostomerSuccess) {
+        _addUpdateCostomerSuccess();
+    }
     [self.navigationController popViewControllerAnimated:YES];
 }
-- (void)handleSaveEvaluationFailed:(NSNotification *)info{
-    [self stopObservingForEvaluation];
-    DLog(@"handleSaveEvaluationFailed! ====== %@",info);
-    self.hud.labelText = NSLocalizedString(KHHMessageSaveFailed, nil);
-    [self.hud hide:YES afterDelay:1];
 
+- (void)addUpdateCustomerForUIFailed:(NSDictionary *)dict
+{
+    [_hud hide:YES];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"修改评估失败" message:dict[kInfoKeyErrorMessage] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+    [alert show];
 }
-- (void)stopObservingForEvaluation{
-    [self stopObservingNotificationName:KHHUISaveEvaluationSucceeded];
-    [self stopObservingNotificationName:KHHUISaveEvaluationFailed];
 
-}
+////处理网络返回结果
+//- (void)handleSaveEvaluationSucceeded:(NSNotification *)info{
+//    [self stopObservingForEvaluation];
+//    [self.hud hide:YES];
+//    [self.navigationController popViewControllerAnimated:YES];
+//}
+//- (void)handleSaveEvaluationFailed:(NSNotification *)info{
+//    [self stopObservingForEvaluation];
+//    DLog(@"handleSaveEvaluationFailed! ====== %@",info);
+//    self.hud.labelText = NSLocalizedString(KHHMessageSaveFailed, nil);
+//    [self.hud hide:YES afterDelay:1];
+//
+//}
+//- (void)stopObservingForEvaluation{
+//    [self stopObservingNotificationName:KHHUISaveEvaluationSucceeded];
+//    [self stopObservingNotificationName:KHHUISaveEvaluationFailed];
+//
+//}
 #pragma mark -
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     KHHCustomEvaluaView *view = [[[NSBundle mainBundle] loadNibNamed:@"KHHCustomEvaluaView" owner:self options:nil] objectAtIndex:0];
-    view.importFlag = _cusView.importFlag;
+    view.importFlag =  self.card.evaluation.remarks;//_cusView.importFlag;
     view.relationEx = [self.card.evaluation.degree floatValue];
     view.customValue = [self.card.evaluation.value floatValue];
     view.delegate = self;

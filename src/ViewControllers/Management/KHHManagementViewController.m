@@ -31,6 +31,7 @@
 #import "KHHBMapLocationController.h"
 #import "KHHDataNew+Card.h"
 #import "KHHDataNew+Message.h"
+#import "KHHDataNew+Template.h"
 
 #define TEXT_NEW_MESSAGE_COMMING NSLocalizedString(@"您有新消息到了,可到消息界面查看新消息。",nil)
 #define TEXT_NEW_CONTACT_COMMING NSLocalizedString(@"您有新名片到了，点击确认去查看联系人...",nil)
@@ -53,6 +54,8 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
 @implementation KHHManagementViewController
 {
     IntroViewController *introVC;
+    
+    MBProgressHUD *_hud;
 }
 @synthesize guide = _guide;
 @synthesize signButton = _signButton;
@@ -127,17 +130,7 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
         self.messageImageView.hidden = YES;
     }
 }
-- (void)synBtnClick
-{
-    NSLog(@"start syn");
-    [self observeNotificationName:nDataSyncAllSucceeded selector:@"handleDataSyncAllSucceeded:"];
-    [self observeNotificationName:nDataSyncAllFailed selector:@"handleDataSyncAllFailed:"];
-    app = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
-    //    [MBProgressHUD showHUDAddedTo:app.window animated:YES];
-    MBProgressHUD *progess = [MBProgressHUD showHUDAddedTo:app.window animated:YES];
-    progess.labelText = NSLocalizedString(KHHMessageSyncAll, nil);
-   // [[KHHData sharedData] startSyncAllData];
-}
+
 - (void)handleDataSyncAllSucceeded:(NSNotification *)noti{
     [self stopObservingStartSynAllData];
     DLog(@"handleDataSyncAllSucceeded! ====== noti is %@",noti.userInfo);
@@ -569,9 +562,11 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    [super alertView:alertView clickedButtonAtIndex:buttonIndex];
     if (!alertView || !alertView.tag) {
         return;
     }
+    
     KHHAlertType type = alertView.tag;
     
     switch (type) {
@@ -616,5 +611,139 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
     }
 }
 
+#pragma mark - net syn & delegate
+- (void)synBtnClick
+{
+    NSLog(@"start syn");
+    //    [self observeNotificationName:nDataSyncAllSucceeded selector:@"handleDataSyncAllSucceeded:"];
+    //    [self observeNotificationName:nDataSyncAllFailed selector:@"handleDataSyncAllFailed:"];
+    app = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
+    //    [MBProgressHUD showHUDAddedTo:app.window animated:YES];
+    _hud = [MBProgressHUD showHUDAddedTo:app.window animated:YES];
+    _hud.labelText = @"同步联系人...";
+    // [[KHHData sharedData] startSyncAllData];
+    [[KHHDataNew sharedData] doSyncContact:contactSyncTypeJust delegate:self];
+}
+
+- (void)syncContactForUISuccess
+{
+    [self step2SyncTemplate];
+    
+    
+}
+
+- (void)syncContactForUIFailed:(NSDictionary *)dict
+{
+    [MBProgressHUD hideHUDForView:app.window animated:YES];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"同步联系人失败" message:dict[kInfoKeyErrorMessage] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alert show];
+}
+
+#pragma mark - step2
+
+- (void)step2SyncTemplate
+{
+    _hud.labelText = @"同步模板...";
+    [[KHHDataNew sharedData]doSyncTemplates:self];
+    
+}
+
+- (void)syncTemplateForUISuccess
+{  
+    [self step3SyncGroup];
+}
+
+- (void)syncTemplateForUIFailed:(NSDictionary *)dict
+{
+    [MBProgressHUD hideHUDForView:app.window animated:YES];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"同步模板失败" message:dict[kInfoKeyErrorMessage] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alert show];
+}
+
+#pragma mark - step3
+
+- (void)step3SyncGroup
+{
+    _hud.labelText = @"同步分组...";
+    [[KHHDataNew sharedData]doSyncGroup:self];
+}
+
+- (void)syncGroupForUISuccess
+{
+    [self step4SyncPrivateCard];
+}
+
+#pragma mark - step4
+
+- (void)step4SyncPrivateCard
+{
+    _hud.labelText = @"同步私有名片...";
+    [[KHHDataNew sharedData] syncCard:self];
+}
+
+- (void)syncCardForUISuccess
+{
+   [self step5SyncPlan];
+}
+
+- (void)syncCardForUIFailed:(NSDictionary *)dict
+{
+    [MBProgressHUD hideHUDForView:app.window animated:YES];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"同步私有名片失败" message:dict[kInfoKeyErrorMessage] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alert show];
+}
+
+
+#pragma mark - step5
+
+- (void)step5SyncPlan
+{
+    _hud.labelText = @"同步拜访计划...";
+    [[KHHDataNew sharedData] syncPlan:self];
+}
+
+- (void)syncPlanForUISuccess
+{
+    [self step6SyncCustomer];
+}
+
+- (void)syncPlanForUIFailed:(NSDictionary *)dict
+{
+    [MBProgressHUD hideHUDForView:app.window animated:YES];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"同步拜访计划失败" message:dict[kInfoKeyErrorMessage] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alert show];
+}
+
+#pragma mark - step6
+
+- (void)step6SyncCustomer
+{
+    _hud.labelText = @"同步客户评估...";
+    [[KHHDataNew sharedData] doSyncCustomer:self];
+}
+
+- (void)syncCustomerForUISuccess
+{    
+    [self step7SyncMessgae];
+    [MBProgressHUD hideHUDForView:app.window animated:YES];
+}
+
+- (void)syncCustomerForUIFailed:(NSDictionary *)dict
+{
+    [MBProgressHUD hideHUDForView:app.window animated:YES];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"同步客户评估失败" message:dict[kInfoKeyErrorMessage] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alert show];
+}
+
+
+#pragma mark - step5
+
+- (void)step7SyncMessgae
+{
+    if (_hud) {
+        _hud.labelText = @"收消息...";
+    }    
+    [[KHHDataNew sharedData] reseaveMsg:self];
+}
 
 @end

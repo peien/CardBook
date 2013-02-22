@@ -14,10 +14,46 @@
 
 @implementation KHHAddressBook
 
-//保存到通讯录
-+ (BOOL)saveToCantactWithCard:(Card *)card
++ (void)addContactToAddressBook:(Card *)card
 {
-    BOOL result = YES;
+    
+}
+
++ (Boolean)existPhone:(NSString *)phone
+{
+    ABAddressBookRef addressBook = ABAddressBookCreate();
+    
+    CFArrayRef records = ABAddressBookCopyArrayOfAllPeople(addressBook);
+    for (int i=0; i<CFArrayGetCount(records); i++) {
+        ABRecordRef record = CFArrayGetValueAtIndex(records, i);
+        CFTypeRef items = ABRecordCopyValue(record, kABPersonPhoneProperty);
+        CFArrayRef phoneNums = ABMultiValueCopyArrayOfAllValues(items);
+        if (phoneNums) {
+            for (int j=0; j<CFArrayGetCount(phoneNums); j++) {
+                NSString *phone = (NSString*)CFArrayGetValueAtIndex(phoneNums, j);
+                if ([phone isEqualToString:phone]) {
+                    return YES;
+                }
+            }
+        }
+    }
+    return NO;
+}
+
+//保存到通讯录
++ (Boolean)saveToCantactWithCard:(Card *)card
+{
+    if ([self existPhone:[card.mobilePhone componentsSeparatedByString:KHH_SEPARATOR][0]]) {
+        return NO;
+    }
+    
+    ABAddressBookRef addressBook = ABAddressBookCreate();
+    
+    
+    //  ABAddressBookRef addressBook = ABAddressBookCreate();
+    ABRecordRef newPerson = ABPersonCreate();
+    
+    
     ABMutableMultiValueRef phoneNumbers = ABMultiValueCreateMutable(kABMultiStringPropertyType);
     if (card.mobilePhone && card.mobilePhone.length > 0) {
         NSArray *mobiles = [card.mobilePhone componentsSeparatedByString:KHH_SEPARATOR];
@@ -45,20 +81,20 @@
     }
     
     //address
-     ABMutableMultiValueRef address = ABMultiValueCreateMutable(kABDictionaryPropertyType);
-//    CFStringRef keys[5] = {kABPersonAddressZIPKey,kABPersonAddressStreetKey,kABPersonAddressCityKey,kABPersonAddressStateKey,kABPersonAddressCountryKey};
-//    CFStringRef values[5];
+    ABMutableMultiValueRef address = ABMultiValueCreateMutable(kABDictionaryPropertyType);
+    //    CFStringRef keys[5] = {kABPersonAddressZIPKey,kABPersonAddressStreetKey,kABPersonAddressCityKey,kABPersonAddressStateKey,kABPersonAddressCountryKey};
+    //    CFStringRef values[5];
     
     //邮编
     //详细地址
-//    if (card.address != nil) {
-//        values[1] = (__bridge CFStringRef)card.address;
-//    }else{
-//        values[1] = (__bridge CFStringRef)@"";
-//    }
-//    CFDictionaryRef aDict = CFDictionaryCreate(kCFAllocatorDefault, (void *)keys, (void *)values, 1, &kCFCopyStringDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
-//    ABMultiValueAddValueAndLabel(address, aDict, kABHomeLabel, NULL);
-//    CFRelease(aDict);
+    //    if (card.address != nil) {
+    //        values[1] = (__bridge CFStringRef)card.address;
+    //    }else{
+    //        values[1] = (__bridge CFStringRef)@"";
+    //    }
+    //    CFDictionaryRef aDict = CFDictionaryCreate(kCFAllocatorDefault, (void *)keys, (void *)values, 1, &kCFCopyStringDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+    //    ABMultiValueAddValueAndLabel(address, aDict, kABHomeLabel, NULL);
+    //    CFRelease(aDict);
     
     //emails
     ABMutableMultiValueRef emails = ABMultiValueCreateMutable(kABMultiStringPropertyType);
@@ -66,16 +102,16 @@
         NSArray *emails = [card.email componentsSeparatedByString:KHH_SEPARATOR];
         for (NSString *email in emails) {
             if (email.length > 0) {
-                 ABMultiValueAddValueAndLabel(phoneNumbers, (__bridge CFTypeRef)email, kABWorkLabel, NULL);
+                ABMultiValueAddValueAndLabel(phoneNumbers, (__bridge CFTypeRef)email, kABWorkLabel, NULL);
             }
         }
     }
-    ABRecordRef newPerson = ABPersonCreate();
+    
     if (card.department && card.department.length > 0) {
         ABRecordSetValue(newPerson, kABPersonDepartmentProperty, (__bridge CFTypeRef)card.department, NULL);
     }
     ABRecordSetValue(newPerson, kABPersonFirstNameProperty, (__bridge CFTypeRef)card.name, NULL);
-   //判断公司名字,
+    //判断公司名字,
     if (card.company && card.company.name.length > 0) {
 		ABRecordSetValue(newPerson, kABPersonOrganizationProperty, (__bridge CFTypeRef)card.company.name, NULL);
 	}else{
@@ -85,17 +121,24 @@
         ABRecordSetValue(newPerson, kABPersonJobTitleProperty, (__bridge CFTypeRef)card.title, NULL);
     }
     
-    ABRecordSetValue(newPerson, kABPersonEmailProperty, emails, NULL);
-	ABRecordSetValue(newPerson, kABPersonPhoneProperty, phoneNumbers, NULL);
-	ABRecordSetValue(newPerson, kABPersonAddressProperty, address, NULL);
-    
     CFErrorRef error = NULL;
-    ABAddressBookRef addressBook = ABAddressBookCreate();
+    
+    ABRecordSetValue(newPerson, kABPersonEmailProperty, emails, &error);
+	ABRecordSetValue(newPerson, kABPersonPhoneProperty, phoneNumbers, &error);
+	ABRecordSetValue(newPerson, kABPersonAddressProperty, address, &error);
+    
+    
+    
+    // ABAddressBookAddRecord(addressBook, newPerson, &error);
     if (!ABAddressBookAddRecord(addressBook, newPerson, &error)) {
         //goto SAVEADDRESSFROMCARDEND;
     }
     if (!ABAddressBookSave(addressBook,&error)) {
         //goto SAVEADDRESSFROMCARDEND;
+    }
+    if (error != NULL)
+    {
+        NSLog(@"Danger Will Robinson! Danger!");
     }
     
 SAVEADDRESSFROMCARDEND:
@@ -109,8 +152,8 @@ SAVEADDRESSFROMCARDEND:
         
         CFRelease(error);
     }
-
-    return result;
+    
+    return YES;
 }
 
 + (NSArray *)getAddressBookData

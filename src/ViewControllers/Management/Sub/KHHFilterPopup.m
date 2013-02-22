@@ -43,6 +43,7 @@
 
 - (void)showPopUp:(NSArray *)array index:(int)index Title:(NSString *)title delegate:(id<KHHFilterPopupDelegate>)delegate
 {
+    isSelectGroup = NO;
     _delegate = delegate;
     dataArr = array;
     seleIndex = index;

@@ -20,6 +20,8 @@
 #import "InterCard.h"
 #import "KHHCardTemplageVC.h"
 #import "KHHFrameCardView.h"
+#import "Company.h"
+#import "Address.h"
 
 @interface KHHNewEdit_ecardViewController  ()
 {
@@ -77,18 +79,196 @@
     ((ParamForEditecard *)section0Arr[0]).value = _toEditCard.name;
     ((ParamForEditecard *)section0Arr[1]).value = _toEditCard.title;
     
-    ((ParamForEditecard *)section1Arr[0]).value = _toEditCard.mobilePhone;
-    ((ParamForEditecard *)section1Arr[1]).value = _toEditCard.telephone;
-    ((ParamForEditecard *)section1Arr[2]).value = _toEditCard.fax;
-    ((ParamForEditecard *)section1Arr[3]).value = _toEditCard.email;
+    ((ParamForEditecard *)section1Arr[0]).value = [_toEditCard.mobilePhone componentsSeparatedByString:@"|"][0];
+    ((ParamForEditecard *)section1Arr[1]).value = [_toEditCard.telephone componentsSeparatedByString:@"|"][0];
+    ((ParamForEditecard *)section1Arr[2]).value = [_toEditCard.fax componentsSeparatedByString:@"|"][0];
+    ((ParamForEditecard *)section1Arr[3]).value = [_toEditCard.email componentsSeparatedByString:@"|"][0];
+    
+    NSArray *mobileArr =  [_toEditCard.mobilePhone componentsSeparatedByString:@"|"];
+    NSArray *telephoneArr =  [_toEditCard.telephone componentsSeparatedByString:@"|"];
+    NSArray *faxArr = [_toEditCard.fax componentsSeparatedByString:@"|"];
+    NSArray *emailArr = [_toEditCard.email componentsSeparatedByString:@"|"];
+    
+    for (int i =1 ; i< [mobileArr count]; i++) {
+        ParamForEditecard * paramEdit = [[ParamForEditecard alloc]init];
+        paramEdit.title = @"手机";
+        paramEdit.value = mobileArr[i];
+        paramEdit.placeholder = @"请输入手机";
+        paramEdit.tag = 2400+100+3+i;
+        paramEdit.editingStyle = UITableViewCellEditingStyleDelete;
+        paramEdit.boardType = UIKeyboardTypePhonePad;
+        section1Arr[3+i] = paramEdit;
+    }
+    
+    for (int i =1 ; i< [telephoneArr count]; i++) {
+        ParamForEditecard * paramEdit = [[ParamForEditecard alloc]init];
+        paramEdit.title = @"电话";
+        paramEdit.value = telephoneArr[i];
+        paramEdit.placeholder = @"请输入电话";
+        paramEdit.tag = 2400+100+3+[mobileArr count]+i;
+        paramEdit.editingStyle = UITableViewCellEditingStyleDelete;
+        paramEdit.boardType = UIKeyboardTypePhonePad;
+        section1Arr[3+[mobileArr count]-1+i] = paramEdit;
+    }
+    
+    for (int i =1 ; i< [faxArr count]; i++) {
+        ParamForEditecard * paramEdit = [[ParamForEditecard alloc]init];
+        paramEdit.title = @"传真";
+        paramEdit.value = faxArr[i];
+        paramEdit.placeholder = @"请输入传真";
+        paramEdit.tag = 2400+100+3+[mobileArr count]+[telephoneArr count]+i;
+        paramEdit.editingStyle = UITableViewCellEditingStyleDelete;
+        paramEdit.boardType = UIKeyboardTypePhonePad;
+        section1Arr[3+[mobileArr count]-1+[telephoneArr count]-1+i] = paramEdit;
+    }
+    
+   
+    for (int i =1 ; i< [emailArr count]; i++) {
+        ParamForEditecard * paramEdit = [[ParamForEditecard alloc]init];
+        paramEdit.title = @"邮箱";
+        paramEdit.value = emailArr[i];
+        paramEdit.placeholder = @"请输入邮箱";
+        paramEdit.tag = 2400+100+3+[mobileArr count]+[telephoneArr count]+[faxArr count]+i;
+        paramEdit.editingStyle = UITableViewCellEditingStyleDelete;
+        paramEdit.boardType = UIKeyboardTypeEmailAddress;
+        section1Arr[3+[mobileArr count]-1+[telephoneArr count]-1+[faxArr count]-1+i] = paramEdit;
+    }
+    
+    if (!((ParamForEditecard *)section1Arr[4]).toPicker) {
+        NSMutableArray *arrPro = [[NSMutableArray alloc]initWithObjects:@"手机",@"电话",@"传真",@"邮箱", nil];
+        ParamForEditecard *paramPro = [[ParamForEditecard alloc]init];
+        paramPro.title = @"添加";
+        paramPro.editingStyle = UITableViewCellEditingStyleInsert;
+        paramPro.toPicker = [[NSMutableArray alloc]initWithArray:arrPro copyItems:YES];
+        [section1Arr addObject:paramPro];
+    }
+    
    
     ((ParamForEditecard *)section2Arr[0]).value = _toEditCard.company.name;
-    if (_toEditCard.address.province) {
-         locationStr =[NSString stringWithFormat:@"%@,%@,%@", _toEditCard.address.province,_toEditCard.address.city ,_toEditCard.address.district];
+    NSLog(@"%@",_toEditCard.address);
+    if (_toEditCard.address.province.length) {
+        
+         locationStr =[NSString stringWithFormat:@"%@ %@ %@", _toEditCard.address.province,_toEditCard.address.city ,_toEditCard.address.district];
     }
+    
+    
    
-    ((ParamForEditecard *)section2Arr[1]).value = _toEditCard.address.street;
+    ((ParamForEditecard *)section2Arr[1]).value = _toEditCard.address.other;
     ((ParamForEditecard *)section2Arr[2]).value = _toEditCard.address.zip;
+    
+    if (_toEditCard.company.email.length) {
+        ParamForEditecard * paramEdit = [[ParamForEditecard alloc]init];
+        paramEdit.title = @"公司邮箱";
+        paramEdit.value = _toEditCard.company.email;
+        paramEdit.placeholder = @"请输入公司邮箱";
+        paramEdit.editingStyle = UITableViewCellEditingStyleDelete;
+        paramEdit.tag = 2400+200+3;
+        section2Arr[3] = paramEdit;
+    }
+    //@"网页",@"QQ",@"MSN",@"旺旺",@"业务范围",@"银行信息",@"其它信息"
+   ParamForEditecard * paramEditPickerPro = section3Arr[0];
+    int i = 0;
+    if (_toEditCard.web.length) {
+        ParamForEditecard * paramEdit = [[ParamForEditecard alloc]init];
+        paramEdit.title = @"网页";
+        paramEdit.value = _toEditCard.web;
+        paramEdit.placeholder = @"请输入网页";
+        paramEdit.editingStyle = UITableViewCellEditingStyleDelete;
+        paramEdit.tag = 2400+300;
+        section3Arr[i] = paramEdit;
+        [paramEditPickerPro.toPicker removeObject:@"网页"];
+        i++;
+    }
+    if (_toEditCard.qq.length) {
+        ParamForEditecard * paramEdit = [[ParamForEditecard alloc]init];
+        paramEdit.title = @"QQ";
+        paramEdit.value = _toEditCard.qq;
+        paramEdit.placeholder = @"请输入QQ";
+        paramEdit.editingStyle = UITableViewCellEditingStyleDelete;
+        paramEdit.tag = 2400+300+i;
+        section3Arr[i] = paramEdit;
+        [paramEditPickerPro.toPicker removeObject:@"QQ"];
+        i++;
+    }
+    if (_toEditCard.msn.length) {
+        ParamForEditecard * paramEdit = [[ParamForEditecard alloc]init];
+        paramEdit.title = @"MSN";
+        paramEdit.value = _toEditCard.msn;
+        paramEdit.placeholder = @"请输入MSN";
+        paramEdit.editingStyle = UITableViewCellEditingStyleDelete;
+        paramEdit.tag = 2400+300+i;
+        section3Arr[i] = paramEdit;
+        [paramEditPickerPro.toPicker removeObject:@"MSN"];
+        i++;
+    }
+    if (_toEditCard.aliWangWang.length) {
+        ParamForEditecard * paramEdit = [[ParamForEditecard alloc]init];
+        paramEdit.title = @"旺旺";
+        paramEdit.value = _toEditCard.aliWangWang;
+        paramEdit.placeholder = @"请输入旺旺";
+        paramEdit.editingStyle = UITableViewCellEditingStyleDelete;
+        paramEdit.tag = 2400+300+i;
+        section3Arr[i] = paramEdit;
+        [paramEditPickerPro.toPicker removeObject:@"旺旺"];
+        i++;
+    }
+    if (_toEditCard.businessScope.length) {
+        ParamForEditecard * paramEdit = [[ParamForEditecard alloc]init];
+        paramEdit.title = @"业务范围";
+        paramEdit.value = _toEditCard.businessScope;
+        paramEdit.placeholder = @"请输入业务范围";
+        paramEdit.editingStyle = UITableViewCellEditingStyleDelete;
+        paramEdit.tag = 2400+300+i;
+        section3Arr[i] = paramEdit;
+        [paramEditPickerPro.toPicker removeObject:@"业务范围"];
+        i++;
+    }
+    if (_toEditCard.moreInfo.length) {
+        ParamForEditecard * paramEdit = [[ParamForEditecard alloc]init];
+        paramEdit.title = @"其它信息";
+        paramEdit.value = _toEditCard.moreInfo;
+        paramEdit.placeholder = @"请输入其它信息";
+        paramEdit.editingStyle = UITableViewCellEditingStyleDelete;
+        paramEdit.tag = 2400+300+i;
+        section3Arr[i] = paramEdit;
+        [paramEditPickerPro.toPicker removeObject:@"其它信息"];
+        i++;
+    }
+    if (_toEditCard.bankAccount.name.length) {
+        ParamForEditecard * paramEdit = [[ParamForEditecard alloc]init];
+        paramEdit.title = @"开户行";
+        paramEdit.value = _toEditCard.bankAccount.bank;
+        paramEdit.placeholder = @"请输入开户行";
+        paramEdit.editingStyle = UITableViewCellEditingStyleDelete;
+        paramEdit.tag = 2400+300+i;
+        section3Arr[i] = paramEdit;
+        [paramEditPickerPro.toPicker removeObject:@"银行信息"];
+         i++;
+        
+        ParamForEditecard * paramEdit2 = [[ParamForEditecard alloc]init];
+        paramEdit2.title = @"银行帐号";
+        paramEdit2.value = _toEditCard.bankAccount.number;
+        paramEdit2.placeholder = @"请输入银行帐号";
+        paramEdit2.editingStyle = UITableViewCellEditingStyleDelete;
+        paramEdit2.tag = 2400+300+i;
+        section3Arr[i] = paramEdit2;
+         i++;
+        
+        ParamForEditecard * paramEdit3 = [[ParamForEditecard alloc]init];
+        paramEdit3.title = @"户名";
+        paramEdit3.value = _toEditCard.bankAccount.name;
+        paramEdit3.placeholder = @"请输入户名";
+        paramEdit3.editingStyle = UITableViewCellEditingStyleDelete;
+        paramEdit3.tag = 2400+300+i;
+        section3Arr[i] = paramEdit3;
+        i++;       
+       
+    }
+    
+    if ([paramEditPickerPro.toPicker count]>0) {
+        section3Arr[i] = paramEditPickerPro;
+    }
+    
 }
 
 #pragma mark - apparece in new
@@ -128,8 +308,8 @@
     ParamForEditecard *paramPro2 = [[ParamForEditecard alloc]init];
     paramPro2.title = @"添加";
     paramPro2.editingStyle = UITableViewCellEditingStyleInsert;
-    paramPro2.toPicker = [[NSMutableArray alloc]initWithObjects:@"部门",@"公司邮箱", nil];
-    topicker2 = [[NSMutableArray alloc]initWithObjects:@"部门",@"公司邮箱", nil];
+    paramPro2.toPicker = [[NSMutableArray alloc]initWithObjects:@"公司邮箱", nil];
+    topicker2 = [[NSMutableArray alloc]initWithObjects:@"公司邮箱", nil];
     paramPro2.forPickerToDel = YES;
     [section2Arr addObject:paramPro2];
     
@@ -152,6 +332,7 @@
 {
     for (int i=0; i<[arrPro count]; i++) {
         ParamForEditecard *paramPro = [[ParamForEditecard alloc]initWithTitle:arrPro[i] placeholder:[NSString stringWithFormat:@"请输入%@",arrPro[i]]];
+        paramPro.boardType = UIKeyboardTypeNamePhonePad;
         paramPro.tag = 2400 +section*100 +i;
         [sectionArr addObject:paramPro];
     }
@@ -203,7 +384,7 @@
         tapp.numberOfTapsRequired = 1;
         tapp.numberOfTouchesRequired = 1;
         [tempImgview addGestureRecognizer:tapp];
-        CardTemplate * cardTempLatePro = [CardTemplate objectByID:@(10) createIfNone:NO];
+        CardTemplate * cardTempLatePro = [CardTemplate objectByID:@(180) createIfNone:NO];
         [tempImgview setImageWithURL:[NSURL URLWithString:cardTempLatePro.bgImage.url] placeholderImage:nil];
         [viewf addSubview:tempImgview];
         _table.tableHeaderView = viewf;
@@ -221,7 +402,7 @@
 }
 
 - (void)gotoTemplagesVC:(UITapGestureRecognizer *)sender{
-    KHHCardTemplageVC *temVC = [[KHHCardTemplageVC alloc] initWithNibName:nil bundle:nil];
+    KHHCardTemplageVC *temVC = [[KHHCardTemplageVC alloc] init];
     temVC.selectTemplate = ^(CardTemplate *cardTemplate){
         _cardTemplate = cardTemplate;
         [tempImgview setImageWithURL:[NSURL URLWithString:_cardTemplate.bgImage.url] placeholderImage:nil];
@@ -881,7 +1062,7 @@ NSMutableArray *topicker3;
             }
         }
     }
-    NSString *strPro = ((ParamForEditecard *)section2Arr[2]).value;
+    NSString *strPro = ((ParamForEditecard *)section2Arr[1]).value;
     icard.addressOther = strPro?strPro:@"";
     icard.addressZip = [self zipCode];
 }
@@ -986,7 +1167,7 @@ NSMutableArray *topicker3;
 
 - (void)rightBarButtonClick:(id)sender
 {
-    [self saveCardInfo];
+        [self saveCardInfo];
 }
 
 - (void)saveCardInfo
@@ -1020,7 +1201,14 @@ NSMutableArray *topicker3;
     icard.telephone = phones;
     icard.fax = faxs;
     icard.email = mails;
-    icard.templateID = @(2);
+    if (_cardTemplate) {
+        icard.templateID = _cardTemplate.id;
+    }else if(_toEditCard){
+        icard.templateID = _toEditCard.template.id;
+    }else{
+        icard.templateID = @(2);
+    }
+    
     [self toAddressCard];
     
     icard.companyEmail = [self companyEmail];
@@ -1030,8 +1218,13 @@ NSMutableArray *topicker3;
     [self toIcardSection3];
     icard.cardType = kCardType_Person;
     icard.cardSource = kCardSource_Client_SelfBuild;
-    icard.templateID = [NSNumber numberWithInt:2];
-    icard.modelType = KHHCardModelTypePrivateCard;
+   
+    if (_toEditCard) {
+        icard.modelType = _toEditCard.modelType.intValue;
+    }else{
+        icard.modelType = KHHCardModelTypePrivateCard;
+    }
+    
     // id，version，userid,templateID付给InterCard，否则不能通过
     //    self.interCard.id = _glCard.id;
     //    self.interCard.version = _glCard.version;
@@ -1075,7 +1268,7 @@ NSMutableArray *topicker3;
     //    }
     if (_toEditCard) {
         icard.id = _toEditCard.id;
-         _hud.labelText = @"修改名片...";
+         _hud.labelText = @"修改名片...";        
         [[KHHDataNew sharedData] doUpdateCard:icard delegate:self];
     }else{
          _hud.labelText = @"创建名片...";
@@ -1086,12 +1279,12 @@ NSMutableArray *topicker3;
 
 #pragma mark - add delegate
 
-- (void)addCardForUISuccess:(NSDictionary *)dict
+- (void)addCardForUISuccess
 {
     [_hud hide:YES];
-    icard.id =  dict[@"id"];
-    [PrivateCard processIObject:icard];
-    [[KHHDataNew sharedData] saveContext];
+//    icard.id =  dict[@"id"];
+//    [PrivateCard processIObject:icard];
+//    [[KHHDataNew sharedData] saveContext];
     if (_addCardSuccess) {
         _addCardSuccess();
     }
@@ -1109,8 +1302,12 @@ NSMutableArray *topicker3;
 - (void)updateCardForUISuccess
 {
     [_hud hide:YES];
+    if (icard.modelType == KHHCardModelTypePrivateCard) {
+        [PrivateCard processIObject:icard];
+    }else{
+        [MyCard processIObject:icard];
+    }
     
-    [PrivateCard processIObject:icard];
     [[KHHDataNew sharedData] saveContext];
     if (_updateCardSuccess) {
         _updateCardSuccess();

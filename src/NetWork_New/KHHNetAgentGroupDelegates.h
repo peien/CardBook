@@ -27,7 +27,7 @@
 -(void) deleteGroupFailed:(NSDictionary *) dict;
 
 //修改分组下的组员
--(void) moveGroupMembersSuccess;
+-(void) moveGroupMembersSuccess:(int) groupId;
 -(void) moveGroupMembersFailed:(NSDictionary *) dict;
 
 //修改分组下的组员

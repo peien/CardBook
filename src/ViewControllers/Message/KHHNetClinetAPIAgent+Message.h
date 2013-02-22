@@ -7,12 +7,12 @@
 //
 
 #import "KHHNetClinetAPIAgent.h"
-#import "MsgDelegates.h"
+#import "KHHNetAgentMessageDelegate.h"
 #import "Reachability.h"
 
 @interface KHHNetClinetAPIAgent (Message)
-- (void)doDeleteInEdit:(id<delegateMsgForRead>)delegate messages:(NSArray *)messages;
-- (void)doDelete:(id<delegateMsgForRead>) delegate messages:(NSArray *)messages;
-- (void)doReseaveMessage:(id<delegateMsgForMain>) delegate;
+- (void)doDeleteInEdit:(id<KHHNetAgentMessageDelegate>)delegate messages:(NSArray *)messages;
+- (void)doDelete:(id<KHHNetAgentMessageDelegate>) delegate messages:(NSArray *)messages;
+- (void)reseaveMessage:(id<KHHNetAgentMessageDelegate>) delegate;
 
 @end

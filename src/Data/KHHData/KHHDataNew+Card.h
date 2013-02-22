@@ -78,6 +78,9 @@ typedef enum {
 #pragma mark - 获取本地最后一个联系人
 - (void)latestCustomerCard:(id<KHHDataCardDelegate>) delegate;
 
+#pragma mark - markIsRead
+- (void)doMarkIsRead:(ReceivedCard *)aCard delegate:(id<KHHDataCardDelegate>)delegate;
+
 #pragma mark - for UI
 - (NSArray *)cardsOfstartsForRelation:(float)starts  groupID: (long) groupID;
 - (NSArray *)cardsofStarts:(float)starts;
@@ -88,6 +91,8 @@ typedef enum {
 - (NSArray *)cardsOfNew;
 - (NSArray *)cardsOfAll;
 - (void)markIsRead:(ReceivedCard *)aCard;
+
+- (NSArray *)cardsOfCompetitors;
 
 - (void)doInsertMyCard;
 

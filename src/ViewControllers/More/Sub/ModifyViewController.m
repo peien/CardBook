@@ -281,6 +281,11 @@
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+    [super alertView:alertView clickedButtonAtIndex:buttonIndex];
+    if (alertView.tag == KHHAlertMessage||alertView.tag == KHHAlertContact) {
+        return;
+    }
+    
     switch (buttonIndex) {
         case 0:
             //密码修改成功,要登出

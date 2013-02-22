@@ -15,7 +15,7 @@
 #import "KHHFrameCardView.h"
 #import "MBProgressHUD.h"
 #import "DetailInfoViewController.h"
-#import "MBProgressHUD.h"
+
 #import "KHHAppDelegate.h"
 #import "KHHMyDetailController.h"
 
@@ -86,6 +86,9 @@
 //    editeCardVC.glCard = self.card;
     KHHNewEdit_ecardViewController *editeCardVC = [[KHHNewEdit_ecardViewController alloc]init];
     editeCardVC.toEditCard = self.card;
+    editeCardVC.updateCardSuccess = ^(){
+         //[self updateCardTempInfo];
+    };
     [self.navigationController pushViewController:editeCardVC animated:YES];
 }
 - (void)viewDidLoad
@@ -125,6 +128,7 @@
     }
     // 获取经度，纬度
     [self getLocationForExChange];
+   
 }
 
 //显示数据未同步完全的alert
@@ -146,7 +150,7 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     [KHHShowHideTabBar showTabbar];
-    DLog(@"becomeFirstResponder ====== %i",[self becomeFirstResponder]);
+  //  DLog(@"becomeFirstResponder ====== %i",[self becomeFirstResponder]);
     //判断是否要显示编辑按钮
     if ([self inShowEditButton]) {
         [self.rightBtn setTitle:@"编辑" forState:UIControlStateNormal];
@@ -158,12 +162,12 @@
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [self resignFirstResponder];
+  //  [self resignFirstResponder];
     
 }
 - (void)viewDidAppear:(BOOL)animated{
     [super viewDidAppear:animated];
-    [self becomeFirstResponder];
+   // [self becomeFirstResponder];
 }
 
 - (void)viewDidUnload
@@ -291,8 +295,8 @@
 {
     //注册交换成功，失败的消息
     [self getLocationForExChange];
-    [self observeNotificationName:KHHNetworkExchangeCardSucceeded selector:@"handleExchangeCardSucceeded:"];
-    [self observeNotificationName:KHHNetworkExchangeCardFailed selector:@"handleExchangeCardFailed:"];
+  //  [self observeNotificationName:KHHNetworkExchangeCardSucceeded selector:@"handleExchangeCardSucceeded:"];
+  //  [self observeNotificationName:KHHNetworkExchangeCardFailed selector:@"handleExchangeCardFailed:"];
     if (!self.localM) {
         NSLog(@"你的设备未开启定位服务");
         [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"设备未开启定位服务", nil)
@@ -320,9 +324,12 @@
         [self warnNetWork:@"请不要频繁交换名片"];
         return;
     }
-    self.mbHUD = [MBProgressHUD showHUDAddedTo:self.app.window animated:YES];
+    self.mbHUD = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     self.mbHUD.labelText = @"请稍后,正在交换名片...";
-  //  [[KHHDataNew sharedData] exchangeCard:self.card withCoordinate:self.currentLocation.coordinate delegate:self];
+    InterShake *iShake = [[InterShake alloc]init];
+    iShake.coordinate = _currentLocation.coordinate;
+    iShake.card = self.card;
+    [[KHHDataNew sharedData] doExchange:iShake delegate:self];
 //    [self.httpAgent exchangeCard:self.card withCoordinate:self.currentLocation.coordinate];
     self.exchangeStartTime = CFAbsoluteTimeGetCurrent();
     AudioServicesPlaySystemSound(kSystemSoundID_Vibrate);
@@ -345,7 +352,7 @@
     //交换成功后在收取名片中间的空隙添加文字提示
     self.mbHUD.labelText = @"名片交换成功，正在为您收取名片";
    
-    [[KHHDataNew sharedData] pullLatestReceivedCard];
+    //[[KHHDataNew sharedData] pullLatestReceivedCard];
 }
 //交换失败
 - (void)handleExchangeCardFailed:(NSNotification *)info{
@@ -438,7 +445,7 @@
     
     MBProgressHUD *progress = [MBProgressHUD showHUDAddedTo:self.app.aTabBarController.view animated:YES];
     progress.labelText = NSLocalizedString(warnString, nil);
-    [progress hide:YES afterDelay:2.0];
+  //  [progress hide:YES afterDelay:2.0];
     
 }
 - (void)countdownForMBHUD:(NSTimer *)timerr {
@@ -446,8 +453,11 @@
     if (self.countDownNum <= 0) {
         //超时处理；
         DLog(@"exchange failed because time out!!");
-        self.mbHUD.hidden = YES;
-        [self exchangeFailed:@"网络超时"];
+        if (self.mbHUD.isHidden) {
+            return;
+        }
+        [self.mbHUD hide:YES];
+        [self exchangeFailed:@"没有匹配的名片可交换"];
     }else{
         self.mbHUD = [timerr.userInfo objectForKey:@"Hud"];
         NSString *label = [timerr.userInfo objectForKey:@"label"];
@@ -456,8 +466,8 @@
 }
 //交换失败处理
 - (void)exchangeFailed:(NSString *)message{
-    [self stopObservingNotificationName:KHHNetworkExchangeCardSucceeded];
-    [self stopObservingNotificationName:KHHNetworkExchangeCardFailed];
+//    [self stopObservingNotificationName:KHHNetworkExchangeCardSucceeded];
+//    [self stopObservingNotificationName:KHHNetworkExchangeCardFailed];
     [self.timer invalidate];
     self.timer = nil;
     [MBProgressHUD hideHUDForView:self.navigationController.view animated:YES];
@@ -470,6 +480,11 @@
 }
 //收到新的名片，跳转到详细界面
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    [super alertView:alertView clickedButtonAtIndex:buttonIndex];
+    if (alertView.tag == KHHAlertMessage||alertView.tag == KHHAlertContact) {
+        return;
+    }
+    
     KHHAlertType type = alertView.tag;
     switch (type) {
         case KHHAlertNewContact:
@@ -498,14 +513,48 @@
 
 #pragma mark - exchange delegate
 
-- (void)exchangeCardForUISuccess:(NSDictionary *)dict
+- (void)exchangeForUISuccess
 {
+    [self.timer invalidate];
+    self.timer = nil;
+   
+    self.mbHUD.labelText = @"名片交换成功，正在为您收取名片";
+    
+    [[KHHDataNew sharedData] doReceiveForExchange:self];
+}
+
+- (void)exchangeForUIFailed:(NSDictionary *)dict
+{
+    if (self.mbHUD.isHidden) {
+        return;
+    }
+    [self.mbHUD hide:YES];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"交换失败" message:dict[@"errorMessage"] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alert show];
+//    if ([dict[@"errorCode"] intValue] == -21) {
+//        DLog(@"没有相对应的卡片要交换");
+//        [self exchangeFailed:@"没有匹配的名片可交换"];
+//    }else if ([dict[@"errorCode"] intValue] == KHHErrorCodeConnectionOffline){
+//        [self exchangeFailed:@"网络错误"];
+//    }
 
 }
 
-- (void)exchangeCardForUIFailed:(NSDictionary *)dict
+- (void)receiveLastCostomerForUISuccess:(NSDictionary *)dict
 {
-
+    [self.mbHUD hide:YES];
+    self.latestCard = dict[@"receivedCard"];
+    
+    [self showNewCardInfo];
 }
+
+- (void)receiveLastCostomerForUIFailed:(NSDictionary *)dict
+{
+    [self.mbHUD hide:YES];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"获取名片失败" message:dict[kInfoKeyErrorMessage] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alert show];
+}
+
+
 
 @end

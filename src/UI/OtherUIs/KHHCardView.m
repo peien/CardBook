@@ -18,7 +18,7 @@
 #import "KHHDefaults.h"
 #import <QuartzCore/QuartzCore.h>
 #import "KHHNewEdit_ecardViewController.h"
-
+#import <AddressBook/AddressBook.h>
 
 #define CARD_IMGVIEW_TAG 333
 #define CARDMOD_VIEW_TAG 444
@@ -346,19 +346,64 @@
 //添加card到通讯录
 - (void)saveToContactBtnClick:(id)sender
 {
-    NSString *message = nil;
-    if ([KHHAddressBook saveToCantactWithCard:_myCard]) {
-        message = [NSString stringWithFormat:@"%@%@",KHHMessageAddContactToLocal, KHHMessageSucceed];
-    }else {
-        message = [NSString stringWithFormat:@"%@%@",KHHMessageAddContactToLocal, KHHMessageFailed];
+    __block NSString *message = nil;
+    
+    ABAddressBookRef addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
+    
+    if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined) {
+        ABAddressBookRequestAccessWithCompletion(addressBookRef, ^(bool granted, CFErrorRef error) {
+            // First time access has been granted, add the contact
+            if (granted) {
+                if ([KHHAddressBook saveToCantactWithCard:_myCard]) {
+                    message = [NSString stringWithFormat:@"%@%@",KHHMessageAddContactToLocal, KHHMessageSucceed];
+                }else {
+                    message = @"号码已在通讯录中";
+                }
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:KHHMessageAddContactToLocal
+                                                                message:message
+                                                               delegate:nil
+                                                      cancelButtonTitle:KHHMessageSure
+                                                      otherButtonTitles:nil, nil];
+                [alert show];
+            }
+            
+        });
+        
+    }
+    else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized) {
+        // The user has previously given access, add the contact
+        if ([KHHAddressBook saveToCantactWithCard:_myCard]) {
+            message = [NSString stringWithFormat:@"%@%@",KHHMessageAddContactToLocal, KHHMessageSucceed];
+        }else {
+            message = @"号码已在通讯录中";
+        }
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:KHHMessageAddContactToLocal
+                                                        message:message
+                                                       delegate:nil
+                                              cancelButtonTitle:KHHMessageSure
+                                              otherButtonTitles:nil, nil];
+        [alert show];
+        
+    }
+    else {
+        // The user has previously denied access
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"该功能需设置通讯录访问权限" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alert show];
+        return;
     }
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:KHHMessageAddContactToLocal
-                                                    message:message
-                                                   delegate:nil
-                                          cancelButtonTitle:KHHMessageSure
-                                          otherButtonTitles:nil, nil];
-    [alert show];
+    //    if ([KHHAddressBook saveToCantactWithCard:_myCard]) {
+    //        message = [NSString stringWithFormat:@"%@%@",KHHMessageAddContactToLocal, KHHMessageSucceed];
+    //    }else {
+    //        message = [NSString stringWithFormat:@"%@%@",KHHMessageAddContactToLocal, KHHMessageFailed];
+    //    }
+    //
+    //    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:KHHMessageAddContactToLocal
+    //                                                    message:message
+    //                                                   delegate:nil
+    //                                          cancelButtonTitle:KHHMessageSure
+    //                                          otherButtonTitles:nil, nil];
+    //    [alert show];
 }
 
 - (void)delCardBtnClick:(id)sender
@@ -369,15 +414,20 @@
     //KHHAppDelegate *app = (KHHAppDelegate *)[UIApplication sharedApplication].delegate;
     hud = [MBProgressHUD showHUDAddedTo:self.detailVC.navigationController.view animated:YES];
     hud.labelText = KhhMessageDeleteContact;
-//    if ([self.myCard isKindOfClass:[PrivateCard class]]) {
-//        [[KHHDataNew sharedData] doDeleteCard:self.myCard delegate:self];
-//        //[self.dataCtrl deletePrivateCardByID:self.myCard.id];
-//    }else if ([self.myCard isKindOfClass:[ReceivedCard class]]){
-//        [[KHHDataNew sharedData] doDeleteCard:self.myCard delegate:self];
-//        // [self.dataCtrl deleteReceivedCard:(ReceivedCard *)self.myCard];
-//    }
+    //    if ([self.myCard isKindOfClass:[PrivateCard class]]) {
+    //        [[KHHDataNew sharedData] doDeleteCard:self.myCard delegate:self];
+    //        //[self.dataCtrl deletePrivateCardByID:self.myCard.id];
+    //    }else if ([self.myCard isKindOfClass:[ReceivedCard class]]){
+    //        [[KHHDataNew sharedData] doDeleteCard:self.myCard delegate:self];
+    //        // [self.dataCtrl deleteReceivedCard:(ReceivedCard *)self.myCard];
+    //    }
     
-    [[KHHDataNew sharedData] doDeleteCard:self.myCard delegate:self];
+    if ([self.myCard.modelType intValue] ==  KHHCardModelTypePrivateCard) {
+        [[KHHDataNew sharedData] doDeleteCard:self.myCard delegate:self];
+    }else{
+        [[KHHDataNew sharedData] doDeleteContact:[NSString stringWithFormat:@"%lld",self.myCard.idValue] delegate:self];
+    }
+   
 }
 
 #pragma mark - network dele delegate
@@ -385,7 +435,10 @@
 - (void)deleteCardForUISuccess
 {
     [hud hide:YES];
-    [[[KHHDataNew sharedData] context] deleteObject:self.myCard];
+    if(self.detailVC.deleteSelfSuccess){
+        self.detailVC.deleteSelfSuccess();
+    }
+    // [[[KHHDataNew sharedData] context] deleteObject:self.myCard];
     [self.detailVC.navigationController popViewControllerAnimated:YES];
 }
 
@@ -394,6 +447,16 @@
     [hud hide:YES];
     UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"删除失败" message:dict[kInfoKeyErrorMessage] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
     [alertView show];
+}
+
+- (void)deleteContactForUISuccess
+{
+    [self deleteCardForUISuccess];
+}
+
+- (void)deleteContactForUIFailed:(NSDictionary *)dict
+{
+    [self deleteCardForUIFailed:dict];
 }
 
 #pragma mark -

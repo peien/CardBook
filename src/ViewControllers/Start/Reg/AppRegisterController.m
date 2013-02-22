@@ -73,10 +73,10 @@ enum Tag_TextField {
                                                  target:self
                                                  action:@selector(goBack:)];
         self.defaults = [KHHDefaults sharedDefaults];
-        [self observeNotificationName:UIKeyboardDidShowNotification
-                             selector:@"keyboardShow:"];
-        [self observeNotificationName:UIKeyboardWillHideNotification
-                             selector:@"keyboardHide:"];
+//        [self observeNotificationName:UIKeyboardDidShowNotification
+//                             selector:@"keyboardShow:"];
+//        [self observeNotificationName:UIKeyboardWillHideNotification
+//                             selector:@"keyboardHide:"];
     }
     return self;
 }

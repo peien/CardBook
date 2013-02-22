@@ -25,10 +25,11 @@
         
         return;
     }
+    NSLog(@"lastDate%@",lastDate);
     
     //lastDate为空时表示拿全部数据，这里就没有无效参数判断
     NSString *pathFormat = @"template/sync/%@";
-    NSString *path = [NSString stringWithFormat:pathFormat,lastDate ? lastDate : @""];
+    NSString *path = [NSString stringWithFormat:pathFormat,lastDate&&![lastDate isEqualToString:@"(null)"] ? lastDate : @""];
     
     //成功block
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -43,7 +44,7 @@
             dict[kInfoKeyCount] = responseDict[JSONDataKeyCount];
             
             // synTime -> syncTime
-            NSString *syncTime = responseDict[JSONDataKeySynTime];
+            NSString *syncTime = responseDict[@"syncTime"];
             dict[kInfoKeySyncTime] = syncTime? syncTime: @"";
             
             // templatelist -> templatelist
@@ -151,7 +152,7 @@
     }
     
     //url
-    NSString *pathFormat = @"template/%ld";
+    NSString *pathFormat = @"template/detail/%ld";
     NSString *path = [NSString stringWithFormat:pathFormat, templateID];
     
     //成功block
@@ -163,12 +164,12 @@
         KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
         dict[kInfoKeyErrorCode] = @(code);
         if (KHHErrorCodeSucceeded == code) {
-            // count
-            dict[kInfoKeyCount] = responseDict[JSONDataKeyCount];
+                      
             
             // templatelist -> templatelist
-            NSArray *oldList = responseDict[JSONDataKeyTemplateList_Single];
-            dict[kInfoKeyTemplateList] = oldList;
+            
+            NSDictionary *dicPro = responseDict[JSONDataKeyTemplateList_Single];
+            dict[kInfoKeyTemplateList] = [[NSArray alloc]initWithObjects:dicPro, nil];
             
             //同步成功,返回数据到data层保存数据
             if ([delegate respondsToSelector:@selector(syncTemplateItemsWithTemplateIDSuccess:)]) {
@@ -227,7 +228,7 @@
             dict[kInfoKeyCount] = responseDict[JSONDataKeyCount];
             
             // templatelist -> templatelist
-            NSArray *oldList = responseDict[JSONDataKeyTemplateList];
+            NSArray *oldList = responseDict[@"templatelist"];
             dict[kInfoKeyTemplateList] = oldList;
             
             //同步成功,返回数据到data层保存数据

@@ -21,6 +21,8 @@
 @property (readonly, strong, nonatomic) KHHNetClinetAPIAgent *agent;
 
 @property (strong,nonatomic) id delegate;
+@property (strong,nonatomic) id delegateInSelf;
+@property (strong,nonatomic) NSMutableDictionary *needDic;
 
 //类别的同步类型
 @property (assign,nonatomic) int syncType;

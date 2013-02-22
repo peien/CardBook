@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SMObject.h"
 
-@interface InterSign : NSObject
+@interface InterSign : SMObject
 
 
 

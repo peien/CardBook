@@ -78,11 +78,26 @@
 - (void)setCompanyId:(NSString *)companyId
 {
     if (![_companyId isEqualToString:companyId]) {
+        if ([companyId isKindOfClass:[NSNumber class]]) {
+            companyId = [NSString stringWithFormat:@"%@",companyId];
+        }
         [[NSUserDefaults standardUserDefaults] setValue:companyId forKey:@"kCompanyId"];
         [[NSUserDefaults standardUserDefaults] synchronize];
         _companyId = companyId;
     }
 }
+
+- (void)setIsFinishLogin:(Boolean)isFinishLogin
+{
+    [[NSUserDefaults standardUserDefaults] setBool:isFinishLogin forKey:@"KIsFinishLogin"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
+- (Boolean)isFinishLogin
+{
+    return [[NSUserDefaults standardUserDefaults] boolForKey:@"KIsFinishLogin"];
+}
+
 
 
 - (NSString *)username
@@ -236,6 +251,7 @@
 {
     self.sessionId = @"";
     self.companyId = @"";
+    self.isFinishLogin = NO;
     self.companyName = @"";
     self.userId = @"";
     self.isAutoReceive = @"";

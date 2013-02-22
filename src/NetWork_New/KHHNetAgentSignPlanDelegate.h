@@ -23,11 +23,13 @@
 -(void) deletePlanSuccess;
 -(void) deletePlanFailed:(NSDictionary *) dict;
 //上传拜访计划图片
--(void) uploadPlanImageSuccess;
--(void) uploadPlanImageFailed:(NSDictionary *) dict;
+-(void) addPlanImgSuccess;
+-(void) addPlanImgFailed:(NSDictionary *) dict;
 //删除拜访计划图片
--(void) deletePlanImageSuccess;
--(void) deletePlanImageFailed:(NSDictionary *) dict;
+-(void) deletePlanImgSuccess;
+-(void) deletePlanImgFailed:(NSDictionary *) dict;
+
+
 
 @end
 #endif

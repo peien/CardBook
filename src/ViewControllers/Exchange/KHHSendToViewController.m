@@ -81,8 +81,8 @@
 //发送
 - (void)rightBarButtonClick:(id)sender
 {
-    [self observeNotificationName:KHHUIReplyCardSucceeded selector:@"handleSendCardToPhoneSucceeded:"];
-    [self observeNotificationName:KHHUIReplyCardFailed selector:@"handleSendCardToPhoneFailed:"];
+//    [self observeNotificationName:KHHUIReplyCardSucceeded selector:@"handleSendCardToPhoneSucceeded:"];
+//    [self observeNotificationName:KHHUIReplyCardFailed selector:@"handleSendCardToPhoneFailed:"];
     [self sendToReceivers];
 }
 - (void)sendToReceivers{
@@ -110,6 +110,7 @@
 #ifdef DEBUG
                 NSLog(@"接受者mobileArray：%@", mobileArray);
 #endif
+                [[KHHDataNew sharedData] doSendByPhone:mobileArray cardId:[NSString stringWithFormat:@"%lld",self.theCard.idValue] delegate:self];
                 [self.agent sendCard:self.theCard toPhones:mobileArray];
                 
             }
@@ -251,8 +252,13 @@
                 [peoplePicker dismissModalViewControllerAnimated:YES];
             }
             // 生成Receiver并添加为token
-           CardReceiver *aReceiver = [[CardReceiver alloc] initWithName:aName andMobile:aPhone];
-           [self.theTokenField addTokenWithTitle:(aName.length?aName:aPhone) representedObject:aReceiver];
+           
+            if (![self isHaveInReceivers:aPhone]) {
+                CardReceiver *aReceiver = [[CardReceiver alloc] initWithName:aName andMobile:aPhone];
+                
+                [self.theTokenField addTokenWithTitle:(aName.length?aName:aPhone) representedObject:aReceiver];
+            }
+        
         } else {
             //
             [[[UIAlertView alloc]
@@ -269,6 +275,19 @@
     CFRelease(phones);
     return YES;
 }
+
+#pragma mark - theReceivers isHave
+
+- (Boolean)isHaveInReceivers:(NSString *)phone
+{
+    for (CardReceiver *receiver in _theReceivers) {
+        if ([receiver.mobile isEqualToString:phone]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier
 {
     NSString *aName = CFBridgingRelease(ABRecordCopyCompositeName(person));
@@ -287,8 +306,11 @@
                 [peoplePicker dismissModalViewControllerAnimated:YES];
             }
             // 生成Receiver并添加为token
-           CardReceiver *aReceiver = [[CardReceiver alloc] initWithName:aName andMobile:aPhone];
-           [self.theTokenField addTokenWithTitle:(aName.length?aName:aPhone) representedObject:aReceiver];
+            if (![self isHaveInReceivers:aPhone]) {
+                CardReceiver *aReceiver = [[CardReceiver alloc] initWithName:aName andMobile:aPhone];
+                
+                [self.theTokenField addTokenWithTitle:(aName.length?aName:aPhone) representedObject:aReceiver];
+            }
         } else {
             //
             [[[UIAlertView alloc]
@@ -377,6 +399,9 @@
 	}
     return YES;
 }
+
+#pragma mark - tokenFiled delegate
+
 - (BOOL)tokenFieldShouldReturn:(JSTokenField *)tokenField {
     NSString *rawStr = [[tokenField textField] text];
 #ifdef DEBUG
@@ -403,9 +428,45 @@
 
 //发送成功，返回上个界面
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    [super alertView:alertView clickedButtonAtIndex:buttonIndex];
+    if (alertView.tag == KHHAlertMessage||alertView.tag == KHHAlertContact) {
+        return;
+    }
+    
     if (buttonIndex == 0) {
         [self.navigationController popViewControllerAnimated:YES];
     }
+}
+
+#pragma mark - transCard delegate
+
+- (void)sendByPhoneForUISuccess
+{
+    NSString *message = textCardSent;
+//    if ([[info.userInfo objectForKey:@"errorCode"] intValue] == 1) {
+//        message = @"对方已有你的名片，无需发送";
+//    }else if([[info.userInfo objectForKey:@"errorCode"] intValue] == 0) {
+//        message = textCardSent;
+//    }else {
+//        message = @"发送失败，请稍后再试";
+//    }
+//#ifdef DEBUG
+//    NSLog(@"发送结果message：%@", message);
+//#endif
+    [[[UIAlertView alloc] initWithTitle:nil
+                                message:message
+                               delegate:self
+                      cancelButtonTitle:textOK
+                      otherButtonTitles:nil] show];
+}
+
+- (void)sendByPhoneForUIFailed:(NSDictionary *)dict
+{
+    [[[UIAlertView alloc] initWithTitle:@"发送失败"
+                                message:dict[kInfoKeyErrorMessage]
+                               delegate:nil
+                      cancelButtonTitle:textOK
+                      otherButtonTitles:nil] show];
 }
 
 @end

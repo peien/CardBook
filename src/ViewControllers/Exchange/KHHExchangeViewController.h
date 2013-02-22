@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "SuperViewController.h"
-#import "KHHDataNew+Exchange.h"
-@interface KHHExchangeViewController : SuperViewController<UIAlertViewDelegate,KHHDataExchangeDelegate>
+//#import "KHHDataNew+Exchange.h"
+#import "KHHDataNew+TransCard.h"
+
+@interface KHHExchangeViewController : SuperViewController<UIAlertViewDelegate,KHHDataTransCardDelegate>
 @property (strong, nonatomic) UIScrollView *    scrView;
 @property (assign, nonatomic) bool              isVer;
 

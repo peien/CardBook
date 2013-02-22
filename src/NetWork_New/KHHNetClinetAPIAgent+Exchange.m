@@ -86,8 +86,8 @@
     }
     
     //请求url的格式
-    NSString *pathFormat = @"card/shakeInfo/%@";
-    NSString *path = [NSString stringWithFormat:pathFormat, card.userID.stringValue];
+  //  NSString *pathFormat = @"card/shakeInfo/%@";
+    NSString *path = @"card/shakeInfo";//[NSString stringWithFormat:pathFormat, card.userID.stringValue];
     
     ALog(@"[II] 用于交换的名片 id = %@, version = %@", card.id, card.version);
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithCapacity:6];

@@ -11,6 +11,6 @@
 @interface Edit_eCardViewCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UILabel *name;
 @property (strong, nonatomic) IBOutlet UITextField *value;
-@property (strong, nonatomic) IBOutlet UILabel *styleLab;
+//@property (strong, nonatomic) IBOutlet UILabel *styleLab;
 
 @end

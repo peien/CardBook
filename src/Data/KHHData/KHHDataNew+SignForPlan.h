@@ -13,16 +13,26 @@
 #import "Card.h"
 
 typedef enum {
-    KHHVisitScheduleSyncTypeAdd = 1,
-    KHHVisitScheduleSyncTypeUpdate,
-    KHHVisitScheduleSyncTypeDelete,
-    KHHVisitScheduleSyncTypeSync,
-}   KHHVisitScheduleSyncType;
+    KHHPlanSyncTypeAdd = 1,
+    KHHPlanSyncTypeUpdate,
+    KHHPlanSyncTypeDelete,
+    KHHPlanSyncTypeSync,
+    KHHPlanSyncTypeAddImg,
+    KHHPlanSyncTypeDeleteImg,
+}   KHHPlanSyncType;
 
 @interface KHHDataNew (SignForPlan)<KHHNetAgentSignPlanDelegate>
-- (void)doSign;
+
 - (void)doAddPlan:(InterPlan *)iPlan delegate:(id<KHHDataSignPlanDelegate>) delegate;
-- (void)doSyncPlan:(KHHVisitScheduleSyncType)syncType;
+- (void)doUpdatePlan:(InterPlan *)iPlan delegate:(id<KHHDataSignPlanDelegate>) delegate;
+- (void)doSyncPlan:(KHHPlanSyncType)syncType;
+
+- (void)doDeleteImg:(NSString *)planId attachmentId:(NSString *)attachmentId delegate:(id<KHHDataSignPlanDelegate>) delegate;
+- (void)doAddImg:(NSString *)planId image:(UIImage *)image  delegate:(id<KHHDataSignPlanDelegate>) delegate;
+
+#pragma mark - sync in managePage
+
+- (void)syncPlan:(id<KHHDataSignPlanDelegate>)delegate;
 
 #pragma mark - for ui
 - (NSInteger)countOfUnfinishedSchedulesOnCard:(Card *)aCard day:(NSString *)aDay;

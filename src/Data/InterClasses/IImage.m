@@ -20,7 +20,7 @@
                              zeroIfUnresolvable:YES]; //id
     self.isDeleted = [NSNumber numberFromObject:json[JSONDataKeyIsDelete]
                              zeroIfUnresolvable:YES]; //isDelete
-    NSString *url = json[JSONDataKeyLinkURL];
+    NSString *url = json[@"fileName"];
     if (0 == url.length) {
         url = json[JSONDataKeyFileURL];
     }

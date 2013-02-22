@@ -189,6 +189,11 @@
 
 #pragma mark - alert
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    [super alertView:alertView clickedButtonAtIndex:buttonIndex];
+    if (alertView.tag == KHHAlertMessage||alertView.tag == KHHAlertContact) {
+        return;
+    }
+    
     if (!alertView || !alertView.tag) {
         return;
     }

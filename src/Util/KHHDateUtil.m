@@ -8,6 +8,8 @@
 
 #import "KHHDateUtil.h"
 
+static NSDateFormatter *dateFormatter;
+
 @implementation KHHDateUtil
 
 

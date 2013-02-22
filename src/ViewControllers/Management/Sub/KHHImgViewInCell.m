@@ -12,13 +12,16 @@
 {
     NSTimeInterval begin;
     NSTimeInterval end;
+    UITapGestureRecognizer *singleTap;
+    UILongPressGestureRecognizer *longPress;
 }
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+     
+        self.userInteractionEnabled = YES;
     }
     return self;
 }
@@ -47,10 +50,10 @@
     
 }
 
-- (void)drawRect:(CGRect)rect
-{
-    [_img drawInRect:rect];
-}
+//- (void)drawRect:(CGRect)rect
+//{
+//    [_img drawInRect:rect];
+//}
 
 
 @end

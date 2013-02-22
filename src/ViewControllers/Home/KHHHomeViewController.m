@@ -66,7 +66,7 @@
 @property (strong, nonatomic)  NSArray                *myCardArray;
 @property (strong, nonatomic)  KHHFloatBarController  *floatBarVC;
 @property (assign, nonatomic)  bool                   isOwnGroup;
-@property (assign, nonatomic)  bool                   isNeedReloadTable;
+
 @property (assign, nonatomic)  int                    currentTag;
 @property (assign, nonatomic)  bool                   isAddressBookData;
 //多选时记录选择位置（bug 1176 要改成一次只先一个，方文苑确认了）
@@ -284,9 +284,9 @@
         
     }else{
         [KHHShowHideTabBar showTabbar];
-//        if (self.isNeedReloadTable) {
-//            [self reloadTable];
-//        }
+        if (self.isNeedReloadTable) {
+            [self reloadTable];
+        }
     }
 }
 - (void)viewDidAppear:(BOOL)animated{
@@ -378,6 +378,8 @@
     }
     
     self.oWnGroupArray = [[KHHDataNew sharedData] allTopLevelGroups];
+    [_btnTitleArr addObject:@"所有"];
+    [_btnTitleArr addObject:@"未分组"];
     for (int i = 0; i < self.oWnGroupArray.count; i++) {
         Group *group = [self.oWnGroupArray objectAtIndex:i];
         NSLog(@"%lld,%@",group.idValue,group.name);
@@ -661,10 +663,15 @@
                     
                     Card *card = (Card *)[self.generalArray objectAtIndex:indexPath.row];
                     detailVC.card = card;
+                    detailVC.deleteSelfSuccess = ^(){
+                        
+                        [self dataArrayRefresh];
+                    };
+                    
                     if ([card isKindOfClass:[ReceivedCard class]]){
                         ReceivedCard *receCard = (ReceivedCard *)card;
                         if (!receCard.isReadValue) {
-                           [[KHHDataNew sharedData] markIsRead:receCard];
+                            [[KHHDataNew sharedData] doMarkIsRead:receCard delegate:self];
                         }
                     }
                     [self.navigationController pushViewController:detailVC animated:YES];
@@ -685,6 +692,9 @@
                 if (!_isNormalSearchBar) {
                     DetailInfoViewController *detailVC = [[DetailInfoViewController alloc] initWithNibName:nil bundle:nil];
                     detailVC.card = card;
+                    detailVC.deleteSelfSuccess = ^(){
+                        [self dataArrayRefresh];
+                    } ;
                     [self.navigationController pushViewController:detailVC animated:YES];
                     
                 }else{
@@ -832,6 +842,8 @@
                 self.generalArray = [[KHHDataNew sharedData] cardsOfAll];
             }else if([btnName isEqualToString:KHHMessageDefaultGroupUnGroup]){
                 self.generalArray = [[KHHDataNew sharedData] cardsOfUngrouped];
+            }else if([btnName isEqualToString:@"竞争对手"]){
+                self.generalArray = [[KHHDataNew sharedData] cardsOfCompetitors];            
             }else if([btnName isEqualToString:KHHMessageDefaultGroupLocal]){
                 if ([KHHUser shareInstance].isAddMobPhoneGroup) {
                     self.isAddressBookData = YES;
@@ -872,6 +884,25 @@
             [actSheet showInView:self.view];
         }
     }
+}
+
+- (void)dataArrayRefresh
+{
+    if ([self isOWnGroupSelected:_lastIndexPath]) {
+        //调用接口，获得self.ownGroupArray
+       // self.currentTag = btn.tag;
+        [self updateOwnGroupArray];
+    }else {
+        //刷新表
+        if (_lastIndexPath.row == 0) {
+            self.generalArray = [[KHHDataNew sharedData] cardsOfAll];
+        }else if(_lastIndexPath.row == 1){
+            self.generalArray = [[KHHDataNew sharedData] cardsOfUngrouped];
+        }else if(_lastIndexPath.row == 2){
+            self.generalArray = [[KHHDataNew sharedData] cardsOfCompetitors];
+        }
+    }
+    [_bigTable reloadData];
 }
 
 //返回是否要刷新 _bigTable
@@ -917,6 +948,10 @@
         KHHAddGroupMemberVC *addMemVC = [[KHHAddGroupMemberVC alloc] initWithNibName:@"KHHAddGroupMemberVC" bundle:nil];
         addMemVC.group = group;
         addMemVC.homeVC = self;
+        addMemVC.moveSuccess = ^(){
+            [self updateOwnGroupArray];
+            [_bigTable reloadData];
+        };
         self.isNeedReloadTable = YES;
         if (buttonIndex == 1) {
             self.isNeedReloadTable = YES;
@@ -1079,6 +1114,11 @@
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     //是添加分组的alert
+    [super alertView:alertView clickedButtonAtIndex:buttonIndex];
+    if (alertView.tag == KHHAlertMessage||alertView.tag == KHHAlertContact) {
+        return;
+    }
+    
     if ([alertView isMemberOfClass:[myAlertView class]]) {
         if (buttonIndex == 0) {
             for (UIView *view in alertView.subviews) {
@@ -1168,9 +1208,9 @@
     }else if(KHHAlertDelete == alertView.tag){
         if (0 == buttonIndex) {
             //自己添加的删除完以后，就不可删除
-            if (_btnTitleArr.count < self.baseNum + 1) {
-                return;
-            }
+//            if (_btnTitleArr.count < self.baseNum + 1) {
+//                return;
+//            }
             //注册删除分组的消息
 //            [self observeNotificationName:KHHUIDeleteGroupSucceeded selector:@"handleDeleteGroupSucceeded:"];
 //            [self observeNotificationName:KHHUIDeleteGroupFailed selector:@"handleDeleteGroupFailed:"];

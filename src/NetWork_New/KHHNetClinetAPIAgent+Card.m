@@ -9,6 +9,7 @@
 #import "KHHNetClinetAPIAgent+Card.h"
 #import "Card.h"
 #import "UIImage+KHH.h"
+#import "ReceivedCard.h"
 
 @implementation KHHNetClinetAPIAgent (Card)
 
@@ -128,6 +129,11 @@ NSMutableDictionary * parametersToCreateOrUpdateCard(InterCard *iCard) {
         dict[kInfoKeyErrorCode] = @(code);
         if (KHHErrorCodeSucceeded == code) {
 #warning 服务器那边返回数据还未定义好
+            dict[kInfoKeyCount] = responseDict[JSONDataKeyCount];
+            dict[@"myPrivateCard"] = responseDict[@"myPrivateCard"];
+            // synTime -> syncTime
+            NSString *syncTime = responseDict[@"syncTime"];
+            dict[kInfoKeySyncTime] = syncTime? syncTime: @"";
             
             //同步成功,把解析后的数据传出，上层去保存数据
             if ([delegate respondsToSelector:@selector(syncCardSuccess:)]) {
@@ -160,7 +166,7 @@ NSMutableDictionary * parametersToCreateOrUpdateCard(InterCard *iCard) {
     }
     //url format
 #warning 服务器还未定义
-    NSString *path = @"";
+    NSString *path = @"cardSendedRecievedRecord/sync";
     if (lastDate.length > 0) {
         //以前同步过
         path = [NSString stringWithFormat:@"%@/%@", path, lastDate];
@@ -529,6 +535,49 @@ NSMutableDictionary * parametersToCreateOrUpdateCard(InterCard *iCard) {
     
     //发送请求
     [self getPath:path parameters:nil success:success failure:failed];
+
+}
+
+#pragma mark - markIsRead
+- (void)markIsRead:(ReceivedCard *)aCard delegate:(id<KHHNetAgentCardDelegate>)delegate
+{
+    if (![self networkStateIsValid:delegate selector:@"markIsReadFailed:"]) {
+        return;
+    }
+    //url format
+    NSString *path = [NSString stringWithFormat:@"cardSendedRecievedRecord/%lld",aCard.idValue];
+    
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
+        
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
+        
+        // 把返回的数据转成本地数据
+        KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
+        // errorCode
+        dict[kInfoKeyErrorCode] = @(code);
+        
+        if (KHHErrorCodeSucceeded == code) {
+            //同步成功,把解析后的数据传出，上层去保存数据
+            dict[@"card"] = aCard;
+            if ([delegate respondsToSelector:@selector(markIsReadSuccess:)]) {
+                [delegate markIsReadSuccess:dict];
+            }
+        }else {
+            //错误码
+            dict[kInfoKeyErrorMessage] = [responseDict valueForKey:JSONDataKeyNote];
+            //同步失败，返回错误信息
+            if ([delegate respondsToSelector:@selector(markIsReadFailed:)]) {
+                [delegate markIsReadFailed:dict];
+            }
+        }
+    };
+    
+    //其它失败的block
+    KHHFailureBlock failed = [self defaultFailedResponse:delegate selector:@"markIsReadFailed:"];
+    
+    //发送请求
+    [self putPath:path parameters:nil success:success failure:failed];
 
 }
 

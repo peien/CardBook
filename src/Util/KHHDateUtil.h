@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-static NSDateFormatter *dateFormatter;
+
 @interface KHHDateUtil : NSObject
+
 
 + (NSString *)nowDate;
 + (NSString *)strFromDate:(NSDate *)date;

@@ -22,5 +22,6 @@
 
 - (void)doChangePassword:(NSString *)oldPassword newPassword:(NSString *)newPassword delegate:(id<KHHDataAccountDelegate>) delegate;
 
+- (void)saveToken;
 
 @end

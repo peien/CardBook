@@ -15,7 +15,7 @@
 
 @implementation KHHNetClinetAPIAgent (Message)
 
-- (void)doDeleteInEdit:(id<delegateMsgForRead>)delegate messages:(NSArray *)messages
+- (void)doDeleteInEdit:(id<KHHNetAgentMessageDelegate>)delegate messages:(NSArray *)messages
 {  
     NSMutableArray *arrPro = [[NSMutableArray alloc]init];
     NSMutableArray *arrPro2 = [[NSMutableArray alloc]init];
@@ -36,15 +36,15 @@
     if ([arrPro count]>0) {
         [self doDelete:delegate messages:arrPro];
     }else{
-        [delegate deleDone];
+       // [delegate deleDone];
     }
 }
 
-- (void)doDelete:(id<delegateMsgForRead>) delegate messages:(NSArray *)messages
+- (void)doDelete:(id<KHHNetAgentMessageDelegate>) delegate messages:(NSArray *)messages
 {
     if (![self networkStateIsValid]) {
         [self setYES:messages];
-        [delegate deleFail];
+       // [delegate deleFail];
         return;
     }
     
@@ -76,11 +76,11 @@
                                                 DLog(@"[II] responseDict = %@", responseDict);
                                                 KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
                                                 if (code == 0) {
-                                                    [delegate deleDone];
+                                                 //   [delegate deleDone];
                                                     
                                                 }else{
                                                     [self setYES:messages];
-                                                    [delegate deleFail];
+                                                  //  [delegate deleFail];
                                                     
                                                 }
                                                 
@@ -89,7 +89,7 @@
                                             failure:^(AFHTTPRequestOperation *operation, NSError *error)
                                             {
                                                 [self setYES:messages];
-                                                [delegate deleFail];                                                
+                                              //  [delegate deleFail];
                                             }];
     
     // 实际发送请求
@@ -98,54 +98,47 @@
     
 }
 
-- (void)doReseaveMessage:(id<delegateMsgForMain>) delegate
+- (void)reseaveMessage:(id<KHHNetAgentMessageDelegate>) delegate
 
 {
     
-    NSDictionary *queryDict = @{ @"method" : @"customFsendService.list" };
-    //把函数从Netclient中分离，新方法中的url固定参数变化，及签名，故先用老的
-    KHHNetworkAPIAgent *agent = [[KHHNetworkAPIAgent alloc] init];
-    NSString *path = [NSString stringWithFormat:@"rest?%@",
-                      [agent queryStringWithDictionary:queryDict]];
-    DLog(@"path%@",path);
+    if (![self networkStateIsValid]) {
+        if ([delegate respondsToSelector:@selector(reseaveMsgFailed:)]) {
+            NSDictionary *dict = [self networkUnableFailedResponseDictionary];
+            [delegate reseaveMsgFailed:dict];
+        }
+        return;
+        
+    } 
+   
+    NSString *path = @"message/msgsIos";
+    // 处理返回数据的block
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
+        if ([[responseDict objectForKey:@"errorCode"]intValue]!=0) {
+            [delegate reseaveMsgFailed:responseDict];            
+        }
+        NSArray *fsendList = responseDict[@"fsendList"];
+        NSMutableArray *messageList = [NSMutableArray arrayWithCapacity:fsendList.count];
+        for (id obj in fsendList) {
+            InMessage *im = [[[InMessage alloc] init] updateWithJSON:obj];
+            [messageList addObject:im];
+            [KHHMessage processIObject:im];
+        }
+        [[KHHDataNew sharedData] saveContext];
+        if (messageList && messageList.count > 0) {
+            [delegate reseaveMsgSuccess:YES];
+        }else{
+            [delegate reseaveMsgSuccess:NO];
+        }
+    };
     
-    NSURLRequest *request = [[NetClient sharedClient]
-                             multipartFormRequestWithMethod:@"POST"
-                             path:path
-                             parameters:nil
-                             constructingBodyWithBlock:nil];
-    AFHTTPRequestOperation *reqOperation = [[NetClient sharedClient]
-                                            HTTPRequestOperationWithRequest:request success:^(AFHTTPRequestOperation *operation, id responseObject)
-                                            {
-                                                
-                                                NSDictionary *responseDict = [agent JSONDictionaryWithResponse:responseObject];
-                                                if ([responseDict objectForKey:@"errorCode"]!=0) {
-                                                    [delegate reseaveFail];
-
-                                                }
-                                                NSArray *fsendList = responseDict[@"fsendList"];
-                                                NSMutableArray *messageList = [NSMutableArray arrayWithCapacity:fsendList.count];
-                                                for (id obj in fsendList) {
-                                                    InMessage *im = [[[InMessage alloc] init] updateWithJSON:obj];
-                                                    [messageList addObject:im];
-                                                    [KHHMessage processIObject:im];
-                                                }
-                                                [[KHHDataNew sharedData] saveContext];
-                                                if (messageList && messageList.count > 0) {
-                                                    [delegate reseaveDone:YES];
-                                                }else{
-                                                    [delegate reseaveDone:NO];
-                                                }
-                                                
-                                                
-                                            }
-                                            failure:^(AFHTTPRequestOperation *operation, NSError *error)
-                                            {
-                                                [delegate reseaveFail];
-                                            }];
+    //其它操作失败block
+    KHHFailureBlock failed = [self defaultFailedResponse:delegate selector:@"reseaveMsgFailed:"];
     
-    // 实际发送请求
-    [[NetClient sharedClient] enqueueHTTPRequestOperation:reqOperation];
+    [self getPath:path parameters:nil success:success failure:failed];
+    
+    
 }
 
 
@@ -155,4 +148,5 @@
         msg.isReadValue = NO;
     }
 }
+
 @end

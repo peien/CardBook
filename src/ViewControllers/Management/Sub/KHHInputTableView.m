@@ -25,7 +25,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         normalH = H460-44-50;
-       
+        
     }
     return self;
 }

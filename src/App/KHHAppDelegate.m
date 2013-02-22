@@ -15,12 +15,13 @@
 #import "MyTabBarController.h"
 #import "ATestViewController.h"
 #import "AppStartController.h"
-#import "KHHNetClinetAPIAgent+Message.h"
+
 #import "NSString+Base64.h"
 #import "KHHTypes.h"
 #import "NetClient.h"
 #import "KHHManagementViewController.h"
 #import "KHHUser.h"
+#import "KHHDataNew+Message.h"
 
 @implementation KHHAppDelegate
 
@@ -35,8 +36,8 @@
                                                  name: kReachabilityChangedNotification
                                                object: nil];
     [[NetClient sharedClient].r startNotifier];
-
-     [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
+    
+    [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert|UIRemoteNotificationTypeBadge|UIRemoteNotificationTypeSound];
     // 设置界面元素的公共属性
     [self customizeCommonUI];
     
@@ -49,23 +50,23 @@
     // 注册响应的消息
     [self observeNotificationName:KHHUIShowStartup selector:@"handleShowStartup:"]; // 显示主界面消息
     [self observeNotificationName:nAppShowMainView  selector:@"handleShowMainUI:"]; // 显示主界面消息
-    [self observeNotificationName:KHHAppLogout     selector:@"handleLogout:"];// 登出    
-   
+    [self observeNotificationName:KHHAppLogout     selector:@"handleLogout:"];// 登出
+    
     AppStartController *startVC = [[AppStartController alloc] initWithNibName:nil bundle:nil] ;
-                                                                                          //initWithNibName:@"KHHManagementViewController" bundle:nil];
-        startVC.agent    = [[KHHNetworkAPIAgent alloc] init];
-        startVC.data     = [KHHDataNew sharedData];
-        startVC.defaults = [KHHDefaults sharedDefaults];
-        self.window.rootViewController = startVC;
-//    KHHManagementViewController *manViewCon  = [[KHHManagementViewController alloc]initWithNibName:nil bundle:nil];
-//    self.window.rootViewController = manViewCon;
+    //initWithNibName:@"KHHManagementViewController" bundle:nil];
+    startVC.agent    = [[KHHNetworkAPIAgent alloc] init];
+    startVC.data     = [KHHDataNew sharedData];
+    startVC.defaults = [KHHDefaults sharedDefaults];
+    self.window.rootViewController = startVC;
+    //    KHHManagementViewController *manViewCon  = [[KHHManagementViewController alloc]initWithNibName:nil bundle:nil];
+    //    self.window.rootViewController = manViewCon;
     //[[UINavigationController alloc]initWithRootViewController:manViewCon];
     // 显示启动界面
-   
+    
     
     // 显示Startup界面
     [self.window makeKeyAndVisible];
-   // [self postASAPNotificationName:KHHUIShowStartup];
+    // [self postASAPNotificationName:KHHUIShowStartup];
     
     //捕获摇摇动作
     application.applicationSupportsShakeToEdit = YES;
@@ -84,13 +85,13 @@
 -(void)reachabilityChanged:(NSNotification *)note
 {
     Reachability *currReach = [note object];
-    NSParameterAssert([currReach isKindOfClass:[Reachability class]]);  
-
+    NSParameterAssert([currReach isKindOfClass:[Reachability class]]);
+    
     if([currReach currentReachabilityStatus] == NotReachable)
     {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"" message:@"正在使用离线模式" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alert show];        
-       
+        [alert show];
+        
     }
 }
 
@@ -102,7 +103,7 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
@@ -128,14 +129,14 @@
     DLog(@"%@",_deviceToken);
     [KHHUser shareInstance].deviceToken = _deviceToken;
     
-   // [KHHDefaults sharedDefaults].token = _deviceToken;
-//    [PFPush storeDeviceToken:deviceToken];
-//    [PFPush subscribeToChannelInBackground:@"" block:^(BOOL succeeded, NSError *error) {
-//        if (succeeded)
-//            NSLog(@"Successfully subscribed to broadcast channel!");
-//        else
-//            NSLog(@"Failed to subscribe to broadcast channel; Error: %@",error);
-//    }];
+    // [KHHDefaults sharedDefaults].token = _deviceToken;
+    //    [PFPush storeDeviceToken:deviceToken];
+    //    [PFPush subscribeToChannelInBackground:@"" block:^(BOOL succeeded, NSError *error) {
+    //        if (succeeded)
+    //            NSLog(@"Successfully subscribed to broadcast channel!");
+    //        else
+    //            NSLog(@"Failed to subscribe to broadcast channel; Error: %@",error);
+    //    }];
     
 }
 
@@ -151,21 +152,28 @@
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     DLog(@"userInfo%@",userInfo);
     //PFPush handlePush:userInfo];
-   NSString *type = [userInfo objectForKey:@"type"];
-    if([type isEqualToString:@"1"]){
-        if ([self.window.rootViewController isKindOfClass:[UINavigationController class]]) {
-            //具体网络接口从netclient中分离
-            KHHNetClinetAPIAgent *agent = [[KHHNetClinetAPIAgent alloc] init];
-            [agent doReseaveMessage:(id<delegateMsgForMain>)[(UINavigationController *)self.window.rootViewController topViewController]];
-        }
-        
-       // [[KHHData sharedData] syncMessages];
-    }else{
-        //[[KHHDataNew sharedData]syncReceivedCards:[NSArray arrayWithObject:@(KHHQueuedOperationSyncReceivedCards)]];
+    NSString *type = [userInfo objectForKey:@"type"];
+    if ([self.window.rootViewController.childViewControllers count]!=1)
+    {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"请先登陆后同步" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+        [alert show];
+        [self updateApplicationIconNumber:application];
+        return;
     }
-    
+    if([type isEqualToString:@"1"]){
+        
+        //具体网络接口从netclient中分离
+        [[KHHDataNew sharedData] reseaveMsg:(id<KHHDataMessageDelegate>)[(UINavigationController *)self.window.rootViewController topViewController]];
+    }else{        
+        //具体网络接口从netclient中分离
+        NSString *cardId = [type componentsSeparatedByString:@"|"][1];
+        if (!cardId||[cardId isEqualToString:@"0"]) {
+            return;
+        }
+        [[KHHDataNew sharedData] doTouchCardForPushMsg:cardId delegate:(id<KHHDataSyncContactDelegate>)[(UINavigationController *)self.window.rootViewController.childViewControllers[0] topViewController]];
+        
+    }
     [self updateApplicationIconNumber:application];
-    
 }
 
 
@@ -175,7 +183,7 @@
     UINavigationBar *navBar = [UINavigationBar appearance];
     UIEdgeInsets navBgInsets = { 0, 0, 0, 0 };
     UIImage *navBarBg = [[UIImage imageNamed:@"title_bg.png"]
-                     resizableImageWithCapInsets:navBgInsets];
+                         resizableImageWithCapInsets:navBgInsets];
     [navBar setBackgroundImage:navBarBg
                  forBarMetrics:UIBarMetricsDefault];
     
@@ -211,9 +219,9 @@
     self.mainUI = nil;
     // 显示启动界面
     AppStartController *startVC = [[AppStartController alloc] initWithNibName:nil bundle:nil];
-//    startVC.agent    = [[KHHNetworkAPIAgent alloc] init];
-//    startVC.data     = [KHHData sharedData];
-//    startVC.defaults = [KHHDefaults sharedDefaults];
+    //    startVC.agent    = [[KHHNetworkAPIAgent alloc] init];
+    //    startVC.data     = [KHHData sharedData];
+    //    startVC.defaults = [KHHDefaults sharedDefaults];
     self.window.rootViewController = startVC;
 }
 
@@ -243,7 +251,7 @@
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-
+    
     UIApplicationState state = application.applicationState;
     //    NSLog(@"%@,%d",notification,state);
     if (state == UIApplicationStateActive) {
@@ -254,7 +262,7 @@
                                               otherButtonTitles:KHHMessageSure,nil];
         [alert show];
     }
-
+    
     //若有notification里有数就取里面的dictionary
     NSDictionary* infoDic = notification.userInfo;
     if (infoDic) {

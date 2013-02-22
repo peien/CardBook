@@ -2,8 +2,9 @@
 //  KHHCardTemplageVC.m
 //  CardBook
 //
-//  Created by 王国辉 on 12-10-26.
-//  Copyright (c) 2012年 Kinghanhong. All rights reserved.
+//  Created by CJK on 13-2-1.
+//  Copyright (c) 2013年 Kinghanhong. All rights reserved.
+//
 
 #import "KHHCardTemplageVC.h"
 //#import "KHHData+UI.h"
@@ -19,7 +20,7 @@
 
 @implementation KHHCardTemplageVC
 @synthesize tempArr;
-@synthesize editCardVC;
+//@synthesize editCardVC;
 @synthesize card;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -49,7 +50,7 @@
     int page = 0;
     int col = (self.view.frame.size.width - 2 * UIIMAGE_WIDTH) / 3;
     int row = (contentViewHeight - 30 - 3 * UIIMAGE_HEIGHT) / 4;
-
+    
     for (int i = 0; i< self.tempArr.count; i++) {
         UIImageView *imgView = [[UIImageView alloc] init];
         imgView.userInteractionEnabled = YES;
@@ -57,6 +58,7 @@
         imgView.tag = i + 100;
         CardTemplate *cardTemp = [self.tempArr objectAtIndex:i];
         if (cardTemp.domainTypeValue == 1 && cardTemp.isFullValue) {
+            NSLog(@"%@",cardTemp.bgImage.url);
             [imgView setImageWithURL:[NSURL URLWithString:cardTemp.bgImage.url] placeholderImage:nil];
         }
         [scrol addSubview:imgView];
@@ -74,10 +76,10 @@
         scrol.contentSize = CGSizeMake(320, page * contentViewHeight);
     }
     [self.view addSubview:scrol];
-    CGRect rect = self.view.frame;
-    UIButton *payBtn = [[UIButton alloc]initWithFrame:CGRectMake(rect.size.width/2-100/2, rect.size.height-100, 100, 30)];
-    [payBtn setBackgroundImage:[UIImage imageNamed:@"addIco"] forState:UIControlStateNormal];
-    [self.view addSubview: payBtn];
+    //    CGRect rect = self.view.frame;
+    //    UIButton *payBtn = [[UIButton alloc]initWithFrame:CGRectMake(rect.size.width/2-100/2, rect.size.height-100, 100, 30)];
+    //    [payBtn setBackgroundImage:[UIImage imageNamed:@"addIco"] forState:UIControlStateNormal];
+    //    [self.view addSubview: payBtn];
 }
 
 - (void)selectedOneTemplate:(UITapGestureRecognizer *)sender{
@@ -86,15 +88,15 @@
     if (_selectTemplate) {
         _selectTemplate(tem);
     }
-    self.editCardVC.glCard.template = tem;
-    self.editCardVC.cardTemp = tem;
+    // self.editCardVC.glCard.template = tem;
+    // self.editCardVC.cardTemp = tem;
     [self.navigationController popViewControllerAnimated:YES];
-
+    
 }
 - (void)viewDidUnload{
     [super viewDidUnload];
     self.tempArr = nil;
-    self.editCardVC = nil;
+    // self.editCardVC = nil;
 }
 - (void)didReceiveMemoryWarning
 {

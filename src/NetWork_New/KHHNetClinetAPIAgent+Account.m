@@ -451,7 +451,8 @@
     [param setValue:[[UIDevice currentDevice] systemVersion]  forKey:@"device.opsVersion"];
     [param setValue:@"Apple" forKey:@"device.phoneBrand"];
     
-    
+        
+    [self postPath:@"loginHistory" parameters:param success:nil failure:nil];
 }
 
 - (NSString*)getDeviceVersion

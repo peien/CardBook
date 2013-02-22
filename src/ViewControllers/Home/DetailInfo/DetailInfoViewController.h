@@ -13,10 +13,11 @@
 #import "Card.h"
 #import "KHHCardMode.h"
 #import "KHHViewAdapterUtil.h"
+#import "KHHDataNew+TransCard.h"
 
 @class eCardViewController;
 
-@interface DetailInfoViewController : SuperViewController <UIAlertViewDelegate>{
+@interface DetailInfoViewController : SuperViewController <UIAlertViewDelegate,KHHDataTransCardDelegate>{
     
         UIImageView *iconImgView;
 }
@@ -31,8 +32,13 @@
 @property (nonatomic, assign) bool                isNeedReloadTable;
 @property (assign, nonatomic) bool                isReloadVisiteTable;
 @property (strong, nonatomic) Card              *myDefaultReplyCard;
-- (IBAction)btnEditCard:(id)sender;
+
+@property (nonatomic,strong) void(^deleteSelfSuccess)();
+
+//- (IBAction)btnEditCard:(id)sender;
 
 - (void)updateViewData:(Card *)temCard;
+
+
 
 @end

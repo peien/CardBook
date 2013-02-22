@@ -41,6 +41,10 @@
 //获取最后一个联系人名片
 - (void)getLatestCustomerCardSuccess:(NSDictionary *)dict;
 - (void)getLatestCustomerCardFailed:(NSDictionary *)dict;
+
+- (void)markIsReadSuccess:(NSDictionary *)dict;
+- (void)markIsReadFailed:(NSDictionary *)dict;
+
 @end
 
 #endif

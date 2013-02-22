@@ -14,11 +14,12 @@
 
 
 #pragma mark - 模板增量接口
-- (void)doSyncTemplatesWithDate:(NSString *)lastDate delegate:(id<KHHDataTemplateDelegate>) delegate
+- (void)doSyncTemplates:(id<KHHDataTemplateDelegate>) delegate
 {
     self.delegate = delegate;
-   
-    [self.agent syncTemplatesWithDate: lastDate delegate:self];
+    SyncMark* syncMark = [SyncMark syncMarkByKey:kSyncMarkKeyTemplatesLastTime];
+    [self.agent syncTemplatesWithDate:syncMark.value delegate:self];
+    
 }
 
 //#pragma mark - 根据模板id和版本获取联系人模板
@@ -31,14 +32,14 @@
 #pragma mark - 根据模板id获取模板详细信息
 - (void)syncTemplateItemsWithTemplateID:(long) templateID delegate:(id<KHHDataTemplateDelegate>)delegate
 {
-    self.delegate = delegate;
+    self.delegateInSelf = delegate;
     [self.agent syncTemplateItemsWithTemplateID:templateID delegate:self];
 }
 
 #pragma mark - 一次获取多个模板的详细信息
 - (void)syncTemplateItemsWithTemplateIDs:(NSString *) templateIDs delegate:(id<KHHDataTemplateDelegate>)delegate
 {
-    self.delegate = delegate;
+    self.delegateInSelf = delegate;
     [self.agent syncTemplateItemsWithTemplateIDs:templateIDs delegate:self];
 }
 
@@ -88,15 +89,15 @@
     [self mergeTemplates:dict];
     
     //通知界面
-    if ([self.delegate respondsToSelector:@selector(syncTemplateItemsWithTemplateIDForUISuccess)]) {
-        [self.delegate syncTemplateItemsWithTemplateIDForUISuccess];
+    if ([self.delegateInSelf respondsToSelector:@selector(syncTemplateItemsWithTemplateIDForUISuccess)]) {
+        [self.delegateInSelf syncTemplateItemsWithTemplateIDForUISuccess];
     }
 }
 -(void)syncTemplateItemsWithTemplateIDFailed:(NSDictionary *) dict
 {
     DLog(@"syncTemplateItemsWithTemplateIDFailed! dict = %@", dict);
-    if ([self.delegate respondsToSelector:@selector(syncTemplateItemsWithTemplateIDForUIFailed:)]) {
-        [self.delegate syncTemplateItemsWithTemplateIDForUIFailed:dict];
+    if ([self.delegateInSelf respondsToSelector:@selector(syncTemplateItemsWithTemplateIDForUIFailed:)]) {
+        [self.delegateInSelf syncTemplateItemsWithTemplateIDForUIFailed:dict];
     }
 }
 
@@ -108,16 +109,16 @@
     [self mergeTemplates:dict];
     
     //通知界面
-    if ([self.delegate respondsToSelector:@selector(syncTemplateItemsWithTemplateIDsForUISuccess)]) {
-        [self.delegate syncTemplateItemsWithTemplateIDsForUISuccess];
+    if ([self.delegateInSelf respondsToSelector:@selector(syncTemplateItemsWithTemplateIDsForUISuccess)]) {
+        [self.delegateInSelf syncTemplateItemsWithTemplateIDsForUISuccess];
     }
 }
 
 -(void)syncTemplateItemsWithTemplateIDsFailed:(NSDictionary *) dict
 {
     DLog(@"syncTemplateItemsWithTemplateIDsFailed! dict = %@", dict);
-    if ([self.delegate respondsToSelector:@selector(syncTemplateItemsWithTemplateIDsForUIFailed:)]) {
-        [self.delegate syncTemplateItemsWithTemplateIDsForUIFailed:dict];
+    if ([self.delegateInSelf respondsToSelector:@selector(syncTemplateItemsWithTemplateIDsForUIFailed:)]) {
+        [self.delegateInSelf syncTemplateItemsWithTemplateIDsForUIFailed:dict];
     }
 }
 
@@ -132,12 +133,10 @@
     [CardTemplate processJSONList:list];
     // }
     //2.syncTime {
-    NSString *lastDate = dict[kInfoKeySyncTime];
-    if (!lastDate&&lastDate.length > 0) {
-        [SyncMark UpdateKey:kSyncMarkKeyTemplatesLastTime
-                      value:[self interval:dict[kInfoKeySyncTime]]];
-        
-    }
+    
+    [SyncMark UpdateKey:kSyncMarkKeyTemplatesLastTime
+                  value:[NSString stringWithFormat:@"%@",dict[kInfoKeySyncTime]]];
+    
     
     // }
     // 3.保存

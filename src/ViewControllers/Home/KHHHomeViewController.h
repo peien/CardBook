@@ -10,10 +10,10 @@
 #import "SuperViewController.h"
 #import "KHHVisitRecoardVC.h"
 #import "KHHDataNew+Group.h"
-
+#import "KHHDataCardDelegate.h"
 
 @interface KHHHomeViewController : SuperViewController <UITableViewDelegate, UITableViewDataSource,
-UIImagePickerControllerDelegate,UINavigationControllerDelegate>
+UIImagePickerControllerDelegate,UINavigationControllerDelegate,KHHDataCardDelegate>
 @property (nonatomic, weak)   IBOutlet UISearchBar      *searchBar;
 @property (nonatomic, strong) NSMutableArray            *btnTitleArr;
 @property (nonatomic, strong) NSMutableDictionary       *dicBtnTttle;
@@ -39,9 +39,12 @@ UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (strong, nonatomic) NSArray                   *oWnGroupArray;
 @property (strong, nonatomic) KHHVisitRecoardVC         *visitVC;
 
+@property (assign, nonatomic)  bool                   isNeedReloadTable;
 //for select person
 
 @property (strong, nonatomic) void(^appendCardName)(Card *card);
 - (IBAction)addBtnClick:(id)sender;
 - (IBAction)cancelBtnClick:(id)sender;
+#pragma mark - reseaveCardForPushMsg
+- (void)reloadTable;
 @end

@@ -65,6 +65,22 @@
 		3103C40816A90ECB00240570 /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 3103C40516A90ECB00240570 /* CustomBadge.m */; };
 		3103C40916A90ECB00240570 /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 3103C40516A90ECB00240570 /* CustomBadge.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3103C40A16A90ECB00240570 /* CustomBadge.m in Sources */ = {isa = PBXBuildFile; fileRef = 3103C40516A90ECB00240570 /* CustomBadge.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		31047E4216BB6599008690AF /* InterShake.m in Sources */ = {isa = PBXBuildFile; fileRef = 31047E4116BB6599008690AF /* InterShake.m */; };
+		31047E4316BB6599008690AF /* InterShake.m in Sources */ = {isa = PBXBuildFile; fileRef = 31047E4116BB6599008690AF /* InterShake.m */; };
+		31047E4416BB6599008690AF /* InterShake.m in Sources */ = {isa = PBXBuildFile; fileRef = 31047E4116BB6599008690AF /* InterShake.m */; };
+		31047E4516BB6599008690AF /* InterShake.m in Sources */ = {isa = PBXBuildFile; fileRef = 31047E4116BB6599008690AF /* InterShake.m */; };
+		31047E4E16BBAC48008690AF /* KHHCardTemplageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 31047E4D16BBAC48008690AF /* KHHCardTemplageVC.m */; };
+		31047E4F16BBAC48008690AF /* KHHCardTemplageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 31047E4D16BBAC48008690AF /* KHHCardTemplageVC.m */; };
+		31047E5016BBAC48008690AF /* KHHCardTemplageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 31047E4D16BBAC48008690AF /* KHHCardTemplageVC.m */; };
+		31047E5116BBAC48008690AF /* KHHCardTemplageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 31047E4D16BBAC48008690AF /* KHHCardTemplageVC.m */; };
+		31047E6116BBC2A0008690AF /* KHHDataNew+SyncContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 31047E6016BBC29F008690AF /* KHHDataNew+SyncContact.m */; };
+		31047E6216BBC2A0008690AF /* KHHDataNew+SyncContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 31047E6016BBC29F008690AF /* KHHDataNew+SyncContact.m */; };
+		31047E6316BBC2A0008690AF /* KHHDataNew+SyncContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 31047E6016BBC29F008690AF /* KHHDataNew+SyncContact.m */; };
+		31047E6416BBC2A0008690AF /* KHHDataNew+SyncContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 31047E6016BBC29F008690AF /* KHHDataNew+SyncContact.m */; };
+		31047E6816BBC3B0008690AF /* KHHNetClinetAPIAgent+SyncContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 31047E6716BBC3B0008690AF /* KHHNetClinetAPIAgent+SyncContact.m */; };
+		31047E6916BBC3B1008690AF /* KHHNetClinetAPIAgent+SyncContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 31047E6716BBC3B0008690AF /* KHHNetClinetAPIAgent+SyncContact.m */; };
+		31047E6A16BBC3B1008690AF /* KHHNetClinetAPIAgent+SyncContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 31047E6716BBC3B0008690AF /* KHHNetClinetAPIAgent+SyncContact.m */; };
+		31047E6B16BBC3B1008690AF /* KHHNetClinetAPIAgent+SyncContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 31047E6716BBC3B0008690AF /* KHHNetClinetAPIAgent+SyncContact.m */; };
 		3104A145169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3104A144169BBCD100CC4F22 /* KHHForWhereCell.m */; };
 		3104A146169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3104A144169BBCD100CC4F22 /* KHHForWhereCell.m */; };
 		3104A147169BBCD100CC4F22 /* KHHForWhereCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3104A144169BBCD100CC4F22 /* KHHForWhereCell.m */; };
@@ -111,14 +127,22 @@
 		310A069D16AD36F0007460F4 /* InterCollect.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A069916AD36F0007460F4 /* InterCollect.m */; };
 		310A3F41168D3E9D009FF135 /* CardBook_test_haibo-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 310A3F3E168D3E9D009FF135 /* CardBook_test_haibo-Info.plist */; };
 		310A3F42168D3E9D009FF135 /* CardBook_test-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 310A3F3F168D3E9D009FF135 /* CardBook_test-Info.plist */; };
-		310A59B316B11F3F00834305 /* KHHDataNew+Evaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A59B216B11F3E00834305 /* KHHDataNew+Evaluation.m */; };
-		310A59B416B11F3F00834305 /* KHHDataNew+Evaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A59B216B11F3E00834305 /* KHHDataNew+Evaluation.m */; };
-		310A59B516B11F3F00834305 /* KHHDataNew+Evaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A59B216B11F3E00834305 /* KHHDataNew+Evaluation.m */; };
-		310A59B616B11F3F00834305 /* KHHDataNew+Evaluation.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A59B216B11F3E00834305 /* KHHDataNew+Evaluation.m */; };
+		310A59B316B11F3F00834305 /* KHHDataNew+Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A59B216B11F3E00834305 /* KHHDataNew+Customer.m */; };
+		310A59B416B11F3F00834305 /* KHHDataNew+Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A59B216B11F3E00834305 /* KHHDataNew+Customer.m */; };
+		310A59B516B11F3F00834305 /* KHHDataNew+Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A59B216B11F3E00834305 /* KHHDataNew+Customer.m */; };
+		310A59B616B11F3F00834305 /* KHHDataNew+Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A59B216B11F3E00834305 /* KHHDataNew+Customer.m */; };
 		310A59B916B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A59B816B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.m */; };
 		310A59BA16B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A59B816B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.m */; };
 		310A59BB16B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A59B816B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.m */; };
 		310A59BC16B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.m in Sources */ = {isa = PBXBuildFile; fileRef = 310A59B816B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.m */; };
+		310AD0CC16B8CAD1001064EE /* KHHDataNew+SyncDefault.m in Sources */ = {isa = PBXBuildFile; fileRef = 310AD0CB16B8CAD0001064EE /* KHHDataNew+SyncDefault.m */; };
+		310AD0CD16B8CAD1001064EE /* KHHDataNew+SyncDefault.m in Sources */ = {isa = PBXBuildFile; fileRef = 310AD0CB16B8CAD0001064EE /* KHHDataNew+SyncDefault.m */; };
+		310AD0CE16B8CAD1001064EE /* KHHDataNew+SyncDefault.m in Sources */ = {isa = PBXBuildFile; fileRef = 310AD0CB16B8CAD0001064EE /* KHHDataNew+SyncDefault.m */; };
+		310AD0CF16B8CAD1001064EE /* KHHDataNew+SyncDefault.m in Sources */ = {isa = PBXBuildFile; fileRef = 310AD0CB16B8CAD0001064EE /* KHHDataNew+SyncDefault.m */; };
+		310AD0DB16B8CB9D001064EE /* KHHNetClinetAPIAgent+SyncDefault.m in Sources */ = {isa = PBXBuildFile; fileRef = 310AD0DA16B8CB9D001064EE /* KHHNetClinetAPIAgent+SyncDefault.m */; };
+		310AD0DC16B8CB9D001064EE /* KHHNetClinetAPIAgent+SyncDefault.m in Sources */ = {isa = PBXBuildFile; fileRef = 310AD0DA16B8CB9D001064EE /* KHHNetClinetAPIAgent+SyncDefault.m */; };
+		310AD0DD16B8CB9D001064EE /* KHHNetClinetAPIAgent+SyncDefault.m in Sources */ = {isa = PBXBuildFile; fileRef = 310AD0DA16B8CB9D001064EE /* KHHNetClinetAPIAgent+SyncDefault.m */; };
+		310AD0DE16B8CB9D001064EE /* KHHNetClinetAPIAgent+SyncDefault.m in Sources */ = {isa = PBXBuildFile; fileRef = 310AD0DA16B8CB9D001064EE /* KHHNetClinetAPIAgent+SyncDefault.m */; };
 		310B2ED01699090B00818461 /* KHHInputTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 310B2ECF1699090B00818461 /* KHHInputTableView.m */; };
 		310B2ED11699090B00818461 /* KHHInputTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 310B2ECF1699090B00818461 /* KHHInputTableView.m */; };
 		310B2ED21699090B00818461 /* KHHInputTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 310B2ECF1699090B00818461 /* KHHInputTableView.m */; };
@@ -135,6 +159,14 @@
 		310B2EE51699461500818461 /* KHHUpperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 310B2EE31699461500818461 /* KHHUpperView.m */; };
 		310B2EE61699461500818461 /* KHHUpperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 310B2EE31699461500818461 /* KHHUpperView.m */; };
 		310B2EE71699461500818461 /* KHHUpperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 310B2EE31699461500818461 /* KHHUpperView.m */; };
+		31159F5916BA0573008580A1 /* KHHNetClinetAPIAgent+TransCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 31159F5816BA0573008580A1 /* KHHNetClinetAPIAgent+TransCard.m */; };
+		31159F5A16BA0573008580A1 /* KHHNetClinetAPIAgent+TransCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 31159F5816BA0573008580A1 /* KHHNetClinetAPIAgent+TransCard.m */; };
+		31159F5B16BA0573008580A1 /* KHHNetClinetAPIAgent+TransCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 31159F5816BA0573008580A1 /* KHHNetClinetAPIAgent+TransCard.m */; };
+		31159F5C16BA0573008580A1 /* KHHNetClinetAPIAgent+TransCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 31159F5816BA0573008580A1 /* KHHNetClinetAPIAgent+TransCard.m */; };
+		31159F6116BA064D008580A1 /* KHHDataNew+TransCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 31159F6016BA064D008580A1 /* KHHDataNew+TransCard.m */; };
+		31159F6216BA064D008580A1 /* KHHDataNew+TransCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 31159F6016BA064D008580A1 /* KHHDataNew+TransCard.m */; };
+		31159F6316BA064D008580A1 /* KHHDataNew+TransCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 31159F6016BA064D008580A1 /* KHHDataNew+TransCard.m */; };
+		31159F6416BA064D008580A1 /* KHHDataNew+TransCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 31159F6016BA064D008580A1 /* KHHDataNew+TransCard.m */; };
 		314A0000168BEE9A00029324 /* settingIcon_selected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6217811F164BBA1D00E1CFD4 /* settingIcon_selected@2x.png */; };
 		314A0001168BEE9A00029324 /* settingIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 62178120164BBA1D00E1CFD4 /* settingIcon@2x.png */; };
 		314A0003168BEE9A00029324 /* accessBtnico@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 98A84F891602D7B300A4A673 /* accessBtnico@2x.png */; };
@@ -443,7 +475,6 @@
 		314A0147168BEF3800029324 /* CustomSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F471602D6C500A4A673 /* CustomSegmentedControl.m */; };
 		314A0148168BEF3800029324 /* KHHAddImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F491602D6C500A4A673 /* KHHAddImageView.m */; };
 		314A0149168BEF3800029324 /* KHHAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A9C99A16099AC100BF7D41 /* KHHAddressBook.m */; };
-		314A014A168BEF3800029324 /* KHHCardTemplageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 62AC98DC163A4A50009EF269 /* KHHCardTemplageVC.m */; };
 		314A014B168BEF3800029324 /* KHHCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F4C1602D6C500A4A673 /* KHHCardView.m */; };
 		314A014C168BEF3800029324 /* KHHCustomEvaluaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F511602D6C500A4A673 /* KHHCustomEvaluaView.m */; };
 		314A014D168BEF3800029324 /* KHHFullFrameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A6C4DC160AAECE00ADA43E /* KHHFullFrameController.m */; };
@@ -877,7 +908,6 @@
 		314AFF88168BEE9A00029324 /* CustomSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F471602D6C500A4A673 /* CustomSegmentedControl.m */; };
 		314AFF89168BEE9A00029324 /* KHHAddImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F491602D6C500A4A673 /* KHHAddImageView.m */; };
 		314AFF8A168BEE9A00029324 /* KHHAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A9C99A16099AC100BF7D41 /* KHHAddressBook.m */; };
-		314AFF8B168BEE9A00029324 /* KHHCardTemplageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 62AC98DC163A4A50009EF269 /* KHHCardTemplageVC.m */; };
 		314AFF8C168BEE9A00029324 /* KHHCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F4C1602D6C500A4A673 /* KHHCardView.m */; };
 		314AFF8D168BEE9A00029324 /* KHHCustomEvaluaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F511602D6C500A4A673 /* KHHCustomEvaluaView.m */; };
 		314AFF8E168BEE9A00029324 /* KHHFullFrameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A6C4DC160AAECE00ADA43E /* KHHFullFrameController.m */; };
@@ -1031,6 +1061,10 @@
 		319C29F6169C0672005A1BFF /* collection.plist in Resources */ = {isa = PBXBuildFile; fileRef = 319C29F4169C0672005A1BFF /* collection.plist */; };
 		319C29F7169C0672005A1BFF /* collection.plist in Resources */ = {isa = PBXBuildFile; fileRef = 319C29F4169C0672005A1BFF /* collection.plist */; };
 		319C29F8169C0672005A1BFF /* collection.plist in Resources */ = {isa = PBXBuildFile; fileRef = 319C29F4169C0672005A1BFF /* collection.plist */; };
+		31CE80DF16B786C700A8A0B7 /* KHHActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 31CE80DE16B786C600A8A0B7 /* KHHActionSheet.m */; };
+		31CE80E016B786C700A8A0B7 /* KHHActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 31CE80DE16B786C600A8A0B7 /* KHHActionSheet.m */; };
+		31CE80E116B786C700A8A0B7 /* KHHActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 31CE80DE16B786C600A8A0B7 /* KHHActionSheet.m */; };
+		31CE80E216B786C700A8A0B7 /* KHHActionSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 31CE80DE16B786C600A8A0B7 /* KHHActionSheet.m */; };
 		31D0E3DD169D4B4300E410CA /* NetClient+PrivateCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D0E3DC169D4B4300E410CA /* NetClient+PrivateCard.m */; };
 		31D0E3DE169D4B4300E410CA /* NetClient+PrivateCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D0E3DC169D4B4300E410CA /* NetClient+PrivateCard.m */; };
 		31D0E3DF169D4B4300E410CA /* NetClient+PrivateCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 31D0E3DC169D4B4300E410CA /* NetClient+PrivateCard.m */; };
@@ -1053,6 +1087,14 @@
 		31FCDBC116A298BE0049BDCA /* KHHLocalForCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FCDBBF16A298BE0049BDCA /* KHHLocalForCardCell.m */; };
 		31FCDBC216A298BE0049BDCA /* KHHLocalForCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FCDBBF16A298BE0049BDCA /* KHHLocalForCardCell.m */; };
 		31FCDBC316A298BE0049BDCA /* KHHLocalForCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FCDBBF16A298BE0049BDCA /* KHHLocalForCardCell.m */; };
+		31FDE01616B374B400940BBE /* InterCustomer.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FDE01516B374B400940BBE /* InterCustomer.m */; };
+		31FDE01716B374B400940BBE /* InterCustomer.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FDE01516B374B400940BBE /* InterCustomer.m */; };
+		31FDE01816B374B400940BBE /* InterCustomer.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FDE01516B374B400940BBE /* InterCustomer.m */; };
+		31FDE01916B374B400940BBE /* InterCustomer.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FDE01516B374B400940BBE /* InterCustomer.m */; };
+		31FDE01E16B3784F00940BBE /* KHHNetClinetAPIAgent+Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FDE01D16B3784F00940BBE /* KHHNetClinetAPIAgent+Customer.m */; };
+		31FDE01F16B3784F00940BBE /* KHHNetClinetAPIAgent+Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FDE01D16B3784F00940BBE /* KHHNetClinetAPIAgent+Customer.m */; };
+		31FDE02016B3784F00940BBE /* KHHNetClinetAPIAgent+Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FDE01D16B3784F00940BBE /* KHHNetClinetAPIAgent+Customer.m */; };
+		31FDE02116B3784F00940BBE /* KHHNetClinetAPIAgent+Customer.m in Sources */ = {isa = PBXBuildFile; fileRef = 31FDE01D16B3784F00940BBE /* KHHNetClinetAPIAgent+Customer.m */; };
 		624F8C7F1676C167006CD354 /* KHHBMapLocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 624F8C7E1676C167006CD354 /* KHHBMapLocationController.m */; };
 		624F8C801676C167006CD354 /* KHHBMapLocationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 624F8C7E1676C167006CD354 /* KHHBMapLocationController.m */; };
 		626832AF16758BDA00EB04BF /* mapapi.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 626832AC16758BDA00EB04BF /* mapapi.bundle */; };
@@ -1192,7 +1234,6 @@
 		6274BFDF165C7C3300DB5EBE /* CustomSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F471602D6C500A4A673 /* CustomSegmentedControl.m */; };
 		6274BFE0165C7C3300DB5EBE /* KHHAddImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F491602D6C500A4A673 /* KHHAddImageView.m */; };
 		6274BFE1165C7C3300DB5EBE /* KHHAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A9C99A16099AC100BF7D41 /* KHHAddressBook.m */; };
-		6274BFE2165C7C3300DB5EBE /* KHHCardTemplageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 62AC98DC163A4A50009EF269 /* KHHCardTemplageVC.m */; };
 		6274BFE3165C7C3300DB5EBE /* KHHCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F4C1602D6C500A4A673 /* KHHCardView.m */; };
 		6274BFE4165C7C3300DB5EBE /* KHHCustomEvaluaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F511602D6C500A4A673 /* KHHCustomEvaluaView.m */; };
 		6274BFE5165C7C3300DB5EBE /* KHHFullFrameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A6C4DC160AAECE00ADA43E /* KHHFullFrameController.m */; };
@@ -1594,7 +1635,6 @@
 		62ECD904166DE1D000A15E24 /* CustomSegmentedControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F471602D6C500A4A673 /* CustomSegmentedControl.m */; };
 		62ECD905166DE1D000A15E24 /* KHHAddImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F491602D6C500A4A673 /* KHHAddImageView.m */; };
 		62ECD906166DE1D000A15E24 /* KHHAddressBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A9C99A16099AC100BF7D41 /* KHHAddressBook.m */; };
-		62ECD907166DE1D000A15E24 /* KHHCardTemplageVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 62AC98DC163A4A50009EF269 /* KHHCardTemplageVC.m */; };
 		62ECD908166DE1D000A15E24 /* KHHCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F4C1602D6C500A4A673 /* KHHCardView.m */; };
 		62ECD909166DE1D000A15E24 /* KHHCustomEvaluaView.m in Sources */ = {isa = PBXBuildFile; fileRef = 98A84F511602D6C500A4A673 /* KHHCustomEvaluaView.m */; };
 		62ECD90A166DE1D000A15E24 /* KHHFullFrameController.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A6C4DC160AAECE00ADA43E /* KHHFullFrameController.m */; };
@@ -2049,8 +2089,19 @@
 		31027B6C16AF8836003CA44A /* KHHNetAgentSignPlanDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNetAgentSignPlanDelegate.h; sourceTree = "<group>"; };
 		31027B6D16AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHNetClinetAPIAgent+SignPlan.h"; sourceTree = "<group>"; };
 		31027B6E16AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHNetClinetAPIAgent+SignPlan.m"; sourceTree = "<group>"; };
+		3103790616D3203C00C55A07 /* KHHNetAgentMessageDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNetAgentMessageDelegate.h; sourceTree = "<group>"; };
 		3103C40516A90ECB00240570 /* CustomBadge.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomBadge.m; sourceTree = "<group>"; };
 		3103C40616A90ECB00240570 /* CustomBadge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomBadge.h; sourceTree = "<group>"; };
+		31047E4016BB6599008690AF /* InterShake.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterShake.h; sourceTree = "<group>"; };
+		31047E4116BB6599008690AF /* InterShake.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InterShake.m; sourceTree = "<group>"; };
+		31047E4C16BBAC48008690AF /* KHHCardTemplageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHCardTemplageVC.h; sourceTree = "<group>"; };
+		31047E4D16BBAC48008690AF /* KHHCardTemplageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHCardTemplageVC.m; sourceTree = "<group>"; };
+		31047E5F16BBC29E008690AF /* KHHDataNew+SyncContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHDataNew+SyncContact.h"; sourceTree = "<group>"; };
+		31047E6016BBC29F008690AF /* KHHDataNew+SyncContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHDataNew+SyncContact.m"; sourceTree = "<group>"; };
+		31047E6516BBC307008690AF /* KHHDataSyncContactDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHDataSyncContactDelegate.h; sourceTree = "<group>"; };
+		31047E6616BBC3AF008690AF /* KHHNetClinetAPIAgent+SyncContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHNetClinetAPIAgent+SyncContact.h"; sourceTree = "<group>"; };
+		31047E6716BBC3B0008690AF /* KHHNetClinetAPIAgent+SyncContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHNetClinetAPIAgent+SyncContact.m"; sourceTree = "<group>"; };
+		31047E6C16BBC3E5008690AF /* KHHNetAgentSyncContactDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNetAgentSyncContactDelegate.h; sourceTree = "<group>"; };
 		3104A143169BBCD100CC4F22 /* KHHForWhereCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHForWhereCell.h; sourceTree = "<group>"; };
 		3104A144169BBCD100CC4F22 /* KHHForWhereCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHForWhereCell.m; sourceTree = "<group>"; };
 		3104E05E1687EE6600B0B45F /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -2074,10 +2125,16 @@
 		310A3F36168D2C43009FF135 /* MsgDelegates.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MsgDelegates.h; path = ../ViewControllers/Message/MsgDelegates.h; sourceTree = "<group>"; };
 		310A3F3E168D3E9D009FF135 /* CardBook_test_haibo-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CardBook_test_haibo-Info.plist"; sourceTree = SOURCE_ROOT; };
 		310A3F3F168D3E9D009FF135 /* CardBook_test-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CardBook_test-Info.plist"; sourceTree = SOURCE_ROOT; };
-		310A59B116B11F3D00834305 /* KHHDataNew+Evaluation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHDataNew+Evaluation.h"; sourceTree = "<group>"; };
-		310A59B216B11F3E00834305 /* KHHDataNew+Evaluation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHDataNew+Evaluation.m"; sourceTree = "<group>"; };
+		310A59B116B11F3D00834305 /* KHHDataNew+Customer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHDataNew+Customer.h"; sourceTree = "<group>"; };
+		310A59B216B11F3E00834305 /* KHHDataNew+Customer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHDataNew+Customer.m"; sourceTree = "<group>"; };
 		310A59B716B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHNetClinetAPIAgent+CustomerEvelent.h"; sourceTree = "<group>"; };
 		310A59B816B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHNetClinetAPIAgent+CustomerEvelent.m"; sourceTree = "<group>"; };
+		310AD0CA16B8CAD0001064EE /* KHHDataNew+SyncDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHDataNew+SyncDefault.h"; sourceTree = "<group>"; };
+		310AD0CB16B8CAD0001064EE /* KHHDataNew+SyncDefault.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHDataNew+SyncDefault.m"; sourceTree = "<group>"; };
+		310AD0D116B8CAFB001064EE /* KHHDataSyncDefaultDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHDataSyncDefaultDelegate.h; sourceTree = "<group>"; };
+		310AD0D816B8CB4F001064EE /* KHHNetAgentSyncDefaultDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNetAgentSyncDefaultDelegate.h; sourceTree = "<group>"; };
+		310AD0D916B8CB9D001064EE /* KHHNetClinetAPIAgent+SyncDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHNetClinetAPIAgent+SyncDefault.h"; sourceTree = "<group>"; };
+		310AD0DA16B8CB9D001064EE /* KHHNetClinetAPIAgent+SyncDefault.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHNetClinetAPIAgent+SyncDefault.m"; sourceTree = "<group>"; };
 		310B2ECE1699090B00818461 /* KHHInputTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHInputTableView.h; sourceTree = "<group>"; };
 		310B2ECF1699090B00818461 /* KHHInputTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHInputTableView.m; sourceTree = "<group>"; };
 		310B2ED61699247100818461 /* KHHMemoPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHMemoPicker.h; sourceTree = "<group>"; };
@@ -2086,6 +2143,12 @@
 		310B2EDD16992FFC00818461 /* KHHMemoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHMemoCell.m; sourceTree = "<group>"; };
 		310B2EE21699461500818461 /* KHHUpperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHUpperView.h; sourceTree = "<group>"; };
 		310B2EE31699461500818461 /* KHHUpperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHUpperView.m; sourceTree = "<group>"; };
+		31159F5716BA0573008580A1 /* KHHNetClinetAPIAgent+TransCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHNetClinetAPIAgent+TransCard.h"; sourceTree = "<group>"; };
+		31159F5816BA0573008580A1 /* KHHNetClinetAPIAgent+TransCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHNetClinetAPIAgent+TransCard.m"; sourceTree = "<group>"; };
+		31159F5E16BA059E008580A1 /* KHHNetAgentTransCardDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNetAgentTransCardDelegate.h; sourceTree = "<group>"; };
+		31159F5F16BA064D008580A1 /* KHHDataNew+TransCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHDataNew+TransCard.h"; sourceTree = "<group>"; };
+		31159F6016BA064D008580A1 /* KHHDataNew+TransCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHDataNew+TransCard.m"; sourceTree = "<group>"; };
+		31159F6516BA0684008580A1 /* KHHDataTransCardDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHDataTransCardDelegate.h; sourceTree = "<group>"; };
 		314A00BE168BEE9A00029324 /* CardBook_test.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardBook_test.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		314A00C0168BEE9A00029324 /* CardBook copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "CardBook copy-Info.plist"; path = "/Users/sanzang/CardBook/CardBook copy-Info.plist"; sourceTree = "<absolute>"; };
 		314A027D168BEF3800029324 /* CardBook_test_haibo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CardBook_test_haibo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2113,6 +2176,8 @@
 		3180A55516981E8F00DD9501 /* KHHImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHImageCell.m; sourceTree = "<group>"; };
 		319C29EF169C04D4005A1BFF /* attendance.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = attendance.plist; sourceTree = "<group>"; };
 		319C29F4169C0672005A1BFF /* collection.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = collection.plist; sourceTree = "<group>"; };
+		31CE80DD16B786C600A8A0B7 /* KHHActionSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHActionSheet.h; sourceTree = "<group>"; };
+		31CE80DE16B786C600A8A0B7 /* KHHActionSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHActionSheet.m; sourceTree = "<group>"; };
 		31D0E3DB169D4B4300E410CA /* NetClient+PrivateCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NetClient+PrivateCard.h"; sourceTree = "<group>"; };
 		31D0E3DC169D4B4300E410CA /* NetClient+PrivateCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NetClient+PrivateCard.m"; sourceTree = "<group>"; };
 		31D0E3E8169D553200E410CA /* PrivateDelegates.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrivateDelegates.h; sourceTree = "<group>"; };
@@ -2130,6 +2195,12 @@
 		31FCBC361682BD0A00ABFE3F /* KHHFilterPopup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHFilterPopup.m; sourceTree = "<group>"; };
 		31FCDBBE16A298BE0049BDCA /* KHHLocalForCardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHLocalForCardCell.h; sourceTree = "<group>"; };
 		31FCDBBF16A298BE0049BDCA /* KHHLocalForCardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHLocalForCardCell.m; sourceTree = "<group>"; };
+		31FDE01416B374B400940BBE /* InterCustomer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterCustomer.h; sourceTree = "<group>"; };
+		31FDE01516B374B400940BBE /* InterCustomer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InterCustomer.m; sourceTree = "<group>"; };
+		31FDE01B16B3768700940BBE /* KHHDataCustomerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHDataCustomerDelegate.h; sourceTree = "<group>"; };
+		31FDE01C16B3784F00940BBE /* KHHNetClinetAPIAgent+Customer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KHHNetClinetAPIAgent+Customer.h"; sourceTree = "<group>"; };
+		31FDE01D16B3784F00940BBE /* KHHNetClinetAPIAgent+Customer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KHHNetClinetAPIAgent+Customer.m"; sourceTree = "<group>"; };
+		31FDE02216B3788900940BBE /* KHHNetAgentCustomerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNetAgentCustomerDelegate.h; sourceTree = "<group>"; };
 		620712F01650D263000188E8 /* LoginImage_normal@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "LoginImage_normal@2x.jpg"; sourceTree = "<group>"; };
 		620712FB1650E600000188E8 /* PCPieChart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PCPieChart.h; sourceTree = "<group>"; };
 		620712FC1650E600000188E8 /* PCPieChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PCPieChart.m; sourceTree = "<group>"; };
@@ -2276,8 +2347,6 @@
 		62AB2981160C07270004A3E3 /* KHHBMapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHBMapViewController.h; sourceTree = "<group>"; };
 		62AB2982160C07270004A3E3 /* KHHBMapViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = KHHBMapViewController.mm; sourceTree = "<group>"; };
 		62AB2983160C07270004A3E3 /* KHHBMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = KHHBMapViewController.xib; sourceTree = "<group>"; };
-		62AC98DB163A4A50009EF269 /* KHHCardTemplageVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHCardTemplageVC.h; sourceTree = "<group>"; };
-		62AC98DC163A4A50009EF269 /* KHHCardTemplageVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHCardTemplageVC.m; sourceTree = "<group>"; };
 		62ACD2F51623BF2800D88F57 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		62ACD2F61623BF2800D88F57 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		62BD4F75165CDB70007B948E /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -3036,8 +3105,14 @@
 				3101B33816A4FEF50070D5FF /* KHHDataNew+Account.m */,
 				310A068316AD34FE007460F4 /* KHHDataNew+SignForPlan.h */,
 				310A068416AD34FF007460F4 /* KHHDataNew+SignForPlan.m */,
-				310A59B116B11F3D00834305 /* KHHDataNew+Evaluation.h */,
-				310A59B216B11F3E00834305 /* KHHDataNew+Evaluation.m */,
+				310A59B116B11F3D00834305 /* KHHDataNew+Customer.h */,
+				310A59B216B11F3E00834305 /* KHHDataNew+Customer.m */,
+				310AD0CA16B8CAD0001064EE /* KHHDataNew+SyncDefault.h */,
+				310AD0CB16B8CAD0001064EE /* KHHDataNew+SyncDefault.m */,
+				31159F5F16BA064D008580A1 /* KHHDataNew+TransCard.h */,
+				31159F6016BA064D008580A1 /* KHHDataNew+TransCard.m */,
+				31047E5F16BBC29E008690AF /* KHHDataNew+SyncContact.h */,
+				31047E6016BBC29F008690AF /* KHHDataNew+SyncContact.m */,
 			);
 			name = KHHData_New;
 			path = KHHData;
@@ -3056,12 +3131,11 @@
 		3101A258169FB74700C08769 /* ParamForCell */ = {
 			isa = PBXGroup;
 			children = (
+				31047E5816BBB0CE008690AF /* PersonCells */,
 				3101A24B169FB52000C08769 /* KHHNewEdit_ecardViewController.h */,
 				3101A24C169FB52000C08769 /* KHHNewEdit_ecardViewController.m */,
 				3101A252169FB74300C08769 /* ParamForEditecard.h */,
 				3101A253169FB74300C08769 /* ParamForEditecard.m */,
-				31FCDBBE16A298BE0049BDCA /* KHHLocalForCardCell.h */,
-				31FCDBBF16A298BE0049BDCA /* KHHLocalForCardCell.m */,
 			);
 			name = ParamForCell;
 			sourceTree = "<group>";
@@ -3088,6 +3162,8 @@
 				310B2ECF1699090B00818461 /* KHHInputTableView.m */,
 				310B2EE21699461500818461 /* KHHUpperView.h */,
 				310B2EE31699461500818461 /* KHHUpperView.m */,
+				31CE80DD16B786C600A8A0B7 /* KHHActionSheet.h */,
+				31CE80DE16B786C600A8A0B7 /* KHHActionSheet.m */,
 				310523DA169ABC0E000B2C64 /* plan.plist */,
 				319C29EF169C04D4005A1BFF /* attendance.plist */,
 				319C29F4169C0672005A1BFF /* collection.plist */,
@@ -3124,6 +3200,24 @@
 			name = Cells;
 			sourceTree = "<group>";
 		};
+		31047E3E16BB6531008690AF /* TransParam */ = {
+			isa = PBXGroup;
+			children = (
+				31047E4016BB6599008690AF /* InterShake.h */,
+				31047E4116BB6599008690AF /* InterShake.m */,
+			);
+			name = TransParam;
+			sourceTree = "<group>";
+		};
+		31047E5816BBB0CE008690AF /* PersonCells */ = {
+			isa = PBXGroup;
+			children = (
+				31FCDBBE16A298BE0049BDCA /* KHHLocalForCardCell.h */,
+				31FCDBBF16A298BE0049BDCA /* KHHLocalForCardCell.m */,
+			);
+			name = PersonCells;
+			sourceTree = "<group>";
+		};
 		310523CE169A9805000B2C64 /* View for cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -3138,6 +3232,7 @@
 		310A068B16AD3697007460F4 /* ForNetParam */ = {
 			isa = PBXGroup;
 			children = (
+				31047E3E16BB6531008690AF /* TransParam */,
 				310A067716AD0764007460F4 /* template.plist */,
 				310A068C16AD36CE007460F4 /* InterSign.h */,
 				310A068D16AD36CE007460F4 /* InterSign.m */,
@@ -3145,6 +3240,8 @@
 				310A069316AD36DF007460F4 /* InterPlan.m */,
 				310A069816AD36EF007460F4 /* InterCollect.h */,
 				310A069916AD36F0007460F4 /* InterCollect.m */,
+				31FDE01416B374B400940BBE /* InterCustomer.h */,
+				31FDE01516B374B400940BBE /* InterCustomer.m */,
 			);
 			name = ForNetParam;
 			sourceTree = "<group>";
@@ -3229,6 +3326,11 @@
 				84732DE5169FADD200C9910E /* KHHNetAgentVisitScheduleDelegates.h */,
 				310A3F36168D2C43009FF135 /* MsgDelegates.h */,
 				31027B6C16AF8836003CA44A /* KHHNetAgentSignPlanDelegate.h */,
+				31FDE02216B3788900940BBE /* KHHNetAgentCustomerDelegate.h */,
+				310AD0D816B8CB4F001064EE /* KHHNetAgentSyncDefaultDelegate.h */,
+				31159F5E16BA059E008580A1 /* KHHNetAgentTransCardDelegate.h */,
+				31047E6C16BBC3E5008690AF /* KHHNetAgentSyncContactDelegate.h */,
+				3103790616D3203C00C55A07 /* KHHNetAgentMessageDelegate.h */,
 			);
 			name = "NetDelegate impl in data";
 			sourceTree = "<group>";
@@ -3257,6 +3359,10 @@
 				84DB11DB16A4F3AB001B0FAC /* KHHDataTemplateDelegate.h */,
 				84DB11DE16A4F538001B0FAC /* KHHDataVisitScheduleDelegate.h */,
 				31027B6A16AF87F0003CA44A /* KHHDataSignPlanDelegate.h */,
+				31FDE01B16B3768700940BBE /* KHHDataCustomerDelegate.h */,
+				310AD0D116B8CAFB001064EE /* KHHDataSyncDefaultDelegate.h */,
+				31159F6516BA0684008580A1 /* KHHDataTransCardDelegate.h */,
+				31047E6516BBC307008690AF /* KHHDataSyncContactDelegate.h */,
 			);
 			name = "DataDelegate impl in UI";
 			sourceTree = "<group>";
@@ -3419,11 +3525,11 @@
 			isa = PBXGroup;
 			children = (
 				310164E416A3F678003D4527 /* UserSet */,
+				31D0E3BC169D3B0100E410CA /* NetDelegate impl in data */,
 				84732D97169D3AEF00C9910E /* KHHNetClinetAPIAgent+Account.h */,
 				84732D98169D3AEF00C9910E /* KHHNetClinetAPIAgent+Account.m */,
 				314A032A168C52D000029324 /* KHHNetClinetAPIAgent+Message.h */,
 				314A032B168C52D000029324 /* KHHNetClinetAPIAgent+Message.m */,
-				31D0E3BC169D3B0100E410CA /* NetDelegate impl in data */,
 				84DA3F14169D097500D222A4 /* Reachability.h */,
 				84DA3F15169D097500D222A4 /* Reachability.m */,
 				84732DBB169E65BA00C9910E /* KHHNetClinetAPIAgent+Template.h */,
@@ -3444,8 +3550,16 @@
 				31FA580616A12C8100F65BC6 /* KHHNetClinetAPIAgent+Card.m */,
 				31027B6D16AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.h */,
 				31027B6E16AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.m */,
+				31FDE01C16B3784F00940BBE /* KHHNetClinetAPIAgent+Customer.h */,
+				31FDE01D16B3784F00940BBE /* KHHNetClinetAPIAgent+Customer.m */,
 				310A59B716B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.h */,
 				310A59B816B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.m */,
+				310AD0D916B8CB9D001064EE /* KHHNetClinetAPIAgent+SyncDefault.h */,
+				310AD0DA16B8CB9D001064EE /* KHHNetClinetAPIAgent+SyncDefault.m */,
+				31159F5716BA0573008580A1 /* KHHNetClinetAPIAgent+TransCard.h */,
+				31159F5816BA0573008580A1 /* KHHNetClinetAPIAgent+TransCard.m */,
+				31047E6616BBC3AF008690AF /* KHHNetClinetAPIAgent+SyncContact.h */,
+				31047E6716BBC3B0008690AF /* KHHNetClinetAPIAgent+SyncContact.m */,
 			);
 			name = NetWork_New;
 			path = ../NetWork_New;
@@ -4229,8 +4343,8 @@
 				98A84F4A1602D6C500A4A673 /* KHHAddImageView.xib */,
 				62A9C99916099AC100BF7D41 /* KHHAddressBook.h */,
 				62A9C99A16099AC100BF7D41 /* KHHAddressBook.m */,
-				62AC98DB163A4A50009EF269 /* KHHCardTemplageVC.h */,
-				62AC98DC163A4A50009EF269 /* KHHCardTemplageVC.m */,
+				31047E4C16BBAC48008690AF /* KHHCardTemplageVC.h */,
+				31047E4D16BBAC48008690AF /* KHHCardTemplageVC.m */,
 				98A84F4B1602D6C500A4A673 /* KHHCardView.h */,
 				98A84F4C1602D6C500A4A673 /* KHHCardView.m */,
 				98A84F4D1602D6C500A4A673 /* KHHCardView.xib */,
@@ -5865,7 +5979,6 @@
 				314A0147168BEF3800029324 /* CustomSegmentedControl.m in Sources */,
 				314A0148168BEF3800029324 /* KHHAddImageView.m in Sources */,
 				314A0149168BEF3800029324 /* KHHAddressBook.m in Sources */,
-				314A014A168BEF3800029324 /* KHHCardTemplageVC.m in Sources */,
 				314A014B168BEF3800029324 /* KHHCardView.m in Sources */,
 				314A014C168BEF3800029324 /* KHHCustomEvaluaView.m in Sources */,
 				314A014D168BEF3800029324 /* KHHFullFrameController.m in Sources */,
@@ -5986,8 +6099,19 @@
 				310A069716AD36DF007460F4 /* InterPlan.m in Sources */,
 				310A069D16AD36F0007460F4 /* InterCollect.m in Sources */,
 				31027B7216AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.m in Sources */,
-				310A59B616B11F3F00834305 /* KHHDataNew+Evaluation.m in Sources */,
+				310A59B616B11F3F00834305 /* KHHDataNew+Customer.m in Sources */,
 				310A59BC16B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.m in Sources */,
+				31FDE01916B374B400940BBE /* InterCustomer.m in Sources */,
+				31FDE02116B3784F00940BBE /* KHHNetClinetAPIAgent+Customer.m in Sources */,
+				31CE80E216B786C700A8A0B7 /* KHHActionSheet.m in Sources */,
+				310AD0CF16B8CAD1001064EE /* KHHDataNew+SyncDefault.m in Sources */,
+				310AD0DE16B8CB9D001064EE /* KHHNetClinetAPIAgent+SyncDefault.m in Sources */,
+				31159F5C16BA0573008580A1 /* KHHNetClinetAPIAgent+TransCard.m in Sources */,
+				31159F6416BA064D008580A1 /* KHHDataNew+TransCard.m in Sources */,
+				31047E4516BB6599008690AF /* InterShake.m in Sources */,
+				31047E5116BBAC48008690AF /* KHHCardTemplageVC.m in Sources */,
+				31047E6416BBC2A0008690AF /* KHHDataNew+SyncContact.m in Sources */,
+				31047E6B16BBC3B1008690AF /* KHHNetClinetAPIAgent+SyncContact.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6124,7 +6248,6 @@
 				314AFF88168BEE9A00029324 /* CustomSegmentedControl.m in Sources */,
 				314AFF89168BEE9A00029324 /* KHHAddImageView.m in Sources */,
 				314AFF8A168BEE9A00029324 /* KHHAddressBook.m in Sources */,
-				314AFF8B168BEE9A00029324 /* KHHCardTemplageVC.m in Sources */,
 				314AFF8C168BEE9A00029324 /* KHHCardView.m in Sources */,
 				314AFF8D168BEE9A00029324 /* KHHCustomEvaluaView.m in Sources */,
 				314AFF8E168BEE9A00029324 /* KHHFullFrameController.m in Sources */,
@@ -6245,8 +6368,19 @@
 				310A069616AD36DF007460F4 /* InterPlan.m in Sources */,
 				310A069C16AD36F0007460F4 /* InterCollect.m in Sources */,
 				31027B7116AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.m in Sources */,
-				310A59B516B11F3F00834305 /* KHHDataNew+Evaluation.m in Sources */,
+				310A59B516B11F3F00834305 /* KHHDataNew+Customer.m in Sources */,
 				310A59BB16B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.m in Sources */,
+				31FDE01816B374B400940BBE /* InterCustomer.m in Sources */,
+				31FDE02016B3784F00940BBE /* KHHNetClinetAPIAgent+Customer.m in Sources */,
+				31CE80E116B786C700A8A0B7 /* KHHActionSheet.m in Sources */,
+				310AD0CE16B8CAD1001064EE /* KHHDataNew+SyncDefault.m in Sources */,
+				310AD0DD16B8CB9D001064EE /* KHHNetClinetAPIAgent+SyncDefault.m in Sources */,
+				31159F5B16BA0573008580A1 /* KHHNetClinetAPIAgent+TransCard.m in Sources */,
+				31159F6316BA064D008580A1 /* KHHDataNew+TransCard.m in Sources */,
+				31047E4416BB6599008690AF /* InterShake.m in Sources */,
+				31047E5016BBAC48008690AF /* KHHCardTemplageVC.m in Sources */,
+				31047E6316BBC2A0008690AF /* KHHDataNew+SyncContact.m in Sources */,
+				31047E6A16BBC3B1008690AF /* KHHNetClinetAPIAgent+SyncContact.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6383,7 +6517,6 @@
 				6274BFDF165C7C3300DB5EBE /* CustomSegmentedControl.m in Sources */,
 				6274BFE0165C7C3300DB5EBE /* KHHAddImageView.m in Sources */,
 				6274BFE1165C7C3300DB5EBE /* KHHAddressBook.m in Sources */,
-				6274BFE2165C7C3300DB5EBE /* KHHCardTemplageVC.m in Sources */,
 				6274BFE3165C7C3300DB5EBE /* KHHCardView.m in Sources */,
 				6274BFE4165C7C3300DB5EBE /* KHHCustomEvaluaView.m in Sources */,
 				6274BFE5165C7C3300DB5EBE /* KHHFullFrameController.m in Sources */,
@@ -6504,8 +6637,19 @@
 				310A069416AD36DF007460F4 /* InterPlan.m in Sources */,
 				310A069A16AD36F0007460F4 /* InterCollect.m in Sources */,
 				31027B6F16AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.m in Sources */,
-				310A59B316B11F3F00834305 /* KHHDataNew+Evaluation.m in Sources */,
+				310A59B316B11F3F00834305 /* KHHDataNew+Customer.m in Sources */,
 				310A59B916B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.m in Sources */,
+				31FDE01616B374B400940BBE /* InterCustomer.m in Sources */,
+				31FDE01E16B3784F00940BBE /* KHHNetClinetAPIAgent+Customer.m in Sources */,
+				31CE80DF16B786C700A8A0B7 /* KHHActionSheet.m in Sources */,
+				310AD0CC16B8CAD1001064EE /* KHHDataNew+SyncDefault.m in Sources */,
+				310AD0DB16B8CB9D001064EE /* KHHNetClinetAPIAgent+SyncDefault.m in Sources */,
+				31159F5916BA0573008580A1 /* KHHNetClinetAPIAgent+TransCard.m in Sources */,
+				31159F6116BA064D008580A1 /* KHHDataNew+TransCard.m in Sources */,
+				31047E4216BB6599008690AF /* InterShake.m in Sources */,
+				31047E4E16BBAC48008690AF /* KHHCardTemplageVC.m in Sources */,
+				31047E6116BBC2A0008690AF /* KHHDataNew+SyncContact.m in Sources */,
+				31047E6816BBC3B0008690AF /* KHHNetClinetAPIAgent+SyncContact.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6642,7 +6786,6 @@
 				62ECD904166DE1D000A15E24 /* CustomSegmentedControl.m in Sources */,
 				62ECD905166DE1D000A15E24 /* KHHAddImageView.m in Sources */,
 				62ECD906166DE1D000A15E24 /* KHHAddressBook.m in Sources */,
-				62ECD907166DE1D000A15E24 /* KHHCardTemplageVC.m in Sources */,
 				62ECD908166DE1D000A15E24 /* KHHCardView.m in Sources */,
 				62ECD909166DE1D000A15E24 /* KHHCustomEvaluaView.m in Sources */,
 				62ECD90A166DE1D000A15E24 /* KHHFullFrameController.m in Sources */,
@@ -6761,8 +6904,19 @@
 				310A069516AD36DF007460F4 /* InterPlan.m in Sources */,
 				310A069B16AD36F0007460F4 /* InterCollect.m in Sources */,
 				31027B7016AF8877003CA44A /* KHHNetClinetAPIAgent+SignPlan.m in Sources */,
-				310A59B416B11F3F00834305 /* KHHDataNew+Evaluation.m in Sources */,
+				310A59B416B11F3F00834305 /* KHHDataNew+Customer.m in Sources */,
 				310A59BA16B11FE700834305 /* KHHNetClinetAPIAgent+CustomerEvelent.m in Sources */,
+				31FDE01716B374B400940BBE /* InterCustomer.m in Sources */,
+				31FDE01F16B3784F00940BBE /* KHHNetClinetAPIAgent+Customer.m in Sources */,
+				31CE80E016B786C700A8A0B7 /* KHHActionSheet.m in Sources */,
+				310AD0CD16B8CAD1001064EE /* KHHDataNew+SyncDefault.m in Sources */,
+				310AD0DC16B8CB9D001064EE /* KHHNetClinetAPIAgent+SyncDefault.m in Sources */,
+				31159F5A16BA0573008580A1 /* KHHNetClinetAPIAgent+TransCard.m in Sources */,
+				31159F6216BA064D008580A1 /* KHHDataNew+TransCard.m in Sources */,
+				31047E4316BB6599008690AF /* InterShake.m in Sources */,
+				31047E4F16BBAC48008690AF /* KHHCardTemplageVC.m in Sources */,
+				31047E6216BBC2A0008690AF /* KHHDataNew+SyncContact.m in Sources */,
+				31047E6916BBC3B1008690AF /* KHHNetClinetAPIAgent+SyncContact.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6871,8 +7025,8 @@
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ming Sun (BWKVEKZTR4)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ming Sun (BWKVEKZTR4)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/3rdPart/SDWebImage\"",
@@ -6896,8 +7050,8 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = CardBook_test_haibo;
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				PROVISIONING_PROFILE = "EEEB5646-113D-4618-A801-6D9D20F69A70";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "EEEB5646-113D-4618-A801-6D9D20F69A70";
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;
 			};
@@ -6908,7 +7062,7 @@
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Wosheng Software";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Wosheng Software";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6929,7 +7083,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = CardBook_test_haibo;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "AC2FF7A0-2300-49BF-8C0E-A9140C7AF136";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "206FDEBC-C2A3-406F-9532-CA7FA6D109B0";
 				VALID_ARCHS = "armv7 armv7s";
 				WRAPPER_EXTENSION = app;

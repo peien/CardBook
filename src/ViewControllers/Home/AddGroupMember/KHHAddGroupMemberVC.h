@@ -10,7 +10,10 @@
 #import "SuperViewController.h"
 #import "KHHHomeViewController.h"
 #import "Group.h"
-@interface KHHAddGroupMemberVC : SuperViewController
+#import "KHHDataNew+Group.h"
+
+@interface KHHAddGroupMemberVC : SuperViewController<KHHDataGroupDelegate>
+
 @property (strong, nonatomic) UISearchDisplayController *searbarCtrl;
 @property (strong, nonatomic) IBOutlet UITableView *theTableM;
 @property (strong, nonatomic) IBOutlet UIView *footView;
@@ -25,6 +28,8 @@
 @property (strong, nonatomic) NSArray          *handleArray;
 @property (strong, nonatomic) KHHHomeViewController *homeVC;
 @property (strong, nonatomic) Group                 *group;
+
+@property (strong,nonatomic) void(^moveSuccess)();
 
 - (IBAction)sureBtnClick:(id)sender;
 - (IBAction)cancelBtn:(id)sender;

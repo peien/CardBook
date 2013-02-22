@@ -7,13 +7,9 @@
 //
 
 #import "KHHDataNew+Card.h"
-
-
 #import "CardTemplate.h"
 #import "Company.h"
-
-
-
+#import "Group.h"
 
 
 
@@ -44,7 +40,7 @@
 {
     NSArray *array;
     //老的存放地方
-//    NSNumber *myComID = [KHHDefaults sharedDefaults].currentCompanyID;
+    //    NSNumber *myComID = [KHHDefaults sharedDefaults].currentCompanyID;
     //新的存放地方
     NSString *myComID = [KHHUser shareInstance].companyId;
     NSPredicate *predicate = nil;
@@ -171,9 +167,18 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray)
 {
     DLog(@"同步名片成功! dict = %@", dict);
     //把返回的名片保存下来，根据cardType与cardSource来判断用什么类型的card来保存
-#warning 把同步下来的名片保存到本地数据库中，注意的时要根据cardType与cardSource来判断用什么类型的card 看是要保存在myCard表中还是privateCard表中
+    //#warning 把同步下来的名片保存到本地数据库中，注意的时要根据cardType与cardSource来判断用什么类型的card 看是要保存在myCard表中还是privateCard表中
     
     //告诉界面操作成功
+    
+    NSArray *arrPro = dict[@"myPrivateCard"];
+    for (NSDictionary *dicPro in arrPro) {
+        [PrivateCard processIObject:[InterCard interCardWithPrivateCardJSON:dicPro]];
+    }
+    
+    [SyncMark UpdateKey:kSyncMarkKeySyncCardLastTime value:[NSString stringWithFormat:@"%@",dict[kInfoKeySyncTime]]];
+   
+    [self saveContext];
     switch (self.syncType) {
         case KHHCardSyncTypeAdd:
         {
@@ -306,9 +311,10 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray)
     DLog(@"添加名片成功!");
     //先同步一下相应名片类型的名片
     //告诉界面，添加成功
-    if ([self.delegate respondsToSelector:@selector(addCardForUISuccess:)]) {
-        [self.delegate addCardForUISuccess:dict];
-    }
+    [self syncCard:self.delegate syncType:KHHCardSyncTypeAdd];
+//    if ([self.delegate respondsToSelector:@selector(addCardForUISuccess:)]) {
+//        [self.delegate addCardForUISuccess:dict];
+//    }
 }
 
 - (void)addCardFailed:(NSDictionary *) dict
@@ -355,7 +361,7 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray)
     DLog(@"更新新名片标记成功!");
     //返回更新标记成功（这里只是改一张标记，可以直改本地数据库，建议与服务器同步一次）
 #warning 这个要startPage 和 pageSize 才能同步，如果服务不提供只同步一个联系人接口，那只能在成功后直接改本地数据库的
-//    [self syncCustomerCard:nil pageSize:nil delegate:self.delegate syncType:KHHCardSyncTypeSyncCustomerCardUpdateNewCardState];
+    //    [self syncCustomerCard:nil pageSize:nil delegate:self.delegate syncType:KHHCardSyncTypeSyncCustomerCardUpdateNewCardState];
 }
 - (void)updateCardNewCardStateFailed:(NSDictionary *)dict
 {
@@ -486,7 +492,7 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray)
     
     DLog(@"reply card, the receiver mobilePhone at index 0 = %@", mobiles);
     [self.agent sendCard:myReplyCard toPhones:newMobiles delegate:self];
-   
+    
 }
 
 - (void)doInsertMyCard
@@ -496,12 +502,12 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray)
     icardPro.id = @(10);
     icardPro.userID = [NSNumber numberFromString:[KHHUser shareInstance].userId];
     icardPro.mobilePhone = [KHHUser shareInstance].username;
-   
+    
     
     [CardTemplate processJSON:[[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"template" ofType:@"plist"]][@"templatelist"][0]];
-   // Company *company = [Company objectByID:@(10) createIfNone:YES];
-//    icardPro.companyName = @"000";
-//    icardPro.companyID = @"";
+    // Company *company = [Company objectByID:@(10) createIfNone:YES];
+    //    icardPro.companyName = @"000";
+    //    icardPro.companyID = @"";
     
     icardPro.templateID = @(10);
     
@@ -514,7 +520,7 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray)
 - (NSArray *)allMyCards
 {
     NSArray *array;
-   NSPredicate *predicate = [NSPredicate predicateWithFormat:@"modelType == %d", KHHCardModelTypeMyCard];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"modelType == %d", KHHCardModelTypeMyCard];
     array = [MyCard objectArrayByPredicate:predicate
                            sortDescriptors:@[[Card nameSortDescriptor],[Card companyCardSortDescriptor]]];
     return array;
@@ -525,7 +531,7 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray)
 - (void)modifyMyCardWithInterCard:(InterCard *)iCard
 {
     iCard.modelType = KHHCardModelTypeMyCard;
-    [self.agent updateCard:iCard delegate:self];    
+    [self.agent updateCard:iCard delegate:self];
 }
 
 /*!
@@ -563,9 +569,9 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray)
 - (void)deletePrivateCardByID:(NSNumber *)cardID
 {
     Card *cardPro = [Card objectByID:cardID createIfNone:NO];
-   
+    
     [self.agent deleteCard:cardPro delegate:self];
-   
+    
 }
 
 /*!
@@ -602,11 +608,24 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray)
     //[self.agent deleteReceivedCards:cardList];
 }
 
-- (void)markIsRead:(ReceivedCard *)aCard
+#pragma mark - markIsRead
+- (void)doMarkIsRead:(ReceivedCard *)aCard delegate:(id<KHHDataCardDelegate>)delegate
 {
-   // [self.agent markReadReceivedCard:aCard];
+    self.delegate = delegate;
+    [self.agent markIsRead:aCard delegate:self];
 }
 
+- (void)markIsReadSuccess:(NSDictionary *)dict
+{
+    ((ReceivedCard *)dict[@"card"]).isReadValue = YES;
+    [self saveContext];
+   // [self.delegate markIsReadForUISuccess];
+}
+
+- (void)markIsReadFailed
+{
+   // [self.delegate markIsReadForUIFailed];
+}
 
 // 通过几颗星筛选关系
 - (NSArray *)cardsOfstartsForRelation:(float)starts groupID: (long) groupID
@@ -679,6 +698,35 @@ NSMutableArray *FilterUnexpectedCardsFromArray(NSArray *oldArray)
         // 过滤掉意外情况
         result = FilterUnexpectedCardsFromArray(fetched);
     }
+    return result;
+}
+
+- (NSArray *)cardsOfCompetitors
+{
+    NSNumber *myComIDPro = [NSNumber numberFromString: [KHHUser shareInstance].companyId];
+    NSPredicate *predicate = nil;
+    if (myComIDPro.integerValue) {
+        // 自己属于某公司
+        predicate = [NSPredicate predicateWithFormat:@"company.id <> %@", myComIDPro];
+    }
+    NSArray *fetched;
+    fetched = [ContactCard objectArrayByPredicate:predicate
+                                  sortDescriptors:[Card defaultSortDescriptors]];
+    NSMutableArray *filtered = [NSMutableArray arrayWithCapacity:fetched.count];
+    for (Card *card in fetched) {
+        for (Group *groupPro in card.groups) {
+            
+            
+            if ([groupPro.name isEqualToString:@"竞争对手"]) {
+                [filtered addObject:card];
+            }
+        }
+        //        if (card.groups.count < 1) {
+        //            [filtered addObject:card];
+        //        }
+    }
+    // 过滤掉意外情况
+    NSMutableArray *result =[self filterUnexpectedCardsFromArray:filtered];
     return result;
 }
 

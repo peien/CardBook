@@ -32,7 +32,7 @@
         
         return;
     }
-   
+    
     //url
     NSString *path = @"cardGroup/groups";
     
@@ -114,7 +114,7 @@
         
         return;
     }
-
+    
     //请求url的格式
     NSString *path = @"cardGroup";
     
@@ -208,9 +208,9 @@
     parameters[@"name"]  = igroup.name;
     //cardid （区分多公司的）
     if (!igroup.parentID && [igroup.parentID longValue] > 0) {
-         parameters[@"card"] = igroup.cardID;
+        parameters[@"card"] = igroup.cardID;
     }
-   
+    
     //parentID
     if (!igroup.parentID && [igroup.parentID longValue] > 0) {
         parameters[@"parent"] = igroup.parentID;
@@ -411,27 +411,54 @@
         return;
     }
     
-    //组装成cardIdAndTypes="234;me|345;linkman|456;linkman"格式
-    NSMutableArray *idAndTypes = [NSMutableArray arrayWithCapacity:[cards count]];
-    for (id card in cards) {
-        NSString *cardID = [[card valueForKey:kAttributeKeyID] stringValue];
-        NSString *cardType = [card isKindOfClass:[ReceivedCard class]]?@"linkman"
-        :([card isKindOfClass:[PrivateCard class]]?@"me"
-          :@"private");
-        [idAndTypes addObject:[NSString stringWithFormat:@"%@;%@", cardID, cardType]];
+    if ([cards count]<=0) {
+        if ([delegate respondsToSelector:@selector(moveGroupMembersFailed:)]) {
+            NSDictionary * dict = [self parametersNotMeetRequirementFailedResponseDictionary];
+            [delegate moveGroupMembersFailed:dict];
+        }
     }
     
-    //请求url,默认查所有
-    NSString *path = @"cardGroup/move";
-    //参数
-    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:3];
-    //分组名
-    parameters[@"cardIdAndTypes"]  = [idAndTypes componentsJoinedByString:KHH_SEPARATOR];
-    //fromgroupID，fromGroupID <= 0时说原先是没有分组的，所以参数可以不传
-    parameters[@"delGroupId"]  = fromGroup ? fromGroup.id.stringValue : @"";
+    //组装成cardIdAndTypes="234;me|345;linkman|456;linkman"格式
+    //    NSMutableArray *idAndTypes = [NSMutableArray arrayWithCapacity:[cards count]];
+    //    for (id card in cards) {
+    //        NSString *cardID = [[card valueForKey:kAttributeKeyID] stringValue];
+    //        NSString *cardType = [card isKindOfClass:[ReceivedCard class]]?@"linkman"
+    //        :([card isKindOfClass:[PrivateCard class]]?@"me"
+    //          :@"private");
+    //        [idAndTypes addObject:[NSString stringWithFormat:@"%@;%@", cardID, cardType]];
+    //    }
     
-    //toGroupID, toGroupID <= 0时说明是要把名片移到未分组中去
-    parameters[@"addGroupId"] = toGroup ? toGroup.id.stringValue : @"";
+    //请求url,默认查所有
+    NSString *path = @"cardGroup";
+    NSMutableString *ids = [[NSMutableString alloc]init];
+    for (int i=0;i<[cards count];i++) {
+        Card *card = [cards objectAtIndex:i];
+        if (i==0) {
+            [ids appendString:[NSString stringWithFormat:@"%lld",card.idValue]];
+            continue;
+        }
+        [ids appendString:[NSString stringWithFormat:@",%lld",card.idValue]];
+        
+    }
+    int groupIdPro;
+    if (fromGroup) {
+        path = [NSString stringWithFormat:@"%@/%lld/%@",path,fromGroup.idValue,ids];
+        groupIdPro = fromGroup.idValue;
+    }
+    if (toGroup) {
+        path = [NSString stringWithFormat:@"%@/%lld/%@",path,toGroup.idValue,ids];
+        groupIdPro = toGroup.idValue;
+    }
+    
+    //参数
+    //    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] initWithCapacity:3];
+    //    //分组名
+    //    parameters[@"cardIdAndTypes"]  = [idAndTypes componentsJoinedByString:KHH_SEPARATOR];
+    //    //fromgroupID，fromGroupID <= 0时说原先是没有分组的，所以参数可以不传
+    //    parameters[@"delGroupId"]  = fromGroup ? fromGroup.id.stringValue : @"";
+    //
+    //    //toGroupID, toGroupID <= 0时说明是要把名片移到未分组中去
+    //    parameters[@"addGroupId"] = toGroup ? toGroup.id.stringValue : @"";
     
     //成功block
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -441,13 +468,13 @@
         KHHErrorCode code = [responseDict[kInfoKeyErrorCode] integerValue];
         if (KHHErrorCodeSucceeded == code) {
             //同步成功,返回数据到data层与服务同步一下
-            if ([delegate respondsToSelector:@selector(moveGroupMembersSuccess)]) {
-                [delegate moveGroupMembersSuccess];
+            if ([delegate respondsToSelector:@selector(moveGroupMembersSuccess:)]) {
+                [delegate moveGroupMembersSuccess:groupIdPro];
             }
         }else {
             NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:5];
             //code号
-            dict[kInfoKeyErrorCode] = @(code);    
+            dict[kInfoKeyErrorCode] = @(code);
             dict[kInfoKeyErrorMessage] = [responseDict valueForKey:JSONDataKeyNote];
             //同步失败
             if ([delegate respondsToSelector:@selector(moveGroupMembersFailed:)]) {
@@ -460,6 +487,11 @@
     KHHFailureBlock failed = [self defaultFailedResponse:delegate selector:@"moveGroupMembersFailed:"];
     
     //发送请求
-    [self postPath:path parameters:parameters success:success failure:failed];
+    if (fromGroup) {
+        [self deletePath:path parameters:nil success:success failure:failed];
+        return;
+    }
+    [self postPath:path parameters:nil success:success failure:failed];
+    
 }
 @end

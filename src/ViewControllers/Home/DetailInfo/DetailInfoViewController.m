@@ -28,6 +28,9 @@
 #import <QuartzCore/QuartzCore.h>
 #import "KHHDataNew+Card.h"
 #import "KHHNewEdit_ecardViewController.h"
+#import "KHHPlanViewController.h"
+#import "KHHHomeViewController.h"
+
 
 #define POPDismiss [self.popover dismissPopoverAnimated:YES];
 #define LABEL_NAME_TAG    98980
@@ -49,6 +52,12 @@
 @end
 
 @implementation DetailInfoViewController
+{
+    UIButton *bottomBtn;
+    UIButton *btnPlanEdit;
+    
+    MBProgressHUD * _hud;
+}
 
 @synthesize eCardVC = _eCardVC;
 @synthesize isToeCardVC = _isToeCardVC;
@@ -86,10 +95,10 @@
         self.tabBarController.tabBar.hidden = YES;
        
         //回赠名片跟回赠按钮一起初始化
-//        NSArray *cards = [[KHHDataNew sharedData] allMyCards];
-//        if (cards) {
-//            _myDefaultReplyCard = [cards objectAtIndex:0];
-//        }
+        NSArray *cards = [[KHHDataNew sharedData] allMyCards];
+        if (cards) {
+            _myDefaultReplyCard = [cards objectAtIndex:0];
+        }
     }
     return self;
 }
@@ -116,6 +125,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+//    if ([self.card isKindOfClass:[PrivateCard class]]) {
+//        self.rightBtn.hidden = YES;
+//    }
+    
     // Do any additional setup after loading the view from its nib.
     [self initView];
     self.view.backgroundColor = [UIColor clearColor];
@@ -137,23 +151,11 @@
         
     }
     if (self.isReloadCustomValTable){
-        if ([self.card isKindOfClass:[ReceivedCard class]]) {
-            self.card = [[KHHDataNew sharedData] receivedCardByID:self.card.id];
-        }else if ([self.card isKindOfClass:[PrivateCard class]]){
-            self.card = [[KHHDataNew sharedData] privateCardByID:self.card.id];
-        }
-        _customView.card = self.card;
-        [_customView reloadTable];
+       
     
     }
     if (self.isReloadVisiteTable){
-        if ([self.card isKindOfClass:[ReceivedCard class]]) {
-            self.card = [[KHHDataNew sharedData] receivedCardByID:self.card.id];
-        }else if ([self.card isKindOfClass:[PrivateCard class]]){
-            self.card = [[KHHDataNew sharedData] privateCardByID:self.card.id];
-        }
-        _visitCalView.card = self.card;
-        [_visitCalView reloadTheTable];
+        
     }
     
 }
@@ -277,6 +279,7 @@
         _visitCalView.theTable.frame = rectTable;
         _visitCalView.viewCtrl = self;
         _visitCalView.footView.backgroundColor = [UIColor clearColor];
+        _visitCalView.addBtn.hidden = YES;
         [self.containView addSubview:_visitCalView];
         
         //客户评估视图
@@ -291,25 +294,16 @@
     
     
     //接收到的卡片不能修改
-//    UIButton *bottomBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-//    bottomBtn.tag = 323;
-//    [bottomBtn addTarget:self action:@selector(bottomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-//    bottomBtn.frame = CGRectMake(260, 360, 50, 50);
-//    [bottomBtn setBackgroundImage:[UIImage imageNamed:@"edit_Btn_Red.png"] forState:UIControlStateNormal];
-//    [self.view insertSubview:bottomBtn atIndex:100];
    
-    
-    //适配一下iphone5
-//    [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:bottomBtn];
-//    [KHHViewAdapterUtil checkIsNeedAddHeightForIphone5:_visitCalView];
+    [KHHViewAdapterUtil checkIsNeedAddHeightForIphone5:_visitCalView];
 }
 
 #pragma mark - action
 
-- (IBAction)btnEditCard:(id)sender {
-    NSLog(@"xx");
-    
-}
+//- (IBAction)btnEditCard:(id)sender {
+//    NSLog(@"xx");
+//    
+//}
 
 - (void)updateViewData:(Card *)temCard{
     UILabel *nameLab = (UILabel *)[self.view viewWithTag:LABEL_NAME_TAG];
@@ -350,6 +344,9 @@
             [_cardView reloadTable];
             [_cardView initView];
             [self updateViewData:self.card];
+            if (_deleteSelfSuccess) {
+                 _deleteSelfSuccess();
+            }           
         };
         [self.navigationController pushViewController:newEditCardVC animated:YES];
         
@@ -362,6 +359,17 @@
         editCustomVC.importFlag = self.card.evaluation.remarks;
         editCustomVC.relationEx = [self.card.evaluation.degree floatValue];
         editCustomVC.customValue = [self.card.evaluation.value floatValue];
+        editCustomVC.addUpdateCostomerSuccess = ^(){
+            if ([self.card isKindOfClass:[ReceivedCard class]]) {
+                self.card = [[KHHDataNew sharedData] receivedCardByID:self.card.id];
+            }else if ([self.card isKindOfClass:[PrivateCard class]]){
+                self.card = [[KHHDataNew sharedData] privateCardByID:self.card.id];
+            }
+            _customView.card = self.card;
+            [_customView reloadTable];
+        };
+        
+        
         [self.navigationController pushViewController:editCustomVC animated:YES];
     }
     
@@ -370,7 +378,7 @@
 - (void)headBtnClick:(id)sender
 {
 
-    //UIButton *bottomBtn = (UIButton *)[self.view viewWithTag:323];
+   
     UIButton *btn = (UIButton *)sender;
     
     if (_lastBtn != btn.tag && _lastBtn != 0) {
@@ -392,16 +400,16 @@
     
     if (btn.tag == 999) {
         [self.containView bringSubviewToFront:_cardView];
-        [_containView bringSubviewToFront:[_containView viewWithTag:10001]];
-        [_containView viewWithTag:10001].hidden = NO;
+        
+        [self changeToSubContaintView:0];
         if (self.card.modelTypeValue != 2) {
             if (self.card.roleTypeValue != 1 || [self.card isKindOfClass:[ReceivedCard class]]) {
-                [_containView viewWithTag:10001].hidden = YES;
+                bottomBtn.hidden = YES;
             }else{
-                [_containView viewWithTag:10001].hidden = NO;
+                bottomBtn.hidden = NO;
             }
         }
-        _isToeCardVC  = YES;
+        
         
     }else if (btn.tag == 1000){
         _visitCalView.isDetailVC = YES;
@@ -411,13 +419,12 @@
 //        rectfoot.origin.y = 260;
 //        _visitCalView.footView.frame = rectfoot;
 //        _visitCalView.theTable.frame = rect;
-        [self.containView bringSubviewToFront:_visitCalView];
-        [_containView viewWithTag:10001].hidden = YES;
+        [self.containView bringSubviewToFront:_visitCalView];        
+        [self changeToSubContaintView:1];
     
     }else if (btn.tag == 1001){
-        [self.containView bringSubviewToFront:_customView];
-        _isToeCardVC = NO;
-        [_containView viewWithTag:10001].hidden = NO;
+        [self.containView bringSubviewToFront:_customView];       
+         [self changeToSubContaintView:2];
     }
 }
 
@@ -462,6 +469,11 @@
 
 //回赠名片选择按钮点击
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    [super alertView:alertView clickedButtonAtIndex:buttonIndex];
+    if (alertView.tag == KHHAlertMessage||alertView.tag == KHHAlertContact) {
+        return;
+    }
+    
     switch (buttonIndex) {
         case 0:
             DLog(@"reply card cancle");
@@ -470,11 +482,18 @@
         {
             DLog(@"begin reply card");
             //注册UI回赠成功失败广播
-            [self observeNotificationName:KHHUIReplyCardSucceeded selector:@"handleReplyCardSucessded:"];
-            [self observeNotificationName:KHHUIReplyCardFailed selector:@"handleReplyCardFailed:"];
-            MBProgressHUD *progess = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
-            progess.labelText = NSLocalizedString(@"正在回赠名片，请稍后", nil);
-          //  [[KHHDataNew sharedData] replyCard:self.card myDefaultReplyCard:self.myDefaultReplyCard];
+//            [self observeNotificationName:KHHUIReplyCardSucceeded selector:@"handleReplyCardSucessded:"];
+//            [self observeNotificationName:KHHUIReplyCardFailed selector:@"handleReplyCardFailed:"];
+           _hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+            _hud.labelText = NSLocalizedString(@"正在回赠名片，请稍后", nil);
+            NSString *receiverIdOrMobile;
+            if ([self.card isKindOfClass:[PrivateCard class]]) {
+                receiverIdOrMobile = self.card.mobilePhone;
+            }else{
+                receiverIdOrMobile = [NSString stringWithFormat:@"%lld",self.card.userIDValue];
+            }
+            [[KHHDataNew sharedData] doRebateCard:receiverIdOrMobile cardId:[NSString stringWithFormat:@"%lld",_myDefaultReplyCard.idValue] cardType:self.card.modelTypeValue delegate:self];
+          
             break;
         }
         default:
@@ -543,4 +562,128 @@
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"回赠名片" message:result delegate:nil cancelButtonTitle:@"ok" otherButtonTitles:nil, nil];
     [alert show];
 }
+
+- (void)changeToSubContaintView:(int)index
+{
+    switch (index) {
+        case 0:
+            
+            if (btnPlanEdit) {
+                btnPlanEdit.hidden = YES;
+            }
+            
+            if (!bottomBtn) {
+                [self btnEditInit];
+            }
+            _isToeCardVC  = YES;
+            
+            bottomBtn.hidden = NO;
+            break;
+        case 1:
+            if (bottomBtn) {
+                bottomBtn.hidden = YES;
+            }
+            
+            if (!btnPlanEdit) {
+                [self btnPlanEditInit];
+            }
+            
+            btnPlanEdit.hidden = NO;
+             break;
+        default:
+            if (btnPlanEdit) {
+                btnPlanEdit.hidden = YES;
+            }
+            
+            if (!bottomBtn) {
+                [self btnEditInit];
+            }
+            
+            bottomBtn.hidden = NO;
+            
+            _isToeCardVC = NO;
+            break;
+    }
+}
+
+- (void)btnEditInit
+{
+
+    bottomBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    bottomBtn.tag = 323;
+    [bottomBtn addTarget:self action:@selector(bottomBtnClick:) forControlEvents:UIControlEventTouchUpInside];
+    bottomBtn.frame = CGRectMake(260, 360, 50, 50);
+    [bottomBtn setBackgroundImage:[UIImage imageNamed:@"edit_Btn_Red.png"] forState:UIControlStateNormal];
+    [self.view insertSubview:bottomBtn atIndex:100];
+    
+    
+    //适配一下iphone5
+    [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:bottomBtn];
+}
+
+- (void)btnPlanEditInit
+{
+    
+    btnPlanEdit = [UIButton buttonWithType:UIButtonTypeCustom];
+    btnPlanEdit.tag = 324;
+    [btnPlanEdit addTarget:self action:@selector(btnPlanAction) forControlEvents:UIControlEventTouchUpInside];
+    btnPlanEdit.frame = CGRectMake(15, 355, 55, 55);
+    [btnPlanEdit setBackgroundImage:[UIImage imageNamed:@"tianjia_Btn_Red"] forState:UIControlStateNormal];
+    [self.view insertSubview:btnPlanEdit atIndex:101];
+    
+    
+    //适配一下iphone5
+    [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:btnPlanEdit];
+}
+
+- (void)btnPlanAction
+{
+    KHHPlanViewController *planPro = [[KHHPlanViewController alloc]init];
+   planPro.paramDic = [[NSMutableDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"plan" ofType:@"plist"]];
+    [planPro set_dicTempTarget:self.card];
+   planPro.title = @"新建计划";
+    planPro.uperSuccess = ^(){
+        if ([self.card isKindOfClass:[ReceivedCard class]]) {
+            self.card = [[KHHDataNew sharedData] receivedCardByID:self.card.id];
+        }else if ([self.card isKindOfClass:[PrivateCard class]]){
+            self.card = [[KHHDataNew sharedData] privateCardByID:self.card.id];
+        }
+        _visitCalView.card = self.card;
+        [_visitCalView reloadTheTable:KHHCalendarViewDataTypeCheckIn];
+    };
+    
+    [self.navigationController pushViewController:planPro animated:YES];
+}
+
+#pragma mark - transCard delegate
+
+- (void)rebateCardForUIFailed:(NSDictionary *)dict
+{
+    [_hud hide:YES];
+    NSMutableString *message = [[NSMutableString alloc] initWithCapacity:0];
+    [message appendString:@"回赠名片"];
+    if (self.card.name && self.card.name.length > 0) {
+        [message appendString:@"给["];
+        [message appendString:self.card.name];
+        [message appendString:@"]"];
+    }
+    [message appendFormat:@"失败，请稍后再试"];
+    [self showReplyResult: message];
+}
+
+- (void)rebateCardForUISuccess
+{
+     [_hud hide:YES];
+    NSMutableString *message = [[NSMutableString alloc] initWithCapacity:0];
+    [message appendString:@"回赠名片"];
+    if (self.card.name && self.card.name.length > 0) {
+        [message appendString:@"给["];
+        [message appendString:self.card.name];
+        [message appendString:@"]"];
+    }
+    [message appendFormat:@"成功"];
+    [self showReplyResult: message];
+}
+
+
 @end

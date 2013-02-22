@@ -14,7 +14,7 @@
 - (NSArray *) allPublicTemplates;// 公共模板
 
 #pragma mark - 模板增量接口
-- (void)doSyncTemplatesWithDate:(NSString *)lastDate delegate:(id<KHHDataTemplateDelegate>) delegate;
+- (void)doSyncTemplates:(id<KHHDataTemplateDelegate>) delegate;
 
 //#pragma mark - 根据模板id和版本获取联系人模板
 //- (void)syncTemplatesWithTemplateIDAndVersion:(NSString *) idAndVersions delegate:(id<KHHDataTemplateDelegate>)delegate;

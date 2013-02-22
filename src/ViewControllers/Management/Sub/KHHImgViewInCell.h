@@ -17,8 +17,10 @@
 
 
 
-@interface KHHImgViewInCell : UIView
-@property(nonatomic,strong) UIImage *img;
+@interface KHHImgViewInCell : UIImageView
+
 @property(nonatomic,strong) id<KHHImgViewInCellDelegate> touchDelegate;
+
+@property(nonatomic,strong) NSString *attachmentId;
 @end
 

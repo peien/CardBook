@@ -12,7 +12,14 @@
 #import "KHHManagementViewController.h"
 #import "KHHFilterPopup.h"
 
-@interface KHHManagementViewController : SuperViewController <UIAlertViewDelegate,KHHFilterPopupDelegate>
+#import "KHHDataNew+SyncContact.h"
+#import "KHHDataTemplateDelegate.h"
+#import "KHHDataGroupDelegate.h"
+#import "KHHDataNew+Card.h"
+#import "KHHDataNew+SignForPlan.h"
+#import "KHHDataNew+Customer.h"
+
+@interface KHHManagementViewController : SuperViewController <UIAlertViewDelegate,KHHFilterPopupDelegate,KHHDataSyncContactDelegate,KHHDataTemplateDelegate,KHHDataGroupDelegate,KHHDataCardDelegate,KHHDataSignPlanDelegate,KHHDataCustomerDelegate>
 @property (nonatomic, strong) UIView *entranceView;
 @property (strong, nonatomic) UIButton *signButton;
 @property (strong, nonatomic) IBOutlet UIButton *guide;

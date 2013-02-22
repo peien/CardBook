@@ -9,9 +9,16 @@
 #import "SuperViewController.h"
 #import "KHHMessageViewController.h"
 #import "KHHEditMSGViewController.h"
+#import "KHHHomeViewController.h"
+#import "DetailInfoViewController.h"
+#import "KHHDataNew+Card.h"
+
 #define TEXT_NEW_MESSAGE_COMMING NSLocalizedString(@"您有新消息到了,可到消息界面查看新消息。",nil)
 
 @implementation SuperViewController
+{
+    NSNumber *_reseaveCardId;
+}
 @synthesize leftBtn;
 @synthesize rightBtn;
 
@@ -71,9 +78,14 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-#pragma mark - delegateMsgForMain
+#pragma mark - KHHDataMessageDelegate
 
-- (void)reseaveDone:(Boolean)haveNewMsg
+- (void)reseaveMsgForUIFailed:(NSDictionary *)dict
+{
+
+}
+
+- (void)reseaveMsgForUISuccess:(Boolean)haveNewMsg
 
 {
     if (haveNewMsg) {
@@ -84,19 +96,14 @@
             UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"新消息"
                                                             message:TEXT_NEW_MESSAGE_COMMING
                                                            delegate:self
-                                                  cancelButtonTitle:@"确认"
-                                                  otherButtonTitles:@"取消", nil];
+                                                  cancelButtonTitle:@"以后看"
+                                                  otherButtonTitles:@"查看", nil];
             alert.tag = KHHAlertMessage;
             [alert show];
         }else{
             [(KHHMessageViewController *)[self.navigationController.viewControllers lastObject] refreshTable];
         }
     }
-    
-}
-
-- (void)reseaveFail
-{
     
 }
 
@@ -112,20 +119,62 @@
        
         case KHHAlertMessage:
         {
-            if (buttonIndex == 0) {
+            if (buttonIndex == 1) {
                 [self gotoMessageListViewController];
             }
             break;
         }
+        case KHHAlertContact:
+        {
+            if (buttonIndex == 1) {
+                [self gotoDetailContactController];
+            }
+            break;
+        }
+            
             default:
             break;
     }
 }
 
--(void) gotoMessageListViewController
+- (void)gotoMessageListViewController
 {
     KHHMessageViewController *messageVC = [[KHHMessageViewController alloc] initWithNibName:nil bundle:nil];
     [self.navigationController pushViewController:messageVC animated:YES];
+}
+
+- (void)gotoDetailContactController
+{
+    
+    DetailInfoViewController *detailVC = [[DetailInfoViewController alloc] initWithNibName:nil bundle:nil];
+    detailVC.card = [[KHHDataNew sharedData] receivedCardByID:_reseaveCardId];
+    [[KHHDataNew sharedData] doMarkIsRead:(ReceivedCard *)detailVC.card  delegate:self];
+    [self.navigationController pushViewController:detailVC animated:YES];
+}
+
+#pragma mark - KHHDataSyncContactDelegate
+
+- (void)touchCardForUISuccess:(NSDictionary *)dict
+{
+    if ([self isMemberOfClass:[KHHHomeViewController class]]
+        )
+    {
+        ((KHHHomeViewController *)self).isNeedReloadTable = YES;
+        [((KHHHomeViewController *)self) reloadTable];
+    }
+        _reseaveCardId = dict[@"card"][@"cardId"];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"新名片"
+                                                        message:@"收到一张新名片"
+                                                       delegate:self
+                                              cancelButtonTitle:@"以后看"
+                                              otherButtonTitles:@"查看", nil];
+        alert.tag = KHHAlertContact;
+        [alert show];    
+}
+
+- (void)touchCardForUIFailed:(NSDictionary *)dict
+{
+    
 }
 
 @end

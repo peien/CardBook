@@ -18,13 +18,21 @@
     return fetched.count;
 }
 
+- (void)reseaveMsg:(id<KHHDataMessageDelegate>)delegate
+{
+    self.delegate = delegate;
+    [self.agent reseaveMessage:self];
+}
+
 #pragma mark - delegates
-- (void)reseaveDone:(Boolean)haveNewMsg
+- (void)reseaveMsgSuccess:(Boolean)haveNewMsg
 {
-
+    [self.delegate reseaveMsgForUISuccess:haveNewMsg];
 }
-- (void)reseaveFail
+
+- (void)reseaveMsgFailed:(NSDictionary *)dict
 {
-
+    [self.delegate reseaveMsgForUIFailed:dict];
 }
+
 @end

@@ -266,7 +266,7 @@ static NSString * const kSyncMarkKeySyncCheckInRecordsLastTime = @"checkInRecord
 static NSString * const kSyncMarkKeySyncCardLastTime = @"cardLastTime";
 static NSString * const kSyncMarkKeySyncCustomerCardLastTime = @"customercardLastTime";
 static NSString * const kSyncMarkKeySyncPlanLastTime = @"planLastTime";
-
+static NSString * const kSyncMarkKeySyncCustomerLastTime = @"customerLastTime";
 
 #pragma mark - user permission
 static NSString * const  kPERMISSION_ORDINARY = @"ordinary_user";

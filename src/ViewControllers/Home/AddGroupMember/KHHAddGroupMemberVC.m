@@ -56,8 +56,8 @@
         self.navigationItem.rightBarButtonItem = nil;
         //self.dataCtrl = [KHHData sharedData];
         //注册移动卡片消息
-        [self observeNotificationName:KHHUIMoveCardsSucceeded selector:@"handleMoveCardsSucceeded:"];
-        [self observeNotificationName:KHHUIMoveCardsFailed selector:@"handleMoveCardsFailed:"];
+//        [self observeNotificationName:KHHUIMoveCardsSucceeded selector:@"handleMoveCardsSucceeded:"];
+//        [self observeNotificationName:KHHUIMoveCardsFailed selector:@"handleMoveCardsFailed:"];
         
     }
     return self;
@@ -297,6 +297,23 @@ int num = 0;
     
    
 }
+
+#pragma mark - move delegate
+-(void) moveGroupMembersForUISuccess
+{
+    [_hud hide:YES];
+    if (_moveSuccess) {
+        _moveSuccess();
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+}
+-(void) moveGroupMembersForUIFailed:(NSDictionary *) dict
+{
+    [_hud hide:YES];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"编辑组员失败" message:dict[kInfoKeyErrorMessage] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alert show];
+}
+
 #pragma mark -
 - (IBAction)cancelBtn:(id)sender
 {

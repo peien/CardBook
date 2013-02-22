@@ -17,7 +17,7 @@
         _title = title;
         _placeholder = placeholder;
         _editingStyle = UITableViewCellEditingStyleNone;
-        _boardType = UIKeyboardTypeASCIICapable;
+        _boardType = UIKeyboardTypeDefault;
     }
     return self;
 }

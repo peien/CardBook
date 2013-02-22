@@ -9,6 +9,7 @@
 #import "KHHNetClinetAPIAgent.h"
 #import "KHHNetAgentCardDelegates.h"
 #import "Card.h"
+#import "ReceivedCard.h"
 
 @interface KHHNetClinetAPIAgent (Card)
 
@@ -54,4 +55,6 @@
  * 方法 put
  */
 - (void)latestCustomerCard:(id<KHHNetAgentCardDelegate>) delegate;
+
+- (void)markIsRead:(ReceivedCard *)aCard delegate:(id<KHHNetAgentCardDelegate>)delegate;
 @end

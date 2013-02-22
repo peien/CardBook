@@ -8,9 +8,13 @@
 
 #import "KHHDataNew.h"
 #import "MsgDelegates.h"
+#import "KHHNetClinetAPIAgent+Message.h"
+#import "KHHDataMessageDelegate.h"
 
-@interface KHHDataNew (Message)<delegateMsgForMain>
+@interface KHHDataNew (Message)<KHHNetAgentMessageDelegate>
 
 - (NSUInteger)countOfUnreadMessages;
+
+- (void)reseaveMsg:(id<KHHDataMessageDelegate>)delegate;
 
 @end

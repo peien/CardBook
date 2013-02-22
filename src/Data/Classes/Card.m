@@ -139,13 +139,14 @@
         // 公司 {
         NSNumber *companyID = iCard.companyID;
             // 保证公司对象存在
-            if (companyID.integerValue) {
+            if (![companyID isEqual:[NSNull null]] &&companyID.integerValue) {
                 self.company = [Company objectByID:companyID createIfNone:YES];
             } else {
                 // 公司无ID，通常是PrivateCard。
                 if (nil == self.company) self.company = [Company newObject];
             }
         self.company.name = iCard.companyName;
+        self.company.email = iCard.companyEmail;
         // }
         
         // logo {

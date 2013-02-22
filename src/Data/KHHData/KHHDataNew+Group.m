@@ -204,11 +204,11 @@
 }
 
 //修改分组下的组员
--(void) moveGroupMembersSuccess
+-(void) moveGroupMembersSuccess:(int) groupId;
 {
     DLog(@"moveGroupMembersSuccess!");
     //修改分组成功，与服务器同步一下分组组员
-    [self getGroupMembers:self.delegate syncType:KHHGroupSyncTypeSyncGroupMenbersMove];
+    [self getGroupMembers:groupId delegate:self.delegate syncType:KHHGroupSyncTypeSyncGroupMenbersMove];
 }
 -(void) moveGroupMembersFailed:(NSDictionary *) dict
 {
@@ -235,8 +235,8 @@
         case KHHGroupSyncTypeSyncGroupMenbersMove:
         {
             //告诉界面分组移动成功
-            if ([self.delegate respondsToSelector:@selector(moveGroupMembersForUIFailed:)]) {
-                [self.delegate moveGroupMembersForUIFailed:dict];
+            if ([self.delegate respondsToSelector:@selector(moveGroupMembersForUISuccess)]) {
+                [self.delegate moveGroupMembersForUISuccess];
             }
         }
             break;

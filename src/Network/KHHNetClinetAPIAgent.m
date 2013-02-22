@@ -76,17 +76,26 @@
 //serverurl/ cellvisiting/mobile/{sessionId}/{companyId}/method
 - (NSString *)queryStringWithMethod:(NSString *) method
 {
+    NSMutableString *cellvisiting = [[NSMutableString alloc]init];
+   
+#ifdef HAIBO
+    [cellvisiting appendString:@"cellvisiting-mobile"];   
+#else
+    [cellvisiting appendString:@"cellvisiting"];
+#endif
+    
     if ([method isEqualToString:@"register"]) {
-        return @"cellvisiting/account/register";
+        return [NSString stringWithFormat:@"%@/account/register",cellvisiting];
     }
     if ([method isEqualToString:@"login"]) {
-        return @"cellvisiting/account/login";
+        
+        return [NSString stringWithFormat:@"%@/account/login",cellvisiting];
     }
     if ([method rangeOfString:@"resetPwd"].location == 0) {
-        return [NSString stringWithFormat:@"cellvisiting/account/%@",method];
+        return [NSString stringWithFormat:@"%@/account/%@",cellvisiting,method];
     }
-    NSString * urlFormat = @"cellvisiting/mobile/%@/%@/%@";
-
+    [cellvisiting appendString:@"/mobile/%@/%@/%@"];
+    NSString *urlFormat = cellvisiting;
     return [NSString stringWithFormat:urlFormat,[KHHUser shareInstance].sessionId ,[KHHUser shareInstance].companyId,method];
 }
 
@@ -101,7 +110,7 @@
     NSMutableDictionary *dict = [NSJSONSerialization JSONObjectWithData:responseData
                                                                 options:NSJSONReadingMutableContainers
                                                                   error:nil];
-    NSLog(@"%@",responseData);
+    NSLog(@"%@",base64);
     NSMutableDictionary *result = dict[@"jsonData"];
     NSNumber *state = result[@"state"];
     NSInteger code = KHHErrorCodeUnresolvableData;

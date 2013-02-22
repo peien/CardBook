@@ -11,7 +11,7 @@
 @implementation Edit_eCardViewCell
 @synthesize name = _name;
 @synthesize value = _value;
-@synthesize styleLab = _styleLab;
+//@synthesize styleLab = _styleLab;
 
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier

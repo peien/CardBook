@@ -16,7 +16,13 @@
 #import "KHHMemoCell.h"
 #import "KHHImageCell.h"
 #import "KHHDataNew+SignForPlan.h"
+#import "InterPlan.h"
 
+typedef enum {
+    plan =0,
+    collect,
+    sign,
+} planCollectSign;
 
 @interface KHHPlanViewController : SuperViewController<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate,HZAreaPickerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate,KHHInputTableViewHiddenDelegate,KHHMemoCellDelegate,KHHImgViewInCellDelegate,KHHDataSignPlanDelegate>
 {
@@ -30,4 +36,14 @@
 
 
 @property (nonatomic,strong)NSMutableDictionary *paramDic;
+
+
+@property (nonatomic,strong)void(^uperSuccess)();
+
+- (void)set_dicTempTarget:(Card *)card;
+
+- (void)setTargetStr:(NSString *)target cardsArr:(NSArray *)cardsArrPro;
+
+- (void)setSchedule:(Schedule *)schedulePro type:(planCollectSign)type;
+
 @end

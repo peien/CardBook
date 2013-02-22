@@ -13,6 +13,8 @@
 @property (nonatomic,strong) NSString *sessionId;
 @property (nonatomic,strong) NSString *companyId;
 
+@property (nonatomic,assign) Boolean isFinishLogin;
+
 @property (nonatomic,strong) NSString *username;
 @property (nonatomic,strong) NSString *password;
 @property (nonatomic,assign) NSString *userId;

@@ -45,6 +45,11 @@
     [self.agent changePassword:oldPassword toNewPassword:newPassword delegate:self];
 }
 
+- (void)saveToken
+{
+    [self.agent saveToken];
+}
+
 #pragma mark - delegate - createAccount
 - (void)createAccountSuccess:(NSDictionary *)userInfo
 {
@@ -79,8 +84,6 @@
     }else{
         [(id<KHHDataAccountDelegate>)self.delegate loginForUISuccessStep2:userInfo];
     }
-    
-    
     
 }
 

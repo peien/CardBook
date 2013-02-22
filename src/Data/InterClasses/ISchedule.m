@@ -33,6 +33,7 @@
     
     //appendixs, IImage数组
     NSArray *imgList = json[JSONDataKeyAppendixs];
+    
     self.imageList = [NSMutableArray arrayWithCapacity:imgList.count];
     for (id img in imgList) {
         IImage *ii = [[[IImage alloc] init] updateWithJSON:img];

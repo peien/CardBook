@@ -16,10 +16,11 @@
 #import "MBProgressHUD.h"
 #import "KHHFrameCardView.h"
 #import "KHHDataNew+Card.h"
+#import "KHHDataNew+SyncContact.h"
 
 @class XLPageControl;
 
-@interface KHHCardView : UIView<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,KHHDataCardDelegate>
+@interface KHHCardView : UIView<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate,KHHDataCardDelegate,KHHDataSyncContactDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *theTable;
 @property (nonatomic, strong) UIView *card;
 @property (strong, nonatomic) UIButton *saveToContactBtn;

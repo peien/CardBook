@@ -21,10 +21,13 @@
 #import "MBProgressHUD.h"
 
 #import "KHHDataNew+Card.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+#import "KHHActionSheet.h"
+
 
 @interface KHHPlanViewController ()
 {
-    NSMutableDictionary *dicTemp;
+    
     CGRect rectForKey;
     NSMutableArray *inputsForKeyboard;
     
@@ -33,8 +36,14 @@
     NSMutableArray *cardsArr;
     
     BMKAddrInfo *_addrInfo;
-    
+    NSMutableDictionary *_dicTemp;
     MBProgressHUD *_hud;
+    
+    //for edit for imgs
+    NSMutableDictionary *_iPlan;
+    
+    //for collect sign
+    planCollectSign _type;
 }
 @end
 
@@ -46,11 +55,13 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
-        table = [[KHHInputTableView alloc]initWithFrame:CGRectZero style:UITableViewStyleGrouped];
+        table = [[KHHInputTableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
         table.delegate = self;
         table.dataSource = self;
         table.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
         table.hiddenDelgate = self;
+        
+        // table.backgroundView = nil;
     }
     return self;
 }
@@ -100,7 +111,7 @@
     self.areaPicker = nil;
     self.paramDic = nil;
     
-    dicTemp = nil;
+    _dicTemp = nil;
     if (inputsForKeyboard) {
         [inputsForKeyboard removeAllObjects];
         inputsForKeyboard = nil;
@@ -111,7 +122,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    self.view.frame = CGRectMake(0, 20, self.view.frame.size.width, self.view.frame.size.height-100);
+    //    self.view.frame = CGRectMake(0, 20, self.view.frame.size.width, self.view.frame.size.height-100);
     //self.title =  @"新建计划";
     [self doUIRightButton];
     // NSLog(@"%f",);
@@ -121,11 +132,26 @@
     
     inputsForKeyboard = [[NSMutableArray alloc]initWithCapacity:10];
     [self.view addSubview:table];
-    dicTemp = [[NSMutableDictionary alloc]init];
+    
+    if (!_dicTemp) {
+        _dicTemp = [[NSMutableDictionary alloc]init];
+        [_dicTemp setValue:[KHHDateUtil nowDate] forKey:@"date"];
+    }
+    
+    if (![_dicTemp objectForKey:@"date"]) {
+        [_dicTemp setValue:[KHHDateUtil nowDate] forKey:@"date"];
+    }
+    
+    if (![_dicTemp objectForKey:@"time"]) {
+        [_dicTemp setValue:[KHHDateUtil strTimeFromDate:[NSDate new]] forKey:@"time"];
+    }
+    
+    
     KHHUpperView *upView = [[KHHUpperView alloc]initWithFrame:CGRectMake(0, self.view.frame.size.height-44-50, 320, 50)];
     [self.view addSubview:upView];
-    upView.upperBtn.enabled =  [self where] == -1||[dicTemp objectForKey:@"where"]?YES:NO;
+    //    upView.upperBtn.enabled =  [self where] == -1||[_dicTemp objectForKey:@"where"]?YES:NO;
     [upView.upperBtn addTarget:self action:@selector(uper) forControlEvents:UIControlEventTouchUpInside];
+    
     //weakself = self;
     
 }
@@ -139,7 +165,7 @@
 
 - (void)rightBarButtonClick:(id)sender
 {
-     KHHCalendarViewController *calVC = [[KHHCalendarViewController alloc] initWithNibName:nil bundle:nil];
+    KHHCalendarViewController *calVC = [[KHHCalendarViewController alloc] initWithNibName:nil bundle:nil];
     calVC.card = [[KHHDataNew sharedData]allMyCards][0];
     [self.navigationController pushViewController:calVC animated:YES];
 }
@@ -154,8 +180,8 @@
 
 - (void)dateChanged
 {
-    [dicTemp setValue:[KHHDateUtil strFromDate:[_datePicker date]] forKey:@"date"];
-    [dicTemp setValue:[KHHDateUtil strTimeFromDate:[_datePicker date]] forKey:@"time"];
+    [_dicTemp setValue:[KHHDateUtil strFromDate:[_datePicker date]] forKey:@"date"];
+    [_dicTemp setValue:[KHHDateUtil strTimeFromDate:[_datePicker date]] forKey:@"time"];
     [table reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:[self date] inSection:0],[NSIndexPath indexPathForRow:[self time] inSection:0],nil]  withRowAnimation:UITableViewRowAnimationNone];
 }
 
@@ -187,11 +213,11 @@
             ((KHHTargetCell *)cell).placeStr = @"请选择拜访对象";
             ((KHHTargetCell *)cell).field.delegate = self;
             ((KHHTargetCell *)cell).field.tag = 10020;
-           
+            
             
         }
-        if ([dicTemp objectForKey:@"target"]) {
-            ((KHHTargetCell *)cell).field.text = [dicTemp objectForKey:@"target"];
+        if ([_dicTemp objectForKey:@"target"]) {
+            ((KHHTargetCell *)cell).field.text = [_dicTemp objectForKey:@"target"];
         }
         {
             objectBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -211,16 +237,16 @@
         }
         if (indexPath.row == [self date]) {
             ((KHHDateCell *)cell).headStr = @"日期";
-            if ([dicTemp objectForKey:@"date"]) {
-                ((KHHDateCell *)cell).dateStr = [dicTemp objectForKey:@"date"];
+            if ([_dicTemp objectForKey:@"date"]) {
+                ((KHHDateCell *)cell).dateStr = [_dicTemp objectForKey:@"date"];
             }else{
                 ((KHHDateCell *)cell).dateStr = [KHHDateUtil nowDate];
             }
         }
         if (indexPath.row == [self time]) {
             ((KHHDateCell *)cell).headStr = @"时间";
-            if ([dicTemp objectForKey:@"time"]) {
-                ((KHHDateCell *)cell).dateStr = [dicTemp objectForKey:@"time"];
+            if ([_dicTemp objectForKey:@"time"]) {
+                ((KHHDateCell *)cell).dateStr = [_dicTemp objectForKey:@"time"];
             }else{
                 ((KHHDateCell *)cell).dateStr = [KHHDateUtil strTimeFromDate:[NSDate new]];
             }
@@ -237,13 +263,13 @@
         ((KHHLocationCell *)cell).headStr = @"位置";
         ((KHHLocationCell *)cell).field.delegate = self;
         ((KHHLocationCell *)cell).field.tag = 10021;
-        if ([dicTemp objectForKey:@"location"]) {
-            ((KHHLocationCell *)cell).locationStr = [dicTemp objectForKey:@"location"];
+        if ([_dicTemp objectForKey:@"location"]) {
+            ((KHHLocationCell *)cell).locationStr = [_dicTemp objectForKey:@"location"];
         }else{
             ((KHHLocationCell *)cell).locationStr = @"请选择省市地";
         }
-        if ([dicTemp objectForKey:@"street"]) {
-            ((KHHLocationCell *)cell).street = [dicTemp objectForKey:@"street"];
+        if ([_dicTemp objectForKey:@"street"]) {
+            ((KHHLocationCell *)cell).street = [_dicTemp objectForKey:@"street"];
         }
         
     }
@@ -256,8 +282,8 @@
         ((KHHImageCell *)cell).headStr = @"图片";
         [((KHHImageCell *)cell).imageBtn addTarget:self action:@selector(addImg) forControlEvents:UIControlEventTouchUpInside];
         
-        if ([dicTemp objectForKey:@"imgArr"]) {
-            NSArray* imgArr = [dicTemp objectForKey:@"imgArr"];
+        if ([_dicTemp objectForKey:@"imgArr"]) {
+            NSArray* imgArr = [_dicTemp objectForKey:@"imgArr"];
             ((KHHImageCell *)cell).imgArr = imgArr;
         }
     }
@@ -272,8 +298,8 @@
             ((KHHMemoCell *)cell).headStr = @"备注";
             ((KHHMemoCell *)cell).indexpath = indexPath;
             ((KHHMemoCell *)cell).pickerDelegate = self;
-            if ([dicTemp objectForKey:@"memo"]) {
-                ((KHHMemoCell *)cell).butTitle = [dicTemp objectForKey:@"memo"];
+            if ([_dicTemp objectForKey:@"memo"]) {
+                ((KHHMemoCell *)cell).butTitle = [_dicTemp objectForKey:@"memo"];
             }else{
                 ((KHHMemoCell *)cell).butTitle = @"请选择";
             }
@@ -282,8 +308,8 @@
             ((KHHMemoCell *)cell).headStr = @"提醒";
             ((KHHMemoCell *)cell).indexpath = indexPath;
             ((KHHMemoCell *)cell).pickerDelegate = self;
-            if ([dicTemp objectForKey:@"remind"]) {
-                ((KHHMemoCell *)cell).butTitle = [dicTemp objectForKey:@"remind"];
+            if ([_dicTemp objectForKey:@"remind"]) {
+                ((KHHMemoCell *)cell).butTitle = [_dicTemp objectForKey:@"remind"];
             }else{
                 ((KHHMemoCell *)cell).butTitle = @"不提醒";
             }
@@ -300,8 +326,8 @@
             ((KHHTargetCell *)cell).field.delegate = self;
             ((KHHTargetCell *)cell).field.tag = 10022;
         }
-        if ([dicTemp objectForKey:@"descript"]) {
-            ((KHHTargetCell *)cell).field.text = [dicTemp objectForKey:@"descript"];
+        if ([_dicTemp objectForKey:@"descript"]) {
+            ((KHHTargetCell *)cell).field.text = [_dicTemp objectForKey:@"descript"];
         }
     }
     
@@ -316,12 +342,12 @@
             tap.numberOfTouchesRequired = 1;
             [cellPro.rotaView addGestureRecognizer:tap];
             rotaView = cellPro.rotaView;
-            if (![dicTemp objectForKey:@"where"]) {
+            if (![_dicTemp objectForKey:@"where"]) {
                 [self updateLocation:tap];
             }
         }
-        if ([dicTemp objectForKey:@"where"]) {
-            ((KHHForWhereCell *)cell).locStrPro = [dicTemp objectForKey:@"where"];
+        if ([_dicTemp objectForKey:@"where"]) {
+            ((KHHForWhereCell *)cell).locStrPro = [_dicTemp objectForKey:@"where"];
         }
     }
     
@@ -338,15 +364,15 @@
     [rotaView startAnimating];
     
     [[KHHBMapLocationController sharedController] doGetLocation:^(BMKAddrInfo *addrInfo) {
-       // NSLog(@"locStr%@",_addrInfo.strAddr);
+        // NSLog(@"locStr%@",_addrInfo.strAddr);
         _addrInfo = addrInfo;
-        [dicTemp setValue:addrInfo.strAddr forKey:@"where"];
-         [table reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self where] inSection:0]]  withRowAnimation:UITableViewRowAnimationNone];
+        [_dicTemp setValue:addrInfo.strAddr forKey:@"where"];
+        [table reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self where] inSection:0]]  withRowAnimation:UITableViewRowAnimationNone];
         [rotaView stopAnimating];
         
     } fail:^{
         [rotaView stopAnimating];
-       
+        
     }];
 }
 
@@ -355,7 +381,7 @@
 - (void)addImg{
     [table showNormal];
     [self hiddenKeyboard];
-    if ([dicTemp objectForKey:@"imgArr"]&&[[dicTemp objectForKey:@"imgArr"] count]>=4) {
+    if ([_dicTemp objectForKey:@"imgArr"]&&[[_dicTemp objectForKey:@"imgArr"] count]>=4) {
         UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"" message:@"最多4张图片" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alert show];
         return;
@@ -365,6 +391,7 @@
                                                  cancelButtonTitle:@"取消"
                                             destructiveButtonTitle:nil
                                                  otherButtonTitles:nil, nil];
+    
     [actSheet addButtonWithTitle:@"本地相册"];
     [actSheet addButtonWithTitle:@"拍照"];
     actSheet.tag = 10010;
@@ -375,18 +402,19 @@
 - (void)showLarge:(UIView *)img
 {
     KHHFullFrameController *fullVC = [[KHHFullFrameController alloc] initWithNibName:nil bundle:nil];
-    fullVC.image = ((KHHImgViewInCell *)img).img;
+    fullVC.image = ((KHHImgViewInCell *)img).image;
     [self.navigationController pushViewController:fullVC animated:YES];
 }
 
 - (void)doDelete:(UIView *)img
 {
-    UIActionSheet *actSheet = [[UIActionSheet alloc] initWithTitle:@""
-                                                          delegate:self
-                                                 cancelButtonTitle:@"取消"
-                                            destructiveButtonTitle:nil
-                                                 otherButtonTitles:nil, nil];
-    [actSheet setValue:img forKey:@"img"];
+    KHHActionSheet *actSheet = [[KHHActionSheet alloc] initWithTitle:@""
+                                                            delegate:self
+                                                   cancelButtonTitle:@"取消"
+                                              destructiveButtonTitle:nil
+                                                   otherButtonTitles:nil, nil];
+    [actSheet.dic setValue:img forKey:@"img"];
+    [actSheet.dic setValue:((KHHImgViewInCell *)img).attachmentId forKey:@"attachmentId"];
     [actSheet addButtonWithTitle:@"删除图片"];
     actSheet.tag = 10011;
     [actSheet showInView:self.view];
@@ -416,11 +444,11 @@
     
     
     if (textField.tag == 10022) {
-        [dicTemp setValue:textField.text forKey:@"descript"];
+        [_dicTemp setValue:textField.text forKey:@"descript"];
     }else if(textField.tag == 10020){
-        [dicTemp setValue:textField.text forKey:@"target"];
+        [_dicTemp setValue:textField.text forKey:@"target"];
     }else{
-        [dicTemp setValue:textField.text forKey:@"street"];
+        [_dicTemp setValue:textField.text forKey:@"street"];
     }
     
 }
@@ -485,9 +513,9 @@
 - (void)pickerDidChaneStatus:(HZAreaPickerView *)picker
 {
     if (picker.locate.district) {
-        [dicTemp setValue:[NSString stringWithFormat:@"%@ %@ %@", picker.locate.state, picker.locate.city, picker.locate.district] forKey:@"location"];
+        [_dicTemp setValue:[NSString stringWithFormat:@"%@ %@ %@", picker.locate.state, picker.locate.city, picker.locate.district] forKey:@"location"];
     }else{
-        [dicTemp setValue:[NSString stringWithFormat:@"%@ %@", picker.locate.state, picker.locate.city] forKey:@"location"];
+        [_dicTemp setValue:[NSString stringWithFormat:@"%@ %@", picker.locate.state, picker.locate.city] forKey:@"location"];
     }
     
     [table reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self local0] inSection:0]]  withRowAnimation:UITableViewRowAnimationNone];
@@ -497,7 +525,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-   // NSLog(@"%d",indexPath.row);
+    // NSLog(@"%d",indexPath.row);
     
     if (indexPath.row == [self date]||indexPath.row == [self time]||indexPath.row == [self local0]||indexPath.row == [self memo]||indexPath.row == [self remind]) {
         rectForKey = [tableView cellForRowAtIndexPath:indexPath].frame;
@@ -603,30 +631,65 @@
 #pragma mark - imagePicker delegate
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingImage:(UIImage *)image editingInfo:(NSDictionary *)editingInfo
 {
-    NSMutableArray *imgArr ;
-    if ([dicTemp objectForKey:@"imgArr"]) {
-        imgArr= [dicTemp objectForKey:@"imgArr"];
-    }else{
-        imgArr = [[NSMutableArray alloc]initWithCapacity:4];
-        [dicTemp setValue:imgArr forKey:@"imgArr"];
+    if (_iPlan) {
+        [self dismissModalViewControllerAnimated:YES];
+        _hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+        _hud.labelText = @"图片添加...";
+        [[KHHDataNew sharedData]doAddImg:_iPlan[@"planId"] image:image delegate:self];
+        _iPlan[@"image"] = image;
+        return;
     }
-    KHHImgViewInCell *img = [[KHHImgViewInCell alloc]init];
-    img.img = image;
-    img.touchDelegate = self;
-    [imgArr addObject:img];
+    
+    [self imgArrPro:image URL:nil attachmentId:nil];
+    
     [table reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self img] inSection:0]]  withRowAnimation:UITableViewRowAnimationNone];
     [self dismissModalViewControllerAnimated:YES];
     
 }
 
 
+- (void)imgArrPro:(UIImage *)image URL:(NSURL *)url attachmentId:(NSString *)attachmentId
+{
+    NSMutableArray *imgArr ;
+    if ([_dicTemp objectForKey:@"imgArr"]) {
+        imgArr = [_dicTemp objectForKey:@"imgArr"];
+    }else{
+        imgArr = [[NSMutableArray alloc]initWithCapacity:4];
+        [_dicTemp setValue:imgArr forKey:@"imgArr"];
+    }
+    KHHImgViewInCell *img = [[KHHImgViewInCell alloc]init];
+    if (image) {
+        [img setImage:image];
+        
+    }
+    if (url) {
+        //todo for complete
+        [img setImageWithURL:url placeholderImage:[UIImage imageNamed:@"ic_shuaxin1"]];
+        img.attachmentId = attachmentId;
+    }
+    
+    img.touchDelegate = self;
+    [imgArr addObject:img];
+}
+
 #pragma mark - actionsheet delegate
+
+
+
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if (actionSheet.tag == 10011) {
         if (buttonIndex == 1 ){
             
-            [[dicTemp objectForKey:@"imgArr"]removeObject:[actionSheet valueForKey:@"img"] ] ;
+            if (_iPlan) {
+                _hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
+                _hud.labelText = @"图片删除...";
+                _iPlan[@"imgToDele"] = [((KHHActionSheet *)actionSheet).dic valueForKey:@"img"];
+                [[KHHDataNew sharedData]doDeleteImg:_iPlan[@"planId"] attachmentId:[((KHHActionSheet *)actionSheet).dic valueForKey:@"attachmentId"] delegate:self];
+                return;
+            }
+            
+            [[_dicTemp objectForKey:@"imgArr"]removeObject:[((KHHActionSheet *)actionSheet).dic valueForKey:@"img"] ] ;
             [table reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self img] inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
         }
         
@@ -713,11 +776,11 @@
 - (void)showTitle:(NSString *)title tag:(int)tag
 {
     if(tag == 10030){
-        [dicTemp setValue:title forKey:@"memo"];
+        [_dicTemp setValue:title forKey:@"memo"];
         [table reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self memo] inSection:0]]  withRowAnimation:UITableViewRowAnimationNone];
     }
     if(tag == 10031){
-        [dicTemp setValue:title forKey:@"remind"];
+        [_dicTemp setValue:title forKey:@"remind"];
         [table reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self remind] inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
     }
     
@@ -739,14 +802,14 @@
         
         [cardsArr addObject:card];
         NSString *strPro2;
-        if ([dicTemp objectForKey:@"target"]&&![[dicTemp objectForKey:@"target"] isEqualToString:@""]) {
-            strPro2 = [dicTemp objectForKey:@"target"];
+        if ([_dicTemp objectForKey:@"target"]&&![[_dicTemp objectForKey:@"target"] isEqualToString:@""]) {
+            strPro2 = [_dicTemp objectForKey:@"target"];
             if (![strPro2 isEqualToString:@""]&&![strPro2 hasSuffix:@";"]) {
                 strPro2 = [NSString stringWithFormat:@"%@;",strPro2];
             }
             
         }
-
+        
         
         NSMutableString *strPro = [[NSMutableString alloc]init];
         NSString *name = [NSString stringByFilterNilFromString:card.name];
@@ -762,23 +825,100 @@
                 [strPro appendString:[NSString stringWithFormat:@"(%@);",company]];
             }
         }
-
-        [dicTemp setValue:[NSString stringWithFormat:@"%@%@",strPro2?strPro2:@"",strPro] forKey:@"target"];
+        
+        [_dicTemp setValue:[NSString stringWithFormat:@"%@%@",strPro2?strPro2:@"",strPro] forKey:@"target"];
         
         [table reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:[self target] inSection:0],nil]  withRowAnimation:UITableViewRowAnimationNone];
     };
-   // homeVC.visitVC = self;
+    // homeVC.visitVC = self;
     [self.navigationController pushViewController:homeVC animated:YES];
 }
 
-- (void)setDicTempTarget
+#pragma mark - to init dicTemp
+
+- (void)set_dicTempTarget:(Card *)card
 {
-   
-    for (Card *card in cardsArr) {
+    if (!cardsArr) {
+        cardsArr = [[NSMutableArray alloc]init];
+    }
+    if ([cardsArr containsObject:card]) {
+        return;
+    }
+    [cardsArr addObject:card];
+    if (!_dicTemp) {
+        _dicTemp = [[NSMutableDictionary alloc]init];
+    }
+    if (card.company && card.company.name && card.company.name.length > 0){
+        [_dicTemp setValue: [NSString stringWithFormat:@"%@(%@);",card.name,card.company.name] forKey:@"target"];
+        return;
+    }
+    [_dicTemp setValue: [NSString stringWithFormat:@"%@;",card.name] forKey:@"target"];
+    //    [table reloadRowsAtIndexPaths:[NSArray arrayWithObjects:[NSIndexPath indexPathForRow:[self target] inSection:0],nil]  withRowAnimation:UITableViewRowAnimationNone];
+    
+}
+
+- (void)setTargetStr:(NSString *)target cardsArr:(NSArray *)cardsArrPro
+{
+    
+    
+    if (!_dicTemp) {
+        _dicTemp = [[NSMutableDictionary alloc]init];
+    }
+    
+    if (target) {
+        [_dicTemp setValue: target forKey:@"target"];
+    }
+    
+    if (cardsArrPro) {
+        if (!cardsArr) {
+            cardsArr = [[NSMutableArray alloc]init];
+        }
+        [cardsArr setArray:cardsArrPro];
+    }
+    
+    
+}
+
+- (void)setSchedule:(Schedule *)schedulePro type:(planCollectSign)type
+{
+    _type = type;
+    
+    if(!_iPlan)
+    {
+        _iPlan = [[NSMutableDictionary alloc]initWithCapacity:4];
+    }
+    [_iPlan setValue:[NSString stringWithFormat:@"%lld",schedulePro.idValue] forKey:@"planId"];
+    
+    if (!_dicTemp) {
+        _dicTemp = [[NSMutableDictionary alloc]init];
+    }
+    [_dicTemp setValue:schedulePro.customer forKey:@"target"];
+    if (!cardsArr) {
+        cardsArr = [[NSMutableArray alloc]init];
+    }
+    [cardsArr setArray:[schedulePro.targets allObjects]];
+    if (schedulePro.plannedDate) {
+        [_dicTemp setValue:[KHHDateUtil strFromDate:schedulePro.plannedDate] forKey:@"date"];
+        [_dicTemp setValue:[KHHDateUtil strTimeFromDate:schedulePro.plannedDate] forKey:@"time"];
+    }
+    
+    if ([[schedulePro.images allObjects] count]>0) {
+        for (Image *imgDB in [schedulePro.images allObjects]) {
+            [self imgArrPro:nil URL:[NSURL URLWithString:imgDB.url] attachmentId:[NSString stringWithFormat:@"%lld",imgDB.idValue]];
+        }
+    }
+    if (schedulePro.address) {
+        if (!schedulePro.address.other) {
+             [_dicTemp setValue:[NSString stringWithFormat:@"%@ %@", schedulePro.address.province, schedulePro.address.city] forKey:@"location"];
+        }else{
+            [_dicTemp setValue:[NSString stringWithFormat:@"%@ %@", schedulePro.address.province, schedulePro.address.city] forKey:@"location"];
+            _dicTemp[@"street"] = schedulePro.address.other;
+        }
         
-        
-        //公司
-           }
+    }
+    if (schedulePro.content) {
+        _dicTemp[@"descript"] = schedulePro.content;
+    }
     
 }
 
@@ -799,7 +939,7 @@
 }
 
 - (int)date
-{    
+{
     if ([_paramDic valueForKeyPath:@"date"]) {
         return [[_paramDic valueForKeyPath:@"date"] integerValue];
     }
@@ -866,36 +1006,73 @@
 
 #pragma mark - for uper delegate
 
+
+
 - (void)uper
 {
-    if ([self target]!=-1&&![[dicTemp objectForKey:@"target"] length]) {
+    if ([self target]!=-1&&![[_dicTemp objectForKey:@"target"] length]) {
         UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"上传失败" message:@"客户不能为空" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alert show];
         return;
     }
-    if ([self descript]!=-1&&![[dicTemp objectForKey:@"descript"] length]) {
+    
+    NSString * strPro = ((NSString *)[_dicTemp objectForKey:@"target"]);
+    if(![[strPro substringFromIndex:[strPro length]-1] isEqualToString:@";"]) {
+        [_dicTemp setValue:[NSString stringWithFormat:@"%@;",strPro] forKey:@"target"];
+        
+    }
+    
+    if ([self descript]!=-1&&![[_dicTemp objectForKey:@"descript"] length]) {
         UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"上传失败" message:@"说明不能为空" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
         [alert show];
         return;
     }
+    
+    if ([self where]!=-1&&!_dicTemp[@"where"]) {
+        UIAlertView * alert = [[UIAlertView alloc]initWithTitle:@"上传失败" message:@"请完成定位" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+        [alert show];
+        return;
+    }
+    
     InterPlan *iplan = [[InterPlan alloc]init];
+    
+    iplan.planTime = [NSString stringWithFormat:@"%@ %@:00",[_dicTemp objectForKey:@"date"],[_dicTemp objectForKey:@"time"]];
     iplan.cardsArr = cardsArr;
-    iplan.customerName = [dicTemp objectForKey:@"target"];
-    iplan.content = [dicTemp objectForKey:@"descript"];
-    iplan.imgViews = [dicTemp objectForKey:@"imgArr"];
-    iplan.remindDate = [dicTemp objectForKey:@"remind"];
-    iplan.localStr = [dicTemp objectForKey:@"location"];
-    iplan.address = [dicTemp objectForKey:@"street"];
+    
+    iplan.customerName = [_dicTemp objectForKey:@"target"];
+    iplan.content = [_dicTemp objectForKey:@"descript"];
+    if (!_iPlan) {
+        iplan.imgViews = [_dicTemp objectForKey:@"imgArr"];
+    }
+    iplan.remindDate = [_dicTemp objectForKey:@"remind"];
+    iplan.localStr = [_dicTemp objectForKey:@"location"];
+    iplan.address = [_dicTemp objectForKey:@"street"];
     _hud = [MBProgressHUD showHUDAddedTo:self.navigationController.view animated:YES];
     _hud.labelText = @"正在上传...";
-    [[KHHDataNew sharedData] doAddPlan:iplan  delegate:self];
     
+    if (_type == collect) {
+        iplan.id = [NSNumber numberFromString:_iPlan[@"planId"]];
+        iplan.addrInfo = _addrInfo;
+        iplan.finished = @"true";
+        [[KHHDataNew sharedData] doUpdatePlan:iplan delegate:self];
+        return;
+    }
+    if (_iPlan) {
+        iplan.id = [NSNumber numberFromString:_iPlan[@"planId"]];
+        [[KHHDataNew sharedData] doUpdatePlan:iplan delegate:self];
+        return;
+    }
+    [[KHHDataNew sharedData] doAddPlan:iplan  delegate:self];
     NSLog(@"!!!!!enable");
 }
 
 - (void)addPlanForUISuccess
 {
     [_hud hide:YES];
+    if (_uperSuccess) {
+        _uperSuccess();
+    }
+    [self.navigationController popViewControllerAnimated:YES];
     NSLog(@"success");
 }
 - (void)addPlanForUIFailed:(NSDictionary *)dict
@@ -904,6 +1081,69 @@
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"上传失败" message:dict[kInfoKeyErrorMessage] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
     [alert show];
     NSLog(@"Failed");
+}
+
+- (void)updatePlanForUISuccess
+{
+    [_hud hide:YES];
+    if (_uperSuccess) {
+        _uperSuccess();
+    }
+    [self.navigationController popViewControllerAnimated:YES];
+    NSLog(@"success");
+}
+- (void)updatePlanForUIFailed:(NSDictionary *)dict
+{
+    [_hud hide:YES];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"修改计划失败" message:dict[kInfoKeyErrorMessage] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alert show];
+    NSLog(@"Failed");
+}
+
+
+- (void)deletePlanImgForUISuccess
+{
+    [_hud hide:YES];
+    if (_iPlan) {
+        [[_dicTemp objectForKey:@"imgArr"] removeAllObjects];
+        for (Image *imgDB in [((Schedule *)[Schedule objectByID:[NSNumber numberFromString:_iPlan[@"planId"]] createIfNone:NO]).images allObjects]) {
+            [self imgArrPro:nil URL:[NSURL URLWithString:imgDB.url] attachmentId:[NSString stringWithFormat:@"%lld",imgDB.idValue]];
+        }
+    }else{
+        [[_dicTemp objectForKey:@"imgArr"]removeObject:_iPlan[@"imgToDele"] ] ;
+    }
+    [table reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self img] inSection:0]] withRowAnimation:UITableViewRowAnimationNone];
+}
+
+- (void)deletePlanImgForUIFailed:(NSDictionary *)dict
+{
+    [_hud hide:YES];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"图片删除失败" message:dict[kInfoKeyErrorMessage] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alert show];
+}
+
+- (void)addPlanImgForUISuccess
+{
+    
+    [_hud hide:YES];
+    if (_iPlan) {
+        [_dicTemp[@"imgArr"] removeAllObjects];
+        for (Image *imgDB in [((Schedule *)[Schedule objectByID:[NSNumber numberFromString:_iPlan[@"planId"]] createIfNone:NO]).images allObjects]) {
+            [self imgArrPro:nil URL:[NSURL URLWithString:imgDB.url] attachmentId:[NSString stringWithFormat:@"%lld",imgDB.idValue]];
+        }
+    }else{
+        [self imgArrPro:_iPlan[@"image"] URL:nil attachmentId:nil];
+    }
+    
+    [table reloadRowsAtIndexPaths:[NSArray arrayWithObject:[NSIndexPath indexPathForRow:[self img] inSection:0]]  withRowAnimation:UITableViewRowAnimationNone];
+    
+}
+
+- (void)addPlanImgForUIFailed:(NSDictionary *)dict
+{
+    [_hud hide:YES];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"图片添加失败" message:dict[kInfoKeyErrorMessage] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles: nil];
+    [alert show];
 }
 
 @end

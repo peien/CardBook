@@ -11,17 +11,24 @@
 @protocol KHHDataSignPlanDelegate <NSObject>
 @optional
 //同步拜访计划
--(void) syncVisitScheduleForUISuccess;
--(void) syncVisitScheduleForUIFailed:(NSDictionary *) dict;
+-(void) syncPlanForUISuccess;
+-(void) syncPlanForUIFailed:(NSDictionary *) dict;
 //新增拜访计划
 -(void) addPlanForUISuccess;
 -(void) addPlanForUIFailed:(NSDictionary *) dict;
 //更新拜访计划
--(void) updateVisitScheduleForUISuccess;
--(void) updateVisitScheduleForUIFailed:(NSDictionary *) dict;
+-(void) updatePlanForUISuccess;
+-(void) updatePlanForUIFailed:(NSDictionary *) dict;
 //删除拜访计划
--(void) deleteVisitScheduleForUISuccess;
--(void) deleteVisitScheduleForUIFailed:(NSDictionary *) dict;
+-(void) deletePlanForUISuccess;
+-(void) deletePlanForUIFailed:(NSDictionary *) dict;
+
+- (void)deletePlanImgForUISuccess;
+- (void)deletePlanImgForUIFailed:(NSDictionary *) dict;
+
+- (void)addPlanImgForUISuccess;
+- (void)addPlanImgForUIFailed:(NSDictionary *) dict;
+
 @end
 
 #endif

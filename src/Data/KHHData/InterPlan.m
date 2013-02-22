@@ -36,7 +36,7 @@
     }
     _imgs = [[NSMutableArray alloc]init];
     for (KHHImgViewInCell *imgView in imgViews) {
-        [_imgs addObject:imgView.img];
+        [_imgs addObject:imgView.image];
     }
    
 }
@@ -81,6 +81,32 @@
         return;
     }
     _address = [NSString stringWithFormat:@"%@ %@",_address,address];
+}
+
+#pragma mark - sign collect Util
+- (void)setAddrInfo:(BMKAddrInfo *)addrInfo
+{
+    _latitude = [NSString stringWithFormat:@"%f",addrInfo.geoPt.latitude ];
+    _longitude = [NSString stringWithFormat:@"%f",addrInfo.geoPt.longitude];
+    _province = addrInfo.addressComponent.province;
+    _city = addrInfo.addressComponent.city;
+    _address = [NSString stringWithFormat:@"%@%@%@",addrInfo.addressComponent.district,addrInfo.addressComponent.streetName,addrInfo.addressComponent.streetNumber ];
+}
+
+- (NSMutableDictionary *)toCollectDic
+{
+    NSMutableDictionary *dicPro = [[NSMutableDictionary alloc]initWithCapacity:10];
+    dicPro[@"latitude"] = _latitude;
+    dicPro[@"type"] = @"2";
+    dicPro[@"content"] = _content;
+    dicPro[@"address"] = _address;
+    dicPro[@"latitude"] = _latitude;
+    
+    dicPro[@"visitPlan"] = [NSString stringWithFormat:@"%@",_id];
+    dicPro[@"userIds"] = _customCardIds;
+    dicPro[@"objectName"] = _customerName;
+    
+    return dicPro;
 }
 
 @end

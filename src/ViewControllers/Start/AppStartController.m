@@ -200,7 +200,7 @@ static const UIViewAnimationOptions AppStart_AnimationOptions =UIViewAnimationOp
 //    }else{
 //        [self showLoginView];
 //    }
-    if (![KHHUser shareInstance].sessionId||[@"" isEqualToString:[KHHUser shareInstance].sessionId]) {
+    if (![KHHUser shareInstance].sessionId||[@"" isEqualToString:[KHHUser shareInstance].sessionId]||![KHHUser shareInstance].isFinishLogin) {
         [self showLoginView];
     }else{
         [self changeToManageView];
