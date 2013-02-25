@@ -34,13 +34,13 @@
         
     }
     if ([arrPro count]>0) {
-        [self doDelete:delegate messages:arrPro];
+        [self deleteMessage:delegate messages:arrPro];
     }else{
        // [delegate deleDone];
     }
 }
 
-- (void)doDelete:(id<KHHNetAgentMessageDelegate>) delegate messages:(NSArray *)messages
+- (void)deleteMessage:(id<KHHNetAgentMessageDelegate>) delegate messages:(NSArray *)messages
 {
     if (![self networkStateIsValid]) {
         [self setYES:messages];
@@ -98,6 +98,8 @@
     
 }
 
+#pragma mark - reseaveMessage
+
 - (void)reseaveMessage:(id<KHHNetAgentMessageDelegate>) delegate
 
 {
@@ -116,20 +118,25 @@
     KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
         NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
         if ([[responseDict objectForKey:@"errorCode"]intValue]!=0) {
-            [delegate reseaveMsgFailed:responseDict];            
+            [delegate reseaveMsgFailed:responseDict];
+            return;
         }
         NSArray *fsendList = responseDict[@"fsendList"];
         NSMutableArray *messageList = [NSMutableArray arrayWithCapacity:fsendList.count];
         for (id obj in fsendList) {
             InMessage *im = [[[InMessage alloc] init] updateWithJSON:obj];
             [messageList addObject:im];
-            [KHHMessage processIObject:im];
+           
         }
-        [[KHHDataNew sharedData] saveContext];
+        NSMutableDictionary *dicPro = [[NSMutableDictionary alloc]initWithCapacity:2];
+        
         if (messageList && messageList.count > 0) {
-            [delegate reseaveMsgSuccess:YES];
+            dicPro[@"haveNew"] = @"1";
+            dicPro[@"fsendList"] = messageList;
+            [delegate reseaveMsgSuccess:dicPro];
         }else{
-            [delegate reseaveMsgSuccess:NO];
+            dicPro[@"haveNew"] = @"0";
+            [delegate reseaveMsgSuccess:dicPro];
         }
     };
     
@@ -149,4 +156,37 @@
     }
 }
 
+
+
+- (void)deleteMessage:(NSString *)messageId delegate:(id<KHHNetAgentMessageDelegate>) delegate
+{
+    if (![self networkStateIsValid]) {
+        if ([delegate respondsToSelector:@selector(deleteMessageFailed)]) {
+            NSDictionary *dict = [self networkUnableFailedResponseDictionary];
+            [delegate deleteMessageFailed:dict];
+        }
+        return;
+        
+    }
+    
+    NSString *path = [NSString stringWithFormat:@"message/%@",messageId];
+    // 处理返回数据的block
+    KHHSuccessBlock success = ^(AFHTTPRequestOperation *op, id response) {
+        NSDictionary *responseDict = [self JSONDictionaryWithResponse:response];
+        if ([[responseDict objectForKey:@"errorCode"]intValue]!=0) {
+            NSMutableDictionary *dict = [[NSMutableDictionary alloc]initWithCapacity:1];
+            dict[kInfoKeyErrorMessage] = [responseDict valueForKey:JSONDataKeyNote];
+            
+            [delegate deleteMessageFailed:dict];
+            return;
+        }
+            [delegate deleteMessageSuccess];
+       
+    };
+    
+    //其它操作失败block
+    KHHFailureBlock failed = [self defaultFailedResponse:delegate selector:@"deleteMessageFailed:"];
+    
+    [self getPath:path parameters:nil success:success failure:failed];
+}
 @end

@@ -101,6 +101,22 @@
 		310523E2169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 310523E0169AD2A3000B2C64 /* KHHWhereUtil.m */; };
 		310523E3169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 310523E0169AD2A3000B2C64 /* KHHWhereUtil.m */; };
 		310523E4169AD2A3000B2C64 /* KHHWhereUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 310523E0169AD2A3000B2C64 /* KHHWhereUtil.m */; };
+		3106872316D77352003C197B /* KHHNewMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3106872216D77352003C197B /* KHHNewMessageViewController.m */; };
+		3106872416D77352003C197B /* KHHNewMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3106872216D77352003C197B /* KHHNewMessageViewController.m */; };
+		3106872516D77352003C197B /* KHHNewMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3106872216D77352003C197B /* KHHNewMessageViewController.m */; };
+		3106872616D77352003C197B /* KHHNewMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3106872216D77352003C197B /* KHHNewMessageViewController.m */; };
+		310919DA16DAFC5600657D95 /* KHHMessageNewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 310919D916DAFC5600657D95 /* KHHMessageNewCell.m */; };
+		310919DB16DAFC5600657D95 /* KHHMessageNewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 310919D916DAFC5600657D95 /* KHHMessageNewCell.m */; };
+		310919DC16DAFC5600657D95 /* KHHMessageNewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 310919D916DAFC5600657D95 /* KHHMessageNewCell.m */; };
+		310919DD16DAFC5600657D95 /* KHHMessageNewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 310919D916DAFC5600657D95 /* KHHMessageNewCell.m */; };
+		310919F316DB2AC600657D95 /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = 310919F016DB2AC600657D95 /* UIScrollView+SVInfiniteScrolling.m */; };
+		310919F416DB2AC600657D95 /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = 310919F016DB2AC600657D95 /* UIScrollView+SVInfiniteScrolling.m */; };
+		310919F516DB2AC600657D95 /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = 310919F016DB2AC600657D95 /* UIScrollView+SVInfiniteScrolling.m */; };
+		310919F616DB2AC600657D95 /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = 310919F016DB2AC600657D95 /* UIScrollView+SVInfiniteScrolling.m */; };
+		310919F716DB2AC600657D95 /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 310919F216DB2AC600657D95 /* UIScrollView+SVPullToRefresh.m */; };
+		310919F816DB2AC600657D95 /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 310919F216DB2AC600657D95 /* UIScrollView+SVPullToRefresh.m */; };
+		310919F916DB2AC600657D95 /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 310919F216DB2AC600657D95 /* UIScrollView+SVPullToRefresh.m */; };
+		310919FA16DB2AC600657D95 /* UIScrollView+SVPullToRefresh.m in Sources */ = {isa = PBXBuildFile; fileRef = 310919F216DB2AC600657D95 /* UIScrollView+SVPullToRefresh.m */; };
 		310A067816AD0765007460F4 /* template.plist in Resources */ = {isa = PBXBuildFile; fileRef = 310A067716AD0764007460F4 /* template.plist */; };
 		310A067916AD0765007460F4 /* template.plist in Resources */ = {isa = PBXBuildFile; fileRef = 310A067716AD0764007460F4 /* template.plist */; };
 		310A067A16AD0765007460F4 /* template.plist in Resources */ = {isa = PBXBuildFile; fileRef = 310A067716AD0764007460F4 /* template.plist */; };
@@ -2111,6 +2127,15 @@
 		310523DA169ABC0E000B2C64 /* plan.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = plan.plist; sourceTree = "<group>"; };
 		310523DF169AD2A3000B2C64 /* KHHWhereUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHWhereUtil.h; sourceTree = "<group>"; };
 		310523E0169AD2A3000B2C64 /* KHHWhereUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHWhereUtil.m; sourceTree = "<group>"; };
+		3106872116D77352003C197B /* KHHNewMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHNewMessageViewController.h; sourceTree = "<group>"; };
+		3106872216D77352003C197B /* KHHNewMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHNewMessageViewController.m; sourceTree = "<group>"; };
+		310919D816DAFC5600657D95 /* KHHMessageNewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHMessageNewCell.h; sourceTree = "<group>"; };
+		310919D916DAFC5600657D95 /* KHHMessageNewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHMessageNewCell.m; sourceTree = "<group>"; };
+		310919EE16DB2AC600657D95 /* SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPullToRefresh.h; sourceTree = "<group>"; };
+		310919EF16DB2AC600657D95 /* UIScrollView+SVInfiniteScrolling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SVInfiniteScrolling.h"; sourceTree = "<group>"; };
+		310919F016DB2AC600657D95 /* UIScrollView+SVInfiniteScrolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVInfiniteScrolling.m"; sourceTree = "<group>"; };
+		310919F116DB2AC600657D95 /* UIScrollView+SVPullToRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SVPullToRefresh.h"; sourceTree = "<group>"; };
+		310919F216DB2AC600657D95 /* UIScrollView+SVPullToRefresh.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVPullToRefresh.m"; sourceTree = "<group>"; };
 		310A067716AD0764007460F4 /* template.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = template.plist; sourceTree = "<group>"; };
 		310A067D16AD319C007460F4 /* KHHTemplatePayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KHHTemplatePayViewController.h; sourceTree = "<group>"; };
 		310A067E16AD319D007460F4 /* KHHTemplatePayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KHHTemplatePayViewController.m; sourceTree = "<group>"; };
@@ -3229,6 +3254,18 @@
 			name = "View for cell";
 			sourceTree = "<group>";
 		};
+		310919ED16DB2AC600657D95 /* SVPullToRefresh */ = {
+			isa = PBXGroup;
+			children = (
+				310919EE16DB2AC600657D95 /* SVPullToRefresh.h */,
+				310919EF16DB2AC600657D95 /* UIScrollView+SVInfiniteScrolling.h */,
+				310919F016DB2AC600657D95 /* UIScrollView+SVInfiniteScrolling.m */,
+				310919F116DB2AC600657D95 /* UIScrollView+SVPullToRefresh.h */,
+				310919F216DB2AC600657D95 /* UIScrollView+SVPullToRefresh.m */,
+			);
+			path = SVPullToRefresh;
+			sourceTree = "<group>";
+		};
 		310A068B16AD3697007460F4 /* ForNetParam */ = {
 			isa = PBXGroup;
 			children = (
@@ -4161,6 +4198,10 @@
 				62D3F40B1603188500E011E2 /* KHHEditMSGViewController.h */,
 				62D3F40C1603188500E011E2 /* KHHEditMSGViewController.m */,
 				62D3F40D1603188500E011E2 /* KHHEditMSGViewController.xib */,
+				3106872116D77352003C197B /* KHHNewMessageViewController.h */,
+				3106872216D77352003C197B /* KHHNewMessageViewController.m */,
+				310919D816DAFC5600657D95 /* KHHMessageNewCell.h */,
+				310919D916DAFC5600657D95 /* KHHMessageNewCell.m */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -4523,6 +4564,7 @@
 		98A84FEA1602D80500A4A673 /* 3rdPart */ = {
 			isa = PBXGroup;
 			children = (
+				310919ED16DB2AC600657D95 /* SVPullToRefresh */,
 				6268328B16758BDA00EB04BF /* BaiduMap */,
 				620712FA1650E585000188E8 /* PCPieChart */,
 				62ACD2F31623BEBB00D88F57 /* MBProgressHUD */,
@@ -6112,6 +6154,10 @@
 				31047E5116BBAC48008690AF /* KHHCardTemplageVC.m in Sources */,
 				31047E6416BBC2A0008690AF /* KHHDataNew+SyncContact.m in Sources */,
 				31047E6B16BBC3B1008690AF /* KHHNetClinetAPIAgent+SyncContact.m in Sources */,
+				3106872616D77352003C197B /* KHHNewMessageViewController.m in Sources */,
+				310919DD16DAFC5600657D95 /* KHHMessageNewCell.m in Sources */,
+				310919F616DB2AC600657D95 /* UIScrollView+SVInfiniteScrolling.m in Sources */,
+				310919FA16DB2AC600657D95 /* UIScrollView+SVPullToRefresh.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6381,6 +6427,10 @@
 				31047E5016BBAC48008690AF /* KHHCardTemplageVC.m in Sources */,
 				31047E6316BBC2A0008690AF /* KHHDataNew+SyncContact.m in Sources */,
 				31047E6A16BBC3B1008690AF /* KHHNetClinetAPIAgent+SyncContact.m in Sources */,
+				3106872516D77352003C197B /* KHHNewMessageViewController.m in Sources */,
+				310919DC16DAFC5600657D95 /* KHHMessageNewCell.m in Sources */,
+				310919F516DB2AC600657D95 /* UIScrollView+SVInfiniteScrolling.m in Sources */,
+				310919F916DB2AC600657D95 /* UIScrollView+SVPullToRefresh.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6650,6 +6700,10 @@
 				31047E4E16BBAC48008690AF /* KHHCardTemplageVC.m in Sources */,
 				31047E6116BBC2A0008690AF /* KHHDataNew+SyncContact.m in Sources */,
 				31047E6816BBC3B0008690AF /* KHHNetClinetAPIAgent+SyncContact.m in Sources */,
+				3106872316D77352003C197B /* KHHNewMessageViewController.m in Sources */,
+				310919DA16DAFC5600657D95 /* KHHMessageNewCell.m in Sources */,
+				310919F316DB2AC600657D95 /* UIScrollView+SVInfiniteScrolling.m in Sources */,
+				310919F716DB2AC600657D95 /* UIScrollView+SVPullToRefresh.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6917,6 +6971,10 @@
 				31047E4F16BBAC48008690AF /* KHHCardTemplageVC.m in Sources */,
 				31047E6216BBC2A0008690AF /* KHHDataNew+SyncContact.m in Sources */,
 				31047E6916BBC3B1008690AF /* KHHNetClinetAPIAgent+SyncContact.m in Sources */,
+				3106872416D77352003C197B /* KHHNewMessageViewController.m in Sources */,
+				310919DB16DAFC5600657D95 /* KHHMessageNewCell.m in Sources */,
+				310919F416DB2AC600657D95 /* UIScrollView+SVInfiniteScrolling.m in Sources */,
+				310919F816DB2AC600657D95 /* UIScrollView+SVPullToRefresh.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

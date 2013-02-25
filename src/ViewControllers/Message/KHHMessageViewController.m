@@ -16,6 +16,7 @@
 #import "KHHMessage.h"
 #import "MBProgressHUD.h"
 #import "KHHNetClinetAPIAgent+Message.h"
+#import "KHHDataNew+Message.h"
 
 
 @interface KHHMessageViewController ()<UITableViewDataSource,UITableViewDelegate,UIAlertViewDelegate>
@@ -99,7 +100,7 @@
     // Do any additional setup after loading the view from its nib.
     _theTable.backgroundColor = [UIColor clearColor];
     [self.view setBackgroundColor:[UIColor colorWithRed:241 green:238 blue:232 alpha:1.0]];
-   // self.messageArr = [[KHHDataNew sharedData] allMessages];
+    self.messageArr = [[KHHDataNew sharedData] allMessages];
         
     //iphone5 适配
    // [KHHViewAdapterUtil checkIsNeedMoveDownForIphone5:_editBtn];
@@ -164,7 +165,7 @@
     KHHMessage *message = [self.messageArr objectAtIndex:indexPath.row];
     message.isRead = [NSNumber numberWithBool:YES];
     KHHNetClinetAPIAgent *agent = [[KHHNetClinetAPIAgent alloc] init];
-    [agent doDelete:self messages:[NSArray arrayWithObject:message]];
+  //  [agent doDelete:self messages:[NSArray arrayWithObject:message]];
 }
 - (void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath
 {

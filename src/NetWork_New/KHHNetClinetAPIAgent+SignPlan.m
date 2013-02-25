@@ -234,7 +234,7 @@
     if (iPlan.address.length)
         parameters[@"address"]   = iPlan.address;
     
-    if (iPlan.accompanist.length)
+    if (iPlan.finished.length)
         parameters[@"finished"]   = iPlan.finished;
     
     

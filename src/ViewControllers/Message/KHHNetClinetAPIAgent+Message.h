@@ -12,7 +12,9 @@
 
 @interface KHHNetClinetAPIAgent (Message)
 - (void)doDeleteInEdit:(id<KHHNetAgentMessageDelegate>)delegate messages:(NSArray *)messages;
-- (void)doDelete:(id<KHHNetAgentMessageDelegate>) delegate messages:(NSArray *)messages;
+
 - (void)reseaveMessage:(id<KHHNetAgentMessageDelegate>) delegate;
+
+- (void)deleteMessage:(NSString *)messageId delegate:(id<KHHNetAgentMessageDelegate>) delegate;
 
 @end

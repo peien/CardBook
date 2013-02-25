@@ -85,10 +85,11 @@
 
 }
 
-- (void)reseaveMsgForUISuccess:(Boolean)haveNewMsg
+- (void)reseaveMsgForUISuccess:(NSDictionary *)dict
 
 {
-    if (haveNewMsg) {
+    
+    if ([dict[@"haveNew"] isEqualToString:@"1"]) {
         //当前页不是消息界面时要弹出新消息到了的框
         if (!([self isMemberOfClass:[KHHMessageViewController class]]
               || [self isMemberOfClass:[KHHEditMSGViewController class]])) {

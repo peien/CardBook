@@ -126,6 +126,8 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    return 85;
+    
     Schedule *sched = [self.dataArray objectAtIndex:indexPath.row];
     if ([sched.images allObjects].count > 0) {
         return 140;
@@ -307,7 +309,16 @@
         // [planPro set_dicTempTarget:self.card];
         [planPro setSchedule:[self.dataArray objectAtIndex:indexPath.row] type:collect];
         planPro.title = @"数据采集";
-        
+        planPro.uperSuccess = ^(){
+            if ([self.card isKindOfClass:[ReceivedCard class]]) {
+                self.card = [[KHHDataNew sharedData] receivedCardByID:self.card.id];
+            }else if ([self.card isKindOfClass:[PrivateCard class]]){
+                self.card = [[KHHDataNew sharedData] privateCardByID:self.card.id];
+            }
+            
+            [self reloadTheTable:KHHCalendarViewDataTypeCheckIn];
+        };
+
         //完成
         //        KHHVisitCalendarCell *cell = (KHHVisitCalendarCell *)[[btn superview] superview];
         //        NSIndexPath *index = [_theTable indexPathForCell:cell];

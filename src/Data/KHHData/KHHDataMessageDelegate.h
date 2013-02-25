@@ -11,8 +11,10 @@
 @protocol KHHDataMessageDelegate <NSObject>
 @optional
 //同步分组
-- (void)reseaveMsgForUISuccess:(Boolean)haveNewMsg;
+- (void)reseaveMsgForUISuccess:(NSDictionary *)dict;
 - (void)reseaveMsgForUIFailed:(NSDictionary *)dict;
+
+
 
 @end
 

@@ -15,6 +15,16 @@
 
 - (NSUInteger)countOfUnreadMessages;
 
+#pragma mark - reseaveMsg
 - (void)reseaveMsg:(id<KHHDataMessageDelegate>)delegate;
+
+#pragma mark - allMessage
+- (NSArray *)allMessages;
+
+#pragma mark - setRead
+- (void)setRead:(NSString *)messageId delegate:(id<KHHDataMessageDelegate>)delegate;
+
+#pragma mark - true delete 
+- (void)doDeleteMessage:(NSString *)messageId delegate:(id<KHHDataMessageDelegate>)delegate;
 
 @end

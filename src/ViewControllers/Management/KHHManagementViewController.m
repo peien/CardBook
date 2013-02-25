@@ -32,6 +32,8 @@
 #import "KHHDataNew+Card.h"
 #import "KHHDataNew+Message.h"
 #import "KHHDataNew+Template.h"
+#import "KHHNewMessageViewController.h"
+
 
 #define TEXT_NEW_MESSAGE_COMMING NSLocalizedString(@"您有新消息到了,可到消息界面查看新消息。",nil)
 #define TEXT_NEW_CONTACT_COMMING NSLocalizedString(@"您有新名片到了，点击确认去查看联系人...",nil)
@@ -104,7 +106,7 @@ static int const KHH_SYNC_MESSAGE_TIME = 3 * 60;//alert类型:1.新消息 2.新�
 //去消息列表
 -(void) gotoMessageListViewController
 {
-    KHHMessageViewController *messageVC = [[KHHMessageViewController alloc] initWithNibName:nil bundle:nil];
+    KHHNewMessageViewController *messageVC = [[KHHNewMessageViewController alloc] initWithNibName:nil bundle:nil];
     [self.navigationController pushViewController:messageVC animated:YES];
 }
 //显示消息个数

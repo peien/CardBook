@@ -12,8 +12,12 @@
 @protocol KHHNetAgentMessageDelegate <NSObject>
 @optional
 
-- (void)reseaveMsgSuccess:(Boolean)haveNewMsg;
+- (void)reseaveMsgSuccess:(NSMutableDictionary *) dict;
 - (void)reseaveMsgFailed:(NSDictionary *) dict;
+
+- (void)deleteMessageFailed:(NSDictionary *) dict;
+- (void)deleteMessageSuccess;
+
 
 @end
 
